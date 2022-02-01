@@ -12,6 +12,7 @@ declare module "styled-components" {
     BLURPLE: string;
     FULL_WHITE: string;
     BLACK: string;
+    BLACK_LIGHT: string;
     BLACK_DARK: string;
     BLACK_PRIMARY: string;
     BLACK_SECONDARY: string;
