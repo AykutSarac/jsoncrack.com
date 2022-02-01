@@ -21,7 +21,7 @@ const StyledEditor = styled.div`
   align-items: center;
   border-radius: 0 0 5px 5px;
   height: 100%;
-  background: ${({ theme }) => theme.BLACK_DARK};
+  background: ${({ theme }) => theme.BLACK_LIGHT};
   border: 1px solid ${({ theme }) => theme.BLACK};
   border-top: none;
   overflow: hidden;
