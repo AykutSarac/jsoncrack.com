@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import JSONInput from "react-json-editor-ajrm";
 import { useLocalStorage } from "usehooks-ts";
-const locale = require("react-json-editor-ajrm/locale/en");
+import locale from "react-json-editor-ajrm/locale/en";
 
 const StyledJSONInput = styled(JSONInput)`
   margin-top: 10px;
