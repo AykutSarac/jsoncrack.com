@@ -31,7 +31,7 @@ const Navbar: React.FC = () => {
         <Link href="/editor">
           <a>Editor</a>
         </Link>
-        <Link href="#">
+        <Link href="https://github.com/AykutSarac/jsonvisio.com">
           <a>GitHub</a>
         </Link>
       </StyledNav>
