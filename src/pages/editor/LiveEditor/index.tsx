@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { css } from "styled-components";
 import ReactFlow, {
+  ControlButton,
   Controls,
   Elements,
   isNode,
@@ -25,6 +26,27 @@ const nodeExtent: NodeExtent = [
 const StyledLiveEditor = styled.div`
   width: 100%;
   height: 100%;
+
+  .react-flow__controls {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 8px;
+    right: 10px;
+    left: unset;
+  }
+
+  .react-flow__controls-button {
+    background: ${({ theme }) => theme.BLACK_PRIMARY};
+    fill: ${({ theme }) => theme.SILVER};
+    color: ${({ theme }) => theme.SILVER};
+    font-weight: 600;
+    border: 1px solid ${({ theme }) => theme.BLACK};
+
+    &:hover {
+      background: unset;
+    }
+  }
 `;
 
 const onLayout = (
@@ -105,13 +127,11 @@ const LiveEditor: React.FC = () => {
           }}
         >
           <Controls>
-            <button
-              type="button"
-              className="react-flow__controls-button react-flow__controls-zoomin"
+            <ControlButton
               onClick={() => onLayout("RL", elements, setElements)}
             >
               Style
-            </button>
+            </ControlButton>
           </Controls>
         </ReactFlow>
       </ReactFlowProvider>
