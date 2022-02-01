@@ -3,7 +3,8 @@ import { Handle, Position } from "react-flow-renderer";
 import styled from "styled-components";
 
 const StyledWrapper = styled.div<{ isArray?: boolean }>`
-  background: ${({ theme }) => theme.BLACK_SECONDARY};
+  background: ${({ theme }) => theme.BLACK_PRIMARY};
+  border: 1px solid ${({ theme }) => theme.BLACK};
   border-radius: 5px;
   padding: 16px;
   color: ${({ theme, isArray }) => isArray && theme.SEAGREEN};
