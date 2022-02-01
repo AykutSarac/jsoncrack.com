@@ -35,7 +35,7 @@ export const defaultValue = [
   },
 ];
 
-const JsonEditor = () => {
+const JsonEditor: React.FC = () => {
   const [json, setJson] = useLocalStorage("json", JSON.stringify(defaultValue));
 
   React.useEffect(() => {

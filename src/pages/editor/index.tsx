@@ -27,7 +27,7 @@ const StyledEditor = styled.div`
   overflow: hidden;
 `;
 
-const Editor = () => {
+const Editor: React.FC = () => {
   return (
     <StyledEditorWrapper>
       <StyledTools>tools</StyledTools>
