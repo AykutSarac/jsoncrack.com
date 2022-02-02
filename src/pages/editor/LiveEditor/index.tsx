@@ -23,8 +23,9 @@ const StyledLiveEditor = styled.div`
 
   .react-flow__controls {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-auto-flow: dense;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: 1fr;
     gap: 8px;
     right: 10px;
     left: unset;
@@ -51,9 +52,7 @@ export const LiveEditor: React.FC = () => {
   const [json] = useLocalStorage("json", JSON.stringify(defaultValue));
   const [rfInstance, setRfInstance] = React.useState<any>(null);
   const [valid, setValid] = React.useState(true);
-  const [elements, setElements] = React.useState<Elements>(
-    parser(json)
-  );
+  const [elements, setElements] = React.useState<Elements>(parser(json));
 
   React.useEffect(() => {
     try {
@@ -85,8 +84,11 @@ export const LiveEditor: React.FC = () => {
         }}
       >
         <Controls>
-          <ControlButton onClick={() => onLayout("RL", elements, setElements)}>
-            Style
+          <ControlButton
+            onClick={() => onLayout("RL", elements, setElements)}
+            style={{ gridColumn: "1 / 3", width: "auto" }}
+          >
+            Format
           </ControlButton>
         </Controls>
       </ReactFlow>
