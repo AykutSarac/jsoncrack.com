@@ -25,12 +25,10 @@ const StyledButton = styled.button<{ status: keyof typeof ButtonType }>`
 
 const StyledButtonContent = styled.div``;
 
-const Button: React.FC<ButtonProps> = ({ children, status, ...props }) => {
+export const Button: React.FC<ButtonProps> = ({ children, status, ...props }) => {
   return (
     <StyledButton type="button" status={status ?? "DEFAULT"} {...props}>
       <StyledButtonContent>{children}</StyledButtonContent>
     </StyledButton>
   );
 };
-
-export default Button;
