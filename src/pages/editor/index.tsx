@@ -17,7 +17,7 @@ const StyledTools = styled.div`
   display: flex;
   align-items: center;
   height: 36px;
-  border: 1px solid ${({ theme }) => theme.BLACK};
+  border-bottom: 1px solid ${({ theme }) => theme.BLACK};
   padding: 4px 16px;
   background: ${({ theme }) => theme.BLACK_SECONDARY};
   color: ${({ theme }) => theme.SILVER};
@@ -26,9 +26,7 @@ const StyledTools = styled.div`
 const StyledEditor = styled.div`
   display: flex;
   background: ${({ theme }) => theme.BLACK_LIGHT};
-  border: 1px solid ${({ theme }) => theme.BLACK};
-  border-top: none;
-  height: calc(100vh - 48px);
+  height: calc(100vh - 46px);
 `;
 
 
