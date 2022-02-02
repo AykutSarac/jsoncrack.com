@@ -22,5 +22,6 @@ declare module "styled-components" {
     SEAGREEN: string;
     ORANGE: string;
     SILVER: string;
+    SILVER_DARK: string;
   }
 }
