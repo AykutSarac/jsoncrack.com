@@ -43,7 +43,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     &:hover {
-      filter: brightness(0.85);
+      box-shadow: 3px 3px 5px ${({ theme }) => theme.BLACK};
     }
   }
 `;
