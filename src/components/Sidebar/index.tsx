@@ -19,6 +19,7 @@ const StyledSidebar = styled.div`
   width: 60px;
   background: #2f3136;
   padding: 8px;
+  border-right: 1px solid ${({ theme }) => theme.SILVER_DARK};
 `;
 
 const StyledElement = styled.div`
