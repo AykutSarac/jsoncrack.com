@@ -19,7 +19,6 @@ const GlobalStyle = createGlobalStyle`
     &:hover {
       transition: 0.2s;
       color: ${({ theme }) => theme.BLURPLE};
-      filter: brightness(1.3);
     }
   }
 
