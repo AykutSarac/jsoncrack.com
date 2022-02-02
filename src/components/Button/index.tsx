@@ -18,14 +18,21 @@ function getButtonStatus(status: keyof typeof ButtonType, theme: DefaultTheme) {
 }
 
 const StyledButton = styled.button<{ status: keyof typeof ButtonType }>`
+  display: block;
   background: ${({ status, theme }) => getButtonStatus(status, theme)};
   color: ${({ theme }) => theme.FULL_WHITE};
   cursor: pointer;
 `;
 
-const StyledButtonContent = styled.div``;
+const StyledButtonContent = styled.div`
+  padding: 8px;
+`;
 
-export const Button: React.FC<ButtonProps> = ({ children, status, ...props }) => {
+export const Button: React.FC<ButtonProps> = ({
+  children,
+  status,
+  ...props
+}) => {
   return (
     <StyledButton type="button" status={status ?? "DEFAULT"} {...props}>
       <StyledButtonContent>{children}</StyledButtonContent>
