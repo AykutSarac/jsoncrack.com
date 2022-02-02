@@ -2,12 +2,12 @@ import React from "react";
 import { Handle, Position } from "react-flow-renderer";
 import styled from "styled-components";
 
-const StyledWrapper = styled.div<{ isArray?: boolean }>`
+const StyledWrapper = styled.div<{ isArray?: boolean, isElement?: boolean }>`
   background: ${({ theme }) => theme.BLACK_PRIMARY};
   border: 1px solid ${({ theme }) => theme.BLACK};
   border-radius: 5px;
   padding: 16px;
-  color: ${({ theme, isArray }) => isArray && theme.SEAGREEN};
+  color: ${({ theme, isArray, isElement }) => isArray ? theme.SEAGREEN : isElement && theme.ORANGE};
   width: auto;
   min-width: 100px;
   text-align: ${({ isArray }) => isArray && "center"};
@@ -35,6 +35,17 @@ export const CustomNodeComponent: React.FC<{ data: any; id: string }> = ({
 
   if (typeof json === "object") {
     const keyPairs = Object.entries(json);
+
+    // temporary solution for array items
+    if (Object.keys(json).every((val) => !isNaN(+val))) {
+      return (
+        <StyledWrapper isElement>
+          {Object.values(json).join('')}
+          <Handle type="source" position={Position.Left} />
+          <Handle type="target" position={Position.Right} />
+        </StyledWrapper>
+      );
+    }
 
     return (
       <StyledWrapper>
