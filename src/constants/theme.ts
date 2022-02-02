@@ -14,4 +14,5 @@ export const darkTheme: DefaultTheme = {
   SEAGREEN: "#3BA55D",
   ORANGE: "#FAA81A",
   SILVER: "#B9BBBE",
+  SILVER_DARK: "#4D4D4D"
 } as const;
