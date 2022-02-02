@@ -1,7 +1,7 @@
-import Image from "next/image";
 import React from "react";
-import Button from "src/components/Button";
+import Image from "next/image";
 import styled from "styled-components";
+import { Button } from "src/components/Button";
 import { useRouter } from "next/router";
 
 const StyledNotFound = styled.div`
