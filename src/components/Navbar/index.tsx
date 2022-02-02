@@ -10,7 +10,7 @@ const StyledNavbar = styled.div`
   display: flex;
   justify-content: space-between;
   width: 75%;
-  margin: 0 auto 20px;
+  margin: 0 auto 80px;
 `;
 
 const StyledLogo = styled.div`
