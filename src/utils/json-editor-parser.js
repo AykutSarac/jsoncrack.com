@@ -1,3 +1,5 @@
+import { defaultValue } from "src/pages/editor/JsonEditor";
+
 /**
  * @param {never[] | Object} input 
  * @returns {import("react-flow-renderer").FlowElement[]}
@@ -57,6 +59,7 @@ export const parser = (input) => {
     return [...flatten(res), ...relationships(res)];
   } catch (error) {
     console.error("An error occured while parsin JSON data!", error.stack);
+    localStorage.setItem('json', JSON.stringify(defaultValue));
     return Array;
   }
 };
