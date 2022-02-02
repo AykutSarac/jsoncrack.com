@@ -4,6 +4,15 @@ import JSONInput from "react-json-editor-ajrm";
 import { useLocalStorage } from "usehooks-ts";
 import locale from "react-json-editor-ajrm/locale/en";
 
+type JsonData = {
+  plainText: string;
+  markupText: string;
+  json: string;
+  jsObject?: object;
+  lines: number;
+  error: boolean;
+};
+
 const StyledJSONInput = styled(JSONInput)`
   margin-top: 10px;
   padding: 5px;
@@ -50,11 +59,11 @@ export const JsonEditor: React.FC = () => {
   return (
     <StyledJSONInput
       placeholder={JSON.parse(json)}
-      onChange={(value: any) => {
+      onChange={(value: JsonData) => {
         try {
           JSON.parse(value.json);
           setJson(value.json);
-        } catch (error) {
+        } catch (error: any) {
           console.error("Invalid JSON!", error.stack);
         }
       }}
