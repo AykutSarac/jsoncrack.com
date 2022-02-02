@@ -6,7 +6,6 @@ import { LiveEditor } from "./LiveEditor";
 
 const StyledPageWrapper = styled.div`
   display: flex;
-  width: 100%;
 `;
 
 const StyledEditorWrapper = styled.div`
