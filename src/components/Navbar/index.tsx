@@ -19,6 +19,7 @@ const StyledLogo = styled.div`
   font-size: 20px;
   cursor: pointer;
   font-weight: 700;
+  color: #ffffff;
 `;
 
 const StyledNav = styled.nav`
