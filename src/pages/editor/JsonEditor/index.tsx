@@ -35,7 +35,7 @@ export const defaultValue = [
   },
 ];
 
-const JsonEditor: React.FC = () => {
+export const JsonEditor: React.FC = () => {
   const [json, setJson] = useLocalStorage("json", JSON.stringify(defaultValue));
 
   React.useEffect(() => {
@@ -55,7 +55,7 @@ const JsonEditor: React.FC = () => {
           JSON.parse(value.json);
           setJson(value.json);
         } catch (error) {
-          console.error("Invalid JSON!");
+          console.error("Invalid JSON!", error.stack);
         }
       }}
       locale={locale}
@@ -63,5 +63,3 @@ const JsonEditor: React.FC = () => {
     />
   );
 };
-
-export default JsonEditor;
