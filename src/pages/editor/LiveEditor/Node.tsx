@@ -2,15 +2,22 @@ import React from "react";
 import { Handle, Position } from "react-flow-renderer";
 import styled from "styled-components";
 
-const StyledWrapper = styled.div<{ isArray?: boolean, isElement?: boolean }>`
+const StyledWrapper = styled.div<{
+  isArray?: boolean;
+  isElement?: boolean;
+  circle?: boolean;
+}>`
   background: ${({ theme }) => theme.BLACK_PRIMARY};
   border: 1px solid ${({ theme }) => theme.BLACK};
   border-radius: 5px;
   padding: 16px;
-  color: ${({ theme, isArray, isElement }) => isArray ? theme.SEAGREEN : isElement && theme.ORANGE};
-  width: auto;
-  min-width: 100px;
+  color: ${({ theme, isArray, isElement }) =>
+    isArray ? theme.SEAGREEN : isElement && theme.ORANGE};
+  width: ${({ circle }) => (circle ? "20px" : "auto")};
+  height: ${({ circle }) => (circle ? "20px" : "auto")};
+  min-width: ${({ circle }) => !circle && "100px"};
   text-align: ${({ isArray }) => isArray && "center"};
+  border-radius: ${({ circle }) => circle && "50%"};
 `;
 
 const StyledKey = styled.span`
@@ -22,6 +29,15 @@ export const CustomNodeComponent: React.FC<{ data: any; id: string }> = ({
   data,
 }) => {
   const { label: json } = data;
+
+  if (Object.keys(json).length === 0) {
+    return (
+      <StyledWrapper circle>
+        <Handle type="source" position={Position.Left} />
+        <Handle type="target" position={Position.Right} />
+      </StyledWrapper>
+    );
+  }
 
   if (typeof json === "string") {
     return (
@@ -40,7 +56,7 @@ export const CustomNodeComponent: React.FC<{ data: any; id: string }> = ({
     if (Object.keys(json).every((val) => !isNaN(+val))) {
       return (
         <StyledWrapper isElement>
-          {Object.values(json).join('')}
+          {Object.values(json).join("")}
           <Handle type="source" position={Position.Left} />
           <Handle type="target" position={Position.Right} />
         </StyledWrapper>
