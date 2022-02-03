@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { AiFillGithub } from "react-icons/ai";
 import { Footer } from "src/components/Footer";
 import Link from "next/link";
+import Head from "next/head";
 
 const StyledHome = styled.div`
   padding: 24px;
@@ -49,6 +50,9 @@ const StyledText = styled.span<{ white?: boolean }>`
 const Home: React.FC = () => {
   return (
     <StyledHome>
+      <Head>
+        <title>JSON Visio</title>
+      </Head>
       <Navbar />
       <Container>
         <StyledContent>

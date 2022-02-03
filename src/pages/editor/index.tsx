@@ -5,6 +5,7 @@ import { Sidebar } from "src/components/Sidebar";
 import styled from "styled-components";
 import { JsonEditor } from "src/containers/JsonEditor";
 import { LiveEditor } from "src/containers/LiveEditor";
+import Head from "next/head";
 
 const StyledPageWrapper = styled.div`
   display: flex;
@@ -69,6 +70,9 @@ const Editor: React.FC = () => {
 
   return (
     <StyledPageWrapper>
+      <Head>
+        <title>Editor | JSON Visio</title>
+      </Head>
       <Sidebar />
       <StyledEditorWrapper>
         <StyledTools>Tools</StyledTools>

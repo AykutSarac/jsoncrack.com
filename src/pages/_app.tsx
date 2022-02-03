@@ -5,6 +5,7 @@ import type { AppProps } from "next/app";
 import { ThemeProvider } from "styled-components";
 import { useRouter } from "next/router";
 import { Loading } from "src/components/Loading";
+import Head from "next/head";
 
 function AykutSarac({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -22,7 +23,15 @@ function AykutSarac({ Component, pageProps }: AppProps) {
     router.events.on("routeChangeError", handleComplete);
   }, [router]);
 
-  if (pageLoading) return <Loading />;
+  if (pageLoading)
+    return (
+      <>
+        <Head>
+          <title>Loading... | JSON Visio</title>
+        </Head>
+        <Loading />
+      </>
+    );
 
   return (
     <ThemeProvider theme={darkTheme}>
