@@ -1,6 +1,8 @@
+import { FlowElement } from "react-flow-renderer";
+
 /**
- * @param {never[] | Object} input 
- * @returns {import("react-flow-renderer").FlowElement[]}
+ * @param {never[] | Object} input
+ * @returns {FlowElement[]}
  */
 export const parser = (input) => {
   try {
@@ -53,6 +55,8 @@ export const parser = (input) => {
       xs.flatMap(({ children, ...rest }) => [rest, ...flatten(children)]);
 
     const res = extract(input);
+
+    console.log([...flatten(res), ...relationships(res)]);
 
     return [...flatten(res), ...relationships(res)];
   } catch (error) {
