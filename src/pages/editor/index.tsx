@@ -3,8 +3,8 @@ import React from "react";
 import { Button } from "src/components/Button";
 import { Sidebar } from "src/components/Sidebar";
 import styled from "styled-components";
-import { JsonEditor } from "./JsonEditor";
-import { LiveEditor } from "./LiveEditor";
+import { JsonEditor } from "src/containers/JsonEditor";
+import { LiveEditor } from "src/containers/LiveEditor";
 
 const StyledPageWrapper = styled.div`
   display: flex;
