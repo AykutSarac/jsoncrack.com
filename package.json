@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build && next export",
+    "test": "jest",
     "start": "next start",
     "lint": "next lint",
     "deploy": "gh-pages -d out -t true"
@@ -22,15 +23,25 @@
     "usehooks-ts": "^2.3.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/user-event": "^13.5.0",
     "@types/dagre": "^0.7.47",
+    "@types/enzyme": "^3.10.11",
+    "@types/jest": "^27.4.0",
     "@types/node": "17.0.13",
     "@types/react": "17.0.38",
     "@types/react-json-editor-ajrm": "^2.5.2",
     "@types/styled-components": "^5.1.21",
+    "babel-jest": "^27.4.6",
+    "enzyme": "^3.11.0",
     "eslint": "8.8.0",
     "eslint-config-next": "12.0.9",
+    "eslint-plugin-testing-library": "^5.0.5",
     "gh-pages": "^3.2.3",
+    "jest": "^27.4.7",
     "prettier": "^2.5.1",
+    "ts-node": "^10.4.0",
     "typescript": "4.5.5"
   }
 }
