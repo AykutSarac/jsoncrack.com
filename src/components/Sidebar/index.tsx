@@ -9,7 +9,7 @@ import {
 } from "react-icons/ai";
 import { FaFileImport } from "react-icons/fa";
 import { useLocalStorage } from "usehooks-ts";
-import { defaultValue } from "src/pages/editor/JsonEditor";
+import { defaultValue } from "src/containers/JsonEditor";
 
 const StyledSidebar = styled.div`
   display: flex;
