@@ -56,8 +56,6 @@ export const parser = (input) => {
 
     const res = extract(input);
 
-    console.log([...flatten(res), ...relationships(res)]);
-
     return [...flatten(res), ...relationships(res)];
   } catch (error) {
     console.error("An error occured while parsin JSON data!", error.stack);
