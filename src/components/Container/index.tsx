@@ -16,6 +16,7 @@ const StyledContainer = styled.div<{ reverse: boolean }>`
   line-height: 1.2;
 
   @media only screen and (max-width: 768px) {
+    width: 100%;
     flex-direction: column;
   }
 `;
