@@ -23,6 +23,11 @@ const StyledButton = styled.button<{ status: keyof typeof ButtonType }>`
   background: ${({ status, theme }) => getButtonStatus(status, theme)};
   color: ${({ theme }) => theme.FULL_WHITE};
   cursor: pointer;
+  padding: 8px 16px;
+
+  @media only screen and (max-width: 768px) {
+    font-size: 18px;
+  }
 `;
 
 const StyledButtonContent = styled.div`
@@ -30,7 +35,6 @@ const StyledButtonContent = styled.div`
   justify-content: center;
   align-items: center;
   gap: 8px;
-  padding: 8px;
 `;
 
 export const Button: React.FC<ButtonProps> = ({
