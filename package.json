@@ -2,11 +2,13 @@
   "name": "json-visio-next",
   "private": true,
   "version": "v1.0.0-beta",
+  "homepage": "https://aykutsarac.github.io",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "gh-pages -d out"
   },
   "dependencies": {
     "dagre": "^0.8.5",
@@ -28,6 +30,7 @@
     "@types/styled-components": "^5.1.21",
     "eslint": "8.8.0",
     "eslint-config-next": "12.0.9",
+    "gh-pages": "^3.2.3",
     "prettier": "^2.5.1",
     "typescript": "4.5.5"
   }
