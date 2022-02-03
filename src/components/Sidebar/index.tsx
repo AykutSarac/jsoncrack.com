@@ -121,17 +121,17 @@ export const Sidebar = () => {
             </a>
           </Link>
         </StyledElement>
-        <StyledElement>
+        <StyledElement title="Home">
           <Link href="/">
             <a>
               <AiFillHome />
             </a>
           </Link>
         </StyledElement>
-        <StyledElement as="a" onClick={handleClear}>
+        <StyledElement as="a" onClick={handleClear} title="Clear JSON">
           <AiOutlineClear />
         </StyledElement>
-        <StyledElement>
+        <StyledElement title="Import JSON File">
           <a>
             <StyledImportFile>
               <input
