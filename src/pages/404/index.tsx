@@ -1,8 +1,8 @@
 import React from "react";
-import Image from "next/image";
 import styled from "styled-components";
 import { Button } from "src/components/Button";
 import { useRouter } from "next/router";
+import { Image } from "src/components/Image";
 
 const StyledNotFound = styled.div`
   display: flex;
@@ -26,12 +26,18 @@ const StyledSubMessage = styled.div`
   margin-bottom: 25px;
 `;
 
+const StyledImageWrapper = styled.div`
+  width: 300px;
+`;
+
 const NotFound: React.FC = () => {
   const router = useRouter();
 
   return (
     <StyledNotFound>
-      <Image src="/404.svg" alt="" width={300} height={400} />
+      <StyledImageWrapper>
+        <Image src="/404.svg" alt="404" width={300} height={400} />
+      </StyledImageWrapper>
       <StyledMessage>WIZARDS BEHIND CURTAINS?</StyledMessage>
       <StyledSubMessage>
         Looks like you&apos;re lost, let&apos;s head back to the home!
