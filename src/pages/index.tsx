@@ -1,8 +1,8 @@
-import Image from "next/image";
 import React from "react";
 import { Button } from "src/components/Button";
 import { Container } from "src/components/Container";
 import { Navbar } from "src/components/Navbar";
+import { Image } from "src/components/Image";
 import styled from "styled-components";
 import { AiFillGithub } from "react-icons/ai";
 import { Footer } from "src/components/Footer";
@@ -65,7 +65,7 @@ const Home: React.FC = () => {
             </a>
           </Link>
         </StyledContent>
-        <Image src="/graphs.svg" width={500} height={400} alt="graphs" />
+        <Image src="graphs.svg" width={500} height={400} alt="graphs" />
       </Container>
 
       <Container reverse>
@@ -82,7 +82,7 @@ const Home: React.FC = () => {
             </a>
           </Link>
         </StyledContent>
-        <Image src="/graphs3.svg" width={500} height={400} alt="preview" />
+        <Image src="graphs3.svg" width={500} height={400} alt="preview" />
       </Container>
 
       <Container>
@@ -98,7 +98,7 @@ const Home: React.FC = () => {
             </a>
           </Link>
         </StyledContent>
-        <Image src="/graphs4.svg" width={500} height={400} alt="preview" />
+        <Image src="graphs4.svg" width={500} height={400} alt="preview" />
       </Container>
 
       <Container reverse>
@@ -118,7 +118,7 @@ const Home: React.FC = () => {
             </a>
           </Link>
         </StyledContent>
-        <Image src="/graphs5.svg" width={500} height={400} alt="preview" />
+        <Image src="graphs5.svg" width={500} height={400} alt="preview" />
       </Container>
       <Footer />
     </StyledHome>
