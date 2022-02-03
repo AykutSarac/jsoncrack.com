@@ -2,7 +2,8 @@ import React from "react";
 import styled, { DefaultTheme } from "styled-components";
 
 enum ButtonType {
-  DEFAULT = "BLURPLE",
+  PRIMARY = "SILVER_DARK",
+  SECONDARY = "BLURPLE",
   DANGER = "DANGER",
   SUCCESS = "SEAGREEN",
   WARNING = "ORANGE",
@@ -25,6 +26,10 @@ const StyledButton = styled.button<{ status: keyof typeof ButtonType }>`
 `;
 
 const StyledButtonContent = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
   padding: 8px;
 `;
 
@@ -34,7 +39,7 @@ export const Button: React.FC<ButtonProps> = ({
   ...props
 }) => {
   return (
-    <StyledButton type="button" status={status ?? "DEFAULT"} {...props}>
+    <StyledButton type="button" status={status ?? "PRIMARY"} {...props}>
       <StyledButtonContent>{children}</StyledButtonContent>
     </StyledButton>
   );
