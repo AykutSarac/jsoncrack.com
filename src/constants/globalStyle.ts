@@ -27,7 +27,6 @@ const GlobalStyle = createGlobalStyle`
     min-width: 60px;
     border: none;
     border-radius: 5px;
-    padding: 2px 16px;
     outline: none;
     font-family: 'Catamaran', sans-serif;
     font-weight: 500;
