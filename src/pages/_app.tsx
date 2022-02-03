@@ -25,12 +25,13 @@ function AykutSarac({ Component, pageProps }: AppProps) {
 
   if (pageLoading)
     return (
-      <>
+      <ThemeProvider theme={darkTheme}>
+        <GlobalStyle />
         <Head>
           <title>Loading... | JSON Visio</title>
         </Head>
         <Loading />
-      </>
+      </ThemeProvider>
     );
 
   return (
