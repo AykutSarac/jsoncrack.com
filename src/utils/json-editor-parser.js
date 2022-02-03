@@ -1,5 +1,3 @@
-import { defaultValue } from "src/pages/editor/JsonEditor";
-
 /**
  * @param {never[] | Object} input 
  * @returns {import("react-flow-renderer").FlowElement[]}
