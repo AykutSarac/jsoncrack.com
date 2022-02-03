@@ -41,7 +41,7 @@ class MyDocument extends Document {
           <meta name="title" content="JSON Visio" />
           <meta
             name="description"
-            content="Simple visualization tool for your JSON data. No forced structure, paste your JSON data and view it instantly."
+            content="Simple visualization tool for your JSON data. No forced structure, paste your JSON and view it instantly."
           />
 
           <meta property="og:type" content="website" />
@@ -49,7 +49,7 @@ class MyDocument extends Document {
           <meta property="og:title" content="JSON Visio" />
           <meta
             property="og:description"
-            content="Simple visualization tool for your JSON data. No forced structure, paste your JSON data and view it instantly."
+            content="Simple visualization tool for your JSON data. No forced structure, paste your JSON and view it instantly."
           />
           <meta property="og:image" content="https://jsonvisio.com/image.png" />
 
@@ -58,7 +58,7 @@ class MyDocument extends Document {
           <meta property="twitter:title" content="JSON Visio" />
           <meta
             property="twitter:description"
-            content="Simple visualization tool for your JSON data. No forced structure, paste your JSON data and view it instantly."
+            content="Simple visualization tool for your JSON data. No forced structure, paste your JSON and view it instantly."
           />
           <meta property="twitter:image" content="https://jsonvisio.com/image.png" />
           <link rel="icon" href="/favicon.ico" />
