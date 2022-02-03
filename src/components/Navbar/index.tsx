@@ -62,7 +62,9 @@ export const Navbar: React.FC<NavbarProps> = () => {
           <a>Editor</a>
         </Link>
         <Link href="https://github.com/AykutSarac/jsonvisio.com">
-          <a>GitHub</a>
+          <a rel="me" target="_blank">
+            GitHub
+          </a>
         </Link>
       </StyledNav>
     </StyledNavbar>
