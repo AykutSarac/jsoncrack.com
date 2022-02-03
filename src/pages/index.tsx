@@ -1,11 +1,12 @@
 import Image from "next/image";
-import { useRouter } from "next/router";
 import React from "react";
 import { Button } from "src/components/Button";
 import { Container } from "src/components/Container";
 import { Navbar } from "src/components/Navbar";
 import styled from "styled-components";
 import { AiFillGithub } from "react-icons/ai";
+import { Footer } from "src/components/Footer";
+import Link from "next/link";
 
 const StyledHome = styled.div`
   padding: 24px;
@@ -31,6 +32,10 @@ const StyledContent = styled.div`
 const StyledHeader = styled.h2`
   font-size: 54px;
   color: ${({ theme }) => theme.FULL_WHITE};
+
+  @media only screen and (max-width: 768px) {
+    font-size: 36px;
+  }
 `;
 
 const StyledSubContent = styled.div`
@@ -42,8 +47,6 @@ const StyledText = styled.span<{ white?: boolean }>`
 `;
 
 const Home: React.FC = () => {
-  const route = useRouter();
-
   return (
     <StyledHome>
       <Navbar />
@@ -56,9 +59,11 @@ const Home: React.FC = () => {
             Simple visualization tool for your JSON data. No forced structure,
             paste your JSON data and view it instantly.
           </StyledSubContent>
-          <Button onClick={() => route.push("/editor")} status="SECONDARY">
-            Start Generating
-          </Button>
+          <Link href="/editor" passHref>
+            <a>
+              <Button status="SECONDARY">Start Generating</Button>
+            </a>
+          </Link>
         </StyledContent>
         <Image src="/graphs.svg" width={500} height={400} alt="graphs" />
       </Container>
@@ -71,9 +76,11 @@ const Home: React.FC = () => {
             it into graphs. We&apos;ve done it at our side, so you can just
             paste your JSON.
           </StyledSubContent>
-          <Button onClick={() => route.push("/editor")} status="SUCCESS">
-            Paste It!
-          </Button>
+          <Link href="/editor" passHref>
+            <a>
+              <Button status="SUCCESS">Paste It!</Button>
+            </a>
+          </Link>
         </StyledContent>
         <Image src="/graphs3.svg" width={500} height={400} alt="preview" />
       </Container>
@@ -85,9 +92,11 @@ const Home: React.FC = () => {
             Have an existing file for your data? No worries, directly import it
             into our editor without having to scroll through all of it!
           </StyledSubContent>
-          <Button onClick={() => route.push("/editor")} status="SUCCESS">
-            Import JSON
-          </Button>
+          <Link href="/editor" passHref>
+            <a>
+              <Button status="SUCCESS">Import JSON</Button>
+            </a>
+          </Link>
         </StyledContent>
         <Image src="/graphs4.svg" width={500} height={400} alt="preview" />
       </Container>
@@ -100,17 +109,18 @@ const Home: React.FC = () => {
             <StyledText> JSON</StyledText>
             <StyledText white> Visio</StyledText> at GitHub!
           </StyledSubContent>
-          <Button
-            onClick={() =>
-              route.push("https://github.com/AykutSarac/jsonvisio.com")
-            }
-          >
-            <AiFillGithub size={20} />
-            Check GitHub
-          </Button>
+          <Link href="https://github.com/AykutSarac/jsonvisio.com" passHref>
+            <a rel="me" target="_blank">
+              <Button>
+                <AiFillGithub size={20} />
+                Check GitHub
+              </Button>
+            </a>
+          </Link>
         </StyledContent>
         <Image src="/graphs5.svg" width={500} height={400} alt="preview" />
       </Container>
+      <Footer />
     </StyledHome>
   );
 };
