@@ -19,8 +19,7 @@
     "react-icons": "^4.3.1",
     "react-json-editor-ajrm": "^2.5.13",
     "styled-components": "^5.3.3",
-    "usehooks-ts": "^2.3.0",
-    "uuidv4": "^6.2.12"
+    "usehooks-ts": "^2.3.0"
   },
   "devDependencies": {
     "@types/dagre": "^0.7.47",
