@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const StyledImage = styled.img`
   object-fit: contain;
+  height: auto;
   
   @media only screen and (max-width: 768px) {
     width: 100%;
