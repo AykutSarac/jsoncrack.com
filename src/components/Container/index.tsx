@@ -11,9 +11,13 @@ const StyledContainer = styled.div<{ reverse: boolean }>`
   gap: 50px;
   align-items: center;
   width: 75%;
-  margin: 40px auto;
+  margin: 120px auto;
   flex-direction: ${({ reverse }) => reverse && 'row-reverse'};
   line-height: 1.2;
+
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 export const Container: React.FC<ContainerProps> = ({ children, reverse = false }) => {

@@ -11,6 +11,10 @@ const StyledNavbar = styled.div`
   justify-content: space-between;
   width: 75%;
   margin: 0 auto 80px;
+
+  @media only screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const StyledLogo = styled.div`
