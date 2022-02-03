@@ -11,7 +11,7 @@ const StyledContainer = styled.div<{ reverse: boolean }>`
   gap: 50px;
   align-items: center;
   width: 75%;
-  margin: 120px auto;
+  margin: 160px auto;
   flex-direction: ${({ reverse }) => reverse && 'row-reverse'};
   line-height: 1.2;
 
