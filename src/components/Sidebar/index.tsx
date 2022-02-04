@@ -6,12 +6,19 @@ import {
   AiOutlineClear,
   AiFillGithub,
   AiOutlineTwitter,
+  AiFillControl,
 } from "react-icons/ai";
-import { FaFileImport } from "react-icons/fa";
+import { FaFileImport, FaMap } from "react-icons/fa";
 import { MdAutoGraph } from "react-icons/md";
 import { useLocalStorage } from "usehooks-ts";
 import { defaultValue } from "src/containers/JsonEditor";
 import { getNextLayout } from "src/containers/LiveEditor/helpers";
+
+interface Config {
+  layout: "TB" | "BT" | "LR" | "RL";
+  minimap: boolean;
+  controls: boolean;
+}
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -85,30 +92,23 @@ const StyledImportFile = styled.label`
   }
 `;
 
-const fileToJson = (file: File, setJson: (val: string) => void) => {
-  const reader = new FileReader();
-
-  reader.readAsText(file, "UTF-8");
-  reader.onload = function (data) {
-    setJson(data.target?.result as string);
-  };
-};
-
 export const Sidebar = () => {
   const [jsonFile, setJsonFile] = React.useState<File | any>(null);
   const [_, setJson] = useLocalStorage("json", JSON.stringify(defaultValue));
-  const [layout, setLayout] = useLocalStorage<"TB" | "BT" | "RL" | "LR">(
-    "layout",
-    "RL"
-  );
-
-  const handleClear = () => {
-    setJson("[]");
-  };
+  const [config, setConfig] = useLocalStorage<Config>("config", {
+    layout: "RL",
+    minimap: true,
+    controls: true,
+  });
 
   React.useEffect(() => {
     if (jsonFile) {
-      fileToJson(jsonFile, setJson);
+      const reader = new FileReader();
+
+      reader.readAsText(jsonFile, "UTF-8");
+      reader.onload = function (data) {
+        setJson(data.target?.result as string);
+      };
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -134,8 +134,44 @@ export const Sidebar = () => {
             </a>
           </Link>
         </StyledElement>
-        <StyledElement as="a" onClick={handleClear} title="Clear JSON">
+        <StyledElement as="a" onClick={() => setJson("[]")} title="Clear JSON">
           <AiOutlineClear />
+        </StyledElement>
+        <StyledElement
+          as="a"
+          onClick={() =>
+            setConfig((c) => ({
+              ...c,
+              layout: getNextLayout(c.layout),
+            }))
+          }
+          title="Change Layout"
+        >
+          <MdAutoGraph />
+        </StyledElement>
+        <StyledElement
+          title="Toggle Minimap"
+          as="a"
+          onClick={() =>
+            setConfig((c) => ({
+              ...c,
+              minimap: !c.minimap,
+            }))
+          }
+        >
+          <FaMap />
+        </StyledElement>
+        <StyledElement
+          title="Toggle Controls"
+          as="a"
+          onClick={() =>
+            setConfig((c) => ({
+              ...c,
+              controls: !c.controls,
+            }))
+          }
+        >
+          <AiFillControl />
         </StyledElement>
         <StyledElement title="Import JSON File">
           <a>
@@ -149,13 +185,6 @@ export const Sidebar = () => {
               <FaFileImport />
             </StyledImportFile>
           </a>
-        </StyledElement>
-        <StyledElement
-          as="a"
-          onClick={() => setLayout(getNextLayout(layout))}
-          title="Change Layout"
-        >
-          <MdAutoGraph />
         </StyledElement>
       </StyledTopWrapper>
       <StyledBottomWrapper>
