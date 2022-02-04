@@ -21,7 +21,7 @@ const nodeTypes = {
 
 export const FlowWrapper: React.FC = () => {
   const [json] = useLocalStorage("json", JSON.stringify(defaultValue));
-  const [layout] = useLocalStorage("layout", "TB");
+  const [layout] = useLocalStorage("layout", "RL");
 
   const [elements, setElements] = React.useState<Elements>([]);
   const [rfInstance, setRfInstance] = React.useState<any>(null);

@@ -99,7 +99,7 @@ export const Sidebar = () => {
   const [_, setJson] = useLocalStorage("json", JSON.stringify(defaultValue));
   const [layout, setLayout] = useLocalStorage<"TB" | "BT" | "RL" | "LR">(
     "layout",
-    "TB"
+    "RL"
   );
 
   const handleClear = () => {
