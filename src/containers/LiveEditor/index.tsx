@@ -6,6 +6,7 @@ import { FlowWrapper } from "./FlowWrapper";
 const StyledLiveEditor = styled.div`
   width: 100%;
   height: 100%;
+  border-left: 1px solid ${({ theme }) => theme.SILVER_DARK};
 
   .react-flow__controls {
     display: grid;
@@ -15,6 +16,17 @@ const StyledLiveEditor = styled.div`
     gap: 8px;
     right: 10px;
     left: unset;
+  }
+
+  .react-flow__minimap {
+    top: 8px;
+    right: 8px;
+    background: transparent;
+
+    .react-flow__minimap-mask {
+      fill: ${({ theme }) => theme.SILVER_DARK};
+      opacity: 0.5;
+    }
   }
 
   .react-flow__controls-button {
