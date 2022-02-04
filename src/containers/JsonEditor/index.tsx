@@ -16,10 +16,6 @@ type JsonData = {
 const StyledJSONInput = styled(JSONInput)`
   margin-top: 10px;
   padding: 5px;
-
-  [name="outer-box"] > div {
-    transform: translate(-75%, 25%);
-  }
 `;
 
 export const defaultValue = [
@@ -69,17 +65,19 @@ export const JsonEditor: React.FC = () => {
     }
   }, []);
 
+  const handleChange = (data: JsonData) => {
+    try {
+      JSON.parse(data.json);
+      setJson(data.json);
+    } catch (error: any) {
+      console.error("Invalid JSON!", error.stack);
+    }
+  };
+
   return (
     <StyledJSONInput
       placeholder={JSON.parse(json)}
-      onChange={(value: JsonData) => {
-        try {
-          JSON.parse(value.json);
-          setJson(value.json);
-        } catch (error: any) {
-          console.error("Invalid JSON!", error.stack);
-        }
-      }}
+      onChange={handleChange}
       locale={locale}
       height="100%"
     />
