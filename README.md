@@ -6,4 +6,6 @@ Simple visualization tool for your JSON data. No forced structure, paste your JS
 
 ## Preview
 
-![Preview](preview/preview.png)
+![Preview](preview/preview_1.png)
+
+![Preview](preview/preview_2.png)
