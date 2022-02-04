@@ -22,7 +22,9 @@ export const parser = (input) => {
         id: nextId(),
         data: {
           label: Object.fromEntries(
-            Object.entries(o).filter(([k, v]) => !Array.isArray(v))
+            Object.entries(o).filter(
+              ([k, v]) => !Array.isArray(v) && !(v instanceof Object)
+            )
           ),
         },
         position: { x: 0, y: 0 },
