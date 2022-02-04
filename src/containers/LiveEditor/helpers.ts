@@ -1,20 +1,20 @@
 import dagre from "dagre";
 import { Elements, isNode, Position } from "react-flow-renderer";
+import { parser } from "src/utils/json-editor-parser";
 
 const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
 
-export const onLayout = (
-  direction: string,
-  elements: Elements,
-  setElements: React.Dispatch<Elements>
-) => {
+export const getLayoutPosition = (direction: string, elements: Elements, dynamic = false) => {
   const isHorizontal = direction === "LR";
   dagreGraph.setGraph({ rankdir: direction });
 
   elements.forEach((el) => {
     if (isNode(el)) {
-      dagreGraph.setNode(el.id, { width: 175, height: 50 });
+      dagreGraph.setNode(el.id, {
+        width: dynamic ? el.__rf.width : 200,
+        height: dynamic ? el.__rf.height : 100,
+      });
     } else {
       dagreGraph.setEdge(el.source, el.target);
     }
@@ -36,5 +36,28 @@ export const onLayout = (
     return el;
   });
 
-  setElements(layoutedElements);
+  return layoutedElements;
 };
+
+export function getNextLayout(layout: "TB" | "BT" | "RL" | "LR") {
+  switch (layout) {
+    case "TB":
+      return "BT";
+
+    case "BT":
+      return "RL";
+
+    case "RL":
+      return "LR";
+
+    default:
+      return "TB";
+  }
+}
+
+export function getLayout(layout: string, json: string, dynamic = false) {
+  const jsonToGraph = parser(json);
+  const layoutedElements = getLayoutPosition(layout, jsonToGraph, dynamic);
+
+  return layoutedElements;
+}

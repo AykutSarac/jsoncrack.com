@@ -8,8 +8,10 @@ import {
   AiOutlineTwitter,
 } from "react-icons/ai";
 import { FaFileImport } from "react-icons/fa";
+import { MdAutoGraph } from "react-icons/md";
 import { useLocalStorage } from "usehooks-ts";
 import { defaultValue } from "src/containers/JsonEditor";
+import { getNextLayout } from "src/containers/LiveEditor/helpers";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -95,6 +97,10 @@ const fileToJson = (file: File, setJson: (val: string) => void) => {
 export const Sidebar = () => {
   const [jsonFile, setJsonFile] = React.useState<File | any>(null);
   const [_, setJson] = useLocalStorage("json", JSON.stringify(defaultValue));
+  const [layout, setLayout] = useLocalStorage<"TB" | "BT" | "RL" | "LR">(
+    "layout",
+    "TB"
+  );
 
   const handleClear = () => {
     setJson("[]");
@@ -143,6 +149,13 @@ export const Sidebar = () => {
               <FaFileImport />
             </StyledImportFile>
           </a>
+        </StyledElement>
+        <StyledElement
+          as="a"
+          onClick={() => setLayout(getNextLayout(layout))}
+          title="Change Layout"
+        >
+          <MdAutoGraph />
         </StyledElement>
       </StyledTopWrapper>
       <StyledBottomWrapper>

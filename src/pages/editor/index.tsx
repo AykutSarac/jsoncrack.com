@@ -75,7 +75,7 @@ const Editor: React.FC = () => {
       </Head>
       <Sidebar />
       <StyledEditorWrapper>
-        <StyledTools>Tools</StyledTools>
+        <StyledTools>Editor</StyledTools>
         <StyledEditor>
           <JsonEditor />
           <LiveEditor />

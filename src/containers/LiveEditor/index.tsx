@@ -1,21 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import ReactFlow, {
-  ControlButton,
-  Controls,
-  Elements,
-  NodeExtent,
-} from "react-flow-renderer";
-import { defaultValue } from "../JsonEditor";
-import { parser } from "src/utils/json-editor-parser";
-import { useLocalStorage } from "usehooks-ts";
-import { CustomNodeComponent } from "./Node";
-import { onLayout } from "./helpers";
-
-const nodeExtent: NodeExtent = [
-  [0, 0],
-  [1000, 1000],
-];
+import { ReactFlowProvider } from "react-flow-renderer";
+import { FlowWrapper } from "./FlowWrapper";
 
 const StyledLiveEditor = styled.div`
   width: 100%;
@@ -44,54 +30,12 @@ const StyledLiveEditor = styled.div`
   }
 `;
 
-const nodeTypes = {
-  special: CustomNodeComponent,
-};
-
 export const LiveEditor: React.FC = () => {
-  const [json] = useLocalStorage("json", JSON.stringify(defaultValue));
-  const [rfInstance, setRfInstance] = React.useState<any>(null);
-  const [valid, setValid] = React.useState(true);
-  const [elements, setElements] = React.useState<Elements>(parser(json));
-
-  React.useEffect(() => {
-    try {
-      JSON.parse(json);
-      onLayout("RL", parser(json), setElements);
-      setValid(true);
-    } catch (error) {
-      setValid(false);
-    }
-  }, [json]);
-
-  React.useEffect(() => {
-    if (rfInstance) {
-      rfInstance.fitView();
-    }
-  }, [elements, rfInstance]);
-
-  if (!valid) return null;
-
   return (
     <StyledLiveEditor>
-      <ReactFlow
-        nodeExtent={nodeExtent}
-        elements={elements}
-        nodeTypes={nodeTypes}
-        onLoad={(rf: any) => {
-          setRfInstance(rf);
-          onLayout("RL", elements, setElements);
-        }}
-      >
-        <Controls>
-          <ControlButton
-            onClick={() => onLayout("RL", elements, setElements)}
-            style={{ gridColumn: "1 / 3", width: "auto" }}
-          >
-            Format
-          </ControlButton>
-        </Controls>
-      </ReactFlow>
+      <ReactFlowProvider>
+        <FlowWrapper />
+      </ReactFlowProvider>
     </StyledLiveEditor>
   );
 };
