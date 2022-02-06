@@ -1,7 +1,7 @@
 {
   "name": "json-visio-next",
   "private": true,
-  "version": "v1.0.0-beta",
+  "version": "v1.0.3-beta",
   "homepage": "https://aykutsarac.github.io",
   "scripts": {
     "dev": "next dev",
