@@ -1,16 +1,12 @@
 import { FlowElement } from "react-flow-renderer";
 
-/**
- * @param {never[] | Object} input
- * @returns {FlowElement[]}
- */
-export const parser = (input) => {
+export const parser = (input: string | string[]): FlowElement[] => {
   try {
-    input = JSON.parse(input);
+    if (typeof input !== "object") input = JSON.parse(input);
     if (!Array.isArray(input)) input = [input];
 
     const extract = (
-      os,
+      os: string[] | object[] | null,
       nextId = (
         (id) => () =>
           String(++id)
@@ -43,8 +39,8 @@ export const parser = (input) => {
       }));
     };
 
-    const relationships = (xs) =>
-      xs.flatMap(({ id: target, children = [] }) => [
+    const relationships = (xs: { id: string; children: never[] }[]) => {
+      return xs.flatMap(({ id: target, children = [] }) => [
         ...children.map(({ id: source }) => ({
           id: `e${source}-${target}`,
           source,
@@ -52,15 +48,16 @@ export const parser = (input) => {
         })),
         ...relationships(children),
       ]);
+    };
 
-    const flatten = (xs) =>
+    const flatten = (xs: { id: string; children: never[] }[]) =>
       xs.flatMap(({ children, ...rest }) => [rest, ...flatten(children)]);
 
     const res = extract(input);
 
     return [...flatten(res), ...relationships(res)];
   } catch (error) {
-    console.error("An error occured while parsin JSON data!", error.stack);
-    return Array;
+    console.error("An error occured while parsin JSON data!");
+    return [];
   }
 };
