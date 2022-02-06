@@ -13,12 +13,7 @@ import { MdAutoGraph } from "react-icons/md";
 import { useLocalStorage } from "usehooks-ts";
 import { defaultValue } from "src/containers/JsonEditor";
 import { getNextLayout } from "src/containers/LiveEditor/helpers";
-
-interface Config {
-  layout: "TB" | "BT" | "LR" | "RL";
-  minimap: boolean;
-  controls: boolean;
-}
+import { StorageConfig } from "src/typings/global";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -93,13 +88,24 @@ const StyledImportFile = styled.label`
 `;
 
 export const Sidebar = () => {
-  const [jsonFile, setJsonFile] = React.useState<File | any>(null);
-  const [_, setJson] = useLocalStorage("json", JSON.stringify(defaultValue));
-  const [config, setConfig] = useLocalStorage<Config>("config", {
+  const [jsonFile, setJsonFile] = React.useState<File | null>(null);
+  const [json, setJson] = useLocalStorage("json", JSON.stringify(defaultValue));
+  const [config, setConfig] = useLocalStorage<StorageConfig>("config", {
     layout: "RL",
     minimap: true,
     controls: true,
   });
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) setJsonFile(e.target.files?.item(0));
+  };
+
+  const toggle = (setting: "minimap" | "controls") => {
+    setConfig((c) => ({
+      ...c,
+      [setting]: !c[setting],
+    }));
+  };
 
   React.useEffect(() => {
     if (jsonFile) {
@@ -110,8 +116,6 @@ export const Sidebar = () => {
         setJson(data.target?.result as string);
       };
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jsonFile]);
 
   return (
@@ -152,24 +156,14 @@ export const Sidebar = () => {
         <StyledElement
           title="Toggle Minimap"
           as="a"
-          onClick={() =>
-            setConfig((c) => ({
-              ...c,
-              minimap: !c.minimap,
-            }))
-          }
+          onClick={() => toggle("minimap")}
         >
           <FaMap />
         </StyledElement>
         <StyledElement
           title="Toggle Controls"
           as="a"
-          onClick={() =>
-            setConfig((c) => ({
-              ...c,
-              controls: !c.controls,
-            }))
-          }
+          onClick={() => toggle("controls")}
         >
           <AiFillControl />
         </StyledElement>
@@ -177,8 +171,8 @@ export const Sidebar = () => {
           <a>
             <StyledImportFile>
               <input
-                key={jsonFile}
-                onChange={(e) => setJsonFile(e.target.files?.item(0))}
+                key={jsonFile?.name}
+                onChange={handleFileChange}
                 type="file"
                 accept="application/JSON"
               />

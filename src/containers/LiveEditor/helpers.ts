@@ -1,5 +1,6 @@
 import dagre from "dagre";
 import { Elements, isNode, Position } from "react-flow-renderer";
+import { Layout } from "src/typings/global";
 import { parser } from "src/utils/json-editor-parser";
 
 const dagreGraph = new dagre.graphlib.Graph();
@@ -39,7 +40,7 @@ export const getLayoutPosition = (direction: string, elements: Elements, dynamic
   return layoutedElements;
 };
 
-export function getNextLayout(layout: "TB" | "BT" | "RL" | "LR") {
+export function getNextLayout(layout: Layout) {
   switch (layout) {
     case "TB":
       return "BT";
@@ -55,7 +56,7 @@ export function getNextLayout(layout: "TB" | "BT" | "RL" | "LR") {
   }
 }
 
-export function getLayout(layout: string, json: string, dynamic = false) {
+export function getLayout(layout: Layout, json: string, dynamic = false) {
   const jsonToGraph = parser(json);
   const layoutedElements = getLayoutPosition(layout, jsonToGraph, dynamic);
 

@@ -2,6 +2,8 @@ import React from "react";
 import { Handle, Position } from "react-flow-renderer";
 import styled from "styled-components";
 
+type Data = { label: string | object };
+
 const StyledWrapper = styled.div<{
   isArray?: boolean;
   isElement?: boolean;
@@ -24,7 +26,7 @@ const StyledKey = styled.span`
   color: ${({ theme }) => theme.BLURPLE};
 `;
 
-export const CustomNodeComponent: React.FC<{ data: any; id: string }> = ({
+export const CustomNodeComponent: React.FC<{ data: Data; id: string }> = ({
   id,
   data,
 }) => {
@@ -49,7 +51,7 @@ export const CustomNodeComponent: React.FC<{ data: any; id: string }> = ({
     );
   }
 
-  if (typeof json === "object") {
+  if (json instanceof Object) {
     const keyPairs = Object.entries(json);
 
     // temporary solution for array items

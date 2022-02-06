@@ -5,7 +5,9 @@ import ReactFlow, {
   Elements,
   MiniMap,
   NodeExtent,
+  OnLoadParams,
 } from "react-flow-renderer";
+import { StorageConfig } from "src/typings/global";
 import { useLocalStorage } from "usehooks-ts";
 import { defaultValue } from "../JsonEditor";
 import { getLayout, getLayoutPosition } from "./helpers";
@@ -22,15 +24,19 @@ const nodeTypes = {
 
 export const FlowWrapper: React.FC = () => {
   const [json] = useLocalStorage("json", JSON.stringify(defaultValue));
-  const [config] = useLocalStorage("config", {
+  const [config] = useLocalStorage<StorageConfig>("config", {
     layout: "RL",
     minimap: true,
     controls: true,
   });
 
   const [elements, setElements] = React.useState<Elements>([]);
-  const [rfInstance, setRfInstance] = React.useState<any>(null);
+  const [rfInstance, setRfInstance] = React.useState<OnLoadParams | null>(null);
   const [valid, setValid] = React.useState(true);
+
+  const handleClick = () => {
+    setElements(getLayoutPosition(config.layout, elements));
+  };
 
   React.useEffect(() => {
     if (rfInstance) rfInstance.fitView();
@@ -53,15 +59,13 @@ export const FlowWrapper: React.FC = () => {
       nodeExtent={nodeExtent}
       elements={elements}
       nodeTypes={nodeTypes}
-      onLoad={(rf: any) => setRfInstance(rf)}
+      onLoad={setRfInstance}
     >
       {config.minimap && <MiniMap />}
       {config.controls && (
         <Controls>
           <ControlButton
-            onClick={() =>
-              setElements(getLayoutPosition(config.layout, elements))
-            }
+            onClick={handleClick}
             style={{ gridColumn: "1 / 3", width: "auto" }}
           >
             Format
