@@ -5,6 +5,8 @@ import { Sidebar } from "src/components/Sidebar";
 import styled from "styled-components";
 import { JsonEditor } from "src/containers/JsonEditor";
 import { LiveEditor } from "src/containers/LiveEditor";
+import SplitPane from "react-split-pane";
+
 import Head from "next/head";
 
 const StyledPageWrapper = styled.div`
@@ -14,7 +16,7 @@ const StyledPageWrapper = styled.div`
 const StyledIncompatible = styled.div`
   display: none;
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 568px) {
     position: fixed;
     top: 0;
     left: 0;
@@ -33,7 +35,7 @@ const StyledIncompatible = styled.div`
     }
 
     &::before {
-      content: 'Uh, oh!';
+      content: "Uh, oh!";
       font-weight: 700;
       font-size: 60px;
       opacity: 0.6;
@@ -44,7 +46,7 @@ const StyledIncompatible = styled.div`
 const StyledEditorWrapper = styled.div`
   width: 100%;
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 568px) {
     display: none;
   }
 `;
@@ -59,10 +61,58 @@ const StyledTools = styled.div`
   color: ${({ theme }) => theme.SILVER};
 `;
 
-const StyledEditor = styled.div`
+const StyledEditor = styled(SplitPane)`
+  position: relative !important;
   display: flex;
   background: ${({ theme }) => theme.BLACK_LIGHT};
-  height: calc(100vh - 46px);
+  height: calc(100vh - 46px) !important;
+
+  .Resizer {
+    background: #000;
+    opacity: 0.2;
+    z-index: 1;
+    box-sizing: border-box;
+    background-clip: padding-box;
+  }
+
+  .Resizer:hover {
+    transition: all 2s ease;
+  }
+
+  .Resizer.horizontal {
+    height: 11px;
+    margin: -5px 0;
+    border-top: 5px solid rgba(255, 255, 255, 0);
+    border-bottom: 5px solid rgba(255, 255, 255, 0);
+    cursor: row-resize;
+    width: 100%;
+  }
+
+  .Resizer.horizontal:hover {
+    border-top: 5px solid rgba(0, 0, 0, 0.5);
+    border-bottom: 5px solid rgba(0, 0, 0, 0.5);
+  }
+
+  .Resizer.vertical {
+    width: 11px;
+    margin: 0 -5px;
+    border-left: 5px solid rgba(255, 255, 255, 0);
+    border-right: 5px solid rgba(255, 255, 255, 0);
+    cursor: col-resize;
+  }
+
+  .Resizer.vertical:hover {
+    border-left: 5px solid rgba(0, 0, 0, 0.5);
+    border-right: 5px solid rgba(0, 0, 0, 0.5);
+  }
+
+  .Resizer.disabled {
+    cursor: not-allowed;
+  }
+
+  .Resizer.disabled:hover {
+    border-color: transparent;
+  }
 `;
 
 const Editor: React.FC = () => {
@@ -76,7 +126,12 @@ const Editor: React.FC = () => {
       <Sidebar />
       <StyledEditorWrapper>
         <StyledTools>Editor</StyledTools>
-        <StyledEditor>
+        <StyledEditor
+          maxSize={800}
+          minSize={300}
+          defaultSize={450}
+          split="vertical"
+        >
           <JsonEditor />
           <LiveEditor />
         </StyledEditor>

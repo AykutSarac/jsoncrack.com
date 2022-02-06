@@ -6,7 +6,7 @@ import { FlowWrapper } from "./FlowWrapper";
 const StyledLiveEditor = styled.div`
   width: 100%;
   height: 100%;
-  border-left: 1px solid ${({ theme }) => theme.SILVER_DARK};
+  border-left: 3px solid ${({ theme }) => theme.SILVER_DARK};
 
   .react-flow__controls {
     display: grid;
