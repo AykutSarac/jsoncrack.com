@@ -13,7 +13,7 @@ export const getLayoutPosition = (direction: string, elements: Elements, dynamic
   elements.forEach((el) => {
     if (isNode(el)) {
       dagreGraph.setNode(el.id, {
-        width: dynamic ? el.__rf.width : 200,
+        width: dynamic ? el.__rf.width : 400,
         height: dynamic ? el.__rf.height : 100,
       });
     } else {

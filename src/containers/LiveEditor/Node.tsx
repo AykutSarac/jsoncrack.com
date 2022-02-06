@@ -18,12 +18,19 @@ const StyledWrapper = styled.div<{
   width: ${({ circle }) => (circle ? "20px" : "auto")};
   height: ${({ circle }) => (circle ? "20px" : "auto")};
   min-width: ${({ circle }) => !circle && "100px"};
+  max-width: 400px;
   text-align: ${({ isArray }) => isArray && "center"};
   border-radius: ${({ circle }) => circle && "50%"};
 `;
 
 const StyledKey = styled.span`
   color: ${({ theme }) => theme.BLURPLE};
+`;
+
+const StyledLineWrapper = styled.div`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const CustomNodeComponent: React.FC<{ data: Data; id: string }> = ({
@@ -72,10 +79,10 @@ export const CustomNodeComponent: React.FC<{ data: Data; id: string }> = ({
             typeof entries[1] === "string" || typeof entries[1] === "number";
 
           return (
-            <div key={entries[0]}>
+            <StyledLineWrapper key={entries[0]}>
               <StyledKey>{entries[0]}: </StyledKey>
               {isValidValue && entries[1]}
-            </div>
+            </StyledLineWrapper>
           );
         })}
 
