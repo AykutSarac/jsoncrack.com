@@ -10,6 +10,6 @@ const StyledImage = styled.img`
   }
 `;
 
-export const Image: React.FC = ({ ...props }) => {
+export const Image = ({ ...props }) => {
   return <StyledImage {...props} />
 };
