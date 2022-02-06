@@ -29,7 +29,7 @@ const StyledMessage = styled.div`
   font-weight: 500;
 `;
 
-export const Loading = () => {
+export const Loading: React.FC = () => {
   return (
     <StyledLoading>
       <StyledLogo>
