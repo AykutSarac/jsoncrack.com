@@ -20,6 +20,8 @@
     "react-icons": "^4.3.1",
     "react-json-editor-ajrm": "^2.5.13",
     "react-split-pane": "^0.1.92",
+    "react-zoom-pan-pinch": "^2.1.3",
+    "reaflow": "^4.2.15",
     "styled-components": "^5.3.3",
     "usehooks-ts": "^2.3.0"
   },

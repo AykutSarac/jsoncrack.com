@@ -1,53 +1,60 @@
-import React from "react";
+import React, { ComponentType } from "react";
 import styled from "styled-components";
-import { ReactFlowProvider } from "react-flow-renderer";
-import { FlowWrapper } from "./FlowWrapper";
+import { Canvas, CanvasRef } from "reaflow/dist/index";
+import { useLocalStorage } from "usehooks-ts";
+import { defaultValue } from "../JsonEditor";
+import { getEdgeNodes } from "./helpers";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import { StorageConfig } from "src/typings/global";
 
 const StyledLiveEditor = styled.div`
-  width: 100%;
-  height: 100%;
+  position: relative;
   border-left: 3px solid ${({ theme }) => theme.SILVER_DARK};
+`;
 
-  .react-flow__controls {
-    display: grid;
-    grid-auto-flow: dense;
-    grid-template-columns: 1fr 1fr;
-    grid-auto-rows: 1fr;
-    gap: 8px;
-    right: 10px;
-    left: unset;
-  }
-
-  .react-flow__minimap {
-    top: 8px;
-    right: 8px;
-    background: transparent;
-
-    .react-flow__minimap-mask {
-      fill: ${({ theme }) => theme.SILVER_DARK};
-      opacity: 0.5;
-    }
-  }
-
-  .react-flow__controls-button {
-    background: ${({ theme }) => theme.BLACK_PRIMARY};
-    fill: ${({ theme }) => theme.SILVER};
-    color: ${({ theme }) => theme.SILVER};
-    font-weight: 600;
-    border: 1px solid ${({ theme }) => theme.BLACK};
-
-    &:hover {
-      background: unset;
-    }
-  }
+const StyledEditorWrapper = styled.div`
+  position: absolute;
 `;
 
 export const LiveEditor: React.FC = () => {
+  const canvasRef = React.useRef<CanvasRef | null>(null);
+  const [json] = useLocalStorage("json", JSON.stringify(defaultValue));
+  const [config] = useLocalStorage<StorageConfig>("config", {
+    layout: "LEFT",
+    minimap: true,
+    controls: true,
+  });
+
+  const { nodes, edges } = getEdgeNodes(json);
+
   return (
     <StyledLiveEditor>
-      <ReactFlowProvider>
-        <FlowWrapper />
-      </ReactFlowProvider>
+      <StyledEditorWrapper>
+        <TransformWrapper
+          maxScale={2}
+          limitToBounds={false}
+          minScale={0.5}
+          initialScale={0.8}
+          initialPositionX={-600}
+          initialPositionY={-600}
+        >
+          <TransformComponent>
+            <Canvas
+              ref={canvasRef}
+              nodes={nodes}
+              edges={edges}
+              layoutOptions={{
+                "elk.direction": config.layout,
+                "elk.layout": "mrtree",
+              }}
+              width={5000}
+              height={5000}
+              zoomable={false}
+              center
+            />
+          </TransformComponent>
+        </TransformWrapper>
+      </StyledEditorWrapper>
     </StyledLiveEditor>
   );
 };

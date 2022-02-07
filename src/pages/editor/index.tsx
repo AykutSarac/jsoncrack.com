@@ -45,6 +45,7 @@ const StyledIncompatible = styled.div`
 
 const StyledEditorWrapper = styled.div`
   width: 100%;
+  overflow: hidden;
 
   @media only screen and (max-width: 568px) {
     display: none;

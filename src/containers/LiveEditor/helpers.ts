@@ -1,12 +1,63 @@
 import dagre from "dagre";
 import { Elements, isNode, Position } from "react-flow-renderer";
-import { Layout } from "src/typings/global";
+import { CanvasDirection } from "reaflow";
 import { parser } from "src/utils/json-editor-parser";
+
+export function getEdgeNodes(graph: any): any {
+  graph = JSON.parse(graph);
+  const elements = parser(graph);
+
+  let nodes: object[] = [],
+    edges: object[] = [];
+
+  elements.forEach((el) => {
+    const renderText = (value: string | object) => {
+      if (value instanceof Object) {
+        let temp = "";
+        const entries = Object.entries(value);
+
+        if (Object.keys(value).every((val) => !isNaN(+val))) {
+          return Object.values(value).join("");
+        }
+
+        entries.forEach((entry) => {
+          temp += `${entry[0]}: ${entry[1]}\n`;
+        });
+
+        return temp;
+      }
+
+      return value;
+    };
+
+    if (isNode(el)) {
+      nodes.push({
+        id: el.id,
+        text: renderText(el.data.label),
+      });
+    } else {
+      edges.push({
+        id: el.id,
+        from: el.source,
+        to: el.target,
+      });
+    }
+  });
+
+  return {
+    nodes,
+    edges,
+  };
+}
 
 const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
 
-export const getLayoutPosition = (direction: string, elements: Elements, dynamic = false) => {
+export const getLayoutPosition = (
+  direction: string,
+  elements: Elements,
+  dynamic = false
+) => {
   const isHorizontal = direction === "LR";
   dagreGraph.setGraph({ rankdir: direction });
 
@@ -40,23 +91,23 @@ export const getLayoutPosition = (direction: string, elements: Elements, dynamic
   return layoutedElements;
 };
 
-export function getNextLayout(layout: Layout) {
+export function getNextLayout(layout: CanvasDirection) {
   switch (layout) {
-    case "TB":
-      return "BT";
+    case "LEFT":
+      return "UP";
 
-    case "BT":
-      return "RL";
+    case "UP":
+      return "RIGHT";
 
-    case "RL":
-      return "LR";
+    case "RIGHT":
+      return "DOWN";
 
     default:
-      return "TB";
+      return "LEFT";
   }
 }
 
-export function getLayout(layout: Layout, json: string, dynamic = false) {
+export function getLayout(layout: CanvasDirection, json: string, dynamic = false) {
   const jsonToGraph = parser(json);
   const layoutedElements = getLayoutPosition(layout, jsonToGraph, dynamic);
 
