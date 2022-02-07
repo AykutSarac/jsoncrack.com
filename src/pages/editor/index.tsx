@@ -1,13 +1,14 @@
-import { useRouter } from "next/router";
 import React from "react";
-import { Button } from "src/components/Button";
-import { Sidebar } from "src/components/Sidebar";
+import Head from "next/head";
+import { useRouter } from "next/router";
 import styled from "styled-components";
-import { JsonEditor } from "src/containers/JsonEditor";
-import { LiveEditor } from "src/containers/LiveEditor";
 import SplitPane from "react-split-pane";
 
-import Head from "next/head";
+import { Button } from "src/components/Button";
+import { Sidebar } from "src/components/Sidebar";
+import { JsonEditor } from "src/containers/JsonEditor";
+import { LiveEditor } from "src/containers/LiveEditor";
+
 
 const StyledPageWrapper = styled.div`
   display: flex;

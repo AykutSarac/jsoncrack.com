@@ -1,11 +1,12 @@
-import React, { ComponentType } from "react";
+import React from "react";
 import styled from "styled-components";
-import { Canvas, CanvasRef } from "reaflow/dist/index";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { useLocalStorage } from "usehooks-ts";
+import { Canvas, CanvasRef } from "reaflow/dist/index";
+
+import { StorageConfig } from "src/typings/global";
 import { defaultValue } from "../JsonEditor";
 import { getEdgeNodes } from "./helpers";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import { StorageConfig } from "src/typings/global";
 
 const StyledLiveEditor = styled.div`
   position: relative;

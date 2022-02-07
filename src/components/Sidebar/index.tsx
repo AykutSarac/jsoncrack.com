@@ -1,6 +1,9 @@
-import Link from "next/link";
 import React from "react";
+import Link from "next/link";
 import styled from "styled-components";
+import { useLocalStorage } from "usehooks-ts";
+import { FaFileImport, FaMap } from "react-icons/fa";
+import { MdAutoGraph } from "react-icons/md";
 import {
   AiFillHome,
   AiOutlineClear,
@@ -8,9 +11,7 @@ import {
   AiOutlineTwitter,
   AiFillControl,
 } from "react-icons/ai";
-import { FaFileImport, FaMap } from "react-icons/fa";
-import { MdAutoGraph } from "react-icons/md";
-import { useLocalStorage } from "usehooks-ts";
+
 import { defaultValue } from "src/containers/JsonEditor";
 import { getNextLayout } from "src/containers/LiveEditor/helpers";
 import { StorageConfig } from "src/typings/global";
@@ -91,7 +92,7 @@ export const Sidebar = () => {
   const [jsonFile, setJsonFile] = React.useState<File | null>(null);
   const [json, setJson] = useLocalStorage("json", JSON.stringify(defaultValue));
   const [config, setConfig] = useLocalStorage<StorageConfig>("config", {
-    layout: "RL",
+    layout: "LEFT",
     minimap: true,
     controls: true,
   });
