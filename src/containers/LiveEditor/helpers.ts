@@ -30,9 +30,17 @@ export function getEdgeNodes(graph: any): any {
     };
 
     if (isNode(el)) {
+      const text = renderText(el.data.label);
+      const lines = text.split("\n");
+      const lineLength = lines.map((line) => line.length);
+      const longestLine = lineLength.sort()[lineLength.length - 1];
+
       nodes.push({
         id: el.id,
-        text: renderText(el.data.label),
+        text: text,
+        width: 35 + longestLine * 8,
+        height: 30 + lines.length * 10,
+        data: { type: "special" },
       });
     } else {
       edges.push({
