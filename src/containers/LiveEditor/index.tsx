@@ -1,12 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import {
+  TransformWrapper,
+  TransformComponent,
+  ReactZoomPanPinchRef,
+} from "react-zoom-pan-pinch";
 import { useLocalStorage } from "usehooks-ts";
 import { Canvas, CanvasRef } from "reaflow/dist/index";
 
 import { StorageConfig } from "src/typings/global";
 import { defaultValue } from "../JsonEditor";
 import { getEdgeNodes } from "./helpers";
+import { NodeWrapper } from "./CustomNode";
 
 const StyledLiveEditor = styled.div`
   position: relative;
@@ -19,6 +24,7 @@ const StyledEditorWrapper = styled.div`
 
 export const LiveEditor: React.FC = () => {
   const canvasRef = React.useRef<CanvasRef | null>(null);
+  const wrapperRef = React.useRef<ReactZoomPanPinchRef | null>(null);
   const [json] = useLocalStorage("json", JSON.stringify(defaultValue));
   const [config] = useLocalStorage<StorageConfig>("config", {
     layout: "LEFT",
@@ -36,22 +42,28 @@ export const LiveEditor: React.FC = () => {
           limitToBounds={false}
           minScale={0.5}
           initialScale={0.8}
-          initialPositionX={-600}
-          initialPositionY={-600}
+          ref={wrapperRef}
         >
           <TransformComponent>
             <Canvas
               ref={canvasRef}
+              animated
+              pannable
+              zoomable={false}
               nodes={nodes}
               edges={edges}
               layoutOptions={{
                 "elk.direction": config.layout,
-                "elk.layout": "mrtree",
               }}
-              width={5000}
-              height={5000}
-              zoomable={false}
-              center
+              maxWidth={20000}
+              maxHeight={20000}
+              fit={true}
+              center={false}
+              readonly
+              node={NodeWrapper}
+              onLayoutChange={() => {
+                canvasRef.current?.centerCanvas && canvasRef.current?.centerCanvas()
+              }}
             />
           </TransformComponent>
         </TransformWrapper>
