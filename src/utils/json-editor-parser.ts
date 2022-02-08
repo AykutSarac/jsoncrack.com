@@ -23,17 +23,13 @@ export const parser = (input: string | string[]): FlowElement[] => {
             )
           ),
         },
-        position: { x: 0, y: 0 },
-        type: "special",
         children: Object.entries(o)
           .filter(([k, v]) => Array.isArray(v) || typeof v === "object")
           .flatMap(([k, v]) => [
             {
               id: nextId(),
               data: { label: k },
-              position: { x: 0, y: 0 },
               children: extract(v, nextId),
-              type: "special",
             },
           ]),
       }));
