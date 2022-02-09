@@ -1,64 +1,78 @@
-import dagre from "dagre";
-import { Elements, isNode, Position } from "react-flow-renderer";
-import { Layout } from "src/typings/global";
+import { CanvasDirection, NodeData, EdgeData } from "reaflow";
 import { parser } from "src/utils/json-editor-parser";
 
-const dagreGraph = new dagre.graphlib.Graph();
-dagreGraph.setDefaultEdgeLabel(() => ({}));
+export function getEdgeNodes(graph: any): any {
+  graph = JSON.parse(graph);
+  const elements = parser(graph);
 
-export const getLayoutPosition = (direction: string, elements: Elements, dynamic = false) => {
-  const isHorizontal = direction === "LR";
-  dagreGraph.setGraph({ rankdir: direction });
+  let nodes: NodeData[] = [],
+    edges: EdgeData[] = [];
 
-  elements.forEach((el) => {
+  for (let i = 0; i < elements.length; i++) {
+    const el = elements[i];
+
     if (isNode(el)) {
-      dagreGraph.setNode(el.id, {
-        width: dynamic ? el.__rf.width : 400,
-        height: dynamic ? el.__rf.height : 100,
+      const text = renderText(el.text);
+      const lines = text.split("\n");
+      const lineLengths = lines
+        .map((line) => line.length)
+        .sort((a, b) => a - b);
+      const longestLine = lineLengths.reverse()[0];
+
+      nodes.push({
+        id: el.id,
+        text: text,
+        width: 35 + longestLine * 8,
+        height: 30 + lines.length * 10,
+        data: { type: "special" },
       });
     } else {
-      dagreGraph.setEdge(el.source, el.target);
+      edges.push(el);
     }
-  });
+  }
 
-  dagre.layout(dagreGraph);
+  return {
+    nodes,
+    edges,
+  };
+}
 
-  const layoutedElements = elements.map((el) => {
-    if (isNode(el)) {
-      const nodeWithPosition = dagreGraph.node(el.id);
-      el.targetPosition = isHorizontal ? Position.Left : Position.Top;
-      el.sourcePosition = isHorizontal ? Position.Right : Position.Bottom;
-      el.position = {
-        x: nodeWithPosition.x + Math.random() / 1000,
-        y: nodeWithPosition.y,
-      };
-    }
-
-    return el;
-  });
-
-  return layoutedElements;
-};
-
-export function getNextLayout(layout: Layout) {
+export function getNextLayout(layout: CanvasDirection) {
   switch (layout) {
-    case "TB":
-      return "BT";
+    case "LEFT":
+      return "UP";
 
-    case "BT":
-      return "RL";
+    case "UP":
+      return "RIGHT";
 
-    case "RL":
-      return "LR";
+    case "RIGHT":
+      return "DOWN";
 
     default:
-      return "TB";
+      return "LEFT";
   }
 }
 
-export function getLayout(layout: Layout, json: string, dynamic = false) {
-  const jsonToGraph = parser(json);
-  const layoutedElements = getLayoutPosition(layout, jsonToGraph, dynamic);
+function renderText(value: string | object) {
+  if (value instanceof Object) {
+    let temp = "";
+    const entries = Object.entries(value);
 
-  return layoutedElements;
+    if (Object.keys(value).every((val) => !isNaN(+val))) {
+      return Object.values(value).join("");
+    }
+
+    entries.forEach((entry) => {
+      temp += `${entry[0]}: ${entry[1]}\n`;
+    });
+
+    return temp;
+  }
+
+  return value;
+}
+
+function isNode(element: NodeData | EdgeData) {
+  if ("text" in element) return true;
+  return false;
 }

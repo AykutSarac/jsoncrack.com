@@ -1,7 +1,8 @@
-import Link from "next/link";
 import React from "react";
-import { AiFillGithub, AiOutlineTwitter } from "react-icons/ai";
+import Link from "next/link";
 import styled from "styled-components";
+import { AiFillGithub, AiOutlineTwitter } from "react-icons/ai";
+
 import pkg from "../../../package.json";
 
 const StyledFooter = styled.footer`

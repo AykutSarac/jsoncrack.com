@@ -1,11 +1,12 @@
 import React from "react";
-import GlobalStyle from "src/constants/globalStyle";
-import { darkTheme } from "src/constants/theme";
+import Head from "next/head";
+import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "styled-components";
-import { useRouter } from "next/router";
+
+import GlobalStyle from "src/constants/globalStyle";
+import { darkTheme } from "src/constants/theme";
 import { Loading } from "src/components/Loading";
-import Head from "next/head";
 
 function AykutSarac({ Component, pageProps }: AppProps) {
   const router = useRouter();

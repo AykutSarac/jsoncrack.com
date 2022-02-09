@@ -1,7 +1,7 @@
-export type Layout = "TB" | "BT" | "LR" | "RL";
+import { CanvasDirection } from "reaflow";
 
 export interface StorageConfig {
-    layout: Layout;
+    layout: CanvasDirection;
     minimap: boolean;
     controls: boolean;
   }

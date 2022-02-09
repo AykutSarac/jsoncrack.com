@@ -54,12 +54,13 @@ export const defaultValue = [
 ];
 
 export const JsonEditor: React.FC = () => {
+  const [clear, setClear] = React.useState(0);
   const [json, setJson] = useLocalStorage("json", JSON.stringify(defaultValue));
-  const [initialJson, setInitialJson] = React.useState(json);
+  const initialJson = React.useMemo(() => JSON.parse(json), [clear]);
 
   React.useEffect(() => {
-    setInitialJson(json);
-  }, []);
+    if (json === "[]") setClear((c) => c + 1);
+  }, [json]);
 
   React.useEffect(() => {
     const element = document.querySelector(
@@ -71,12 +72,15 @@ export const JsonEditor: React.FC = () => {
   }, []);
 
   const handleChange = (data: JsonData) => {
-    if (!data.error) setJson(data.json);
+    if (!data.error) {
+      if (data.json === "") return setJson("[]");
+      setJson(data.json);
+    }
   };
 
   return (
     <StyledJSONInput
-      placeholder={JSON.parse(initialJson)}
+      placeholder={initialJson}
       onChange={handleChange}
       locale={locale}
       height="100%"

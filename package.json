@@ -1,7 +1,7 @@
 {
   "name": "json-visio-next",
   "private": true,
-  "version": "v1.0.0-beta",
+  "version": "v1.2.0-beta",
   "homepage": "https://aykutsarac.github.io",
   "scripts": {
     "dev": "next dev",
@@ -14,12 +14,14 @@
   "dependencies": {
     "dagre": "^0.8.5",
     "next": "12.0.9",
+    "next-transpile-modules": "^9.0.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-flow-renderer": "^9.7.3",
     "react-icons": "^4.3.1",
     "react-json-editor-ajrm": "^2.5.13",
     "react-split-pane": "^0.1.92",
+    "react-zoom-pan-pinch": "^2.1.3",
+    "reaflow": "^4.2.15",
     "styled-components": "^5.3.3",
     "usehooks-ts": "^2.3.0"
   },
