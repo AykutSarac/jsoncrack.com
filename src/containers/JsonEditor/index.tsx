@@ -53,13 +53,22 @@ export const defaultValue = [
   },
 ];
 
-export const JsonEditor: React.FC = () => {
-  const [clear, setClear] = React.useState(0);
-  const [json, setJson] = useLocalStorage("json", JSON.stringify(defaultValue));
-  const initialJson = React.useMemo(() => JSON.parse(json), [clear]);
+export const JsonEditor: React.FC<{
+  json: string;
+  setJson: React.Dispatch<React.SetStateAction<string>>;
+}> = ({ json, setJson }) => {
+  const [initialJson, setInitialJson] = React.useState(
+    React.useMemo(
+      () =>
+        typeof localStorage !== "undefined" && localStorage.getItem("json")
+          ? localStorage.getItem("json")
+          : json,
+      []
+    )
+  );
 
   React.useEffect(() => {
-    if (json === "[]") setClear((c) => c + 1);
+    if (json === "[]") setInitialJson(json);
   }, [json]);
 
   React.useEffect(() => {
@@ -78,13 +87,17 @@ export const JsonEditor: React.FC = () => {
     }
   };
 
-  return (
-    <StyledJSONInput
-      placeholder={initialJson}
-      onChange={handleChange}
-      locale={locale}
-      height="100%"
-      width="auto"
-    />
-  );
+  if (typeof window !== "undefined") {
+    return (
+      <StyledJSONInput
+        placeholder={JSON.parse(initialJson as string)}
+        onChange={handleChange}
+        locale={locale}
+        height="100%"
+        width="auto"
+      />
+    );
+  }
+
+  return null;
 };

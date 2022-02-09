@@ -1,4 +1,4 @@
-import React, { ComponentType } from "react";
+import React from "react";
 import styled from "styled-components";
 import {
   TransformWrapper,
@@ -40,11 +40,12 @@ const StyledControls = styled.div`
   opacity: 0.8;
 `;
 
-export const LiveEditor: React.FC = () => {
+export const LiveEditor: React.FC<{
+  json: string;
+  setJson: React.Dispatch<React.SetStateAction<string>>;
+}> = ({ json }) => {
   const canvasRef = React.useRef<CanvasRef | null>(null);
   const wrapperRef = React.useRef<ReactZoomPanPinchRef | null>(null);
-
-  const [json] = useLocalStorage("json", JSON.stringify(defaultValue));
   const [config] = useLocalStorage<StorageConfig>("config", {
     layout: "LEFT",
     minimap: true,
@@ -52,7 +53,7 @@ export const LiveEditor: React.FC = () => {
   });
 
   React.useEffect(() => {
-    wrapperRef.current?.resetTransform();
+    if (wrapperRef.current) wrapperRef.current?.resetTransform();
   }, [json, wrapperRef]);
 
   const { nodes, edges } = getEdgeNodes(json);
@@ -127,7 +128,7 @@ export const LiveEditor: React.FC = () => {
           <Button onClick={() => wrapperRef.current?.resetTransform()}>
             <AiOutlineFullscreen size={20} />
           </Button>
-          <Button>
+          <Button onClick={() => localStorage.setItem("json", json)}>
             <AiFillSave size={20} />
           </Button>
         </StyledControls>

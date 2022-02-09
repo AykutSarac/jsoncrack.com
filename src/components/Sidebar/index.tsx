@@ -35,7 +35,7 @@ const StyledElement = styled.div<{ disabled?: boolean }>`
   color: ${({ theme, disabled }) =>
     disabled ? theme.SILVER_DARK : theme.SILVER};
   cursor: pointer;
-  pointer-events: ${({ disabled }) => disabled && 'none'};
+  pointer-events: ${({ disabled }) => disabled && "none"};
 
   a {
     text-align: center;
@@ -90,9 +90,10 @@ const StyledImportFile = styled.label`
   }
 `;
 
-export const Sidebar = () => {
+export const Sidebar: React.FC<{
+  setJson: React.Dispatch<React.SetStateAction<string>>;
+}> = ({ setJson }) => {
   const [jsonFile, setJsonFile] = React.useState<File | null>(null);
-  const [json, setJson] = useLocalStorage("json", JSON.stringify(defaultValue));
   const [config, setConfig] = useLocalStorage<StorageConfig>("config", {
     layout: "LEFT",
     minimap: true,

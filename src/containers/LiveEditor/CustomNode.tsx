@@ -82,7 +82,10 @@ const CustomNode = ({ nodeProps }) => {
               <StyledTextWrapper>
                 <StyledText width={width} height={height}>
                   {entries.map((val) => (
-                    <div style={{ height: "fit-content" }}>
+                    <div
+                      key={nodeProps.id}
+                      style={{ height: "fit-content" }}
+                    >
                       <StyledKey>{val[0]}: </StyledKey>
                       {val[1]}
                     </div>

@@ -6,7 +6,7 @@ import SplitPane from "react-split-pane";
 
 import { Button } from "src/components/Button";
 import { Sidebar } from "src/components/Sidebar";
-import { JsonEditor } from "src/containers/JsonEditor";
+import { defaultValue, JsonEditor } from "src/containers/JsonEditor";
 import { LiveEditor } from "src/containers/LiveEditor";
 
 const StyledPageWrapper = styled.div`
@@ -117,14 +117,21 @@ const StyledEditor = styled(SplitPane)`
 `;
 
 const Editor: React.FC = () => {
+  const [json, setJson] = React.useState<string>(JSON.stringify(defaultValue));
   const route = useRouter();
+
+  React.useEffect(() => {
+    const jsonStored = localStorage.getItem("json");
+
+    if (jsonStored) setJson(jsonStored);
+  }, []);
 
   return (
     <StyledPageWrapper>
       <Head>
         <title>Editor | JSON Visio</title>
       </Head>
-      <Sidebar />
+      <Sidebar setJson={setJson} />
       <StyledEditorWrapper>
         <StyledTools></StyledTools>
         <StyledEditor
@@ -133,8 +140,8 @@ const Editor: React.FC = () => {
           defaultSize={450}
           split="vertical"
         >
-          <JsonEditor />
-          <LiveEditor />
+          <JsonEditor json={json} setJson={setJson} />
+          <LiveEditor json={json} setJson={setJson} />
         </StyledEditor>
       </StyledEditorWrapper>
       <StyledIncompatible>
