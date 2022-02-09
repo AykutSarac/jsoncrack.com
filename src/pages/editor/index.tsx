@@ -9,7 +9,6 @@ import { Sidebar } from "src/components/Sidebar";
 import { JsonEditor } from "src/containers/JsonEditor";
 import { LiveEditor } from "src/containers/LiveEditor";
 
-
 const StyledPageWrapper = styled.div`
   display: flex;
 `;
@@ -127,7 +126,7 @@ const Editor: React.FC = () => {
       </Head>
       <Sidebar />
       <StyledEditorWrapper>
-        <StyledTools>Editor</StyledTools>
+        <StyledTools></StyledTools>
         <StyledEditor
           maxSize={800}
           minSize={300}

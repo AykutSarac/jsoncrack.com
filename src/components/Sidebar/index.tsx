@@ -27,13 +27,15 @@ const StyledSidebar = styled.div`
   border-right: 1px solid ${({ theme }) => theme.SILVER_DARK};
 `;
 
-const StyledElement = styled.div`
+const StyledElement = styled.div<{ disabled?: boolean }>`
   text-align: center;
   font-size: 32px;
   font-weight: 700;
   width: 100%;
-  color: ${({ theme }) => theme.SILVER};
+  color: ${({ theme, disabled }) =>
+    disabled ? theme.SILVER_DARK : theme.SILVER};
   cursor: pointer;
+  pointer-events: ${({ disabled }) => disabled && 'none'};
 
   a {
     text-align: center;
@@ -158,6 +160,7 @@ export const Sidebar = () => {
           title="Toggle Minimap"
           as="a"
           onClick={() => toggle("minimap")}
+          disabled
         >
           <FaMap />
         </StyledElement>
