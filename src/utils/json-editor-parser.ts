@@ -1,6 +1,4 @@
-import { FlowElement } from "react-flow-renderer";
-
-export const parser = (input: string | string[]): FlowElement[] => {
+export const parser = (input: string | string[]) => {
   try {
     if (typeof input !== "object") input = JSON.parse(input);
     if (!Array.isArray(input)) input = [input];
@@ -16,19 +14,17 @@ export const parser = (input: string | string[]): FlowElement[] => {
 
       return [os].flat().map((o) => ({
         id: nextId(),
-        data: {
-          label: Object.fromEntries(
-            Object.entries(o).filter(
-              ([k, v]) => !Array.isArray(v) && !(v instanceof Object)
-            )
-          ),
-        },
+        text: Object.fromEntries(
+          Object.entries(o).filter(
+            ([k, v]) => !Array.isArray(v) && !(v instanceof Object)
+          )
+        ),
         children: Object.entries(o)
           .filter(([k, v]) => Array.isArray(v) || typeof v === "object")
           .flatMap(([k, v]) => [
             {
               id: nextId(),
-              data: { label: k },
+              text: k,
               children: extract(v, nextId),
             },
           ]),
@@ -36,11 +32,11 @@ export const parser = (input: string | string[]): FlowElement[] => {
     };
 
     const relationships = (xs: { id: string; children: never[] }[]) => {
-      return xs.flatMap(({ id: target, children = [] }) => [
-        ...children.map(({ id: source }) => ({
-          id: `e${source}-${target}`,
-          source,
-          target,
+      return xs.flatMap(({ id: to, children = [] }) => [
+        ...children.map(({ id: from }) => ({
+          id: `e${from}-${to}`,
+          from,
+          to,
         })),
         ...relationships(children),
       ]);

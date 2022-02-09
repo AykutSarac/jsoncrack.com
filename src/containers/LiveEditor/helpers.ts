@@ -1,39 +1,23 @@
-import { isNode } from "react-flow-renderer";
-import { CanvasDirection } from "reaflow";
+import { CanvasDirection, NodeData, EdgeData } from "reaflow";
 import { parser } from "src/utils/json-editor-parser";
 
 export function getEdgeNodes(graph: any): any {
   graph = JSON.parse(graph);
   const elements = parser(graph);
 
-  let nodes: object[] = [],
-    edges: object[] = [];
+  let nodes: NodeData[] = [],
+    edges: EdgeData[] = [];
 
-  elements.forEach((el) => {
-    const renderText = (value: string | object) => {
-      if (value instanceof Object) {
-        let temp = "";
-        const entries = Object.entries(value);
-
-        if (Object.keys(value).every((val) => !isNaN(+val))) {
-          return Object.values(value).join("");
-        }
-
-        entries.forEach((entry) => {
-          temp += `${entry[0]}: ${entry[1]}\n`;
-        });
-
-        return temp;
-      }
-
-      return value;
-    };
+  for (let i = 0; i < elements.length; i++) {
+    const el = elements[i];
 
     if (isNode(el)) {
-      const text = renderText(el.data.label);
+      const text = renderText(el.text);
       const lines = text.split("\n");
-      const lineLength = lines.map((line) => line.length);
-      const longestLine = lineLength.sort()[lineLength.length - 1];
+      const lineLengths = lines
+        .map((line) => line.length)
+        .sort((a, b) => a - b);
+      const longestLine = lineLengths.reverse()[0];
 
       nodes.push({
         id: el.id,
@@ -43,13 +27,9 @@ export function getEdgeNodes(graph: any): any {
         data: { type: "special" },
       });
     } else {
-      edges.push({
-        id: el.id,
-        from: el.source,
-        to: el.target,
-      });
+      edges.push(el);
     }
-  });
+  }
 
   return {
     nodes,
@@ -71,4 +51,28 @@ export function getNextLayout(layout: CanvasDirection) {
     default:
       return "LEFT";
   }
+}
+
+function renderText(value: string | object) {
+  if (value instanceof Object) {
+    let temp = "";
+    const entries = Object.entries(value);
+
+    if (Object.keys(value).every((val) => !isNaN(+val))) {
+      return Object.values(value).join("");
+    }
+
+    entries.forEach((entry) => {
+      temp += `${entry[0]}: ${entry[1]}\n`;
+    });
+
+    return temp;
+  }
+
+  return value;
+}
+
+function isNode(element: NodeData | EdgeData) {
+  if ("text" in element) return true;
+  return false;
 }

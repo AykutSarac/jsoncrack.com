@@ -24,6 +24,16 @@ const StyledText = styled.pre<{ width: number; height: number }>`
   color: ${({ theme }) => theme.SILVER};
 `;
 
+const StyledForeignObject = styled.foreignObject<{
+  width: number;
+  height: number;
+}>`
+  position: "relative" !important;
+  pointer-events: "none" !important;
+  width: ${({ width }) => width + "px"};
+  height: ${({ height }) => height + "px"};
+`;
+
 const baseLabelStyle = {
   fill: "transparent",
   stroke: "transparent",
@@ -36,7 +46,7 @@ const basePortStyle = {
 
 const CustomNode = ({ nodeProps }) => {
   const { properties: data } = nodeProps;
-  
+
   return (
     <StyledNode
       label={<Label style={baseLabelStyle} />}
@@ -47,22 +57,13 @@ const CustomNode = ({ nodeProps }) => {
         const { width, height } = nodeProps;
 
         return (
-          <foreignObject
-            width={width}
-            height={height}
-            x={0} // Relative position from the parent Node component (aligned to top)
-            y={0} // Relative position from the parent Node component (aligned to left)
-            style={{
-              position: "relative",
-              pointerEvents: "none",
-            }}
-          >
+          <StyledForeignObject width={width} height={height} x={0} y={0}>
             <StyledTextWrapper>
               <StyledText width={width} height={height}>
                 {data.text}
               </StyledText>
             </StyledTextWrapper>
-          </foreignObject>
+          </StyledForeignObject>
         );
       }}
     </StyledNode>
