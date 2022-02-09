@@ -57,15 +57,12 @@ export const JsonEditor: React.FC<{
   json: string;
   setJson: React.Dispatch<React.SetStateAction<string>>;
 }> = ({ json, setJson }) => {
-  const [initialJson, setInitialJson] = React.useState(
-    React.useMemo(
-      () =>
-        typeof localStorage !== "undefined" && localStorage.getItem("json")
-          ? localStorage.getItem("json")
-          : json,
-      []
-    )
-  );
+  const [initialJson, setInitialJson] = React.useState(json);
+
+  React.useEffect(() => {
+    const jsonStored = localStorage.getItem("json");
+    if (jsonStored) setInitialJson(jsonStored);
+  }, []);
 
   React.useEffect(() => {
     if (json === "[]") setInitialJson(json);
