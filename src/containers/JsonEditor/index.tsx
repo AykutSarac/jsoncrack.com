@@ -56,7 +56,7 @@ export const defaultValue = [
 export const JsonEditor: React.FC = () => {
   const [clear, setClear] = React.useState(0);
   const [json, setJson] = useLocalStorage("json", JSON.stringify(defaultValue));
-  const initialJson = React.useMemo(() => JSON.parse(json), []);
+  const initialJson = React.useMemo(() => JSON.parse(json), [clear]);
 
   React.useEffect(() => {
     if (json === "[]") setClear((c) => c + 1);
@@ -69,7 +69,7 @@ export const JsonEditor: React.FC = () => {
     if (element) {
       element.style.transform = "translate(-75%, 25%)";
     }
-  }, [json]);
+  }, []);
 
   const handleChange = (data: JsonData) => {
     if (!data.error) {
@@ -85,7 +85,6 @@ export const JsonEditor: React.FC = () => {
       locale={locale}
       height="100%"
       width="auto"
-      key={clear}
     />
   );
 };
