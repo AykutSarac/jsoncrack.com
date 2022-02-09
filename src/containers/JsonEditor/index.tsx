@@ -84,17 +84,13 @@ export const JsonEditor: React.FC<{
     }
   };
 
-  if (typeof window !== "undefined") {
-    return (
-      <StyledJSONInput
-        placeholder={JSON.parse(initialJson as string)}
-        onChange={handleChange}
-        locale={locale}
-        height="100%"
-        width="auto"
-      />
-    );
-  }
-
-  return null;
+  return (
+    <StyledJSONInput
+      placeholder={JSON.parse(initialJson)}
+      onChange={handleChange}
+      locale={locale}
+      height="100%"
+      width="auto"
+    />
+  );
 };
