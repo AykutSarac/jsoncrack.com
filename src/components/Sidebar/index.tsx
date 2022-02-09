@@ -119,7 +119,7 @@ export const Sidebar = () => {
         setJson(data.target?.result as string);
       };
     }
-  }, [jsonFile]);
+  }, [jsonFile, setJson]);
 
   return (
     <StyledSidebar>
