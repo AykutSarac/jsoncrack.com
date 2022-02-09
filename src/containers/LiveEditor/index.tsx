@@ -25,6 +25,7 @@ const StyledEditorWrapper = styled.div`
 export const LiveEditor: React.FC = () => {
   const canvasRef = React.useRef<CanvasRef | null>(null);
   const wrapperRef = React.useRef<ReactZoomPanPinchRef | null>(null);
+
   const [json] = useLocalStorage("json", JSON.stringify(defaultValue));
   const [config] = useLocalStorage<StorageConfig>("config", {
     layout: "LEFT",
@@ -33,6 +34,10 @@ export const LiveEditor: React.FC = () => {
   });
 
   const { nodes, edges } = getEdgeNodes(json);
+
+  const onLayoutChange = () => {
+    wrapperRef.current?.resetTransform();
+  };
 
   return (
     <StyledLiveEditor>
@@ -61,9 +66,7 @@ export const LiveEditor: React.FC = () => {
               center={false}
               readonly
               node={NodeWrapper}
-              onLayoutChange={() => {
-                canvasRef.current?.centerCanvas && canvasRef.current?.centerCanvas()
-              }}
+              onLayoutChange={onLayoutChange}
             />
           </TransformComponent>
         </TransformWrapper>
