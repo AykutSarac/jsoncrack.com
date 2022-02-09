@@ -12,6 +12,13 @@ import { StorageConfig } from "src/typings/global";
 import { defaultValue } from "../JsonEditor";
 import { getEdgeNodes } from "./helpers";
 import { NodeWrapper } from "./CustomNode";
+import { Button } from "src/components/Button";
+import {
+  AiOutlineZoomIn,
+  AiOutlineZoomOut,
+  AiOutlineFullscreen,
+  AiFillSave,
+} from "react-icons/ai";
 
 const StyledLiveEditor = styled.div`
   position: relative;
@@ -20,6 +27,17 @@ const StyledLiveEditor = styled.div`
 
 const StyledEditorWrapper = styled.div`
   position: absolute;
+`;
+
+const StyledControls = styled.div`
+  position: fixed;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 8px;
+  bottom: 8px;
+  right: 8px;
+  opacity: 0.8;
 `;
 
 export const LiveEditor: React.FC = () => {
@@ -39,22 +57,48 @@ export const LiveEditor: React.FC = () => {
     wrapperRef.current?.resetTransform();
   };
 
+  const zoomIn = (scale: number) => {
+    if (
+      wrapperRef.current?.state.scale &&
+      wrapperRef.current?.state.scale < 2
+    ) {
+      wrapperRef.current?.setTransform(
+        wrapperRef.current.instance.transformState.positionX - 200,
+        wrapperRef.current.instance.transformState.positionY - 200,
+        wrapperRef.current.state.scale + scale
+      );
+    }
+  };
+
+  const zoomOut = (scale: number) => {
+    if (
+      wrapperRef.current?.state.scale &&
+      wrapperRef.current?.state.scale > 0.4
+    ) {
+      wrapperRef.current?.setTransform(
+        wrapperRef.current.instance.transformState.positionX + 200,
+        wrapperRef.current.instance.transformState.positionY + 200,
+        wrapperRef.current.state.scale - scale
+      );
+    }
+  };
+
   return (
     <StyledLiveEditor>
       <StyledEditorWrapper>
         <TransformWrapper
           maxScale={2}
-          limitToBounds={false}
-          minScale={0.5}
+          minScale={0.4}
           initialScale={0.8}
           ref={wrapperRef}
+          limitToBounds={false}
+          wheel={{
+            step: 0.4,
+          }}
         >
           <TransformComponent>
             <Canvas
               ref={canvasRef}
-              animated
-              pannable
-              zoomable={false}
               nodes={nodes}
               edges={edges}
               layoutOptions={{
@@ -62,15 +106,31 @@ export const LiveEditor: React.FC = () => {
               }}
               maxWidth={20000}
               maxHeight={20000}
-              fit={true}
               center={false}
+              zoomable={false}
+              fit
               readonly
+              animated
               node={NodeWrapper}
               onLayoutChange={onLayoutChange}
             />
           </TransformComponent>
         </TransformWrapper>
       </StyledEditorWrapper>
+      <StyledControls>
+        <Button onClick={() => zoomIn(0.8)}>
+          <AiOutlineZoomIn size={20} />
+        </Button>
+        <Button onClick={() => zoomOut(0.4)}>
+          <AiOutlineZoomOut size={20} />
+        </Button>
+        <Button onClick={() => wrapperRef.current?.resetTransform()}>
+          <AiOutlineFullscreen size={20} />
+        </Button>
+        <Button>
+          <AiFillSave size={20} />
+        </Button>
+      </StyledControls>
     </StyledLiveEditor>
   );
 };
