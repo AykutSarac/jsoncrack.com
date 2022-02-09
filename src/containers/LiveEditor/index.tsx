@@ -117,20 +117,22 @@ export const LiveEditor: React.FC = () => {
           </TransformComponent>
         </TransformWrapper>
       </StyledEditorWrapper>
-      <StyledControls>
-        <Button onClick={() => zoomIn(0.8)}>
-          <AiOutlineZoomIn size={20} />
-        </Button>
-        <Button onClick={() => zoomOut(0.4)}>
-          <AiOutlineZoomOut size={20} />
-        </Button>
-        <Button onClick={() => wrapperRef.current?.resetTransform()}>
-          <AiOutlineFullscreen size={20} />
-        </Button>
-        <Button>
-          <AiFillSave size={20} />
-        </Button>
-      </StyledControls>
+      {config.controls && (
+        <StyledControls>
+          <Button onClick={() => zoomIn(0.8)}>
+            <AiOutlineZoomIn size={20} />
+          </Button>
+          <Button onClick={() => zoomOut(0.4)}>
+            <AiOutlineZoomOut size={20} />
+          </Button>
+          <Button onClick={() => wrapperRef.current?.resetTransform()}>
+            <AiOutlineFullscreen size={20} />
+          </Button>
+          <Button>
+            <AiFillSave size={20} />
+          </Button>
+        </StyledControls>
+      )}
     </StyledLiveEditor>
   );
 };
