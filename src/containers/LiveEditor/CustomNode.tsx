@@ -57,7 +57,7 @@ const CustomNode = ({ nodeProps }) => {
       port={<Port style={basePortStyle} rx={10} ry={10} />}
       {...nodeProps}
     >
-      {(nodeProps: NodeChildProps) => {
+      {(nodeProps: NodeProps) => {
         const { width, height } = nodeProps;
 
         if (data.text instanceof Object) {
