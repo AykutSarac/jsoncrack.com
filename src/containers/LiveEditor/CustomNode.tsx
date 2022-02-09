@@ -4,7 +4,6 @@ import styled from "styled-components";
 
 const StyledNode = styled(Node)`
   stroke: black;
-  fill: ${({ theme }) => theme.BLACK_PRIMARY};
   stroke-width: 1;
 `;
 
@@ -34,6 +33,11 @@ const StyledForeignObject = styled.foreignObject<{
   height: ${({ height }) => height + "px"};
 `;
 
+const StyledKey = styled.span<{ bond?: boolean; arrayValue?: boolean }>`
+  color: ${({ theme, bond, arrayValue }) =>
+    bond ? theme.SEAGREEN : arrayValue ? theme.ORANGE : theme.BLURPLE};
+`;
+
 const baseLabelStyle = {
   fill: "transparent",
   stroke: "transparent",
@@ -56,11 +60,44 @@ const CustomNode = ({ nodeProps }) => {
       {(nodeProps: NodeChildProps) => {
         const { width, height } = nodeProps;
 
+        if (data.text instanceof Object) {
+          const entries = Object.entries(data.text);
+
+          if (Object.keys(data.text).every((val) => !isNaN(+val))) {
+            return (
+              <StyledForeignObject width={width} height={height} x={0} y={0}>
+                <StyledTextWrapper>
+                  <StyledText width={width} height={height}>
+                    <StyledKey arrayValue>
+                      {Object.values(data.text).join("")}
+                    </StyledKey>
+                  </StyledText>
+                </StyledTextWrapper>
+              </StyledForeignObject>
+            );
+          }
+
+          return (
+            <StyledForeignObject width={width} height={height} x={0} y={0}>
+              <StyledTextWrapper>
+                <StyledText width={width} height={height}>
+                  {entries.map((val) => (
+                    <div style={{ height: "fit-content" }}>
+                      <StyledKey>{val[0]}: </StyledKey>
+                      {val[1]}
+                    </div>
+                  ))}
+                </StyledText>
+              </StyledTextWrapper>
+            </StyledForeignObject>
+          );
+        }
+
         return (
           <StyledForeignObject width={width} height={height} x={0} y={0}>
             <StyledTextWrapper>
               <StyledText width={width} height={height}>
-                {data.text}
+                <StyledKey bond>{data.text}</StyledKey>
               </StyledText>
             </StyledTextWrapper>
           </StyledForeignObject>
