@@ -118,7 +118,7 @@ export const LiveEditor: React.FC = () => {
       </StyledEditorWrapper>
       {config.controls && (
         <StyledControls>
-          <Button onClick={() => zoomIn(0.6)}>
+          <Button onClick={() => zoomIn(0.5)}>
             <AiOutlineZoomIn size={20} />
           </Button>
           <Button onClick={() => zoomOut(0.4)}>
