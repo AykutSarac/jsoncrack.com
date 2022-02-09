@@ -21,7 +21,7 @@ export function getEdgeNodes(graph: any): any {
 
       nodes.push({
         id: el.id,
-        text: text,
+        text: el.text,
         width: 35 + longestLine * 8,
         height: 30 + lines.length * 10,
         data: { type: "special" },
