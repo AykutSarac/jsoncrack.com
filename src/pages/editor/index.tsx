@@ -55,7 +55,7 @@ const StyledEditorWrapper = styled.div`
 const StyledTools = styled.div`
   display: flex;
   align-items: center;
-  height: 36px;
+  height: 15px;
   border-bottom: 1px solid ${({ theme }) => theme.BLACK};
   padding: 4px 16px;
   background: ${({ theme }) => theme.BLACK_SECONDARY};
@@ -66,7 +66,7 @@ const StyledEditor = styled(SplitPane)`
   position: relative !important;
   display: flex;
   background: ${({ theme }) => theme.BLACK_LIGHT};
-  height: calc(100vh - 46px) !important;
+  height: calc(100vh - 26px) !important;
 
   .Resizer {
     background: #000;
