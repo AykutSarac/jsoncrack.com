@@ -142,7 +142,14 @@ export const Sidebar: React.FC<{
             </a>
           </Link>
         </StyledElement>
-        <StyledElement as="a" onClick={() => setJson("[]")} title="Clear JSON">
+        <StyledElement
+          as="a"
+          onClick={() => {
+            setJson("[]");
+            localStorage.removeItem("json");
+          }}
+          title="Clear JSON"
+        >
           <AiOutlineClear />
         </StyledElement>
         <StyledElement
