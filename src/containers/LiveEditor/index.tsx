@@ -51,11 +51,11 @@ export const LiveEditor: React.FC = () => {
     controls: true,
   });
 
-  const { nodes, edges } = getEdgeNodes(json);
-
-  const onLayoutChange = () => {
+  React.useEffect(() => {
     wrapperRef.current?.resetTransform();
-  };
+  }, [json, wrapperRef]);
+
+  const { nodes, edges } = getEdgeNodes(json);
 
   const zoomIn = (scale: number) => {
     if (
@@ -112,14 +112,13 @@ export const LiveEditor: React.FC = () => {
               readonly
               animated
               node={NodeWrapper}
-              onLayoutChange={onLayoutChange}
             />
           </TransformComponent>
         </TransformWrapper>
       </StyledEditorWrapper>
       {config.controls && (
         <StyledControls>
-          <Button onClick={() => zoomIn(0.8)}>
+          <Button onClick={() => zoomIn(0.6)}>
             <AiOutlineZoomIn size={20} />
           </Button>
           <Button onClick={() => zoomOut(0.4)}>
