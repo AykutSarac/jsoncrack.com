@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ComponentType } from "react";
 import styled from "styled-components";
 import {
   TransformWrapper,
@@ -6,7 +6,7 @@ import {
   ReactZoomPanPinchRef,
 } from "react-zoom-pan-pinch";
 import { useLocalStorage } from "usehooks-ts";
-import { Canvas, CanvasRef } from "reaflow/dist/index";
+import { Canvas, CanvasRef } from "reaflow";
 
 import { StorageConfig } from "src/typings/global";
 import { defaultValue } from "../JsonEditor";

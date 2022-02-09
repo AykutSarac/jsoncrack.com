@@ -1,7 +1,7 @@
 {
   "name": "json-visio-next",
   "private": true,
-  "version": "v1.0.0-beta",
+  "version": "v1.2.0-beta",
   "homepage": "https://aykutsarac.github.io",
   "scripts": {
     "dev": "next dev",
@@ -14,6 +14,7 @@
   "dependencies": {
     "dagre": "^0.8.5",
     "next": "12.0.9",
+    "next-transpile-modules": "^9.0.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-icons": "^4.3.1",
