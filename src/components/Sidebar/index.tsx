@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import { useLocalStorage } from "usehooks-ts";
-import { FaFileImport, FaMap } from "react-icons/fa";
+import { FaFileImport } from "react-icons/fa";
 import { MdAutoGraph, MdFormatLineSpacing } from "react-icons/md";
 import {
   AiFillHome,
@@ -12,7 +12,6 @@ import {
   AiFillControl,
 } from "react-icons/ai";
 
-import { defaultValue } from "src/containers/JsonEditor";
 import { getNextLayout } from "src/containers/LiveEditor/helpers";
 import { StorageConfig } from "src/typings/global";
 
@@ -125,7 +124,7 @@ export const Sidebar: React.FC<{
   return (
     <StyledSidebar>
       <StyledTopWrapper>
-        <Link href="/">
+        <Link passHref href="/">
           <StyledElement as="a">
             <StyledLogo>
               <StyledText>J</StyledText>
