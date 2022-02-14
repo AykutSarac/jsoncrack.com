@@ -2,6 +2,6 @@ import { CanvasDirection } from "reaflow";
 
 export interface StorageConfig {
     layout: CanvasDirection;
-    minimap: boolean;
+    expand: boolean;
     controls: boolean;
   }

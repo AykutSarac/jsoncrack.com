@@ -1,7 +1,7 @@
 import { CanvasDirection, NodeData, EdgeData } from "reaflow";
 import { parser } from "src/utils/json-editor-parser";
 
-export function getEdgeNodes(graph: any): any {
+export function getEdgeNodes(graph: any, isExpanded: boolean = true): any {
   graph = JSON.parse(graph);
   const elements = parser(graph);
 
@@ -22,8 +22,8 @@ export function getEdgeNodes(graph: any): any {
       nodes.push({
         id: el.id,
         text: el.text,
-        width: 35 + longestLine * 8,
-        height: 30 + lines.length * 10,
+        width: isExpanded ? (35 + longestLine * 8) : 180,
+        height: isExpanded ? (30 + lines.length * 10) : 50,
         data: { type: "special" },
       });
     } else {

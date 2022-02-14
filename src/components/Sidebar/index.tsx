@@ -3,7 +3,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import { useLocalStorage } from "usehooks-ts";
 import { FaFileImport, FaMap } from "react-icons/fa";
-import { MdAutoGraph } from "react-icons/md";
+import { MdAutoGraph, MdFormatLineSpacing } from "react-icons/md";
 import {
   AiFillHome,
   AiOutlineClear,
@@ -96,7 +96,7 @@ export const Sidebar: React.FC<{
   const [jsonFile, setJsonFile] = React.useState<File | null>(null);
   const [config, setConfig] = useLocalStorage<StorageConfig>("config", {
     layout: "LEFT",
-    minimap: true,
+    expand: true,
     controls: true,
   });
 
@@ -104,7 +104,7 @@ export const Sidebar: React.FC<{
     if (e.target.files) setJsonFile(e.target.files?.item(0));
   };
 
-  const toggle = (setting: "minimap" | "controls") => {
+  const toggle = (setting: "expand" | "controls") => {
     setConfig((c) => ({
       ...c,
       [setting]: !c[setting],
@@ -125,16 +125,14 @@ export const Sidebar: React.FC<{
   return (
     <StyledSidebar>
       <StyledTopWrapper>
-        <StyledElement>
-          <Link href="/">
-            <a>
-              <StyledLogo>
-                <StyledText>J</StyledText>
-                <StyledText secondary>V</StyledText>
-              </StyledLogo>
-            </a>
-          </Link>
-        </StyledElement>
+        <Link href="/">
+          <StyledElement as="a">
+            <StyledLogo>
+              <StyledText>J</StyledText>
+              <StyledText secondary>V</StyledText>
+            </StyledLogo>
+          </StyledElement>
+        </Link>
         <StyledElement title="Home">
           <Link href="/">
             <a>
@@ -165,32 +163,30 @@ export const Sidebar: React.FC<{
           <MdAutoGraph />
         </StyledElement>
         <StyledElement
-          title="Toggle Minimap"
-          as="a"
-          onClick={() => toggle("minimap")}
-          disabled
-        >
-          <FaMap />
-        </StyledElement>
-        <StyledElement
           title="Toggle Controls"
           as="a"
           onClick={() => toggle("controls")}
         >
           <AiFillControl />
         </StyledElement>
-        <StyledElement title="Import JSON File">
-          <a>
-            <StyledImportFile>
-              <input
-                key={jsonFile?.name}
-                onChange={handleFileChange}
-                type="file"
-                accept="application/JSON"
-              />
-              <FaFileImport />
-            </StyledImportFile>
-          </a>
+
+        <StyledElement
+          as="a"
+          title="Toggle Expand/Collapse"
+          onClick={() => toggle("expand")}
+        >
+          <MdFormatLineSpacing />
+        </StyledElement>
+        <StyledElement as="a" title="Import JSON File">
+          <StyledImportFile>
+            <input
+              key={jsonFile?.name}
+              onChange={handleFileChange}
+              type="file"
+              accept="application/JSON"
+            />
+            <FaFileImport />
+          </StyledImportFile>
         </StyledElement>
       </StyledTopWrapper>
       <StyledBottomWrapper>

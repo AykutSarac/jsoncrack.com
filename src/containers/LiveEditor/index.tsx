@@ -9,7 +9,6 @@ import { useLocalStorage } from "usehooks-ts";
 import { Canvas, CanvasRef } from "reaflow";
 
 import { StorageConfig } from "src/typings/global";
-import { defaultValue } from "../JsonEditor";
 import { getEdgeNodes } from "./helpers";
 import { NodeWrapper } from "./CustomNode";
 import { Button } from "src/components/Button";
@@ -37,7 +36,11 @@ const StyledControls = styled.div`
   gap: 8px;
   bottom: 8px;
   right: 8px;
-  opacity: 0.8;
+  opacity: 0.9;
+
+  button:hover {
+    opacity: 0.5;
+  }
 `;
 
 export const LiveEditor: React.FC<{
@@ -48,7 +51,7 @@ export const LiveEditor: React.FC<{
   const wrapperRef = React.useRef<ReactZoomPanPinchRef | null>(null);
   const [config] = useLocalStorage<StorageConfig>("config", {
     layout: "LEFT",
-    minimap: true,
+    expand: true,
     controls: true,
   });
 
@@ -56,7 +59,7 @@ export const LiveEditor: React.FC<{
     if (wrapperRef.current) wrapperRef.current?.resetTransform();
   }, [json, wrapperRef]);
 
-  const { nodes, edges } = getEdgeNodes(json);
+  const { nodes, edges } = getEdgeNodes(json, config.expand);
 
   const zoomIn = (scale: number) => {
     if (
@@ -120,16 +123,16 @@ export const LiveEditor: React.FC<{
       {config.controls && (
         <StyledControls>
           <Button onClick={() => zoomIn(0.5)}>
-            <AiOutlineZoomIn size={20} />
+            <AiOutlineZoomIn size={24} />
           </Button>
           <Button onClick={() => zoomOut(0.4)}>
-            <AiOutlineZoomOut size={20} />
+            <AiOutlineZoomOut size={24} />
           </Button>
           <Button onClick={() => wrapperRef.current?.resetTransform()}>
-            <AiOutlineFullscreen size={20} />
+            <AiOutlineFullscreen size={24} />
           </Button>
           <Button onClick={() => localStorage.setItem("json", json)}>
-            <AiFillSave size={20} />
+            <AiFillSave size={24} />
           </Button>
         </StyledControls>
       )}

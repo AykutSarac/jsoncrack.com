@@ -1,11 +1,8 @@
-import React, { memo } from "react";
-import { Label, Node, Port, NodeChildProps, NodeProps } from "reaflow";
+import React from "react";
+import { Label, Node, Port, NodeProps } from "reaflow";
 import styled from "styled-components";
 
-const StyledNode = styled(Node)`
-  stroke: black;
-  stroke-width: 1;
-`;
+const StyledNode = styled(Node)``;
 
 const StyledTextWrapper = styled.div`
   position: absolute;
@@ -15,9 +12,18 @@ const StyledTextWrapper = styled.div`
   font-size: 12px;
   width: 100%;
   height: 100%;
+  overflow: hidden;
+
+  &:hover {
+    cursor: pointer;
+    stroke: white !important;
+  }
 `;
 
 const StyledText = styled.pre<{ width: number; height: number }>`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
   width: ${({ width }) => width};
   height: ${({ height }) => height};
   color: ${({ theme }) => theme.SILVER};
@@ -33,7 +39,10 @@ const StyledForeignObject = styled.foreignObject<{
   height: ${({ height }) => height + "px"};
 `;
 
-const StyledKey = styled.span<{ bond?: boolean; arrayValue?: boolean }>`
+const StyledKey = styled.span<{
+  bond?: boolean;
+  arrayValue?: boolean;
+}>`
   color: ${({ theme, bond, arrayValue }) =>
     bond ? theme.SEAGREEN : arrayValue ? theme.ORANGE : theme.BLURPLE};
 `;
@@ -64,13 +73,13 @@ const CustomNode = ({ nodeProps }) => {
           const entries = Object.entries(data.text);
 
           if (Object.keys(data.text).every((val) => !isNaN(+val))) {
+            const text = Object.values(data.text).join("");
+
             return (
               <StyledForeignObject width={width} height={height} x={0} y={0}>
                 <StyledTextWrapper>
                   <StyledText width={width} height={height}>
-                    <StyledKey arrayValue>
-                      {Object.values(data.text).join("")}
-                    </StyledKey>
+                    <StyledKey arrayValue>{text}</StyledKey>
                   </StyledText>
                 </StyledTextWrapper>
               </StyledForeignObject>
@@ -84,7 +93,14 @@ const CustomNode = ({ nodeProps }) => {
                   {entries.map((val) => (
                     <div
                       key={nodeProps.id}
-                      style={{ height: "fit-content" }}
+                      style={{
+                        height: "fit-content",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                        padding: '0 auto',
+                        width: width - 20
+                      }}
                     >
                       <StyledKey>{val[0]}: </StyledKey>
                       {val[1]}
