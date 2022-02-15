@@ -1,3 +1,5 @@
+import toast from "react-hot-toast";
+
 export const parser = (input: string | string[]) => {
   try {
     if (typeof input !== "object") input = JSON.parse(input);
@@ -49,7 +51,7 @@ export const parser = (input: string | string[]) => {
 
     return [...flatten(res), ...relationships(res)];
   } catch (error) {
-    console.error("An error occured while parsin JSON data!");
+    toast.error("An error occured while parsin JSON data!");
     return [];
   }
 };

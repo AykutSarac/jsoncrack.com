@@ -7,9 +7,9 @@ import { ThemeProvider } from "styled-components";
 import GlobalStyle from "src/constants/globalStyle";
 import { darkTheme } from "src/constants/theme";
 import { Loading } from "src/components/Loading";
-import { useLoading } from "src/hooks/useLoading";
+import { Toaster } from "react-hot-toast";
 
-function AykutSarac({ Component, pageProps }: AppProps) {
+function JsonVisio({ Component, pageProps }: AppProps) {
   const router = useRouter();
 
   const [pageLoading, setPageLoading] = React.useState<boolean>(false);
@@ -41,8 +41,17 @@ function AykutSarac({ Component, pageProps }: AppProps) {
     <ThemeProvider theme={darkTheme}>
       <GlobalStyle />
       <Component {...pageProps} />
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          style: {
+            background: "#4D4D4D",
+            color: "#B9BBBE",
+          },
+        }}
+      />
     </ThemeProvider>
   );
 }
 
-export default AykutSarac;
+export default JsonVisio;

@@ -19,6 +19,7 @@ import {
   AiFillSave,
 } from "react-icons/ai";
 import { useLoading } from "src/hooks/useLoading";
+import toast from "react-hot-toast";
 
 const StyledLiveEditor = styled.div`
   position: relative;
@@ -90,6 +91,11 @@ export const LiveEditor: React.FC<{
     }
   };
 
+  const handleSave = () => {
+    localStorage.setItem("json", json);
+    toast.success("Saved JSON successfully!");
+  };
+
   if (pageLoaded)
     return (
       <StyledLiveEditor>
@@ -135,7 +141,7 @@ export const LiveEditor: React.FC<{
             <Button onClick={() => wrapperRef.current?.resetTransform()}>
               <AiOutlineFullscreen size={24} />
             </Button>
-            <Button onClick={() => localStorage.setItem("json", json)}>
+            <Button onClick={handleSave}>
               <AiFillSave size={24} />
             </Button>
           </StyledControls>
