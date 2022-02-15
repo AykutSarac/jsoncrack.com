@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import JSONInput from "react-json-editor-ajrm";
-import { useLocalStorage } from "usehooks-ts";
 import locale from "react-json-editor-ajrm/locale/en";
 
 interface JsonData {
@@ -62,13 +61,7 @@ export const JsonEditor: React.FC<{
   React.useEffect(() => {
     const jsonStored = localStorage.getItem("json");
     if (jsonStored) setInitialJson(jsonStored);
-  }, []);
 
-  React.useEffect(() => {
-    if (json === "[]") setInitialJson(json);
-  }, [json]);
-
-  React.useEffect(() => {
     const element = document.querySelector(
       '[name="outer-box"] > div'
     ) as HTMLDivElement;
@@ -76,6 +69,10 @@ export const JsonEditor: React.FC<{
       element.style.transform = "translate(-75%, 25%)";
     }
   }, []);
+
+  React.useEffect(() => {
+    if (json === "[]") setInitialJson(json);
+  }, [json]);
 
   const handleChange = (data: JsonData) => {
     if (!data.error) {
@@ -91,6 +88,11 @@ export const JsonEditor: React.FC<{
       locale={locale}
       height="100%"
       width="auto"
+      style={{
+        outerBox: {
+          background: "blue",
+        },
+      }}
     />
   );
 };
