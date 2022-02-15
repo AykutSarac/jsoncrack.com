@@ -2,8 +2,6 @@ import React from "react";
 import { Label, Node, Port, NodeProps } from "reaflow";
 import styled from "styled-components";
 
-const StyledNode = styled(Node)``;
-
 const StyledTextWrapper = styled.div`
   position: absolute;
   display: flex;
@@ -57,14 +55,14 @@ const basePortStyle = {
   fill: "black",
 };
 
-const CustomNode = ({ nodeProps }) => {
+export const CustomNode = (nodeProps: NodeProps) => {
   const { properties: data } = nodeProps;
 
   return (
-    <StyledNode
+    <Node
+      {...nodeProps}
       label={<Label style={baseLabelStyle} />}
       port={<Port style={basePortStyle} rx={10} ry={10} />}
-      {...nodeProps}
     >
       {(nodeProps: NodeProps) => {
         const { width, height } = nodeProps;
@@ -91,10 +89,10 @@ const CustomNode = ({ nodeProps }) => {
               <StyledTextWrapper>
                 <StyledText width={width} height={height}>
                   {entries.map(
-                    (val) =>
+                    (val, idx) =>
                       val[1] !== null && (
                         <div
-                          key={nodeProps.id}
+                          key={idx}
                           style={{
                             height: "fit-content",
                             overflow: "hidden",
@@ -125,14 +123,6 @@ const CustomNode = ({ nodeProps }) => {
           </StyledForeignObject>
         );
       }}
-    </StyledNode>
-  );
-};
-
-export const NodeWrapper = (nodeProps: NodeProps) => {
-  return nodeProps.properties?.data?.type ? (
-    <CustomNode nodeProps={nodeProps} />
-  ) : (
-    <Node {...nodeProps} />
+    </Node>
   );
 };
