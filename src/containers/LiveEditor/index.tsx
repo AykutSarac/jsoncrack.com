@@ -10,7 +10,7 @@ import { Canvas, CanvasRef } from "reaflow";
 
 import { StorageConfig } from "src/typings/global";
 import { getEdgeNodes } from "./helpers";
-import { NodeWrapper } from "./CustomNode";
+import { CustomNode } from "./CustomNode";
 import { Button } from "src/components/Button";
 import {
   AiOutlineZoomIn,
@@ -115,7 +115,7 @@ export const LiveEditor: React.FC<{
               fit
               readonly
               animated
-              node={NodeWrapper}
+              node={CustomNode}
             />
           </TransformComponent>
         </TransformWrapper>
