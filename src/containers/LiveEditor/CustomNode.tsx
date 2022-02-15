@@ -90,22 +90,25 @@ const CustomNode = ({ nodeProps }) => {
             <StyledForeignObject width={width} height={height} x={0} y={0}>
               <StyledTextWrapper>
                 <StyledText width={width} height={height}>
-                  {entries.map((val) => (
-                    <div
-                      key={nodeProps.id}
-                      style={{
-                        height: "fit-content",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                        padding: '0 auto',
-                        width: width - 20
-                      }}
-                    >
-                      <StyledKey>{val[0]}: </StyledKey>
-                      {val[1]}
-                    </div>
-                  ))}
+                  {entries.map(
+                    (val) =>
+                      val[1] !== null && (
+                        <div
+                          key={nodeProps.id}
+                          style={{
+                            height: "fit-content",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                            padding: "0 auto",
+                            width: width - 20,
+                          }}
+                        >
+                          <StyledKey>{val[0]}: </StyledKey>
+                          {val[1]}
+                        </div>
+                      )
+                  )}
                 </StyledText>
               </StyledTextWrapper>
             </StyledForeignObject>

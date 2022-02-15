@@ -22,8 +22,8 @@ export function getEdgeNodes(graph: any, isExpanded: boolean = true): any {
       nodes.push({
         id: el.id,
         text: el.text,
-        width: isExpanded ? (35 + longestLine * 8) : 180,
-        height: isExpanded ? (30 + lines.length * 10) : 50,
+        width: isExpanded ? 35 + longestLine * 8 : 180,
+        height: isExpanded ? 30 + lines.length * 10 : 50,
         data: { type: "special" },
       });
     } else {
