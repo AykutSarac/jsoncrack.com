@@ -24,7 +24,6 @@ export function getEdgeNodes(graph: any, isExpanded: boolean = true): any {
         text: el.text,
         width: isExpanded ? 35 + longestLine * 8 : 180,
         height: isExpanded ? 30 + lines.length * 10 : 50,
-        data: { type: "special" },
       });
     } else {
       edges.push(el);
