@@ -88,11 +88,6 @@ export const JsonEditor: React.FC<{
       locale={locale}
       height="100%"
       width="auto"
-      style={{
-        outerBox: {
-          background: "blue",
-        },
-      }}
     />
   );
 };
