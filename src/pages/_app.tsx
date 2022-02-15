@@ -7,9 +7,12 @@ import { ThemeProvider } from "styled-components";
 import GlobalStyle from "src/constants/globalStyle";
 import { darkTheme } from "src/constants/theme";
 import { Loading } from "src/components/Loading";
+import { useLoading } from "src/hooks/useLoading";
 
 function AykutSarac({ Component, pageProps }: AppProps) {
   const router = useRouter();
+  const data = useLoading();
+
   const [pageLoading, setPageLoading] = React.useState<boolean>(false);
   React.useEffect(() => {
     const handleStart = () => {
@@ -34,6 +37,8 @@ function AykutSarac({ Component, pageProps }: AppProps) {
         <Loading />
       </ThemeProvider>
     );
+
+    if (!data) return null;
 
   return (
     <ThemeProvider theme={darkTheme}>
