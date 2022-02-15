@@ -11,7 +11,6 @@ import { useLoading } from "src/hooks/useLoading";
 
 function AykutSarac({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const data = useLoading();
 
   const [pageLoading, setPageLoading] = React.useState<boolean>(false);
   React.useEffect(() => {
@@ -37,8 +36,6 @@ function AykutSarac({ Component, pageProps }: AppProps) {
         <Loading />
       </ThemeProvider>
     );
-
-    if (!data) return null;
 
   return (
     <ThemeProvider theme={darkTheme}>

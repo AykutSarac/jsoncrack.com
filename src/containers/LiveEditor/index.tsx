@@ -18,6 +18,7 @@ import {
   AiOutlineFullscreen,
   AiFillSave,
 } from "react-icons/ai";
+import { useLoading } from "src/hooks/useLoading";
 
 const StyledLiveEditor = styled.div`
   position: relative;
@@ -47,6 +48,8 @@ export const LiveEditor: React.FC<{
   json: string;
   setJson: React.Dispatch<React.SetStateAction<string>>;
 }> = ({ json }) => {
+  const pageLoaded = useLoading();
+
   const canvasRef = React.useRef<CanvasRef | null>(null);
   const wrapperRef = React.useRef<ReactZoomPanPinchRef | null>(null);
   const [config] = useLocalStorage<StorageConfig>("config", {
@@ -87,55 +90,58 @@ export const LiveEditor: React.FC<{
     }
   };
 
-  return (
-    <StyledLiveEditor>
-      <StyledEditorWrapper>
-        <TransformWrapper
-          maxScale={2}
-          minScale={0.4}
-          initialScale={0.8}
-          ref={wrapperRef}
-          limitToBounds={false}
-          wheel={{
-            step: 0.4,
-          }}
-        >
-          <TransformComponent>
-            <Canvas
-              ref={canvasRef}
-              nodes={nodes}
-              edges={edges}
-              layoutOptions={{
-                "elk.direction": config.layout,
-              }}
-              maxWidth={20000}
-              maxHeight={20000}
-              center={false}
-              zoomable={false}
-              fit
-              readonly
-              animated
-              node={CustomNode}
-            />
-          </TransformComponent>
-        </TransformWrapper>
-      </StyledEditorWrapper>
-      {config.controls && (
-        <StyledControls>
-          <Button onClick={() => zoomIn(0.5)}>
-            <AiOutlineZoomIn size={24} />
-          </Button>
-          <Button onClick={() => zoomOut(0.4)}>
-            <AiOutlineZoomOut size={24} />
-          </Button>
-          <Button onClick={() => wrapperRef.current?.resetTransform()}>
-            <AiOutlineFullscreen size={24} />
-          </Button>
-          <Button onClick={() => localStorage.setItem("json", json)}>
-            <AiFillSave size={24} />
-          </Button>
-        </StyledControls>
-      )}
-    </StyledLiveEditor>
-  );
+  if (pageLoaded)
+    return (
+      <StyledLiveEditor>
+        <StyledEditorWrapper>
+          <TransformWrapper
+            maxScale={2}
+            minScale={0.4}
+            initialScale={0.8}
+            ref={wrapperRef}
+            limitToBounds={false}
+            wheel={{
+              step: 0.4,
+            }}
+          >
+            <TransformComponent>
+              <Canvas
+                ref={canvasRef}
+                nodes={nodes}
+                edges={edges}
+                layoutOptions={{
+                  "elk.direction": config.layout,
+                }}
+                maxWidth={20000}
+                maxHeight={20000}
+                center={false}
+                zoomable={false}
+                fit
+                readonly
+                animated
+                node={CustomNode}
+              />
+            </TransformComponent>
+          </TransformWrapper>
+        </StyledEditorWrapper>
+        {config.controls && (
+          <StyledControls>
+            <Button onClick={() => zoomIn(0.5)}>
+              <AiOutlineZoomIn size={24} />
+            </Button>
+            <Button onClick={() => zoomOut(0.4)}>
+              <AiOutlineZoomOut size={24} />
+            </Button>
+            <Button onClick={() => wrapperRef.current?.resetTransform()}>
+              <AiOutlineFullscreen size={24} />
+            </Button>
+            <Button onClick={() => localStorage.setItem("json", json)}>
+              <AiFillSave size={24} />
+            </Button>
+          </StyledControls>
+        )}
+      </StyledLiveEditor>
+    );
+
+  return null;
 };
