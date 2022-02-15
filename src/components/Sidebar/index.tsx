@@ -3,17 +3,28 @@ import Link from "next/link";
 import styled from "styled-components";
 import { useLocalStorage } from "usehooks-ts";
 import { FaFileImport } from "react-icons/fa";
-import { MdAutoGraph, MdFormatLineSpacing } from "react-icons/md";
+import {
+  MdUnfoldMore,
+  MdUnfoldLess,
+} from "react-icons/md";
 import {
   AiFillHome,
   AiOutlineClear,
   AiFillGithub,
   AiOutlineTwitter,
   AiFillControl,
+  AiOutlineControl,
 } from "react-icons/ai";
+import {
+  CgArrowLongDownE,
+  CgArrowLongLeftE,
+  CgArrowLongRightE,
+  CgArrowLongUpE,
+} from "react-icons/cg";
 
 import { getNextLayout } from "src/containers/LiveEditor/helpers";
 import { StorageConfig } from "src/typings/global";
+import { CanvasDirection } from "reaflow";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -89,6 +100,13 @@ const StyledImportFile = styled.label`
   }
 `;
 
+function getLayoutIcon(layout: CanvasDirection) {
+  if (layout === "LEFT") return <CgArrowLongRightE />;
+  if (layout === "UP") return <CgArrowLongDownE />;
+  if (layout === "RIGHT") return <CgArrowLongLeftE />;
+  return <CgArrowLongUpE />;
+}
+
 export const Sidebar: React.FC<{
   setJson: React.Dispatch<React.SetStateAction<string>>;
 }> = ({ setJson }) => {
@@ -98,6 +116,7 @@ export const Sidebar: React.FC<{
     expand: true,
     controls: true,
   });
+
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) setJsonFile(e.target.files?.item(0));
@@ -159,14 +178,14 @@ export const Sidebar: React.FC<{
           }
           title="Change Layout"
         >
-          <MdAutoGraph />
+          {getLayoutIcon(config.layout)}
         </StyledElement>
         <StyledElement
           title="Toggle Controls"
           as="a"
           onClick={() => toggle("controls")}
         >
-          <AiFillControl />
+          {config.controls ? <AiFillControl /> : <AiOutlineControl />}
         </StyledElement>
 
         <StyledElement
@@ -174,7 +193,7 @@ export const Sidebar: React.FC<{
           title="Toggle Expand/Collapse"
           onClick={() => toggle("expand")}
         >
-          <MdFormatLineSpacing />
+          {config.expand ? <MdUnfoldMore /> : <MdUnfoldLess />}
         </StyledElement>
         <StyledElement as="a" title="Import JSON File">
           <StyledImportFile>
