@@ -22,7 +22,7 @@ import {
 import { getNextLayout } from "src/containers/LiveEditor/helpers";
 import { StorageConfig } from "src/typings/global";
 import { CanvasDirection } from "reaflow";
-import { useLoading } from "src/hooks/useLoading";
+import { defaultConfig } from "src/constants/data";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -105,17 +105,14 @@ function getLayoutIcon(layout: CanvasDirection) {
   return <CgArrowLongUpE />;
 }
 
-export const Sidebar: React.FC<{
+const Sidebar: React.FC<{
   setJson: React.Dispatch<React.SetStateAction<string>>;
 }> = ({ setJson }) => {
-  const pageLoaded = useLoading();
-
   const [jsonFile, setJsonFile] = React.useState<File | null>(null);
-  const [config, setConfig] = useLocalStorage<StorageConfig>("config", {
-    layout: "LEFT",
-    expand: true,
-    controls: true,
-  });
+  const [config, setConfig] = useLocalStorage<StorageConfig>(
+    "config",
+    defaultConfig
+  );
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) setJsonFile(e.target.files?.item(0));
@@ -139,92 +136,91 @@ export const Sidebar: React.FC<{
     }
   }, [jsonFile, setJson]);
 
-  if (pageLoaded)
-    return (
-      <StyledSidebar>
-        <StyledTopWrapper>
-          <Link passHref href="/">
-            <StyledElement as="a">
-              <StyledLogo>
-                <StyledText>J</StyledText>
-                <StyledText secondary>V</StyledText>
-              </StyledLogo>
-            </StyledElement>
+  return (
+    <StyledSidebar>
+      <StyledTopWrapper>
+        <Link passHref href="/">
+          <StyledElement as="a">
+            <StyledLogo>
+              <StyledText>J</StyledText>
+              <StyledText secondary>V</StyledText>
+            </StyledLogo>
+          </StyledElement>
+        </Link>
+        <StyledElement title="Home">
+          <Link href="/">
+            <a>
+              <AiFillHome />
+            </a>
           </Link>
-          <StyledElement title="Home">
-            <Link href="/">
-              <a>
-                <AiFillHome />
-              </a>
-            </Link>
-          </StyledElement>
-          <StyledElement
-            as="a"
-            onClick={() => {
-              setJson("[]");
-              localStorage.removeItem("json");
-            }}
-            title="Clear JSON"
-          >
-            <AiOutlineClear />
-          </StyledElement>
-          <StyledElement
-            as="a"
-            onClick={() =>
-              setConfig((c) => ({
-                ...c,
-                layout: getNextLayout(c.layout),
-              }))
-            }
-            title="Change Layout"
-          >
-            {getLayoutIcon(config.layout)}
-          </StyledElement>
-          <StyledElement
-            title="Toggle Controls"
-            as="a"
-            onClick={() => toggle("controls")}
-          >
-            {config.controls ? <AiFillControl /> : <AiOutlineControl />}
-          </StyledElement>
+        </StyledElement>
+        <StyledElement
+          as="a"
+          onClick={() => {
+            setJson("[]");
+            localStorage.removeItem("json");
+          }}
+          title="Clear JSON"
+        >
+          <AiOutlineClear />
+        </StyledElement>
+        <StyledElement
+          as="a"
+          onClick={() =>
+            setConfig((c) => ({
+              ...c,
+              layout: getNextLayout(c.layout),
+            }))
+          }
+          title="Change Layout"
+        >
+          {getLayoutIcon(config.layout)}
+        </StyledElement>
+        <StyledElement
+          title="Toggle Controls"
+          as="a"
+          onClick={() => toggle("controls")}
+        >
+          {config.controls ? <AiFillControl /> : <AiOutlineControl />}
+        </StyledElement>
 
-          <StyledElement
-            as="a"
-            title="Toggle Expand/Collapse"
-            onClick={() => toggle("expand")}
-          >
-            {config.expand ? <MdUnfoldMore /> : <MdUnfoldLess />}
-          </StyledElement>
-          <StyledElement as="a" title="Import JSON File">
-            <StyledImportFile>
-              <input
-                key={jsonFile?.name}
-                onChange={handleFileChange}
-                type="file"
-                accept="application/JSON"
-              />
-              <FaFileImport />
-            </StyledImportFile>
-          </StyledElement>
-        </StyledTopWrapper>
-        <StyledBottomWrapper>
-          <StyledElement>
-            <Link href="https://twitter.com/aykutsarach">
-              <a rel="me" target="_blank">
-                <AiOutlineTwitter />
-              </a>
-            </Link>
-          </StyledElement>
-          <StyledElement>
-            <Link href="https://github.com/AykutSarac/jsonvisio.com">
-              <a rel="me" target="_blank">
-                <AiFillGithub />
-              </a>
-            </Link>
-          </StyledElement>
-        </StyledBottomWrapper>
-      </StyledSidebar>
-    );
-
-  return null;
+        <StyledElement
+          as="a"
+          title="Toggle Expand/Collapse"
+          onClick={() => toggle("expand")}
+        >
+          {config.expand ? <MdUnfoldMore /> : <MdUnfoldLess />}
+        </StyledElement>
+        <StyledElement as="a" title="Import JSON File">
+          <StyledImportFile>
+            <input
+              key={jsonFile?.name}
+              onChange={handleFileChange}
+              type="file"
+              accept="application/JSON"
+            />
+            <FaFileImport />
+          </StyledImportFile>
+        </StyledElement>
+      </StyledTopWrapper>
+      <StyledBottomWrapper>
+        <StyledElement>
+          <Link href="https://twitter.com/aykutsarach">
+            <a rel="me" target="_blank">
+              <AiOutlineTwitter />
+            </a>
+          </Link>
+        </StyledElement>
+        <StyledElement>
+          <Link href="https://github.com/AykutSarac/jsonvisio.com">
+            <a rel="me" target="_blank">
+              <AiFillGithub />
+            </a>
+          </Link>
+        </StyledElement>
+      </StyledBottomWrapper>
+    </StyledSidebar>
+  );
 };
+
+export default Sidebar;

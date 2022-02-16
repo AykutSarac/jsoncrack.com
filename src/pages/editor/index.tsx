@@ -5,9 +5,17 @@ import styled from "styled-components";
 import SplitPane from "react-split-pane";
 
 import { Button } from "src/components/Button";
-import { Sidebar } from "src/components/Sidebar";
-import { defaultValue, JsonEditor } from "src/containers/JsonEditor";
+import { defaultJson } from "src/constants/data";
+import dynamic from "next/dynamic";
 import { LiveEditor } from "src/containers/LiveEditor";
+
+const JsonEditor = dynamic(() => import("src/containers/JsonEditor"), {
+  ssr: false,
+});
+
+const Sidebar = dynamic(() => import("src/components/Sidebar"), {
+  ssr: false,
+});
 
 const StyledPageWrapper = styled.div`
   display: flex;
@@ -23,7 +31,6 @@ const StyledIncompatible = styled.div`
     display: flex;
     flex-direction: column;
     background: ${({ theme }) => theme.BLACK_LIGHT};
-    content: "This app is not compatible with your device!";
     color: ${({ theme }) => theme.SILVER};
     width: 100%;
     height: 100vh;
@@ -117,7 +124,7 @@ const StyledEditor = styled(SplitPane)`
 `;
 
 const Editor: React.FC = () => {
-  const [json, setJson] = React.useState<string>(JSON.stringify(defaultValue));
+  const [json, setJson] = React.useState<string>(JSON.stringify(defaultJson));
   const route = useRouter();
 
   React.useEffect(() => {

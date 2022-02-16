@@ -1,93 +1,70 @@
-import React from "react";
-import styled from "styled-components";
-import JSONInput from "react-json-editor-ajrm";
-import locale from "react-json-editor-ajrm/locale/en";
+import dynamic from "next/dynamic";
+import React, { ComponentType } from "react";
+import { IAceEditorProps } from "react-ace";
+import toast from "react-hot-toast";
 
-interface JsonData {
-  plainText: string;
-  markupText: string;
-  json: string;
-  jsObject?: object;
-  lines: number;
-  error: boolean;
+function isJson(value: string) {
+  value = typeof value !== "string" ? JSON.stringify(value) : value;
+
+  try {
+    value = JSON.parse(value);
+  } catch (e: any) {
+    toast.error(e.message);
+    return false;
+  }
+
+  if (typeof value === "object" && value !== null) {
+    return true;
+  }
+
+  return false;
 }
 
-const StyledJSONInput = styled(JSONInput)`
-  margin-top: 10px;
-  padding: 5px;
-`;
-
-export const defaultValue = [
-  {
-    Author: "J. K. Rowling.",
-    Genre: "Fantasy",
-    Characters: ["Hermione Granger", "Harry Potter", "Lord Voldemort", "MORE"],
-    Books: [
-      { title: "Philosopher's Stone", date: "1997" },
-      {
-        title: "Chamber of Secrets",
-        date: "1998",
-      },
-      {
-        title: "Prisoner of Azkaban",
-        date: "1999",
-      },
-      {
-        title: "Goblet of Fire",
-        date: "1999",
-      },
-      {
-        title: "Order of the Phoenix",
-        date: "2003",
-      },
-      {
-        title: "Half-Blood Prince",
-        date: "2005",
-      },
-      {
-        title: "Deathly Hallows",
-        date: "2007",
-      },
-    ],
+const AceEditor: ComponentType<IAceEditorProps> = dynamic(
+  async () => {
+    const Ace = require("react-ace").default;
+    require("ace-builds/src-noconflict/mode-json");
+    require("ace-builds/src-noconflict/theme-tomorrow_night");
+    return Ace;
   },
-];
+  {
+    ssr: false,
+  }
+);
 
-export const JsonEditor: React.FC<{
+const JsonEditor: React.FC<{
   json: string;
   setJson: React.Dispatch<React.SetStateAction<string>>;
 }> = ({ json, setJson }) => {
-  const [initialJson, setInitialJson] = React.useState(json);
+  const [value, setValue] = React.useState(
+    JSON.stringify(JSON.parse(json), null, 2)
+  );
 
   React.useEffect(() => {
-    const jsonStored = localStorage.getItem("json");
-    if (jsonStored) setInitialJson(jsonStored);
-
-    const element = document.querySelector(
-      '[name="outer-box"] > div'
-    ) as HTMLDivElement;
-    if (element) {
-      element.style.transform = "translate(-75%, 25%)";
-    }
-  }, []);
-
-  React.useEffect(() => {
-    if (json === "[]") setInitialJson(json);
+    setValue(JSON.stringify(JSON.parse(json), null, 2));
   }, [json]);
 
-  const handleChange = (data: JsonData) => {
-    if (!data.error) {
-      if (data.json === "") return setJson("[]");
-      setJson(data.json);
-    }
-  };
+  React.useEffect(() => {
+    const formatTimer = setTimeout(() => {
+      if (!isJson(value)) return;
+      setValue(JSON.stringify(JSON.parse(value), null, 2));
+      setJson(value);
+    }, 2000);
+
+    return () => clearTimeout(formatTimer);
+  }, [value]);
 
   return (
-    <StyledJSONInput
-      placeholder={JSON.parse(initialJson)}
-      onChange={handleChange}
-      locale={locale}
-      height="100%"
+    <AceEditor
+      value={value}
+      onChange={setValue}
+      mode="json"
+      theme="tomorrow_night"
       width="auto"
+      height="100%"
+      fontSize={14}
     />
   );
 };
+
+export default JsonEditor;
