@@ -39,4 +39,5 @@ export const defaultConfig: StorageConfig = {
   layout: "LEFT",
   expand: true,
   controls: true,
+  autoformat: true,
 };

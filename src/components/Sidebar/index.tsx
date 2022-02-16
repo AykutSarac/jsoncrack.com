@@ -3,7 +3,12 @@ import Link from "next/link";
 import styled from "styled-components";
 import { useLocalStorage } from "usehooks-ts";
 import { FaFileImport } from "react-icons/fa";
-import { MdUnfoldMore, MdUnfoldLess } from "react-icons/md";
+import {
+  MdUnfoldMore,
+  MdUnfoldLess,
+  MdAutoFixHigh,
+  MdOutlineAutoFixOff,
+} from "react-icons/md";
 import {
   AiFillHome,
   AiOutlineClear,
@@ -118,7 +123,7 @@ const Sidebar: React.FC<{
     if (e.target.files) setJsonFile(e.target.files?.item(0));
   };
 
-  const toggle = (setting: "expand" | "controls") => {
+  const toggle = (setting: "expand" | "controls" | "autoformat") => {
     setConfig((c) => ({
       ...c,
       [setting]: !c[setting],
@@ -147,12 +152,17 @@ const Sidebar: React.FC<{
             </StyledLogo>
           </StyledElement>
         </Link>
-        <StyledElement title="Home">
-          <Link href="/">
-            <a>
-              <AiFillHome />
-            </a>
-          </Link>
+        <Link href="/">
+          <StyledElement as="a" title="Home">
+            <AiFillHome />
+          </StyledElement>
+        </Link>
+        <StyledElement
+          as="a"
+          title="Auto Format"
+          onClick={() => toggle("autoformat")}
+        >
+          {config.autoformat ? <MdAutoFixHigh /> : <MdOutlineAutoFixOff />}
         </StyledElement>
         <StyledElement
           as="a"
