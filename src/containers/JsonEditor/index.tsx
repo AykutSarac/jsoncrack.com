@@ -22,13 +22,19 @@ const StyledEditorWrapper = styled.div`
 
 const StyledErrorWrapper = styled.div``;
 
-const StyledErrorHeader = styled.div`
+const StyledErrorHeader = styled.a`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background: ${({ theme }) => theme.BLACK_DARK};
   padding: 6px 12px;
   color: ${({ theme }) => theme.DANGER};
   font-size: 22px;
+  cursor: pointer;
+
+  &:hover {
+    color: ${({ theme }) => theme.DANGER};
+  }
 `;
 
 const StyledTitle = styled.span`
@@ -37,19 +43,6 @@ const StyledTitle = styled.span`
   align-items: center;
   font-weight: 600;
   gap: 10px;
-`;
-
-const StyledCollapse = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: none;
-  color: ${({ theme }) => theme.DANGER};
-  cursor: pointer;
-
-  &:hover {
-    box-shadow: none;
-  }
 `;
 
 const StyledError = styled.pre`
@@ -142,17 +135,19 @@ const JsonEditor: React.FC<{
     <StyledEditorWrapper>
       {error.message && (
         <StyledErrorWrapper>
-          <StyledErrorHeader>
+          <StyledErrorHeader
+            onClick={() =>
+              setError((err) => ({ ...err, isExpanded: !err.isExpanded }))
+            }
+          >
             <StyledTitle>
               <MdReportGmailerrorred size={26} /> Error
             </StyledTitle>
-            <StyledCollapse
-              onClick={() =>
-                setError((err) => ({ ...err, isExpanded: !err.isExpanded }))
-              }
-            >
-              {true ? <MdExpandMore size={22} /> : <MdExpandLess size={22} />}
-            </StyledCollapse>
+            {error.isExpanded ? (
+              <MdExpandLess size={22} />
+            ) : (
+              <MdExpandMore size={22} />
+            )}
           </StyledErrorHeader>
           {error.isExpanded && <StyledError>{error.message}</StyledError>}
         </StyledErrorWrapper>
