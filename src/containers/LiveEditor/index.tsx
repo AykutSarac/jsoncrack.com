@@ -20,6 +20,7 @@ import {
 } from "react-icons/ai";
 import { useLoading } from "src/hooks/useLoading";
 import toast from "react-hot-toast";
+import { defaultConfig } from "src/constants/data";
 
 const StyledLiveEditor = styled.div`
   position: relative;
@@ -53,11 +54,7 @@ export const LiveEditor: React.FC<{
 
   const canvasRef = React.useRef<CanvasRef | null>(null);
   const wrapperRef = React.useRef<ReactZoomPanPinchRef | null>(null);
-  const [config] = useLocalStorage<StorageConfig>("config", {
-    layout: "LEFT",
-    expand: true,
-    controls: true,
-  });
+  const [config] = useLocalStorage<StorageConfig>("config", defaultConfig);
 
   React.useEffect(() => {
     if (wrapperRef.current) wrapperRef.current?.resetTransform();
