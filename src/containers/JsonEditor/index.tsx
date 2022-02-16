@@ -6,7 +6,11 @@ import { useLocalStorage } from "usehooks-ts";
 import { defaultConfig } from "src/constants/data";
 import parseJson from "parse-json";
 import styled from "styled-components";
-import { MdExpandMore, MdExpandLess } from "react-icons/md";
+import {
+  MdExpandMore,
+  MdExpandLess,
+  MdReportGmailerrorred,
+} from "react-icons/md";
 
 const StyledEditorWrapper = styled.div`
   display: flex;
@@ -28,7 +32,11 @@ const StyledErrorHeader = styled.div`
 `;
 
 const StyledTitle = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-weight: 600;
+  gap: 10px;
 `;
 
 const StyledCollapse = styled.button`
@@ -135,7 +143,9 @@ const JsonEditor: React.FC<{
       {error.message && (
         <StyledErrorWrapper>
           <StyledErrorHeader>
-            <StyledTitle>Error</StyledTitle>
+            <StyledTitle>
+              <MdReportGmailerrorred size={26} /> Error
+            </StyledTitle>
             <StyledCollapse
               onClick={() =>
                 setError((err) => ({ ...err, isExpanded: !err.isExpanded }))
