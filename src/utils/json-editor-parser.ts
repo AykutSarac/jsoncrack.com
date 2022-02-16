@@ -51,7 +51,7 @@ export const parser = (input: string | string[]) => {
 
     return [...flatten(res), ...relationships(res)];
   } catch (error) {
-    toast.error("An error occured while parsin JSON data!");
+    toast.error("An error occured while parsing JSON data!");
     return [];
   }
 };
