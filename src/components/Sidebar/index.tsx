@@ -28,6 +28,7 @@ import { getNextLayout } from "src/containers/LiveEditor/helpers";
 import { StorageConfig } from "src/typings/global";
 import { CanvasDirection } from "reaflow";
 import { defaultConfig } from "src/constants/data";
+import toast from "react-hot-toast";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -160,7 +161,10 @@ const Sidebar: React.FC<{
         <StyledElement
           as="a"
           title="Auto Format"
-          onClick={() => toggle("autoformat")}
+          onClick={() => {
+            toggle("autoformat");
+            toast(`Auto format has been ${config.autoformat ? "disabled." : "enabled."}`);
+          }}
         >
           {config.autoformat ? <MdAutoFixHigh /> : <MdOutlineAutoFixOff />}
         </StyledElement>
@@ -169,6 +173,7 @@ const Sidebar: React.FC<{
           onClick={() => {
             setJson("[]");
             localStorage.removeItem("json");
+            toast.success(`Cleared JSON and removed from memory.`);
           }}
           title="Clear JSON"
         >
@@ -189,7 +194,10 @@ const Sidebar: React.FC<{
         <StyledElement
           title="Toggle Controls"
           as="a"
-          onClick={() => toggle("controls")}
+          onClick={() => {
+            toggle("controls");
+            toast(`Controls ${config.controls ? "disabled." : "enabled."}`);
+          }}
         >
           {config.controls ? <AiFillControl /> : <AiOutlineControl />}
         </StyledElement>
@@ -197,7 +205,10 @@ const Sidebar: React.FC<{
         <StyledElement
           as="a"
           title="Toggle Expand/Collapse"
-          onClick={() => toggle("expand")}
+          onClick={() => {
+            toggle("expand");
+            toast(`${config.expand ? "Collapsed" : "Expanded"} nodes.`);
+          }}
         >
           {config.expand ? <MdUnfoldMore /> : <MdUnfoldLess />}
         </StyledElement>
