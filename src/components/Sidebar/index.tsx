@@ -152,7 +152,7 @@ const Sidebar: React.FC<{
             </StyledLogo>
           </StyledElement>
         </Link>
-        <Link href="/">
+        <Link passHref href="/">
           <StyledElement as="a" title="Home">
             <AiFillHome />
           </StyledElement>
