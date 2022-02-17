@@ -111,18 +111,18 @@ export const LiveEditor: React.FC<{
               <Canvas
                 ref={canvasRef}
                 nodes={nodes}
+                node={CustomNode}
                 edges={edges}
-                layoutOptions={{
-                  "elk.direction": config.layout,
-                }}
                 maxWidth={20000}
                 maxHeight={20000}
                 center={false}
                 zoomable={false}
+                layoutOptions={{
+                  "elk.direction": config.layout,
+                }}
                 fit
                 readonly
                 animated
-                node={CustomNode}
               />
             </TransformComponent>
           </TransformWrapper>

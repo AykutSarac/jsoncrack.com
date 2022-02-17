@@ -11,11 +11,7 @@ const StyledTextWrapper = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;
-
-  &:hover {
-    cursor: pointer;
-    stroke: white !important;
-  }
+  cursor: pointer;
 `;
 
 const StyledText = styled.pre<{ width: number; height: number }>`
