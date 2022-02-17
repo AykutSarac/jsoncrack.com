@@ -35,7 +35,7 @@ const StyledSidebar = styled.div`
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
-  width: 60px;
+  width: 42px;
   background: #2f3136;
   padding: 8px;
   border-right: 1px solid ${({ theme }) => theme.SILVER_DARK};
@@ -43,7 +43,7 @@ const StyledSidebar = styled.div`
 
 const StyledElement = styled.div<{ disabled?: boolean }>`
   text-align: center;
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
   width: 100%;
   color: ${({ theme, disabled }) =>
