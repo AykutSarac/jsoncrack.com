@@ -42,7 +42,7 @@ const StyledControls = styled.div`
   opacity: 0.9;
 
   button:hover {
-    opacity: 0.5;
+    opacity: 0.7;
   }
 `;
 
