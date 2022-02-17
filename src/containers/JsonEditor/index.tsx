@@ -77,6 +77,8 @@ const JsonEditor: React.FC<{
     message: "",
     isExpanded: true,
   });
+
+  const [editorWidth, setEditorWidth] = React.useState("auto");
   const [config] = useLocalStorage<StorageConfig>("config", defaultConfig);
   const [value, setValue] = React.useState(
     JSON.stringify(JSON.parse(json), null, 2)
@@ -106,6 +108,20 @@ const JsonEditor: React.FC<{
 
     return false;
   }
+
+  React.useEffect(() => {
+    const resizeObserver = new ResizeObserver((observed) => {
+      const width = observed[0].contentRect.width;
+      setEditorWidth(width.toString());
+    });
+
+    const dom = document.querySelector(".ace_scroller");
+    if (dom) resizeObserver.observe(dom);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [json]);
 
   React.useEffect(() => {
     if (config.autoformat) {
@@ -152,14 +168,16 @@ const JsonEditor: React.FC<{
           {error.isExpanded && <StyledError>{error.message}</StyledError>}
         </StyledErrorWrapper>
       )}
+
       <AceEditor
         value={value}
         onChange={setValue}
         mode="json"
         theme="tomorrow_night"
-        width="auto"
+        width={editorWidth}
         height="100%"
         fontSize={14}
+        wrapEnabled
       />
     </StyledEditorWrapper>
   );
