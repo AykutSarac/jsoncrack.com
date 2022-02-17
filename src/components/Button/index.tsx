@@ -22,8 +22,8 @@ const StyledButton = styled.button<{ status: keyof typeof ButtonType }>`
   display: block;
   background: ${({ status, theme }) => getButtonStatus(status, theme)};
   color: ${({ theme }) => theme.FULL_WHITE};
-  cursor: pointer;
   padding: 8px 16px;
+  min-width: 60px;
 
   @media only screen and (max-width: 768px) {
     font-size: 18px;

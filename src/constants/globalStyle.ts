@@ -35,7 +35,6 @@ const GlobalStyle = createGlobalStyle`
 
   button {
     min-height: 32px;
-    min-width: 60px;
     border: none;
     border-radius: 5px;
     outline: none;
@@ -43,6 +42,7 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 500;
     font-size: 14px;
     transition: 0.3s;
+    cursor: pointer;
     
 
     div {
