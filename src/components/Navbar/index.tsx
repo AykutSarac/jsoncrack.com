@@ -36,16 +36,6 @@ const StyledTitleWrapper = styled.span`
   color: ${({ theme }) => theme.ORANGE};
 `;
 
-const StyledBetaText = styled.span`
-  position: absolute;
-  top: 0;
-  right: 0;
-  transform: translate(85%, -25%);
-  color: ${({ theme }) => theme.BLURPLE};
-  font-size: 12px;
-  font-weight: 400;
-`;
-
 export const Navbar: React.FC<NavbarProps> = () => {
   return (
     <StyledNavbar>
@@ -53,7 +43,6 @@ export const Navbar: React.FC<NavbarProps> = () => {
         <a>
           <StyledLogo>
             <StyledTitleWrapper>JSON</StyledTitleWrapper> Visio
-            <StyledBetaText>BETA!</StyledBetaText>
           </StyledLogo>
         </a>
       </Link>
