@@ -12,7 +12,7 @@
     "deploy": "gh-pages -d out -t true"
   },
   "dependencies": {
-    "next": "12.0.9",
+    "next": "^12.1.0",
     "next-transpile-modules": "^9.0.0",
     "parse-json": "^6.0.2",
     "react": "17.0.2",
