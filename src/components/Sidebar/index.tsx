@@ -154,13 +154,13 @@ const Sidebar: React.FC<{
             </StyledLogo>
           </StyledElement>
         </Link>
-        <Link passHref href="/">
-          <Tooltip title="Home">
+        <Tooltip title="Home">
+          <Link passHref href="/">
             <StyledElement as="a">
               <AiFillHome />
             </StyledElement>
-          </Tooltip>
-        </Link>
+          </Link>
+        </Tooltip>
         <Tooltip title="Auto Format">
           <StyledElement
             as="a"
