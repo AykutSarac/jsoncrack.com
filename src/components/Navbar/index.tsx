@@ -12,6 +12,10 @@ const StyledNavbar = styled.div`
   width: 75%;
   margin: 0 auto 80px;
 
+  a:hover {
+    color: ${({ theme }) => theme.ORANGE};
+  }
+
   @media only screen and (max-width: 768px) {
     width: 100%;
   }
