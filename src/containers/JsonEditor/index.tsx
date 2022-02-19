@@ -6,11 +6,7 @@ import { useLocalStorage } from "usehooks-ts";
 import { defaultConfig } from "src/constants/data";
 import parseJson from "parse-json";
 import styled from "styled-components";
-import {
-  MdExpandMore,
-  MdExpandLess,
-  MdReportGmailerrorred,
-} from "react-icons/md";
+import { Error, ErrorContainer } from "./ErrorContainer";
 
 const StyledEditorWrapper = styled.div`
   display: flex;
@@ -18,43 +14,6 @@ const StyledEditorWrapper = styled.div`
   height: 100%;
   overflow: auto;
   user-select: none;
-`;
-
-const StyledErrorWrapper = styled.div``;
-
-const StyledErrorHeader = styled.a`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: ${({ theme }) => theme.BLACK_DARK};
-  padding: 6px 12px;
-  color: ${({ theme }) => theme.DANGER};
-  font-size: 22px;
-  cursor: pointer;
-
-  &:hover {
-    color: ${({ theme }) => theme.DANGER};
-  }
-`;
-
-const StyledTitle = styled.span`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: 600;
-  gap: 10px;
-`;
-
-const StyledError = styled.pre`
-  color: ${({ theme }) => theme.DANGER};
-  border: 1px solid ${({ theme }) => theme.SILVER_DARK};
-  border-left: none;
-  border-right: none;
-  font-size: 12px;
-  padding: 12px;
-  margin: 0;
-  word-wrap: break-word;
-  white-space: pre-line;
 `;
 
 const AceEditor: ComponentType<IAceEditorProps> = dynamic(
@@ -68,6 +27,34 @@ const AceEditor: ComponentType<IAceEditorProps> = dynamic(
     ssr: false,
   }
 );
+
+function isJson(
+  value: string,
+  setState: React.Dispatch<React.SetStateAction<Error>>
+) {
+  value = typeof value !== "string" ? JSON.stringify(value) : value;
+
+  try {
+    value = parseJson(value);
+    setState((err) => ({
+      ...err,
+      message: "",
+    }));
+  } catch (e: any) {
+    setState((err) => ({
+      ...err,
+      message: e.message,
+    }));
+
+    return false;
+  }
+
+  if (typeof value === "object" && value !== null) {
+    return true;
+  }
+
+  return false;
+}
 
 const JsonEditor: React.FC<{
   json: string;
@@ -83,31 +70,6 @@ const JsonEditor: React.FC<{
   const [value, setValue] = React.useState(
     JSON.stringify(JSON.parse(json), null, 2)
   );
-
-  function isJson(value: string) {
-    value = typeof value !== "string" ? JSON.stringify(value) : value;
-
-    try {
-      value = parseJson(value);
-      setError((err) => ({
-        ...err,
-        message: "",
-      }));
-    } catch (e: any) {
-      setError((err) => ({
-        ...err,
-        message: e.message,
-      }));
-
-      return false;
-    }
-
-    if (typeof value === "object" && value !== null) {
-      return true;
-    }
-
-    return false;
-  }
 
   React.useEffect(() => {
     const resizeObserver = new ResizeObserver((observed) => {
@@ -133,7 +95,7 @@ const JsonEditor: React.FC<{
 
   React.useEffect(() => {
     const formatTimer = setTimeout(() => {
-      if (!isJson(value)) return;
+      if (!isJson(value, setError)) return;
 
       if (config.autoformat) {
         setValue(JSON.stringify(JSON.parse(value), null, 2));
@@ -149,26 +111,7 @@ const JsonEditor: React.FC<{
 
   return (
     <StyledEditorWrapper>
-      {error.message && (
-        <StyledErrorWrapper>
-          <StyledErrorHeader
-            onClick={() =>
-              setError((err) => ({ ...err, isExpanded: !err.isExpanded }))
-            }
-          >
-            <StyledTitle>
-              <MdReportGmailerrorred size={26} /> Error
-            </StyledTitle>
-            {error.isExpanded ? (
-              <MdExpandLess size={22} />
-            ) : (
-              <MdExpandMore size={22} />
-            )}
-          </StyledErrorHeader>
-          {error.isExpanded && <StyledError>{error.message}</StyledError>}
-        </StyledErrorWrapper>
-      )}
-
+      {error.message && <ErrorContainer error={error} setError={setError} />}
       <AceEditor
         value={value}
         onChange={setValue}

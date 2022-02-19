@@ -129,7 +129,6 @@ const Editor: React.FC = () => {
 
   React.useEffect(() => {
     const jsonStored = localStorage.getItem("json");
-
     if (jsonStored) setJson(jsonStored);
   }, []);
 

@@ -51,16 +51,15 @@ export const LiveEditor: React.FC<{
   setJson: React.Dispatch<React.SetStateAction<string>>;
 }> = ({ json }) => {
   const pageLoaded = useLoading();
-
   const canvasRef = React.useRef<CanvasRef | null>(null);
   const wrapperRef = React.useRef<ReactZoomPanPinchRef | null>(null);
   const [config] = useLocalStorage<StorageConfig>("config", defaultConfig);
 
+  const { nodes, edges } = getEdgeNodes(json, config.expand);
+
   React.useEffect(() => {
     if (wrapperRef.current) wrapperRef.current?.resetTransform();
   }, [json, wrapperRef]);
-
-  const { nodes, edges } = getEdgeNodes(json, config.expand);
 
   const zoomIn = (scale: number) => {
     if (
