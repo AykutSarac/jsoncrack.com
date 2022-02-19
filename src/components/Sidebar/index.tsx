@@ -52,6 +52,10 @@ const StyledElement = styled.div<{ disabled?: boolean }>`
   cursor: pointer;
   pointer-events: ${({ disabled }) => disabled && "none"};
 
+  &:hover {
+    filter: brightness(1.3);
+  }
+
   a {
     text-align: center;
     width: 100%;

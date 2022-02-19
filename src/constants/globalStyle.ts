@@ -26,11 +26,6 @@ const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
     color: unset;
-
-    &:hover {
-      transition: 0.2s;
-      color: ${({ theme }) => theme.BLURPLE};
-    }
   }
 
   button {
