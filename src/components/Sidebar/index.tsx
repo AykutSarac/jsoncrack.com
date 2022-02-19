@@ -29,6 +29,7 @@ import { StorageConfig } from "src/typings/global";
 import { CanvasDirection } from "reaflow";
 import { defaultConfig } from "src/constants/data";
 import toast from "react-hot-toast";
+import { Tooltip } from "../Tooltip";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -154,75 +155,89 @@ const Sidebar: React.FC<{
           </StyledElement>
         </Link>
         <Link passHref href="/">
-          <StyledElement as="a" title="Home">
-            <AiFillHome />
-          </StyledElement>
+          <Tooltip title="Home">
+            <StyledElement as="a">
+              <AiFillHome />
+            </StyledElement>
+          </Tooltip>
         </Link>
-        <StyledElement
-          as="a"
-          title="Auto Format"
-          onClick={() => {
-            toggle("autoformat");
-            toast(`Auto format has been ${config.autoformat ? "disabled." : "enabled."}`);
-          }}
-        >
-          {config.autoformat ? <MdAutoFixHigh /> : <MdOutlineAutoFixOff />}
-        </StyledElement>
-        <StyledElement
-          as="a"
-          onClick={() => {
-            setJson("[]");
-            localStorage.removeItem("json");
-            toast.success(`Cleared JSON and removed from memory.`);
-          }}
-          title="Clear JSON"
-        >
-          <AiOutlineClear />
-        </StyledElement>
-        <StyledElement
-          as="a"
-          onClick={() =>
-            setConfig((c) => ({
-              ...c,
-              layout: getNextLayout(c.layout),
-            }))
-          }
-          title="Change Layout"
-        >
-          {getLayoutIcon(config.layout)}
-        </StyledElement>
-        <StyledElement
-          title="Toggle Controls"
-          as="a"
-          onClick={() => {
-            toggle("controls");
-            toast(`Controls ${config.controls ? "disabled." : "enabled."}`);
-          }}
-        >
-          {config.controls ? <AiFillControl /> : <AiOutlineControl />}
-        </StyledElement>
-
-        <StyledElement
-          as="a"
-          title="Toggle Expand/Collapse"
-          onClick={() => {
-            toggle("expand");
-            toast(`${config.expand ? "Collapsed" : "Expanded"} nodes.`);
-          }}
-        >
-          {config.expand ? <MdUnfoldMore /> : <MdUnfoldLess />}
-        </StyledElement>
-        <StyledElement as="a" title="Import JSON File">
-          <StyledImportFile>
-            <input
-              key={jsonFile?.name}
-              onChange={handleFileChange}
-              type="file"
-              accept="application/JSON"
-            />
-            <FaFileImport />
-          </StyledImportFile>
-        </StyledElement>
+        <Tooltip title="Auto Format">
+          <StyledElement
+            as="a"
+            onClick={() => {
+              toggle("autoformat");
+              toast(
+                `Auto format has been ${
+                  config.autoformat ? "disabled." : "enabled."
+                }`
+              );
+            }}
+          >
+            {config.autoformat ? <MdAutoFixHigh /> : <MdOutlineAutoFixOff />}
+          </StyledElement>
+        </Tooltip>
+        <Tooltip title="Clear JSON">
+          <StyledElement
+            as="a"
+            onClick={() => {
+              setJson("[]");
+              localStorage.removeItem("json");
+              toast.success(`Cleared JSON and removed from memory.`);
+            }}
+          >
+            <AiOutlineClear />
+          </StyledElement>
+        </Tooltip>
+        <Tooltip title="Change Layout">
+          <StyledElement
+            as="a"
+            onClick={() =>
+              setConfig((c) => ({
+                ...c,
+                layout: getNextLayout(c.layout),
+              }))
+            }
+          >
+            {getLayoutIcon(config.layout)}
+          </StyledElement>
+        </Tooltip>
+        <Tooltip title="Toggle Control Buttons">
+          <StyledElement
+            title="Toggle Controls"
+            as="a"
+            onClick={() => {
+              toggle("controls");
+              toast(`Controls ${config.controls ? "disabled." : "enabled."}`);
+            }}
+          >
+            {config.controls ? <AiFillControl /> : <AiOutlineControl />}
+          </StyledElement>
+        </Tooltip>
+        <Tooltip title="Toggle Compact Nodes">
+          <StyledElement
+            as="a"
+            title="Toggle Expand/Collapse"
+            onClick={() => {
+              toggle("expand");
+              toast(`${config.expand ? "Collapsed" : "Expanded"} nodes.`);
+            }}
+          >
+            {config.expand ? <MdUnfoldMore /> : <MdUnfoldLess />}
+          </StyledElement>
+        </Tooltip>
+        <Tooltip title="Import File">
+          <StyledElement as="a">
+            <StyledImportFile>
+              <input
+                key={jsonFile?.name}
+                onChange={handleFileChange}
+                type="file"
+                accept="application/JSON"
+              />
+              <FaFileImport />
+            </StyledImportFile>
+          </StyledElement>
+        </Tooltip>
       </StyledTopWrapper>
       <StyledBottomWrapper>
         <StyledElement>
