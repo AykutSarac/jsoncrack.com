@@ -8,6 +8,7 @@ import { AiFillGithub } from "react-icons/ai";
 import { Footer } from "src/components/Footer";
 import Link from "next/link";
 import Head from "next/head";
+import { Producthunt } from "src/components/Producthunt";
 
 const StyledHome = styled.div`
   padding: 24px;
@@ -124,6 +125,7 @@ const Home: React.FC = () => {
         </StyledContent>
         <Image src="graphs5.svg" width={500} height={400} alt="preview" />
       </Container>
+      <Producthunt />
       <Footer />
     </StyledHome>
   );
