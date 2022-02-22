@@ -5,11 +5,17 @@ const StyledProducthunt = styled.a`
   position: fixed;
   bottom: 12px;
   right: 12px;
+  
 `;
 
 const StyledImage = styled.img`
   width: 250px;
   height: 54px;
+
+  @media only screen and (max-width: 768px) {
+    width: 200px;
+    height: auto;
+  }
 `;
 
 export const Producthunt = () => {
