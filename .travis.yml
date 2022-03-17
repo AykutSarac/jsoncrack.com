@@ -5,20 +5,17 @@ branches:
   only:
   - main
 cache:
-directories:
-  - node_modules
-  - .next
-branches:
-  only:
-  - main
+  directories:
+    - node_modules
+    - .next
 script:
   - npm run test
   - npm run build
 deploy:
   provider: pages
-  skip_cleanup: true
+  cleanup: false
   local_dir: out
-  github_token: $GITHUB_TOKEN
+  token: $GITHUB_TOKEN
   target_branch: gh-pages
   keep_history: true
   on:
