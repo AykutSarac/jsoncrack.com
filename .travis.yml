@@ -13,7 +13,7 @@ script:
   - npm run build
 deploy:
   provider: pages
-  cleanup: false
+  cleanup: true
   local_dir: out
   token: $GITHUB_TOKEN
   target_branch: gh-pages
