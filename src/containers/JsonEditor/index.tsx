@@ -91,7 +91,7 @@ const JsonEditor: React.FC<{
     }
 
     setValue(json);
-  }, [json]);
+  }, [config.autoformat, json]);
 
   React.useEffect(() => {
     const formatTimer = setTimeout(() => {
@@ -107,7 +107,7 @@ const JsonEditor: React.FC<{
     }, 1000);
 
     return () => clearTimeout(formatTimer);
-  }, [value, config.autoformat]);
+  }, [value, config.autoformat, setJson]);
 
   return (
     <StyledEditorWrapper>
