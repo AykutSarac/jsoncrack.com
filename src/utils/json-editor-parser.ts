@@ -14,23 +14,31 @@ export const parser = (input: string | string[]) => {
     ) => {
       if (!os) return [];
 
-      return [os].flat().map((o) => ({
-        id: nextId(),
-        text: Object.fromEntries(
-          Object.entries(o).filter(
-            ([k, v]) => !Array.isArray(v) && !(v instanceof Object)
-          )
-        ),
-        children: Object.entries(o)
-          .filter(([k, v]) => Array.isArray(v) || typeof v === "object")
-          .flatMap(([k, v]) => [
-            {
-              id: nextId(),
-              text: k,
-              children: extract(v, nextId),
-            },
-          ]),
-      }));
+      return [os].flat().map((o) => {
+        const isObject = o instanceof Object;
+
+        return {
+          id: nextId(),
+          text: !isObject
+            ? o.toString()
+            : Object.fromEntries(
+                Object.entries(o).filter(
+                  ([k, v]) => !Array.isArray(v) && !(v instanceof Object)
+                )
+              ),
+          parent: false,
+          children: Object.entries(o)
+            .filter(([k, v]) => Array.isArray(v) || typeof v === "object")
+            .flatMap(([k, v]) => [
+              {
+                id: nextId(),
+                text: k,
+                parent: true,
+                children: extract(v, nextId),
+              },
+            ]),
+        };
+      });
     };
 
     const relationships = (xs: { id: string; children: never[] }[]) => {

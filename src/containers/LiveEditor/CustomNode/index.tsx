@@ -1,13 +1,13 @@
 import React from "react";
 import { Label, Node, Port, NodeProps } from "reaflow";
-import ArrayNode from "./ArrayNode";
-import BondNode from "./BondNode";
 import ObjectNode from "./ObjectNode";
+import TextNode from "./TextNode";
 
 export interface CustomNodeProps<T> {
   width: number;
   height: number;
   value: T;
+  isParent?: boolean;
 }
 
 const baseLabelStyle = {
@@ -33,16 +33,18 @@ export const CustomNode = (nodeProps: NodeProps) => {
         const { width, height } = nodeProps;
 
         if (data.text instanceof Object) {
-          if (Object.keys(data.text).every((val) => !isNaN(+val))) {
-            const text = Object.values(data.text).join("");
-            return <ArrayNode width={width} height={height} value={text} />;
-          }
-
           const entries = Object.entries(data.text);
           return <ObjectNode width={width} height={height} value={entries} />;
         }
 
-        return <BondNode width={width} height={height} value={data.text} />;
+        return (
+          <TextNode
+            isParent={data.data.isParent}
+            width={width}
+            height={height}
+            value={data.text}
+          />
+        );
       }}
     </Node>
   );

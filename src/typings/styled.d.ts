@@ -19,7 +19,7 @@ declare module "styled-components" {
     CRIMSON: string;
     DARK_SALMON: string;
     DANGER: string;
-    SEAGREEN: string;
+    LIGHTGREEN: string;
     ORANGE: string;
     SILVER: string;
     SILVER_DARK: string;

@@ -15,7 +15,7 @@ const ObjectNode: React.FC<CustomNodeProps<[string, unknown][]>> = ({
             (val, idx) =>
               val[1] && (
                 <Styled.StyledRow key={idx} width={width}>
-                  <Styled.StyledKey>{val[0]}: </Styled.StyledKey>
+                  <Styled.StyledKey objectKey>{val[0]}: </Styled.StyledKey>
                   {val[1]}
                 </Styled.StyledRow>
               )
