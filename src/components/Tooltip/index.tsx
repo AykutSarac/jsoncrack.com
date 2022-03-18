@@ -7,14 +7,15 @@ interface TooltipProps {
 
 const StyledTooltipWrapper = styled.div`
   position: relative;
-  width: fit-content;
+  width: 100%;
+  height: 100%;
 `;
 
 const StyledTooltip = styled.div<{ visible: boolean }>`
   position: absolute;
   top: 0;
   right: 0;
-  transform: translate(calc(100% + 20px), 25%);
+  transform: translate(calc(100% + 15px), 25%);
   z-index: 5;
   background: ${({ theme }) => theme.SILVER};
   color: ${({ theme }) => theme.SILVER_DARK};

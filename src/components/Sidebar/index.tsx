@@ -43,6 +43,8 @@ const StyledSidebar = styled.div`
 `;
 
 const StyledElement = styled.div<{ disabled?: boolean }>`
+  display: flex;
+  justify-content: center;
   text-align: center;
   font-size: 28px;
   font-weight: 700;
@@ -62,6 +64,7 @@ const StyledElement = styled.div<{ disabled?: boolean }>`
   }
 
   svg {
+    padding: 8px 0;
     vertical-align: middle;
   }
 `;
@@ -78,8 +81,11 @@ const StyledTopWrapper = styled.nav`
   align-items: center;
   width: 100%;
 
-  & > div,
-  a {
+  & > div:first-of-type {
+    border-top: 1px solid ${({ theme }) => theme.SILVER_DARK};
+  }
+
+  & > div:nth-child(n + 1) {
     border-bottom: 1px solid ${({ theme }) => theme.SILVER_DARK};
   }
 `;
@@ -92,7 +98,7 @@ const StyledBottomWrapper = styled.nav`
   width: 100%;
 
   & > div,
-  a {
+  a:nth-child(0) {
     border-top: 1px solid ${({ theme }) => theme.SILVER_DARK};
   }
 `;
