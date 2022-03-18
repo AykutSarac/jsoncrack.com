@@ -20,6 +20,7 @@ declare module "styled-components" {
     DARK_SALMON: string;
     DANGER: string;
     LIGHTGREEN: string;
+    SEAGREEN: string;
     ORANGE: string;
     SILVER: string;
     SILVER_DARK: string;

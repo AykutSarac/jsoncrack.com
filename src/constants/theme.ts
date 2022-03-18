@@ -12,6 +12,7 @@ export const darkTheme: DefaultTheme = {
   DARK_SALMON: "#E9967A",
   DANGER: "#F26522",
   LIGHTGREEN: "#90EE90",
+  SEAGREEN: "#3BA55D",
   ORANGE: "#FAA81A",
   SILVER: "#B9BBBE",
   SILVER_DARK: "#4D4D4D"
