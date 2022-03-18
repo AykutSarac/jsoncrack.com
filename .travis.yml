@@ -6,14 +6,13 @@ branches:
   - main
 cache:
   directories:
-    - node_modules
-    - .next
+  - node_modules
 script:
   - npm run test
   - npm run build
 deploy:
   provider: pages
-  cleanup: true
+  skip_cleanup: true
   local_dir: out
   token: $GITHUB_TOKEN
   target_branch: gh-pages
