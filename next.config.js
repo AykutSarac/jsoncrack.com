@@ -1,15 +1,17 @@
-const withTM = require('next-transpile-modules')(['reaflow']);
+const withTM = require("next-transpile-modules")(["reaflow"]);
 
-/** @type {import('next').NextConfig} */
 const nextConfig = withTM({
   exportPathMap: () => ({
-    '/': { page: '/' },
-    '/editor': { page: '/editor' },
+    "/": { page: "/" },
+    "/editor": { page: "/editor" },
   }),
-  trailingSlash: true,
   experimental: {
-    esmExternals: 'loose'
-  }
+    esmExternals: "loose",
+  },
+  compiler: {
+    styledComponents: true,
+    swcMinify: true,
+  },
 });
 
 module.exports = nextConfig;
