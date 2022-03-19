@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledTextWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,7 +28,6 @@ export const StyledForeignObject = styled.foreignObject<{
   width: number;
   height: number;
 }>`
-  position: "relative" !important;
   pointer-events: "none" !important;
   width: ${({ width }) => width + "px"};
   height: ${({ height }) => height + "px"};
