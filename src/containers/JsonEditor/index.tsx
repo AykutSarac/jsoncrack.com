@@ -63,7 +63,7 @@ const JsonEditor: React.FC<{
   React.useEffect(() => {
     const resizeObserver = new ResizeObserver((observed) => {
       const width = observed[0].contentRect.width;
-      setEditorWidth(width.toString());
+      setEditorWidth(width ? width.toString() : "auto");
     });
 
     const dom = document.querySelector(".ace_scroller");
