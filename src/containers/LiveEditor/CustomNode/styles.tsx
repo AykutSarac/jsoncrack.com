@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const StyledTextWrapper = styled.div`
-  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,14 +23,7 @@ export const StyledText = styled.pre<{
   color: ${({ theme }) => theme.SILVER};
 `;
 
-export const StyledForeignObject = styled.foreignObject<{
-  width: number;
-  height: number;
-}>`
-  pointer-events: "none" !important;
-  width: ${({ width }) => width + "px"};
-  height: ${({ height }) => height + "px"};
-`;
+export const StyledForeignObject = styled.foreignObject``;
 
 export const StyledKey = styled.span<{
   objectKey?: boolean;
