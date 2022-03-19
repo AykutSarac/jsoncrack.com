@@ -1,12 +1,13 @@
-import React, { ComponentType } from "react";
-import dynamic from "next/dynamic";
-import { IAceEditorProps } from "react-ace";
+import React from "react";
+import AceEditor from "react-ace";
 import { StorageConfig } from "src/typings/global";
 import { useLocalStorage } from "usehooks-ts";
 import { defaultConfig } from "src/constants/data";
 import parseJson from "parse-json";
 import styled from "styled-components";
 import { Error, ErrorContainer } from "./ErrorContainer";
+require("ace-builds/src-noconflict/mode-json");
+require("ace-builds/src-noconflict/theme-tomorrow_night");
 
 const StyledEditorWrapper = styled.div`
   display: flex;
@@ -15,18 +16,6 @@ const StyledEditorWrapper = styled.div`
   overflow: auto;
   user-select: none;
 `;
-
-const AceEditor: ComponentType<IAceEditorProps> = dynamic(
-  async () => {
-    const Ace = require("react-ace").default;
-    require("ace-builds/src-noconflict/mode-json");
-    require("ace-builds/src-noconflict/theme-tomorrow_night");
-    return Ace;
-  },
-  {
-    ssr: false,
-  }
-);
 
 function isJson(
   value: string,
@@ -121,6 +110,7 @@ const JsonEditor: React.FC<{
         height="100%"
         fontSize={14}
         wrapEnabled
+        setOptions={{ useWorker: false }}
       />
     </StyledEditorWrapper>
   );
