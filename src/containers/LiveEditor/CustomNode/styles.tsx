@@ -38,7 +38,6 @@ export const StyledKey = styled.span<{
   objectKey?: boolean;
   parent?: boolean;
 }>`
-  font-style: ${({ parent, objectKey }) => !(parent || objectKey) && "italic"};
   color: ${({ theme, objectKey, parent }) =>
     parent ? theme.ORANGE : objectKey ? theme.BLURPLE : theme.LIGHTGREEN};
 `;
