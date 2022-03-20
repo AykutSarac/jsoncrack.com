@@ -3,13 +3,15 @@ import styled from "styled-components";
 
 const StyledLoading = styled.div`
   position: fixed;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-content: center;
   width: 100%;
   height: 100vh;
   text-align: center;
+  background: ${({ theme }) => theme.BLACK_DARK};
+  z-index: 10;
 `;
 
 const StyledLogo = styled.h2`
