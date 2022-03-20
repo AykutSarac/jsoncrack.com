@@ -8,13 +8,16 @@ import { Button } from "src/components/Button";
 import { defaultJson } from "src/constants/data";
 import dynamic from "next/dynamic";
 import { LiveEditor } from "src/containers/LiveEditor";
+import { Loading } from "src/components/Loading";
 
 const JsonEditor = dynamic(() => import("src/containers/JsonEditor"), {
   ssr: false,
+  loading: () => <Loading />,
 });
 
 const Sidebar = dynamic(() => import("src/components/Sidebar"), {
   ssr: false,
+  loading: () => <Loading />,
 });
 
 const StyledPageWrapper = styled.div`
@@ -78,9 +81,9 @@ const StyledEditor = styled(SplitPane)`
   .Resizer {
     background: #000;
     opacity: 0.2;
-    z-index: 1;
     box-sizing: border-box;
     background-clip: padding-box;
+    z-index: 1;
   }
 
   .Resizer:hover {
@@ -107,6 +110,7 @@ const StyledEditor = styled(SplitPane)`
     border-left: 5px solid rgba(255, 255, 255, 0);
     border-right: 5px solid rgba(255, 255, 255, 0);
     cursor: col-resize;
+    z-index: 0 !important;
   }
 
   .Resizer.vertical:hover {
@@ -124,7 +128,7 @@ const StyledEditor = styled(SplitPane)`
 `;
 
 const Editor: React.FC = () => {
-  const [json, setJson] = React.useState<string>(JSON.stringify(defaultJson));
+  const [json, setJson] = React.useState(JSON.stringify(defaultJson));
   const route = useRouter();
 
   React.useEffect(() => {
