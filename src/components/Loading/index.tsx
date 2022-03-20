@@ -1,6 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
+interface LoadingProps {
+  message?: string;
+}
+
 const StyledLoading = styled.div`
   position: fixed;
   top: 0;
@@ -31,13 +35,15 @@ const StyledMessage = styled.div`
   font-weight: 500;
 `;
 
-export const Loading: React.FC = () => {
+export const Loading: React.FC<LoadingProps> = ({ message }) => {
   return (
     <StyledLoading>
       <StyledLogo>
         <StyledText>JSON</StyledText> Visio
       </StyledLogo>
-      <StyledMessage>Preparing the environment for you...</StyledMessage>
+      <StyledMessage>
+        {message ?? "Preparing the environment for you..."}
+      </StyledMessage>
     </StyledLoading>
   );
 };

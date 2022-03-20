@@ -12,12 +12,12 @@ import { Loading } from "src/components/Loading";
 
 const JsonEditor = dynamic(() => import("src/containers/JsonEditor"), {
   ssr: false,
-  loading: () => <Loading />,
+  loading: () => <Loading message="Loading Editor..." />,
 });
 
 const Sidebar = dynamic(() => import("src/components/Sidebar"), {
   ssr: false,
-  loading: () => <Loading />,
+  loading: () => <Loading message="Loading Sidebar..." />,
 });
 
 const StyledPageWrapper = styled.div`
