@@ -2,7 +2,7 @@ import React from "react";
 import { CustomNodeProps } from ".";
 import * as Styled from "./styles";
 
-const BondNode: React.FC<CustomNodeProps<string>> = ({
+const TextNode: React.FC<CustomNodeProps<string>> = ({
   width,
   height,
   value,
@@ -19,4 +19,4 @@ const BondNode: React.FC<CustomNodeProps<string>> = ({
   );
 };
 
-export default BondNode;
+export default TextNode;
