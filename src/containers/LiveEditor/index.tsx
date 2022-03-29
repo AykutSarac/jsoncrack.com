@@ -59,7 +59,7 @@ export const LiveEditor: React.FC<{
 
   React.useEffect(() => {
     if (wrapperRef.current) wrapperRef.current?.resetTransform();
-  }, [json, wrapperRef]);
+  }, [wrapperRef]);
 
   const zoomIn = (scale: number) => {
     if (
