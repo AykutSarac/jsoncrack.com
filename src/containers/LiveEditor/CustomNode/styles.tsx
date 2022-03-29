@@ -23,7 +23,9 @@ export const StyledText = styled.pre<{
   color: ${({ theme }) => theme.SILVER};
 `;
 
-export const StyledForeignObject = styled.foreignObject``;
+export const StyledForeignObject = styled.foreignObject`
+  pointer-events: none;
+`;
 
 export const StyledKey = styled.span<{
   objectKey?: boolean;
