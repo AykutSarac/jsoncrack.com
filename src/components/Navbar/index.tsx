@@ -2,10 +2,6 @@ import React from "react";
 import Link from "next/link";
 import styled from "styled-components";
 
-interface NavbarProps {
-  isWide?: boolean;
-}
-
 const StyledNavbar = styled.div`
   display: flex;
   justify-content: space-between;
@@ -40,7 +36,7 @@ const StyledTitleWrapper = styled.span`
   color: ${({ theme }) => theme.ORANGE};
 `;
 
-export const Navbar: React.FC<NavbarProps> = () => {
+export const Navbar: React.FC = () => {
   return (
     <StyledNavbar>
       <Link href="/">
