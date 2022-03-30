@@ -108,7 +108,7 @@ const JsonEditor: React.FC<{
         theme="tomorrow_night"
         width={editorWidth}
         height="100%"
-        fontSize={14}
+        fontSize={12}
         wrapEnabled
         setOptions={{ useWorker: false }}
       />
