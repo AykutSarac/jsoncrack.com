@@ -105,7 +105,7 @@ const StyledEditor = styled(SplitPane)`
   }
 
   .Resizer.vertical {
-    width: 11px;
+    width: 16px;
     margin: 0 -5px;
     border-left: 5px solid rgba(255, 255, 255, 0);
     border-right: 5px solid rgba(255, 255, 255, 0);
