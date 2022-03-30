@@ -2,7 +2,7 @@ import { StorageConfig } from "src/typings/global";
 
 export const defaultJson = [
   {
-    Author: "J. K. Rowling.",
+    Author: "J. K. Rowling",
     Genre: "Fantasy",
     Characters: ["Hermione Granger", "Harry Potter", "Lord Voldemort", "MORE"],
     Books: [
