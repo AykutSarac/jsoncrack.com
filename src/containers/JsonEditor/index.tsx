@@ -45,20 +45,21 @@ function isJson(
   return false;
 }
 
+const aceOptions = { useWorker: false };
+
 const JsonEditor: React.FC<{
   json: string;
-  setJson: React.Dispatch<React.SetStateAction<string>>;
+  setJson: (json: string) => void;
 }> = ({ json, setJson }) => {
-  const [error, setError] = React.useState({
-    message: "",
-    isExpanded: true,
-  });
-
   const [editorWidth, setEditorWidth] = React.useState("auto");
   const [config] = useLocalStorage<StorageConfig>("config", defaultConfig);
   const [value, setValue] = React.useState(
     JSON.stringify(JSON.parse(json), null, 2)
   );
+  const [error, setError] = React.useState({
+    message: "",
+    isExpanded: true,
+  });
 
   React.useEffect(() => {
     const resizeObserver = new ResizeObserver((observed) => {
@@ -110,7 +111,9 @@ const JsonEditor: React.FC<{
         height="100%"
         fontSize={12}
         wrapEnabled
-        setOptions={{ useWorker: false }}
+        setOptions={aceOptions}
+        showPrintMargin={false}
+        tabSize={2}
       />
     </StyledEditorWrapper>
   );
