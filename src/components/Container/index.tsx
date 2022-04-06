@@ -20,6 +20,7 @@ const StyledContainer = styled.div<{ reverse: boolean }>`
     width: 100%;
     flex-direction: column;
     margin-top: 160px;
+    justify-content: center;
   }
 `;
 
