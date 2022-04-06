@@ -48,14 +48,25 @@ const StyledControls = styled.div`
 
 export const LiveEditor: React.FC<{
   json: string;
-  setJson: React.Dispatch<React.SetStateAction<string>>;
-}> = ({ json }) => {
+  setJson: (json: string) => void;
+}> = React.memo(({ json }) => {
   const pageLoaded = useLoading();
   const canvasRef = React.useRef<CanvasRef | null>(null);
   const wrapperRef = React.useRef<ReactZoomPanPinchRef | null>(null);
   const [config] = useLocalStorage<StorageConfig>("config", defaultConfig);
+  const [data, setData] = React.useState({
+    nodes: [],
+    edges: [],
+  });
 
-  const { nodes, edges } = getEdgeNodes(json, config.expand);
+  React.useEffect(() => {
+    const { nodes, edges } = getEdgeNodes(json, config.expand);
+
+    setData({
+      nodes,
+      edges,
+    });
+  }, [json, config.expand]);
 
   React.useEffect(() => {
     if (wrapperRef.current) wrapperRef.current?.resetTransform();
@@ -109,16 +120,14 @@ export const LiveEditor: React.FC<{
             <TransformComponent>
               <Canvas
                 ref={canvasRef}
-                nodes={nodes}
+                nodes={data.nodes}
                 node={CustomNode}
-                edges={edges}
+                edges={data.edges}
                 maxWidth={20000}
                 maxHeight={20000}
                 center={false}
                 zoomable={false}
-                layoutOptions={{
-                  "elk.direction": config.layout,
-                }}
+                direction={config.layout}
                 fit
                 readonly
                 animated
@@ -146,4 +155,4 @@ export const LiveEditor: React.FC<{
     );
 
   return null;
-};
+});

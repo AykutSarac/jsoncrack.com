@@ -123,7 +123,7 @@ function getLayoutIcon(layout: CanvasDirection) {
 }
 
 const Sidebar: React.FC<{
-  setJson: React.Dispatch<React.SetStateAction<string>>;
+  setJson: (json: string) => void;
 }> = ({ setJson }) => {
   const [jsonFile, setJsonFile] = React.useState<File | null>(null);
   const [config, setConfig] = useLocalStorage<StorageConfig>(
@@ -269,4 +269,4 @@ const Sidebar: React.FC<{
   );
 };
 
-export default Sidebar;
+export default React.memo(Sidebar);
