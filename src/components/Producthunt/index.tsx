@@ -5,7 +5,6 @@ const StyledProducthunt = styled.a`
   position: fixed;
   bottom: 12px;
   right: 12px;
-  
 `;
 
 const StyledImage = styled.img`
