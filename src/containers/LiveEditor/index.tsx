@@ -6,7 +6,7 @@ import {
   ReactZoomPanPinchRef,
 } from "react-zoom-pan-pinch";
 import { useLocalStorage } from "usehooks-ts";
-import { Canvas, CanvasRef } from "reaflow";
+import { Arrow, Canvas, CanvasRef } from "reaflow";
 
 import { StorageConfig } from "src/typings/global";
 import { getEdgeNodes } from "./helpers";
@@ -51,7 +51,6 @@ export const LiveEditor: React.FC<{
   setJson: (json: string) => void;
 }> = React.memo(({ json }) => {
   const pageLoaded = useLoading();
-  const canvasRef = React.useRef<CanvasRef | null>(null);
   const wrapperRef = React.useRef<ReactZoomPanPinchRef | null>(null);
   const [config] = useLocalStorage<StorageConfig>("config", defaultConfig);
   const [data, setData] = React.useState({
@@ -119,7 +118,6 @@ export const LiveEditor: React.FC<{
           >
             <TransformComponent>
               <Canvas
-                ref={canvasRef}
                 nodes={data.nodes}
                 node={CustomNode}
                 edges={data.edges}
