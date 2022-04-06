@@ -5,6 +5,10 @@ const StyledProducthunt = styled.a`
   position: fixed;
   bottom: 12px;
   right: 12px;
+
+  @media only screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const StyledImage = styled.img`
