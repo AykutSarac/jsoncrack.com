@@ -11,7 +11,7 @@ const StyledContainer = styled.div<{ reverse: boolean }>`
   gap: 50px;
   align-items: center;
   width: 75%;
-  margin: 0 auto;
+  margin: 0 auto 160px;
   min-height: calc(100vh - 250px);
   flex-direction: ${({ reverse }) => reverse && "row-reverse"};
   line-height: 1.2;
@@ -19,7 +19,7 @@ const StyledContainer = styled.div<{ reverse: boolean }>`
   @media only screen and (max-width: 768px) {
     width: 100%;
     flex-direction: column;
-    margin-top: 160px;
+    margin-bottom: 50px;
     justify-content: center;
   }
 `;
