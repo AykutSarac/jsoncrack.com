@@ -55,6 +55,12 @@ export const Navbar: React.FC = () => {
             GitHub
           </a>
         </Link>
+
+        <Link href="https://www.patreon.com/aykutsarac">
+          <a rel="me" target="_blank">
+            Sponsor
+          </a>
+        </Link>
       </StyledNav>
     </StyledNavbar>
   );
