@@ -5,7 +5,10 @@ import Document, {
   NextScript,
   DocumentContext,
 } from "next/document";
+import { SeoTags } from "src/components/SeoTags";
 import { ServerStyleSheet } from "styled-components";
+
+const isDevelopment = process.env.NODE_ENV === "development";
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -38,29 +41,29 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <meta name="title" content="JSON Visio" />
-          <meta
-            name="description"
-            content="Simple visualization tool for your JSON data. No forced structure, paste your JSON and view it instantly."
+          {!isDevelopment && (
+            <>
+              <script
+                async
+                src="https://www.googletagmanager.com/gtag/js?id=G-JKZEHMJBMH"
+              />
+              <script
+                dangerouslySetInnerHTML={{
+                  __html: `window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                
+                  gtag('config', 'G-JKZEHMJBMH');
+            `,
+                }}
+              />
+            </>
+          )}
+          <SeoTags
+            description="Simple visualization tool for your JSON data. No forced structure, paste your JSON and view it instantly."
+            title="JSON Visio"
+            image="https://jsonvisio.com/image.png"
           />
-
-          <meta property="og:type" content="website" />
-          <meta property="og:url" content="https://jsonvisio.com/" />
-          <meta property="og:title" content="JSON Visio" />
-          <meta
-            property="og:description"
-            content="Simple visualization tool for your JSON data. No forced structure, paste your JSON and view it instantly."
-          />
-          <meta property="og:image" content="https://jsonvisio.com/image.png" />
-
-          <meta property="twitter:card" content="summary_large_image" />
-          <meta property="twitter:url" content="https://jsonvisio.com/" />
-          <meta property="twitter:title" content="JSON Visio" />
-          <meta
-            property="twitter:description"
-            content="Simple visualization tool for your JSON data. No forced structure, paste your JSON and view it instantly."
-          />
-          <meta property="twitter:image" content="https://jsonvisio.com/image.png" />
           <link rel="icon" href="/favicon.ico" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
