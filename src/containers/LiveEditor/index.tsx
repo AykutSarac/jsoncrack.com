@@ -5,22 +5,12 @@ import {
   TransformComponent,
   ReactZoomPanPinchRef,
 } from "react-zoom-pan-pinch";
-import { useLocalStorage } from "usehooks-ts";
-import { Arrow, Canvas, CanvasRef } from "reaflow";
+import { Canvas } from "reaflow";
 
-import { StorageConfig } from "src/typings/global";
 import { getEdgeNodes } from "./helpers";
 import { CustomNode } from "./CustomNode";
-import { Button } from "src/components/Button";
-import {
-  AiOutlineZoomIn,
-  AiOutlineZoomOut,
-  AiOutlineFullscreen,
-  AiFillSave,
-} from "react-icons/ai";
 import { useLoading } from "src/hooks/useLoading";
-import toast from "react-hot-toast";
-import { defaultConfig } from "src/constants/data";
+import { useConfig } from "src/hocs/config";
 
 const StyledLiveEditor = styled.div`
   position: relative;
@@ -46,61 +36,34 @@ const StyledControls = styled.div`
   }
 `;
 
-export const LiveEditor: React.FC<{
-  json: string;
-  setJson: (json: string) => void;
-}> = React.memo(({ json }) => {
+const wheelOptions = {
+  step: 0.4,
+};
+
+export const LiveEditor: React.FC = React.memo(() => {
+  const {
+    states: { json, settings },
+  } = useConfig();
   const pageLoaded = useLoading();
   const wrapperRef = React.useRef<ReactZoomPanPinchRef | null>(null);
-  const [config] = useLocalStorage<StorageConfig>("config", defaultConfig);
   const [data, setData] = React.useState({
     nodes: [],
     edges: [],
   });
 
   React.useEffect(() => {
-    const { nodes, edges } = getEdgeNodes(json, config.expand);
+    const { nodes, edges } = getEdgeNodes(json, settings.expand);
 
-    setData({
-      nodes,
-      edges,
-    });
-  }, [json, config.expand]);
+    setData({ nodes, edges });
+  }, [json, settings.expand]);
 
   React.useEffect(() => {
-    if (wrapperRef.current) wrapperRef.current?.resetTransform();
-  }, [wrapperRef]);
+    wrapperRef.current?.zoomIn();
+  }, [settings.zoomScale]);
 
-  const zoomIn = (scale: number) => {
-    if (
-      wrapperRef.current?.state.scale &&
-      wrapperRef.current?.state.scale < 2
-    ) {
-      wrapperRef.current?.setTransform(
-        wrapperRef.current.instance.transformState.positionX - 200,
-        wrapperRef.current.instance.transformState.positionY - 200,
-        wrapperRef.current.state.scale + scale
-      );
-    }
-  };
-
-  const zoomOut = (scale: number) => {
-    if (
-      wrapperRef.current?.state.scale &&
-      wrapperRef.current?.state.scale > 0.4
-    ) {
-      wrapperRef.current?.setTransform(
-        wrapperRef.current.instance.transformState.positionX + 200,
-        wrapperRef.current.instance.transformState.positionY + 200,
-        wrapperRef.current.state.scale - scale
-      );
-    }
-  };
-
-  const handleSave = () => {
-    localStorage.setItem("json", json);
-    toast.success("Saved JSON successfully!");
-  };
+  React.useEffect(() => {
+    wrapperRef.current?.resetTransform();
+  }, [settings.transform]);
 
   if (pageLoaded)
     return (
@@ -112,9 +75,7 @@ export const LiveEditor: React.FC<{
             initialScale={0.8}
             ref={wrapperRef}
             limitToBounds={false}
-            wheel={{
-              step: 0.4,
-            }}
+            wheel={wheelOptions}
           >
             <TransformComponent>
               <Canvas
@@ -125,30 +86,14 @@ export const LiveEditor: React.FC<{
                 maxHeight={20000}
                 center={false}
                 zoomable={false}
-                direction={config.layout}
-                fit
+                fit={true}
+                direction={settings.layout}
                 readonly
-                animated
+                key={settings.layout}
               />
             </TransformComponent>
           </TransformWrapper>
         </StyledEditorWrapper>
-        {config.controls && (
-          <StyledControls>
-            <Button onClick={() => zoomIn(0.5)}>
-              <AiOutlineZoomIn size={24} />
-            </Button>
-            <Button onClick={() => zoomOut(0.4)}>
-              <AiOutlineZoomOut size={24} />
-            </Button>
-            <Button onClick={() => wrapperRef.current?.resetTransform()}>
-              <AiOutlineFullscreen size={24} />
-            </Button>
-            <Button onClick={handleSave}>
-              <AiFillSave size={24} />
-            </Button>
-          </StyledControls>
-        )}
       </StyledLiveEditor>
     );
 

@@ -1,11 +1,10 @@
 import React from "react";
 import AceEditor from "react-ace";
-import { StorageConfig } from "src/typings/global";
-import { useLocalStorage } from "usehooks-ts";
-import { defaultConfig } from "src/constants/data";
 import parseJson from "parse-json";
 import styled from "styled-components";
 import { Error, ErrorContainer } from "./ErrorContainer";
+import { ConfigActionType } from "src/reducer/reducer";
+import { useConfig } from "src/hocs/config";
 require("ace-builds/src-noconflict/mode-json");
 require("ace-builds/src-noconflict/theme-tomorrow_night");
 
@@ -17,42 +16,14 @@ const StyledEditorWrapper = styled.div`
   user-select: none;
 `;
 
-function isJson(
-  value: string,
-  setState: React.Dispatch<React.SetStateAction<Error>>
-) {
-  value = typeof value !== "string" ? JSON.stringify(value) : value;
-
-  try {
-    value = parseJson(value);
-    setState((err) => ({
-      ...err,
-      message: "",
-    }));
-  } catch (e: any) {
-    setState((err) => ({
-      ...err,
-      message: e.message,
-    }));
-
-    return false;
-  }
-
-  if (typeof value === "object" && value !== null) {
-    return true;
-  }
-
-  return false;
-}
-
 const aceOptions = { useWorker: false };
 
-const JsonEditor: React.FC<{
-  json: string;
-  setJson: (json: string) => void;
-}> = ({ json, setJson }) => {
+const JsonEditor: React.FC = () => {
+  const {
+    states: { json, settings },
+    dispatch,
+  } = useConfig();
   const [editorWidth, setEditorWidth] = React.useState("auto");
-  const [config] = useLocalStorage<StorageConfig>("config", defaultConfig);
   const [value, setValue] = React.useState(
     JSON.stringify(JSON.parse(json), null, 2)
   );
@@ -76,28 +47,34 @@ const JsonEditor: React.FC<{
   }, [json]);
 
   React.useEffect(() => {
-    if (config.autoformat) {
+    if (settings.autoformat) {
       return setValue(JSON.stringify(JSON.parse(json), null, 2));
     }
 
     setValue(json);
-  }, [config.autoformat, json]);
+  }, [settings.autoformat, json]);
 
   React.useEffect(() => {
     const formatTimer = setTimeout(() => {
-      if (!isJson(value, setError)) return;
+      try {
+        if (value === "") return setError({ ...error, message: "" });
+        const parsedJson = parseJson(value);
 
-      if (config.autoformat) {
-        setValue(JSON.stringify(JSON.parse(value), null, 2));
-      } else {
-        setValue(value);
+        if (settings.autoformat) {
+          setValue(JSON.stringify(JSON.parse(value), null, 2));
+        } else {
+          setValue(value);
+        }
+
+        dispatch({ type: ConfigActionType.SET_JSON, payload: value });
+        setError({ ...error, message: "" });
+      } catch (jsonError: any) {
+        setError({ ...error, message: jsonError.message });
       }
-
-      setJson(value);
     }, 1000);
 
     return () => clearTimeout(formatTimer);
-  }, [value, config.autoformat, setJson]);
+  }, [value, settings.autoformat, dispatch]);
 
   return (
     <StyledEditorWrapper>
@@ -119,4 +96,4 @@ const JsonEditor: React.FC<{
   );
 };
 
-export default JsonEditor;
+export default React.memo(JsonEditor);

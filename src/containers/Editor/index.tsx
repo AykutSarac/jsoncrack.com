@@ -4,7 +4,9 @@ import { LiveEditor } from "src/containers/LiveEditor";
 import { Loading } from "src/components/Loading";
 import { Incompatible } from "src/containers/Incompatible";
 import * as Styles from "src/containers/Editor/styles";
-import { defaultJson } from "src/constants/data";
+import { Tools } from "./Tools";
+import { ConfigActionType } from "src/reducer/reducer";
+import { useConfig } from "src/hocs/config";
 
 const JsonEditor = dynamic(() => import("src/containers/JsonEditor"), {
   ssr: false,
@@ -17,26 +19,43 @@ const Sidebar = dynamic(() => import("src/components/Sidebar"), {
 });
 
 export const Editor: React.FC = () => {
-  const [json, setJson] = React.useState(JSON.stringify(defaultJson));
+  const {
+    states: { settings },
+    dispatch,
+  } = useConfig();
 
   React.useEffect(() => {
     const jsonStored = localStorage.getItem("json");
-    if (jsonStored) setJson(jsonStored);
+    if (jsonStored)
+      dispatch({ type: ConfigActionType.SET_JSON, payload: jsonStored });
+
+    const configStored = localStorage.getItem("config");
+    if (configStored)
+      dispatch({
+        type: ConfigActionType.SET_CONFIG,
+        payload: JSON.parse(configStored),
+      });
   }, []);
+
+  React.useEffect(() => {
+    localStorage.setItem("config", JSON.stringify(settings));
+  }, [settings]);
 
   return (
     <Styles.StyledPageWrapper>
-      <Sidebar setJson={setJson} />
+      <Sidebar />
       <Styles.StyledEditorWrapper>
-        <Styles.StyledTools></Styles.StyledTools>
+        <Tools />
         <Styles.StyledEditor
           maxSize={800}
           minSize={300}
           defaultSize={450}
           split="vertical"
+          size={settings.hideEditor ? 0 : 450}
+          allowResize={!settings.hideEditor}
         >
-          <JsonEditor json={json} setJson={setJson} />
-          <LiveEditor json={json} setJson={setJson} />
+          <JsonEditor />
+          <LiveEditor />
         </Styles.StyledEditor>
       </Styles.StyledEditorWrapper>
       <Incompatible />

@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import styled from "styled-components";
-import { useLocalStorage } from "usehooks-ts";
 import { FaFileImport } from "react-icons/fa";
 import {
   MdUnfoldMore,
@@ -11,7 +10,7 @@ import {
 } from "react-icons/md";
 import {
   AiFillHome,
-  AiOutlineClear,
+  AiFillDelete,
   AiFillGithub,
   AiOutlineTwitter,
   AiFillControl,
@@ -24,12 +23,11 @@ import {
   CgArrowLongUpE,
 } from "react-icons/cg";
 
-import { getNextLayout } from "src/containers/LiveEditor/helpers";
-import { StorageConfig } from "src/typings/global";
 import { CanvasDirection } from "reaflow";
-import { defaultConfig } from "src/constants/data";
 import toast from "react-hot-toast";
 import { Tooltip } from "../Tooltip";
+import { ConfigActionType } from "src/reducer/reducer";
+import { useConfig } from "src/hocs/config";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -50,12 +48,13 @@ const StyledElement = styled.div<{ disabled?: boolean }>`
   font-weight: 700;
   width: 100%;
   color: ${({ theme, disabled }) =>
-    disabled ? theme.SILVER_DARK : theme.SILVER};
+    disabled ? theme.SILVER_DARK : theme.FULL_WHITE};
+  opacity: 0.6;
   cursor: pointer;
   pointer-events: ${({ disabled }) => disabled && "none"};
 
   &:hover {
-    filter: brightness(1.3);
+    opacity: 1;
   }
 
   a {
@@ -122,24 +121,15 @@ function getLayoutIcon(layout: CanvasDirection) {
   return <CgArrowLongUpE />;
 }
 
-const Sidebar: React.FC<{
-  setJson: (json: string) => void;
-}> = ({ setJson }) => {
+const Sidebar: React.FC = () => {
+  const {
+    states: { settings },
+    dispatch,
+  } = useConfig();
   const [jsonFile, setJsonFile] = React.useState<File | null>(null);
-  const [config, setConfig] = useLocalStorage<StorageConfig>(
-    "config",
-    defaultConfig
-  );
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) setJsonFile(e.target.files?.item(0));
-  };
-
-  const toggle = (setting: "expand" | "controls" | "autoformat") => {
-    setConfig((c) => ({
-      ...c,
-      [setting]: !c[setting],
-    }));
   };
 
   React.useEffect(() => {
@@ -148,10 +138,13 @@ const Sidebar: React.FC<{
 
       reader.readAsText(jsonFile, "UTF-8");
       reader.onload = function (data) {
-        setJson(data.target?.result as string);
+        dispatch({
+          type: ConfigActionType.SET_JSON,
+          payload: data.target?.result as string,
+        });
       };
     }
-  }, [jsonFile, setJson]);
+  }, [jsonFile, dispatch]);
 
   return (
     <StyledSidebar>
@@ -175,52 +168,23 @@ const Sidebar: React.FC<{
           <StyledElement
             as="a"
             onClick={() => {
-              toggle("autoformat");
+              dispatch({ type: ConfigActionType.TOGGLE_AUTOFORMAT });
               toast(
                 `Auto format has been ${
-                  config.autoformat ? "disabled." : "enabled."
+                  settings.autoformat ? "disabled." : "enabled."
                 }`
               );
             }}
           >
-            {config.autoformat ? <MdAutoFixHigh /> : <MdOutlineAutoFixOff />}
-          </StyledElement>
-        </Tooltip>
-        <Tooltip title="Clear JSON">
-          <StyledElement
-            as="a"
-            onClick={() => {
-              setJson("[]");
-              localStorage.removeItem("json");
-              toast.success(`Cleared JSON and removed from memory.`);
-            }}
-          >
-            <AiOutlineClear />
+            {settings.autoformat ? <MdAutoFixHigh /> : <MdOutlineAutoFixOff />}
           </StyledElement>
         </Tooltip>
         <Tooltip title="Change Layout">
           <StyledElement
             as="a"
-            onClick={() =>
-              setConfig((c) => ({
-                ...c,
-                layout: getNextLayout(c.layout),
-              }))
-            }
+            onClick={() => dispatch({ type: ConfigActionType.TOGGLE_LAYOUT })}
           >
-            {getLayoutIcon(config.layout)}
-          </StyledElement>
-        </Tooltip>
-        <Tooltip title="Toggle Control Buttons">
-          <StyledElement
-            title="Toggle Controls"
-            as="a"
-            onClick={() => {
-              toggle("controls");
-              toast(`Controls ${config.controls ? "disabled." : "enabled."}`);
-            }}
-          >
-            {config.controls ? <AiFillControl /> : <AiOutlineControl />}
+            {getLayoutIcon(settings.layout)}
           </StyledElement>
         </Tooltip>
         <Tooltip title="Toggle Compact Nodes">
@@ -228,11 +192,23 @@ const Sidebar: React.FC<{
             as="a"
             title="Toggle Expand/Collapse"
             onClick={() => {
-              toggle("expand");
-              toast(`${config.expand ? "Collapsed" : "Expanded"} nodes.`);
+              dispatch({ type: ConfigActionType.TOGGLE_EXPAND });
+              toast(`${settings.expand ? "Collapsed" : "Expanded"} nodes.`);
             }}
           >
-            {config.expand ? <MdUnfoldMore /> : <MdUnfoldLess />}
+            {settings.expand ? <MdUnfoldMore /> : <MdUnfoldLess />}
+          </StyledElement>
+        </Tooltip>
+        <Tooltip title="Clear JSON">
+          <StyledElement
+            as="a"
+            onClick={() => {
+              dispatch({ type: ConfigActionType.SET_JSON, payload: "[]" });
+              localStorage.removeItem("json");
+              toast.success(`Cleared JSON and removed from memory.`);
+            }}
+          >
+            <AiFillDelete />
           </StyledElement>
         </Tooltip>
         <Tooltip title="Import File">
