@@ -61,7 +61,7 @@ const JsonEditor: React.FC = () => {
         const parsedJson = parseJson(value);
 
         if (settings.autoformat) {
-          setValue(JSON.stringify(JSON.parse(value), null, 2));
+          setValue(JSON.stringify(parsedJson, null, 2));
         } else {
           setValue(value);
         }
