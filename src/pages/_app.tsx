@@ -49,6 +49,9 @@ function JsonVisio({ Component, pageProps }: AppProps) {
             color: "#B9BBBE",
           },
         }}
+        containerStyle={{
+          top: 40,
+        }}
       />
     </ThemeProvider>
   );
