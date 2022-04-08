@@ -58,7 +58,11 @@ export const LiveEditor: React.FC = React.memo(() => {
   }, [json, settings.expand]);
 
   React.useEffect(() => {
-    wrapperRef.current?.zoomIn();
+    wrapperRef.current?.setTransform(
+      wrapperRef.current.state.positionX,
+      wrapperRef.current.state.positionY,
+      settings.zoomScale
+    );
   }, [settings.zoomScale]);
 
   React.useEffect(() => {

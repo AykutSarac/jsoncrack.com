@@ -38,7 +38,7 @@ export const useConfigReducer: React.Reducer<AppConfig, ReducerAction> = (
         ...state,
         settings: {
           ...state.settings,
-          zoomScale: state.settings.zoomScale + 0.1,
+          zoomScale: state.settings.zoomScale + 0.2,
         },
       };
 
@@ -47,7 +47,7 @@ export const useConfigReducer: React.Reducer<AppConfig, ReducerAction> = (
         ...state,
         settings: {
           ...state.settings,
-          zoomScale: state.settings.zoomScale - 0.1,
+          zoomScale: state.settings.zoomScale - 0.2,
         },
       };
 
