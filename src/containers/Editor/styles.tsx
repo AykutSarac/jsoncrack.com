@@ -14,21 +14,11 @@ export const StyledEditorWrapper = styled.div`
   }
 `;
 
-export const StyledTools = styled.div`
-  display: flex;
-  align-items: center;
-  height: 15px;
-  border-bottom: 1px solid ${({ theme }) => theme.BLACK};
-  padding: 4px 16px;
-  background: ${({ theme }) => theme.BLACK_SECONDARY};
-  color: ${({ theme }) => theme.SILVER};
-`;
-
 export const StyledEditor = styled(SplitPane)`
   position: relative !important;
   display: flex;
   background: ${({ theme }) => theme.BLACK_LIGHT};
-  height: calc(100vh - 26px) !important;
+  height: calc(100vh - 30px) !important;
 
   .Resizer {
     background: #000;
@@ -36,6 +26,10 @@ export const StyledEditor = styled(SplitPane)`
     box-sizing: border-box;
     background-clip: padding-box;
     z-index: 1;
+  }
+
+  .Resizer.disabled {
+    pointer-events: none;
   }
 
   .Resizer:hover {
