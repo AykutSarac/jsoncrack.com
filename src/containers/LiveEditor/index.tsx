@@ -74,7 +74,7 @@ export const LiveEditor: React.FC = React.memo(() => {
       <StyledLiveEditor>
         <StyledEditorWrapper>
           <TransformWrapper
-            maxScale={2}
+            maxScale={1.8}
             minScale={0.4}
             initialScale={0.8}
             ref={wrapperRef}
