@@ -71,7 +71,7 @@ const JsonEditor: React.FC = () => {
       } catch (jsonError: any) {
         setError({ ...error, message: jsonError.message });
       }
-    }, 1000);
+    }, 1800);
 
     return () => clearTimeout(formatTimer);
   }, [value, settings.autoformat, dispatch]);
