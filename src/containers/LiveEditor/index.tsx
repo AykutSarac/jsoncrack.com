@@ -77,13 +77,21 @@ export const LiveEditor: React.FC = React.memo(() => {
       `span[data-key*='${settings.searchNode}' i]`
     );
 
-    if (wrapperRect && node) {
-      const newScale = 0.8;
+    document
+      .querySelector("foreignObject.searched")
+      ?.classList.remove("searched");
+
+    if (wrapperRect && node && node.parentElement) {
+      const newScale = 1.2;
       const x = Number(node.getAttribute("data-x"));
       const y = Number(node.getAttribute("data-y"));
 
-      const newPositionX = (wrapperRect.left - x) * newScale;
-      const newPositionY = (wrapperRect.top - y) * newScale;
+      const newPositionX = (wrapperRect.left - x) * newScale - 300;
+      const newPositionY = (wrapperRect.top - y) * newScale + 300;
+
+      node.parentElement.parentElement
+        ?.closest("foreignObject")
+        ?.classList.toggle("searched");
 
       wrapperRef.current?.setTransform(newPositionX, newPositionY, newScale);
     }
