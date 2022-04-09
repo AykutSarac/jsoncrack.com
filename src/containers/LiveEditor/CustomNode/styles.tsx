@@ -25,6 +25,10 @@ export const StyledText = styled.pre<{
 
 export const StyledForeignObject = styled.foreignObject`
   pointer-events: none;
+
+  &.searched {
+    border: 1px solid ${({ theme }) => theme.SEAGREEN};
+  }
 `;
 
 export const StyledKey = styled.span<{
