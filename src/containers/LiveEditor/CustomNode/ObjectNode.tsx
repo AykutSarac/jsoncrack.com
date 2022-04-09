@@ -6,6 +6,8 @@ const ObjectNode: React.FC<CustomNodeProps<[string, unknown][]>> = ({
   width,
   height,
   value,
+  x,
+  y
 }) => {
   return (
     <Styled.StyledForeignObject width={width} height={height} x={0} y={0}>
@@ -15,7 +17,14 @@ const ObjectNode: React.FC<CustomNodeProps<[string, unknown][]>> = ({
             (val, idx) =>
               val[1] && (
                 <Styled.StyledRow key={idx} width={width}>
-                  <Styled.StyledKey objectKey>{val[0]}: </Styled.StyledKey>
+                  <Styled.StyledKey
+                    data-x={x}
+                    data-y={y}
+                    data-key={val[1]}
+                    objectKey
+                  >
+                    {val[0]}:{" "}
+                  </Styled.StyledKey>
                   {val[1]}
                 </Styled.StyledRow>
               )

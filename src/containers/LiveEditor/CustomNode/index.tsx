@@ -8,6 +8,8 @@ export interface CustomNodeProps<T> {
   height: number;
   value: T;
   isParent?: boolean;
+  x: number;
+  y: number;
 }
 
 const baseLabelStyle = {
@@ -34,7 +36,15 @@ export const CustomNode = (nodeProps: NodeProps) => {
 
         if (data.text instanceof Object) {
           const entries = Object.entries(data.text);
-          return <ObjectNode width={width} height={height} value={entries} />;
+          return (
+            <ObjectNode
+              x={nodeProps.x}
+              y={nodeProps.y}
+              width={width}
+              height={height}
+              value={entries}
+            />
+          );
         }
 
         return (
@@ -43,6 +53,8 @@ export const CustomNode = (nodeProps: NodeProps) => {
             width={width}
             height={height}
             value={data.text}
+            x={nodeProps.x}
+            y={nodeProps.y}
           />
         );
       }}
