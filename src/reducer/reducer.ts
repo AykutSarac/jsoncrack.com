@@ -12,6 +12,7 @@ export enum ConfigActionType {
   ZOOM_OUT,
   CENTER_VIEW,
   SET_JSON,
+  SET_SEARCH_NODE,
 }
 
 export type ReducerAction = {
@@ -26,6 +27,15 @@ export const useConfigReducer: React.Reducer<AppConfig, ReducerAction> = (
   switch (action.type) {
     case ConfigActionType.SET_CONFIG:
       return { ...state, settings: action.payload };
+
+    case ConfigActionType.SET_SEARCH_NODE:
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          searchNode: action.payload,
+        },
+      };
 
     case ConfigActionType.CENTER_VIEW:
       return {

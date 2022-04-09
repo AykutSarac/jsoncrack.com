@@ -7,4 +7,5 @@ export interface StorageConfig {
   hideEditor: boolean;
   zoomScale: number;
   transform: number;
+  searchNode: string;
 }
