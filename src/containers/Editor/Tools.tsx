@@ -77,9 +77,9 @@ export const Tools: React.FC = () => {
       <StyledToolElement onClick={zoomIn}>
         <AiOutlinePlus />
       </StyledToolElement>
-      {/* <StyledToolElement>
+      <StyledToolElement>
         <AiOutlineSearch />
-      </StyledToolElement> */}
+      </StyledToolElement>
     </StyledTools>
   );
 };
