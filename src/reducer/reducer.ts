@@ -8,6 +8,7 @@ export enum ConfigActionType {
   TOGGLE_EXPAND,
   TOGGLE_AUTOFORMAT,
   TOGGLE_DOCK,
+  TOGGLE_SEARCH,
   ZOOM_IN,
   ZOOM_OUT,
   CENTER_VIEW,
@@ -27,6 +28,16 @@ export const useConfigReducer: React.Reducer<AppConfig, ReducerAction> = (
   switch (action.type) {
     case ConfigActionType.SET_CONFIG:
       return { ...state, settings: action.payload };
+
+    case ConfigActionType.TOGGLE_SEARCH:
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          showSearch: !state.settings.showSearch,
+          ...(state.settings.showSearch && { searchNode: "" }),
+        },
+      };
 
     case ConfigActionType.SET_SEARCH_NODE:
       return {

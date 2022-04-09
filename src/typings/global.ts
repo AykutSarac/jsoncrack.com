@@ -5,6 +5,7 @@ export interface StorageConfig {
   expand: boolean;
   autoformat: boolean;
   hideEditor: boolean;
+  showSearch: boolean;
   zoomScale: number;
   transform: number;
   searchNode: string;
