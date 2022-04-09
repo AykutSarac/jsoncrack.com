@@ -70,8 +70,7 @@ export const LiveEditor: React.FC = React.memo(() => {
   }, [settings.transform]);
 
   React.useEffect(() => {
-    const wrapperRect =
-      wrapperRef.current?.instance.wrapperComponent?.getBoundingClientRect();
+    const wrapperRect = wrapperRef.current?.instance.wrapperComponent;
 
     const node = document.querySelector(
       `span[data-key*='${settings.searchNode}' i]`
@@ -82,12 +81,16 @@ export const LiveEditor: React.FC = React.memo(() => {
       ?.classList.remove("searched");
 
     if (wrapperRect && node && node.parentElement) {
-      const newScale = 1.2;
+      const newScale = 1;
       const x = Number(node.getAttribute("data-x"));
       const y = Number(node.getAttribute("data-y"));
 
-      const newPositionX = (wrapperRect.left - x) * newScale - 300;
-      const newPositionY = (wrapperRect.top - y) * newScale + 300;
+      const newPositionX =
+        (wrapperRect.offsetLeft - x) * newScale +
+        node.getBoundingClientRect().width;
+      const newPositionY =
+        (wrapperRect.offsetTop - y) * newScale +
+        node.getBoundingClientRect().height;
 
       node.parentElement.parentElement
         ?.closest("foreignObject")
