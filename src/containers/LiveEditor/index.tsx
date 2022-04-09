@@ -69,6 +69,26 @@ export const LiveEditor: React.FC = React.memo(() => {
     wrapperRef.current?.resetTransform();
   }, [settings.transform]);
 
+  React.useEffect(() => {
+    const wrapperRect =
+      wrapperRef.current?.instance.wrapperComponent?.getBoundingClientRect();
+
+    const node = document.querySelector(
+      `span[data-key*='${settings.searchNode}' i]`
+    );
+
+    if (wrapperRect && node) {
+      const newScale = 0.8;
+      const x = Number(node.getAttribute("data-x"));
+      const y = Number(node.getAttribute("data-y"));
+
+      const newPositionX = (wrapperRect.left - x) * newScale;
+      const newPositionY = (wrapperRect.top - y) * newScale;
+
+      wrapperRef.current?.setTransform(newPositionX, newPositionY, newScale);
+    }
+  }, [settings.searchNode]);
+
   if (pageLoaded)
     return (
       <StyledLiveEditor>
