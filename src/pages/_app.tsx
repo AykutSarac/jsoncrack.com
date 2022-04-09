@@ -42,15 +42,12 @@ function JsonVisio({ Component, pageProps }: AppProps) {
       <GlobalStyle />
       <Component {...pageProps} />
       <Toaster
-        position="top-right"
+        position="bottom-right"
         toastOptions={{
           style: {
             background: "#4D4D4D",
             color: "#B9BBBE",
           },
-        }}
-        containerStyle={{
-          top: 40,
         }}
       />
     </ThemeProvider>
