@@ -7,6 +7,7 @@ import * as Styles from "src/containers/Editor/styles";
 import { Tools } from "./Tools";
 import { ConfigActionType } from "src/reducer/reducer";
 import { useConfig } from "src/hocs/config";
+import { Input } from "src/components/Input";
 
 const JsonEditor = dynamic(() => import("src/containers/JsonEditor"), {
   ssr: false,
@@ -46,6 +47,7 @@ export const Editor: React.FC = () => {
       <Sidebar />
       <Styles.StyledEditorWrapper>
         <Tools />
+        {settings.showSearch && <Input />}
         <Styles.StyledEditor
           maxSize={800}
           minSize={300}
