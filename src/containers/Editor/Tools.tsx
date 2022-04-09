@@ -44,31 +44,25 @@ export const Tools: React.FC = () => {
     toast.success("Saved JSON successfully!");
   };
 
-  const zoomIn = () => {
-    dispatch({ type: ConfigActionType.ZOOM_IN });
-  };
+  const zoomIn = () => dispatch({ type: ConfigActionType.ZOOM_IN });
 
-  const zoomOut = () => {
-    dispatch({ type: ConfigActionType.ZOOM_OUT });
-  };
+  const zoomOut = () => dispatch({ type: ConfigActionType.ZOOM_OUT });
 
-  const handleCenter = () => {
-    dispatch({ type: ConfigActionType.CENTER_VIEW });
-  };
+  const centerView = () => dispatch({ type: ConfigActionType.CENTER_VIEW });
 
-  const handleToggleEditor = () => {
-    dispatch({ type: ConfigActionType.TOGGLE_DOCK });
-  };
+  const toggleEditor = () => dispatch({ type: ConfigActionType.TOGGLE_DOCK });
+
+  const toggleSearch = () => dispatch({ type: ConfigActionType.TOGGLE_SEARCH });
 
   return (
     <StyledTools>
-      <StyledToolElement onClick={handleCenter}>
+      <StyledToolElement onClick={centerView}>
         <AiOutlineFullscreen />
       </StyledToolElement>
       <StyledToolElement onClick={handleSave}>
         <AiOutlineSave />
       </StyledToolElement>
-      <StyledToolElement onClick={handleToggleEditor}>
+      <StyledToolElement onClick={toggleEditor}>
         <CgDockLeft />
       </StyledToolElement>
       <StyledToolElement onClick={zoomOut}>
@@ -77,7 +71,7 @@ export const Tools: React.FC = () => {
       <StyledToolElement onClick={zoomIn}>
         <AiOutlinePlus />
       </StyledToolElement>
-      <StyledToolElement>
+      <StyledToolElement onClick={toggleSearch}>
         <AiOutlineSearch />
       </StyledToolElement>
     </StyledTools>
