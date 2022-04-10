@@ -1,13 +1,14 @@
 import Script from "next/script";
 import React from "react";
-import * as gtag from "src/utils/gtag";
+
+const GA_TRACKING_ID = "G-JKZEHMJBMH";
 
 export const GoogleAnalytics: React.FC = () => {
   return (
     <>
       <Script
         strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
       />
       <Script
         id="gtag-init"
@@ -17,7 +18,7 @@ export const GoogleAnalytics: React.FC = () => {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', '${gtag.GA_TRACKING_ID}', {
+            gtag('config', '${GA_TRACKING_ID}', {
               page_path: window.location.pathname,
             });
           `,

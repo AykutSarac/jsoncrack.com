@@ -5,8 +5,11 @@ import Document, {
   NextScript,
   DocumentContext,
 } from "next/document";
+import { GoogleAnalytics } from "src/components/GoogleAnalytics";
 import { SeoTags } from "src/components/SeoTags";
 import { ServerStyleSheet } from "styled-components";
+
+const isDevelopment = process.env.NODE_ENV === "development";
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext) {
@@ -39,6 +42,7 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          {!isDevelopment && <GoogleAnalytics />}
           <SeoTags
             description="Simple visualization tool for your JSON data. No forced structure, paste your JSON and view it instantly."
             title="JSON Visio"
