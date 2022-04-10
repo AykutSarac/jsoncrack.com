@@ -57,7 +57,7 @@ const JsonEditor: React.FC = () => {
   React.useEffect(() => {
     const formatTimer = setTimeout(() => {
       try {
-        if (value === "") return setError({ ...error, message: "" });
+        if (value === "") return setError((err) => ({ ...err, message: "" }));
         const parsedJson = parseJson(value);
 
         if (settings.autoformat) {
@@ -67,9 +67,9 @@ const JsonEditor: React.FC = () => {
         }
 
         dispatch({ type: ConfigActionType.SET_JSON, payload: value });
-        setError({ ...error, message: "" });
+        setError((err) => ({ ...err, message: "" }));
       } catch (jsonError: any) {
-        setError({ ...error, message: jsonError.message });
+        setError((err) => ({ ...err, message: jsonError.message }));
       }
     }, 1800);
 
@@ -78,7 +78,7 @@ const JsonEditor: React.FC = () => {
 
   return (
     <StyledEditorWrapper>
-      {error.message && <ErrorContainer error={error} setError={setError} />}
+      <ErrorContainer error={error} setError={setError} />
       <AceEditor
         value={value}
         onChange={setValue}
