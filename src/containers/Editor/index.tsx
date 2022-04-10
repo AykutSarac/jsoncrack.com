@@ -4,10 +4,8 @@ import { LiveEditor } from "src/containers/LiveEditor";
 import { Loading } from "src/components/Loading";
 import { Incompatible } from "src/containers/Incompatible";
 import * as Styles from "src/containers/Editor/styles";
-import { Tools } from "./Tools";
 import { ConfigActionType } from "src/reducer/reducer";
 import { useConfig } from "src/hocs/config";
-import { Input } from "src/components/Input";
 
 const JsonEditor = dynamic(() => import("src/containers/JsonEditor"), {
   ssr: false,
@@ -36,18 +34,22 @@ export const Editor: React.FC = () => {
         type: ConfigActionType.SET_CONFIG,
         payload: JSON.parse(configStored),
       });
-  }, []);
+  }, [dispatch]);
 
   React.useEffect(() => {
-    localStorage.setItem("config", JSON.stringify(settings));
+    localStorage.setItem(
+      "config",
+      JSON.stringify({
+        ...settings,
+        zoomPanPinch: undefined,
+      })
+    );
   }, [settings]);
 
   return (
     <Styles.StyledPageWrapper>
       <Sidebar />
       <Styles.StyledEditorWrapper>
-        <Tools />
-        {settings.showSearch && <Input />}
         <Styles.StyledEditor
           maxSize={800}
           minSize={300}
