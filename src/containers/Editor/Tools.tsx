@@ -5,9 +5,9 @@ import {
   AiOutlineSave,
   AiOutlineMinus,
   AiOutlinePlus,
-  AiOutlineSearch,
 } from "react-icons/ai";
-import { CgDockLeft } from "react-icons/cg";
+import { MdCenterFocusWeak } from "react-icons/md";
+import { Input } from "src/components/Input";
 import { useConfig } from "src/hocs/config";
 import { ConfigActionType } from "src/reducer/reducer";
 import styled from "styled-components";
@@ -17,10 +17,10 @@ export const StyledTools = styled.div`
   align-items: center;
   gap: 4px;
   flex-direction: row-reverse;
-  height: 20px;
-  border-bottom: 1px solid ${({ theme }) => theme.BLACK};
+  height: 28px;
   padding: 4px 16px;
-  background: ${({ theme }) => theme.BLACK_SECONDARY};
+  border-bottom: 1px solid #1f2124;
+  background: ${({ theme }) => theme.BACKGROUND_PRIMARY};
   color: ${({ theme }) => theme.SILVER};
 `;
 
@@ -29,11 +29,12 @@ const StyledToolElement = styled.button`
   place-content: center;
   font-size: 20px;
   background: none;
-  color: ${({ theme }) => theme.FULL_WHITE};
-  opacity: 0.6;
+  color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
 
   &:hover {
+    color: ${({ theme }) => theme.INTERACTIVE_HOVER};
     opacity: 1;
+    box-shadow: none;
   }
 `;
 
@@ -52,27 +53,23 @@ export const Tools: React.FC = () => {
 
   const toggleEditor = () => dispatch({ type: ConfigActionType.TOGGLE_DOCK });
 
-  const toggleSearch = () => dispatch({ type: ConfigActionType.TOGGLE_SEARCH });
-
   return (
     <StyledTools>
-      <StyledToolElement onClick={centerView}>
+      <StyledToolElement onClick={toggleEditor}>
         <AiOutlineFullscreen />
       </StyledToolElement>
+      <Input />
       <StyledToolElement onClick={handleSave}>
         <AiOutlineSave />
       </StyledToolElement>
-      <StyledToolElement onClick={toggleEditor}>
-        <CgDockLeft />
+      <StyledToolElement>
+        <MdCenterFocusWeak onClick={centerView} />
       </StyledToolElement>
       <StyledToolElement onClick={zoomOut}>
         <AiOutlineMinus />
       </StyledToolElement>
       <StyledToolElement onClick={zoomIn}>
         <AiOutlinePlus />
-      </StyledToolElement>
-      <StyledToolElement onClick={toggleSearch}>
-        <AiOutlineSearch />
       </StyledToolElement>
     </StyledTools>
   );
