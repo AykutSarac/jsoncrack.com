@@ -39,4 +39,5 @@ export const defaultConfig: StorageConfig = {
   autoformat: true,
   hideEditor: false,
   searchNode: "",
+  zoomPanPinch: null,
 };
