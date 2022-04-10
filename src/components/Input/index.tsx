@@ -1,30 +1,47 @@
 import React from "react";
+import { AiOutlineSearch } from "react-icons/ai";
+import { IoCloseSharp } from "react-icons/io5";
 import { useConfig } from "src/hocs/config";
 import { ConfigActionType } from "src/reducer/reducer";
 import styled from "styled-components";
 
 const StyledInputWrapper = styled.div`
-  position: fixed;
-  top: 0;
-  right: 0;
-  transform: translate(-5%, 100%);
-  z-index: 1;
-
-  background: ${({ theme }) => theme.BLACK_SECONDARY};
-  padding: 6px;
-  border-radius: 5px;
-  box-shadow: 0 3px 10px rgb(0 0 0 / 10%), 0 3px 3px rgb(0 0 0 / 5%);
-  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
+  border-radius: 4px;
+  padding: 4px 6px;
 `;
 
 const StyledInput = styled.input`
+  background: none;
+  color: ${({ theme }) => theme.TEXT_NORMAL};
   outline: none;
   border: none;
-  background: none;
-  border-bottom: 1px solid ${({ theme }) => theme.SILVER_DARK};
-  color: ${({ theme }) => theme.SILVER};
+  width: 112px;
   font-size: 14px;
-  width: 100%;
+  font-weight: 500;
+  transition: width 0.3s;
+
+  &::-webkit-search-decoration,
+  &::-webkit-search-cancel-button,
+  &::-webkit-search-results-button,
+  &::-webkit-search-results-decoration {
+    display: none;
+  }
+
+  &:focus {
+    width: 208px;
+  }
+`;
+
+const StyledSearchButton = styled.button`
+  display: grid;
+  background: none;
+  color: inherit;
+  padding: 0;
+  min-height: unset;
 `;
 
 export const Input = () => {
@@ -39,13 +56,21 @@ export const Input = () => {
     return () => clearTimeout(debouncer);
   }, [value, dispatch]);
 
+  const handleClick = () => {
+    setValue("");
+  };
+
   return (
     <StyledInputWrapper>
       <StyledInput
-        type="search"
+        type="text"
         value={value}
         onChange={(e) => setValue(e.target.value)}
+        placeholder="Search Node"
       />
+      <StyledSearchButton onClick={handleClick}>
+        {value ? <IoCloseSharp size={18} /> : <AiOutlineSearch size={18} />}
+      </StyledSearchButton>
     </StyledInputWrapper>
   );
 };
