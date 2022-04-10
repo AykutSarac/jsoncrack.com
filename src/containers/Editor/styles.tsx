@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 export const StyledPageWrapper = styled.div`
   display: flex;
+  height: 100vh;
 `;
 
 export const StyledEditorWrapper = styled.div`
@@ -17,12 +18,10 @@ export const StyledEditorWrapper = styled.div`
 export const StyledEditor = styled(SplitPane)`
   position: relative !important;
   display: flex;
-  background: ${({ theme }) => theme.BLACK_LIGHT};
-  height: calc(100vh - 30px) !important;
+  background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
 
   .Resizer {
-    background: #000;
-    opacity: 0.2;
+    background: ${({ theme }) => theme.BLACK};
     box-sizing: border-box;
     background-clip: padding-box;
     z-index: 1;
@@ -46,8 +45,8 @@ export const StyledEditor = styled(SplitPane)`
   }
 
   .Resizer.horizontal:hover {
-    border-top: 5px solid rgba(0, 0, 0, 0.5);
-    border-bottom: 5px solid rgba(0, 0, 0, 0.5);
+    border-top: 5px solid rgba(0, 0, 0, 0);
+    border-bottom: 5px solid rgba(0, 0, 0, 0);
   }
 
   .Resizer.vertical {
@@ -60,8 +59,8 @@ export const StyledEditor = styled(SplitPane)`
   }
 
   .Resizer.vertical:hover {
-    border-left: 5px solid rgba(0, 0, 0, 0.5);
-    border-right: 5px solid rgba(0, 0, 0, 0.5);
+    border-left: 5px solid rgba(0, 0, 0, 0);
+    border-right: 5px solid rgba(0, 0, 0, 0);
   }
 
   .Resizer.disabled {
