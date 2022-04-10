@@ -13,8 +13,6 @@ import {
   AiFillDelete,
   AiFillGithub,
   AiOutlineTwitter,
-  AiFillControl,
-  AiOutlineControl,
 } from "react-icons/ai";
 import {
   CgArrowLongDownE,
@@ -28,6 +26,7 @@ import toast from "react-hot-toast";
 import { Tooltip } from "../Tooltip";
 import { ConfigActionType } from "src/reducer/reducer";
 import { useConfig } from "src/hocs/config";
+import { useRouter } from "next/router";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -35,31 +34,23 @@ const StyledSidebar = styled.div`
   flex-direction: column;
   align-items: center;
   width: 42px;
-  background: #2f3136;
+  background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
   padding: 8px;
   border-right: 1px solid ${({ theme }) => theme.SILVER_DARK};
 `;
 
-const StyledElement = styled.div<{ disabled?: boolean }>`
+const StyledElement = styled.div`
   display: flex;
   justify-content: center;
   text-align: center;
   font-size: 28px;
   font-weight: 700;
   width: 100%;
-  color: ${({ theme, disabled }) =>
-    disabled ? theme.SILVER_DARK : theme.FULL_WHITE};
-  opacity: 0.6;
+  color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
   cursor: pointer;
-  pointer-events: ${({ disabled }) => disabled && "none"};
 
-  &:hover {
-    opacity: 1;
-  }
-
-  a {
-    text-align: center;
-    width: 100%;
+  &:hover :is(a, svg) {
+    color: ${({ theme }) => theme.INTERACTIVE_HOVER};
   }
 
   svg {
@@ -80,12 +71,8 @@ const StyledTopWrapper = styled.nav`
   align-items: center;
   width: 100%;
 
-  & > div:first-of-type {
-    border-top: 1px solid ${({ theme }) => theme.SILVER_DARK};
-  }
-
   & > div:nth-child(n + 1) {
-    border-bottom: 1px solid ${({ theme }) => theme.SILVER_DARK};
+    border-bottom: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
   }
 `;
 
@@ -98,7 +85,7 @@ const StyledBottomWrapper = styled.nav`
 
   & > div,
   a:nth-child(0) {
-    border-top: 1px solid ${({ theme }) => theme.SILVER_DARK};
+    border-top: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
   }
 `;
 
@@ -126,6 +113,7 @@ const Sidebar: React.FC = () => {
     states: { settings },
     dispatch,
   } = useConfig();
+  const router = useRouter();
   const [jsonFile, setJsonFile] = React.useState<File | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -150,7 +138,7 @@ const Sidebar: React.FC = () => {
     <StyledSidebar>
       <StyledTopWrapper>
         <Link passHref href="/">
-          <StyledElement as="a">
+          <StyledElement onClick={() => router.push("/")}>
             <StyledLogo>
               <StyledText>J</StyledText>
               <StyledText secondary>V</StyledText>
@@ -158,15 +146,12 @@ const Sidebar: React.FC = () => {
           </StyledElement>
         </Link>
         <Tooltip title="Home">
-          <Link passHref href="/">
-            <StyledElement as="a">
-              <AiFillHome />
-            </StyledElement>
-          </Link>
+          <StyledElement onClick={() => router.push("/")}>
+            <AiFillHome />
+          </StyledElement>
         </Tooltip>
         <Tooltip title="Auto Format">
           <StyledElement
-            as="a"
             onClick={() => {
               dispatch({ type: ConfigActionType.TOGGLE_AUTOFORMAT });
               toast(
@@ -181,7 +166,6 @@ const Sidebar: React.FC = () => {
         </Tooltip>
         <Tooltip title="Change Layout">
           <StyledElement
-            as="a"
             onClick={() => dispatch({ type: ConfigActionType.TOGGLE_LAYOUT })}
           >
             {getLayoutIcon(settings.layout)}
@@ -189,7 +173,6 @@ const Sidebar: React.FC = () => {
         </Tooltip>
         <Tooltip title="Toggle Compact Nodes">
           <StyledElement
-            as="a"
             title="Toggle Expand/Collapse"
             onClick={() => {
               dispatch({ type: ConfigActionType.TOGGLE_EXPAND });
@@ -201,7 +184,6 @@ const Sidebar: React.FC = () => {
         </Tooltip>
         <Tooltip title="Clear JSON">
           <StyledElement
-            as="a"
             onClick={() => {
               dispatch({ type: ConfigActionType.SET_JSON, payload: "[]" });
               localStorage.removeItem("json");
@@ -212,7 +194,7 @@ const Sidebar: React.FC = () => {
           </StyledElement>
         </Tooltip>
         <Tooltip title="Import File">
-          <StyledElement as="a">
+          <StyledElement>
             <StyledImportFile>
               <input
                 key={jsonFile?.name}
