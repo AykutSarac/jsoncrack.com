@@ -17,15 +17,16 @@ const StyledTooltip = styled.div<{ visible: boolean }>`
   right: 0;
   transform: translate(calc(100% + 15px), 25%);
   z-index: 5;
-  background: ${({ theme }) => theme.SILVER};
-  color: ${({ theme }) => theme.SILVER_DARK};
+  background: ${({ theme }) => theme.SILVER_DARK};
+  color: ${({ theme }) => theme.TEXT_NORMAL};
   border-radius: 5px;
   padding: 4px 8px;
   opacity: ${({ visible }) => (visible ? "1" : "0")};
   transition: opacity 0.2s;
   white-space: nowrap;
-  font-size: 14px;
+  font-size: 16px;
   user-select: none;
+  font-weight: 600;
 `;
 
 const StyledChildren = styled.div``;
