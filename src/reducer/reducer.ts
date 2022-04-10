@@ -25,8 +25,6 @@ export const useConfigReducer: React.Reducer<AppConfig, ReducerAction> = (
   state = initialStates,
   action
 ) => {
-  if (!state.settings.zoomPanPinch) return state;
-
   switch (action.type) {
     case ConfigActionType.SET_CONFIG:
       return { ...state, settings: action.payload };
@@ -50,22 +48,22 @@ export const useConfigReducer: React.Reducer<AppConfig, ReducerAction> = (
       };
 
     case ConfigActionType.CENTER_VIEW:
-      state.settings.zoomPanPinch.resetTransform();
+      state.settings.zoomPanPinch?.resetTransform();
       return state;
 
     case ConfigActionType.ZOOM_IN:
-      state.settings.zoomPanPinch.setTransform(
-        state.settings.zoomPanPinch.state.positionX,
-        state.settings.zoomPanPinch.state.positionY,
-        state.settings.zoomPanPinch.state.scale + 0.2
+      state.settings.zoomPanPinch?.setTransform(
+        state.settings.zoomPanPinch?.state.positionX,
+        state.settings.zoomPanPinch?.state.positionY,
+        state.settings.zoomPanPinch?.state.scale + 0.2
       );
       return state;
 
     case ConfigActionType.ZOOM_OUT:
-      state.settings.zoomPanPinch.setTransform(
-        state.settings.zoomPanPinch.state.positionX,
-        state.settings.zoomPanPinch.state.positionY,
-        state.settings.zoomPanPinch.state.scale - 0.2
+      state.settings.zoomPanPinch?.setTransform(
+        state.settings.zoomPanPinch?.state.positionX,
+        state.settings.zoomPanPinch?.state.positionY,
+        state.settings.zoomPanPinch?.state.scale - 0.2
       );
       return state;
 
