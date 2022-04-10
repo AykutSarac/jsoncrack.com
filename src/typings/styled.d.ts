@@ -24,5 +24,16 @@ declare module "styled-components" {
     ORANGE: string;
     SILVER: string;
     SILVER_DARK: string;
+
+    INTERACTIVE_NORMAL: string;
+    INTERACTIVE_HOVER: string;
+    INTERACTIVE_ACTIVE: string;
+    BACKGROUND_TERTIARY: string;
+    BACKGROUND_SECONDARY: string;
+    BACKGROUND_PRIMARY: string;
+    BACKGROUND_MODIFIER_ACCENT: string;
+    TEXT_NORMAL: string;
+    TEXT_POSITIVE: string;
+    TEXT_DANGER: string;
   }
 }
