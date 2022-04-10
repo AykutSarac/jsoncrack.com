@@ -1,56 +1,45 @@
 import React from "react";
-import Head from "next/head";
-import { useRouter } from "next/router";
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "styled-components";
 
 import GlobalStyle from "src/constants/globalStyle";
 import { darkTheme } from "src/constants/theme";
-import { Loading } from "src/components/Loading";
 import { Toaster } from "react-hot-toast";
+import { useRouter } from "next/router";
+import * as gtag from "src/utils/gtag";
+import { GoogleAnalytics } from "src/components/GoogleAnalytics";
+
+const isDevelopment = process.env.NODE_ENV === "development";
 
 function JsonVisio({ Component, pageProps }: AppProps) {
   const router = useRouter();
-
-  const [pageLoading, setPageLoading] = React.useState<boolean>(false);
   React.useEffect(() => {
-    const handleStart = () => {
-      setPageLoading(true);
+    const handleRouteChange = (url: string) => {
+      gtag.pageview(url);
     };
-    const handleComplete = () => {
-      setPageLoading(false);
+    router.events.on("routeChangeComplete", handleRouteChange);
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
     };
-
-    router.events.on("routeChangeStart", handleStart);
-    router.events.on("routeChangeComplete", handleComplete);
-    router.events.on("routeChangeError", handleComplete);
-  }, [router]);
-
-  if (pageLoading)
-    return (
-      <ThemeProvider theme={darkTheme}>
-        <GlobalStyle />
-        <Head>
-          <title>Loading... | JSON Visio</title>
-        </Head>
-        <Loading />
-      </ThemeProvider>
-    );
+  }, [router.events]);
 
   return (
-    <ThemeProvider theme={darkTheme}>
-      <GlobalStyle />
-      <Component {...pageProps} />
-      <Toaster
-        position="bottom-right"
-        toastOptions={{
-          style: {
-            background: "#4D4D4D",
-            color: "#B9BBBE",
-          },
-        }}
-      />
-    </ThemeProvider>
+    <>
+      {!isDevelopment && <GoogleAnalytics />}
+      <ThemeProvider theme={darkTheme}>
+        <GlobalStyle />
+        <Component {...pageProps} />
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            style: {
+              background: "#4D4D4D",
+              color: "#B9BBBE",
+            },
+          }}
+        />
+      </ThemeProvider>
+    </>
   );
 }
 
