@@ -33,7 +33,7 @@ export const defaultJson = {
   ],
 };
 
-export const defaultConfig: Partial<StorageConfig> = {
+export const defaultConfig: StorageConfig = {
   layout: "LEFT",
   expand: true,
   autoformat: true,

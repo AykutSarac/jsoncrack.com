@@ -25,6 +25,8 @@ export const useConfigReducer: React.Reducer<AppConfig, ReducerAction> = (
   state = initialStates,
   action
 ) => {
+  if (!state.settings.zoomPanPinch) return state;
+
   switch (action.type) {
     case ConfigActionType.SET_CONFIG:
       return { ...state, settings: action.payload };
