@@ -1,3 +1,4 @@
+import { ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
 import { CanvasDirection } from "reaflow";
 
 export interface StorageConfig {
@@ -5,8 +6,6 @@ export interface StorageConfig {
   expand: boolean;
   autoformat: boolean;
   hideEditor: boolean;
-  showSearch: boolean;
-  zoomScale: number;
-  transform: number;
   searchNode: string;
+  zoomPanPinch: ReactZoomPanPinchRef;
 }

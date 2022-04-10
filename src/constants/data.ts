@@ -33,13 +33,10 @@ export const defaultJson = {
   ],
 };
 
-export const defaultConfig: StorageConfig = {
+export const defaultConfig: Partial<StorageConfig> = {
   layout: "LEFT",
   expand: true,
   autoformat: true,
   hideEditor: false,
-  showSearch: false,
-  zoomScale: 0.8,
-  transform: 0,
   searchNode: "",
 };
