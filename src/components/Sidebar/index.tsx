@@ -108,7 +108,7 @@ function getLayoutIcon(layout: CanvasDirection) {
   return <CgArrowLongUpE />;
 }
 
-const Sidebar: React.FC = () => {
+export const Sidebar: React.FC = () => {
   const {
     states: { settings },
     dispatch,
@@ -226,5 +226,3 @@ const Sidebar: React.FC = () => {
     </StyledSidebar>
   );
 };
-
-export default React.memo(Sidebar);
