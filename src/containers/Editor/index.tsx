@@ -1,5 +1,6 @@
 import React from "react";
 import dynamic from "next/dynamic";
+import { Sidebar } from "src/components/Sidebar";
 import { LiveEditor } from "src/containers/LiveEditor";
 import { Loading } from "src/components/Loading";
 import { Incompatible } from "src/containers/Incompatible";
@@ -10,11 +11,6 @@ import { useConfig } from "src/hocs/config";
 const JsonEditor = dynamic(() => import("src/containers/JsonEditor"), {
   ssr: false,
   loading: () => <Loading message="Loading Editor..." />,
-});
-
-const Sidebar = dynamic(() => import("src/components/Sidebar"), {
-  ssr: false,
-  loading: () => <Loading message="Loading Sidebar..." />,
 });
 
 export const Editor: React.FC = () => {
