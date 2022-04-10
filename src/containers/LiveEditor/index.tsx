@@ -11,10 +11,11 @@ import { getEdgeNodes } from "./helpers";
 import { CustomNode } from "./CustomNode";
 import { useLoading } from "src/hooks/useLoading";
 import { useConfig } from "src/hocs/config";
+import { Tools } from "../Editor/Tools";
+import { ConfigActionType } from "src/reducer/reducer";
 
 const StyledLiveEditor = styled.div`
   position: relative;
-  border-left: 3px solid ${({ theme }) => theme.SILVER_DARK};
 `;
 
 const StyledEditorWrapper = styled.div`
@@ -40,9 +41,10 @@ const wheelOptions = {
   step: 0.4,
 };
 
-export const LiveEditor: React.FC = React.memo(() => {
+export const LiveEditor: React.FC = React.memo(function LiveEditor() {
   const {
     states: { json, settings },
+    dispatch,
   } = useConfig();
   const pageLoaded = useLoading();
   const wrapperRef = React.useRef<ReactZoomPanPinchRef | null>(null);
@@ -56,18 +58,6 @@ export const LiveEditor: React.FC = React.memo(() => {
 
     setData({ nodes, edges });
   }, [json, settings.expand]);
-
-  React.useEffect(() => {
-    wrapperRef.current?.setTransform(
-      wrapperRef.current.state.positionX,
-      wrapperRef.current.state.positionY,
-      settings.zoomScale
-    );
-  }, [settings.zoomScale]);
-
-  React.useEffect(() => {
-    wrapperRef.current?.resetTransform();
-  }, [settings.transform]);
 
   React.useEffect(() => {
     const wrapperRect = wrapperRef.current?.instance.wrapperComponent;
@@ -100,9 +90,21 @@ export const LiveEditor: React.FC = React.memo(() => {
     }
   }, [settings.searchNode]);
 
+  const onCanvasClick = () => {
+    const input = document.querySelector("input:focus") as HTMLInputElement;
+    if (input) input.blur();
+  };
+
+  const onInit = (ref: ReactZoomPanPinchRef) =>
+    dispatch({
+      type: ConfigActionType.SET_ZOOM_PAN_PICNH_REF,
+      payload: ref,
+    });
+
   if (pageLoaded)
     return (
       <StyledLiveEditor>
+        <Tools />
         <StyledEditorWrapper>
           <TransformWrapper
             maxScale={1.8}
@@ -111,6 +113,7 @@ export const LiveEditor: React.FC = React.memo(() => {
             ref={wrapperRef}
             limitToBounds={false}
             wheel={wheelOptions}
+            onInit={onInit}
           >
             <TransformComponent>
               <Canvas
@@ -125,6 +128,7 @@ export const LiveEditor: React.FC = React.memo(() => {
                 direction={settings.layout}
                 readonly
                 key={settings.layout}
+                onCanvasClick={onCanvasClick}
               />
             </TransformComponent>
           </TransformWrapper>

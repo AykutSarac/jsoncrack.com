@@ -8,12 +8,12 @@ export enum ConfigActionType {
   TOGGLE_EXPAND,
   TOGGLE_AUTOFORMAT,
   TOGGLE_DOCK,
-  TOGGLE_SEARCH,
   ZOOM_IN,
   ZOOM_OUT,
   CENTER_VIEW,
   SET_JSON,
   SET_SEARCH_NODE,
+  SET_ZOOM_PAN_PICNH_REF,
 }
 
 export type ReducerAction = {
@@ -29,13 +29,12 @@ export const useConfigReducer: React.Reducer<AppConfig, ReducerAction> = (
     case ConfigActionType.SET_CONFIG:
       return { ...state, settings: action.payload };
 
-    case ConfigActionType.TOGGLE_SEARCH:
+    case ConfigActionType.SET_ZOOM_PAN_PICNH_REF:
       return {
         ...state,
         settings: {
           ...state.settings,
-          showSearch: !state.settings.showSearch,
-          ...(state.settings.showSearch && { searchNode: "" }),
+          zoomPanPinch: action.payload,
         },
       };
 
@@ -49,28 +48,24 @@ export const useConfigReducer: React.Reducer<AppConfig, ReducerAction> = (
       };
 
     case ConfigActionType.CENTER_VIEW:
-      return {
-        ...state,
-        settings: { ...state.settings, transform: Math.random() },
-      };
+      state.settings.zoomPanPinch.resetTransform();
+      return state;
 
     case ConfigActionType.ZOOM_IN:
-      return {
-        ...state,
-        settings: {
-          ...state.settings,
-          zoomScale: state.settings.zoomScale + 0.2,
-        },
-      };
+      state.settings.zoomPanPinch.setTransform(
+        state.settings.zoomPanPinch.state.positionX,
+        state.settings.zoomPanPinch.state.positionY,
+        state.settings.zoomPanPinch.state.scale + 0.2
+      );
+      return state;
 
     case ConfigActionType.ZOOM_OUT:
-      return {
-        ...state,
-        settings: {
-          ...state.settings,
-          zoomScale: state.settings.zoomScale - 0.2,
-        },
-      };
+      state.settings.zoomPanPinch.setTransform(
+        state.settings.zoomPanPinch.state.positionX,
+        state.settings.zoomPanPinch.state.positionY,
+        state.settings.zoomPanPinch.state.scale - 0.2
+      );
+      return state;
 
     case ConfigActionType.TOGGLE_AUTOFORMAT:
       return {
