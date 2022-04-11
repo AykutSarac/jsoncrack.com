@@ -27,7 +27,8 @@ export const StyledForeignObject = styled.foreignObject`
   pointer-events: none;
 
   &.searched {
-    border: 1px solid ${({ theme }) => theme.SEAGREEN};
+    border: 2px solid ${({ theme }) => theme.TEXT_POSITIVE};
+    border-radius: 2px;
   }
 `;
 
