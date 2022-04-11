@@ -20,7 +20,7 @@ export const StyledText = styled.pre<{
   flex-direction: column;
   width: ${({ width }) => width};
   height: ${({ height }) => height};
-  color: ${({ theme }) => theme.SILVER};
+  color: ${({ theme }) => theme.TEXT_NORMAL};
 `;
 
 export const StyledForeignObject = styled.foreignObject`
@@ -37,7 +37,7 @@ export const StyledKey = styled.span<{
   parent?: boolean;
 }>`
   color: ${({ theme, objectKey, parent }) =>
-    parent ? theme.ORANGE : objectKey ? theme.BLURPLE : theme.LIGHTGREEN};
+    parent ? theme.ORANGE : objectKey ? "#5c87ff" : theme.TEXT_POSITIVE};
 `;
 
 export const StyledRow = styled.div<{ width: number }>`

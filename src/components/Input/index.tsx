@@ -23,6 +23,7 @@ const StyledInput = styled.input`
   font-size: 14px;
   font-weight: 500;
   transition: width 0.3s;
+  user-select: none;
 
   &::-webkit-search-decoration,
   &::-webkit-search-cancel-button,
