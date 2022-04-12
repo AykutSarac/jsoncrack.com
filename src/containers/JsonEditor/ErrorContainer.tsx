@@ -19,19 +19,24 @@ interface ErrorContainerProps {
 
 const StyledErrorWrapper = styled.div``;
 
-const StyledErrorHeader = styled.button<{ error: boolean }>`
+const StyledErrorHeader = styled.div`
+  height: 28px;
+  padding: 4px 16px;
+  border-bottom: 1px solid #1f2124;
+  background: ${({ theme }) => theme.BLACK_DARK};
+`;
+
+const StyledErrorExpand = styled.button<{ error: boolean }>`
   display: flex;
   width: 100%;
   border-radius: 0;
   justify-content: space-between;
   align-items: center;
-  background: ${({ theme }) => theme.BLACK_DARK};
-  padding: 4px 16px;
   color: ${({ theme, error }) => (error ? theme.DANGER : theme.TEXT_POSITIVE)};
   cursor: pointer;
-  height: 28px;
-  border-bottom: 1px solid #1f2124;
   pointer-events: ${({ error }) => !error && "none"};
+  padding: 0;
+  background: none;
 
   &:hover {
     color: ${({ theme }) => theme.DANGER};
@@ -64,26 +69,28 @@ export const ErrorContainer: React.FC<ErrorContainerProps> = ({
 }) => {
   return (
     <StyledErrorWrapper>
-      <StyledErrorHeader
-        error={!!error.message}
-        onClick={() =>
-          setError((err: Error) => ({ ...err, isExpanded: !err.isExpanded }))
-        }
-      >
-        <StyledTitle>
-          {error.message ? (
-            <MdReportGmailerrorred size={20} />
-          ) : (
-            <MdOutlineCheckCircleOutline size={20} />
-          )}
-          {error.message ? "Error" : "JSON Valid"}
-        </StyledTitle>
-        {error.message &&
-          (error.isExpanded ? (
-            <MdExpandLess size={22} />
-          ) : (
-            <MdExpandMore size={22} />
-          ))}
+      <StyledErrorHeader>
+        <StyledErrorExpand
+          error={!!error.message}
+          onClick={() =>
+            setError((err: Error) => ({ ...err, isExpanded: !err.isExpanded }))
+          }
+        >
+          <StyledTitle>
+            {error.message ? (
+              <MdReportGmailerrorred size={20} />
+            ) : (
+              <MdOutlineCheckCircleOutline size={20} />
+            )}
+            {error.message ? "Error" : "JSON Valid"}
+          </StyledTitle>
+          {error.message &&
+            (error.isExpanded ? (
+              <MdExpandLess size={22} />
+            ) : (
+              <MdExpandMore size={22} />
+            ))}
+        </StyledErrorExpand>
       </StyledErrorHeader>
       {error.isExpanded && error.message && (
         <StyledError>{error.message}</StyledError>
