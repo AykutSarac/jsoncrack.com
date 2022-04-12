@@ -1,6 +1,19 @@
 import { CanvasDirection, NodeData, EdgeData } from "reaflow";
 import { parser } from "src/utils/json-editor-parser";
 
+const toString = (value: string | object) => {
+  const isObject = value instanceof Object;
+
+  if (isObject) {
+    const entries = Object.entries(value);
+    const stringObj = entries.map((val) => [val[0], String(val[1])]);
+
+    return Object.fromEntries(stringObj);
+  }
+
+  return String(value);
+};
+
 export function getEdgeNodes(graph: any, isExpanded: boolean = true): any {
   graph = JSON.parse(graph);
   const elements = parser(graph);
@@ -21,7 +34,7 @@ export function getEdgeNodes(graph: any, isExpanded: boolean = true): any {
 
       nodes.push({
         id: el.id,
-        text: el.text,
+        text: toString(el.text),
         data: {
           isParent: el.parent,
         },
@@ -65,7 +78,7 @@ function renderText(value: string | object) {
     }
 
     entries.forEach((entry) => {
-      temp += `${entry[0]}: ${entry[1]}\n`;
+      temp += `${entry[0]}: ${String(entry[1])}\n`;
     });
 
     return temp;
