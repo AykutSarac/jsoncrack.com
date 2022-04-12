@@ -5,7 +5,6 @@ import Document, {
   NextScript,
   DocumentContext,
 } from "next/document";
-import { GoogleAnalytics } from "src/components/GoogleAnalytics";
 import { SeoTags } from "src/components/SeoTags";
 import { ServerStyleSheet } from "styled-components";
 
