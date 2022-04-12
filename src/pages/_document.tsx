@@ -42,7 +42,23 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          {!isDevelopment && <GoogleAnalytics />}
+          {!isDevelopment && (
+            <>
+              <script
+                async
+                src="https://www.googletagmanager.com/gtag/js?id=G-JKZEHMJBMH"
+              />
+              <script
+                dangerouslySetInnerHTML={{
+                  __html: `window.dataLayer = window.dataLayer || [];
+                          function gtag(){dataLayer.push(arguments);}
+                          gtag('js', new Date());
+                          gtag('config', 'G-JKZEHMJBMH');
+                    `,
+                }}
+              />
+            </>
+          )}
           <SeoTags
             description="Simple visualization tool for your JSON data. No forced structure, paste your JSON and view it instantly."
             title="JSON Visio"
