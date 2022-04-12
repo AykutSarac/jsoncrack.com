@@ -1,27 +1,20 @@
-import Script from "next/script";
 import React from "react";
-
-const GA_TRACKING_ID = "G-JKZEHMJBMH";
 
 export const GoogleAnalytics: React.FC = () => {
   return (
     <>
-      <Script
-        strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}
+      <script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-JKZEHMJBMH"
       />
-      <Script
-        id="gtag-init"
-        strategy="afterInteractive"
+      <script
         dangerouslySetInnerHTML={{
-          __html: `
-            window.dataLayer = window.dataLayer || [];
+          __html: `window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', '${GA_TRACKING_ID}', {
-              page_path: window.location.pathname,
-            });
-          `,
+          
+            gtag('config', 'G-JKZEHMJBMH');
+      `,
         }}
       />
     </>
