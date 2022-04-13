@@ -38,7 +38,7 @@ const StyledControls = styled.div`
 `;
 
 const wheelOptions = {
-  step: 0.4,
+  step: 0.05,
 };
 
 export const LiveEditor: React.FC = React.memo(function LiveEditor() {
