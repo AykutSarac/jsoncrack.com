@@ -32,11 +32,11 @@ const StyledContent = styled.div`
 `;
 
 const StyledHeader = styled.h2`
-  font-size: 54px;
+  font-size: 3rem;
   color: ${({ theme }) => theme.FULL_WHITE};
 
   @media only screen and (max-width: 768px) {
-    font-size: 36px;
+    font-size: 2.2rem;
   }
 `;
 
@@ -70,7 +70,7 @@ const Home: React.FC = () => {
             </a>
           </Link>
         </StyledContent>
-        <Image src="graphs.svg" width={500} height={400} alt="graphs" />
+        <Image src="421.svg" width={500} height={400} alt="graphs" />
       </Container>
 
       <Container reverse>

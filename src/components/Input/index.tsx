@@ -68,7 +68,7 @@ export const Input = () => {
         onChange={(e) => setValue(e.target.value)}
         placeholder="Search Node"
       />
-      <StyledSearchButton onClick={handleClick}>
+      <StyledSearchButton aria-label="search" onClick={handleClick}>
         {value ? <IoCloseSharp size={18} /> : <AiOutlineSearch size={18} />}
       </StyledSearchButton>
     </StyledInputWrapper>

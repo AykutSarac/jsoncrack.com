@@ -5,7 +5,7 @@ import styled from "styled-components";
 const StyledNavbar = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 75%;
+  width: 80%;
   margin: 0 auto 80px;
 
   a:hover {
@@ -23,7 +23,7 @@ const StyledLogo = styled.div`
   font-size: 20px;
   cursor: pointer;
   font-weight: 700;
-  color: #ffffff;
+  color: ${({ theme }) => theme.FULL_WHITE};
 `;
 
 const StyledNav = styled.nav`

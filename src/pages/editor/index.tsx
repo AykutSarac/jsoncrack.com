@@ -8,6 +8,10 @@ const EditorPage: React.FC = () => {
     <>
       <Head>
         <title>Editor | JSON Visio</title>
+        <meta
+          name="description"
+          content="View your JSON data in graphs instantly."
+        />
       </Head>
       <WithConfig>
         <Editor />

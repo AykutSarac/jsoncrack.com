@@ -10,7 +10,7 @@ const StyledContainer = styled.div<{ reverse: boolean }>`
   justify-content: space-between;
   gap: 50px;
   align-items: center;
-  width: 75%;
+  width: 80%;
   margin: 0 auto 160px;
   min-height: calc(100vh - 250px);
   flex-direction: ${({ reverse }) => reverse && "row-reverse"};

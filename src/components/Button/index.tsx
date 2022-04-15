@@ -21,7 +21,7 @@ function getButtonStatus(status: keyof typeof ButtonType, theme: DefaultTheme) {
 const StyledButton = styled.button<{ status: keyof typeof ButtonType }>`
   display: block;
   background: ${({ status, theme }) => getButtonStatus(status, theme)};
-  color: ${({ theme }) => theme.FULL_WHITE};
+  color: #ffffff;
   padding: 8px 16px;
   min-width: 60px;
 

@@ -30,8 +30,8 @@ JSON Visio is data visualization tool for your json data which seamlessly illust
 ## 🧩 Preview
 
 <div align="center">
-  <img width="800" src="https://github.com/AykutSarac/jsonvisio.com/blob/main/preview/preview_1.png" alt="preview 1" />
-  <img width="800" src="https://github.com/AykutSarac/jsonvisio.com/blob/main/preview/preview_2.png" alt="preview 1" />
+  <img width="800" src="https://github.com/AykutSarac/jsonvisio.com/blob/main/public/preview.png" alt="preview 1" />
+  <img width="800" src="https://github.com/AykutSarac/jsonvisio.com/blob/main/public/preview_2.png" alt="preview 1" />
   </div>
 
 ## License

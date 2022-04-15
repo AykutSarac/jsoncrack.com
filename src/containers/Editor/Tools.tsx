@@ -55,20 +55,20 @@ export const Tools: React.FC = () => {
 
   return (
     <StyledTools>
-      <StyledToolElement onClick={toggleEditor}>
+      <StyledToolElement aria-label="fullscreen" onClick={toggleEditor}>
         <AiOutlineFullscreen />
       </StyledToolElement>
       <Input />
-      <StyledToolElement onClick={handleSave}>
+      <StyledToolElement aria-label="save" onClick={handleSave}>
         <AiOutlineSave />
       </StyledToolElement>
-      <StyledToolElement>
-        <MdCenterFocusWeak onClick={centerView} />
+      <StyledToolElement aria-label="center canvas" onClick={centerView}>
+        <MdCenterFocusWeak />
       </StyledToolElement>
-      <StyledToolElement onClick={zoomOut}>
+      <StyledToolElement aria-label="zoom out" onClick={zoomOut}>
         <AiOutlineMinus />
       </StyledToolElement>
-      <StyledToolElement onClick={zoomIn}>
+      <StyledToolElement aria-label="zoom in" onClick={zoomIn}>
         <AiOutlinePlus />
       </StyledToolElement>
     </StyledTools>

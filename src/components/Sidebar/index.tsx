@@ -210,14 +210,14 @@ export const Sidebar: React.FC = () => {
       <StyledBottomWrapper>
         <StyledElement>
           <Link href="https://twitter.com/aykutsarach">
-            <a rel="me" target="_blank">
+            <a aria-label="Twitter" rel="me" target="_blank">
               <AiOutlineTwitter />
             </a>
           </Link>
         </StyledElement>
         <StyledElement>
           <Link href="https://github.com/AykutSarac/jsonvisio.com">
-            <a rel="me" target="_blank">
+            <a aria-label="GitHub" rel="me" target="_blank">
               <AiFillGithub />
             </a>
           </Link>
