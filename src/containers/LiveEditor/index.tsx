@@ -36,9 +36,6 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
     dispatch,
   } = useConfig();
   const pageLoaded = useLoading();
-  const wrapperRef = React.useRef<ReactZoomPanPinchRef | null>(
-    settings.zoomPanPinch
-  );
   const [data, setData] = React.useState({
     nodes: [],
     edges: [],
@@ -51,7 +48,8 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
   }, [json, settings.expand]);
 
   React.useEffect(() => {
-    const wrapperRect = wrapperRef.current?.instance.wrapperComponent;
+    if (!settings.zoomPanPinch) return;
+    const zoomPanPinch = settings.zoomPanPinch.instance.wrapperComponent;
 
     const node = document.querySelector(
       `span[data-key*='${settings.searchNode}' i]`
@@ -61,25 +59,25 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
       .querySelector("foreignObject.searched")
       ?.classList.remove("searched");
 
-    if (wrapperRect && node && node.parentElement) {
+    if (zoomPanPinch && node && node.parentElement) {
       const newScale = 1;
       const x = Number(node.getAttribute("data-x"));
       const y = Number(node.getAttribute("data-y"));
 
       const newPositionX =
-        (wrapperRect.offsetLeft - x) * newScale +
+        (zoomPanPinch.offsetLeft - x) * newScale +
         node.getBoundingClientRect().width;
       const newPositionY =
-        (wrapperRect.offsetTop - y) * newScale +
+        (zoomPanPinch.offsetTop - y) * newScale +
         node.getBoundingClientRect().height;
 
       node.parentElement.parentElement
         ?.closest("foreignObject")
         ?.classList.toggle("searched");
 
-      wrapperRef.current?.setTransform(newPositionX, newPositionY, newScale);
+        settings.zoomPanPinch?.setTransform(newPositionX, newPositionY, newScale);
     }
-  }, [settings.searchNode]);
+  }, [settings.searchNode, settings.zoomPanPinch]);
 
   const onCanvasClick = () => {
     const input = document.querySelector("input:focus") as HTMLInputElement;
