@@ -8,6 +8,7 @@ export enum ConfigActionType {
   TOGGLE_EXPAND,
   TOGGLE_AUTOFORMAT,
   TOGGLE_DOCK,
+  TOGGLE_THEME,
   ZOOM_IN,
   ZOOM_OUT,
   CENTER_VIEW,
@@ -28,6 +29,15 @@ export const useConfigReducer: React.Reducer<AppConfig, ReducerAction> = (
   switch (action.type) {
     case ConfigActionType.SET_CONFIG:
       return { ...state, settings: action.payload };
+
+    case ConfigActionType.TOGGLE_THEME:
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          lightmode: !state.settings.lightmode,
+        },
+      };
 
     case ConfigActionType.SET_ZOOM_PAN_PICNH_REF:
       return {

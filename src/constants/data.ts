@@ -40,4 +40,5 @@ export const defaultConfig: StorageConfig = {
   hideEditor: false,
   searchNode: "",
   zoomPanPinch: null,
+  lightmode: false
 };

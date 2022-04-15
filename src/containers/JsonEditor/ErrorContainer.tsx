@@ -17,13 +17,16 @@ interface ErrorContainerProps {
   setError: React.Dispatch<React.SetStateAction<Error>>;
 }
 
-const StyledErrorWrapper = styled.div``;
+const StyledErrorWrapper = styled.div`
+  z-index: 5;
+`;
 
 const StyledErrorHeader = styled.div`
   height: 28px;
   padding: 4px 16px;
-  border-bottom: 1px solid #1f2124;
-  background: ${({ theme }) => theme.BLACK_DARK};
+  background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
+
+  box-shadow: 0 1px 0px ${({ theme }) => theme.BACKGROUND_TERTIARY};
 `;
 
 const StyledErrorExpand = styled.button<{ error: boolean }>`

@@ -21,7 +21,7 @@ export const StyledEditor = styled(SplitPane)`
   background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
 
   .Resizer {
-    background: ${({ theme }) => theme.BLACK};
+    background: ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
     box-sizing: border-box;
     background-clip: padding-box;
     z-index: 1;
@@ -50,12 +50,12 @@ export const StyledEditor = styled(SplitPane)`
   }
 
   .Resizer.vertical {
-    width: 16px;
+    width: 14px;
     margin: 0 -5px;
     border-left: 5px solid rgba(255, 255, 255, 0);
     border-right: 5px solid rgba(255, 255, 255, 0);
     cursor: col-resize;
-    z-index: 0 !important;
+    z-index: 1;
   }
 
   .Resizer.vertical:hover {

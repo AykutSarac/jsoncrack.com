@@ -17,7 +17,7 @@ const StyledTooltip = styled.div<{ visible: boolean }>`
   right: 0;
   transform: translate(calc(100% + 15px), 25%);
   z-index: 5;
-  background: ${({ theme }) => theme.SILVER_DARK};
+  background: ${({ theme }) => theme.BACKGROUND_PRIMARY};
   color: ${({ theme }) => theme.TEXT_NORMAL};
   border-radius: 5px;
   padding: 4px 8px;
@@ -27,6 +27,9 @@ const StyledTooltip = styled.div<{ visible: boolean }>`
   font-size: 16px;
   user-select: none;
   font-weight: 600;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
+    0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
+    0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
 `;
 
 const StyledChildren = styled.div``;

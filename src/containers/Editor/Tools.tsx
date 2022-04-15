@@ -6,6 +6,7 @@ import {
   AiOutlineMinus,
   AiOutlinePlus,
 } from "react-icons/ai";
+import { HiOutlineSun, HiOutlineMoon } from "react-icons/hi";
 import { MdCenterFocusWeak } from "react-icons/md";
 import { Input } from "src/components/Input";
 import { useConfig } from "src/hocs/config";
@@ -19,9 +20,10 @@ export const StyledTools = styled.div`
   flex-direction: row-reverse;
   height: 28px;
   padding: 4px 16px;
-  border-bottom: 1px solid #1f2124;
   background: ${({ theme }) => theme.BACKGROUND_PRIMARY};
   color: ${({ theme }) => theme.SILVER};
+
+  box-shadow: 0 1px 0px ${({ theme }) => theme.BACKGROUND_TERTIARY};
 `;
 
 const StyledToolElement = styled.button`
@@ -53,10 +55,15 @@ export const Tools: React.FC = () => {
 
   const toggleEditor = () => dispatch({ type: ConfigActionType.TOGGLE_DOCK });
 
+  const toggleTheme = () => dispatch({ type: ConfigActionType.TOGGLE_THEME });
+
   return (
     <StyledTools>
       <StyledToolElement aria-label="fullscreen" onClick={toggleEditor}>
         <AiOutlineFullscreen />
+      </StyledToolElement>
+      <StyledToolElement aria-label="switch theme" onClick={toggleTheme}>
+        {states.settings.lightmode ? <HiOutlineMoon /> : <HiOutlineSun />}
       </StyledToolElement>
       <Input />
       <StyledToolElement aria-label="save" onClick={handleSave}>

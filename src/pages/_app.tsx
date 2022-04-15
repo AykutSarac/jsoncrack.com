@@ -3,13 +3,18 @@ import type { AppProps } from "next/app";
 import { ThemeProvider } from "styled-components";
 
 import GlobalStyle from "src/constants/globalStyle";
-import { darkTheme } from "src/constants/theme";
+import { darkTheme, lightTheme } from "src/constants/theme";
 import { Toaster } from "react-hot-toast";
+import { useConfig, withConfig, WithConfig } from "src/hocs/config";
 
 function JsonVisio({ Component, pageProps }: AppProps) {
+  const {
+    states: { settings },
+  } = useConfig();
+
   return (
     <>
-      <ThemeProvider theme={darkTheme}>
+      <ThemeProvider theme={settings.lightmode ? lightTheme : darkTheme}>
         <GlobalStyle />
         <Component {...pageProps} />
         <Toaster
@@ -26,4 +31,4 @@ function JsonVisio({ Component, pageProps }: AppProps) {
   );
 }
 
-export default JsonVisio;
+export default withConfig(JsonVisio);

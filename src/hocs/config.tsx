@@ -37,4 +37,12 @@ const WithConfig: React.FC = ({ children }) => {
   );
 };
 
-export { WithConfig, useConfig, ConfigContext };
+const withConfig = (Component) => {
+  return (props) => (
+    <WithConfig>
+      <Component {...props} />
+    </WithConfig>
+  );
+};
+
+export { WithConfig, useConfig, ConfigContext, withConfig };

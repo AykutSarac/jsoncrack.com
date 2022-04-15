@@ -18,19 +18,11 @@ const baseLabelStyle = {
   strokeWidth: 0,
 };
 
-const basePortStyle = {
-  fill: "black",
-};
-
-export const CustomNode = (nodeProps: NodeProps) => {
+export const CustomNode = React.memo((nodeProps: NodeProps) => {
   const { properties: data } = nodeProps;
 
   return (
-    <Node
-      {...nodeProps}
-      label={<Label style={baseLabelStyle} />}
-      port={<Port style={basePortStyle} rx={10} ry={10} />}
-    >
+    <Node {...nodeProps} label={<Label style={baseLabelStyle} />}>
       {(nodeProps: NodeProps) => {
         const { width, height } = nodeProps;
 
@@ -60,4 +52,4 @@ export const CustomNode = (nodeProps: NodeProps) => {
       }}
     </Node>
   );
-};
+});

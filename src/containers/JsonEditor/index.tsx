@@ -2,11 +2,12 @@ import React from "react";
 import AceEditor from "react-ace";
 import parseJson from "parse-json";
 import styled from "styled-components";
-import { Error, ErrorContainer } from "./ErrorContainer";
+import { ErrorContainer } from "./ErrorContainer";
 import { ConfigActionType } from "src/reducer/reducer";
 import { useConfig } from "src/hocs/config";
 require("ace-builds/src-noconflict/mode-json");
 require("ace-builds/src-noconflict/theme-tomorrow_night");
+require("ace-builds/src-noconflict/theme-github");
 
 const StyledEditorWrapper = styled.div`
   display: flex;
@@ -31,6 +32,11 @@ const JsonEditor: React.FC = () => {
     message: "",
     isExpanded: true,
   });
+
+  const editorTheme = React.useMemo(
+    () => (settings.lightmode ? "github" : "tomorrow_night"),
+    [settings.lightmode]
+  );
 
   React.useEffect(() => {
     const resizeObserver = new ResizeObserver((observed) => {
@@ -83,7 +89,7 @@ const JsonEditor: React.FC = () => {
         value={value}
         onChange={setValue}
         mode="json"
-        theme="tomorrow_night"
+        theme={editorTheme}
         width={editorWidth}
         height="100%"
         fontSize={12}

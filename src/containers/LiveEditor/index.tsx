@@ -20,20 +20,9 @@ const StyledLiveEditor = styled.div`
 
 const StyledEditorWrapper = styled.div`
   position: absolute;
-`;
 
-const StyledControls = styled.div`
-  position: fixed;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  gap: 8px;
-  bottom: 8px;
-  right: 8px;
-  opacity: 0.9;
-
-  button:hover {
-    opacity: 0.7;
+  rect {
+    fill: ${({ theme }) => theme.BACKGROUND_NODE};
   }
 `;
 
@@ -118,7 +107,7 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
             <TransformComponent>
               <Canvas
                 nodes={data.nodes}
-                node={CustomNode}
+                node={(props) => <CustomNode {...props} />}
                 edges={data.edges}
                 maxWidth={20000}
                 maxHeight={20000}
@@ -127,7 +116,7 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
                 fit={true}
                 direction={settings.layout}
                 readonly
-                key={settings.layout}
+                key={settings.layout || settings.lightmode}
                 onCanvasClick={onCanvasClick}
               />
             </TransformComponent>

@@ -28,6 +28,7 @@ declare module "styled-components" {
     INTERACTIVE_NORMAL: string;
     INTERACTIVE_HOVER: string;
     INTERACTIVE_ACTIVE: string;
+    BACKGROUND_NODE: string;
     BACKGROUND_TERTIARY: string;
     BACKGROUND_SECONDARY: string;
     BACKGROUND_PRIMARY: string;

@@ -36,7 +36,7 @@ const StyledSidebar = styled.div`
   width: 42px;
   background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
   padding: 8px;
-  border-right: 1px solid ${({ theme }) => theme.SILVER_DARK};
+  border-right: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
 `;
 
 const StyledElement = styled.div`
@@ -61,7 +61,7 @@ const StyledElement = styled.div`
 
 const StyledText = styled.span<{ secondary?: boolean }>`
   color: ${({ theme, secondary }) =>
-    secondary ? theme.FULL_WHITE : theme.ORANGE};
+    secondary ? theme.INTERACTIVE_NORMAL : theme.ORANGE};
 `;
 
 const StyledTopWrapper = styled.nav`

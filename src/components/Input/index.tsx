@@ -39,9 +39,13 @@ const StyledInput = styled.input`
 const StyledSearchButton = styled.button`
   display: grid;
   background: none;
-  color: inherit;
+  color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
   padding: 0;
   min-height: unset;
+
+  &:hover {
+    box-shadow: none;
+  }
 `;
 
 export const Input = () => {
