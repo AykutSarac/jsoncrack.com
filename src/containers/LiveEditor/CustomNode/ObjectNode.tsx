@@ -2,7 +2,7 @@ import React from "react";
 import { CustomNodeProps } from ".";
 import * as Styled from "./styles";
 
-const ObjectNode: React.FC<CustomNodeProps<[string, unknown][]>> = ({
+const ObjectNode: React.FC<CustomNodeProps<[string, string][]>> = ({
   width,
   height,
   value,

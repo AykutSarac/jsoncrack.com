@@ -27,7 +27,7 @@ export const CustomNode = React.memo((nodeProps: NodeProps) => {
         const { width, height } = nodeProps;
 
         if (data.text instanceof Object) {
-          const entries = Object.entries(data.text);
+          const entries = Object.entries<string>(data.text);
           return (
             <ObjectNode
               x={nodeProps.x}
