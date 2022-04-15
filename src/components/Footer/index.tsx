@@ -29,12 +29,12 @@ export const Footer: React.FC = () => {
     <StyledFooter>
       <StyledSocial>
         <Link href="https://github.com/AykutSarac/jsonvisio.com">
-          <a rel="me" target="_blank">
+          <a aria-label="GitHub" rel="me" target="_blank">
             <AiFillGithub />
           </a>
         </Link>
         <Link href="https://twitter.com/aykutsarach">
-          <a rel="me" target="_blank">
+          <a aria-label="Twitter" rel="me" target="_blank">
             <AiOutlineTwitter />
           </a>
         </Link>
