@@ -15,6 +15,8 @@ export const SeoTags: React.FC<SeoTagsProps> = ({
 }) => {
   return (
     <>
+      <meta name="description" content={description} />
+
       {/* <!-- Facebook Meta Tags --> */}
       <meta property="og:url" content={baseURL} />
       <meta property="og:type" content="website" />
