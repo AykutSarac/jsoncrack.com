@@ -46,6 +46,7 @@ export const Editor: React.FC = () => {
     <Styles.StyledPageWrapper>
       <Sidebar />
       <Styles.StyledEditorWrapper>
+        { // @ts-ignore }
         <Styles.StyledEditor
           maxSize={800}
           minSize={300}
