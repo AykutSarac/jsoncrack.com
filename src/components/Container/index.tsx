@@ -24,7 +24,7 @@ const StyledContainer = styled.div<{ reverse: boolean }>`
   }
 `;
 
-export const Container: React.FC<ContainerProps> = ({
+export const Container: React.FC<React.PropsWithChildren<ContainerProps>> = ({
   children,
   reverse = false,
 }) => {

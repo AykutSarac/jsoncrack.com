@@ -1,5 +1,5 @@
 import React from "react";
-import { Label, Node, Port, NodeProps } from "reaflow";
+import { Label, Node, NodeProps } from "reaflow";
 import ObjectNode from "./ObjectNode";
 import TextNode from "./TextNode";
 
@@ -23,7 +23,7 @@ export const CustomNode = React.memo((nodeProps: NodeProps) => {
 
   return (
     <Node {...nodeProps} label={<Label style={baseLabelStyle} />}>
-      {(nodeProps: NodeProps) => {
+      {() => {
         const { width, height } = nodeProps;
 
         if (data.text instanceof Object) {

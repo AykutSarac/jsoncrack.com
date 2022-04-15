@@ -5,7 +5,7 @@ import { ThemeProvider } from "styled-components";
 import GlobalStyle from "src/constants/globalStyle";
 import { darkTheme, lightTheme } from "src/constants/theme";
 import { Toaster } from "react-hot-toast";
-import { useConfig, withConfig, WithConfig } from "src/hocs/config";
+import { useConfig, withConfig } from "src/hocs/config";
 
 function JsonVisio({ Component, pageProps }: AppProps) {
   const {

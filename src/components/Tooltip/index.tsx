@@ -34,7 +34,10 @@ const StyledTooltip = styled.div<{ visible: boolean }>`
 
 const StyledChildren = styled.div``;
 
-export const Tooltip: React.FC<TooltipProps> = ({ children, title }) => {
+export const Tooltip: React.FC<React.PropsWithChildren<TooltipProps>> = ({
+  children,
+  title,
+}) => {
   const [visible, setVisible] = React.useState(false);
 
   return (

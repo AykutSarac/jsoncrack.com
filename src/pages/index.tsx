@@ -6,7 +6,6 @@ import { Image } from "src/components/Image";
 import styled from "styled-components";
 import { AiFillGithub } from "react-icons/ai";
 import { Footer } from "src/components/Footer";
-import Link from "next/link";
 import Head from "next/head";
 import { Producthunt } from "src/components/Producthunt";
 import { useRouter } from "next/router";

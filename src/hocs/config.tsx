@@ -1,7 +1,7 @@
 import React from "react";
 import { defaultConfig, defaultJson } from "src/constants/data";
 import { ReducerAction, useConfigReducer } from "src/reducer/reducer";
-import { StorageConfig } from "src/typings/global";
+import { ReactComponent, StorageConfig } from "src/typings/global";
 
 export interface AppConfig {
   json: string;
@@ -28,7 +28,7 @@ const ConfigContext: React.Context<Config> =
 
 const useConfig = () => React.useContext(ConfigContext);
 
-const WithConfig: React.FC = ({ children }) => {
+const WithConfig: ReactComponent = ({ children }) => {
   const [states, dispatch] = React.useReducer(useConfigReducer, initialStates);
   const value = { states, dispatch };
 
@@ -37,12 +37,13 @@ const WithConfig: React.FC = ({ children }) => {
   );
 };
 
-const withConfig = (Component) => {
-  return (props) => (
-    <WithConfig>
-      <Component {...props} />
-    </WithConfig>
-  );
-};
+const withConfig =
+  <P extends object>(Component: React.ComponentType<P>): React.FC =>
+  (props) =>
+    (
+      <WithConfig>
+        <Component {...(props as P)} />
+      </WithConfig>
+    );
 
 export { WithConfig, useConfig, ConfigContext, withConfig };

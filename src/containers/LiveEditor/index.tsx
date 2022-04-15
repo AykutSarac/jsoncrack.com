@@ -36,7 +36,9 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
     dispatch,
   } = useConfig();
   const pageLoaded = useLoading();
-  const wrapperRef = React.useRef<ReactZoomPanPinchRef | null>(null);
+  const wrapperRef = React.useRef<ReactZoomPanPinchRef | null>(
+    settings.zoomPanPinch
+  );
   const [data, setData] = React.useState({
     nodes: [],
     edges: [],
@@ -84,11 +86,12 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
     if (input) input.blur();
   };
 
-  const onInit = (ref: ReactZoomPanPinchRef) =>
+  const onInit = (ref: ReactZoomPanPinchRef) => {
     dispatch({
       type: ConfigActionType.SET_ZOOM_PAN_PICNH_REF,
       payload: ref,
     });
+  };
 
   if (pageLoaded)
     return (
@@ -99,7 +102,6 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
             maxScale={1.8}
             minScale={0.4}
             initialScale={0.8}
-            ref={wrapperRef}
             limitToBounds={false}
             wheel={wheelOptions}
             onInit={onInit}
@@ -116,7 +118,7 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
                 fit={true}
                 direction={settings.layout}
                 readonly
-                key={settings.layout || settings.lightmode}
+                key={settings.layout}
                 onCanvasClick={onCanvasClick}
               />
             </TransformComponent>
