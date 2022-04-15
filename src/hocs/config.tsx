@@ -37,13 +37,14 @@ const WithConfig: ReactComponent = ({ children }) => {
   );
 };
 
-const withConfig =
-  <P extends object>(Component: React.ComponentType<P>): React.FC =>
-  (props) =>
-    (
-      <WithConfig>
-        <Component {...(props as P)} />
-      </WithConfig>
-    );
+const withConfig = <P extends object>(
+  Component: React.ComponentType<P>
+): React.FC => {
+  return (props) => (
+    <WithConfig>
+      <Component {...(props as P)} />
+    </WithConfig>
+  );
+};
 
 export { WithConfig, useConfig, ConfigContext, withConfig };
