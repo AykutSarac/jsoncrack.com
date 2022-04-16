@@ -11,11 +11,13 @@ JSON Visio is data visualization tool for your json data which seamlessly illust
 ## ⚡️ Features
 
 * Advanced Error Message
+* Search Nodes
 * Save JSON locally
 * Multiple layout direction support
 * Compressed view
 * Representative colors for arrays & keys
-* Friendly UI 
+* Friendly UI
+* Light/Dark Mode
 
 ## ❤️ Support JSON Visio
 
