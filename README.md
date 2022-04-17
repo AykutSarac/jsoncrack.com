@@ -4,7 +4,6 @@
   </a>
   <h1 align="center">JSON Visio (jsonvisio.com)</h1>
 </div>
-<hr />
 
 <div>
     <p align="center">
