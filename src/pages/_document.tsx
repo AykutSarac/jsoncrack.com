@@ -59,7 +59,7 @@ class MyDocument extends Document {
           <SeoTags
             description="Simple visualization tool for your JSON data. No forced structure, paste your JSON and view it instantly."
             title="JSON Visio - Directly into graphs"
-            image="https://jsonvisio.com/preview.png"
+            image="https://jsonvisio.com/jsonvisio.png"
           />
           <link rel="icon" href="/favicon.ico" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />

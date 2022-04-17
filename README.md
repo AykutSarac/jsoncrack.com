@@ -21,7 +21,7 @@
   <p align="center">
     <i>Simple json visualization tool for your data.</i>
   </p>
-  <img width="800" src="https://github.com/AykutSarac/jsonvisio.com/blob/main/public/preview.png" alt="preview 1" />
+  <img width="800" src="https://github.com/AykutSarac/jsonvisio.com/blob/main/public/jsonvisio.png" alt="preview 1" />
 
   <p align="center">
     <h2 align="center">Support JSON Visio<h2>
