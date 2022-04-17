@@ -33,7 +33,7 @@
   </p>
 </div>
 
-## JSON Visio (jsonvisio.com)
+# JSON Visio (jsonvisio.com)
 
 JSON Visio is data visualization tool for your json data which seamlessly illustrates your data on graphs without having to restructure anything, paste directly or import file.
 
