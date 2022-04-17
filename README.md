@@ -15,7 +15,7 @@
       <img alt="open collective badge" src="https://img.shields.io/opencollective/backers/jsonvisio.com?style=flat-square" />
       </a>
       <a href="https://github.com/AykutSarac/jsonvisio.com/releases">
-      <img alt="version badge" src="https://img.shields.io/github/package-json/v/AykutSarac/jsonvisio.com?color=green&style=flat-square" />
+      <img alt="version badge" src="https://img.shields.io/github/package-json/v/AykutSarac/jsonvisio.com?color=brightgreen&style=flat-square" />
       </a>
   </p>
   <p align="center">
