@@ -1,6 +1,10 @@
 import React from "react";
 import { defaultConfig, defaultJson } from "src/constants/data";
-import { ReducerAction, useConfigReducer } from "src/reducer/reducer";
+import {
+  ConfigActionType,
+  ReducerAction,
+  useConfigReducer,
+} from "src/reducer/reducer";
 import { ReactComponent, StorageConfig } from "src/typings/global";
 
 export interface AppConfig {
@@ -29,8 +33,34 @@ const ConfigContext: React.Context<Config> =
 const useConfig = () => React.useContext(ConfigContext);
 
 const WithConfig: ReactComponent = ({ children }) => {
+  const [render, setRender] = React.useState(false);
   const [states, dispatch] = React.useReducer(useConfigReducer, initialStates);
   const value = { states, dispatch };
+
+  React.useEffect(() => {
+    const jsonStored = localStorage.getItem("json");
+    if (jsonStored)
+      dispatch({ type: ConfigActionType.SET_JSON, payload: jsonStored });
+
+    const configStored = localStorage.getItem("config");
+    if (configStored)
+      dispatch({
+        type: ConfigActionType.SET_CONFIG,
+        payload: JSON.parse(configStored),
+      });
+    setRender(true);
+  }, [dispatch]);
+
+  React.useEffect(() => {
+    if (render)
+      localStorage.setItem(
+        "config",
+        JSON.stringify({
+          ...states.settings,
+          zoomPanPinch: undefined,
+        })
+      );
+  }, [states.settings, render]);
 
   return (
     <ConfigContext.Provider value={value}>{children}</ConfigContext.Provider>

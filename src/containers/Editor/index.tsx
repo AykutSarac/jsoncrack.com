@@ -5,7 +5,6 @@ import { LiveEditor } from "src/containers/LiveEditor";
 import { Loading } from "src/components/Loading";
 import { Incompatible } from "src/containers/Incompatible";
 import * as Styles from "src/containers/Editor/styles";
-import { ConfigActionType } from "src/reducer/reducer";
 import { useConfig } from "src/hocs/config";
 
 const JsonEditor = dynamic(() => import("src/containers/JsonEditor"), {
@@ -16,31 +15,7 @@ const JsonEditor = dynamic(() => import("src/containers/JsonEditor"), {
 export const Editor: React.FC = () => {
   const {
     states: { settings },
-    dispatch,
   } = useConfig();
-
-  React.useEffect(() => {
-    const jsonStored = localStorage.getItem("json");
-    if (jsonStored)
-      dispatch({ type: ConfigActionType.SET_JSON, payload: jsonStored });
-
-    const configStored = localStorage.getItem("config");
-    if (configStored)
-      dispatch({
-        type: ConfigActionType.SET_CONFIG,
-        payload: JSON.parse(configStored),
-      });
-  }, [dispatch]);
-
-  React.useEffect(() => {
-    localStorage.setItem(
-      "config",
-      JSON.stringify({
-        ...settings,
-        zoomPanPinch: undefined,
-      })
-    );
-  }, [settings]);
 
   return (
     <Styles.StyledPageWrapper>

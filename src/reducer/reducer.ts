@@ -28,7 +28,10 @@ export const useConfigReducer: React.Reducer<AppConfig, ReducerAction> = (
 ) => {
   switch (action.type) {
     case ConfigActionType.SET_CONFIG:
-      return { ...state, settings: action.payload };
+      return {
+        ...state,
+        settings: action.payload,
+      };
 
     case ConfigActionType.TOGGLE_THEME:
       return {
