@@ -13,9 +13,6 @@ const nextConfig = withTM({
   compiler: {
     styledComponents: true,
     swcMinify: true,
-    removeConsole: {
-      exclude: ["error"],
-    },
   },
 });
 
