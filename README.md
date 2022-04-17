@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://jsonvisio.com">
-    <img width="512" alt="json visio logo" src="https://user-images.githubusercontent.com/47941171/161961529-8d617a59-2439-4f5a-b918-bde12da5bcf8.png">
+    <img width="512" alt="json visio logo" src="https://github.com/AykutSarac/jsonvisio.com/blob/main/public/logo.png">
   </a>
   <h1 align="center">JSON Visio (jsonvisio.com)</h1>
 </div>
