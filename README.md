@@ -2,7 +2,6 @@
   <a href="https://jsonvisio.com">
     <img width="512" alt="json visio logo" src="https://github.com/AykutSarac/jsonvisio.com/blob/main/public/logo.png">
   </a>
-  <h1 align="center">JSON Visio (jsonvisio.com)</h1>
 </div>
 
 <div>
@@ -33,6 +32,8 @@
     </a>
   </p>
 </div>
+
+## JSON Visio (jsonvisio.com)
 
 JSON Visio is data visualization tool for your json data which seamlessly illustrates your data on graphs without having to restructure anything, paste directly or import file.
 
