@@ -31,14 +31,13 @@ const GlobalStyle = createGlobalStyle`
   button {
     min-height: 32px;
     border: none;
-    border-radius: 5px;
+    border-radius: 3px;
     outline: none;
     font-family: 'Catamaran', sans-serif;
     font-weight: 500;
     font-size: 14px;
-    transition: 0.3s;
+    background-image: none;
     cursor: pointer;
-    
 
     div {
       white-space: normal;
@@ -48,7 +47,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     &:hover {
-      box-shadow: 3px 3px 5px ${({ theme }) => theme.BLACK};
+      background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0 0);
     }
   }
 `;
