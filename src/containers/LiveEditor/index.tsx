@@ -5,7 +5,7 @@ import {
   TransformComponent,
   ReactZoomPanPinchRef,
 } from "react-zoom-pan-pinch";
-import { Canvas } from "reaflow";
+import { Canvas, ElkRoot } from "reaflow";
 
 import { getEdgeNodes } from "./helpers";
 import { CustomNode } from "./CustomNode";
@@ -20,6 +20,10 @@ const StyledLiveEditor = styled.div`
 
 const StyledEditorWrapper = styled.div`
   position: absolute;
+
+  :active {
+    cursor: move;
+  }
 
   rect {
     fill: ${({ theme }) => theme.BACKGROUND_NODE};
@@ -40,6 +44,12 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
     nodes: [],
     edges: [],
   });
+  const [canvasSize, setCanvasSize] = React.useState({
+    width: 2000,
+    height: 2000,
+  });
+
+  console.log(canvasSize);
 
   React.useEffect(() => {
     const { nodes, edges } = getEdgeNodes(json, settings.expand);
@@ -75,7 +85,7 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
         ?.closest("foreignObject")
         ?.classList.toggle("searched");
 
-        settings.zoomPanPinch?.setTransform(newPositionX, newPositionY, newScale);
+      settings.zoomPanPinch?.setTransform(newPositionX, newPositionY, newScale);
     }
   }, [settings.searchNode, settings.zoomPanPinch]);
 
@@ -83,6 +93,12 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
     const input = document.querySelector("input:focus") as HTMLInputElement;
     if (input) input.blur();
   };
+
+  const onLayoutChange = (layout: ElkRoot) =>
+    setCanvasSize({
+      width: layout.width ?? 2000,
+      height: layout.height ?? 2000,
+    });
 
   const onInit = (ref: ReactZoomPanPinchRef) => {
     dispatch({
@@ -109,8 +125,8 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
                 nodes={data.nodes}
                 node={(props) => <CustomNode {...props} />}
                 edges={data.edges}
-                maxWidth={20000}
-                maxHeight={20000}
+                maxWidth={canvasSize.width}
+                maxHeight={canvasSize.height}
                 center={false}
                 zoomable={false}
                 fit={true}
@@ -118,6 +134,7 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
                 readonly
                 key={settings.layout}
                 onCanvasClick={onCanvasClick}
+                onLayoutChange={onLayoutChange}
               />
             </TransformComponent>
           </TransformWrapper>
