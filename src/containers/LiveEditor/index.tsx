@@ -49,8 +49,6 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
     height: 2000,
   });
 
-  console.log(canvasSize);
-
   React.useEffect(() => {
     const { nodes, edges } = getEdgeNodes(json, settings.expand);
 
