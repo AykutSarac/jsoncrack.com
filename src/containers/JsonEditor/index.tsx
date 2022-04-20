@@ -23,7 +23,6 @@ const aceOptions: IAceOptions = {
   tabSize: 2,
   showPrintMargin: false,
   wrap: true,
-  mode: "json",
 };
 
 const JsonEditor: React.FC = () => {
@@ -94,6 +93,7 @@ const JsonEditor: React.FC = () => {
       <ErrorContainer error={error} setError={setError} />
       <AceEditor
         height="100%"
+        mode="json"
         value={value}
         onChange={setValue}
         theme={editorTheme}
