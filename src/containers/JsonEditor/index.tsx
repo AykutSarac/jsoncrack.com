@@ -1,5 +1,5 @@
 import React from "react";
-import AceEditor from "react-ace";
+import AceEditor, { IAceOptions } from "react-ace";
 import parseJson from "parse-json";
 import styled from "styled-components";
 import { ErrorContainer } from "./ErrorContainer";
@@ -17,7 +17,14 @@ const StyledEditorWrapper = styled.div`
   user-select: none;
 `;
 
-const aceOptions = { useWorker: false };
+const aceOptions: IAceOptions = {
+  useWorker: false,
+  fontSize: 12,
+  tabSize: 2,
+  showPrintMargin: false,
+  wrap: true,
+  mode: "json",
+};
 
 const JsonEditor: React.FC = () => {
   const {
@@ -86,17 +93,12 @@ const JsonEditor: React.FC = () => {
     <StyledEditorWrapper>
       <ErrorContainer error={error} setError={setError} />
       <AceEditor
+        height="100%"
         value={value}
         onChange={setValue}
-        mode="json"
         theme={editorTheme}
         width={editorWidth}
-        height="100%"
-        fontSize={12}
-        wrapEnabled
         setOptions={aceOptions}
-        showPrintMargin={false}
-        tabSize={2}
       />
     </StyledEditorWrapper>
   );
