@@ -78,7 +78,7 @@ const Home: React.FC = () => {
           <StyledHeader>No Rules</StyledHeader>
           <StyledSubContent>
             Be free, you don&apos;t have to restructure your json to transform
-            it into graphs. We&apos;ve done it at our side, so you can just
+            it onto graphs. We&apos;ve done it at our side, so you can just
             paste your JSON.
           </StyledSubContent>
           <Button status="SUCCESS" onClick={() => push("/editor")}>

@@ -37,7 +37,7 @@
 
 JSON Visio is data visualization tool for your json data which seamlessly illustrates your data on graphs without having to restructure anything, paste directly or import file.
 
-> <b><a href="https://jsonvisio.com">JSON Visio - Directly into graphs</a></b>
+> <b><a href="https://jsonvisio.com">JSON Visio - Directly onto graphs</a></b>
 
 ## ⚡️ Features
 
