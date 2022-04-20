@@ -44,10 +44,6 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
     nodes: [],
     edges: [],
   });
-  const [canvasSize, setCanvasSize] = React.useState({
-    width: 2000,
-    height: 2000,
-  });
 
   React.useEffect(() => {
     const { nodes, edges } = getEdgeNodes(json, settings.expand);
@@ -92,12 +88,6 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
     if (input) input.blur();
   };
 
-  const onLayoutChange = (layout: ElkRoot) =>
-    setCanvasSize({
-      width: layout.width ?? 2000,
-      height: layout.height ?? 2000,
-    });
-
   const onInit = (ref: ReactZoomPanPinchRef) => {
     dispatch({
       type: ConfigActionType.SET_ZOOM_PAN_PICNH_REF,
@@ -123,8 +113,8 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
                 nodes={data.nodes}
                 node={(props) => <CustomNode {...props} />}
                 edges={data.edges}
-                maxWidth={canvasSize.width}
-                maxHeight={canvasSize.height}
+                maxWidth={20000}
+                maxHeight={20000}
                 center={false}
                 zoomable={false}
                 fit={true}
@@ -132,7 +122,6 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
                 readonly
                 key={settings.layout}
                 onCanvasClick={onCanvasClick}
-                onLayoutChange={onLayoutChange}
               />
             </TransformComponent>
           </TransformWrapper>
