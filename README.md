@@ -64,6 +64,26 @@ JSON Visio is data visualization tool for your json data which seamlessly illust
   npm run dev
 ```
 
+## 🛠 docker-compose
+```
+version: '3'
+services:
+  next:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jsonvisio
+    
+    restart: always
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - /app/.next
+```
+
+
 ## License
 
 This project is open source and available under the [MIT License](LICENSE).
