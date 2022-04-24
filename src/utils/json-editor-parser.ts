@@ -1,5 +1,12 @@
 import toast from "react-hot-toast";
 
+const filterChild = ([k, v]) => {
+  const notNull = v !== null;
+  const isArray = Array.isArray(v);
+  const condition = isArray ? !!v.length : typeof v === "object";
+  return notNull && condition;
+};
+
 const extract = (
   os: string[] | object[] | null,
   nextId = (
@@ -22,9 +29,7 @@ const extract = (
           ),
       parent: false,
       children: Object.entries(o)
-        .filter(
-          ([k, v]) => v !== null && (Array.isArray(v) || typeof v === "object")
-        )
+        .filter(filterChild)
         .flatMap(([k, v]) => [
           {
             id: nextId(),
