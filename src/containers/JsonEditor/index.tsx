@@ -2,7 +2,7 @@ import React from "react";
 import AceEditor, { IAceOptions } from "react-ace";
 import parseJson from "parse-json";
 import styled from "styled-components";
-import { ErrorContainer } from "./ErrorContainer";
+import { ErrorContainer } from "../../components/ErrorContainer/ErrorContainer";
 import { ConfigActionType } from "src/reducer/reducer";
 import { useConfig } from "src/hocs/config";
 require("ace-builds/src-noconflict/mode-json");

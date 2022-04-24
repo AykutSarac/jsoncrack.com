@@ -5,10 +5,10 @@ import {
   TransformComponent,
   ReactZoomPanPinchRef,
 } from "react-zoom-pan-pinch";
-import { Canvas, ElkRoot } from "reaflow";
+import { Canvas } from "reaflow";
 
 import { getEdgeNodes } from "./helpers";
-import { CustomNode } from "./CustomNode";
+import { CustomNode } from "../../components/CustomNode";
 import { useLoading } from "src/hooks/useLoading";
 import { useConfig } from "src/hocs/config";
 import { Tools } from "../Editor/Tools";
