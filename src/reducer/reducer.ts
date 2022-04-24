@@ -13,7 +13,6 @@ export enum ConfigActionType {
   ZOOM_OUT,
   CENTER_VIEW,
   SET_JSON,
-  SET_SEARCH_NODE,
   SET_ZOOM_PAN_PICNH_REF,
 }
 
@@ -48,15 +47,6 @@ export const useConfigReducer: React.Reducer<AppConfig, ReducerAction> = (
         settings: {
           ...state.settings,
           zoomPanPinch: action.payload,
-        },
-      };
-
-    case ConfigActionType.SET_SEARCH_NODE:
-      return {
-        ...state,
-        settings: {
-          ...state.settings,
-          searchNode: action.payload,
         },
       };
 

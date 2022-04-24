@@ -7,7 +7,6 @@ export interface StorageConfig {
   expand: boolean;
   autoformat: boolean;
   hideEditor: boolean;
-  searchNode: string;
   zoomPanPinch: ReactZoomPanPinchRef | null;
   lightmode: boolean;
 }

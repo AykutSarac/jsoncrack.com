@@ -1,8 +1,7 @@
 import React from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { IoCloseSharp } from "react-icons/io5";
-import { useConfig } from "src/hocs/config";
-import { ConfigActionType } from "src/reducer/reducer";
+import { useFocusNode } from "src/hooks/useFocusNode";
 import styled from "styled-components";
 
 const StyledInputWrapper = styled.div`
@@ -48,32 +47,28 @@ const StyledSearchButton = styled.button`
   }
 `;
 
-export const Input = () => {
-  const { dispatch } = useConfig();
-  const [value, setValue] = React.useState("");
-
-  React.useEffect(() => {
-    const debouncer = setTimeout(() => {
-      dispatch({ type: ConfigActionType.SET_SEARCH_NODE, payload: value });
-    }, 1500);
-
-    return () => clearTimeout(debouncer);
-  }, [value, dispatch]);
-
-  const handleClick = () => {
-    setValue("");
-  };
+export const Input: React.FC = () => {
+  const [content, setContent] = useFocusNode();
 
   return (
     <StyledInputWrapper>
       <StyledInput
         type="text"
-        value={value}
-        onChange={(e) => setValue(e.target.value)}
+        value={content.value}
+        onChange={(e) =>
+          setContent((val) => ({ ...val, value: e.target.value }))
+        }
         placeholder="Search Node"
       />
-      <StyledSearchButton aria-label="search" onClick={handleClick}>
-        {value ? <IoCloseSharp size={18} /> : <AiOutlineSearch size={18} />}
+      <StyledSearchButton
+        aria-label="search"
+        onClick={() => setContent({ value: "", debounced: "" })}
+      >
+        {content.value ? (
+          <IoCloseSharp size={18} />
+        ) : (
+          <AiOutlineSearch size={18} />
+        )}
       </StyledSearchButton>
     </StyledInputWrapper>
   );
