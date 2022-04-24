@@ -7,7 +7,7 @@ const extract = (
       String(++id)
   )(0)
 ) => {
-  if (!os) return {};
+  if (!os) return [];
   return [os].flat().map((o) => {
     const isObject = o instanceof Object;
 
@@ -22,7 +22,9 @@ const extract = (
           ),
       parent: false,
       children: Object.entries(o)
-        .filter(([k, v]) => Array.isArray(v) || typeof v === "object")
+        .filter(
+          ([k, v]) => v !== null && (Array.isArray(v) || typeof v === "object")
+        )
         .flatMap(([k, v]) => [
           {
             id: nextId(),
@@ -57,10 +59,10 @@ export const parser = (input: string | string[]) => {
     const mappedElements = extract(input);
     const res = [...flatten(mappedElements), ...relationships(mappedElements)];
 
-    console.log(res);
-
     return res;
   } catch (error) {
+    console.log(error);
+
     toast.error("An error occured while parsing JSON data!");
     return [];
   }
