@@ -12,6 +12,16 @@ import { useRouter } from "next/router";
 
 const StyledHome = styled.div`
   padding: 24px;
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    background: #23272a !important;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #4d4d4d !important;
+  }
 `;
 
 const StyledContent = styled.div`

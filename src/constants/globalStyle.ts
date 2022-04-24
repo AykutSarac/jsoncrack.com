@@ -12,17 +12,6 @@ const GlobalStyle = createGlobalStyle`
     font-size: 16px;
   }
 
-
-  ::-webkit-scrollbar {
-    width: 8px;
-    background: ${({ theme }) => theme.BLACK_SECONDARY};
-  }
-
-  ::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background-color: ${({ theme }) => theme.SILVER_DARK};
-  }
-
   a {
     text-decoration: none;
     color: unset;

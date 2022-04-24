@@ -16,6 +16,7 @@ export const darkTheme: DefaultTheme = {
   ORANGE: "#FAA81A",
   SILVER: "#B9BBBE",
   SILVER_DARK: "#4D4D4D",
+  PRIMARY: "#4D4D4D",
 
   INTERACTIVE_NORMAL: "#b9bbbe",
   INTERACTIVE_HOVER: "#dcddde",
@@ -37,7 +38,7 @@ export const lightTheme: DefaultTheme = {
   BLACK_DARK: "#2C2F33",
   BLACK_LIGHT: "#2F3136",
   BLACK_PRIMARY: "#36393f",
-  BLACK_SECONDARY: "#23272A",
+  BLACK_SECONDARY: "#F2F2F2",
   CRIMSON: "#DC143C",
   DARK_SALMON: "#E9967A",
   DANGER: "#db662e",
@@ -45,7 +46,8 @@ export const lightTheme: DefaultTheme = {
   SEAGREEN: "#3BA55D",
   ORANGE: "#FAA81A",
   SILVER: "#B9BBBE",
-  SILVER_DARK: "#4D4D4D",
+  SILVER_DARK: "#CCCCCC",
+  PRIMARY: "#4D4D4D",
 
   INTERACTIVE_NORMAL: "#4f5660",
   INTERACTIVE_HOVER: "#2e3338",

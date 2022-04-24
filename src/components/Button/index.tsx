@@ -2,7 +2,7 @@ import React from "react";
 import styled, { DefaultTheme } from "styled-components";
 
 enum ButtonType {
-  PRIMARY = "SILVER_DARK",
+  PRIMARY = "PRIMARY",
   SECONDARY = "BLURPLE",
   DANGER = "DANGER",
   SUCCESS = "SEAGREEN",

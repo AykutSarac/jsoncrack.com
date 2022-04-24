@@ -24,6 +24,7 @@ declare module "styled-components" {
     ORANGE: string;
     SILVER: string;
     SILVER_DARK: string;
+    PRIMARY: string;
 
     INTERACTIVE_NORMAL: string;
     INTERACTIVE_HOVER: string;
