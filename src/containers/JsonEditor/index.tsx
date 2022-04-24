@@ -59,14 +59,6 @@ const JsonEditor: React.FC = () => {
   }, [json]);
 
   React.useEffect(() => {
-    if (settings.autoformat) {
-      return setValue(JSON.stringify(JSON.parse(json), null, 2));
-    }
-
-    setValue(json);
-  }, [settings.autoformat, json]);
-
-  React.useEffect(() => {
     const formatTimer = setTimeout(() => {
       try {
         if (value === "") return setError((err) => ({ ...err, message: "" }));
@@ -86,7 +78,7 @@ const JsonEditor: React.FC = () => {
     }, 1800);
 
     return () => clearTimeout(formatTimer);
-  }, [value, settings.autoformat, dispatch]);
+  }, [value, settings.autoformat, dispatch, json]);
 
   return (
     <StyledEditorWrapper>
