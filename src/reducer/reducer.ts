@@ -58,7 +58,7 @@ export const useConfigReducer: React.Reducer<AppConfig, ReducerAction> = (
       state.settings.zoomPanPinch?.setTransform(
         state.settings.zoomPanPinch?.state.positionX,
         state.settings.zoomPanPinch?.state.positionY,
-        state.settings.zoomPanPinch?.state.scale + 0.2
+        state.settings.zoomPanPinch?.state.scale + 0.4
       );
       return state;
 
@@ -66,7 +66,7 @@ export const useConfigReducer: React.Reducer<AppConfig, ReducerAction> = (
       state.settings.zoomPanPinch?.setTransform(
         state.settings.zoomPanPinch?.state.positionX,
         state.settings.zoomPanPinch?.state.positionY,
-        state.settings.zoomPanPinch?.state.scale - 0.2
+        state.settings.zoomPanPinch?.state.scale - 0.4
       );
       return state;
 
