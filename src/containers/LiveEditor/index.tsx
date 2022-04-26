@@ -5,7 +5,7 @@ import {
   TransformComponent,
   ReactZoomPanPinchRef,
 } from "react-zoom-pan-pinch";
-import { Canvas, CanvasPosition } from "reaflow";
+import { Canvas, CanvasPosition, CanvasRef } from "reaflow";
 
 import { getEdgeNodes } from "./helpers";
 import { CustomNode } from "../../components/CustomNode";
@@ -45,8 +45,8 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
     edges: [],
   });
   const [size, setSize] = React.useState({
-    width: 20000,
-    height: 20000,
+    width: 2000,
+    height: 2000,
   });
 
   React.useEffect(() => {
@@ -87,12 +87,10 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
               nodes={data.nodes}
               node={(props) => <CustomNode {...props} />}
               edges={data.edges}
-              maxWidth={size.width + 1000}
-              maxHeight={size.height + 1000}
+              maxWidth={size.width}
+              maxHeight={size.height}
               zoomable={false}
-              fit={true}
               direction={settings.layout}
-              defaultPosition={CanvasPosition.CENTER}
               readonly
               key={settings.layout}
               onCanvasClick={onCanvasClick}
