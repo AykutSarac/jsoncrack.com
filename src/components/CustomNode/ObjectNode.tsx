@@ -7,7 +7,7 @@ const ObjectNode: React.FC<CustomNodeProps<[string, string][]>> = ({
   height,
   value,
   x,
-  y
+  y,
 }) => {
   return (
     <Styled.StyledForeignObject width={width} height={height} x={0} y={0}>
