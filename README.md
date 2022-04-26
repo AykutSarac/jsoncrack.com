@@ -57,7 +57,7 @@ JSON Visio is data visualization tool for your json data which seamlessly illust
 ## 🛠 Development Setup
 
 ```sh
-  npm install
+  npm install --legacy-peer-deps
   npm run dev
 ```
 
