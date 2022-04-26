@@ -32,6 +32,8 @@ export function getEdgeNodes(graph: any, isExpanded: boolean = true): any {
         .sort((a, b) => a - b);
       const longestLine = lineLengths.reverse()[0];
 
+      const height = (lines.length * 14 < 30 ? 30 : lines.length * 14) + 10;
+
       nodes.push({
         id: el.id,
         text: toString(el.text),
@@ -39,7 +41,7 @@ export function getEdgeNodes(graph: any, isExpanded: boolean = true): any {
           isParent: el.parent,
         },
         width: isExpanded ? 35 + longestLine * 8 : 180,
-        height: 30 + lines.length * 10,
+        height,
       });
     } else {
       edges.push(el);
