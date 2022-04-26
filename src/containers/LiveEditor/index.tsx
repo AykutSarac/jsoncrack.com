@@ -74,7 +74,6 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
           maxScale={1.8}
           minScale={0.4}
           initialScale={0.8}
-          limitToBounds={false}
           wheel={wheelOptions}
           onInit={onInit}
         >
