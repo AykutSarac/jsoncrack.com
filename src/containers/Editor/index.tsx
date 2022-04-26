@@ -6,6 +6,8 @@ import { Loading } from "src/components/Loading";
 import { Incompatible } from "src/containers/Incompatible";
 import * as Styles from "src/containers/Editor/styles";
 import { useConfig } from "src/hocs/config";
+import { Allotment } from "allotment";
+import { useLoading } from "src/hooks/useLoading";
 
 const JsonEditor = dynamic(() => import("src/containers/JsonEditor"), {
   ssr: false,
@@ -13,25 +15,29 @@ const JsonEditor = dynamic(() => import("src/containers/JsonEditor"), {
 });
 
 export const Editor: React.FC = () => {
+  const loading = useLoading();
   const {
     states: { settings },
   } = useConfig();
+
+  if (loading) return null;
 
   return (
     <Styles.StyledPageWrapper>
       <Sidebar />
       <Styles.StyledEditorWrapper>
-        {/* @ts-ignore */}
-        <Styles.StyledEditor
-          maxSize={800}
-          minSize={300}
-          defaultSize={450}
-          split="vertical"
-          size={settings.hideEditor ? 0 : 450}
-          allowResize={!settings.hideEditor}
-        >
-          <JsonEditor />
-          <LiveEditor />
+        <Styles.StyledEditor>
+          <Allotment.Pane
+            preferredSize={450}
+            minSize={300}
+            maxSize={600}
+            visible={!settings.hideEditor}
+          >
+            <JsonEditor />
+          </Allotment.Pane>
+          <Allotment.Pane>
+            <LiveEditor />
+          </Allotment.Pane>
         </Styles.StyledEditor>
       </Styles.StyledEditorWrapper>
       <Incompatible />
