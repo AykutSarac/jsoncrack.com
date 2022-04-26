@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 
 export const useLoading = () => {
-  const [loaded, setLoaded] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => setLoaded(true), []);
-  
-  return loaded;
+  useEffect(() => setLoading(false), []);
+
+  return loading;
 };
