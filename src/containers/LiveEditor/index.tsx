@@ -87,8 +87,8 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
               nodes={data.nodes}
               node={(props) => <CustomNode {...props} />}
               edges={data.edges}
-              maxWidth={size.width}
-              maxHeight={size.height}
+              maxWidth={size.width + 1000}
+              maxHeight={size.height + 1000}
               zoomable={false}
               fit={true}
               direction={settings.layout}
