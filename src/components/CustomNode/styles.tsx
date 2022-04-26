@@ -11,15 +11,13 @@ export const StyledTextWrapper = styled.div`
   cursor: pointer;
 `;
 
-export const StyledText = styled.pre<{
-  width: number;
-  height: number;
-}>`
+export const StyledText = styled.pre<{ width: number; height: number }>`
   display: flex;
   justify-content: center;
   flex-direction: column;
   width: ${({ width }) => width};
   height: ${({ height }) => height};
+  min-height: 50;
   color: ${({ theme }) => theme.TEXT_NORMAL};
 `;
 
