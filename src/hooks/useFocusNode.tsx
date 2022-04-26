@@ -51,7 +51,7 @@ export const useFocusNode = () => {
 
       settings.zoomPanPinch?.setTransform(newPositionX, newPositionY, newScale);
     }
-  }, [content, settings.zoomPanPinch]);
+  }, [content.debounced, settings.zoomPanPinch]);
 
   return [content, setContent] as const;
 };
