@@ -1,0 +1,23 @@
+{
+  "name": "JSON Visio",
+  "short_name": "JSON Visio",
+  "theme_color": "#36393e",
+  "background_color": "#36393e",
+  "display": "standalone",
+  "orientation": "landscape",
+  "scope": "/",
+  "start_url": "/editor",
+  "icons": [
+    {
+      "src": "/192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+
+    {
+      "src": "/512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
