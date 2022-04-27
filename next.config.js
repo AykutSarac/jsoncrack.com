@@ -14,6 +14,7 @@ const nextConfig = {
     styledComponents: true,
   },
   pwa: {
+    disable: true,
     dest: "public",
     register: true,
     scope: "/editor",
