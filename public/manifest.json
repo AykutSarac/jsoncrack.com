@@ -1,11 +1,12 @@
 {
   "name": "JSON Visio",
   "short_name": "JSON Visio",
+  "description": "Visualize your JSON data onto graphs seamlessly.",
   "theme_color": "#36393e",
   "background_color": "#36393e",
   "display": "standalone",
   "orientation": "landscape",
-  "scope": "/",
+  "scope": "/editor",
   "start_url": "/editor",
   "icons": [
     {
