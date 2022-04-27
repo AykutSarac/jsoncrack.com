@@ -45,6 +45,7 @@
     "jest": "^28",
     "jest-environment-jsdom": "^28.0.0",
     "next-compose-plugins": "^2.2.1",
+    "next-pwa": "^5.5.2",
     "prettier": "^2.6.2",
     "ts-node": "^10.7.0",
     "typescript": "4.6.3"
