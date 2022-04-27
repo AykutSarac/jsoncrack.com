@@ -16,7 +16,7 @@ const nextConfig = {
   pwa: {
     dest: "public",
     register: true,
-    scope: '/editor'
+    scope: "/editor",
   },
 };
 
