@@ -9,8 +9,6 @@ import Document, {
 import { SeoTags } from "src/components/SeoTags";
 import { ServerStyleSheet } from "styled-components";
 
-const isDevelopment = process.env.NODE_ENV === "development";
-
 class MyDocument extends Document {
   static async getInitialProps(
     ctx: DocumentContext
@@ -39,13 +37,13 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <link rel="manifest" href="/manifest.json" />
-          <meta name="theme-color" content="#36393E" />
           <SeoTags
             description="Simple visualization tool for your JSON data. No forced structure, paste your JSON and view it instantly."
             title="JSON Visio - Directly onto graphs"
             image="https://jsonvisio.com/jsonvisio.png"
           />
+          <meta name="theme-color" content="#36393E" />
+          <link rel="manifest" href="/manifest.json" />
           <link rel="icon" href="/favicon.ico" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link

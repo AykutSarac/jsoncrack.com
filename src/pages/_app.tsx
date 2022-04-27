@@ -6,6 +6,7 @@ import GlobalStyle from "src/constants/globalStyle";
 import { darkTheme, lightTheme } from "src/constants/theme";
 import { Toaster } from "react-hot-toast";
 import { useConfig, withConfig } from "src/hocs/config";
+import { GoogleAnalytics } from "src/components/GoogleAnalytics";
 
 function JsonVisio({ Component, pageProps }: AppProps) {
   const {
@@ -14,6 +15,7 @@ function JsonVisio({ Component, pageProps }: AppProps) {
 
   return (
     <>
+      <GoogleAnalytics />
       <ThemeProvider theme={settings.lightmode ? lightTheme : darkTheme}>
         <GlobalStyle />
         <Component {...pageProps} />
