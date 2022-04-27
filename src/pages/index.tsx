@@ -64,7 +64,7 @@ const Home: React.FC = () => {
   return (
     <StyledHome>
       <Head>
-        <title>JSON Visio</title>
+        <title>JSON Visio - Directly onto graphs</title>
       </Head>
       <Navbar />
       <Container>
