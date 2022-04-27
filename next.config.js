@@ -1,4 +1,4 @@
-const withTM = require("next-transpile-modules")(["reaflow", "next-pwa"]);
+const withTM = require("next-transpile-modules")(["reaflow"]);
 
 const nextConfig = withTM({
   reactStrictMode: true,
@@ -13,11 +13,6 @@ const nextConfig = withTM({
   compiler: {
     styledComponents: true,
     swcMinify: true,
-  },
-  pwa: {
-    dest: "public",
-    register: true,
-    skipWaiting: true,
   },
 });
 

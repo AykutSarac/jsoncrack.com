@@ -44,7 +44,7 @@
     "gh-pages": "^3.2.3",
     "jest": "^28",
     "jest-environment-jsdom": "^28.0.0",
-    "next-pwa": "^5.5.2",
+    "next-compose-plugins": "^2.2.1",
     "prettier": "^2.6.2",
     "ts-node": "^10.7.0",
     "typescript": "4.6.3"
