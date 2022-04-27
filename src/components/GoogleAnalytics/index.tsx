@@ -9,10 +9,12 @@ export const GoogleAnalytics = () => {
   return (
     <>
       <Script
+        id="google-tag-manager"
         strategy="afterInteractive"
         src={`https://www.googletagmanager.com/gtag/js?id=G-JKZEHMJBMH`}
       />
       <Script
+        id="gtag-script"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
           __html: `
