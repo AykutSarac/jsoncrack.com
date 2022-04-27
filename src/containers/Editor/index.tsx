@@ -7,20 +7,15 @@ import { Incompatible } from "src/containers/Incompatible";
 import * as Styles from "src/containers/Editor/styles";
 import { useConfig } from "src/hocs/config";
 import { Allotment } from "allotment";
-import { useLoading } from "src/hooks/useLoading";
 
 const JsonEditor = dynamic(() => import("src/containers/JsonEditor"), {
-  ssr: false,
   loading: () => <Loading message="Loading Editor..." />,
 });
 
-export const Editor: React.FC = () => {
-  const loading = useLoading();
+const Editor: React.FC = () => {
   const {
     states: { settings },
   } = useConfig();
-
-  if (loading) return null;
 
   return (
     <Styles.StyledPageWrapper>
@@ -44,3 +39,5 @@ export const Editor: React.FC = () => {
     </Styles.StyledPageWrapper>
   );
 };
+
+export default Editor;

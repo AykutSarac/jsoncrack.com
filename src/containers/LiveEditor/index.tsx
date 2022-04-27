@@ -5,13 +5,13 @@ import {
   TransformComponent,
   ReactZoomPanPinchRef,
 } from "react-zoom-pan-pinch";
-import { Canvas, CanvasPosition, CanvasRef } from "reaflow";
 
 import { getEdgeNodes } from "./helpers";
 import { CustomNode } from "../../components/CustomNode";
 import { useConfig } from "src/hocs/config";
 import { Tools } from "../Editor/Tools";
 import { ConfigActionType } from "src/reducer/reducer";
+import { Canvas } from "reaflow";
 
 const StyledLiveEditor = styled.div`
   position: relative;
