@@ -7,7 +7,7 @@ const nextConfig = {
   reactStrictMode: true,
   exportPathMap: () => ({
     "/": { page: "/" },
-    "/editor": { page: "/_offline" },
+    "/editor": { page: "/editor" },
   }),
   compiler: {
     styledComponents: true,
