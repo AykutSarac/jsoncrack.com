@@ -13,6 +13,10 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
+  experimental: {
+    esmExternals: "loose",
+    outputStandalone: true,
+  },
   pwa: {
     disable: true,
     dest: "public",
