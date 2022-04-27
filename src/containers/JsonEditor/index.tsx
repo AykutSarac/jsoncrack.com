@@ -104,4 +104,6 @@ const JsonEditor: React.FC = () => {
   );
 };
 
-export default React.memo(JsonEditor);
+const memoizedJsonEditor = React.memo(JsonEditor);
+
+export { memoizedJsonEditor as JsonEditor };

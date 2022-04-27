@@ -5,7 +5,6 @@ const withPWA = require("next-pwa");
  */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
   exportPathMap: () => ({
     "/": { page: "/" },
     "/editor": { page: "/editor" },
@@ -13,12 +12,7 @@ const nextConfig = {
   compiler: {
     styledComponents: true,
   },
-  experimental: {
-    esmExternals: "loose",
-    outputStandalone: true,
-  },
   pwa: {
-    disable: true,
     dest: "public",
     register: true,
     scope: "/editor",
