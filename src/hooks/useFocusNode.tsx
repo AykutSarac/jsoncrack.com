@@ -45,10 +45,12 @@ export const useFocusNode = () => {
 
       const newPositionX =
         (zoomPanPinch.offsetLeft - x) * newScale +
-        firstMatchedNode.getBoundingClientRect().width;
+        zoomPanPinch.clientWidth / 2 -
+        firstMatchedNode.getBoundingClientRect().width / 2;
       const newPositionY =
-        (zoomPanPinch.offsetTop - y) * newScale +
-        firstMatchedNode.getBoundingClientRect().height;
+        (zoomPanPinch.offsetLeft - y) * newScale +
+        zoomPanPinch.clientHeight / 2 -
+        firstMatchedNode.getBoundingClientRect().height / 2;
 
       highlightMatchedNodes(matchedNodes);
 
