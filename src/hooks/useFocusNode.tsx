@@ -1,6 +1,12 @@
 import React from "react";
 import { useConfig } from "src/hocs/config";
 
+import {
+  searchQuery,
+  cleanupHighlight,
+  highlightMatchedNodes,
+} from "src/utils/search";
+
 type Content = { value: string; debounced: string };
 
 export const useFocusNode = () => {
@@ -25,29 +31,26 @@ export const useFocusNode = () => {
     if (!settings.zoomPanPinch) return;
     const zoomPanPinch = settings.zoomPanPinch.instance.wrapperComponent;
 
-    const node = document.querySelector(
+    const matchedNodes: NodeListOf<Element> = searchQuery(
       `span[data-key*='${content.debounced}' i]`
     );
+    const firstMatchedNode: Element | null = matchedNodes[0] || null;
 
-    document
-      .querySelector("foreignObject.searched")
-      ?.classList.remove("searched");
+    cleanupHighlight();
 
-    if (zoomPanPinch && node && node.parentElement) {
+    if (zoomPanPinch && firstMatchedNode && firstMatchedNode.parentElement) {
       const newScale = 1;
-      const x = Number(node.getAttribute("data-x"));
-      const y = Number(node.getAttribute("data-y"));
+      const x = Number(firstMatchedNode.getAttribute("data-x"));
+      const y = Number(firstMatchedNode.getAttribute("data-y"));
 
       const newPositionX =
         (zoomPanPinch.offsetLeft - x) * newScale +
-        node.getBoundingClientRect().width;
+        firstMatchedNode.getBoundingClientRect().width;
       const newPositionY =
         (zoomPanPinch.offsetTop - y) * newScale +
-        node.getBoundingClientRect().height;
+        firstMatchedNode.getBoundingClientRect().height;
 
-      node.parentElement.parentElement
-        ?.closest("foreignObject")
-        ?.classList.toggle("searched");
+      highlightMatchedNodes(matchedNodes);
 
       settings.zoomPanPinch?.setTransform(newPositionX, newPositionY, newScale);
     }
