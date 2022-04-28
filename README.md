@@ -59,7 +59,7 @@ JSON Visio is data visualization tool for your json data which seamlessly illust
 A Docker file is provided in the root of the repo.
 If you want to run JsonVision locally:
 
-* Build Docker image with `docker build -t jsonvisio.`
+* Build Docker image with `docker build -t jsonvisio .`
 * Run locally with `docker run -p 8888:80 jsonvisio`
 * Go to [http://localhost:8888]
 
