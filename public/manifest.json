@@ -6,7 +6,7 @@
   "background_color": "#36393e",
   "display": "standalone",
   "orientation": "landscape",
-  "scope": "/editor",
+  "scope": "/",
   "start_url": "/editor",
   "icons": [
     {
