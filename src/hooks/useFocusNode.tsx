@@ -1,9 +1,14 @@
 import React from "react";
 import { useConfig } from "src/hocs/config";
 
-type Content = { value: string; debounced: string };
+import {
+  searchQuery,
+  cleanupHighlight,
+  highlightMatchedNodes,
+} from "src/utils/search";
 
 export const useFocusNode = () => {
+  const [selectedNode, setSelectedNode] = React.useState(0);
   const [content, setContent] = React.useState({
     value: "",
     debounced: "",
@@ -12,6 +17,8 @@ export const useFocusNode = () => {
   const {
     states: { settings },
   } = useConfig();
+
+  const skip = () => setSelectedNode((current) => current + 1);
 
   React.useEffect(() => {
     const debouncer = setTimeout(() => {
@@ -25,33 +32,38 @@ export const useFocusNode = () => {
     if (!settings.zoomPanPinch) return;
     const zoomPanPinch = settings.zoomPanPinch.instance.wrapperComponent;
 
-    const node = document.querySelector(
+    const matchedNodes: NodeListOf<Element> = searchQuery(
       `span[data-key*='${content.debounced}' i]`
     );
+    const matchedNode: Element | null = matchedNodes[selectedNode] || null;
 
-    document
-      .querySelector("foreignObject.searched")
-      ?.classList.remove("searched");
+    cleanupHighlight();
 
-    if (zoomPanPinch && node && node.parentElement) {
+    if (zoomPanPinch && matchedNode && matchedNode.parentElement) {
       const newScale = 1;
-      const x = Number(node.getAttribute("data-x"));
-      const y = Number(node.getAttribute("data-y"));
+      const x = Number(matchedNode.getAttribute("data-x"));
+      const y = Number(matchedNode.getAttribute("data-y"));
 
       const newPositionX =
         (zoomPanPinch.offsetLeft - x) * newScale +
-        node.getBoundingClientRect().width;
+        zoomPanPinch.clientWidth / 2 -
+        matchedNode.getBoundingClientRect().width / 2;
       const newPositionY =
-        (zoomPanPinch.offsetTop - y) * newScale +
-        node.getBoundingClientRect().height;
+        (zoomPanPinch.offsetLeft - y) * newScale +
+        zoomPanPinch.clientHeight / 2 -
+        matchedNode.getBoundingClientRect().height / 2;
 
-      node.parentElement.parentElement
-        ?.closest("foreignObject")
-        ?.classList.toggle("searched");
+      highlightMatchedNodes(matchedNodes);
 
       settings.zoomPanPinch?.setTransform(newPositionX, newPositionY, newScale);
+    } else {
+      setSelectedNode(0);
     }
-  }, [content.debounced, settings.zoomPanPinch]);
 
-  return [content, setContent] as const;
+    return () => {
+      if (!content.value) setSelectedNode(0);
+    };
+  }, [content.debounced, settings.zoomPanPinch, selectedNode, setSelectedNode]);
+
+  return [content, setContent, skip] as const;
 };
