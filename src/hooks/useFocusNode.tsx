@@ -7,8 +7,6 @@ import {
   highlightMatchedNodes,
 } from "src/utils/search";
 
-type Content = { value: string; debounced: string };
-
 export const useFocusNode = () => {
   const [content, setContent] = React.useState({
     value: "",
