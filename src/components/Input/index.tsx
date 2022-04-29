@@ -13,6 +13,10 @@ const StyledInputWrapper = styled.div`
   padding: 4px 6px;
 `;
 
+const StyledForm = styled.form`
+  display: flex;
+`;
+
 const StyledInput = styled.input`
   background: none;
   color: ${({ theme }) => theme.TEXT_NORMAL};
@@ -48,18 +52,25 @@ const StyledSearchButton = styled.button`
 `;
 
 export const Input: React.FC = () => {
-  const [content, setContent] = useFocusNode();
+  const [content, setContent, skip] = useFocusNode();
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    skip();
+  };
 
   return (
     <StyledInputWrapper>
-      <StyledInput
-        type="text"
-        value={content.value}
-        onChange={(e) =>
-          setContent((val) => ({ ...val, value: e.target.value }))
-        }
-        placeholder="Search Node"
-      />
+      <StyledForm onSubmit={onSubmit}>
+        <StyledInput
+          type="text"
+          value={content.value}
+          onChange={(e) =>
+            setContent((val) => ({ ...val, value: e.target.value }))
+          }
+          placeholder="Search Node"
+        />
+      </StyledForm>
       <StyledSearchButton
         aria-label="search"
         onClick={() => setContent({ value: "", debounced: "" })}

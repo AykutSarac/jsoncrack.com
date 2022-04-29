@@ -8,6 +8,7 @@ import {
 } from "src/utils/search";
 
 export const useFocusNode = () => {
+  const [selectedNode, setSelectedNode] = React.useState(0);
   const [content, setContent] = React.useState({
     value: "",
     debounced: "",
@@ -16,6 +17,8 @@ export const useFocusNode = () => {
   const {
     states: { settings },
   } = useConfig();
+
+  const skip = () => setSelectedNode((current) => current + 1);
 
   React.useEffect(() => {
     const debouncer = setTimeout(() => {
@@ -32,29 +35,35 @@ export const useFocusNode = () => {
     const matchedNodes: NodeListOf<Element> = searchQuery(
       `span[data-key*='${content.debounced}' i]`
     );
-    const firstMatchedNode: Element | null = matchedNodes[0] || null;
+    const matchedNode: Element | null = matchedNodes[selectedNode] || null;
 
     cleanupHighlight();
 
-    if (zoomPanPinch && firstMatchedNode && firstMatchedNode.parentElement) {
+    if (zoomPanPinch && matchedNode && matchedNode.parentElement) {
       const newScale = 1;
-      const x = Number(firstMatchedNode.getAttribute("data-x"));
-      const y = Number(firstMatchedNode.getAttribute("data-y"));
+      const x = Number(matchedNode.getAttribute("data-x"));
+      const y = Number(matchedNode.getAttribute("data-y"));
 
       const newPositionX =
         (zoomPanPinch.offsetLeft - x) * newScale +
         zoomPanPinch.clientWidth / 2 -
-        firstMatchedNode.getBoundingClientRect().width / 2;
+        matchedNode.getBoundingClientRect().width / 2;
       const newPositionY =
         (zoomPanPinch.offsetLeft - y) * newScale +
         zoomPanPinch.clientHeight / 2 -
-        firstMatchedNode.getBoundingClientRect().height / 2;
+        matchedNode.getBoundingClientRect().height / 2;
 
       highlightMatchedNodes(matchedNodes);
 
       settings.zoomPanPinch?.setTransform(newPositionX, newPositionY, newScale);
+    } else {
+      setSelectedNode(0);
     }
-  }, [content.debounced, settings.zoomPanPinch]);
 
-  return [content, setContent] as const;
+    return () => {
+      if (!content.value) setSelectedNode(0);
+    };
+  }, [content.debounced, settings.zoomPanPinch, selectedNode, setSelectedNode]);
+
+  return [content, setContent, skip] as const;
 };
