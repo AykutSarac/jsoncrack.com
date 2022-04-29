@@ -16,15 +16,14 @@ const ObjectNode: React.FC<CustomNodeProps<[string, string][]>> = ({
           {value.map(
             (val, idx) =>
               val[1] && (
-                <Styled.StyledRow key={idx} width={width}>
-                  <Styled.StyledKey
-                    data-x={x}
-                    data-y={y}
-                    data-key={val[1]}
-                    objectKey
-                  >
-                    {val[0]}:{" "}
-                  </Styled.StyledKey>
+                <Styled.StyledRow
+                  data-key={val[1]}
+                  data-x={x}
+                  data-y={y}
+                  key={idx}
+                  width={width}
+                >
+                  <Styled.StyledKey objectKey>{val[0]}: </Styled.StyledKey>
                   {val[1]}
                 </Styled.StyledRow>
               )

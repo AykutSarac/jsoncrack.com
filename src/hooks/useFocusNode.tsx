@@ -53,7 +53,7 @@ export const useFocusNode = () => {
         zoomPanPinch.clientHeight / 2 -
         matchedNode.getBoundingClientRect().height / 2;
 
-      highlightMatchedNodes(matchedNodes);
+      highlightMatchedNodes(matchedNodes, selectedNode);
 
       settings.zoomPanPinch?.setTransform(newPositionX, newPositionY, newScale);
     } else {

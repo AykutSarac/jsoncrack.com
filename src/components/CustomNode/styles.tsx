@@ -28,6 +28,11 @@ export const StyledForeignObject = styled.foreignObject`
     border: 2px solid ${({ theme }) => theme.TEXT_POSITIVE};
     border-radius: 2px;
   }
+
+  .highlight {
+    background-color: rgba(255, 0, 255, 0.5);
+    filter: hue-rotate();
+  }
 `;
 
 export const StyledKey = styled.span<{
@@ -38,7 +43,7 @@ export const StyledKey = styled.span<{
     parent ? theme.ORANGE : objectKey ? "#5c87ff" : theme.TEXT_POSITIVE};
 `;
 
-export const StyledRow = styled.div<{ width: number }>`
+export const StyledRow = styled.span<{ width: number }>`
   height: fit-content;
   overflow: hidden;
   text-overflow: ellipsis;
