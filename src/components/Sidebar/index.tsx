@@ -102,9 +102,9 @@ const StyledImportFile = styled.label`
 `;
 
 function getLayoutIcon(layout: CanvasDirection) {
-  if (layout === "LEFT") return <CgArrowLongRightE />;
+  if (layout === "LEFT") return <CgArrowLongLeftE />;
   if (layout === "UP") return <CgArrowLongDownE />;
-  if (layout === "RIGHT") return <CgArrowLongLeftE />;
+  if (layout === "RIGHT") return <CgArrowLongRightE />;
   return <CgArrowLongUpE />;
 }
 
