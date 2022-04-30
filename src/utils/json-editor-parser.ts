@@ -2,9 +2,14 @@ import toast from "react-hot-toast";
 
 const filterChild = ([k, v]) => {
   const notNull = v !== null;
-  const isArray = Array.isArray(v);
-  const condition = isArray ? !!v.length : typeof v === "object";
-  return notNull && condition;
+  const isArray = Array.isArray(v) ? !!v.length : typeof v === "object";
+  return notNull && isArray;
+};
+
+const filterValues = ([k, v]) => {
+  if (Array.isArray(v) || v instanceof Object) return false;
+
+  return true;
 };
 
 function generateChildren(object: Object, nextId: () => string) {
@@ -23,13 +28,12 @@ function generateChildren(object: Object, nextId: () => string) {
 function generateNodeData(object: Object | number) {
   const isObject = object instanceof Object;
 
-  return !isObject
-    ? object.toString()
-    : Object.fromEntries(
-        Object.entries(object).filter(
-          ([k, v]) => !Array.isArray(v) && !(v instanceof Object)
-        )
-      );
+  if (isObject) {
+    const entries = Object.entries(object).filter(filterValues);
+    return Object.fromEntries(entries);
+  }
+
+  return object.toString();
 }
 
 const extract = (
@@ -52,8 +56,8 @@ const flatten = (xs: { id: string; children: never[] }[]) =>
   xs.flatMap(({ children, ...rest }) => [rest, ...flatten(children)]);
 
 const relationships = (xs: { id: string; children: never[] }[]) => {
-  return xs.flatMap(({ id: to, children = [] }) => [
-    ...children.map(({ id: from }) => ({
+  return xs.flatMap(({ id: from, children = [] }) => [
+    ...children.map(({ id: to }) => ({
       id: `e${from}-${to}`,
       from,
       to,
