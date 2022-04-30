@@ -76,7 +76,7 @@ export const parser = (input: string | string[]) => {
 
     return res;
   } catch (error) {
-    console.log(error);
+    console.error(error);
 
     toast.error("An error occured while parsing JSON data!");
     return [];
