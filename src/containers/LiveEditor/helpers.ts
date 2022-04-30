@@ -14,7 +14,13 @@ const toString = (value: string | object) => {
   return String(value);
 };
 
-export function getEdgeNodes(graph: any, isExpanded: boolean = true): any {
+export function getEdgeNodes(
+  graph: string,
+  isExpanded: boolean = true
+): {
+  nodes: NodeData[];
+  edges: EdgeData[];
+} {
   graph = JSON.parse(graph);
   const elements = parser(graph);
 

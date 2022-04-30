@@ -1,12 +1,12 @@
 import React from "react";
-import { Canvas } from "reaflow";
+import { Canvas, EdgeData, NodeData } from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
 import { useConfig } from "src/hocs/config";
 import { getEdgeNodes } from "src/containers/LiveEditor/helpers";
 
 export const Graph = () => {
-  const [nodes, setNodes] = React.useState([]);
-  const [edges, setEdges] = React.useState([]);
+  const [nodes, setNodes] = React.useState<NodeData[]>([]);
+  const [edges, setEdges] = React.useState<EdgeData[]>([]);
   const [size, setSize] = React.useState({
     width: 2000,
     height: 2000,
