@@ -32,7 +32,7 @@ export function getEdgeNodes(graph: any, isExpanded: boolean = true): any {
         .sort((a, b) => a - b);
       const longestLine = lineLengths.reverse()[0];
 
-      const height = (lines.length * 14 < 30 ? 30 : lines.length * 14) + 10;
+      const height = (lines.length * 18 < 30 ? 40 : lines.length * 18);
 
       nodes.push({
         id: el.id,
