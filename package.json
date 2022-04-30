@@ -31,7 +31,7 @@
     "@testing-library/user-event": "^14.1.0",
     "@types/enzyme": "^3.10.12",
     "@types/jest": "^27.4.1",
-    "@types/node": "17.0.24",
+    "@types/node": "^17.0.30",
     "@types/parse-json": "^4.0.0",
     "@types/react": "18.0.5",
     "@types/react-splitter-layout": "^3.0.2",
