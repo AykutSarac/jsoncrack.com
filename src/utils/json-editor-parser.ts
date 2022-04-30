@@ -7,6 +7,31 @@ const filterChild = ([k, v]) => {
   return notNull && condition;
 };
 
+function generateChildren(object: Object, nextId: () => string) {
+  return Object.entries(object)
+    .filter(filterChild)
+    .flatMap(([k, v]) => [
+      {
+        id: nextId(),
+        text: k,
+        parent: true,
+        children: extract(v, nextId),
+      },
+    ]);
+}
+
+function generateNodeData(object: Object | number) {
+  const isObject = object instanceof Object;
+
+  return !isObject
+    ? object.toString()
+    : Object.fromEntries(
+        Object.entries(object).filter(
+          ([k, v]) => !Array.isArray(v) && !(v instanceof Object)
+        )
+      );
+}
+
 const extract = (
   os: string[] | object[] | null,
   nextId = (
@@ -15,31 +40,12 @@ const extract = (
   )(0)
 ) => {
   if (!os) return [];
-  return [os].flat().map((o) => {
-    const isObject = o instanceof Object;
-
-    return {
-      id: nextId(),
-      text: !isObject
-        ? o.toString()
-        : Object.fromEntries(
-            Object.entries(o).filter(
-              ([k, v]) => !Array.isArray(v) && !(v instanceof Object)
-            )
-          ),
-      parent: false,
-      children: Object.entries(o)
-        .filter(filterChild)
-        .flatMap(([k, v]) => [
-          {
-            id: nextId(),
-            text: k,
-            parent: true,
-            children: extract(v, nextId),
-          },
-        ]),
-    };
-  });
+  return [os].flat().map((o) => ({
+    id: nextId(),
+    text: generateNodeData(o),
+    children: generateChildren(o, nextId),
+    parent: false,
+  }));
 };
 
 const flatten = (xs: { id: string; children: never[] }[]) =>
