@@ -120,6 +120,24 @@ export const Sidebar: React.FC = () => {
     if (e.target.files) setJsonFile(e.target.files?.item(0));
   };
 
+  const handleClear = () => {
+    dispatch({ type: ConfigActionType.SET_JSON, payload: "{}" });
+    localStorage.removeItem("json");
+    toast.success(`Cleared JSON and removed from memory.`);
+  };
+
+  const toggleAutoFormat = () => {
+    dispatch({ type: ConfigActionType.TOGGLE_AUTOFORMAT });
+    toast(
+      `Auto format has been ${settings.autoformat ? "disabled." : "enabled."}`
+    );
+  };
+
+  const toggleExpandCollapse = () => {
+    dispatch({ type: ConfigActionType.TOGGLE_EXPAND });
+    toast(`${settings.expand ? "Collapsed" : "Expanded"} nodes.`);
+  };
+
   React.useEffect(() => {
     if (jsonFile) {
       const reader = new FileReader();
@@ -151,16 +169,7 @@ export const Sidebar: React.FC = () => {
           </StyledElement>
         </Tooltip>
         <Tooltip title="Auto Format">
-          <StyledElement
-            onClick={() => {
-              dispatch({ type: ConfigActionType.TOGGLE_AUTOFORMAT });
-              toast(
-                `Auto format has been ${
-                  settings.autoformat ? "disabled." : "enabled."
-                }`
-              );
-            }}
-          >
+          <StyledElement onClick={toggleAutoFormat}>
             {settings.autoformat ? <MdAutoFixHigh /> : <MdOutlineAutoFixOff />}
           </StyledElement>
         </Tooltip>
@@ -174,22 +183,13 @@ export const Sidebar: React.FC = () => {
         <Tooltip title="Toggle Compact Nodes">
           <StyledElement
             title="Toggle Expand/Collapse"
-            onClick={() => {
-              dispatch({ type: ConfigActionType.TOGGLE_EXPAND });
-              toast(`${settings.expand ? "Collapsed" : "Expanded"} nodes.`);
-            }}
+            onClick={toggleExpandCollapse}
           >
             {settings.expand ? <MdUnfoldMore /> : <MdUnfoldLess />}
           </StyledElement>
         </Tooltip>
         <Tooltip title="Clear JSON">
-          <StyledElement
-            onClick={() => {
-              dispatch({ type: ConfigActionType.SET_JSON, payload: "[]" });
-              localStorage.removeItem("json");
-              toast.success(`Cleared JSON and removed from memory.`);
-            }}
-          >
+          <StyledElement onClick={handleClear}>
             <AiFillDelete />
           </StyledElement>
         </Tooltip>
