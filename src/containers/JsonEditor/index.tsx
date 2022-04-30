@@ -31,9 +31,7 @@ const JsonEditor: React.FC = () => {
     dispatch,
   } = useConfig();
   const [editorWidth, setEditorWidth] = React.useState("auto");
-  const [value, setValue] = React.useState(
-    JSON.stringify(JSON.parse(json), null, 2)
-  );
+  const [value, setValue] = React.useState("");
   const [error, setError] = React.useState({
     message: "",
     isExpanded: true,
@@ -53,32 +51,28 @@ const JsonEditor: React.FC = () => {
     const dom = document.querySelector(".ace_scroller");
     if (dom) resizeObserver.observe(dom);
 
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, [json]);
+    return () => resizeObserver.disconnect();
+  }, []);
 
   React.useEffect(() => {
     if (settings.autoformat) {
-      return setValue(JSON.stringify(JSON.parse(json), null, 2));
+      setValue(JSON.stringify(JSON.parse(json), null, 2));
+    } else {
+      setValue(json);
     }
-
-    setValue(json);
   }, [settings.autoformat, json]);
 
   React.useEffect(() => {
     const formatTimer = setTimeout(() => {
       try {
-        if (value === "") return setError((err) => ({ ...err, message: "" }));
-        const parsedJson = parseJson(value);
-
-        if (settings.autoformat) {
-          setValue(JSON.stringify(parsedJson, null, 2));
-        } else {
-          setValue(value);
+        if (value) {
+          parseJson(json);
+          dispatch({
+            type: ConfigActionType.SET_JSON,
+            payload: value,
+          });
         }
 
-        dispatch({ type: ConfigActionType.SET_JSON, payload: value });
         setError((err) => ({ ...err, message: "" }));
       } catch (jsonError: any) {
         setError((err) => ({ ...err, message: jsonError.message }));
@@ -86,7 +80,7 @@ const JsonEditor: React.FC = () => {
     }, 1800);
 
     return () => clearTimeout(formatTimer);
-  }, [value, settings.autoformat, dispatch]);
+  }, [value, dispatch]);
 
   return (
     <StyledEditorWrapper>
