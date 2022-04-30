@@ -24,6 +24,10 @@ export const StyledText = styled.pre<{ width: number; height: number }>`
 export const StyledForeignObject = styled.foreignObject`
   pointer-events: none;
 
+  * {
+    font-family: "Roboto Mono", monospace;
+  }
+
   &.searched {
     border: 2px solid ${({ theme }) => theme.TEXT_POSITIVE};
     border-radius: 2px;
@@ -39,12 +43,13 @@ export const StyledKey = styled.span<{
   objectKey?: boolean;
   parent?: boolean;
 }>`
+  font-weight: bold;
   color: ${({ theme, objectKey, parent }) =>
-    parent ? theme.ORANGE : objectKey ? "#5c87ff" : theme.TEXT_POSITIVE};
+    parent ? theme.NODE_KEY : objectKey ? "#5c87ff" : theme.TEXT_POSITIVE};
 `;
 
 export const StyledRow = styled.span<{ width: number }>`
-  height: fit-content;
+  height: 18px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
