@@ -26,10 +26,7 @@ const aceOptions: IAceOptions = {
 };
 
 const JsonEditor: React.FC = () => {
-  const {
-    states: { json, settings },
-    dispatch,
-  } = useConfig();
+  const { json, settings, dispatch } = useConfig();
   const [editorWidth, setEditorWidth] = React.useState("auto");
   const [value, setValue] = React.useState("");
   const [error, setError] = React.useState({
@@ -56,21 +53,25 @@ const JsonEditor: React.FC = () => {
 
   React.useEffect(() => {
     if (settings.autoformat) {
-      setValue(JSON.stringify(JSON.parse(json), null, 2));
-    } else {
-      setValue(json);
+      return setValue(JSON.stringify(JSON.parse(json), null, 2));
     }
+
+    setValue(json);
   }, [settings.autoformat, json]);
 
   React.useEffect(() => {
     const formatTimer = setTimeout(() => {
       try {
         if (value) {
-          parseJson(json);
-          dispatch({
-            type: ConfigActionType.SET_JSON,
-            payload: value,
-          });
+          const parsedJson = parseJson(value);
+
+          if (settings.autoformat) {
+            setValue(JSON.stringify(parsedJson, null, 2));
+          } else {
+            setValue(value);
+          }
+
+          dispatch({ type: ConfigActionType.SET_JSON, payload: value });
         }
 
         setError((err) => ({ ...err, message: "" }));
