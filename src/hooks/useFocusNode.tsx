@@ -14,9 +14,7 @@ export const useFocusNode = () => {
     debounced: "",
   });
 
-  const {
-    states: { settings },
-  } = useConfig();
+  const { settings } = useConfig();
 
   const skip = () => setSelectedNode((current) => current + 1);
 

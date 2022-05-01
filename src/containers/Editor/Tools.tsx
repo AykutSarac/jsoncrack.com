@@ -41,9 +41,9 @@ const StyledToolElement = styled.button`
 `;
 
 export const Tools: React.FC = () => {
-  const { states, dispatch } = useConfig();
+  const { json, settings, dispatch } = useConfig();
   const handleSave = () => {
-    localStorage.setItem("json", states.json);
+    localStorage.setItem("json", json);
     toast.success("Saved JSON successfully!");
   };
 
@@ -63,7 +63,7 @@ export const Tools: React.FC = () => {
         <AiOutlineFullscreen />
       </StyledToolElement>
       <StyledToolElement aria-label="switch theme" onClick={toggleTheme}>
-        {states.settings.lightmode ? <HiOutlineMoon /> : <HiOutlineSun />}
+        {settings.lightmode ? <HiOutlineMoon /> : <HiOutlineSun />}
       </StyledToolElement>
       <Input />
       <StyledToolElement aria-label="save" onClick={handleSave}>

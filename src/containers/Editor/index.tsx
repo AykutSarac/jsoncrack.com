@@ -8,9 +8,7 @@ import { useConfig } from "src/hocs/config";
 import { Allotment } from "allotment";
 
 const Editor: React.FC = () => {
-  const {
-    states: { settings },
-  } = useConfig();
+  const { settings } = useConfig();
 
   return (
     <Styles.StyledPageWrapper>

@@ -18,12 +18,13 @@ export const initialStates: AppConfig = {
 };
 
 interface Config {
-  states: AppConfig;
+  json: string;
+  settings: StorageConfig;
   dispatch: React.Dispatch<ReducerAction>;
 }
 
 const defaultContext: Config = {
-  states: initialStates,
+  ...initialStates,
   dispatch: () => {},
 };
 
@@ -35,7 +36,11 @@ const useConfig = () => React.useContext(ConfigContext);
 const WithConfig: ReactComponent = ({ children }) => {
   const [render, setRender] = React.useState(false);
   const [states, dispatch] = React.useReducer(useConfigReducer, initialStates);
-  const value = { states, dispatch };
+  const value = {
+    dispatch,
+    json: states.json,
+    settings: states.settings,
+  };
 
   React.useEffect(() => {
     const jsonStored = localStorage.getItem("json");

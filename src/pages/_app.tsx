@@ -9,9 +9,7 @@ import { useConfig, withConfig } from "src/hocs/config";
 import { GoogleAnalytics } from "src/components/GoogleAnalytics";
 
 function JsonVisio({ Component, pageProps }: AppProps) {
-  const {
-    states: { settings },
-  } = useConfig();
+  const { settings } = useConfig();
 
   return (
     <>

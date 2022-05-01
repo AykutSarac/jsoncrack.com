@@ -103,16 +103,13 @@ const StyledImportFile = styled.label`
 
 function getLayoutIcon(layout: CanvasDirection) {
   if (layout === "LEFT") return <CgArrowLongLeftE />;
-  if (layout === "UP") return <CgArrowLongDownE />;
+  if (layout === "UP") return <CgArrowLongUpE />;
   if (layout === "RIGHT") return <CgArrowLongRightE />;
-  return <CgArrowLongUpE />;
+  return <CgArrowLongDownE />;
 }
 
 export const Sidebar: React.FC = () => {
-  const {
-    states: { settings },
-    dispatch,
-  } = useConfig();
+  const { settings, dispatch } = useConfig();
   const router = useRouter();
   const [jsonFile, setJsonFile] = React.useState<File | null>(null);
 

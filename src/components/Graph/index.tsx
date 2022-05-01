@@ -1,5 +1,5 @@
 import React from "react";
-import { Canvas, EdgeData, NodeData } from "reaflow";
+import { Canvas, EdgeData, ElkRoot, NodeData } from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
 import { useConfig } from "src/hocs/config";
 import { getEdgeNodes } from "src/containers/LiveEditor/helpers";
@@ -12,9 +12,7 @@ export const Graph = () => {
     height: 2000,
   });
 
-  const {
-    states: { json, settings },
-  } = useConfig();
+  const { json, settings } = useConfig();
 
   React.useEffect(() => {
     const { nodes, edges } = getEdgeNodes(json, settings.expand);
@@ -28,22 +26,24 @@ export const Graph = () => {
     if (input) input.blur();
   };
 
+  const onLayoutChange = (layout: ElkRoot) => {
+    if (layout.width && layout.height)
+      setSize({ width: layout.width, height: layout.height });
+  };
+
   return (
     <Canvas
       nodes={nodes}
-      node={(props) => <CustomNode {...props} />}
       edges={edges}
       maxWidth={size.width}
       maxHeight={size.height}
-      zoomable={false}
       direction={settings.layout}
-      readonly
       key={settings.layout}
       onCanvasClick={onCanvasClick}
-      onLayoutChange={(lay) => {
-        if (lay.width && lay.height)
-          setSize({ width: lay.width, height: lay.height });
-      }}
+      onLayoutChange={onLayoutChange}
+      node={CustomNode}
+      zoomable={false}
+      readonly
     />
   );
 };

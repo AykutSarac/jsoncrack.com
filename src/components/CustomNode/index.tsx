@@ -18,7 +18,7 @@ const baseLabelStyle = {
   strokeWidth: 0,
 };
 
-const CustomNode = (nodeProps: NodeProps) => {
+export const CustomNode = (nodeProps: NodeProps) => {
   const { properties: data } = nodeProps;
 
   return (
@@ -53,7 +53,3 @@ const CustomNode = (nodeProps: NodeProps) => {
     </Node>
   );
 };
-
-const MemoizedCustomNode = React.memo(CustomNode);
-
-export { MemoizedCustomNode as CustomNode };
