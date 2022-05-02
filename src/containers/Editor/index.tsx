@@ -16,7 +16,7 @@ const Editor: React.FC = () => {
       <Styles.StyledEditorWrapper>
         <Styles.StyledEditor>
           <Allotment.Pane
-            preferredSize={450}
+            preferredSize={400}
             minSize={300}
             maxSize={600}
             visible={!settings.hideEditor}
