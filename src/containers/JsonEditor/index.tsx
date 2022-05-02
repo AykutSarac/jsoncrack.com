@@ -1,13 +1,11 @@
 import React from "react";
-import AceEditor, { IAceOptions } from "react-ace";
+import Editor from "@monaco-editor/react";
 import parseJson from "parse-json";
 import styled from "styled-components";
 import { ErrorContainer } from "../../components/ErrorContainer/ErrorContainer";
 import { ConfigActionType } from "src/reducer/reducer";
 import { useConfig } from "src/hocs/config";
-require("ace-builds/src-noconflict/mode-json");
-require("ace-builds/src-noconflict/theme-tomorrow_night");
-require("ace-builds/src-noconflict/theme-github");
+import { Loading } from "src/components/Loading";
 
 const StyledEditorWrapper = styled.div`
   display: flex;
@@ -17,17 +15,14 @@ const StyledEditorWrapper = styled.div`
   user-select: none;
 `;
 
-const aceOptions: IAceOptions = {
-  useWorker: false,
-  fontSize: 12,
-  tabSize: 2,
-  showPrintMargin: false,
-  wrap: true,
+const editorOptions = {
+  minimap: {
+    enabled: false,
+  },
 };
 
-const JsonEditor: React.FC = () => {
+export const JsonEditor: React.FC = () => {
   const { json, settings, dispatch } = useConfig();
-  const [editorWidth, setEditorWidth] = React.useState("auto");
   const [value, setValue] = React.useState("");
   const [error, setError] = React.useState({
     message: "",
@@ -35,21 +30,9 @@ const JsonEditor: React.FC = () => {
   });
 
   const editorTheme = React.useMemo(
-    () => (settings.lightmode ? "github" : "tomorrow_night"),
+    () => (settings.lightmode ? "light" : "vs-dark"),
     [settings.lightmode]
   );
-
-  React.useEffect(() => {
-    const resizeObserver = new ResizeObserver((observed) => {
-      const width = observed[0].contentRect.width;
-      setEditorWidth(width ? width.toString() : "auto");
-    });
-
-    const dom = document.querySelector(".ace_scroller");
-    if (dom) resizeObserver.observe(dom);
-
-    return () => resizeObserver.disconnect();
-  }, []);
 
   React.useEffect(() => {
     if (settings.autoformat) {
@@ -60,25 +43,28 @@ const JsonEditor: React.FC = () => {
   }, [settings.autoformat, json]);
 
   React.useEffect(() => {
-    const formatTimer = setTimeout(() => {
-      try {
-        if (value) {
-          const parsedJson = parseJson(value);
+    const formatTimer = setTimeout(
+      () => {
+        try {
+          if (value) {
+            const parsedJson = parseJson(value);
 
-          if (settings.autoformat) {
-            setValue(JSON.stringify(parsedJson, null, 2));
-          } else {
-            setValue(value);
+            if (settings.autoformat) {
+              setValue(JSON.stringify(parsedJson, null, 2));
+            } else {
+              setValue(value);
+            }
+
+            dispatch({ type: ConfigActionType.SET_JSON, payload: value });
           }
 
-          dispatch({ type: ConfigActionType.SET_JSON, payload: value });
+          setError((err) => ({ ...err, message: "" }));
+        } catch (jsonError: any) {
+          setError((err) => ({ ...err, message: jsonError.message }));
         }
-
-        setError((err) => ({ ...err, message: "" }));
-      } catch (jsonError: any) {
-        setError((err) => ({ ...err, message: jsonError.message }));
-      }
-    }, 1800);
+      },
+      settings.autoformat ? 1200 : 1800
+    );
 
     return () => clearTimeout(formatTimer);
   }, [value, dispatch]);
@@ -86,19 +72,15 @@ const JsonEditor: React.FC = () => {
   return (
     <StyledEditorWrapper>
       <ErrorContainer error={error} setError={setError} />
-      <AceEditor
+      <Editor
         height="100%"
-        mode="json"
+        defaultLanguage="json"
         value={value}
-        onChange={setValue}
+        options={editorOptions}
         theme={editorTheme}
-        width={editorWidth}
-        setOptions={aceOptions}
+        loading={<Loading message="Loading Editor..." />}
+        onChange={(value) => setValue(value as string)}
       />
     </StyledEditorWrapper>
   );
 };
-
-const memoizedJsonEditor = React.memo(JsonEditor);
-
-export { memoizedJsonEditor as JsonEditor };
