@@ -21,8 +21,7 @@ const StyledTooltip = styled.div<{ visible: boolean }>`
   color: ${({ theme }) => theme.TEXT_NORMAL};
   border-radius: 5px;
   padding: 4px 8px;
-  opacity: ${({ visible }) => (visible ? "1" : "0")};
-  transition: opacity 0.2s;
+  display: ${({ visible }) => (visible ? "initial" : "none")};
   white-space: nowrap;
   font-size: 16px;
   user-select: none;
