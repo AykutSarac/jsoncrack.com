@@ -36,11 +36,12 @@ const wheelOptions = {
 export const LiveEditor: React.FC = React.memo(function LiveEditor() {
   const { dispatch } = useConfig();
 
-  const onInit = (ref: ReactZoomPanPinchRef) =>
+  const onInit = (ref: ReactZoomPanPinchRef) => {
     dispatch({
       type: ConfigActionType.SET_ZOOM_PAN_PICNH_REF,
       payload: ref,
     });
+  };
 
   return (
     <StyledLiveEditor>
@@ -49,9 +50,10 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
         <TransformWrapper
           maxScale={1.8}
           minScale={0.4}
-          initialScale={0.8}
+          initialScale={0.9}
           wheel={wheelOptions}
           onInit={onInit}
+          centerOnInit
         >
           <TransformComponent
             wrapperStyle={{
