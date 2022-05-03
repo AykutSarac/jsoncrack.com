@@ -5,14 +5,13 @@ import { useConfig } from "src/hocs/config";
 import { getEdgeNodes } from "src/containers/LiveEditor/helpers";
 
 export const Graph = () => {
+  const { json, settings } = useConfig();
   const [nodes, setNodes] = React.useState<NodeData[]>([]);
   const [edges, setEdges] = React.useState<EdgeData[]>([]);
   const [size, setSize] = React.useState({
     width: 2000,
     height: 2000,
   });
-
-  const { json, settings } = useConfig();
 
   React.useEffect(() => {
     const { nodes, edges } = getEdgeNodes(json, settings.expand);
