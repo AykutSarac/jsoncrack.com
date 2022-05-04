@@ -168,7 +168,7 @@ export const Sidebar: React.FC = () => {
             </StyledImportFile>
           </StyledElement>
         </Tooltip>
-        <Tooltip title="Change Layout">
+        <Tooltip title="Rotate Layout">
           <StyledElement
             onClick={() => dispatch({ type: ConfigActionType.TOGGLE_LAYOUT })}
           >
