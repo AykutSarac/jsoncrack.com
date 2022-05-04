@@ -38,8 +38,9 @@ JSON Visio is data visualization tool for your json data which seamlessly illust
 
 ## ⚡️ Features
 * PWA (Progressive Web App) with offline mode support
-* Advanced Error Message
 * Search Nodes
+* Download as image
+* Advanced Error Message
 * Save JSON locally
 * Multiple layout direction support
 * Compressed view
