@@ -68,7 +68,7 @@ const relationships = (xs: { id: string; children: never[] }[]) => {
 
 export const parser = (input: string | string[]) => {
   try {
-    if (typeof input !== "object") input = JSON.parse(input);
+    // if (typeof input !== "object") input = JSON.parse(input);
     if (!Array.isArray(input)) input = [input];
 
     const mappedElements = extract(input);
