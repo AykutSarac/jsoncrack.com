@@ -2,10 +2,10 @@ import React from "react";
 import toast from "react-hot-toast";
 import {
   AiOutlineFullscreen,
-  AiOutlineSave,
   AiOutlineMinus,
   AiOutlinePlus,
 } from "react-icons/ai";
+import { FiDownload } from "react-icons/fi";
 import { HiOutlineSun, HiOutlineMoon } from "react-icons/hi";
 import { MdCenterFocusWeak } from "react-icons/md";
 import { Input } from "src/components/Input";
@@ -42,10 +42,6 @@ const StyledToolElement = styled.button`
 
 export const Tools: React.FC = () => {
   const { json, settings, dispatch } = useConfig();
-  const handleSave = () => {
-    localStorage.setItem("json", json);
-    toast.success("Saved JSON successfully!");
-  };
 
   const zoomIn = () => dispatch({ type: ConfigActionType.ZOOM_IN });
 
@@ -66,8 +62,13 @@ export const Tools: React.FC = () => {
         {settings.lightmode ? <HiOutlineMoon /> : <HiOutlineSun />}
       </StyledToolElement>
       <Input />
-      <StyledToolElement aria-label="save" onClick={handleSave}>
-        <AiOutlineSave />
+      <StyledToolElement
+        aria-label="save"
+        onClick={() => {
+          // export as png
+        }}
+      >
+        <FiDownload />
       </StyledToolElement>
       <StyledToolElement aria-label="center canvas" onClick={centerView}>
         <MdCenterFocusWeak />

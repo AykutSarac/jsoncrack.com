@@ -1,29 +1,22 @@
 import React from "react";
+import toast from "react-hot-toast";
 import Link from "next/link";
 import styled from "styled-components";
-import { FaFileImport } from "react-icons/fa";
+import { CanvasDirection } from "reaflow";
+import { TiFlowMerge } from "react-icons/ti";
+import { BsList } from "react-icons/bs";
+import { MdUploadFile } from "react-icons/md";
+import { RiPatreonFill } from "react-icons/ri";
+import { CgArrowsMergeAltH, CgArrowsShrinkH } from "react-icons/cg";
 import {
-  MdUnfoldMore,
-  MdUnfoldLess,
-  MdAutoFixHigh,
-  MdOutlineAutoFixOff,
-} from "react-icons/md";
-import {
-  AiFillHome,
-  AiFillDelete,
+  AiOutlineDelete,
   AiFillGithub,
   AiOutlineTwitter,
+  AiOutlineSave,
+  AiOutlineFileAdd,
 } from "react-icons/ai";
-import {
-  CgArrowLongDownE,
-  CgArrowLongLeftE,
-  CgArrowLongRightE,
-  CgArrowLongUpE,
-} from "react-icons/cg";
 
-import { CanvasDirection } from "reaflow";
-import toast from "react-hot-toast";
-import { Tooltip } from "../Tooltip";
+import { Tooltip } from "src/components/Tooltip";
 import { ConfigActionType } from "src/reducer/reducer";
 import { useConfig } from "src/hocs/config";
 import { useRouter } from "next/router";
@@ -33,7 +26,7 @@ const StyledSidebar = styled.div`
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
-  width: 42px;
+  width: 36px;
   background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
   padding: 8px;
   border-right: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
@@ -62,6 +55,10 @@ const StyledElement = styled.div`
 const StyledText = styled.span<{ secondary?: boolean }>`
   color: ${({ theme, secondary }) =>
     secondary ? theme.INTERACTIVE_NORMAL : theme.ORANGE};
+`;
+
+const StyledFlowIcon = styled(TiFlowMerge)<{ rotate: number }>`
+  transform: rotate(${({ rotate }) => `${rotate}deg`});
 `;
 
 const StyledTopWrapper = styled.nav`
@@ -101,15 +98,15 @@ const StyledImportFile = styled.label`
   }
 `;
 
-function getLayoutIcon(layout: CanvasDirection) {
-  if (layout === "LEFT") return <CgArrowLongLeftE />;
-  if (layout === "UP") return <CgArrowLongUpE />;
-  if (layout === "RIGHT") return <CgArrowLongRightE />;
-  return <CgArrowLongDownE />;
+function rotateLayout(layout: CanvasDirection) {
+  if (layout === "LEFT") return 90;
+  if (layout === "UP") return 180;
+  if (layout === "RIGHT") return 270;
+  return 360;
 }
 
 export const Sidebar: React.FC = () => {
-  const { settings, dispatch } = useConfig();
+  const { json, settings, dispatch } = useConfig();
   const router = useRouter();
   const [jsonFile, setJsonFile] = React.useState<File | null>(null);
 
@@ -123,11 +120,9 @@ export const Sidebar: React.FC = () => {
     toast.success(`Cleared JSON and removed from memory.`);
   };
 
-  const toggleAutoFormat = () => {
-    dispatch({ type: ConfigActionType.TOGGLE_AUTOFORMAT });
-    toast(
-      `Auto format has been ${settings.autoformat ? "disabled." : "enabled."}`
-    );
+  const handleSave = () => {
+    localStorage.setItem("json", json);
+    toast.success("Saved JSON successfully!");
   };
 
   const toggleExpandCollapse = () => {
@@ -160,36 +155,6 @@ export const Sidebar: React.FC = () => {
             </StyledLogo>
           </StyledElement>
         </Link>
-        <Tooltip title="Home">
-          <StyledElement onClick={() => router.push("/")}>
-            <AiFillHome />
-          </StyledElement>
-        </Tooltip>
-        <Tooltip title="Auto Format">
-          <StyledElement onClick={toggleAutoFormat}>
-            {settings.autoformat ? <MdAutoFixHigh /> : <MdOutlineAutoFixOff />}
-          </StyledElement>
-        </Tooltip>
-        <Tooltip title="Change Layout">
-          <StyledElement
-            onClick={() => dispatch({ type: ConfigActionType.TOGGLE_LAYOUT })}
-          >
-            {getLayoutIcon(settings.layout)}
-          </StyledElement>
-        </Tooltip>
-        <Tooltip title="Toggle Compact Nodes">
-          <StyledElement
-            title="Toggle Expand/Collapse"
-            onClick={toggleExpandCollapse}
-          >
-            {settings.expand ? <MdUnfoldMore /> : <MdUnfoldLess />}
-          </StyledElement>
-        </Tooltip>
-        <Tooltip title="Clear JSON">
-          <StyledElement onClick={handleClear}>
-            <AiFillDelete />
-          </StyledElement>
-        </Tooltip>
         <Tooltip title="Import File">
           <StyledElement>
             <StyledImportFile>
@@ -199,8 +164,33 @@ export const Sidebar: React.FC = () => {
                 type="file"
                 accept="application/JSON"
               />
-              <FaFileImport />
+              <AiOutlineFileAdd />
             </StyledImportFile>
+          </StyledElement>
+        </Tooltip>
+        <Tooltip title="Change Layout">
+          <StyledElement
+            onClick={() => dispatch({ type: ConfigActionType.TOGGLE_LAYOUT })}
+          >
+            <StyledFlowIcon rotate={rotateLayout(settings.layout)} />
+          </StyledElement>
+        </Tooltip>
+        <Tooltip title={settings.expand ? "Shrink Nodes" : "Expand Nodes"}>
+          <StyledElement
+            title="Toggle Expand/Collapse"
+            onClick={toggleExpandCollapse}
+          >
+            {settings.expand ? <CgArrowsMergeAltH /> : <CgArrowsShrinkH />}
+          </StyledElement>
+        </Tooltip>
+        <Tooltip title="Clear JSON">
+          <StyledElement onClick={handleClear}>
+            <AiOutlineDelete />
+          </StyledElement>
+        </Tooltip>
+        <Tooltip title="Save JSON">
+          <StyledElement onClick={handleSave}>
+            <AiOutlineSave />
           </StyledElement>
         </Tooltip>
       </StyledTopWrapper>
@@ -216,6 +206,13 @@ export const Sidebar: React.FC = () => {
           <Link href="https://github.com/AykutSarac/jsonvisio.com">
             <a aria-label="GitHub" rel="me" target="_blank">
               <AiFillGithub />
+            </a>
+          </Link>
+        </StyledElement>
+        <StyledElement>
+          <Link href="https://www.patreon.com/aykutsarac">
+            <a aria-label="Patreon" rel="me" target="_blank">
+              <RiPatreonFill />
             </a>
           </Link>
         </StyledElement>

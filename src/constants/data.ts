@@ -36,7 +36,6 @@ export const defaultJson = {
 export const defaultConfig: StorageConfig = {
   layout: "RIGHT",
   expand: true,
-  autoformat: true,
   hideEditor: false,
   zoomPanPinch: null,
   lightmode: false

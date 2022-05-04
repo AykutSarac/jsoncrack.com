@@ -6,7 +6,6 @@ export enum ConfigActionType {
   SET_CONFIG,
   TOGGLE_LAYOUT,
   TOGGLE_EXPAND,
-  TOGGLE_AUTOFORMAT,
   TOGGLE_DOCK,
   TOGGLE_THEME,
   ZOOM_IN,
@@ -69,15 +68,6 @@ export const useConfigReducer: React.Reducer<AppConfig, ReducerAction> = (
         state.settings.zoomPanPinch?.state.scale - 0.4
       );
       return state;
-
-    case ConfigActionType.TOGGLE_AUTOFORMAT:
-      return {
-        ...state,
-        settings: {
-          ...state.settings,
-          autoformat: !state.settings.autoformat,
-        },
-      };
 
     case ConfigActionType.TOGGLE_DOCK:
       return {

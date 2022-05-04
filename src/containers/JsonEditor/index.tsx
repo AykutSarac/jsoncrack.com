@@ -2,7 +2,7 @@ import React from "react";
 import Editor from "@monaco-editor/react";
 import parseJson from "parse-json";
 import styled from "styled-components";
-import { ErrorContainer } from "../../components/ErrorContainer/ErrorContainer";
+import { ErrorContainer } from "src/components/ErrorContainer/ErrorContainer";
 import { ConfigActionType } from "src/reducer/reducer";
 import { useConfig } from "src/hocs/config";
 import { Loading } from "src/components/Loading";
@@ -16,6 +16,7 @@ const StyledEditorWrapper = styled.div`
 `;
 
 const editorOptions = {
+  formatOnPaste: true,
   minimap: {
     enabled: false,
   },
@@ -35,36 +36,24 @@ export const JsonEditor: React.FC = () => {
   );
 
   React.useEffect(() => {
-    if (settings.autoformat) {
-      return setValue(JSON.stringify(JSON.parse(json), null, 2));
-    }
-
-    setValue(json);
-  }, [settings.autoformat, json]);
+    setValue(JSON.stringify(JSON.parse(json), null, 2));
+  }, [json]);
 
   React.useEffect(() => {
-    const formatTimer = setTimeout(
-      () => {
-        try {
-          if (value) {
-            const parsedJson = parseJson(value);
-
-            if (settings.autoformat) {
-              setValue(JSON.stringify(parsedJson, null, 2));
-            } else {
-              setValue(value);
-            }
-
-            dispatch({ type: ConfigActionType.SET_JSON, payload: value });
-          }
-
+    const formatTimer = setTimeout(() => {
+      try {
+        if (!value) {
           setError((err) => ({ ...err, message: "" }));
-        } catch (jsonError: any) {
-          setError((err) => ({ ...err, message: jsonError.message }));
+          return dispatch({ type: ConfigActionType.SET_JSON, payload: "[]" });
         }
-      },
-      settings.autoformat ? 1200 : 1800
-    );
+
+        parseJson(value);
+        dispatch({ type: ConfigActionType.SET_JSON, payload: value });
+        setError((err) => ({ ...err, message: "" }));
+      } catch (jsonError: any) {
+        setError((err) => ({ ...err, message: jsonError.message }));
+      }
+    }, 1500);
 
     return () => clearTimeout(formatTimer);
   }, [value, dispatch]);
@@ -76,8 +65,8 @@ export const JsonEditor: React.FC = () => {
         height="100%"
         defaultLanguage="json"
         value={value}
-        options={editorOptions}
         theme={editorTheme}
+        options={editorOptions}
         loading={<Loading message="Loading Editor..." />}
         onChange={(value) => setValue(value as string)}
       />
