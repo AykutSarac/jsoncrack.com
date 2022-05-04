@@ -1,5 +1,5 @@
 import React from "react";
-import toast from "react-hot-toast";
+import { saveAsPng } from "save-html-as-image";
 import {
   AiOutlineFullscreen,
   AiOutlineMinus,
@@ -53,6 +53,13 @@ export const Tools: React.FC = () => {
 
   const toggleTheme = () => dispatch({ type: ConfigActionType.TOGGLE_THEME });
 
+  const exportAsImage = () => {
+    saveAsPng(document.querySelector("svg[id*='ref']"), {
+      filename: "jsonvisio.com",
+      printDate: true,
+    });
+  };
+
   return (
     <StyledTools>
       <StyledToolElement aria-label="fullscreen" onClick={toggleEditor}>
@@ -62,12 +69,7 @@ export const Tools: React.FC = () => {
         {settings.lightmode ? <HiOutlineMoon /> : <HiOutlineSun />}
       </StyledToolElement>
       <Input />
-      <StyledToolElement
-        aria-label="save"
-        onClick={() => {
-          // export as png
-        }}
-      >
+      <StyledToolElement aria-label="save" onClick={exportAsImage}>
         <FiDownload />
       </StyledToolElement>
       <StyledToolElement aria-label="center canvas" onClick={centerView}>
