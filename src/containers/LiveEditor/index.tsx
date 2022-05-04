@@ -53,7 +53,6 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
           initialScale={0.9}
           wheel={wheelOptions}
           onInit={onInit}
-          centerOnInit
         >
           <TransformComponent
             wrapperStyle={{
