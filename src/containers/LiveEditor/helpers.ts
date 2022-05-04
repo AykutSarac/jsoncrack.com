@@ -21,8 +21,7 @@ export function getEdgeNodes(
   nodes: NodeData[];
   edges: EdgeData[];
 } {
-  graph = JSON.parse(graph);
-  const elements = parser(graph);
+  const elements = parser(JSON.parse(graph));
 
   let nodes: NodeData[] = [],
     edges: EdgeData[] = [];
@@ -62,17 +61,17 @@ export function getEdgeNodes(
 
 export function getNextLayout(layout: CanvasDirection) {
   switch (layout) {
-    case "LEFT":
+    case "RIGHT":
       return "UP";
 
     case "UP":
-      return "RIGHT";
+      return "LEFT";
 
-    case "RIGHT":
+    case "LEFT":
       return "DOWN";
 
     default:
-      return "LEFT";
+      return "RIGHT";
   }
 }
 

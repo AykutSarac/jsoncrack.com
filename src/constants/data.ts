@@ -34,7 +34,7 @@ export const defaultJson = {
 };
 
 export const defaultConfig: StorageConfig = {
-  layout: "LEFT",
+  layout: "RIGHT",
   expand: true,
   autoformat: true,
   hideEditor: false,
