@@ -41,7 +41,7 @@ const StyledToolElement = styled.button`
 `;
 
 export const Tools: React.FC = () => {
-  const { json, settings, dispatch } = useConfig();
+  const { settings, dispatch } = useConfig();
 
   const zoomIn = () => dispatch({ type: ConfigActionType.ZOOM_IN });
 
