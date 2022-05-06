@@ -14,9 +14,11 @@ import {
   AiOutlineTwitter,
   AiOutlineSave,
   AiOutlineFileAdd,
+  AiOutlineLink,
 } from "react-icons/ai";
 
 import { Tooltip } from "src/components/Tooltip";
+import { Modal } from "src/components/Modal/index";
 import { ConfigActionType } from "src/reducer/reducer";
 import { useConfig } from "src/hocs/config";
 import { useRouter } from "next/router";
@@ -109,9 +111,14 @@ export const Sidebar: React.FC = () => {
   const { json, settings, dispatch } = useConfig();
   const router = useRouter();
   const [jsonFile, setJsonFile] = React.useState<File | null>(null);
+  const [visible, setVisible] = React.useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) setJsonFile(e.target.files?.item(0));
+  };
+
+  const handleImportJSONFromURL = () => {
+    setVisible(true);
   };
 
   const handleClear = () => {
@@ -147,6 +154,7 @@ export const Sidebar: React.FC = () => {
   return (
     <StyledSidebar>
       <StyledTopWrapper>
+        <Modal visible={visible} setVisible={setVisible} />
         <Link passHref href="/">
           <StyledElement onClick={() => router.push("/")}>
             <StyledLogo>
@@ -166,6 +174,11 @@ export const Sidebar: React.FC = () => {
               />
               <AiOutlineFileAdd />
             </StyledImportFile>
+          </StyledElement>
+        </Tooltip>
+        <Tooltip title="Fetch JSON from URL">
+          <StyledElement onClick={handleImportJSONFromURL}>
+            <AiOutlineLink />
           </StyledElement>
         </Tooltip>
         <Tooltip title="Rotate Layout">
