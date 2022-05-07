@@ -65,6 +65,7 @@ export const ImportModal = ({ visible, setVisible }) => {
     if (url) {
       setJsonFile(null);
 
+      const toastId = toast.loading("Loading...");
       return fetch(url)
         .then((res) => res.json())
         .then((json) => {
@@ -73,6 +74,7 @@ export const ImportModal = ({ visible, setVisible }) => {
             payload: JSON.stringify(json),
           });
 
+          toast.dismiss(toastId);
           setVisible(false);
         })
         .catch(() => toast.error("Failed to fetch JSON!"));
@@ -87,6 +89,8 @@ export const ImportModal = ({ visible, setVisible }) => {
           type: ConfigActionType.SET_JSON,
           payload: data.target?.result as string,
         });
+
+        setVisible(false);
       };
     }
   };
