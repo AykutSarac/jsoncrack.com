@@ -23,12 +23,13 @@ export const ModalWrapper = styled.div<{ visible: boolean }>`
 `;
 
 export const ModalInnerWrapper = styled.div`
-  min-width: 40vw;
+  min-width: 440px;
+  width: fit-content;
   animation: ${appearAnimation} 220ms ease-in-out;
 `;
 
 export const Title = styled.h2`
-  color: ${({ theme }) => theme.TEXT_NORMAL};
+  color: ${({ theme }) => theme.INTERACTIVE_ACTIVE};
   font-size: 20px !important;
   margin: 0;
 `;
