@@ -65,7 +65,7 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
     if (url) {
       setJsonFile(null);
 
-      const toastId = toast.loading("Loading...");
+      toast.loading("Loading...", { id: "toastFetch" });
       return fetch(url)
         .then((res) => res.json())
         .then((json) => {
@@ -74,10 +74,10 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
             payload: JSON.stringify(json),
           });
 
-          toast.dismiss(toastId);
           setVisible(false);
         })
-        .catch(() => toast.error("Failed to fetch JSON!"));
+        .catch(() => toast.error("Failed to fetch JSON!"))
+        .finally(() => toast.dismiss("toastFetch"));
     }
 
     if (jsonFile) {
