@@ -13,7 +13,7 @@ type ModalTypes = {
   Controls: React.FC<ControlProps>;
 };
 
-interface ModalProps {
+export interface ModalProps {
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
