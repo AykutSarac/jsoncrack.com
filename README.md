@@ -13,6 +13,9 @@
       <a href="https://github.com/AykutSarac/jsonvisio.com/releases">
       <img alt="version badge" src="https://img.shields.io/github/package-json/v/AykutSarac/jsonvisio.com?color=brightgreen&style=flat-square" />
       </a>
+      <a href="https://opencollective.com/jsonvisio">
+      <img alt="open collective backers" src="https://img.shields.io/opencollective/backers/jsonvisio?style=flat-square" />
+      </a>
   </p>
   <p align="center">
     <i>Simple json visualization tool for your data.</i>
