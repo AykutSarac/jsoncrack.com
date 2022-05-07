@@ -104,7 +104,7 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
 
   return (
     <Modal visible={visible} setVisible={setVisible}>
-      <Modal.Header>Select An Import Method</Modal.Header>
+      <Modal.Header>Import JSON</Modal.Header>
       <StyledModalContent>
         <StyledInput
           value={url}
