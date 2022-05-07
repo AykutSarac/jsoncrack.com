@@ -1,4 +1,9 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
+
+const appearAnimation = keyframes`
+  from { transform: scale(0.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; };
+`;
 
 export const ModalWrapper = styled.div<{ visible: boolean }>`
   position: fixed;
@@ -19,6 +24,7 @@ export const ModalWrapper = styled.div<{ visible: boolean }>`
 
 export const ModalInnerWrapper = styled.div`
   min-width: 40vw;
+  animation: ${appearAnimation} 220ms ease-in-out;
 `;
 
 export const Title = styled.h2`
