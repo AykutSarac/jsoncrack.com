@@ -1,34 +1,40 @@
 import { StorageConfig } from "src/typings/global";
 
+// Example taken from https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json
 export const defaultJson = {
-  Author: "J. K. Rowling",
-  Genre: "Fantasy",
-  Characters: ["Hermione Granger", "Harry Potter", "Lord Voldemort", "MORE"],
-  Books: [
-    { title: "Philosopher's Stone", date: "1997" },
+  squadName: "Super hero squad",
+  homeTown: "Metro City",
+  formed: 2016,
+  secretBase: "Super tower",
+  active: true,
+  members: [
     {
-      title: "Chamber of Secrets",
-      date: "1998",
+      name: "Molecule Man",
+      age: 29,
+      secretIdentity: "Dan Jukes",
+      powers: ["Radiation resistance", "Turning tiny", "Radiation blast"],
     },
     {
-      title: "Prisoner of Azkaban",
-      date: "1999",
+      name: "Madame Uppercut",
+      age: 39,
+      secretIdentity: "Jane Wilson",
+      powers: [
+        "Million tonne punch",
+        "Damage resistance",
+        "Superhuman reflexes",
+      ],
     },
     {
-      title: "Goblet of Fire",
-      date: "1999",
-    },
-    {
-      title: "Order of the Phoenix",
-      date: "2003",
-    },
-    {
-      title: "Half-Blood Prince",
-      date: "2005",
-    },
-    {
-      title: "Deathly Hallows",
-      date: "2007",
+      name: "Eternal Flame",
+      age: 1000000,
+      secretIdentity: "Unknown",
+      powers: [
+        "Immortality",
+        "Heat Immunity",
+        "Inferno",
+        "Teleportation",
+        "Interdimensional travel",
+      ],
     },
   ],
 };
@@ -38,5 +44,5 @@ export const defaultConfig: StorageConfig = {
   expand: true,
   hideEditor: false,
   zoomPanPinch: null,
-  lightmode: false
+  lightmode: false,
 };
