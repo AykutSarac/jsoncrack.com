@@ -1,103 +1,64 @@
 import React from "react";
-import styled, { DefaultTheme } from "styled-components";
-import toast from "react-hot-toast";
+import { ReactComponent } from "src/typings/global";
+import { Button } from "src/components/Button";
+import * as Styled from "./styles";
 
-import { useConfig } from "src/hocs/config";
-import { ConfigActionType } from "src/reducer/reducer";
+type ControlProps = React.PropsWithChildren<{
+  setVisible: (status: boolean) => void;
+}>;
 
-enum ButtonType {
-  PRIMARY = "PRIMARY",
-  SECONDARY = "BLURPLE",
-  DANGER = "DANGER",
-  SUCCESS = "SEAGREEN",
-  WARNING = "ORANGE",
+type ModalTypes = {
+  Header: ReactComponent;
+  Content: ReactComponent;
+  Controls: React.FC<ControlProps>;
+};
+
+interface ModalProps {
+  visible: boolean;
+  setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function getButtonStatus(status: keyof typeof ButtonType, theme: DefaultTheme) {
-  return theme[ButtonType[status]];
-}
+const Header: ReactComponent = ({ children }) => {
+  return (
+    <Styled.HeaderWrapper>
+      <Styled.Title>{children}</Styled.Title>
+    </Styled.HeaderWrapper>
+  );
+};
 
-const StyledModalWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
+const Content: ReactComponent = ({ children }) => {
+  return <Styled.ContentWrapper>{children}</Styled.ContentWrapper>;
+};
 
-const StyledInput = styled.input`
-  background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
-  color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
-  outline: none;
-  border: none;
-  border-radius: 5px;
-  padding: 10px;
-  margin: 10px 0;
-  display: block;
-  width: 100%;
-`;
+const Controls: React.FC<ControlProps> = ({ children, setVisible }) => {
+  return (
+    <Styled.ControlsWrapper>
+      <Button onClick={() => setVisible(false)}>Close</Button>
+      {children}
+    </Styled.ControlsWrapper>
+  );
+};
 
-const StyledButton = styled.button<{ status: keyof typeof ButtonType }>`
-  background: ${({ status, theme }) => getButtonStatus(status, theme)};
-  color: #ffffff;
-  padding: 8px 16px;
-  min-width: 60px;
-  margin-right: 10px;
-
-  @media only screen and (max-width: 768px) {
-    font-size: 18px;
-  }
-`;
-
-export const Modal = ({ visible, setVisible }) => {
-  const { json, settings, dispatch } = useConfig();
-  const inputRef = React.useRef<HTMLInputElement | null>(null);
-
-  const fetchJSON = () => {
-    fetch(inputRef.current!.value)
-      .then((res) => res.json())
-      .then((json) => {
-        dispatch({
-          type: ConfigActionType.SET_JSON,
-          payload: JSON.stringify(json),
-        });
-
-        setVisible(false);
-      })
-      .catch((err) => toast.error(err.message));
-  };
-
-  const cancel = () => {
-    setVisible(false);
+const Modal: React.FC<React.PropsWithChildren<ModalProps>> & ModalTypes = ({
+  children,
+  visible,
+  setVisible,
+}) => {
+  const onClick = (e: React.SyntheticEvent<HTMLDivElement>) => {
+    if (e.currentTarget === e.target) {
+      setVisible((v) => !v);
+    }
   };
 
   return (
-    visible && (
-      <StyledModalWrapper>
-        <div>
-          <h2>Import JSON from URL</h2>
-
-          <div>
-            <StyledInput
-              ref={inputRef}
-              type="url"
-              placeholder="URL of JSON to fetch"
-            />
-
-            <StyledButton status="PRIMARY" onClick={fetchJSON}>
-              Import
-            </StyledButton>
-            <StyledButton status="DANGER" onClick={cancel}>
-              Cancel
-            </StyledButton>
-          </div>
-        </div>
-      </StyledModalWrapper>
-    )
+    <Styled.ModalWrapper visible={visible} onClick={onClick}>
+      <Styled.ModalInnerWrapper>{children}</Styled.ModalInnerWrapper>
+    </Styled.ModalWrapper>
   );
 };
+
+Modal.Header = Header;
+Modal.Content = Content;
+Modal.Controls = Controls;
+
+export { Modal };
