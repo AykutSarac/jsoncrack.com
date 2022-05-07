@@ -35,6 +35,7 @@ declare module "styled-components" {
     BACKGROUND_SECONDARY: string;
     BACKGROUND_PRIMARY: string;
     BACKGROUND_MODIFIER_ACCENT: string;
+    MODAL_BACKGROUND: string;
     TEXT_NORMAL: string;
     TEXT_POSITIVE: string;
     TEXT_DANGER: string;
