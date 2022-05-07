@@ -27,8 +27,8 @@
     </p>
   <p align="center">
     <a href="https://www.producthunt.com/posts/json-visio?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-json&#0045;visio" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=332281&theme=light" alt="JSON&#0032;Visio - Simple&#0032;visualization&#0032;tool&#0032;for&#0032;your&#0032;JSON&#0032;data&#0046; | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
-    <a href="https://www.patreon.com/bePatron?u=55924790" data-patreon-widget-type="become-patron-button">
-  <img height="54" alt="Become_a_patron" src="https://user-images.githubusercontent.com/47941171/161963362-78d9121c-99b8-4194-aaf7-2cef35b7f599.png">
+    <a href="https://opencollective.com/jsonvisio" target="_blank">
+    <img src="https://opencollective.com/webpack/donate/button@2x.png?color=blue" width=300 />
     </a>
   </p>
 </div>
