@@ -1,2 +1,2 @@
-User-agent: * 
-Disallow: /editor
+User-agent: *
+Allow: /
