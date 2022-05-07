@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 import { useConfig } from "src/hocs/config";
 import { ConfigActionType } from "src/reducer/reducer";
-import { Modal } from "src/components/Modal";
+import { Modal, ModalProps } from "src/components/Modal";
 import { Button } from "src/components/Button";
 import { AiOutlineUpload } from "react-icons/ai";
 
@@ -52,7 +52,7 @@ const StyledUploadMessage = styled.h3`
   margin-bottom: 0;
 `;
 
-export const ImportModal = ({ visible, setVisible }) => {
+export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   const { dispatch } = useConfig();
   const [url, setURL] = React.useState("");
   const [jsonFile, setJsonFile] = React.useState<File | null>(null);
