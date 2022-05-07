@@ -13,10 +13,12 @@ const StyledInput = styled.input`
   color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
   outline: none;
   border: none;
-  border-radius: 5px;
-  padding: 6px 8px;
+  border-radius: 4px;
+  line-height: 32px;
+  padding: 16px;
   width: 100%;
   margin-bottom: 10px;
+  height: 30px;
 `;
 
 const StyledModalContent = styled(Modal.Content)`
