@@ -29,14 +29,14 @@ const StyledErrorExpand = styled.button<{ error: boolean }>`
   border-radius: 0;
   justify-content: space-between;
   align-items: center;
-  color: ${({ theme, error }) => (error ? theme.DANGER : theme.TEXT_POSITIVE)};
+  color: ${({ theme, error }) => (error ? theme.TEXT_DANGER : theme.TEXT_POSITIVE)};
   pointer-events: ${({ error }) => !error && "none"};
   background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
   box-shadow: 0 1px 0px ${({ theme }) => theme.BACKGROUND_TERTIARY};
   cursor: pointer;
 
   &:hover {
-    color: ${({ theme }) => theme.DANGER};
+    color: ${({ theme }) => theme.TEXT_DANGER};
     box-shadow: none;
   }
 `;
@@ -51,7 +51,7 @@ const StyledTitle = styled.span`
 `;
 
 const StyledError = styled.pre`
-  color: ${({ theme }) => theme.DANGER};
+  color: ${({ theme }) => theme.TEXT_DANGER};
   border-bottom: 1px solid ${({ theme }) => theme.SILVER_DARK};
   font-size: 12px;
   padding: 12px;
