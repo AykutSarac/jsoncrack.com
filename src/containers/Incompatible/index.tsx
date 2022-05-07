@@ -25,7 +25,7 @@ export const StyledIncompatible = styled.div`
 
     &::before {
       content: "Uh, oh!";
-      font-weight: 700;
+      font-weight: 600;
       font-size: 60px;
       opacity: 0.6;
     }

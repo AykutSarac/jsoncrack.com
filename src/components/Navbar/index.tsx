@@ -22,7 +22,7 @@ const StyledLogo = styled.div`
   font-weight: 600;
   font-size: 20px;
   cursor: pointer;
-  font-weight: 700;
+  font-weight: 600;
   color: ${({ theme }) => theme.FULL_WHITE};
 `;
 

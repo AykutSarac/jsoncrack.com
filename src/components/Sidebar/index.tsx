@@ -4,8 +4,6 @@ import Link from "next/link";
 import styled from "styled-components";
 import { CanvasDirection } from "reaflow";
 import { TiFlowMerge } from "react-icons/ti";
-import { BsList } from "react-icons/bs";
-import { MdUploadFile } from "react-icons/md";
 import { RiPatreonFill } from "react-icons/ri";
 import { CgArrowsMergeAltH, CgArrowsShrinkH } from "react-icons/cg";
 import {
@@ -20,15 +18,16 @@ import { Tooltip } from "src/components/Tooltip";
 import { ConfigActionType } from "src/reducer/reducer";
 import { useConfig } from "src/hocs/config";
 import { useRouter } from "next/router";
+import { ImportModal } from "src/containers/ImportModal";
 
 const StyledSidebar = styled.div`
   display: flex;
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
-  width: 36px;
+  width: fit-content;
   background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
-  padding: 8px;
+  padding: 4px;
   border-right: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
 `;
 
@@ -37,18 +36,22 @@ const StyledElement = styled.div`
   justify-content: center;
   text-align: center;
   font-size: 28px;
-  font-weight: 700;
+  font-weight: 600;
   width: 100%;
   color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
   cursor: pointer;
 
-  &:hover :is(a, svg) {
-    color: ${({ theme }) => theme.INTERACTIVE_HOVER};
+  svg {
+    padding: 8px;
+    vertical-align: middle;
   }
 
-  svg {
-    padding: 8px 0;
-    vertical-align: middle;
+  a {
+    display: flex;
+  }
+
+  &:hover :is(a, svg) {
+    color: ${({ theme }) => theme.INTERACTIVE_HOVER};
   }
 `;
 
@@ -90,14 +93,6 @@ const StyledLogo = styled.div`
   color: ${({ theme }) => theme.FULL_WHITE};
 `;
 
-const StyledImportFile = styled.label`
-  cursor: pointer;
-
-  input[type="file"] {
-    display: none;
-  }
-`;
-
 function rotateLayout(layout: CanvasDirection) {
   if (layout === "LEFT") return 90;
   if (layout === "UP") return 180;
@@ -109,6 +104,7 @@ export const Sidebar: React.FC = () => {
   const { json, settings, dispatch } = useConfig();
   const router = useRouter();
   const [jsonFile, setJsonFile] = React.useState<File | null>(null);
+  const [modalVisible, setModalVisible] = React.useState(false);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) setJsonFile(e.target.files?.item(0));
@@ -147,6 +143,7 @@ export const Sidebar: React.FC = () => {
   return (
     <StyledSidebar>
       <StyledTopWrapper>
+        <ImportModal visible={modalVisible} setVisible={setModalVisible} />
         <Link passHref href="/">
           <StyledElement onClick={() => router.push("/")}>
             <StyledLogo>
@@ -156,16 +153,8 @@ export const Sidebar: React.FC = () => {
           </StyledElement>
         </Link>
         <Tooltip title="Import File">
-          <StyledElement>
-            <StyledImportFile>
-              <input
-                key={jsonFile?.name}
-                onChange={handleFileChange}
-                type="file"
-                accept="application/JSON"
-              />
-              <AiOutlineFileAdd />
-            </StyledImportFile>
+          <StyledElement onClick={() => setModalVisible(true)}>
+            <AiOutlineFileAdd />
           </StyledElement>
         </Tooltip>
         <Tooltip title="Rotate Layout">

@@ -43,7 +43,7 @@ export const StyledKey = styled.span<{
   objectKey?: boolean;
   parent?: boolean;
 }>`
-  font-weight: bold;
+  font-weight: 500;
   color: ${({ theme, objectKey, parent }) =>
     parent ? theme.NODE_KEY : objectKey ? "#5c87ff" : theme.TEXT_POSITIVE};
 `;

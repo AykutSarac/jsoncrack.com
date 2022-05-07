@@ -32,6 +32,7 @@ export const darkTheme: DefaultTheme = {
   BACKGROUND_SECONDARY: "#2f3136",
   BACKGROUND_PRIMARY: "#36393f",
   BACKGROUND_MODIFIER_ACCENT: "rgba(79,84,92,0.48)",
+  MODAL_BACKGROUND: "#36393E",
   TEXT_NORMAL: "#dcddde",
   TEXT_POSITIVE: "hsl(139,calc(var(--saturation-factor, 1)*51.6%),52.2%)",
 } as const;
@@ -50,6 +51,7 @@ export const lightTheme: DefaultTheme = {
   BACKGROUND_SECONDARY: "#f2f3f5",
   BACKGROUND_PRIMARY: "#FFFFFF",
   BACKGROUND_MODIFIER_ACCENT: "rgba(106,116,128,0.24)",
+  MODAL_BACKGROUND: "#FFFFFF",
   TEXT_NORMAL: "#2e3338",
   TEXT_POSITIVE: "#008736",
 } as const;

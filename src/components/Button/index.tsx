@@ -25,6 +25,11 @@ const StyledButton = styled.button<{ status: keyof typeof ButtonType }>`
   padding: 8px 16px;
   min-width: 60px;
 
+  :disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
   @media only screen and (max-width: 768px) {
     font-size: 18px;
   }

@@ -8,7 +8,7 @@ import {
 import { FiDownload } from "react-icons/fi";
 import { HiOutlineSun, HiOutlineMoon } from "react-icons/hi";
 import { MdCenterFocusWeak } from "react-icons/md";
-import { Input } from "src/components/Input";
+import { SearchInput } from "src/containers/SearchInput";
 import { useConfig } from "src/hocs/config";
 import { ConfigActionType } from "src/reducer/reducer";
 import styled from "styled-components";
@@ -68,7 +68,7 @@ export const Tools: React.FC = () => {
       <StyledToolElement aria-label="switch theme" onClick={toggleTheme}>
         {settings.lightmode ? <HiOutlineMoon /> : <HiOutlineSun />}
       </StyledToolElement>
-      <Input />
+      <SearchInput />
       <StyledToolElement aria-label="save" onClick={exportAsImage}>
         <FiDownload />
       </StyledToolElement>

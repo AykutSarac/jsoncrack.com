@@ -3,12 +3,12 @@ import { Button } from "src/components/Button";
 import { Container } from "src/components/Container";
 import { Navbar } from "src/components/Navbar";
 import { Image } from "src/components/Image";
-import styled from "styled-components";
 import { AiFillGithub } from "react-icons/ai";
 import { Footer } from "src/components/Footer";
 import Head from "next/head";
 import { Producthunt } from "src/components/Producthunt";
 import { useRouter } from "next/router";
+import styled from "styled-components";
 
 const StyledHome = styled.div`
   padding: 24px;
