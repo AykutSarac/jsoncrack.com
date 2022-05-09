@@ -1,9 +1,12 @@
 import React from "react";
 import { saveAsPng } from "save-html-as-image";
+import { copyBlobToClipboard } from "copy-image-clipboard";
+import * as htmlToImage from "html-to-image";
 import {
   AiOutlineFullscreen,
   AiOutlineMinus,
   AiOutlinePlus,
+  AiOutlineCopy,
 } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
 import { HiOutlineSun, HiOutlineMoon } from "react-icons/hi";
@@ -12,6 +15,7 @@ import { SearchInput } from "src/containers/SearchInput";
 import { useConfig } from "src/hocs/config";
 import { ConfigActionType } from "src/reducer/reducer";
 import styled from "styled-components";
+import toast from "react-hot-toast";
 
 export const StyledTools = styled.div`
   display: flex;
@@ -60,6 +64,22 @@ export const Tools: React.FC = () => {
     });
   };
 
+  const copyToClipboard = () => {
+    const imageElement: any = document.querySelector("svg[id*='ref']");
+
+    htmlToImage
+      .toBlob(imageElement)
+      .then((blob: any) => {
+        return copyBlobToClipboard(blob);
+      })
+      .then(() => {
+        toast.success("Copied to clipboard");
+      })
+      .catch((e) => {
+        toast.error("Failed to copy to clipboard");
+      });
+  };
+
   return (
     <StyledTools>
       <StyledToolElement aria-label="fullscreen" onClick={toggleEditor}>
@@ -71,6 +91,9 @@ export const Tools: React.FC = () => {
       <SearchInput />
       <StyledToolElement aria-label="save" onClick={exportAsImage}>
         <FiDownload />
+      </StyledToolElement>
+      <StyledToolElement aria-label="save" onClick={copyToClipboard}>
+        <AiOutlineCopy />
       </StyledToolElement>
       <StyledToolElement aria-label="center canvas" onClick={centerView}>
         <MdCenterFocusWeak />
