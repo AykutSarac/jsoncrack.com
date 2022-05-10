@@ -14,6 +14,7 @@
   "dependencies": {
     "@monaco-editor/react": "^4.4.4",
     "allotment": "^1.12.1",
+    "js-base64": "^3.7.2",
     "next": "^12.1.5",
     "next-transpile-modules": "^9.0.0",
     "parse-json": "^6.0.2",
