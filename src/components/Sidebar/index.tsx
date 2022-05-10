@@ -12,6 +12,7 @@ import {
   AiOutlineTwitter,
   AiOutlineSave,
   AiOutlineFileAdd,
+  AiOutlineLink,
 } from "react-icons/ai";
 
 import { Tooltip } from "src/components/Tooltip";
@@ -20,6 +21,7 @@ import { useConfig } from "src/hocs/config";
 import { useRouter } from "next/router";
 import { ImportModal } from "src/containers/ImportModal";
 import { ClearModal } from "src/containers/ClearModal";
+import { ShareModal } from "src/containers/ShareModal";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -106,6 +108,7 @@ export const Sidebar: React.FC = () => {
   const router = useRouter();
   const [uploadVisible, setUploadVisible] = React.useState(false);
   const [clearVisible, setClearVisible] = React.useState(false);
+  const [shareVisible, setShareVisible] = React.useState(false);
 
   const handleSave = () => {
     localStorage.setItem("json", json);
@@ -158,6 +161,11 @@ export const Sidebar: React.FC = () => {
             <AiOutlineSave />
           </StyledElement>
         </Tooltip>
+        <Tooltip title="Share Link">
+          <StyledElement onClick={() => setShareVisible(true)}>
+            <AiOutlineLink />
+          </StyledElement>
+        </Tooltip>
       </StyledTopWrapper>
       <StyledBottomWrapper>
         <StyledElement>
@@ -184,6 +192,7 @@ export const Sidebar: React.FC = () => {
       </StyledBottomWrapper>
       <ImportModal visible={uploadVisible} setVisible={setUploadVisible} />
       <ClearModal visible={clearVisible} setVisible={setClearVisible} />
+      <ShareModal visible={shareVisible} setVisible={setShareVisible} />
     </StyledSidebar>
   );
 };
