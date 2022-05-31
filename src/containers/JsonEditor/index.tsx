@@ -6,6 +6,9 @@ import { ErrorContainer } from "src/components/ErrorContainer/ErrorContainer";
 import { ConfigActionType } from "src/reducer/reducer";
 import { useConfig } from "src/hocs/config";
 import { Loading } from "src/components/Loading";
+import { loader } from "@monaco-editor/react";
+
+loader.config({ paths: { vs: "/monaco-editor/min/vs" } });
 
 const StyledEditorWrapper = styled.div`
   display: flex;
