@@ -1,5 +1,17 @@
 import toast from "react-hot-toast";
 
+//performance reference: https://stackoverflow.com/a/59787784
+const isEmptyObject = (object: Object) => {
+  for (let i in object) {
+    return false;
+  }
+  return true;
+};
+
+const isEmptyString = (str) => {
+  return !str || str.length === 0;
+};
+
 const filterChild = ([k, v]) => {
   const notNull = v !== null;
   const isArray = Array.isArray(v) ? !!v.length : typeof v === "object";
@@ -30,10 +42,12 @@ function generateNodeData(object: Object | number) {
 
   if (isObject) {
     const entries = Object.entries(object).filter(filterValues);
-    return Object.fromEntries(entries);
+    const filteredObject = Object.fromEntries(entries);
+    return !isEmptyObject(filteredObject) ? filteredObject : "{}";
   }
 
-  return object.toString();
+  const text = object.toString();
+  return !isEmptyString(text) ? text : `""`;
 }
 
 const extract = (
