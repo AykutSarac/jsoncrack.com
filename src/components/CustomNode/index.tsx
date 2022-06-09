@@ -19,34 +19,33 @@ const baseLabelStyle = {
 };
 
 export const CustomNode = (nodeProps: NodeProps) => {
-  const { properties: data } = nodeProps;
+  const { properties } = nodeProps;
 
   return (
     <Node {...nodeProps} label={<Label style={baseLabelStyle} />}>
-      {() => {
-        const { width, height } = nodeProps;
+      {({ width, height, x, y }) => {
+        if (properties.text instanceof Object) {
+          const entries = Object.entries<string>(properties.text);
 
-        if (data.text instanceof Object) {
-          const entries = Object.entries<string>(data.text);
           return (
             <ObjectNode
-              x={nodeProps.x}
-              y={nodeProps.y}
+              value={entries}
               width={width}
               height={height}
-              value={entries}
+              x={x}
+              y={y}
             />
           );
         }
 
         return (
           <TextNode
-            isParent={data.data.isParent}
+            isParent={properties.data.isParent}
+            value={properties.text}
             width={width}
             height={height}
-            value={data.text}
-            x={nodeProps.x}
-            y={nodeProps.y}
+            x={x}
+            y={y}
           />
         );
       }}
