@@ -5367,6 +5367,11 @@ react-is@^18.0.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.1.0.tgz#61aaed3096d30eacf2a2127118b5b41387d32a67"
   integrity sha512-Fl7FuabXsJnV5Q1qIOQwx/sagGF18kogb4gpfcG4gjLBWO0WDiiz1ko/ExayuxE7InyQkBLkxRFG5oxY6Uu3Kg==
 
+react-render-if-visible@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-render-if-visible/-/react-render-if-visible-2.1.0.tgz#2a8d3c3e2f32394c78967bb58ee7546666831605"
+  integrity sha512-mOLrj0eDezdTB9zxjBaOOP+cOHVKhoCQCk6qZlHev9a6Edb0eQs2CfHqBa1PNq3kfCW28NAS8QJMXXMJsUonxw==
+
 react-scrolllock@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/react-scrolllock/-/react-scrolllock-5.0.1.tgz#da1cfb7b6d55c86ae41dbad5274b778c307752b7"
