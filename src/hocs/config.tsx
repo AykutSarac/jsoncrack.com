@@ -66,6 +66,7 @@ const WithConfig: ReactComponent = ({ children }) => {
         JSON.stringify({
           ...states.settings,
           zoomPanPinch: undefined,
+          performance: undefined,
         })
       );
   }, [states.settings, render]);

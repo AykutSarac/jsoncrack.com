@@ -68,10 +68,12 @@ export const Tools: React.FC = () => {
       <StyledToolElement aria-label="switch theme" onClick={toggleTheme}>
         {settings.lightmode ? <HiOutlineMoon /> : <HiOutlineSun />}
       </StyledToolElement>
-      <SearchInput />
-      <StyledToolElement aria-label="save" onClick={exportAsImage}>
-        <FiDownload />
-      </StyledToolElement>
+      {!settings.performance && <SearchInput />}
+      {!settings.performance && (
+        <StyledToolElement aria-label="save" onClick={exportAsImage}>
+          <FiDownload />
+        </StyledToolElement>
+      )}
       <StyledToolElement aria-label="center canvas" onClick={centerView}>
         <MdCenterFocusWeak />
       </StyledToolElement>
