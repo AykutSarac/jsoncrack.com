@@ -5,7 +5,11 @@ import styled from "styled-components";
 import { CanvasDirection } from "reaflow";
 import { TiFlowMerge } from "react-icons/ti";
 import { RiPatreonFill } from "react-icons/ri";
-import { CgArrowsMergeAltH, CgArrowsShrinkH } from "react-icons/cg";
+import {
+  CgArrowsMergeAltH,
+  CgArrowsShrinkH,
+  CgPerformance,
+} from "react-icons/cg";
 import {
   AiOutlineDelete,
   AiFillGithub,
@@ -20,6 +24,7 @@ import { useConfig } from "src/hocs/config";
 import { useRouter } from "next/router";
 import { ImportModal } from "src/containers/ImportModal";
 import { ClearModal } from "src/containers/ClearModal";
+import { IoAlertCircleSharp } from "react-icons/io5";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -32,7 +37,8 @@ const StyledSidebar = styled.div`
   border-right: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
 `;
 
-const StyledElement = styled.div`
+const StyledElement = styled.div<{ beta?: boolean }>`
+  position: relative;
   display: flex;
   justify-content: center;
   text-align: center;
@@ -41,6 +47,28 @@ const StyledElement = styled.div`
   width: 100%;
   color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
   cursor: pointer;
+
+  ${({ theme, beta }) =>
+    beta &&
+    `
+    &::after {
+      position: absolute;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      bottom: 0;
+      right: 0;
+      content: 'Beta';
+      font-size: 10px;
+      font-weight: 500;
+      background: ${theme.BLURPLE};
+      border-radius: 4px;
+      color: ${theme.FULL_WHITE};
+      padding: 2px;
+      height: 14px;
+      z-index: 2;
+    }
+  `};
 
   svg {
     padding: 8px;
@@ -101,6 +129,10 @@ function rotateLayout(layout: CanvasDirection) {
   return 360;
 }
 
+const StyledAlertIcon = styled(IoAlertCircleSharp)`
+  color: ${({ theme }) => theme.ORANGE};
+`;
+
 export const Sidebar: React.FC = () => {
   const { json, settings, dispatch } = useConfig();
   const router = useRouter();
@@ -115,6 +147,19 @@ export const Sidebar: React.FC = () => {
   const toggleExpandCollapse = () => {
     dispatch({ type: ConfigActionType.TOGGLE_EXPAND });
     toast(`${settings.expand ? "Collapsed" : "Expanded"} nodes.`);
+  };
+
+  const togglePerformance = () => {
+    const toastMsg = settings.performance
+      ? "Disabled Performance Mode\nSearch Node & Save Image enabled."
+      : "Enabled Performance Mode\nSearch Node & Save Image disabled.";
+
+    toast(toastMsg, {
+      icon: <StyledAlertIcon size={36} />,
+      duration: 3000,
+    });
+
+    dispatch({ type: ConfigActionType.TOGGLE_PERFORMANCE });
   };
 
   return (
@@ -156,6 +201,17 @@ export const Sidebar: React.FC = () => {
         <Tooltip title="Save JSON">
           <StyledElement onClick={handleSave}>
             <AiOutlineSave />
+          </StyledElement>
+        </Tooltip>
+        <Tooltip
+          title={`${
+            settings.performance ? "Disable" : "Enable"
+          } Performance Mode (Beta)`}
+        >
+          <StyledElement onClick={togglePerformance} beta>
+            <CgPerformance
+              color={settings.performance ? "#0073FF" : undefined}
+            />
           </StyledElement>
         </Tooltip>
       </StyledTopWrapper>
