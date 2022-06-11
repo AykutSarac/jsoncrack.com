@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@monaco-editor/react": "^4.4.4",
+    "@sentry/nextjs": "^7.1.1",
     "allotment": "^1.12.1",
     "next": "^12.1.5",
     "next-transpile-modules": "^9.0.0",
