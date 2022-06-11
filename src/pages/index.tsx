@@ -1,61 +1,122 @@
-import React from "react";
-import { Button } from "src/components/Button";
-import { Container } from "src/components/Container";
-import { Navbar } from "src/components/Navbar";
-import { Image } from "src/components/Image";
-import { AiFillGithub } from "react-icons/ai";
-import { Footer } from "src/components/Footer";
-import Head from "next/head";
-import { Producthunt } from "src/components/Producthunt";
+import Link from "next/link";
 import { useRouter } from "next/router";
+import React from "react";
+import {
+  HiCursorClick,
+  HiLightningBolt,
+  HiOutlineDownload,
+  HiOutlineSearchCircle,
+} from "react-icons/hi";
+import { Button } from "src/components/Button";
 import styled from "styled-components";
 
 const StyledHome = styled.div`
-  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8em;
+  font-family: "Roboto", sans-serif;
+`;
 
-  ::-webkit-scrollbar {
-    width: 8px;
-    background: #23272a !important;
-  }
+const StyledGradientText = styled.span`
+  background: #ffb76b;
+  background: linear-gradient(
+    to right,
+    #ffb76b 0%,
+    #ffa73d 30%,
+    #ff7c00 60%,
+    #ff7f04 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+`;
 
-  ::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-    background-color: #4d4d4d !important;
+const StyledNavbar = styled.nav`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 16px 16px;
+  gap: 20px;
+`;
+
+const StyledHeroSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5em;
+  min-height: 50vh;
+`;
+
+const StyledNavLink = styled.a`
+  font-size: 1rem;
+  cursor: pointer;
+  transition: color 0.2s;
+
+  &:hover {
+    font-weight: 500;
+    color: ${({ theme }) => theme.ORANGE};
   }
 `;
 
-const StyledContent = styled.div`
-  font-size: 20px;
-  font-weight: 500;
-  color: ${({ theme }) => theme.SILVER};
-  width: 50%;
+const StyledTitle = styled.h1`
+  font-size: 5rem;
+  font-weight: 900;
+  margin: 0;
+`;
 
-  @media only screen and (max-width: 768px) {
-    width: 100%;
-    text-align: center;
+const StyledSubTitle = styled.h2`
+  color: #dedede;
+  text-align: center;
+  font-size: 2.5rem;
+  max-width: 40rem;
+  margin: 0;
+`;
 
-    button {
-      margin-left: auto;
-      margin-right: auto;
-    }
+const StyledMinorTitle = styled.p`
+  color: #b4b4b4;
+  text-align: center;
+  font-size: 1.25rem;
+  margin: 0;
+  letter-spacing: 1.2px;
+`;
+
+const StyledButton = styled(Button)`
+  background: #d0880d;
+  padding: 12px 24px;
+
+  div {
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    font-size: 16px;
   }
 `;
 
-const StyledHeader = styled.h2`
-  font-size: 3rem;
-  color: ${({ theme }) => theme.FULL_WHITE};
-
-  @media only screen and (max-width: 768px) {
-    font-size: 2.2rem;
-  }
+const StyledFeaturesSection = styled.section`
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 2rem;
 `;
 
-const StyledSubContent = styled.div`
-  margin-bottom: 20px;
+const StyledSectionCard = styled.div`
+  text-align: center;
 `;
 
-const StyledText = styled.span<{ white?: boolean }>`
-  color: ${({ theme, white }) => (white ? theme.FULL_WHITE : theme.ORANGE)};
+const StyledCardTitle = styled.div`
+  font-weight: 700;
+  font-size: 1.5rem;
+  padding: 0.875rem 0;
+  letter-spacing: 1px;
+`;
+
+const StyledCardIcon = styled.div``;
+
+const StyledCardDescription = styled.p`
+  text-align: left;
+  line-height: 1.5rem;
+  font-size: 0.875rem;
 `;
 
 const Home: React.FC = () => {
@@ -63,74 +124,87 @@ const Home: React.FC = () => {
 
   return (
     <StyledHome>
-      <Head>
-        <title>JSON Visio - Directly onto graphs</title>
-      </Head>
-      <Navbar />
-      <Container>
-        <StyledContent>
-          <StyledHeader as="h1">
-            Visualize your JSON into interactive graphs.
-          </StyledHeader>
-          <StyledSubContent>
-            Simple visualization tool for your JSON data. No forced structure,
-            paste your JSON and view it instantly.
-          </StyledSubContent>
-          <Button status="SECONDARY" onClick={() => push("/editor")}>
-            Start Generating
-          </Button>
-        </StyledContent>
-        <Image src="421.svg" width={500} height={400} alt="graphs" />
-      </Container>
+      <StyledNavbar>
+        <Link href="/editor">
+          <StyledNavLink>Editor</StyledNavLink>
+        </Link>
+        <Link href="#features">
+          <StyledNavLink>Features</StyledNavLink>
+        </Link>
+        <Link href="#sponsor">
+          <StyledNavLink>Sponsor</StyledNavLink>
+        </Link>
+        <Link href="https://github.com/AykutSarac/jsonvisio.com">
+          <StyledNavLink target="_blank" rel="external">
+            GitHub
+          </StyledNavLink>
+        </Link>
+      </StyledNavbar>
 
-      <Container reverse>
-        <StyledContent>
-          <StyledHeader>No Rules</StyledHeader>
-          <StyledSubContent>
-            Be free, you don&apos;t have to restructure your json to transform
-            it onto graphs. We&apos;ve done it at our side, so you can just
-            paste your JSON.
-          </StyledSubContent>
-          <Button status="SUCCESS" onClick={() => push("/editor")}>
-            Paste It!
-          </Button>
-        </StyledContent>
-        <Image src="graphs3.svg" width={500} height={400} alt="preview" />
-      </Container>
+      <StyledHeroSection id="features">
+        <StyledTitle>
+          <StyledGradientText>JSON</StyledGradientText> Visio
+        </StyledTitle>
+        <StyledSubTitle>
+          Seamlessly visualize your JSON data instantly into graphs.
+        </StyledSubTitle>
+        <StyledMinorTitle>Paste - Import - Fetch!</StyledMinorTitle>
+        <StyledButton onClick={() => push("/editor")}>GET STARTED</StyledButton>
+      </StyledHeroSection>
 
-      <Container>
-        <StyledContent>
-          <StyledHeader>Import File</StyledHeader>
-          <StyledSubContent>
-            Have an existing file for your data? No worries, directly import it
-            into our editor without having to scroll through all of it!
-          </StyledSubContent>
-          <Button status="SUCCESS" onClick={() => push("/editor")}>
-            Import JSON
-          </Button>
-        </StyledContent>
-        <Image src="graphs4.svg" width={500} height={400} alt="preview" />
-      </Container>
+      <StyledFeaturesSection>
+        <StyledSectionCard>
+          <StyledCardIcon>
+            <HiCursorClick size={50} color="#3BA55D" />
+          </StyledCardIcon>
+          <StyledCardTitle>SEAMLESS</StyledCardTitle>
+          <StyledCardDescription>
+            What good is a powerful table if that super hip designer you just
+            hired can't work their UI magic on it? TanStack Table is headless by
+            design, which means 100% control down to the very smallest HTML tag,
+            component, class and style. Pixel Perfection? Go for it!
+          </StyledCardDescription>
+        </StyledSectionCard>
 
-      <Container reverse>
-        <StyledContent>
-          <StyledHeader>Supported by Open Source</StyledHeader>
-          <StyledSubContent>
-            We do our work at open source. Help us improve by contributing to
-            <StyledText> JSON</StyledText>
-            <StyledText white> Visio</StyledText> at GitHub!
-          </StyledSubContent>
-          <Button
-            onClick={() => push("https://github.com/AykutSarac/jsonvisio.com")}
-          >
-            <AiFillGithub size={20} />
-            Check GitHub
-          </Button>
-        </StyledContent>
-        <Image src="graphs5.svg" width={500} height={400} alt="preview" />
-      </Container>
-      <Producthunt />
-      <Footer />
+        <StyledSectionCard>
+          <StyledCardIcon>
+            <HiOutlineSearchCircle size={50} color="#5865F2" />
+          </StyledCardIcon>
+          <StyledCardTitle>SEARCH</StyledCardTitle>
+          <StyledCardDescription>
+            What good is a powerful table if that super hip designer you just
+            hired can't work their UI magic on it? TanStack Table is headless by
+            design, which means 100% control down to the very smallest HTML tag,
+            component, class and style. Pixel Perfection? Go for it!
+          </StyledCardDescription>
+        </StyledSectionCard>
+
+        <StyledSectionCard>
+          <StyledCardIcon>
+            <HiOutlineDownload size={50} color="#DA2877" />
+          </StyledCardIcon>
+          <StyledCardTitle>DOWNLOAD</StyledCardTitle>
+          <StyledCardDescription>
+            What good is a powerful table if that super hip designer you just
+            hired can't work their UI magic on it? TanStack Table is headless by
+            design, which means 100% control down to the very smallest HTML tag,
+            component, class and style. Pixel Perfection? Go for it!
+          </StyledCardDescription>
+        </StyledSectionCard>
+
+        <StyledSectionCard>
+          <StyledCardIcon>
+            <HiLightningBolt size={50} color="#F5E027" />
+          </StyledCardIcon>
+          <StyledCardTitle>LIVE</StyledCardTitle>
+          <StyledCardDescription>
+            What good is a powerful table if that super hip designer you just
+            hired can't work their UI magic on it? TanStack Table is headless by
+            design, which means 100% control down to the very smallest HTML tag,
+            component, class and style. Pixel Perfection? Go for it!
+          </StyledCardDescription>
+        </StyledSectionCard>
+      </StyledFeaturesSection>
     </StyledHome>
   );
 };
