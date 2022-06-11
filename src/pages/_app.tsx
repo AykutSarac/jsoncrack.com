@@ -9,10 +9,12 @@ import { darkTheme, lightTheme } from "src/constants/theme";
 import { useConfig, withConfig } from "src/hocs/config";
 import { GoogleAnalytics } from "src/components/GoogleAnalytics";
 
-Sentry.init({
-  dsn: "https://d3345591295d4dd1b8c579b62003d939@o1284435.ingest.sentry.io/6495191",
-  tracesSampleRate: 0.5,
-});
+if (process.env.NODE_ENV !== "development") {
+  Sentry.init({
+    dsn: "https://d3345591295d4dd1b8c579b62003d939@o1284435.ingest.sentry.io/6495191",
+    tracesSampleRate: 0.5,
+  });
+}
 
 function JsonVisio({ Component, pageProps }: AppProps) {
   const { settings } = useConfig();
