@@ -16,18 +16,16 @@ const TextNode: React.FC<CustomNodeProps<string>> = ({
   return (
     <Styled.StyledForeignObject width={width} height={height} x={0} y={0}>
       <ConditionalWrapper condition={settings.performance}>
-        <Styled.StyledTextWrapper>
-          <Styled.StyledText width={width} height={height}>
-            <Styled.StyledKey
-              data-x={x}
-              data-y={y}
-              data-key={value}
-              parent={isParent}
-            >
-              {value}
-            </Styled.StyledKey>
-          </Styled.StyledText>
-        </Styled.StyledTextWrapper>
+        <Styled.StyledText width={width} height={height}>
+          <Styled.StyledKey
+            data-x={x}
+            data-y={y}
+            data-key={value}
+            parent={isParent}
+          >
+            {value}
+          </Styled.StyledKey>
+        </Styled.StyledText>
       </ConditionalWrapper>
     </Styled.StyledForeignObject>
   );

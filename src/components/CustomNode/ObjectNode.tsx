@@ -15,25 +15,23 @@ const ObjectNode: React.FC<CustomNodeProps<[string, string][]>> = ({
   return (
     <Styled.StyledForeignObject width={width} height={height} x={0} y={0}>
       <ConditionalWrapper condition={settings.performance}>
-        <Styled.StyledTextWrapper>
-          <Styled.StyledText width={width} height={height}>
-            {value.map(
-              (val, idx) =>
-                val[1] && (
-                  <Styled.StyledRow
-                    data-key={val[1]}
-                    data-x={x}
-                    data-y={y}
-                    key={idx}
-                    width={width}
-                  >
-                    <Styled.StyledKey objectKey>{val[0]}: </Styled.StyledKey>
-                    {val[1]}
-                  </Styled.StyledRow>
-                )
-            )}
-          </Styled.StyledText>
-        </Styled.StyledTextWrapper>
+        <Styled.StyledText width={width} height={height}>
+          {value.map(
+            (val, idx) =>
+              val[1] && (
+                <Styled.StyledRow
+                  data-key={val[1]}
+                  data-x={x}
+                  data-y={y}
+                  key={idx}
+                  width={width}
+                >
+                  <Styled.StyledKey objectKey>{val[0]}: </Styled.StyledKey>
+                  {val[1]}
+                </Styled.StyledRow>
+              )
+          )}
+        </Styled.StyledText>
       </ConditionalWrapper>
     </Styled.StyledForeignObject>
   );
