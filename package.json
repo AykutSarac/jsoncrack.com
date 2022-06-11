@@ -12,9 +12,9 @@
     "deploy": "gh-pages -d out -t true"
   },
   "dependencies": {
-    "@monaco-editor/react": "^4.4.4",
+    "@monaco-editor/react": "^4.4.5",
     "@sentry/nextjs": "^7.1.1",
-    "allotment": "^1.12.1",
+    "allotment": "^1.14.2",
     "next": "^12.1.5",
     "next-transpile-modules": "^9.0.0",
     "parse-json": "^6.0.2",
@@ -44,7 +44,7 @@
     "eslint": "8.13.0",
     "eslint-config-next": "12.1.5",
     "eslint-plugin-testing-library": "^5.3.1",
-    "gh-pages": "^3.2.3",
+    "gh-pages": "^4.0.0",
     "jest": "^28",
     "jest-environment-jsdom": "^28.0.0",
     "next-compose-plugins": "^2.2.1",
