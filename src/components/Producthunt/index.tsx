@@ -23,6 +23,7 @@ export const Producthunt = () => {
         height="200"
         src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=332281&theme=neutral"
         alt="JSON Visio - Simple visualization tool for your JSON data. | Product Hunt"
+        loading="lazy"
       />
     </a>
   );
