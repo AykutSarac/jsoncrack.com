@@ -159,7 +159,7 @@ const StyledSectionCard = styled.div`
 const StyledCardTitle = styled.div`
   font-weight: 700;
   font-size: 1.5rem;
-  padding: 0.875rem 0;
+  padding: 1.5rem 0 0.5rem;
   letter-spacing: 1px;
 `;
 
@@ -404,8 +404,8 @@ const Home: React.FC = () => {
           <StyledCardDescription>
             Download the graph to your local machine and use it wherever you
             want, to your blogs, website or make it a poster and paste to the
-            wall. Who wouldn&apos;t want to see a JSON Visio graph onto their wall,
-            eh?
+            wall. Who wouldn&apos;t want to see a JSON Visio graph onto their
+            wall, eh?
           </StyledCardDescription>
         </StyledSectionCard>
 
@@ -415,9 +415,10 @@ const Home: React.FC = () => {
           </StyledCardIcon>
           <StyledCardTitle>LIVE</StyledCardTitle>
           <StyledCardDescription>
-            With Microsoft&apos;s Monaco Editor which is also used by VS Code, easily
-            edit your JSON and directly view through the graphs. Also there&apos;s a
-            JSON validator above of it to make sure there is no type error.
+            With Microsoft&apos;s Monaco Editor which is also used by VS Code,
+            easily edit your JSON and directly view through the graphs. Also
+            there&apos;s a JSON validator above of it to make sure there is no
+            type error.
           </StyledCardDescription>
         </StyledSectionCard>
       </StyledFeaturesSection>
