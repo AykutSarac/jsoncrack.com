@@ -367,6 +367,7 @@ const Home: React.FC = () => {
           height="auto"
           src="/jsonvisio-screenshot.png"
           alt="preview"
+          loading="lazy"
         />
       </StyledPreviewSection>
 
