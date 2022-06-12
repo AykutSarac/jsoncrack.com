@@ -16,7 +16,7 @@ export const Producthunt = () => {
     <a
       href="https://www.producthunt.com/posts/json-visio?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-json-visio"
       target="_blank"
-      rel="me"
+      rel="noreferrer"
     >
       <StyledImage
         width="500"

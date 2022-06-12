@@ -377,7 +377,7 @@ const Home: React.FC = () => {
           </StyledCardIcon>
           <StyledCardTitle>EASY-TO-USE</StyledCardTitle>
           <StyledCardDescription>
-            Don't even bother to update your schema to view your JSON into
+            Don&apos;t even bother to update your schema to view your JSON into
             graphs; directly paste, import or fetch! JSON Visio helps you to
             visualize without any additional values and save your time.
           </StyledCardDescription>
@@ -404,7 +404,7 @@ const Home: React.FC = () => {
           <StyledCardDescription>
             Download the graph to your local machine and use it wherever you
             want, to your blogs, website or make it a poster and paste to the
-            wall. Who wouldn't want to see a JSON Visio graph onto their wall,
+            wall. Who wouldn&apos;t want to see a JSON Visio graph onto their wall,
             eh?
           </StyledCardDescription>
         </StyledSectionCard>
@@ -415,8 +415,8 @@ const Home: React.FC = () => {
           </StyledCardIcon>
           <StyledCardTitle>LIVE</StyledCardTitle>
           <StyledCardDescription>
-            With Microsoft's Monaco Editor which is also used by VS Code, easily
-            edit your JSON and directly view through the graphs. Also there's a
+            With Microsoft&apos;s Monaco Editor which is also used by VS Code, easily
+            edit your JSON and directly view through the graphs. Also there&apos;s a
             JSON validator above of it to make sure there is no type error.
           </StyledCardDescription>
         </StyledSectionCard>
