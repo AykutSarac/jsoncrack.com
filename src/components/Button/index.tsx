@@ -24,6 +24,7 @@ const StyledButton = styled.button<{ status: keyof typeof ButtonType }>`
   color: #ffffff;
   padding: 8px 16px;
   min-width: 60px;
+  width: fit-content;
 
   :disabled {
     cursor: not-allowed;
