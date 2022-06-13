@@ -489,20 +489,6 @@ const Home: React.FC = () => {
         </StyledSectionArea>
       </StyledGitHubSection>
 
-      <StyledSponsorSection id="sponsor">
-        <StyledSubTitle>Sponsors</StyledSubTitle>
-        <StyledMinorTitle>
-          Your supports make JSON Visio possible to continue and accessible for
-          everyone!
-        </StyledMinorTitle>
-        <StyledButton
-          status="SUCCESS"
-          onClick={() => push("https://www.patreon.com/aykutsarac")}
-        >
-          Become A Sponsor!
-        </StyledButton>
-      </StyledSponsorSection>
-
       <StyledPaidSection>
         <StyledProducthunt>
           <StyledSubTitle>
@@ -517,6 +503,20 @@ const Home: React.FC = () => {
           <CarbonAds />
         </StyledAffiliate>
       </StyledPaidSection>
+
+      <StyledSponsorSection id="sponsor">
+        <StyledSubTitle>Sponsors</StyledSubTitle>
+        <StyledMinorTitle>
+          Your supports make JSON Visio possible to continue and accessible for
+          everyone!
+        </StyledMinorTitle>
+        <StyledButton
+          status="SUCCESS"
+          onClick={() => push("https://www.patreon.com/aykutsarac")}
+        >
+          Become A Sponsor!
+        </StyledButton>
+      </StyledSponsorSection>
 
       <StyledFooter>
         <StyledFooterText>© 2022 JSON Visio - {pkg.version}</StyledFooterText>
