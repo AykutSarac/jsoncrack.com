@@ -12,6 +12,7 @@ import {
 import { TwitterTweetEmbed } from "react-twitter-embed";
 import { Button } from "src/components/Button";
 import { Producthunt } from "src/components/Producthunt";
+import { CarbonAds } from "src/components/CarbonAds";
 import styled from "styled-components";
 import pkg from "../../package.json";
 
@@ -274,35 +275,86 @@ const StyledHighlightedText = styled.span`
   text-decoration-color: #eab308;
 `;
 
-const StyledProducthuntSection = styled.section`
+const StyledProducthunt = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   gap: 3rem;
+  border-right: 1px solid white;
+  padding-right: 3rem;
 
+  @media only screen and (max-width: 768px) {
+    border-right: none;
+    border-bottom: 1px solid white;
+    padding-bottom: 3rem;
+    padding-right: 0;
+  }
+`;
+
+const StyledPaidSection = styled.section`
+  display: flex;
   max-width: 85%;
   margin: 0 auto;
+  gap: 2rem;
   padding: 60px 3%;
-
-  ${StyledSectionArea} {
-    margin: 0;
-    width: 100%;
-
-    h2 {
-      text-align: right;
-    }
-  }
 
   @media only screen and (max-width: 768px) {
     flex-direction: column;
     max-width: 80%;
-
-    ${StyledSectionArea} {
-      h2 {
-        text-align: center;
-      }
-    }
   }
+`;
+
+const StyledAffiliate = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 3rem;
+`;
+
+const StyledCarbonWrapper = styled.div`
+  display: flex;
+  background: #111827;
+  border-radius: 5px;
+  overflow: hidden;
+`;
+
+const StyledCarbon = styled.span`
+  display: flex;
+  position: relative;
+`;
+
+const StyledCarbonAttribute = styled.a`
+  display: block;
+  padding: 6px 8px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  font-size: 8px;
+  line-height: 1;
+  border-top-left-radius: 3px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+`;
+
+const StyledCarbonImage = styled.a`
+  display: block;
+  margin: 0;
+  line-height: 1;
+
+  img {
+    display: block;
+  }
+`;
+
+const StyledCarbonText = styled.a`
+  font-size: 13px;
+  padding: 10px;
+  line-height: 1.5;
+  text-align: left;
 `;
 
 const Home: React.FC = () => {
@@ -451,16 +503,20 @@ const Home: React.FC = () => {
         </StyledButton>
       </StyledSponsorSection>
 
-      <StyledProducthuntSection>
-        <StyledSectionArea>
+      <StyledPaidSection>
+        <StyledProducthunt>
           <StyledSubTitle>
             Support JSON Visio at
             <br />
             <StyledHighlightedText>Product Hunt</StyledHighlightedText>
           </StyledSubTitle>
-        </StyledSectionArea>
-        <Producthunt />
-      </StyledProducthuntSection>
+          <Producthunt />
+        </StyledProducthunt>
+        <StyledAffiliate>
+          <StyledSubTitle>Affiliate</StyledSubTitle>
+          <CarbonAds />
+        </StyledAffiliate>
+      </StyledPaidSection>
 
       <StyledFooter>
         <StyledFooterText>© 2022 JSON Visio - {pkg.version}</StyledFooterText>
