@@ -46,38 +46,52 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #carbonads * {
-    margin: initial;
-    padding: initial;
+  margin: initial;
+  padding: initial;
+  line-height: initial;
   }
 
   #carbonads {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-      Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', Helvetica, Arial,
-      sans-serif;
-      overflow: hidden;
-      border-radius: 4px;
+    --carbon-font-size: 16px;
+    --carbon-padding-size: 12px;
+    border-radius: 4px;
+    overflow: hidden;
   }
 
   #carbonads {
-    display: flex;
-    background-color: #111827;
-    box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, 0.1);
     z-index: 100;
+    display: inline-block;
+
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+      Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
+      Helvetica, Arial, sans-serif;
+    font-size: var(--carbon-font-size);
+  }
+
+  #carbonads > span {
+
+    min-width: 18.75em;
+    max-width: clamp(18.75em, 22.5em, 24.5em);
+    min-height: 100px;
+    background-color: hsl(0, 0%, 10%);
+    box-shadow: 0 0 1px hsl(0deg 0% 0% / 0.085),
+      0 0 2px hsl(0deg 0% 0% / 0.085),
+      0 0 4px hsl(0deg 0% 0% / 0.085),
+      0 0 8px hsl(0deg 0% 0% / 0.085);
   }
 
   #carbonads a {
-    color: inherit;
     text-decoration: none;
+    color: #ddd;
   }
 
   #carbonads a:hover {
-    color: inherit;
+    color: #ddd;
   }
-  
+
   #carbonads span {
-    position: relative;
     display: block;
-    overflow: hidden;
+    position: relative;
   }
 
   #carbonads .carbon-wrap {
@@ -85,32 +99,33 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #carbonads .carbon-img {
-    display: block;
-    margin: 0;
-    line-height: 1;
+    height: 100px;
+    width: 130px;
   }
 
   #carbonads .carbon-img img {
     display: block;
   }
-  
+
   #carbonads .carbon-text {
-    font-size: 13px;
-    padding: 10px;
-    margin-bottom: 16px;
-    line-height: 1.5;
+    padding: 0.625em 1em;
+
+    font-size: 0.8125em;
+    margin-bottom: 1em;
+    line-height: 1.4;
     text-align: left;
   }
 
   #carbonads .carbon-poweredby {
     display: block;
     padding: 6px 8px;
-    background: #111827;
+    color: #aaa;
+    background: #1e2021;
     text-align: center;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.1ch;
     font-weight: 600;
-    font-size: 8px;
+    font-size: 0.5em;
     line-height: 1;
     border-top-left-radius: 3px;
     position: absolute;

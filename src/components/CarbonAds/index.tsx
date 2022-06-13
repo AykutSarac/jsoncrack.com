@@ -3,8 +3,6 @@ import React from "react";
 const isDevelopment = process.env.NODE_ENV === "development";
 
 export const CarbonAds = () => {
-  if (isDevelopment) return null;
-
   return (
     <>
       <script
