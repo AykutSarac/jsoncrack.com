@@ -2,11 +2,7 @@ import React from "react";
 import { Sidebar } from "src/components/Sidebar";
 import { Incompatible } from "src/containers/Incompatible";
 import * as Styles from "src/containers/Editor/styles";
-import dynamic from "next/dynamic";
-
-const Panes = dynamic(() => import("./Panes"), {
-  ssr: false,
-});
+import Panes from "./Panes";
 
 const Editor: React.FC = () => {
   return (
