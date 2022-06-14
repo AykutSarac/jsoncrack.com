@@ -82,7 +82,7 @@ export const JsonEditor: React.FC = () => {
           loading={<Loading message="Loading Editor..." />}
           onChange={(value) => setValue(value as string)}
         />
-        <CarbonAds />
+        <CarbonAds editor />
       </StyledWrapper>
     </StyledEditorWrapper>
   );
