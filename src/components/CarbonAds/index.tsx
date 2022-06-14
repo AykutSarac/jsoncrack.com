@@ -5,6 +5,7 @@ const StyledWrapper = styled.span`
   #carbonads {
     width: 100%;
     display: flex;
+    border-radius: 0;
   }
 
   #carbonads > span {
