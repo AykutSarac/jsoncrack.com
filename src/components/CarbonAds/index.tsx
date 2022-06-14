@@ -12,6 +12,12 @@ const StyledWrapper = styled.span`
     max-width: 100%;
     width: 100%;
   }
+
+  @media all and (display-mode: standalone) {
+    #carbonads {
+      display: none;
+    }
+  }
 `;
 
 export const CarbonAds = () => {
