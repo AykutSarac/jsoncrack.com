@@ -30,7 +30,7 @@ const StyledWrapper = styled.div`
   display: grid;
   height: calc(100vh - 36px);
   grid-template-columns: 1fr;
-  grid-auto-rows: 1fr 100px;
+  grid-auto-rows: 1fr minmax(1fr, 100px);
 `;
 
 export const JsonEditor: React.FC = () => {
