@@ -313,50 +313,6 @@ const StyledAffiliate = styled.div`
   gap: 3rem;
 `;
 
-const StyledCarbonWrapper = styled.div`
-  display: flex;
-  background: #111827;
-  border-radius: 5px;
-  overflow: hidden;
-`;
-
-const StyledCarbon = styled.span`
-  display: flex;
-  position: relative;
-`;
-
-const StyledCarbonAttribute = styled.a`
-  display: block;
-  padding: 6px 8px;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-weight: 600;
-  font-size: 8px;
-  line-height: 1;
-  border-top-left-radius: 3px;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-`;
-
-const StyledCarbonImage = styled.a`
-  display: block;
-  margin: 0;
-  line-height: 1;
-
-  img {
-    display: block;
-  }
-`;
-
-const StyledCarbonText = styled.a`
-  font-size: 13px;
-  padding: 10px;
-  line-height: 1.5;
-  text-align: left;
-`;
-
 const Home: React.FC = () => {
   const { push } = useRouter();
   const [isMobile, setIsMobile] = React.useState(false);
@@ -371,9 +327,7 @@ const Home: React.FC = () => {
         <title>JSON Visio - Directly onto graphs</title>
       </Head>
       <StyledNavbar>
-        <Link href="/editor" passHref>
-          <StyledNavLink>Editor</StyledNavLink>
-        </Link>
+        <StyledNavLink href="/editor">Editor</StyledNavLink>
         <Link href="#features" passHref>
           <StyledNavLink>Features</StyledNavLink>
         </Link>
@@ -398,7 +352,10 @@ const Home: React.FC = () => {
           <StyledHighlightedText>instantly</StyledHighlightedText> into graphs.
         </StyledSubTitle>
         <StyledMinorTitle>Paste - Import - Fetch!</StyledMinorTitle>
-        <StyledButton onClick={() => push("/editor")} disabled={isMobile}>
+        <StyledButton
+          onClick={() => window.location.replace("/editor")}
+          disabled={isMobile}
+        >
           {isMobile ? "Incompatible Device" : "GO TO EDITOR"}
         </StyledButton>
       </StyledHeroSection>

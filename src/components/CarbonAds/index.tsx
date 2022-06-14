@@ -1,9 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const StyledWrapper = styled.div`
-  height: 100px;
-
+const StyledWrapper = styled.span`
   #carbonads {
     width: 100%;
     display: flex;

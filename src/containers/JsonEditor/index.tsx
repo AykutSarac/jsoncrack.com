@@ -74,7 +74,7 @@ export const JsonEditor: React.FC = () => {
       <ErrorContainer error={error} setError={setError} />
       <StyledWrapper>
         <Editor
-          height="auto"
+          height="100%"
           defaultLanguage="json"
           value={value}
           theme={editorTheme}
