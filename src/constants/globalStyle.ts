@@ -73,7 +73,7 @@ const GlobalStyle = createGlobalStyle`
     min-width: 18.75em;
     max-width: clamp(18.75em, 22.5em, 24.5em);
     min-height: 100px;
-    background-color: hsl(0, 0%, 10%);
+    background-color: ${({ theme }) => theme.BACKGROUND_SECONDARY};
     box-shadow: 0 0 1px hsl(0deg 0% 0% / 0.085),
       0 0 2px hsl(0deg 0% 0% / 0.085),
       0 0 4px hsl(0deg 0% 0% / 0.085),
@@ -82,11 +82,11 @@ const GlobalStyle = createGlobalStyle`
 
   #carbonads a {
     text-decoration: none;
-    color: #ddd;
+    color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
   }
 
   #carbonads a:hover {
-    color: #ddd;
+    color: ${({ theme }) => theme.INTERACTIVE_HOVER};
   }
 
   #carbonads span {
@@ -119,8 +119,8 @@ const GlobalStyle = createGlobalStyle`
   #carbonads .carbon-poweredby {
     display: block;
     padding: 6px 8px;
-    color: #aaa;
-    background: #1e2021;
+    color: ${({ theme }) => theme.TEXT_NORMAL};
+    background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 0.1ch;
