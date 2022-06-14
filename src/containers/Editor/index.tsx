@@ -1,11 +1,15 @@
 import React from "react";
+import dynamic from "next/dynamic";
 import { Sidebar } from "src/components/Sidebar";
-import { LiveEditor } from "src/containers/LiveEditor";
 import { JsonEditor } from "src/containers/JsonEditor";
 import { Incompatible } from "src/containers/Incompatible";
 import * as Styles from "src/containers/Editor/styles";
 import { useConfig } from "src/hocs/config";
 import { Allotment } from "allotment";
+
+const LiveEditor = dynamic(() => import("src/containers/LiveEditor"), {
+  ssr: false,
+});
 
 const Editor: React.FC = () => {
   const { settings } = useConfig();

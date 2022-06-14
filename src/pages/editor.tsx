@@ -1,9 +1,7 @@
 import React from "react";
 import Head from "next/head";
+import Editor from "src/containers/Editor";
 import styled from "styled-components";
-import dynamic from "next/dynamic";
-
-const Editor = dynamic(() => import("src/containers/Editor"), { ssr: false });
 
 const StyledEditorWrapper = styled.div``;
 
