@@ -66,7 +66,7 @@ const StyledElement = styled.div<{ beta?: boolean }>`
       color: ${theme.FULL_WHITE};
       padding: 2px;
       height: 14px;
-      z-index: 2;
+      z-index: 0;
     }
   `};
 
