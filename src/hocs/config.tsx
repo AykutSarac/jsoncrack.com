@@ -43,12 +43,8 @@ const WithConfig: ReactComponent = ({ children }) => {
   };
 
   React.useEffect(() => {
-    const jsonStored = localStorage.getItem("json");
-    if (jsonStored) {
-      dispatch({ type: ConfigActionType.SET_JSON, payload: jsonStored });
-    }
-
     const configStored = localStorage.getItem("config");
+
     if (configStored) {
       dispatch({
         type: ConfigActionType.SET_CONFIG,
