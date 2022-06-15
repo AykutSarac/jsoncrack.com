@@ -8,6 +8,7 @@ import GlobalStyle from "src/constants/globalStyle";
 import { darkTheme, lightTheme } from "src/constants/theme";
 import { useConfig, withConfig } from "src/hocs/config";
 import { GoogleAnalytics } from "src/components/GoogleAnalytics";
+import Script from "next/script";
 
 if (process.env.NODE_ENV !== "development") {
   Sentry.init({
@@ -18,6 +19,21 @@ if (process.env.NODE_ENV !== "development") {
 
 function JsonVisio({ Component, pageProps }: AppProps) {
   const { settings } = useConfig();
+
+  React.useEffect(() => {
+    if (!window.matchMedia("(display-mode: standalone)").matches) {
+      navigator.serviceWorker
+        .getRegistrations()
+        .then(function (registrations) {
+          for (let registration of registrations) {
+            registration.unregister();
+          }
+        })
+        .catch(function (err) {
+          console.log("Service Worker registration failed: ", err);
+        });
+    }
+  }, []);
 
   return (
     <>
