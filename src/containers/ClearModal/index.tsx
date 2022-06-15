@@ -10,7 +10,6 @@ export const ClearModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
 
   const handleClear = () => {
     dispatch({ type: ConfigActionType.SET_JSON, payload: "{}" });
-    localStorage.removeItem("json");
     toast.success(`Cleared JSON and removed from memory.`);
     setVisible(false);
   };
