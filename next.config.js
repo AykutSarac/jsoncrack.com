@@ -1,5 +1,4 @@
 const withPWA = require("next-pwa");
-const runtimeCaching = require("next-pwa/cache");
 
 /**
  * @type {import('next').NextConfig}
@@ -14,10 +13,9 @@ const nextConfig = {
     styledComponents: true,
   },
   pwa: {
-    disable: process.env.NODE_ENV === "development",
-    runtimeCaching,
+    // disable: process.env.NODE_ENV === "development",
+    disable: true, // disable temp until issue #61 solved
     dest: "public",
-    register: true,
     fallbacks: {
       document: "/editor",
     },
