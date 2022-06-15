@@ -140,8 +140,12 @@ export const Sidebar: React.FC = () => {
   const [clearVisible, setClearVisible] = React.useState(false);
 
   const handleSave = () => {
-    localStorage.setItem("json", json);
-    toast.success("Saved JSON successfully!");
+    const a = document.createElement("a");
+    const file = new Blob([json], { type: "text/plain" });
+
+    a.href = window.URL.createObjectURL(file);
+    a.download = "jsonvisio.json";
+    a.click();
   };
 
   const toggleExpandCollapse = () => {
