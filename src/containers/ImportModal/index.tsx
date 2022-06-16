@@ -105,8 +105,7 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
       setVisible(false);
     }
 
-    if (handleEnterKeyPress) {
-      console.log("test enter");
+    if (handleEnterKeyPress && (jsonFile || url)) {
       handleImportFile();
     }
   }, [handleEspacePress, handleEnterKeyPress]);
