@@ -4,14 +4,10 @@ const useKeyPress = (targetKey) => {
   const [keyPressed, setKeyPressed] = React.useState(false);
 
   function downHandler({ key }) {
-    if (key === targetKey) {
-      setKeyPressed(true);
-    }
+    if (key === targetKey) setKeyPressed(true);
   }
   const upHandler = ({ key }) => {
-    if (key === targetKey) {
-      setKeyPressed(false);
-    }
+    if (key === targetKey) setKeyPressed(false);
   };
   React.useEffect(() => {
     window.addEventListener("keydown", downHandler);
