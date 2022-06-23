@@ -12,6 +12,8 @@ import { SearchInput } from "src/containers/SearchInput";
 import { useConfig } from "src/hocs/config";
 import { ConfigActionType } from "src/reducer/reducer";
 import styled from "styled-components";
+import { TbSettings } from "react-icons/tb";
+import { Settings } from "./Settings";
 
 export const StyledTools = styled.div`
   display: flex;
@@ -41,6 +43,7 @@ const StyledToolElement = styled.button`
 `;
 
 export const Tools: React.FC = () => {
+  const [settingsVisible, setSettingsVisible] = React.useState(false);
   const { settings, dispatch } = useConfig();
 
   const zoomIn = () => dispatch({ type: ConfigActionType.ZOOM_IN });
@@ -65,6 +68,12 @@ export const Tools: React.FC = () => {
       <StyledToolElement aria-label="fullscreen" onClick={toggleEditor}>
         <AiOutlineFullscreen />
       </StyledToolElement>
+      <StyledToolElement
+        aria-label="settings"
+        onClick={() => setSettingsVisible(true)}
+      >
+        <TbSettings />
+      </StyledToolElement>
       <StyledToolElement aria-label="switch theme" onClick={toggleTheme}>
         {settings.lightmode ? <HiOutlineMoon /> : <HiOutlineSun />}
       </StyledToolElement>
@@ -83,6 +92,7 @@ export const Tools: React.FC = () => {
       <StyledToolElement aria-label="zoom in" onClick={zoomIn}>
         <AiOutlinePlus />
       </StyledToolElement>
+      <Settings visible={settingsVisible} setVisible={setSettingsVisible} />
     </StyledTools>
   );
 };
