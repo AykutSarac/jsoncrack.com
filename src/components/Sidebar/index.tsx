@@ -129,10 +129,6 @@ function rotateLayout(layout: CanvasDirection) {
   return 360;
 }
 
-const StyledAlertIcon = styled(IoAlertCircleSharp)`
-  color: ${({ theme }) => theme.ORANGE};
-`;
-
 export const Sidebar: React.FC = () => {
   const { json, settings, dispatch } = useConfig();
   const router = useRouter();
@@ -151,19 +147,6 @@ export const Sidebar: React.FC = () => {
   const toggleExpandCollapse = () => {
     dispatch({ type: ConfigActionType.TOGGLE_EXPAND });
     toast(`${settings.expand ? "Collapsed" : "Expanded"} nodes.`);
-  };
-
-  const togglePerformance = () => {
-    const toastMsg = settings.performance
-      ? "Disabled Performance Mode\nSearch Node & Save Image enabled."
-      : "Enabled Performance Mode\nSearch Node & Save Image disabled.";
-
-    toast(toastMsg, {
-      icon: <StyledAlertIcon size={36} />,
-      duration: 3000,
-    });
-
-    dispatch({ type: ConfigActionType.TOGGLE_PERFORMANCE });
   };
 
   return (
@@ -205,17 +188,6 @@ export const Sidebar: React.FC = () => {
         <Tooltip title="Save JSON">
           <StyledElement onClick={handleSave}>
             <AiOutlineSave />
-          </StyledElement>
-        </Tooltip>
-        <Tooltip
-          title={`${
-            settings.performance ? "Disable" : "Enable"
-          } Performance Mode (Beta)`}
-        >
-          <StyledElement onClick={togglePerformance} beta>
-            <CgPerformance
-              color={settings.performance ? "#0073FF" : undefined}
-            />
           </StyledElement>
         </Tooltip>
       </StyledTopWrapper>

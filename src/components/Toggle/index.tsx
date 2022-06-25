@@ -2,6 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import { IoIosCheckmarkCircle, IoMdCloseCircle } from "react-icons/io";
 
+interface ToggleProps {
+  checked?: boolean;
+  children?: React.ReactNode;
+  onChange?: () => void;
+}
+
 const StyledToggleWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -26,36 +32,37 @@ const StyledToggle = styled.div<{ active: boolean }>`
   padding: 2px;
   border-radius: 14px;
   background: ${({ active }) => (active ? "#3AA55D" : "#72767c")};
-  cursor: pointer;
-
   transition: 0.1s;
+  cursor: pointer;
 
   input {
     display: none;
   }
 `;
 
-const Toggle: React.FC<{ children: string }> = ({ children }) => {
-  const [isActive, setIsActive] = React.useState(false);
-  const id = React.useId();
+const Toggle: React.FC<ToggleProps> = ({
+  children,
+  checked = false,
+  onChange,
+}) => {
+  const [isChecked, setIsChecked] = React.useState(checked);
+
+  const handleClick = () => {
+    setIsChecked(!isChecked);
+    if (onChange) onChange();
+  };
 
   return (
     <StyledToggleWrapper>
-      <StyledToggle active={isActive} onClick={() => setIsActive((a) => !a)}>
-        {isActive ? (
+      <StyledToggle active={isChecked} onClick={handleClick}>
+        {isChecked ? (
           <IoIosCheckmarkCircle size={22} color="white" />
         ) : (
           <IoMdCloseCircle size={22} color="white" />
         )}
-        <input
-          type="checkbox"
-          defaultChecked={isActive}
-          onChange={() => setIsActive((c) => !c)}
-        />
+        <input type="checkbox" checked={isChecked} onChange={handleClick} />
       </StyledToggle>
-      <StyledLabel onClick={() => setIsActive((c) => !c)}>
-        {children}
-      </StyledLabel>
+      <StyledLabel onClick={handleClick}>{children}</StyledLabel>
     </StyledToggleWrapper>
   );
 };
