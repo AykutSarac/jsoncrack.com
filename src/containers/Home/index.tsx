@@ -19,7 +19,7 @@ const Home: React.FC = () => {
   const { push } = useRouter();
   const [isMobile, setIsMobile] = React.useState(false);
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     setIsMobile(window.screen.width <= 768);
   }, []);
 
