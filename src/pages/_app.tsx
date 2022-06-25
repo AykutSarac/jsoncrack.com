@@ -23,7 +23,7 @@ function JsonVisio({ Component, pageProps }: AppProps) {
   React.useEffect(() => {
     if (!window.matchMedia("(display-mode: standalone)").matches) {
       navigator.serviceWorker
-        .getRegistrations()
+        ?.getRegistrations()
         .then(function (registrations) {
           for (let registration of registrations) {
             registration.unregister();
