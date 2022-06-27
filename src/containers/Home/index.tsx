@@ -50,8 +50,8 @@ const Home: React.FC = () => {
           <Styles.StyledGradientText>JSON</Styles.StyledGradientText> Visio
         </Styles.StyledTitle>
         <Styles.StyledSubTitle>
-          Seamlessly visualize your JSON data
-          <Styles.StyledHighlightedText>instantly</Styles.StyledHighlightedText>
+          Seamlessly visualize your JSON data{" "}
+          <Styles.StyledHighlightedText>instantly</Styles.StyledHighlightedText>{" "}
           into graphs.
         </Styles.StyledSubTitle>
         <Styles.StyledMinorTitle>
