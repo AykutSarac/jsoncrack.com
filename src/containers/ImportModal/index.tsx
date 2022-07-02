@@ -7,7 +7,6 @@ import { ConfigActionType } from "src/reducer/reducer";
 import { Modal, ModalProps } from "src/components/Modal";
 import { Button } from "src/components/Button";
 import { AiOutlineUpload } from "react-icons/ai";
-import useKeyPress from "src/hooks/useKeyPress";
 
 const StyledInput = styled.input`
   background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
@@ -97,14 +96,6 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
       };
     }
   };
-
-  const handleEspacePress = useKeyPress("Escape");
-  const handleEnterKeyPress = useKeyPress("Enter");
-  React.useEffect(() => {
-    if (handleEspacePress) setVisible(false);
-
-    if (handleEnterKeyPress && (jsonFile || url)) handleImportFile();
-  }, [handleEspacePress, handleEnterKeyPress]);
 
   React.useEffect(() => {
     return () => {
