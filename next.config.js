@@ -7,15 +7,15 @@ const nextConfig = {
   reactStrictMode: true,
   exportPathMap: () => ({
     "/": { page: "/" },
-    "/editor": { page: "/editor" },
+    "/editor": { page: "/Editor" },
   }),
   compiler: {
     styledComponents: true,
   },
   pwa: {
-    disable: process.env.NODE_ENV === "development",
+    // disable: process.env.NODE_ENV === "development",
+    disable: true, // disable temp until issue #61 solved
     dest: "public",
-    register: true,
     fallbacks: {
       document: "/editor",
     },

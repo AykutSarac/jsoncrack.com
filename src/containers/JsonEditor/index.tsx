@@ -6,6 +6,10 @@ import { ErrorContainer } from "src/components/ErrorContainer/ErrorContainer";
 import { ConfigActionType } from "src/reducer/reducer";
 import { useConfig } from "src/hocs/config";
 import { Loading } from "src/components/Loading";
+import { loader } from "@monaco-editor/react";
+import { CarbonAds } from "src/components/CarbonAds";
+
+loader.config({ paths: { vs: "/monaco-editor/min/vs" } });
 
 const StyledEditorWrapper = styled.div`
   display: flex;
@@ -21,6 +25,13 @@ const editorOptions = {
     enabled: false,
   },
 };
+
+const StyledWrapper = styled.div`
+  display: grid;
+  height: calc(100vh - 36px);
+  grid-template-columns: 100%;
+  grid-template-rows: minmax(0, 1fr);
+`;
 
 export const JsonEditor: React.FC = () => {
   const { json, settings, dispatch } = useConfig();
@@ -61,15 +72,17 @@ export const JsonEditor: React.FC = () => {
   return (
     <StyledEditorWrapper>
       <ErrorContainer error={error} setError={setError} />
-      <Editor
-        height="100%"
-        defaultLanguage="json"
-        value={value}
-        theme={editorTheme}
-        options={editorOptions}
-        loading={<Loading message="Loading Editor..." />}
-        onChange={(value) => setValue(value as string)}
-      />
+      <StyledWrapper>
+        <Editor
+          height="100%"
+          defaultLanguage="json"
+          value={value}
+          theme={editorTheme}
+          options={editorOptions}
+          loading={<Loading message="Loading Editor..." />}
+          onChange={(value) => setValue(value as string)}
+        />
+      </StyledWrapper>
     </StyledEditorWrapper>
   );
 };

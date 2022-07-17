@@ -59,6 +59,7 @@ const WithConfig: ReactComponent = ({ children }) => {
     }
 
     const configStored = localStorage.getItem("config");
+
     if (configStored) {
       dispatch({
         type: ConfigActionType.SET_CONFIG,
@@ -76,6 +77,7 @@ const WithConfig: ReactComponent = ({ children }) => {
         JSON.stringify({
           ...states.settings,
           zoomPanPinch: undefined,
+          performance: undefined,
         })
       );
   }, [states.settings, render]);

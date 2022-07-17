@@ -37,6 +37,17 @@ export const StyledForeignObject = styled.foreignObject`
     background-color: rgba(255, 0, 255, 0.5);
     filter: hue-rotate();
   }
+
+  .renderVisible {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    cursor: pointer;
+  }
 `;
 
 export const StyledKey = styled.span<{

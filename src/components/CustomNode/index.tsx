@@ -1,6 +1,8 @@
 import React from "react";
+import RenderIfVisible from "react-render-if-visible";
 import { Label, Node, NodeProps } from "reaflow";
 import ObjectNode from "./ObjectNode";
+import { StyledTextWrapper } from "./styles";
 import TextNode from "./TextNode";
 
 export interface CustomNodeProps<T> {
@@ -18,35 +20,46 @@ const baseLabelStyle = {
   strokeWidth: 0,
 };
 
+export const ConditionalWrapper: React.FC<{
+  condition?: boolean;
+  children: React.ReactNode;
+}> = ({ condition, children }) =>
+  condition ? (
+    <RenderIfVisible rootElementClass="renderVisible">
+      {children}
+    </RenderIfVisible>
+  ) : (
+    <StyledTextWrapper>{children}</StyledTextWrapper>
+  );
+
 export const CustomNode = (nodeProps: NodeProps) => {
-  const { properties: data } = nodeProps;
+  const { properties } = nodeProps;
 
   return (
     <Node {...nodeProps} label={<Label style={baseLabelStyle} />}>
-      {() => {
-        const { width, height } = nodeProps;
+      {({ width, height, x, y }) => {
+        if (properties.text instanceof Object) {
+          const entries = Object.entries<string>(properties.text);
 
-        if (data.text instanceof Object) {
-          const entries = Object.entries<string>(data.text);
           return (
             <ObjectNode
-              x={nodeProps.x}
-              y={nodeProps.y}
+              value={entries}
               width={width}
               height={height}
-              value={entries}
+              x={x}
+              y={y}
             />
           );
         }
 
         return (
           <TextNode
-            isParent={data.data.isParent}
+            isParent={properties.data.isParent}
+            value={properties.text}
             width={width}
             height={height}
-            value={data.text}
-            x={nodeProps.x}
-            y={nodeProps.y}
+            x={x}
+            y={y}
           />
         );
       }}

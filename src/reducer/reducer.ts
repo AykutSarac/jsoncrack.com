@@ -6,6 +6,7 @@ export enum ConfigActionType {
   SET_CONFIG,
   TOGGLE_LAYOUT,
   TOGGLE_EXPAND,
+  TOGGLE_PERFORMANCE,
   TOGGLE_DOCK,
   TOGGLE_THEME,
   ZOOM_IN,
@@ -84,6 +85,15 @@ export const useConfigReducer: React.Reducer<AppConfig, ReducerAction> = (
         settings: {
           ...state.settings,
           expand: !state.settings.expand,
+        },
+      };
+
+    case ConfigActionType.TOGGLE_PERFORMANCE:
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          performance: !state.settings.performance,
         },
       };
 

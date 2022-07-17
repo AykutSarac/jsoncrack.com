@@ -33,7 +33,7 @@ const wheelOptions = {
   step: 0.05,
 };
 
-export const LiveEditor: React.FC = React.memo(function LiveEditor() {
+const LiveEditor: React.FC = () => {
   const { dispatch } = useConfig();
 
   const onInit = (ref: ReactZoomPanPinchRef) => {
@@ -67,4 +67,6 @@ export const LiveEditor: React.FC = React.memo(function LiveEditor() {
       </StyledEditorWrapper>
     </StyledLiveEditor>
   );
-});
+};
+
+export default LiveEditor;

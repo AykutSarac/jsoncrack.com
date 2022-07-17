@@ -1,0 +1,1 @@
+min/vs folder is taken from the official npm package https://www.npmjs.com/package/monaco-editor

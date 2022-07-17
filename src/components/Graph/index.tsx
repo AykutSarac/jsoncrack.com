@@ -4,7 +4,7 @@ import { CustomNode } from "src/components/CustomNode";
 import { useConfig } from "src/hocs/config";
 import { getEdgeNodes } from "src/containers/LiveEditor/helpers";
 
-export const Graph = () => {
+export const Graph: React.FC = () => {
   const { json, settings } = useConfig();
   const [nodes, setNodes] = React.useState<NodeData[]>([]);
   const [edges, setEdges] = React.useState<EdgeData[]>([]);

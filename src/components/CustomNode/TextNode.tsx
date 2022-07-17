@@ -1,5 +1,6 @@
 import React from "react";
-import { CustomNodeProps } from ".";
+import { useConfig } from "src/hocs/config";
+import { ConditionalWrapper, CustomNodeProps } from "src/components/CustomNode";
 import * as Styled from "./styles";
 
 const TextNode: React.FC<CustomNodeProps<string>> = ({
@@ -8,15 +9,24 @@ const TextNode: React.FC<CustomNodeProps<string>> = ({
   value,
   isParent = false,
   x,
-  y
+  y,
 }) => {
+  const { settings } = useConfig();
+
   return (
     <Styled.StyledForeignObject width={width} height={height} x={0} y={0}>
-      <Styled.StyledTextWrapper>
+      <ConditionalWrapper condition={settings.performance}>
         <Styled.StyledText width={width} height={height}>
-          <Styled.StyledKey data-x={x} data-y={y} data-key={value} parent={isParent}>{value}</Styled.StyledKey>
+          <Styled.StyledKey
+            data-x={x}
+            data-y={y}
+            data-key={value}
+            parent={isParent}
+          >
+            {value}
+          </Styled.StyledKey>
         </Styled.StyledText>
-      </Styled.StyledTextWrapper>
+      </ConditionalWrapper>
     </Styled.StyledForeignObject>
   );
 };
