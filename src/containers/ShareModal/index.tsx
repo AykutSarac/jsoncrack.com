@@ -27,8 +27,9 @@ export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
 
   React.useEffect(() => {
     const jsonEncode = compress(JSON.parse(json));
+    const jsonString = JSON.stringify(jsonEncode);
 
-    setURL(`https://jsonvisio.com/editor?json=${JSON.stringify(jsonEncode)}`);
+    setURL(`https://jsonvisio.com/editor?json=${encodeURI(jsonString)}`);
   }, [json]);
 
   const handleShare = () => {
