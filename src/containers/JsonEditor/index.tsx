@@ -7,7 +7,6 @@ import { ConfigActionType } from "src/reducer/reducer";
 import { useConfig } from "src/hocs/config";
 import { Loading } from "src/components/Loading";
 import { loader } from "@monaco-editor/react";
-import { CarbonAds } from "src/components/CarbonAds";
 
 loader.config({ paths: { vs: "/monaco-editor/min/vs" } });
 
