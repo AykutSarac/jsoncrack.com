@@ -24,7 +24,7 @@ const StyledInput = styled.input`
 export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   const { json } = useConfig();
   const [url, setURL] = React.useState("");
-  const [value, copy] = useCopyToClipboard();
+  const [_, copy] = useCopyToClipboard();
 
   React.useEffect(() => {
     const jsonEncode = encode(json);
