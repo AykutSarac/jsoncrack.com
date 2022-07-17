@@ -20,4 +20,8 @@ export const StyledEditor = styled(Allotment)`
   position: relative !important;
   display: flex;
   background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
+
+  div[class*="sash-module_sash"] {
+    z-index: 3;
+  }
 `;
