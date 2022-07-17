@@ -12,10 +12,10 @@
     "deploy": "gh-pages -d out -t true"
   },
   "dependencies": {
-    "js-base64": "^3.7.2",
     "@monaco-editor/react": "^4.4.5",
     "@sentry/nextjs": "^7.1.1",
     "allotment": "^1.14.2",
+    "compress-json": "^2.0.1",
     "next": "^12.1.5",
     "next-transpile-modules": "^9.0.0",
     "parse-json": "^6.0.2",

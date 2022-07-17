@@ -8,7 +8,7 @@ import {
 import { ReactComponent, StorageConfig } from "src/typings/global";
 import { isValidJson } from "src/utils/isValidJson";
 import { useRouter } from "next/router";
-import { decode } from "js-base64";
+import { Compressed, decompress } from "compress-json";
 
 export interface AppConfig {
   json: string;
@@ -50,10 +50,13 @@ const WithConfig: ReactComponent = ({ children }) => {
 
   React.useEffect(() => {
     const jsonStored = localStorage.getItem("json");
-    const jsonDecode = decode(String(json));
+    const isJsonValid = typeof json === "string" && isValidJson(json);
 
-    if (isValidJson(jsonDecode)) {
-      dispatch({ type: ConfigActionType.SET_JSON, payload: jsonDecode });
+    if (isJsonValid) {
+      const jsonDecoded = decompress(JSON.parse(json));
+      const jsonString = JSON.stringify(jsonDecoded);
+
+      dispatch({ type: ConfigActionType.SET_JSON, payload: jsonString });
     } else if (jsonStored) {
       dispatch({ type: ConfigActionType.SET_JSON, payload: jsonStored });
     }

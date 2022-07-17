@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useCopyToClipboard } from "usehooks-ts";
 import { Modal, ModalProps } from "src/components/Modal";
 import { Button } from "src/components/Button";
-import { encode } from "js-base64";
+import { compress } from "compress-json";
 import { useConfig } from "src/hocs/config";
 
 const StyledInput = styled.input`
@@ -26,8 +26,9 @@ export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   const [_, copy] = useCopyToClipboard();
 
   React.useEffect(() => {
-    const jsonEncode = encode(json);
-    setURL(`https://jsonvisio.com/editor?json=${jsonEncode}`);
+    const jsonEncode = compress(JSON.parse(json));
+
+    setURL(`https://jsonvisio.com/editor?json=${JSON.stringify(jsonEncode)}`);
   }, [json]);
 
   const handleShare = () => {

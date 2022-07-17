@@ -2594,6 +2594,11 @@ commondir@^1.0.1:
   resolved "https://registry.yarnpkg.com/commondir/-/commondir-1.0.1.tgz#ddd800da0c66127393cca5950ea968a3aaf1253b"
   integrity sha1-3dgA2gxmEnOTzKWVDqloo6rxJTs=
 
+compress-json@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/compress-json/-/compress-json-2.0.1.tgz#8460d79e1a5612fab747c20408f997d55f11bc48"
+  integrity sha512-iwGwSGvFd1eN0LQAbbjvBy/liXXKhJpF87u4Rmoqth66o+HqOCwJT3Ok7xY0qCAJhpo4XNH8A699nOUl2G90TQ==
+
 concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
@@ -4614,11 +4619,6 @@ jest@^28:
     "@jest/core" "^28.0.3"
     import-local "^3.0.2"
     jest-cli "^28.0.3"
-
-js-base64@^3.7.2:
-  version "3.7.2"
-  resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-3.7.2.tgz#816d11d81a8aff241603d19ce5761e13e41d7745"
-  integrity sha512-NnRs6dsyqUXejqk/yv2aiXlAvOs56sLkX6nUdeaNezI5LFFLlsZjOThmwnrcwh5ZZRwZlCMnVAY3CvhIhoVEKQ==
 
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
