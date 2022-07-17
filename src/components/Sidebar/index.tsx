@@ -200,21 +200,6 @@ export const Sidebar: React.FC = () => {
             {settings.expand ? <CgArrowsMergeAltH /> : <CgArrowsShrinkH />}
           </StyledElement>
         </Tooltip>
-        <Tooltip title="Clear JSON">
-          <StyledElement onClick={() => setClearVisible(true)}>
-            <AiOutlineDelete />
-          </StyledElement>
-        </Tooltip>
-        <Tooltip title="Save JSON">
-          <StyledElement onClick={handleSave}>
-            <AiOutlineSave />
-          </StyledElement>
-        </Tooltip>
-        <Tooltip title="Share">
-          <StyledElement onClick={() => setShareVisible(true)}>
-            <AiOutlineLink />
-          </StyledElement>
-        </Tooltip>
         <Tooltip
           title={`${
             settings.performance ? "Disable" : "Enable"
@@ -224,6 +209,21 @@ export const Sidebar: React.FC = () => {
             <CgPerformance
               color={settings.performance ? "#0073FF" : undefined}
             />
+          </StyledElement>
+        </Tooltip>
+        <Tooltip title="Save JSON">
+          <StyledElement onClick={handleSave}>
+            <AiOutlineSave />
+          </StyledElement>
+        </Tooltip>
+        <Tooltip title="Clear JSON">
+          <StyledElement onClick={() => setClearVisible(true)}>
+            <AiOutlineDelete />
+          </StyledElement>
+        </Tooltip>
+        <Tooltip title="Share">
+          <StyledElement onClick={() => setShareVisible(true)}>
+            <AiOutlineLink />
           </StyledElement>
         </Tooltip>
       </StyledTopWrapper>
