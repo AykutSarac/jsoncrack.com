@@ -14,10 +14,11 @@ const StyledInput = styled.input`
   border: none;
   border-radius: 4px;
   line-height: 32px;
-  padding: 16px;
   width: 100%;
   margin-bottom: 10px;
-  height: 30px;
+  font-size: 16px;
+  padding: 0px 8px;
+  font-family: "Catamaran", sans-serif;
 `;
 
 export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
@@ -40,7 +41,7 @@ export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
     <Modal visible={visible} setVisible={setVisible}>
       <Modal.Header>Create a Share Link</Modal.Header>
       <Modal.Content>
-        <StyledInput value={url} type="url" readOnly={true} />
+        <StyledInput value={url} type="url" readOnly />
       </Modal.Content>
       <Modal.Controls setVisible={setVisible}>
         <Button status="SECONDARY" onClick={handleShare}>
