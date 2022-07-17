@@ -12,6 +12,7 @@
     "deploy": "gh-pages -d out -t true"
   },
   "dependencies": {
+    "js-base64": "^3.7.2",
     "@monaco-editor/react": "^4.4.5",
     "@sentry/nextjs": "^7.1.1",
     "allotment": "^1.14.2",
@@ -27,7 +28,8 @@
     "react-zoom-pan-pinch": "^2.1.3",
     "reaflow": "^5.0.4",
     "save-html-as-image": "^1.7.1",
-    "styled-components": "^5.3.5"
+    "styled-components": "^5.3.5",
+    "usehooks-ts": "^2.5.2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.4",
