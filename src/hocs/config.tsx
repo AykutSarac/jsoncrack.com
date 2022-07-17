@@ -50,10 +50,11 @@ const WithConfig: ReactComponent = ({ children }) => {
 
   React.useEffect(() => {
     const jsonStored = localStorage.getItem("json");
-    const isJsonValid = typeof json === "string" && isValidJson(json);
+    const isJsonValid =
+      typeof json === "string" && isValidJson(decodeURIComponent(json));
 
     if (isJsonValid) {
-      const jsonDecoded = decompress(JSON.parse(json));
+      const jsonDecoded = decompress(JSON.parse(isJsonValid));
       const jsonString = JSON.stringify(jsonDecoded);
 
       dispatch({ type: ConfigActionType.SET_JSON, payload: jsonString });

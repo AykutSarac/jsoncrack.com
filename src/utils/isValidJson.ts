@@ -4,5 +4,5 @@ export const isValidJson = (str: string) => {
   } catch (e) {
     return false;
   }
-  return true;
+  return str;
 };
