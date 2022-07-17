@@ -50,8 +50,10 @@ const Modal: React.FC<React.PropsWithChildren<ModalProps>> & ModalTypes = ({
     }
   };
 
+  if (!visible) return null;
+
   return (
-    <Styled.ModalWrapper visible={visible} onClick={onClick}>
+    <Styled.ModalWrapper onClick={onClick}>
       <Styled.ModalInnerWrapper>{children}</Styled.ModalInnerWrapper>
     </Styled.ModalWrapper>
   );

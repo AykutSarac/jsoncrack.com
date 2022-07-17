@@ -14,11 +14,10 @@ const StyledInput = styled.input`
   border: none;
   border-radius: 4px;
   line-height: 32px;
+  padding: 12px 8px;
   width: 100%;
   margin-bottom: 10px;
-  font-size: 16px;
-  padding: 0px 8px;
-  font-family: "Catamaran", sans-serif;
+  height: 30px;
 `;
 
 export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {

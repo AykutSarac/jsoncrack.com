@@ -5,13 +5,13 @@ const appearAnimation = keyframes`
   to { transform: scale(1); opacity: 1; };
 `;
 
-export const ModalWrapper = styled.div<{ visible: boolean }>`
+export const ModalWrapper = styled.div`
   position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
   width: 100%;
-  display: ${({ visible }) => (visible ? "flex" : "none")};
+  display: flex;
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.85);
