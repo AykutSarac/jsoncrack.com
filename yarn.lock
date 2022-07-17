@@ -4615,6 +4615,11 @@ jest@^28:
     import-local "^3.0.2"
     jest-cli "^28.0.3"
 
+js-base64@^3.7.2:
+  version "3.7.2"
+  resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-3.7.2.tgz#816d11d81a8aff241603d19ce5761e13e41d7745"
+  integrity sha512-NnRs6dsyqUXejqk/yv2aiXlAvOs56sLkX6nUdeaNezI5LFFLlsZjOThmwnrcwh5ZZRwZlCMnVAY3CvhIhoVEKQ==
+
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
@@ -6611,6 +6616,11 @@ use-resize-observer@^9.0.0:
   integrity sha512-13r/1XeyfPkeegiVZYLDoQbkwbVMzj1XghqNz9HFqiRevtXCWDQTsqzVjQ4WNM4rJ8P3sFYc+3TgX0J2Jsuxfw==
   dependencies:
     "@juggle/resize-observer" "^3.3.1"
+
+usehooks-ts@^2.5.2:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/usehooks-ts/-/usehooks-ts-2.6.0.tgz#aebab367da2350a0bee1c3749bc6dd4bcce3eaae"
+  integrity sha512-Kj/4oc2nOxRDGTDb2v1ZulF7+tpeXFuqI6cUesM0Vic7TPPDlFORxKh4ivsYg+NTvX/YbM+lhqqkfFTiIt23eg==
 
 util-deprecate@~1.0.1:
   version "1.0.2"
