@@ -42,7 +42,7 @@ export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
     const jsonString = JSON.stringify(jsonEncode);
 
     setURL(
-      `http://localhost:3000/editor?json=${encodeURIComponent(jsonString)}`
+      `https://jsonvisio.com/editor?json=${encodeURIComponent(jsonString)}`
     );
   }, [json]);
 
