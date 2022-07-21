@@ -2,6 +2,7 @@ import React from "react";
 import { ReactComponent } from "src/typings/global";
 import { Button } from "src/components/Button";
 import * as Styled from "./styles";
+import useKeyPress from "src/hooks/useKeyPress";
 
 type ControlProps = React.PropsWithChildren<{
   setVisible: (status: boolean) => void;
@@ -31,6 +32,12 @@ const Content: ReactComponent = ({ children }) => {
 };
 
 const Controls: React.FC<ControlProps> = ({ children, setVisible }) => {
+  const handleEspacePress = useKeyPress("Escape");
+
+  React.useEffect(() => {
+    if (handleEspacePress) setVisible(false);
+  }, [handleEspacePress]);
+
   return (
     <Styled.ControlsWrapper>
       <Button onClick={() => setVisible(false)}>Close</Button>
