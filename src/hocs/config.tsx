@@ -6,6 +6,9 @@ import {
   useConfigReducer,
 } from "src/reducer/reducer";
 import { ReactComponent, StorageConfig } from "src/typings/global";
+import { isValidJson } from "src/utils/isValidJson";
+import { useRouter } from "next/router";
+import { Compressed, decompress } from "compress-json";
 
 export interface AppConfig {
   json: string;
@@ -42,7 +45,23 @@ const WithConfig: ReactComponent = ({ children }) => {
     settings: states.settings,
   };
 
+  const router = useRouter();
+  const { json } = router.query;
+
   React.useEffect(() => {
+    const jsonStored = localStorage.getItem("json");
+    const isJsonValid =
+      typeof json === "string" && isValidJson(decodeURIComponent(json));
+
+    if (isJsonValid) {
+      const jsonDecoded = decompress(JSON.parse(isJsonValid));
+      const jsonString = JSON.stringify(jsonDecoded);
+
+      dispatch({ type: ConfigActionType.SET_JSON, payload: jsonString });
+    } else if (jsonStored) {
+      dispatch({ type: ConfigActionType.SET_JSON, payload: jsonStored });
+    }
+
     const configStored = localStorage.getItem("config");
 
     if (configStored) {
@@ -53,7 +72,7 @@ const WithConfig: ReactComponent = ({ children }) => {
     }
 
     setRender(true);
-  }, [dispatch]);
+  }, [dispatch, json]);
 
   React.useEffect(() => {
     if (render)

@@ -2594,6 +2594,11 @@ commondir@^1.0.1:
   resolved "https://registry.yarnpkg.com/commondir/-/commondir-1.0.1.tgz#ddd800da0c66127393cca5950ea968a3aaf1253b"
   integrity sha1-3dgA2gxmEnOTzKWVDqloo6rxJTs=
 
+compress-json@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/compress-json/-/compress-json-2.0.1.tgz#8460d79e1a5612fab747c20408f997d55f11bc48"
+  integrity sha512-iwGwSGvFd1eN0LQAbbjvBy/liXXKhJpF87u4Rmoqth66o+HqOCwJT3Ok7xY0qCAJhpo4XNH8A699nOUl2G90TQ==
+
 concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
@@ -6611,6 +6616,11 @@ use-resize-observer@^9.0.0:
   integrity sha512-13r/1XeyfPkeegiVZYLDoQbkwbVMzj1XghqNz9HFqiRevtXCWDQTsqzVjQ4WNM4rJ8P3sFYc+3TgX0J2Jsuxfw==
   dependencies:
     "@juggle/resize-observer" "^3.3.1"
+
+usehooks-ts@^2.5.2:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/usehooks-ts/-/usehooks-ts-2.6.0.tgz#aebab367da2350a0bee1c3749bc6dd4bcce3eaae"
+  integrity sha512-Kj/4oc2nOxRDGTDb2v1ZulF7+tpeXFuqI6cUesM0Vic7TPPDlFORxKh4ivsYg+NTvX/YbM+lhqqkfFTiIt23eg==
 
 util-deprecate@~1.0.1:
   version "1.0.2"
