@@ -17,6 +17,7 @@ if (process.env.NODE_ENV !== "development") {
 }
 
 function JsonVisio({ Component, pageProps }: AppProps) {
+  const [isRendered, setRendered] = React.useState(false);
   const lightmode = useConfig((state) => state.settings.lightmode);
 
   React.useEffect(() => {
@@ -32,7 +33,11 @@ function JsonVisio({ Component, pageProps }: AppProps) {
           console.log("Service Worker registration failed: ", err);
         });
     }
+
+    setRendered(true);
   }, []);
+
+  if (!isRendered) return null;
 
   return (
     <>

@@ -6,7 +6,7 @@ export interface StorageConfig {
   layout: CanvasDirection;
   expand: boolean;
   hideEditor: boolean;
-  zoomPanPinch: ReactZoomPanPinchRef | null;
+  zoomPanPinch?: ReactZoomPanPinchRef;
   lightmode: boolean;
   performance: boolean;
 }

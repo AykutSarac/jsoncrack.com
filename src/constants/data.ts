@@ -43,7 +43,7 @@ export const defaultConfig: StorageConfig = {
   layout: "RIGHT",
   expand: true,
   hideEditor: false,
-  zoomPanPinch: null,
+  zoomPanPinch: undefined,
   lightmode: false,
   performance: false,
 };

@@ -36,7 +36,7 @@ const Controls: React.FC<ControlProps> = ({ children, setVisible }) => {
 
   React.useEffect(() => {
     if (handleEspacePress) setVisible(false);
-  }, [handleEspacePress]);
+  }, [handleEspacePress, setVisible]);
 
   return (
     <Styled.ControlsWrapper>
