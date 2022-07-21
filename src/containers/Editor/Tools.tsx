@@ -9,9 +9,9 @@ import { FiDownload } from "react-icons/fi";
 import { HiOutlineSun, HiOutlineMoon } from "react-icons/hi";
 import { MdCenterFocusWeak } from "react-icons/md";
 import { SearchInput } from "src/containers/SearchInput";
-import { useConfig } from "src/hocs/config";
-import { ConfigActionType } from "src/reducer/reducer";
 import styled from "styled-components";
+import useConfig from "src/hooks/store/useConfig";
+import shallow from "zustand/shallow";
 
 export const StyledTools = styled.div`
   display: flex;
@@ -41,17 +41,22 @@ const StyledToolElement = styled.button`
 `;
 
 export const Tools: React.FC = () => {
-  const { settings, dispatch } = useConfig();
+  const [lightmode, performance, hideEditor] = useConfig(
+    (state) => [
+      state.settings.lightmode,
+      state.settings.performance,
+      state.settings.hideEditor,
+    ],
+    shallow
+  );
 
-  const zoomIn = () => dispatch({ type: ConfigActionType.ZOOM_IN });
+  const updateSetting = useConfig((state) => state.updateSetting);
 
-  const zoomOut = () => dispatch({ type: ConfigActionType.ZOOM_OUT });
-
-  const centerView = () => dispatch({ type: ConfigActionType.CENTER_VIEW });
-
-  const toggleEditor = () => dispatch({ type: ConfigActionType.TOGGLE_DOCK });
-
-  const toggleTheme = () => dispatch({ type: ConfigActionType.TOGGLE_THEME });
+  const zoomIn = useConfig((state) => state.zoomIn);
+  const zoomOut = useConfig((state) => state.zoomOut);
+  const centerView = useConfig((state) => state.centerView);
+  const toggleEditor = () => updateSetting("hideEditor", !hideEditor);
+  const toggleTheme = () => updateSetting("lightmode", !lightmode);
 
   const exportAsImage = () => {
     saveAsPng(document.querySelector("svg[id*='ref']"), {
@@ -66,10 +71,10 @@ export const Tools: React.FC = () => {
         <AiOutlineFullscreen />
       </StyledToolElement>
       <StyledToolElement aria-label="switch theme" onClick={toggleTheme}>
-        {settings.lightmode ? <HiOutlineMoon /> : <HiOutlineSun />}
+        {lightmode ? <HiOutlineMoon /> : <HiOutlineSun />}
       </StyledToolElement>
-      {!settings.performance && <SearchInput />}
-      {!settings.performance && (
+      {!performance && <SearchInput />}
+      {!performance && (
         <StyledToolElement aria-label="save" onClick={exportAsImage}>
           <FiDownload />
         </StyledToolElement>

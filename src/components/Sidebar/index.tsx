@@ -20,13 +20,13 @@ import {
 } from "react-icons/ai";
 
 import { Tooltip } from "src/components/Tooltip";
-import { ConfigActionType } from "src/reducer/reducer";
-import { useConfig } from "src/hocs/config";
 import { useRouter } from "next/router";
 import { ImportModal } from "src/containers/ImportModal";
 import { ClearModal } from "src/containers/ClearModal";
 import { ShareModal } from "src/containers/ShareModal";
 import { IoAlertCircleSharp } from "react-icons/io5";
+import useConfig from "src/hooks/store/useConfig";
+import { getNextLayout } from "src/containers/LiveEditor/helpers";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -136,7 +136,10 @@ const StyledAlertIcon = styled(IoAlertCircleSharp)`
 `;
 
 export const Sidebar: React.FC = () => {
-  const { json, settings, dispatch } = useConfig();
+  const json = useConfig((state) => state.json);
+  const updateSetting = useConfig((state) => state.updateSetting);
+
+  const { expand, performance, layout } = useConfig((state) => state.settings);
   const router = useRouter();
   const [uploadVisible, setUploadVisible] = React.useState(false);
   const [clearVisible, setClearVisible] = React.useState(false);
@@ -152,12 +155,12 @@ export const Sidebar: React.FC = () => {
   };
 
   const toggleExpandCollapse = () => {
-    dispatch({ type: ConfigActionType.TOGGLE_EXPAND });
-    toast(`${settings.expand ? "Collapsed" : "Expanded"} nodes.`);
+    updateSetting("expand", !expand);
+    toast(`${expand ? "Collapsed" : "Expanded"} nodes.`);
   };
 
   const togglePerformance = () => {
-    const toastMsg = settings.performance
+    const toastMsg = performance
       ? "Disabled Performance Mode\nSearch Node & Save Image enabled."
       : "Enabled Performance Mode\nSearch Node & Save Image disabled.";
 
@@ -166,7 +169,12 @@ export const Sidebar: React.FC = () => {
       duration: 3000,
     });
 
-    dispatch({ type: ConfigActionType.TOGGLE_PERFORMANCE });
+    updateSetting("performance", !performance);
+  };
+
+  const toggleLayout = () => {
+    const nextLayout = getNextLayout(layout);
+    updateSetting("layout", nextLayout);
   };
 
   return (
@@ -186,29 +194,25 @@ export const Sidebar: React.FC = () => {
           </StyledElement>
         </Tooltip>
         <Tooltip title="Rotate Layout">
-          <StyledElement
-            onClick={() => dispatch({ type: ConfigActionType.TOGGLE_LAYOUT })}
-          >
-            <StyledFlowIcon rotate={rotateLayout(settings.layout)} />
+          <StyledElement onClick={toggleLayout}>
+            <StyledFlowIcon rotate={rotateLayout(layout)} />
           </StyledElement>
         </Tooltip>
-        <Tooltip title={settings.expand ? "Shrink Nodes" : "Expand Nodes"}>
+        <Tooltip title={expand ? "Shrink Nodes" : "Expand Nodes"}>
           <StyledElement
             title="Toggle Expand/Collapse"
             onClick={toggleExpandCollapse}
           >
-            {settings.expand ? <CgArrowsMergeAltH /> : <CgArrowsShrinkH />}
+            {expand ? <CgArrowsMergeAltH /> : <CgArrowsShrinkH />}
           </StyledElement>
         </Tooltip>
         <Tooltip
           title={`${
-            settings.performance ? "Disable" : "Enable"
+            performance ? "Disable" : "Enable"
           } Performance Mode (Beta)`}
         >
           <StyledElement onClick={togglePerformance} beta>
-            <CgPerformance
-              color={settings.performance ? "#0073FF" : undefined}
-            />
+            <CgPerformance color={performance ? "#0073FF" : undefined} />
           </StyledElement>
         </Tooltip>
         <Tooltip title="Save JSON">

@@ -1,16 +1,16 @@
 import { Allotment } from "allotment";
 import React from "react";
-import { useConfig } from "src/hocs/config";
 import { JsonEditor } from "src/containers/JsonEditor";
 import { StyledEditor } from "./styles";
 import dynamic from "next/dynamic";
+import useConfig from "src/hooks/store/useConfig";
 
 const LiveEditor = dynamic(() => import("src/containers/LiveEditor"), {
   ssr: false,
 });
 
 const Panes: React.FC = () => {
-  const { settings } = useConfig();
+  const hideEditor = useConfig((state) => state.settings.hideEditor);
 
   return (
     <StyledEditor>
@@ -18,7 +18,7 @@ const Panes: React.FC = () => {
         preferredSize={400}
         minSize={300}
         maxSize={600}
-        visible={!settings.hideEditor}
+        visible={!hideEditor}
       >
         <JsonEditor />
       </Allotment.Pane>

@@ -1,11 +1,11 @@
 import React from "react";
-import { useConfig } from "src/hocs/config";
 
 import {
   searchQuery,
   cleanupHighlight,
   highlightMatchedNodes,
 } from "src/utils/search";
+import useConfig from "./store/useConfig";
 
 export const useFocusNode = () => {
   const [selectedNode, setSelectedNode] = React.useState(0);
@@ -14,7 +14,7 @@ export const useFocusNode = () => {
     debounced: "",
   });
 
-  const { settings } = useConfig();
+  const zoomPanPinch = useConfig((state) => state.settings.zoomPanPinch);
 
   const skip = () => setSelectedNode((current) => current + 1);
 
@@ -27,8 +27,8 @@ export const useFocusNode = () => {
   }, [content.value]);
 
   React.useEffect(() => {
-    if (!settings.zoomPanPinch) return;
-    const zoomPanPinch = settings.zoomPanPinch.instance.wrapperComponent;
+    if (!zoomPanPinch) return;
+    const ref = zoomPanPinch.instance.wrapperComponent;
 
     const matchedNodes: NodeListOf<Element> = searchQuery(
       `span[data-key*='${content.debounced}' i]`
@@ -37,23 +37,23 @@ export const useFocusNode = () => {
 
     cleanupHighlight();
 
-    if (zoomPanPinch && matchedNode && matchedNode.parentElement) {
+    if (ref && matchedNode && matchedNode.parentElement) {
       const newScale = 1;
       const x = Number(matchedNode.getAttribute("data-x"));
       const y = Number(matchedNode.getAttribute("data-y"));
 
       const newPositionX =
-        (zoomPanPinch.offsetLeft - x) * newScale +
-        zoomPanPinch.clientWidth / 2 -
+        (ref.offsetLeft - x) * newScale +
+        ref.clientWidth / 2 -
         matchedNode.getBoundingClientRect().width / 2;
       const newPositionY =
-        (zoomPanPinch.offsetLeft - y) * newScale +
-        zoomPanPinch.clientHeight / 2 -
+        (ref.offsetLeft - y) * newScale +
+        ref.clientHeight / 2 -
         matchedNode.getBoundingClientRect().height / 2;
 
       highlightMatchedNodes(matchedNodes, selectedNode);
 
-      settings.zoomPanPinch?.setTransform(newPositionX, newPositionY, newScale);
+      zoomPanPinch?.setTransform(newPositionX, newPositionY, newScale);
     } else {
       setSelectedNode(0);
     }
@@ -61,7 +61,7 @@ export const useFocusNode = () => {
     return () => {
       if (!content.value) setSelectedNode(0);
     };
-  }, [content.debounced, settings.zoomPanPinch, selectedNode, setSelectedNode]);
+  }, [content.debounced, zoomPanPinch, selectedNode, setSelectedNode]);
 
   return [content, setContent, skip] as const;
 };

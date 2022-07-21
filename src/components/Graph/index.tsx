@@ -1,11 +1,17 @@
 import React from "react";
 import { Canvas, EdgeData, ElkRoot, NodeData } from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
-import { useConfig } from "src/hocs/config";
 import { getEdgeNodes } from "src/containers/LiveEditor/helpers";
+import useConfig from "src/hooks/store/useConfig";
+import shallow from "zustand/shallow";
 
 export const Graph: React.FC = () => {
-  const { json, settings } = useConfig();
+  const json = useConfig((state) => state.json);
+  const [expand, layout] = useConfig(
+    (state) => [state.settings.expand, state.settings.layout],
+    shallow
+  );
+
   const [nodes, setNodes] = React.useState<NodeData[]>([]);
   const [edges, setEdges] = React.useState<EdgeData[]>([]);
   const [size, setSize] = React.useState({
@@ -14,11 +20,11 @@ export const Graph: React.FC = () => {
   });
 
   React.useEffect(() => {
-    const { nodes, edges } = getEdgeNodes(json, settings.expand);
+    const { nodes, edges } = getEdgeNodes(json, expand);
 
     setNodes(nodes);
     setEdges(edges);
-  }, [json, settings.expand]);
+  }, [json, expand]);
 
   const onCanvasClick = () => {
     const input = document.querySelector("input:focus") as HTMLInputElement;
@@ -36,8 +42,8 @@ export const Graph: React.FC = () => {
       edges={edges}
       maxWidth={size.width}
       maxHeight={size.height}
-      direction={settings.layout}
-      key={settings.layout}
+      direction={layout}
+      key={layout}
       onCanvasClick={onCanvasClick}
       onLayoutChange={onLayoutChange}
       node={CustomNode}

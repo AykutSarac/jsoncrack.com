@@ -6,7 +6,7 @@ import { Modal, ModalProps } from "src/components/Modal";
 import { Button } from "src/components/Button";
 import { BiErrorAlt } from "react-icons/bi";
 import { compress } from "compress-json";
-import { useConfig } from "src/hocs/config";
+import useConfig from "src/hooks/store/useConfig";
 
 const StyledInput = styled.input`
   background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
@@ -33,7 +33,7 @@ const StyledErrorWrapper = styled.div`
 `;
 
 export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
-  const { json } = useConfig();
+  const json = useConfig((state) => state.json);
   const [url, setURL] = React.useState("");
   const [_, copy] = useCopyToClipboard();
 

@@ -29,7 +29,8 @@
     "reaflow": "^5.0.4",
     "save-html-as-image": "^1.7.1",
     "styled-components": "^5.3.5",
-    "usehooks-ts": "^2.5.2"
+    "usehooks-ts": "^2.5.2",
+    "zustand": "^4.0.0-rc.4"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.4",

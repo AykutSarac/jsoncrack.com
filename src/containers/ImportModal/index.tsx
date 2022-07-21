@@ -2,11 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 
-import { useConfig } from "src/hocs/config";
-import { ConfigActionType } from "src/reducer/reducer";
 import { Modal, ModalProps } from "src/components/Modal";
 import { Button } from "src/components/Button";
 import { AiOutlineUpload } from "react-icons/ai";
+import useConfig from "src/hooks/store/useConfig";
 
 const StyledInput = styled.input`
   background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
@@ -55,7 +54,7 @@ const StyledUploadMessage = styled.h3`
 `;
 
 export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
-  const { dispatch } = useConfig();
+  const updateJson = useConfig((state) => state.updateJson);
   const [url, setURL] = React.useState("");
   const [jsonFile, setJsonFile] = React.useState<File | null>(null);
 
@@ -71,11 +70,7 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
       return fetch(url)
         .then((res) => res.json())
         .then((json) => {
-          dispatch({
-            type: ConfigActionType.SET_JSON,
-            payload: JSON.stringify(json),
-          });
-
+          updateJson(JSON.stringify(json));
           setVisible(false);
         })
         .catch(() => toast.error("Failed to fetch JSON!"))
@@ -87,11 +82,7 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
 
       reader.readAsText(jsonFile, "UTF-8");
       reader.onload = function (data) {
-        dispatch({
-          type: ConfigActionType.SET_JSON,
-          payload: data.target?.result as string,
-        });
-
+        updateJson(data.target?.result as string);
         setVisible(false);
       };
     }

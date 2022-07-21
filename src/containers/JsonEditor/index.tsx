@@ -3,10 +3,9 @@ import Editor from "@monaco-editor/react";
 import parseJson from "parse-json";
 import styled from "styled-components";
 import { ErrorContainer } from "src/components/ErrorContainer/ErrorContainer";
-import { ConfigActionType } from "src/reducer/reducer";
-import { useConfig } from "src/hocs/config";
 import { Loading } from "src/components/Loading";
 import { loader } from "@monaco-editor/react";
+import useConfig from "src/hooks/store/useConfig";
 
 loader.config({ paths: { vs: "/monaco-editor/min/vs" } });
 
@@ -33,7 +32,10 @@ const StyledWrapper = styled.div`
 `;
 
 export const JsonEditor: React.FC = () => {
-  const { json, settings, dispatch } = useConfig();
+  const json = useConfig((state) => state.json);
+  const lightmode = useConfig((state) => state.settings.lightmode);
+  const updateJson = useConfig((state) => state.updateJson);
+
   const [value, setValue] = React.useState("");
   const [error, setError] = React.useState({
     message: "",
@@ -41,8 +43,8 @@ export const JsonEditor: React.FC = () => {
   });
 
   const editorTheme = React.useMemo(
-    () => (settings.lightmode ? "light" : "vs-dark"),
-    [settings.lightmode]
+    () => (lightmode ? "light" : "vs-dark"),
+    [lightmode]
   );
 
   React.useEffect(() => {
@@ -54,11 +56,11 @@ export const JsonEditor: React.FC = () => {
       try {
         if (!value) {
           setError((err) => ({ ...err, message: "" }));
-          return dispatch({ type: ConfigActionType.SET_JSON, payload: "[]" });
+          return updateJson("[]");
         }
 
         parseJson(value);
-        dispatch({ type: ConfigActionType.SET_JSON, payload: value });
+        updateJson(value);
         setError((err) => ({ ...err, message: "" }));
       } catch (jsonError: any) {
         setError((err) => ({ ...err, message: jsonError.message }));
@@ -66,7 +68,7 @@ export const JsonEditor: React.FC = () => {
     }, 1500);
 
     return () => clearTimeout(formatTimer);
-  }, [value, dispatch]);
+  }, [value, updateJson]);
 
   return (
     <StyledEditorWrapper>

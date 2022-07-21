@@ -1,6 +1,6 @@
 import React from "react";
-import { useConfig } from "src/hocs/config";
 import { ConditionalWrapper, CustomNodeProps } from "src/components/CustomNode";
+import useConfig from "src/hooks/store/useConfig";
 import * as Styled from "./styles";
 
 const TextNode: React.FC<CustomNodeProps<string>> = ({
@@ -11,11 +11,11 @@ const TextNode: React.FC<CustomNodeProps<string>> = ({
   x,
   y,
 }) => {
-  const { settings } = useConfig();
+  const performance = useConfig((state) => state.settings.performance);
 
   return (
     <Styled.StyledForeignObject width={width} height={height} x={0} y={0}>
-      <ConditionalWrapper condition={settings.performance}>
+      <ConditionalWrapper condition={performance}>
         <Styled.StyledText width={width} height={height}>
           <Styled.StyledKey
             data-x={x}

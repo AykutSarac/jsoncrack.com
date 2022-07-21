@@ -6,10 +6,9 @@ import {
   ReactZoomPanPinchRef,
 } from "react-zoom-pan-pinch";
 
-import { useConfig } from "src/hocs/config";
 import { Tools } from "src/containers/Editor/Tools";
-import { ConfigActionType } from "src/reducer/reducer";
 import { Graph } from "src/components/Graph";
+import useConfig from "src/hooks/store/useConfig";
 
 const StyledLiveEditor = styled.div`
   position: relative;
@@ -34,13 +33,10 @@ const wheelOptions = {
 };
 
 const LiveEditor: React.FC = () => {
-  const { dispatch } = useConfig();
+  const updateSetting = useConfig((state) => state.updateSetting);
 
   const onInit = (ref: ReactZoomPanPinchRef) => {
-    dispatch({
-      type: ConfigActionType.SET_ZOOM_PAN_PICNH_REF,
-      payload: ref,
-    });
+    updateSetting("zoomPanPinch", ref);
   };
 
   return (

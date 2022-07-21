@@ -6,8 +6,8 @@ import { init } from "@sentry/nextjs";
 
 import GlobalStyle from "src/constants/globalStyle";
 import { darkTheme, lightTheme } from "src/constants/theme";
-import { useConfig, withConfig } from "src/hocs/config";
 import { GoogleAnalytics } from "src/components/GoogleAnalytics";
+import useConfig from "src/hooks/store/useConfig";
 
 if (process.env.NODE_ENV !== "development") {
   init({
@@ -17,7 +17,7 @@ if (process.env.NODE_ENV !== "development") {
 }
 
 function JsonVisio({ Component, pageProps }: AppProps) {
-  const { settings } = useConfig();
+  const lightmode = useConfig((state) => state.settings.lightmode);
 
   React.useEffect(() => {
     if (!window.matchMedia("(display-mode: standalone)").matches) {
@@ -37,7 +37,7 @@ function JsonVisio({ Component, pageProps }: AppProps) {
   return (
     <>
       <GoogleAnalytics />
-      <ThemeProvider theme={settings.lightmode ? lightTheme : darkTheme}>
+      <ThemeProvider theme={lightmode ? lightTheme : darkTheme}>
         <GlobalStyle />
         <Component {...pageProps} />
         <Toaster
@@ -54,4 +54,4 @@ function JsonVisio({ Component, pageProps }: AppProps) {
   );
 }
 
-export default withConfig(JsonVisio);
+export default JsonVisio;
