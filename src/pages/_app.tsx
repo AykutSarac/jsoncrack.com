@@ -37,7 +37,7 @@ function JsonVisio({ Component, pageProps }: AppProps) {
 
       updateJson(jsonString);
     }
-  }, [json]);
+  }, [json, updateJson]);
 
   React.useEffect(() => {
     if (!window.matchMedia("(display-mode: standalone)").matches) {
