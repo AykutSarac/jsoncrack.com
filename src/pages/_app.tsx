@@ -8,6 +8,9 @@ import GlobalStyle from "src/constants/globalStyle";
 import { darkTheme, lightTheme } from "src/constants/theme";
 import { GoogleAnalytics } from "src/components/GoogleAnalytics";
 import useConfig from "src/hooks/store/useConfig";
+import { decompress } from "compress-json";
+import { useRouter } from "next/router";
+import { isValidJson } from "src/utils/isValidJson";
 
 if (process.env.NODE_ENV !== "development") {
   init({
@@ -17,8 +20,24 @@ if (process.env.NODE_ENV !== "development") {
 }
 
 function JsonVisio({ Component, pageProps }: AppProps) {
-  const [isRendered, setRendered] = React.useState(false);
+  const { json } = useRouter().query;
+
   const lightmode = useConfig((state) => state.settings.lightmode);
+  const [isRendered, setRendered] = React.useState(false);
+
+  const updateJson = useConfig((state) => state.updateJson);
+
+  React.useEffect(() => {
+    const isJsonValid =
+      typeof json === "string" && isValidJson(decodeURIComponent(json));
+
+    if (isJsonValid) {
+      const jsonDecoded = decompress(JSON.parse(isJsonValid));
+      const jsonString = JSON.stringify(jsonDecoded);
+
+      updateJson(jsonString);
+    }
+  }, [json]);
 
   React.useEffect(() => {
     if (!window.matchMedia("(display-mode: standalone)").matches) {
