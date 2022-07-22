@@ -7,19 +7,7 @@ import { Button } from "src/components/Button";
 import { BiErrorAlt } from "react-icons/bi";
 import { compress } from "compress-json";
 import useConfig from "src/hooks/store/useConfig";
-
-const StyledInput = styled.input`
-  background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
-  color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
-  outline: none;
-  border: none;
-  border-radius: 4px;
-  line-height: 32px;
-  padding: 12px 8px;
-  width: 100%;
-  margin-bottom: 10px;
-  height: 30px;
-`;
+import { Input } from "src/components/Input";
 
 const StyledWarning = styled.p``;
 
@@ -65,7 +53,7 @@ export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
             </StyledWarning>
           </StyledErrorWrapper>
         ) : (
-          <StyledInput value={url} type="url" readOnly />
+          <Input value={url} type="url" readOnly />
         )}
       </Modal.Content>
       <Modal.Controls setVisible={setVisible}>

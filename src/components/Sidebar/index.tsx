@@ -21,12 +21,12 @@ import {
 
 import { Tooltip } from "src/components/Tooltip";
 import { useRouter } from "next/router";
-import { ImportModal } from "src/containers/ImportModal";
-import { ClearModal } from "src/containers/ClearModal";
-import { ShareModal } from "src/containers/ShareModal";
+import { ImportModal } from "src/containers/Modals/ImportModal";
+import { ClearModal } from "src/containers/Modals/ClearModal";
+import { ShareModal } from "src/containers/Modals/ShareModal";
 import { IoAlertCircleSharp } from "react-icons/io5";
 import useConfig from "src/hooks/store/useConfig";
-import { getNextLayout } from "src/containers/LiveEditor/helpers";
+import { getNextLayout } from "src/containers/Editor/LiveEditor/helpers";
 
 const StyledSidebar = styled.div`
   display: flex;

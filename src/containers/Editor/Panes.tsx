@@ -1,11 +1,11 @@
 import { Allotment } from "allotment";
 import React from "react";
-import { JsonEditor } from "src/containers/JsonEditor";
+import { JsonEditor } from "src/containers/Editor/JsonEditor";
 import { StyledEditor } from "./styles";
 import dynamic from "next/dynamic";
 import useConfig from "src/hooks/store/useConfig";
 
-const LiveEditor = dynamic(() => import("src/containers/LiveEditor"), {
+const LiveEditor = dynamic(() => import("src/containers/Editor/LiveEditor"), {
   ssr: false,
 });
 

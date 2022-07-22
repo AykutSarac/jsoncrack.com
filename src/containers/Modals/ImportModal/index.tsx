@@ -4,21 +4,9 @@ import toast from "react-hot-toast";
 
 import { Modal, ModalProps } from "src/components/Modal";
 import { Button } from "src/components/Button";
+import { Input } from "src/components/Input";
 import { AiOutlineUpload } from "react-icons/ai";
 import useConfig from "src/hooks/store/useConfig";
-
-const StyledInput = styled.input`
-  background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
-  color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
-  outline: none;
-  border: none;
-  border-radius: 4px;
-  line-height: 32px;
-  padding: 12px 8px;
-  width: 100%;
-  margin-bottom: 10px;
-  height: 30px;
-`;
 
 const StyledModalContent = styled(Modal.Content)`
   display: flex;
@@ -99,7 +87,7 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
     <Modal visible={visible} setVisible={setVisible}>
       <Modal.Header>Import JSON</Modal.Header>
       <StyledModalContent>
-        <StyledInput
+        <Input
           value={url}
           onChange={(e) => setURL(e.target.value)}
           type="url"

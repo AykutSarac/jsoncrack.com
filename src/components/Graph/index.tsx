@@ -1,7 +1,7 @@
 import React from "react";
 import { Canvas, EdgeData, ElkRoot, NodeData } from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
-import { getEdgeNodes } from "src/containers/LiveEditor/helpers";
+import { getEdgeNodes } from "src/containers/Editor/LiveEditor/helpers";
 import useConfig from "src/hooks/store/useConfig";
 import shallow from "zustand/shallow";
 

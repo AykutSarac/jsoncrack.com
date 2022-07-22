@@ -1,5 +1,4 @@
 import React from "react";
-import { saveAsPng } from "save-html-as-image";
 import {
   AiOutlineFullscreen,
   AiOutlineMinus,
@@ -8,10 +7,11 @@ import {
 import { FiDownload } from "react-icons/fi";
 import { HiOutlineSun, HiOutlineMoon } from "react-icons/hi";
 import { MdCenterFocusWeak } from "react-icons/md";
-import { SearchInput } from "src/containers/SearchInput";
+import { SearchInput } from "src/components/SearchInput";
 import styled from "styled-components";
 import useConfig from "src/hooks/store/useConfig";
 import shallow from "zustand/shallow";
+import { DownloadModal } from "../Modals/DownloadModal";
 
 export const StyledTools = styled.div`
   display: flex;
@@ -41,6 +41,7 @@ const StyledToolElement = styled.button`
 `;
 
 export const Tools: React.FC = () => {
+  const [isDownloadVisible, setDownloadVisible] = React.useState(false);
   const [lightmode, performance, hideEditor] = useConfig(
     (state) => [
       state.settings.lightmode,
@@ -58,13 +59,6 @@ export const Tools: React.FC = () => {
   const toggleEditor = () => updateSetting("hideEditor", !hideEditor);
   const toggleTheme = () => updateSetting("lightmode", !lightmode);
 
-  const exportAsImage = () => {
-    saveAsPng(document.querySelector("svg[id*='ref']"), {
-      filename: "jsonvisio.com",
-      printDate: true,
-    });
-  };
-
   return (
     <StyledTools>
       <StyledToolElement aria-label="fullscreen" onClick={toggleEditor}>
@@ -75,7 +69,10 @@ export const Tools: React.FC = () => {
       </StyledToolElement>
       {!performance && <SearchInput />}
       {!performance && (
-        <StyledToolElement aria-label="save" onClick={exportAsImage}>
+        <StyledToolElement
+          aria-label="save"
+          onClick={() => setDownloadVisible(true)}
+        >
           <FiDownload />
         </StyledToolElement>
       )}
@@ -88,6 +85,10 @@ export const Tools: React.FC = () => {
       <StyledToolElement aria-label="zoom in" onClick={zoomIn}>
         <AiOutlinePlus />
       </StyledToolElement>
+      <DownloadModal
+        visible={isDownloadVisible}
+        setVisible={setDownloadVisible}
+      />
     </StyledTools>
   );
 };

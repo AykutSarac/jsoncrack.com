@@ -12,19 +12,23 @@ enum ButtonType {
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   status?: keyof typeof ButtonType;
+  block?: boolean;
 }
 
 function getButtonStatus(status: keyof typeof ButtonType, theme: DefaultTheme) {
   return theme[ButtonType[status]];
 }
 
-const StyledButton = styled.button<{ status: keyof typeof ButtonType }>`
+const StyledButton = styled.button<{
+  status: keyof typeof ButtonType;
+  block: boolean;
+}>`
   display: block;
   background: ${({ status, theme }) => getButtonStatus(status, theme)};
   color: #ffffff;
   padding: 8px 16px;
   min-width: 60px;
-  width: fit-content;
+  width: ${({ block }) => (block ? "100%" : "fit-content")};
 
   :disabled {
     cursor: not-allowed;
@@ -46,10 +50,16 @@ const StyledButtonContent = styled.div`
 export const Button: React.FC<ButtonProps> = ({
   children,
   status,
+  block = false,
   ...props
 }) => {
   return (
-    <StyledButton type="button" status={status ?? "PRIMARY"} {...props}>
+    <StyledButton
+      type="button"
+      status={status ?? "PRIMARY"}
+      block={block}
+      {...props}
+    >
       <StyledButtonContent>{children}</StyledButtonContent>
     </StyledButton>
   );

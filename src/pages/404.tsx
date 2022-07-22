@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 
 import { Button } from "src/components/Button";
-import { Image } from "src/components/Image";
 
 const StyledNotFound = styled.div`
   display: flex;
@@ -37,7 +36,7 @@ const NotFound: React.FC = () => {
   return (
     <StyledNotFound>
       <StyledImageWrapper>
-        <Image src="/404.svg" alt="404" width={300} height={400} />
+        <img src="/404.svg" alt="not found" width={300} height={400} />
       </StyledImageWrapper>
       <StyledMessage>WIZARDS BEHIND CURTAINS?</StyledMessage>
       <StyledSubMessage>
