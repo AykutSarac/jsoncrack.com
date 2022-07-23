@@ -62,13 +62,13 @@ export function getEdgeNodes(
 export function getNextLayout(layout: CanvasDirection) {
   switch (layout) {
     case "RIGHT":
-      return "UP";
+      return "DOWN";
 
-    case "UP":
+    case "DOWN":
       return "LEFT";
 
     case "LEFT":
-      return "DOWN";
+      return "UP";
 
     default:
       return "RIGHT";
