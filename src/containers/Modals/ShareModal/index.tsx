@@ -1,7 +1,6 @@
 import React from "react";
 import toast from "react-hot-toast";
 import styled from "styled-components";
-import { useCopyToClipboard } from "usehooks-ts";
 import { Modal, ModalProps } from "src/components/Modal";
 import { Button } from "src/components/Button";
 import { BiErrorAlt } from "react-icons/bi";
@@ -46,7 +45,6 @@ const StyledContainer = styled.div`
 export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   const json = useConfig((state) => state.json);
   const [encodedJson, setEncodedJson] = React.useState("");
-  const [_, copy] = useCopyToClipboard();
 
   const embedText = `<iframe src="https://jsonvisio.com/widget?json=${encodedJson}" width="512" height="384" style="border: 2px solid #b9bbbe; border-radius: 6px;"></iframe>`;
   const shareURL = `https://jsonvisio.com/editor?json=${encodedJson}`;
@@ -59,7 +57,7 @@ export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   }, [json]);
 
   const handleShare = (value: string) => {
-    copy(value);
+    navigator.clipboard.writeText(value);
     toast.success(`Link copied to clipboard.`);
     setVisible(false);
   };

@@ -10,12 +10,14 @@ import {
   EdgeData,
   ElkRoot,
   NodeData,
+  NodeProps,
 } from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
 import { getEdgeNodes } from "src/containers/Editor/LiveEditor/helpers";
 import useConfig from "src/hooks/store/useConfig";
 import styled from "styled-components";
 import shallow from "zustand/shallow";
+import toast from "react-hot-toast";
 
 interface GraphProps {
   json: string;
@@ -80,6 +82,16 @@ export const Graph: React.FC<GraphProps & CanvasContainerProps> = ({
       setSize({ width: layout.width, height: layout.height });
   };
 
+  const handleNodeClick = (
+    e: React.MouseEvent<SVGElement>,
+    props: NodeProps
+  ) => {
+    if (e.detail === 2) {
+      toast("Object copied to clipboard!");
+      navigator.clipboard.writeText(JSON.stringify(props.properties.text));
+    }
+  };
+
   return (
     <StyledEditorWrapper isWidget={isWidget}>
       <TransformWrapper
@@ -106,7 +118,12 @@ export const Graph: React.FC<GraphProps & CanvasContainerProps> = ({
             key={layout}
             onCanvasClick={onCanvasClick}
             onLayoutChange={onLayoutChange}
-            node={CustomNode}
+            node={(props) => (
+              <CustomNode
+                onClick={(e) => handleNodeClick(e, props)}
+                {...props}
+              />
+            )}
             zoomable={false}
             readonly
             {...props}
