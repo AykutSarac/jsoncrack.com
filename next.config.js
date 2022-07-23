@@ -8,7 +8,7 @@ const nextConfig = {
   exportPathMap: () => ({
     "/": { page: "/" },
     "/editor": { page: "/Editor" },
-    "/widget": { page: "/widget" },
+    "/widget": { page: "/Widget" },
   }),
   compiler: {
     styledComponents: true,

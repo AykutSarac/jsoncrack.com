@@ -32,7 +32,7 @@ function inIframe() {
   }
 }
 
-const Widget = () => {
+const WidgetPage = () => {
   const { query, push } = useRouter();
   const [json, setJson] = React.useState("");
 
@@ -68,4 +68,4 @@ const Widget = () => {
   );
 };
 
-export default Widget;
+export default WidgetPage;
