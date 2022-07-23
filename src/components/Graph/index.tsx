@@ -30,6 +30,7 @@ const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
   position: absolute;
   width: 100%;
   height: ${({ isWidget }) => (isWidget ? "100vh" : "calc(100vh - 36px)")};
+  background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
 
   :active {
     cursor: move;

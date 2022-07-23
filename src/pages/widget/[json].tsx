@@ -14,10 +14,13 @@ const StyledAttribute = styled.a`
   position: fixed;
   bottom: 0;
   right: 0;
-  background: rgba(255, 255, 255, 0.3);
+  color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
+  background: ${({ theme }) => theme.SILVER_DARK};
   padding: 4px 8px;
   font-size: 14px;
   font-weight: 500;
+  border-radius: 3px 0 0 0;
+  opacity: 0.8;
 `;
 
 function inIframe() {
