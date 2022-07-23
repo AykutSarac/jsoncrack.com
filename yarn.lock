@@ -2073,10 +2073,10 @@ ajv@^8.6.0:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
-allotment@^1.14.2:
-  version "1.14.2"
-  resolved "https://registry.yarnpkg.com/allotment/-/allotment-1.14.2.tgz#b89364ede0b3fbeb2927f7c1f80bc90f13248bbf"
-  integrity sha512-Gqfl2DW2hQ3RT22uiJs2yK1bSwwFbDMC4drTe3uWEjKMmwlAZmS7/vqLD1v25kqbAqdjWSzr+aqgHsRXT51BPQ==
+allotment@^1.14.5:
+  version "1.14.5"
+  resolved "https://registry.yarnpkg.com/allotment/-/allotment-1.14.5.tgz#c952f5a7d43ac17649f27cb699e543d85cb6169a"
+  integrity sha512-o/OsKW8HQPDkUoGpzRIULzAy1R3UmbkUw8oBGyJo91YtB7QhiRtUOU5kEUsJX/M8lpnHtJFFo3DWTgH6HXB5TA==
   dependencies:
     classnames "^2.3.0"
     eventemitter3 "^4.0.0"
@@ -5638,10 +5638,10 @@ randombytes@^2.1.0:
   dependencies:
     safe-buffer "^5.1.0"
 
-rdk@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/rdk/-/rdk-6.0.1.tgz#d2e64b473cb50f6727ed90a126a0d5cbbe2c5fb3"
-  integrity sha512-qBzUIUnSfyvE5jEYy3jfgzKSjPOVrIvRS2a+VxZUyekE6p78zSS//vS9vN3uKdCgzNjyfrr7zJwlKrj9LSEoBg==
+rdk@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/rdk/-/rdk-6.0.2.tgz#3dc4f57d6df1d8232555313855157070726ead6b"
+  integrity sha512-Q3nlhqboFdoigCCHIUZFDzAlRY6dTCfOi4zPuELLcbqUZ8cqFE6HK7KREBRqIo2WPmGrCmf+FW299j/0LAvJIA==
   dependencies:
     classnames "^2.3.1"
     popper.js "^1.16.1"
@@ -5761,10 +5761,10 @@ readable-stream@^2.0.6:
     string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
 
-reaflow@^5.0.4:
-  version "5.0.4"
-  resolved "https://registry.yarnpkg.com/reaflow/-/reaflow-5.0.4.tgz#b831d778990a0035bc416a1cdaefbf366cc9c661"
-  integrity sha512-O+joWHRN+95KBxjQ8wAfiZgpyAPqaCtM4Z2cMcnxd9TnRGU492wt/iADfZnP8+zmw6NB7NI5C6m3O5ib/Trxuw==
+reaflow@^5.0.6:
+  version "5.0.6"
+  resolved "https://registry.yarnpkg.com/reaflow/-/reaflow-5.0.6.tgz#3ed1afb35d26fe6d25dcface74eb2ef020088177"
+  integrity sha512-MK3vu0DfbjMNJOyGMdxYGaWlnoaxMpkqy2HsuEIAZWckweVtAzY+MbDQ/V334mLpjPxehYCc4jVakLTmPVbMAg==
   dependencies:
     calculate-size "^1.1.1"
     classnames "^2.3.1"
@@ -5775,7 +5775,7 @@ reaflow@^5.0.4:
     kld-affine "^2.1.1"
     kld-intersections "^0.7.0"
     p-cancelable "^3.0.0"
-    rdk "^6.0.1"
+    rdk "^6.0.2"
     react-cool-dimensions "^2.0.7"
     react-fast-compare "^3.2.0"
     react-use-gesture "^8.0.1"
