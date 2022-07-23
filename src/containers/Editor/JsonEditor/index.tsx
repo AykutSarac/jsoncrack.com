@@ -1,13 +1,17 @@
 import React from "react";
+import styled from "styled-components";
 import Editor from "@monaco-editor/react";
 import parseJson from "parse-json";
-import styled from "styled-components";
-import { ErrorContainer } from "src/components/ErrorContainer/ErrorContainer";
-import { Loading } from "src/components/Loading";
 import { loader } from "@monaco-editor/react";
+import { ErrorContainer } from "src/components/ErrorContainer/ErrorContainer";
 import useConfig from "src/hooks/store/useConfig";
+import { Loading } from "src/components/Loading";
 
-loader.config({ paths: { vs: "/monaco-editor/min/vs" } });
+loader.config({
+  paths: {
+    vs: "https://microsoft.github.io/monaco-editor/node_modules/monaco-editor/min/vs",
+  },
+});
 
 const StyledEditorWrapper = styled.div`
   display: flex;

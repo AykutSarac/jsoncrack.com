@@ -17,6 +17,7 @@
     "allotment": "^1.14.5",
     "compress-json": "^2.0.1",
     "html-to-image": "^1.9.0",
+    "monaco-editor": "^0.33.0",
     "next": "^12.1.5",
     "next-transpile-modules": "^9.0.0",
     "parse-json": "^6.0.2",
