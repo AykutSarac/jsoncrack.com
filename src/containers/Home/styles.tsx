@@ -149,11 +149,18 @@ export const StyledCardDescription = styled.p`
 `;
 
 export const StyledIframge = styled.iframe`
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
   border: 2px solid ${({ theme }) => theme.INTERACTIVE_NORMAL};
   border-radius: 6px;
+
+  @media only screen and (min-width: 768px) {
+    min-height: 384px;
+  }
 `;
 
-export const StyledGitHubSection = styled.section`
+export const StyledSection = styled.section<{ reverse?: boolean }>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -168,7 +175,7 @@ export const StyledGitHubSection = styled.section`
   }
 
   @media only screen and (max-width: 768px) {
-    flex-direction: column-reverse;
+    flex-direction: ${({ reverse }) => (reverse ? "column-reverse" : "column")};
     max-width: 80%;
   }
 `;
