@@ -52,7 +52,7 @@ const Widget = () => {
     }
 
     if (!inIframe()) push("/");
-  }, [query?.json]);
+  }, [query?.json, push]);
 
   return (
     <div>
