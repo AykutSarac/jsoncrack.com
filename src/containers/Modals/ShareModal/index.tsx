@@ -48,7 +48,7 @@ export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   const [encodedJson, setEncodedJson] = React.useState("");
   const [_, copy] = useCopyToClipboard();
 
-  const embedText = `<iframe src="https://jsonvisio.com/widget?json=${encodedJson}" width="512" height="384"></iframe>`;
+  const embedText = `<iframe src="https://jsonvisio.com/widget?json=${encodedJson}" width="512" height="384" style="border: 2px solid #b9bbbe; border-radius: 6px;"></iframe>`;
   const shareURL = `https://jsonvisio.com/editor?json=${encodedJson}`;
 
   React.useEffect(() => {
