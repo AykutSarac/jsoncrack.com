@@ -47,7 +47,7 @@ const Widget = () => {
       setJson(jsonString);
     }
 
-    if (!inIframe()) push("/");
+    // if (!inIframe()) push("/");
   }, [query.json]);
 
   return (
