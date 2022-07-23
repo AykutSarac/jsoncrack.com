@@ -37,7 +37,7 @@ export function getEdgeNodes(
         .sort((a, b) => a - b);
       const longestLine = lineLengths.reverse()[0];
 
-      const height = lines.length * 18 < 30 ? 40 : lines.length * 18;
+      const height = lines.length * 17.8 < 30 ? 40 : lines.length * 17.8;
 
       nodes.push({
         id: el.id,
