@@ -148,6 +148,11 @@ export const StyledCardDescription = styled.p`
   font-size: 0.875rem;
 `;
 
+export const StyledIframge = styled.iframe`
+  border: 2px solid ${({ theme }) => theme.INTERACTIVE_NORMAL};
+  border-radius: 6px;
+`;
+
 export const StyledGitHubSection = styled.section`
   display: flex;
   flex-direction: row;
@@ -198,6 +203,22 @@ export const StyledSectionArea = styled.div`
 export const StyledSponsorSection = styled.section`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 85%;
+  margin: 0 auto;
+  gap: 2rem;
+  line-height: 1.5;
+  padding: 60px 3%;
+
+  @media only screen and (max-width: 768px) {
+    max-width: 80%;
+  }
+`;
+
+export const StyledEmbedSection = styled.section`
+  display: flex;
+  flex-direction: column-reverse;
   justify-content: center;
   align-items: center;
   max-width: 85%;
