@@ -99,8 +99,8 @@ export const Graph: React.FC<GraphProps & CanvasContainerProps> = ({
           <Canvas
             nodes={nodes}
             edges={edges}
-            maxWidth={size.width}
-            maxHeight={size.height}
+            maxWidth={size.width + 100}
+            maxHeight={size.height + 100}
             direction={layout}
             key={layout}
             onCanvasClick={onCanvasClick}
