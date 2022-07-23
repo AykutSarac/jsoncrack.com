@@ -22,6 +22,10 @@ const StyledAttribute = styled.a`
   font-weight: 500;
   border-radius: 3px 0 0 0;
   opacity: 0.8;
+
+  @media only screen and (max-width: 768px) {
+    font-size: 12px;
+  }
 `;
 
 function inIframe() {
