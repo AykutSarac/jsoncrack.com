@@ -23,7 +23,8 @@ const StyledButton = styled.button<{
   status: keyof typeof ButtonType;
   block: boolean;
 }>`
-  display: block;
+  display: flex;
+  align-items: center;
   background: ${({ status, theme }) => getButtonStatus(status, theme)};
   color: #ffffff;
   padding: 8px 16px;
