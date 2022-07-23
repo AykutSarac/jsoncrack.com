@@ -29,6 +29,7 @@ const StyledButton = styled.button<{
   padding: 8px 16px;
   min-width: 60px;
   width: ${({ block }) => (block ? "100%" : "fit-content")};
+  height: 40px;
 
   :disabled {
     cursor: not-allowed;
@@ -45,6 +46,8 @@ const StyledButtonContent = styled.div`
   justify-content: center;
   align-items: center;
   gap: 8px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 export const Button: React.FC<ButtonProps> = ({

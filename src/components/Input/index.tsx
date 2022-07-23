@@ -8,10 +8,10 @@ const StyledInput = styled.input`
   border: none;
   border-radius: 4px;
   line-height: 32px;
-  padding: 12px 8px;
+  padding: 10px;
   width: 100%;
   margin-bottom: 10px;
-  height: 30px;
+  height: 40px;
 `;
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
