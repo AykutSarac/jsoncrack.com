@@ -1,3 +1,4 @@
+import Script from "next/script";
 import React from "react";
 import styled from "styled-components";
 
@@ -32,13 +33,25 @@ export const CarbonAds: React.FC<{ editor?: boolean }> = ({
   editor = false,
 }) => {
   return (
-    <StyledWrapper editor={editor}>
-      <script
-        defer
+    <StyledWrapper editor={editor} id="carbon-wrapper">
+      <Script
         type="text/javascript"
         src="//cdn.carbonads.com/carbon.js?serve=CE7IPKQL&placement=jsonvisiocom"
         id="_carbonads_js"
-      ></script>
+        strategy="lazyOnload"
+        onLoad={() => {
+          const init = () => {
+            const parent = document.getElementById("carbon-wrapper");
+            const ads = document.getElementById("carbonads");
+
+            if (ads === null) return setTimeout(() => init(), 500);
+
+            parent?.appendChild(ads);
+          };
+
+          init();
+        }}
+      />
     </StyledWrapper>
   );
 };
