@@ -43,6 +43,7 @@ const StyledUploadMessage = styled.h3`
 
 export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   const updateJson = useConfig((state) => state.updateJson);
+  const updateFetchUrl = useConfig((state) => state.updateFetchUrl);
   const [url, setURL] = React.useState("");
   const [jsonFile, setJsonFile] = React.useState<File | null>(null);
 
@@ -59,6 +60,7 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
         .then((res) => res.json())
         .then((json) => {
           updateJson(JSON.stringify(json));
+          updateFetchUrl(url);
           setVisible(false);
         })
         .catch(() => toast.error("Failed to fetch JSON!"))

@@ -5,8 +5,10 @@ import { StorageConfig } from "src/typings/global";
 
 export interface Config {
   json: string;
+  fetchUrl: string;
   settings: StorageConfig;
   updateJson: (json: string) => void;
+  updateFetchUrl: (fetchUrl: string) => void;
   loadSettings: (settings: StorageConfig) => void;
   updateSetting: (setting: keyof StorageConfig, value: unknown) => void;
   zoomIn: () => void;
@@ -18,8 +20,11 @@ const useConfig = create(
   persist<Config>(
     (set, get) => ({
       json: JSON.stringify(defaultJson),
+      fetchUrl: "",
       settings: defaultConfig,
       updateJson: (json: string) => set((state) => ({ ...state, json })),
+      updateFetchUrl: (fetchUrl: string) =>
+        set((state) => ({ ...state, fetchUrl })),
       zoomIn: () => {
         const zoomPanPinch = get().settings.zoomPanPinch;
         if (zoomPanPinch) {
@@ -58,6 +63,7 @@ const useConfig = create(
         ({
           ...state,
           json: undefined,
+          fetchUrl: undefined,
           settings: {
             ...state.settings,
             zoomPanPinch: undefined,
