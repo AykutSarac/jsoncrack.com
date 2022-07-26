@@ -2,6 +2,7 @@ import { decompress } from "compress-json";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React from "react";
+import toast from "react-hot-toast";
 import { defaultJson } from "src/constants/data";
 import { isValidJson } from "src/utils/isValidJson";
 import styled from "styled-components";
@@ -39,30 +40,39 @@ function inIframe() {
 const WidgetPage = () => {
   const { query, push } = useRouter();
   const [json, setJson] = React.useState("");
-
+  const [params, setParams] = React.useState("");
   React.useEffect(() => {
-    if (!query.json) {
-      setJson(JSON.stringify(defaultJson));
-    } else {
+    if (query.json) {
+      setParams(`?json=${query.json}`);
       const jsonURI = decodeURIComponent(query.json as string);
       const isJsonValid = isValidJson(jsonURI);
-
       if (isJsonValid) {
         const jsonDecoded = decompress(JSON.parse(isJsonValid));
         const jsonString = JSON.stringify(jsonDecoded);
-
         setJson(jsonString);
       }
-    }
+    } else if (query.url) {
+      toast.loading("Loading...", { id: "toastFetch" });
+      setParams(`?url=${query.url}`);
+      fetch(query.url as string)
+        .then((res) => res.json())
+        .then((json) => {
+          setJson(JSON.stringify(json));
+        })
+        .catch(() => toast.error("Failed to fetch JSON!"))
+        .finally(() => toast.dismiss("toastFetch"));
+      } else {
+    setJson(JSON.stringify(defaultJson));
+      }
 
     if (!inIframe()) push("/");
-  }, [query?.json, push]);
+  }, [query?.json, query?.url, push]);
 
   return (
     <div>
       <Graph json={json} isWidget />
       <StyledAttribute
-        href={`https://jsonvisio.com/editor?json=${query.json}`}
+        href={`https://jsonvisio.com/editor${params}`}
         target="_blank"
         rel="noreferrer"
       >
