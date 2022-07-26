@@ -15,6 +15,7 @@ const StyledErrorWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
   color: ${({ theme }) => theme.TEXT_DANGER};
   font-weight: 600;
 `;
@@ -44,17 +45,30 @@ const StyledContainer = styled.div`
 
 export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   const json = useConfig((state) => state.json);
-  const [encodedJson, setEncodedJson] = React.useState("");
+  const fetchUrl = useConfig((state) => state.fetchUrl);
+  const [showWarning, setShowWarning] = React.useState(false);
+  const [params, setParams] = React.useState("");
 
-  const embedText = `<iframe src="https://jsonvisio.com/widget?json=${encodedJson}" width="512" height="384" style="border: 2px solid #b9bbbe; border-radius: 6px;"></iframe>`;
-  const shareURL = `https://jsonvisio.com/editor?json=${encodedJson}`;
+
+  const embedText = `<iframe src="https://jsonvisio.com/widget?${params}" width="512" height="384" style="border: 2px solid #b9bbbe; border-radius: 6px;"></iframe>`;
+  const shareURL = `https://jsonvisio.com/editor?${params}`;
 
   React.useEffect(() => {
     const jsonEncode = compress(JSON.parse(json));
     const jsonString = JSON.stringify(jsonEncode);
+    const encodedJson = encodeURIComponent(jsonString);
 
-    setEncodedJson(encodeURIComponent(jsonString));
-  }, [json]);
+    if(encodedJson.length < 5000){
+      setParams(`json=${encodedJson}`);
+      setShowWarning(false);
+    } else if (encodedJson.length > 5000 && fetchUrl) {
+      setParams(`url=${fetchUrl}`);
+      setShowWarning(false);
+    } else {
+      setShowWarning(true);
+    }
+
+  }, [json, fetchUrl]);
 
   const handleShare = (value: string) => {
     navigator.clipboard.writeText(value);
@@ -66,12 +80,13 @@ export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
     <Modal visible={visible} setVisible={setVisible}>
       <Modal.Header>Create a Share Link</Modal.Header>
       <Modal.Content>
-        {encodedJson.length > 5000 ? (
+        {showWarning ? (
           <StyledErrorWrapper>
             <BiErrorAlt size={60} />
             <StyledWarning>
-              Link size exceeds 5000 characters, unable to generate link for
-              file of this size!
+            Link size exceeds 5000 characters. <br />
+              You can import file with a URL for generate a link but your
+              changes will not be shared!
             </StyledWarning>
           </StyledErrorWrapper>
         ) : (
