@@ -1,6 +1,6 @@
 import React from "react";
 import type { AppProps } from "next/app";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { ThemeProvider } from "styled-components";
 import { init } from "@sentry/nextjs";
 
@@ -20,7 +20,7 @@ if (process.env.NODE_ENV !== "development") {
 }
 
 function JsonVisio({ Component, pageProps }: AppProps) {
-  const { json } = useRouter().query;
+  const { json, url } = useRouter().query;
 
   const lightmode = useConfig((state) => state.settings.lightmode);
   const [isRendered, setRendered] = React.useState(false);
@@ -36,8 +36,17 @@ function JsonVisio({ Component, pageProps }: AppProps) {
       const jsonString = JSON.stringify(jsonDecoded);
 
       updateJson(jsonString);
-    }
-  }, [json, updateJson]);
+    } else if (url) {
+        toast.loading("Loading...", { id: "toastFetch" });
+        fetch(url as string)
+          .then((res) => res.json())
+          .then((json) => {
+            updateJson(JSON.stringify(json));
+          })
+          .catch(() => toast.error("Failed to fetch JSON!"))
+          .finally(() => toast.dismiss("toastFetch"));
+      }
+  }, [url, json, updateJson]);
 
   React.useEffect(() => {
     if (!window.matchMedia("(display-mode: standalone)").matches) {
