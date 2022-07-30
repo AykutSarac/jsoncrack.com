@@ -4,7 +4,6 @@ import Link from "next/link";
 import styled from "styled-components";
 import { CanvasDirection } from "reaflow";
 import { TiFlowMerge } from "react-icons/ti";
-import { RiPatreonFill } from "react-icons/ri";
 import {
   CgArrowsMergeAltH,
   CgArrowsShrinkH,
@@ -27,6 +26,8 @@ import { ShareModal } from "src/containers/Modals/ShareModal";
 import { IoAlertCircleSharp } from "react-icons/io5";
 import useConfig from "src/hooks/store/useConfig";
 import { getNextLayout } from "src/containers/Editor/LiveEditor/helpers";
+import { FaRegHeart } from "react-icons/fa";
+import { HiHeart, HiOutlineHeart } from "react-icons/hi";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -247,9 +248,9 @@ export const Sidebar: React.FC = () => {
           </Link>
         </StyledElement>
         <StyledElement>
-          <Link href="https://www.patreon.com/aykutsarac">
-            <a aria-label="Patreon" rel="me" target="_blank">
-              <RiPatreonFill />
+          <Link href="https://github.com/sponsors/AykutSarac">
+            <a aria-label="GitHub Sponsors" rel="me" target="_blank">
+              <HiHeart />
             </a>
           </Link>
         </StyledElement>
