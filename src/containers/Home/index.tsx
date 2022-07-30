@@ -189,7 +189,7 @@ const Home: React.FC = () => {
         </Styles.StyledMinorTitle>
         <Styles.StyledButton
           status="SUCCESS"
-          onClick={() => push("https://www.patreon.com/aykutsarac")}
+          onClick={() => push("https://github.com/sponsors/AykutSarac")}
         >
           Become A Sponsor!
         </Styles.StyledButton>
