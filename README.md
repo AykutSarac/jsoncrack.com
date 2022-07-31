@@ -37,16 +37,13 @@ You can use the web version at [jsonvisio.com](https://jsonvisio.com) or also ru
 > <b><a href="https://jsonvisio.com">JSON Visio - Directly onto graphs</a></b>
 
 ## ⚡️ Features
-* PWA (Progressive Web App) with offline mode support
 * Search Nodes
-* Download as image
-* Advanced Error Message
-* Save JSON locally
-* Multiple layout direction support
-* Compressed view
-* Representative colors for arrays & keys
-* Friendly UI
+* Share links & Create Embed Widgets
+* Download/Clipboard as image
+* Upload JSON locally or fetch from URL
+* Great UI/UX
 * Light/Dark Mode
+* Advanced Error Message
 
 
 ## 🛠 Development Setup
