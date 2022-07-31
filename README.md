@@ -30,8 +30,9 @@
 
 
 # JSON Visio (jsonvisio.com)
+JSON Visio is a tool that generates graph diagrams from JSON objects. These diagrams are much easier to navigate than the textual format and to make it even more convenient, the tool also allows you to search the nodes. Additionally, the generated diagrams can also be downloaded or clipboard as image.
 
-JSON Visio is data visualization tool for your json data which seamlessly illustrates your data on graphs without having to restructure anything, paste directly or import file.
+You can use the web version at [jsonvisio.com](https://jsonvisio.com) or also run it locally as [Docker container](https://github.com/AykutSarac/jsonvisio.com#-docker).
 
 > <b><a href="https://jsonvisio.com">JSON Visio - Directly onto graphs</a></b>
 
