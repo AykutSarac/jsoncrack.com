@@ -5,12 +5,14 @@ WORKDIR /src
 
 COPY . /src
 
-RUN npm install --legacy-peer-deps
+RUN yarn install
 
-RUN npm run build
+RUN yarn run build
 
 # App
 FROM nginx:alpine
+
+COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
 
 COPY --from=builder /src/out /app
 
