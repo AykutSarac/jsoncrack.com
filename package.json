@@ -1,7 +1,7 @@
 {
   "name": "json-visio",
   "private": true,
-  "version": "v1.9.2",
+  "version": "v1.9.5",
   "homepage": "https://jsonvisio.com",
   "scripts": {
     "dev": "next dev",
