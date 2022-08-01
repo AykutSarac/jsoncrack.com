@@ -1,9 +1,11 @@
 import toast from "react-hot-toast";
 
 const filterChild = ([k, v]) => {
-  const notNull = v !== null;
-  const isArray = Array.isArray(v) ? !!v.length : typeof v === "object";
-  return notNull && isArray;
+  const isNull = v === null;
+  const isArray = Array.isArray(v) && v.length;
+  const isObject = v instanceof Object;
+
+  return !isNull && (isArray || isObject);
 };
 
 const filterValues = ([k, v]) => {
