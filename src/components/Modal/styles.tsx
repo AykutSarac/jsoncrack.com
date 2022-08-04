@@ -45,7 +45,7 @@ export const ContentWrapper = styled.div`
   color: ${({ theme }) => theme.TEXT_NORMAL};
   background: ${({ theme }) => theme.MODAL_BACKGROUND};
   padding: 16px;
-  overflow: hidden scroll;
+  overflow: hidden auto;
 `;
 
 export const ControlsWrapper = styled.div`
