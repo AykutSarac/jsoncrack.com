@@ -100,7 +100,6 @@ export const Graph: React.FC<GraphProps & CanvasContainerProps> = ({
         initialScale={0.7}
         wheel={wheelOptions}
         onInit={onInit}
-        centerOnInit
       >
         <TransformComponent
           wrapperStyle={{
