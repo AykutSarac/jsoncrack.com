@@ -66,11 +66,15 @@ const Home: React.FC = () => {
           {isMobile ? "Incompatible Device" : "GO TO EDITOR"}
         </Styles.StyledButton>
 
-        <Styles.StyledSponsorButton onClick={() => setModalVisible(true)}>
-          Help JSON Visio Accomplish It's Goals
-          <FaHeart />
-        </Styles.StyledSponsorButton>
-        <GoalsModal visible={isModalVisible} setVisible={setModalVisible} />
+        {!isMobile && (
+          <>
+            <Styles.StyledSponsorButton onClick={() => setModalVisible(true)}>
+              Help JSON Visio Accomplish It's Goals
+              <FaHeart />
+            </Styles.StyledSponsorButton>
+            <GoalsModal visible={isModalVisible} setVisible={setModalVisible} />
+          </>
+        )}
       </Styles.StyledHeroSection>
 
       <Styles.StyledPreviewSection>
