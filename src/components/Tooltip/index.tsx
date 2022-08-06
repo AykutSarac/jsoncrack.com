@@ -29,6 +29,18 @@ const StyledTooltip = styled.div<{ visible: boolean }>`
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
     0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
     0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-100%, 50%);
+    border-width: 8px;
+    border-style: solid;
+    border-color: transparent ${({ theme }) => theme.BACKGROUND_PRIMARY}
+      transparent transparent;
+  }
 `;
 
 const StyledChildren = styled.div``;

@@ -18,7 +18,7 @@ interface ErrorContainerProps {
 }
 
 const StyledErrorWrapper = styled.div`
-  z-index: 5;
+  z-index: 1;
 `;
 
 const StyledErrorExpand = styled.button<{ error: boolean }>`
@@ -29,7 +29,8 @@ const StyledErrorExpand = styled.button<{ error: boolean }>`
   border-radius: 0;
   justify-content: space-between;
   align-items: center;
-  color: ${({ theme, error }) => (error ? theme.TEXT_DANGER : theme.TEXT_POSITIVE)};
+  color: ${({ theme, error }) =>
+    error ? theme.TEXT_DANGER : theme.TEXT_POSITIVE};
   pointer-events: ${({ error }) => !error && "none"};
   background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
   box-shadow: 0 1px 0px ${({ theme }) => theme.BACKGROUND_TERTIARY};
