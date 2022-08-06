@@ -3,9 +3,27 @@ import { persist } from "zustand/middleware";
 import { defaultConfig, defaultJson } from "src/constants/data";
 import { StorageConfig } from "src/typings/global";
 
+type Sponsor = {
+  handle: string;
+  avatar: string;
+  profile: string;
+};
+
+function getTomorrow() {
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  return new Date(tomorrow).getTime();
+}
+
 export interface Config {
   json: string;
   settings: StorageConfig;
+  sponsors: {
+    users: Sponsor[];
+    nextDate: number;
+  } | null;
+  setSponsors: (sponsors: Sponsor[]) => void;
   updateJson: (json: string) => void;
   loadSettings: (settings: StorageConfig) => void;
   updateSetting: (setting: keyof StorageConfig, value: unknown) => void;
@@ -19,6 +37,15 @@ const useConfig = create(
     (set, get) => ({
       json: JSON.stringify(defaultJson),
       settings: defaultConfig,
+      sponsors: null,
+      setSponsors: (users) =>
+        set((state) => ({
+          ...state,
+          sponsors: {
+            users,
+            nextDate: getTomorrow(),
+          },
+        })),
       updateJson: (json: string) => set((state) => ({ ...state, json })),
       zoomIn: () => {
         const zoomPanPinch = get().settings.zoomPanPinch;
@@ -54,10 +81,12 @@ const useConfig = create(
     }),
     {
       name: "config",
+      version: 1,
       partialize: (state) =>
         ({
-          ...state,
-          json: undefined,
+          sponsors: {
+            ...state.sponsors,
+          },
           settings: {
             ...state.settings,
             zoomPanPinch: undefined,

@@ -15,6 +15,7 @@ import { CarbonAds } from "src/components/CarbonAds";
 import pkg from "../../../package.json";
 import * as Styles from "./styles";
 import { GoalsModal } from "../Modals/GoalsModal";
+import { Sponsors } from "src/components/Sponsors";
 
 const Home: React.FC = () => {
   const { push } = useRouter();
@@ -205,6 +206,7 @@ const Home: React.FC = () => {
         >
           Become A Sponsor!
         </Styles.StyledButton>
+        <Sponsors />
       </Styles.StyledSponsorSection>
 
       <Styles.StyledFooter>
