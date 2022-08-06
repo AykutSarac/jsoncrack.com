@@ -24,9 +24,10 @@ export const ModalWrapper = styled.div`
 
 export const ModalInnerWrapper = styled.div`
   min-width: 440px;
-  max-width: 70%;
+  max-width: 490px;
   width: fit-content;
   animation: ${appearAnimation} 220ms ease-in-out;
+  line-height: 20px;
 `;
 
 export const Title = styled.h2`

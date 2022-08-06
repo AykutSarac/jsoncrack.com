@@ -51,7 +51,7 @@ export const StyledHeroSection = styled.section`
   justify-content: center;
   align-items: center;
   gap: 1.5em;
-  min-height: 45vh;
+  min-height: 40vh;
   padding: 0 3%;
 `;
 
@@ -111,6 +111,24 @@ export const StyledButton = styled(Button)`
     font-family: "Roboto", sans-serif;
     font-weight: 700;
     font-size: 16px;
+  }
+`;
+
+export const StyledSponsorButton = styled(StyledButton)`
+  background: transparent;
+  border: 1px solid #ee3d48;
+  transition: all 200ms;
+
+  svg {
+    color: #ee3d48;
+  }
+
+  &:hover {
+    background: #ee3d48;
+
+    svg {
+      color: white;
+    }
   }
 `;
 

@@ -3,7 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { TwitterTweetEmbed } from "react-twitter-embed";
-import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
+import { FaGithub, FaHeart, FaLinkedin, FaTwitter } from "react-icons/fa";
 import {
   HiCursorClick,
   HiLightningBolt,
@@ -14,9 +14,11 @@ import { Producthunt } from "src/components/Producthunt";
 import { CarbonAds } from "src/components/CarbonAds";
 import pkg from "../../../package.json";
 import * as Styles from "./styles";
+import { GoalsModal } from "../Modals/GoalsModal";
 
 const Home: React.FC = () => {
   const { push } = useRouter();
+  const [isModalVisible, setModalVisible] = React.useState(false);
   const [isMobile, setIsMobile] = React.useState(false);
 
   React.useEffect(() => {
@@ -63,6 +65,12 @@ const Home: React.FC = () => {
         >
           {isMobile ? "Incompatible Device" : "GO TO EDITOR"}
         </Styles.StyledButton>
+
+        <Styles.StyledSponsorButton onClick={() => setModalVisible(true)}>
+          Help JSON Visio Accomplish It's Goals
+          <FaHeart />
+        </Styles.StyledSponsorButton>
+        <GoalsModal visible={isModalVisible} setVisible={setModalVisible} />
       </Styles.StyledHeroSection>
 
       <Styles.StyledPreviewSection>
