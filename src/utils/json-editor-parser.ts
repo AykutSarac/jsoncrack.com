@@ -1,3 +1,6 @@
+/**
+ * Copyright (C) 2022 Aykut Saraç - All Rights Reserved
+ */
 import toast from "react-hot-toast";
 
 const filterChild = ([k, v]) => {
@@ -15,16 +18,33 @@ const filterValues = ([k, v]) => {
 };
 
 function generateChildren(object: Object, nextId: () => string) {
+  if (!(object instanceof Object)) object = [object];
+
   return Object.entries(object)
     .filter(filterChild)
-    .flatMap(([k, v]) => [
-      {
-        id: nextId(),
-        text: k,
-        parent: true,
-        children: extract(v, nextId),
-      },
-    ]);
+    .flatMap(([k, v]) => {
+      // const isObject = v instanceof Object && !Array.isArray(v);
+
+      // if (isObject) {
+      //   return [
+      //     {
+      //       id: nextId(),
+      //       text: k,
+      //       parent: true,
+      //       children: generateChildren(v, nextId),
+      //     },
+      //   ];
+      // }
+
+      return [
+        {
+          id: nextId(),
+          text: k,
+          parent: true,
+          children: extract(v, nextId),
+        },
+      ];
+    });
 }
 
 function generateNodeData(object: Object | number) {
@@ -35,7 +55,7 @@ function generateNodeData(object: Object | number) {
     return Object.fromEntries(entries);
   }
 
-  return object.toString();
+  return String(object);
 }
 
 const extract = (
@@ -46,6 +66,7 @@ const extract = (
   )(0)
 ) => {
   if (!os) return [];
+
   return [os].flat().map((o) => ({
     id: nextId(),
     text: generateNodeData(o),
@@ -70,7 +91,6 @@ const relationships = (xs: { id: string; children: never[] }[]) => {
 
 export const parser = (input: string | string[]) => {
   try {
-    // if (typeof input !== "object") input = JSON.parse(input);
     if (!Array.isArray(input)) input = [input];
 
     const mappedElements = extract(input);
@@ -79,7 +99,6 @@ export const parser = (input: string | string[]) => {
     return res;
   } catch (error) {
     console.error(error);
-
     toast.error("An error occured while parsing JSON data!");
     return [];
   }
