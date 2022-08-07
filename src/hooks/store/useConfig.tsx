@@ -81,7 +81,6 @@ const useConfig = create(
     }),
     {
       name: "config",
-      version: 1,
       partialize: (state) =>
         ({
           sponsors: {
