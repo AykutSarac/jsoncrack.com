@@ -79,7 +79,7 @@ export const Sponsors = () => {
     }
   }, []);
 
-  if (!sponsors?.users.length) return null;
+  if (!sponsors?.users?.length) return null;
 
   return (
     <StyledSponsorsWrapper>
