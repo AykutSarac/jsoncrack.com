@@ -85,6 +85,7 @@ const Home: React.FC = () => {
             height="863"
             src="/jsonvisio-screenshot.webp"
             alt="preview"
+            loading="lazy"
           />
         </Styles.StyledImageWrapper>
       </Styles.StyledPreviewSection>
