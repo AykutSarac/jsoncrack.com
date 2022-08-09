@@ -59,7 +59,7 @@ const WidgetPage = () => {
   }, [query?.json, push]);
 
   return (
-    <div>
+    <>
       <Graph json={json} isWidget />
       <StyledAttribute
         href={`https://jsonvisio.com/editor?json=${query.json}`}
@@ -68,7 +68,7 @@ const WidgetPage = () => {
       >
         jsonvisio.com
       </StyledAttribute>
-    </div>
+    </>
   );
 };
 
