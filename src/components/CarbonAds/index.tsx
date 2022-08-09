@@ -62,9 +62,11 @@ export const CarbonAds: React.FC<{ editor?: boolean }> = ({
 
   return (
     <StyledWrapper editor={editor} id="carbon-wrapper">
-      <StyledCloseBtn onClick={() => setIsHidden(true)}>
-        <IoMdClose color="white" size="15" />
-      </StyledCloseBtn>
+      {editor && (
+        <StyledCloseBtn onClick={() => setIsHidden(true)}>
+          <IoMdClose color="white" size="15" />
+        </StyledCloseBtn>
+      )}
       <Script
         type="text/javascript"
         src="https://cdn.carbonads.com/carbon.js?serve=CE7IPKQL&placement=jsonvisiocom"
