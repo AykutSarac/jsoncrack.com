@@ -7,8 +7,8 @@ const nextConfig = {
   reactStrictMode: true,
   exportPathMap: () => ({
     "/": { page: "/" },
-    "/editor": { page: "/Editor", query: { title: "json" } },
-    "/widget": { page: "/Widget", query: { title: "json" } },
+    "/editor": { page: "/Editor" },
+    "/widget": { page: "/Widget" },
   }),
   pwa: {
     disable: true, // disable temp until issue #61 solved
