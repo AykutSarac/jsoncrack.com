@@ -12,10 +12,10 @@ import {
 } from "react-icons/hi";
 import { Producthunt } from "src/components/Producthunt";
 import { CarbonAds } from "src/components/CarbonAds";
+import { Sponsors } from "src/components/Sponsors";
+import { GoalsModal } from "src/containers/Modals/GoalsModal";
 import pkg from "../../../package.json";
 import * as Styles from "./styles";
-import { GoalsModal } from "../Modals/GoalsModal";
-import { Sponsors } from "src/components/Sponsors";
 
 const Home: React.FC = () => {
   const { push } = useRouter();
@@ -70,7 +70,7 @@ const Home: React.FC = () => {
         {!isMobile && (
           <>
             <Styles.StyledSponsorButton onClick={() => setModalVisible(true)}>
-              Help JSON Visio Accomplish It's Goals
+              Help JSON Visio Accomplish It&apos;s Goals
               <FaHeart />
             </Styles.StyledSponsorButton>
             <GoalsModal visible={isModalVisible} setVisible={setModalVisible} />
@@ -79,12 +79,14 @@ const Home: React.FC = () => {
       </Styles.StyledHeroSection>
 
       <Styles.StyledPreviewSection>
-        <Styles.StyledImage
-          width="1200"
-          height="auto"
-          src="/jsonvisio-screenshot.png"
-          alt="preview"
-        />
+        <Styles.StyledImageWrapper>
+          <Styles.StyledImage
+            width="1200"
+            height="863"
+            src="/jsonvisio-screenshot.webp"
+            alt="preview"
+          />
+        </Styles.StyledImageWrapper>
       </Styles.StyledPreviewSection>
 
       <Styles.StyledFeaturesSection id="features">

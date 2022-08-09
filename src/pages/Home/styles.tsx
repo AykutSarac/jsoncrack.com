@@ -1,6 +1,14 @@
 import { Button } from "src/components/Button";
 import styled from "styled-components";
 
+export const StyledImageWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const StyledHome = styled.div`
   display: flex;
   flex-direction: column;
@@ -272,7 +280,9 @@ export const StyledPreviewSection = styled.section`
 `;
 
 export const StyledImage = styled.img`
-  max-width: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   filter: drop-shadow(0px 0px 12px rgba(255, 255, 255, 0.6));
 `;
 

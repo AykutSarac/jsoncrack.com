@@ -1,9 +1,23 @@
 import React from "react";
 import Head from "next/head";
-import Editor from "src/containers/Editor";
 import styled from "styled-components";
+import Panes from "src/containers/Editor/Panes";
+import { Sidebar } from "src/components/Sidebar";
+import { Incompatible } from "src/containers/Incompatible";
 
-const StyledEditorWrapper = styled.div``;
+export const StyledPageWrapper = styled.div`
+  display: flex;
+  height: 100vh;
+`;
+
+export const StyledEditorWrapper = styled.div`
+  width: 100%;
+  overflow: hidden;
+
+  @media only screen and (max-width: 568px) {
+    display: none;
+  }
+`;
 
 const EditorPage: React.FC = () => {
   return (
@@ -15,7 +29,13 @@ const EditorPage: React.FC = () => {
           content="View your JSON data in graphs instantly."
         />
       </Head>
-      <Editor />
+      <StyledPageWrapper>
+        <Sidebar />
+        <StyledEditorWrapper>
+          <Panes />
+        </StyledEditorWrapper>
+        <Incompatible />
+      </StyledPageWrapper>
     </StyledEditorWrapper>
   );
 };

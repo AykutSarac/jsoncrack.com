@@ -1,9 +1,16 @@
 import { Allotment } from "allotment";
 import React from "react";
 import { JsonEditor } from "src/containers/Editor/JsonEditor";
-import { StyledEditor } from "./styles";
 import dynamic from "next/dynamic";
 import useConfig from "src/hooks/store/useConfig";
+import styled from "styled-components";
+import "allotment/dist/style.css";
+
+export const StyledEditor = styled(Allotment)`
+  position: relative !important;
+  display: flex;
+  background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
+`;
 
 const LiveEditor = dynamic(() => import("src/containers/Editor/LiveEditor"), {
   ssr: false,

@@ -1,8 +1,8 @@
 import React from "react";
-import Home from "src/containers/Home";
+import Home from "./Home";
 
-const LandingPage: React.FC = () => {
+const HomePage = () => {
   return <Home />;
 };
 
-export default LandingPage;
+export default HomePage;

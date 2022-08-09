@@ -36,7 +36,7 @@ export const CarbonAds: React.FC<{ editor?: boolean }> = ({
     <StyledWrapper editor={editor} id="carbon-wrapper">
       <Script
         type="text/javascript"
-        src="//cdn.carbonads.com/carbon.js?serve=CE7IPKQL&placement=jsonvisiocom"
+        src="https://cdn.carbonads.com/carbon.js?serve=CE7IPKQL&placement=jsonvisiocom"
         id="_carbonads_js"
         strategy="lazyOnload"
         onLoad={() => {
