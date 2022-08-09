@@ -1,8 +1,26 @@
 import Script from "next/script";
 import React from "react";
+import { IoMdClose } from "react-icons/io";
 import styled from "styled-components";
 
+const StyledCloseBtn = styled.button`
+  display: none;
+  width: 3vw;
+  height: 3vw;
+  opacity: 0.8;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 50;
+  border-radius: 0;
+  background: ${({ theme }) => theme.DANGER};
+`;
+
 const StyledWrapper = styled.span<{ editor?: boolean }>`
+  position: relative;
+
   #carbonads {
     width: 100%;
     display: flex;
@@ -22,6 +40,12 @@ const StyledWrapper = styled.span<{ editor?: boolean }>`
   }
   `};
 
+  &:hover {
+    ${StyledCloseBtn} {
+      display: flex;
+    }
+  }
+
   @media all and (display-mode: standalone) {
     #carbonads {
       display: none;
@@ -32,8 +56,15 @@ const StyledWrapper = styled.span<{ editor?: boolean }>`
 export const CarbonAds: React.FC<{ editor?: boolean }> = ({
   editor = false,
 }) => {
+  const [isHidden, setIsHidden] = React.useState(false);
+
+  if (isHidden) return null;
+
   return (
     <StyledWrapper editor={editor} id="carbon-wrapper">
+      <StyledCloseBtn onClick={() => setIsHidden(true)}>
+        <IoMdClose color="white" size="15" />
+      </StyledCloseBtn>
       <Script
         type="text/javascript"
         src="https://cdn.carbonads.com/carbon.js?serve=CE7IPKQL&placement=jsonvisiocom"
