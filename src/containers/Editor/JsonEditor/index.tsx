@@ -6,6 +6,7 @@ import { loader } from "@monaco-editor/react";
 import { ErrorContainer } from "src/components/ErrorContainer/ErrorContainer";
 import useConfig from "src/hooks/store/useConfig";
 import { Loading } from "src/components/Loading";
+import { CarbonAds } from "src/components/CarbonAds";
 
 loader.config({
   paths: {
@@ -87,6 +88,7 @@ export const JsonEditor: React.FC = () => {
           loading={<Loading message="Loading Editor..." />}
           onChange={(value) => setValue(value as string)}
         />
+        <CarbonAds editor />
       </StyledWrapper>
     </StyledEditorWrapper>
   );
