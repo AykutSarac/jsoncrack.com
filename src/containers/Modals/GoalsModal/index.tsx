@@ -1,5 +1,5 @@
-import { useRouter } from "next/router";
 import React from "react";
+import { useRouter } from "next/router";
 import { FaHeart, FaTwitter } from "react-icons/fa";
 import { Button } from "src/components/Button";
 import { Modal } from "src/components/Modal";
@@ -38,12 +38,12 @@ export const GoalsModal = ({ visible, setVisible }) => {
 
   return (
     <Modal visible={visible} setVisible={setVisible}>
-      <Modal.Header>Help JSON Visio's Goals</Modal.Header>
+      <Modal.Header>Help JSON Visio&apos;s Goals</Modal.Header>
       <Modal.Content>
         <StyledTitle>OUR GOAL</StyledTitle>
-        <b>JSON Visio's Goal</b> is to keep the service completely free and open
-        source for everyone! For the contiunity of our service and keep the new
-        updates coming we need your support to make that possible ❤️
+        <b>JSON Visio&apos;s Goal</b> is to keep the service completely free and
+        open source for everyone! For the contiunity of our service and keep the
+        new updates coming we need your support to make that possible ❤️
         <ButtonsWrapper>
           <Button
             status="DANGER"

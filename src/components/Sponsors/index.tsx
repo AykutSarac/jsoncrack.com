@@ -77,7 +77,7 @@ export const Sponsors = () => {
     if (!sponsors?.nextDate || sponsors?.nextDate < Date.now()) {
       getSponsors().then(setSponsors);
     }
-  }, []);
+  }, [setSponsors, sponsors?.nextDate]);
 
   if (!sponsors?.users?.length) return null;
 
