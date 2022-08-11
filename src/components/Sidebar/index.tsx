@@ -26,8 +26,7 @@ import { ShareModal } from "src/containers/Modals/ShareModal";
 import { IoAlertCircleSharp } from "react-icons/io5";
 import useConfig from "src/hooks/store/useConfig";
 import { getNextLayout } from "src/containers/Editor/LiveEditor/helpers";
-import { FaRegHeart } from "react-icons/fa";
-import { HiHeart, HiOutlineHeart } from "react-icons/hi";
+import { HiHeart } from "react-icons/hi";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -45,7 +44,7 @@ const StyledElement = styled.div<{ beta?: boolean }>`
   display: flex;
   justify-content: center;
   text-align: center;
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 600;
   width: 100%;
   color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
