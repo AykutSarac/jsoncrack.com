@@ -136,7 +136,7 @@ const StyledAlertIcon = styled(IoAlertCircleSharp)`
 `;
 
 export const Sidebar: React.FC = () => {
-  const json = useConfig((state) => state.json);
+  const getJson = useConfig((state) => state.getJson);
   const updateSetting = useConfig((state) => state.updateSetting);
 
   const { expand, performance, layout } = useConfig((state) => state.settings);
@@ -147,7 +147,7 @@ export const Sidebar: React.FC = () => {
 
   const handleSave = () => {
     const a = document.createElement("a");
-    const file = new Blob([json], { type: "text/plain" });
+    const file = new Blob([getJson()], { type: "text/plain" });
 
     a.href = window.URL.createObjectURL(file);
     a.download = "jsonvisio.json";

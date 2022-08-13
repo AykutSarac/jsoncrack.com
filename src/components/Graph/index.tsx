@@ -4,14 +4,7 @@ import {
   TransformComponent,
   TransformWrapper,
 } from "react-zoom-pan-pinch";
-import {
-  Canvas,
-  CanvasContainerProps,
-  EdgeData,
-  ElkRoot,
-  NodeData,
-  NodeProps,
-} from "reaflow";
+import { Canvas, EdgeData, ElkRoot, NodeData, NodeProps } from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
 import { NodeModal } from "src/containers/Modals/NodeModal";
 import { getEdgeNodes } from "src/containers/Editor/LiveEditor/helpers";
@@ -20,7 +13,6 @@ import styled from "styled-components";
 import shallow from "zustand/shallow";
 
 interface LayoutProps {
-  json: string;
   isWidget: boolean;
   openModal: () => void;
   setSelectedNode: (node: object) => void;
@@ -42,11 +34,11 @@ const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
 `;
 
 const MemoizedGraph = React.memo(function Layout({
-  json,
   isWidget,
   openModal,
   setSelectedNode,
 }: LayoutProps) {
+  const json = useConfig((state) => state.json);
   const [nodes, setNodes] = React.useState<NodeData[]>([]);
   const [edges, setEdges] = React.useState<EdgeData[]>([]);
   const [size, setSize] = React.useState({
@@ -81,13 +73,20 @@ const MemoizedGraph = React.memo(function Layout({
       setSize({ width: layout.width, height: layout.height });
   };
 
-  const handleNodeClick = (
-    e: React.MouseEvent<SVGElement>,
-    props: NodeProps
-  ) => {
-    setSelectedNode(props.properties.text);
-    openModal();
-  };
+  const handleNodeClick = React.useCallback(
+    (e: React.MouseEvent<SVGElement>, props: NodeProps) => {
+      setSelectedNode(props.properties.text);
+      openModal();
+    },
+    [openModal, setSelectedNode]
+  );
+
+  const node = React.useCallback(
+    (props) => (
+      <CustomNode onClick={(e) => handleNodeClick(e, props)} {...props} />
+    ),
+    [handleNodeClick]
+  );
 
   return (
     <StyledEditorWrapper isWidget={isWidget}>
@@ -114,14 +113,8 @@ const MemoizedGraph = React.memo(function Layout({
             maxHeight={size.height + 100}
             direction={layout}
             key={layout}
-            onCanvasClick={onCanvasClick}
             onLayoutChange={onLayoutChange}
-            node={(props) => (
-              <CustomNode
-                onClick={(e) => handleNodeClick(e, props)}
-                {...props}
-              />
-            )}
+            node={node}
             zoomable={false}
             readonly
           />
@@ -131,10 +124,7 @@ const MemoizedGraph = React.memo(function Layout({
   );
 });
 
-export const Graph: React.FC<{ json: string; isWidget?: boolean }> = ({
-  json,
-  isWidget = false,
-}) => {
+export const Graph = ({ isWidget = false }: { isWidget?: boolean }) => {
   const [isModalVisible, setModalVisible] = React.useState(false);
   const [selectedNode, setSelectedNode] = React.useState<object>({});
 
@@ -143,7 +133,6 @@ export const Graph: React.FC<{ json: string; isWidget?: boolean }> = ({
   return (
     <>
       <MemoizedGraph
-        json={json}
         openModal={openModal}
         setSelectedNode={setSelectedNode}
         isWidget={isWidget}

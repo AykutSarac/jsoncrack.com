@@ -6,7 +6,6 @@ import { loader } from "@monaco-editor/react";
 import { ErrorContainer } from "src/components/ErrorContainer/ErrorContainer";
 import useConfig from "src/hooks/store/useConfig";
 import { Loading } from "src/components/Loading";
-import { CarbonAds } from "src/components/CarbonAds";
 
 loader.config({
   paths: {
@@ -37,15 +36,12 @@ const StyledWrapper = styled.div`
 `;
 
 export const JsonEditor: React.FC = () => {
+  const [value, setValue] = React.useState<string | undefined>("");
+  const [error, setError] = React.useState("");
+
   const json = useConfig((state) => state.json);
   const lightmode = useConfig((state) => state.settings.lightmode);
   const updateJson = useConfig((state) => state.updateJson);
-
-  const [value, setValue] = React.useState("");
-  const [error, setError] = React.useState({
-    message: "",
-    isExpanded: true,
-  });
 
   const editorTheme = React.useMemo(
     () => (lightmode ? "light" : "vs-dark"),
@@ -60,15 +56,15 @@ export const JsonEditor: React.FC = () => {
     const formatTimer = setTimeout(() => {
       try {
         if (!value) {
-          setError((err) => ({ ...err, message: "" }));
-          return updateJson("[]");
+          setError("");
+          return updateJson("{}");
         }
 
         parseJson(value);
         updateJson(value);
-        setError((err) => ({ ...err, message: "" }));
+        setError("");
       } catch (jsonError: any) {
-        setError((err) => ({ ...err, message: jsonError.message }));
+        setError(jsonError.message);
       }
     }, 1500);
 
@@ -77,7 +73,7 @@ export const JsonEditor: React.FC = () => {
 
   return (
     <StyledEditorWrapper>
-      <ErrorContainer error={error} setError={setError} />
+      <ErrorContainer error={error} />
       <StyledWrapper>
         <Editor
           height="100%"
@@ -85,8 +81,8 @@ export const JsonEditor: React.FC = () => {
           value={value}
           theme={editorTheme}
           options={editorOptions}
+          onChange={setValue}
           loading={<Loading message="Loading Editor..." />}
-          onChange={(value) => setValue(value as string)}
         />
       </StyledWrapper>
     </StyledEditorWrapper>
