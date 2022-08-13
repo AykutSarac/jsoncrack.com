@@ -20,16 +20,15 @@ if (process.env.NODE_ENV !== "development") {
 }
 
 function JsonVisio({ Component, pageProps }: AppProps) {
-  const { json } = useRouter().query;
-
+  const { query } = useRouter();
   const lightmode = useConfig((state) => state.settings.lightmode);
-  const [isRendered, setRendered] = React.useState(false);
-
   const updateJson = useConfig((state) => state.updateJson);
+  const [isRendered, setRendered] = React.useState(false);
 
   React.useEffect(() => {
     const isJsonValid =
-      typeof json === "string" && isValidJson(decodeURIComponent(json));
+      typeof query.json === "string" &&
+      isValidJson(decodeURIComponent(query.json));
 
     if (isJsonValid) {
       const jsonDecoded = decompress(JSON.parse(isJsonValid));
@@ -37,7 +36,7 @@ function JsonVisio({ Component, pageProps }: AppProps) {
 
       updateJson(jsonString);
     }
-  }, [json, updateJson]);
+  }, [query.json, updateJson]);
 
   React.useEffect(() => {
     if (!window.matchMedia("(display-mode: standalone)").matches) {

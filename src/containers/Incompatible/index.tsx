@@ -33,12 +33,12 @@ export const StyledIncompatible = styled.div`
 `;
 
 export const Incompatible: React.FC = () => {
-  const route = useRouter();
+  const { push } = useRouter();
 
   return (
     <StyledIncompatible>
       This app is not compatible with your device!
-      <Button className="incompatible" onClick={() => route.push("/")}>
+      <Button className="incompatible" onClick={() => push("/")}>
         Go Back
       </Button>
     </StyledIncompatible>

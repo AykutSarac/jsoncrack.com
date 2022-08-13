@@ -140,7 +140,7 @@ export const Sidebar: React.FC = () => {
   const updateSetting = useConfig((state) => state.updateSetting);
 
   const { expand, performance, layout } = useConfig((state) => state.settings);
-  const router = useRouter();
+  const { push } = useRouter();
   const [uploadVisible, setUploadVisible] = React.useState(false);
   const [clearVisible, setClearVisible] = React.useState(false);
   const [shareVisible, setShareVisible] = React.useState(false);
@@ -181,7 +181,7 @@ export const Sidebar: React.FC = () => {
     <StyledSidebar>
       <StyledTopWrapper>
         <Link passHref href="/">
-          <StyledElement onClick={() => router.push("/")}>
+          <StyledElement onClick={() => push("/")}>
             <StyledLogo>
               <StyledText>J</StyledText>
               <StyledText secondary>V</StyledText>
