@@ -6,7 +6,10 @@ const toString = (value: string | object) => {
 
   if (isObject) {
     const entries = Object.entries(value);
-    const stringObj = entries.map((val) => [val[0], String(val[1])]);
+    const stringObj = entries.map((val) => [
+      JSON.stringify(val[0]).replaceAll('"', ""),
+      JSON.stringify(val[1]),
+    ]);
 
     return Object.fromEntries(stringObj);
   }
