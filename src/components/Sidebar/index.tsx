@@ -44,7 +44,7 @@ const StyledElement = styled.div<{ beta?: boolean }>`
   display: flex;
   justify-content: center;
   text-align: center;
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 600;
   width: 100%;
   color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
