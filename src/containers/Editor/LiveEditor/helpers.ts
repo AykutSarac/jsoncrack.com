@@ -48,7 +48,7 @@ export function getEdgeNodes(
         data: {
           isParent: el.parent,
         },
-        width: isExpanded ? 35 + longestLine * 8 : 180,
+        width: isExpanded ? 35 + longestLine * (el.parent ? 9 : 8) : 180,
         height,
       });
     } else {
