@@ -20,10 +20,10 @@ const TextNode: React.FC<CustomNodeProps<string>> = ({
           <Styled.StyledKey
             data-x={x}
             data-y={y}
-            data-key={value}
+            data-key={JSON.stringify(value)}
             parent={isParent}
           >
-            <Styled.StyledLinkItUrl>{value}</Styled.StyledLinkItUrl>
+            <Styled.StyledLinkItUrl>{JSON.stringify(value).replaceAll('"', "")}</Styled.StyledLinkItUrl>
           </Styled.StyledKey>
         </Styled.StyledText>
       </ConditionalWrapper>

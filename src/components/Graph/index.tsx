@@ -13,11 +13,11 @@ import {
   NodeProps,
 } from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
+import { NodeModal } from "src/containers/Modals/NodeModal";
 import { getEdgeNodes } from "src/containers/Editor/LiveEditor/helpers";
 import useConfig from "src/hooks/store/useConfig";
 import styled from "styled-components";
 import shallow from "zustand/shallow";
-import toast from "react-hot-toast";
 
 interface GraphProps {
   json: string;
@@ -48,6 +48,7 @@ export const Graph: React.FC<GraphProps & CanvasContainerProps> = ({
   isWidget = false,
   ...props
 }) => {
+  const [isModalVisible, setModalVisible] = React.useState(false);
   const updateSetting = useConfig((state) => state.updateSetting);
   const [expand, layout] = useConfig(
     (state) => [state.settings.expand, state.settings.layout],
@@ -58,6 +59,7 @@ export const Graph: React.FC<GraphProps & CanvasContainerProps> = ({
     updateSetting("zoomPanPinch", ref);
   };
 
+  const [selectedNode, setSelectedNode] = React.useState<NodeData | null>(null);
   const [nodes, setNodes] = React.useState<NodeData[]>([]);
   const [edges, setEdges] = React.useState<EdgeData[]>([]);
   const [size, setSize] = React.useState({
@@ -86,49 +88,56 @@ export const Graph: React.FC<GraphProps & CanvasContainerProps> = ({
     e: React.MouseEvent<SVGElement>,
     props: NodeProps
   ) => {
-    if (e.detail === 2) {
-      toast("Object copied to clipboard!");
-      navigator.clipboard.writeText(JSON.stringify(props.properties.text));
-    }
+    setSelectedNode(props.properties);
+    setModalVisible(true);
   };
 
   return (
-    <StyledEditorWrapper isWidget={isWidget}>
-      <TransformWrapper
-        maxScale={1.8}
-        minScale={0.4}
-        initialScale={0.7}
-        wheel={wheelOptions}
-        onInit={onInit}
-      >
-        <TransformComponent
-          wrapperStyle={{
-            width: "100%",
-            height: "100%",
-            overflow: "hidden",
-          }}
+    <>
+      <StyledEditorWrapper isWidget={isWidget}>
+        <TransformWrapper
+          maxScale={1.8}
+          minScale={0.4}
+          initialScale={0.7}
+          wheel={wheelOptions}
+          onInit={onInit}
         >
-          <Canvas
-            nodes={nodes}
-            edges={edges}
-            maxWidth={size.width + 100}
-            maxHeight={size.height + 100}
-            direction={layout}
-            key={layout}
-            onCanvasClick={onCanvasClick}
-            onLayoutChange={onLayoutChange}
-            node={(props) => (
-              <CustomNode
-                onClick={(e) => handleNodeClick(e, props)}
-                {...props}
-              />
-            )}
-            zoomable={false}
-            readonly
-            {...props}
-          />
-        </TransformComponent>
-      </TransformWrapper>
-    </StyledEditorWrapper>
+          <TransformComponent
+            wrapperStyle={{
+              width: "100%",
+              height: "100%",
+              overflow: "hidden",
+            }}
+          >
+            <Canvas
+              nodes={nodes}
+              edges={edges}
+              maxWidth={size.width + 100}
+              maxHeight={size.height + 100}
+              direction={layout}
+              key={layout}
+              onCanvasClick={onCanvasClick}
+              onLayoutChange={onLayoutChange}
+              node={(props) => (
+                <CustomNode
+                  onClick={(e) => handleNodeClick(e, props)}
+                  {...props}
+                />
+              )}
+              zoomable={false}
+              readonly
+              {...props}
+            />
+          </TransformComponent>
+        </TransformWrapper>
+      </StyledEditorWrapper>
+      {!isWidget && selectedNode && (
+        <NodeModal
+          selectedNode={selectedNode.text}
+          visible={isModalVisible}
+          setVisible={setModalVisible}
+        />
+      )}
+    </>
   );
 };
