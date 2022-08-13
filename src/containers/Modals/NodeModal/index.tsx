@@ -1,9 +1,16 @@
 import React from "react";
 import toast from "react-hot-toast";
 import { FiCopy } from "react-icons/fi";
+import { NodeData } from "reaflow";
 import { Button } from "src/components/Button";
 import { Modal } from "src/components/Modal";
 import styled from "styled-components";
+
+interface NodeModalProps {
+  selectedNode: object;
+  visible: boolean;
+  closeModal: () => void;
+}
 
 const StyledTextarea = styled.textarea`
   resize: none;
@@ -19,16 +26,19 @@ const StyledTextarea = styled.textarea`
   border: none;
 `;
 
-export const NodeModal = ({ selectedNode, visible = true, setVisible }) => {
+export const NodeModal = ({
+  selectedNode,
+  visible,
+  closeModal,
+}: NodeModalProps) => {
   const handleClipboard = () => {
     toast("Content copied to clipboard!");
     navigator.clipboard.writeText(JSON.stringify(selectedNode));
-    setVisible(false);
+    closeModal();
   };
 
-
   return (
-    <Modal visible={visible} setVisible={setVisible}>
+    <Modal visible={visible} setVisible={closeModal}>
       <Modal.Header>Node Content</Modal.Header>
       <Modal.Content>
         <StyledTextarea
@@ -42,7 +52,7 @@ export const NodeModal = ({ selectedNode, visible = true, setVisible }) => {
           )}
         />
       </Modal.Content>
-      <Modal.Controls setVisible={setVisible}>
+      <Modal.Controls setVisible={closeModal}>
         <Button status="SECONDARY" onClick={handleClipboard}>
           <FiCopy size={18} /> Clipboard
         </Button>

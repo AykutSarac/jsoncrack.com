@@ -19,14 +19,12 @@ import useConfig from "src/hooks/store/useConfig";
 import styled from "styled-components";
 import shallow from "zustand/shallow";
 
-interface GraphProps {
+interface LayoutProps {
   json: string;
-  isWidget?: boolean;
+  isWidget: boolean;
+  openModal: () => void;
+  setSelectedNode: (node: object) => void;
 }
-
-const wheelOptions = {
-  step: 0.05,
-};
 
 const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
   position: absolute;
@@ -43,23 +41,12 @@ const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
   }
 `;
 
-export const Graph: React.FC<GraphProps & CanvasContainerProps> = ({
+const MemoizedGraph = React.memo(function Layout({
   json,
-  isWidget = false,
-  ...props
-}) => {
-  const [isModalVisible, setModalVisible] = React.useState(false);
-  const updateSetting = useConfig((state) => state.updateSetting);
-  const [expand, layout] = useConfig(
-    (state) => [state.settings.expand, state.settings.layout],
-    shallow
-  );
-
-  const onInit = (ref: ReactZoomPanPinchRef) => {
-    updateSetting("zoomPanPinch", ref);
-  };
-
-  const [selectedNode, setSelectedNode] = React.useState<NodeData | null>(null);
+  isWidget,
+  openModal,
+  setSelectedNode,
+}: LayoutProps) {
   const [nodes, setNodes] = React.useState<NodeData[]>([]);
   const [edges, setEdges] = React.useState<EdgeData[]>([]);
   const [size, setSize] = React.useState({
@@ -67,12 +54,22 @@ export const Graph: React.FC<GraphProps & CanvasContainerProps> = ({
     height: 2000,
   });
 
+  const updateSetting = useConfig((state) => state.updateSetting);
+  const [expand, layout] = useConfig(
+    (state) => [state.settings.expand, state.settings.layout],
+    shallow
+  );
+
   React.useEffect(() => {
     const { nodes, edges } = getEdgeNodes(json, expand);
 
     setNodes(nodes);
     setEdges(edges);
   }, [json, expand]);
+
+  const onInit = (ref: ReactZoomPanPinchRef) => {
+    updateSetting("zoomPanPinch", ref);
+  };
 
   const onCanvasClick = () => {
     const input = document.querySelector("input:focus") as HTMLInputElement;
@@ -88,54 +85,74 @@ export const Graph: React.FC<GraphProps & CanvasContainerProps> = ({
     e: React.MouseEvent<SVGElement>,
     props: NodeProps
   ) => {
-    setSelectedNode(props.properties);
-    setModalVisible(true);
+    setSelectedNode(props.properties.text);
+    openModal();
   };
 
   return (
-    <>
-      <StyledEditorWrapper isWidget={isWidget}>
-        <TransformWrapper
-          maxScale={1.8}
-          minScale={0.4}
-          initialScale={0.7}
-          wheel={wheelOptions}
-          onInit={onInit}
+    <StyledEditorWrapper isWidget={isWidget}>
+      <TransformWrapper
+        onInit={onInit}
+        maxScale={1.8}
+        minScale={0.4}
+        initialScale={0.7}
+        wheel={{
+          step: 0.05,
+        }}
+      >
+        <TransformComponent
+          wrapperStyle={{
+            width: "100%",
+            height: "100%",
+            overflow: "hidden",
+          }}
         >
-          <TransformComponent
-            wrapperStyle={{
-              width: "100%",
-              height: "100%",
-              overflow: "hidden",
-            }}
-          >
-            <Canvas
-              nodes={nodes}
-              edges={edges}
-              maxWidth={size.width + 100}
-              maxHeight={size.height + 100}
-              direction={layout}
-              key={layout}
-              onCanvasClick={onCanvasClick}
-              onLayoutChange={onLayoutChange}
-              node={(props) => (
-                <CustomNode
-                  onClick={(e) => handleNodeClick(e, props)}
-                  {...props}
-                />
-              )}
-              zoomable={false}
-              readonly
-              {...props}
-            />
-          </TransformComponent>
-        </TransformWrapper>
-      </StyledEditorWrapper>
-      {!isWidget && selectedNode && (
+          <Canvas
+            nodes={nodes}
+            edges={edges}
+            maxWidth={size.width + 100}
+            maxHeight={size.height + 100}
+            direction={layout}
+            key={layout}
+            onCanvasClick={onCanvasClick}
+            onLayoutChange={onLayoutChange}
+            node={(props) => (
+              <CustomNode
+                onClick={(e) => handleNodeClick(e, props)}
+                {...props}
+              />
+            )}
+            zoomable={false}
+            readonly
+          />
+        </TransformComponent>
+      </TransformWrapper>
+    </StyledEditorWrapper>
+  );
+});
+
+export const Graph: React.FC<{ json: string; isWidget?: boolean }> = ({
+  json,
+  isWidget = false,
+}) => {
+  const [isModalVisible, setModalVisible] = React.useState(false);
+  const [selectedNode, setSelectedNode] = React.useState<object>({});
+
+  const openModal = React.useCallback(() => setModalVisible(true), []);
+
+  return (
+    <>
+      <MemoizedGraph
+        json={json}
+        openModal={openModal}
+        setSelectedNode={setSelectedNode}
+        isWidget={isWidget}
+      />
+      {!isWidget && (
         <NodeModal
-          selectedNode={selectedNode.text}
+          selectedNode={selectedNode}
           visible={isModalVisible}
-          setVisible={setModalVisible}
+          closeModal={() => setModalVisible(false)}
         />
       )}
     </>
