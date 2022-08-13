@@ -25,6 +25,7 @@ const ObjectNode: React.FC<CustomNodeProps<[string, string][]>> = ({
                   data-y={y}
                   key={idx}
                   width={width}
+                  value={val[1]}
                 >
                   <Styled.StyledKey objectKey>{val[0]}: </Styled.StyledKey>
                   {val[1]}

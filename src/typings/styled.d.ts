@@ -26,6 +26,7 @@ declare module "styled-components" {
     SILVER_DARK: string;
     PRIMARY: string;
     NODE_KEY: string;
+    OBJECT_KEY: string;
 
     INTERACTIVE_NORMAL: string;
     INTERACTIVE_HOVER: string;

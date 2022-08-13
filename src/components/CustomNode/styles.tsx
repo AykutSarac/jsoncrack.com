@@ -1,4 +1,10 @@
-import styled from "styled-components";
+import styled, { DefaultTheme } from "styled-components";
+
+function getTypeColor(value: string, theme: DefaultTheme) {
+  if (!Number.isNaN(+value)) return "#FD0079";
+  if (value === "true") return theme.TEXT_POSITIVE;
+  if (value === "false") return theme.TEXT_DANGER;
+}
 
 export const StyledTextWrapper = styled.div`
   display: flex;
@@ -56,14 +62,20 @@ export const StyledKey = styled.span<{
 }>`
   font-weight: 500;
   color: ${({ theme, objectKey, parent }) =>
-    parent ? theme.NODE_KEY : objectKey ? "#5c87ff" : theme.TEXT_POSITIVE};
+    parent
+      ? theme.NODE_KEY
+      : objectKey
+      ? theme.OBJECT_KEY
+      : theme.TEXT_POSITIVE};
+  font-size: ${({ parent }) => parent && "14px"};
 `;
 
-export const StyledRow = styled.span<{ width: number }>`
+export const StyledRow = styled.span<{ width: number; value: string }>`
   height: 18px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   padding: 0 auto;
   width: ${({ width }) => `${width - 20}px`};
+  color: ${({ theme, value }) => getTypeColor(value, theme)};
 `;
