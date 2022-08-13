@@ -23,7 +23,7 @@ const TextNode: React.FC<CustomNodeProps<string>> = ({
             data-key={value}
             parent={isParent}
           >
-            {value}
+            <Styled.StyledLinkItUrl>{value}</Styled.StyledLinkItUrl>
           </Styled.StyledKey>
         </Styled.StyledText>
       </ConditionalWrapper>

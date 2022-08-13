@@ -28,7 +28,7 @@ const ObjectNode: React.FC<CustomNodeProps<[string, string][]>> = ({
                   value={val[1]}
                 >
                   <Styled.StyledKey objectKey>{val[0]}: </Styled.StyledKey>
-                  {val[1]}
+                  <Styled.StyledLinkItUrl>{val[1]}</Styled.StyledLinkItUrl>
                 </Styled.StyledRow>
               )
           )}
