@@ -1,10 +1,16 @@
 import styled, { DefaultTheme } from "styled-components";
+import { LinkItUrl } from "react-linkify-it";
 
 function getTypeColor(value: string, theme: DefaultTheme) {
   if (!Number.isNaN(+value)) return "#FD0079";
   if (value === "true") return theme.TEXT_POSITIVE;
   if (value === "false") return theme.TEXT_DANGER;
 }
+
+export const StyledLinkItUrl = styled(LinkItUrl)`
+  text-decoration: underline;
+  pointer-events: all;
+`;
 
 export const StyledTextWrapper = styled.div`
   display: flex;

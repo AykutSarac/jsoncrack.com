@@ -6034,6 +6034,11 @@ react-is@^18.0.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.1.0.tgz#61aaed3096d30eacf2a2127118b5b41387d32a67"
   integrity sha512-Fl7FuabXsJnV5Q1qIOQwx/sagGF18kogb4gpfcG4gjLBWO0WDiiz1ko/ExayuxE7InyQkBLkxRFG5oxY6Uu3Kg==
 
+react-linkify-it@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/react-linkify-it/-/react-linkify-it-1.0.7.tgz#80486c0176644691345b19722678e4d716de5384"
+  integrity sha512-B0Vy0KCAdpkT7Ql/bOpPuAP4l20f78Eaq1yD/q9J2RltPSwD900I0GzQPXaH6gnoWX/qmkBXL42Q3jTnWw8KCw==
+
 react-render-if-visible@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/react-render-if-visible/-/react-render-if-visible-2.1.0.tgz#2a8d3c3e2f32394c78967bb58ee7546666831605"
