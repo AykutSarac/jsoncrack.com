@@ -18,6 +18,7 @@ import useConfig from "src/hooks/store/useConfig";
 import styled from "styled-components";
 import shallow from "zustand/shallow";
 import toast from "react-hot-toast";
+import { flattenTree, extractTree } from "src/utils/json-editor-parser";
 
 interface GraphProps {
   json: string;
@@ -49,8 +50,8 @@ export const Graph: React.FC<GraphProps & CanvasContainerProps> = ({
   ...props
 }) => {
   const updateSetting = useConfig((state) => state.updateSetting);
-  const [expand, layout] = useConfig(
-    (state) => [state.settings.expand, state.settings.layout],
+  const [expand, layout, navigationMode] = useConfig(
+    (state) => [state.settings.expand, state.settings.layout, state.settings.navigationMode],
     shallow
   );
 
@@ -59,6 +60,7 @@ export const Graph: React.FC<GraphProps & CanvasContainerProps> = ({
   };
 
   const [nodes, setNodes] = React.useState<NodeData[]>([]);
+  const [mainTree, setMainTree] = React.useState([]);
   const [edges, setEdges] = React.useState<EdgeData[]>([]);
   const [size, setSize] = React.useState({
     width: 2000,
@@ -66,11 +68,16 @@ export const Graph: React.FC<GraphProps & CanvasContainerProps> = ({
   });
 
   React.useEffect(() => {
-    const { nodes, edges } = getEdgeNodes(json, expand);
+    let parsedJson = JSON.parse(json)
+    if (!Array.isArray(parsedJson)) parsedJson = [parsedJson];
+    const mainTree = extractTree(parsedJson);
+    const flatTree = flattenTree(mainTree);
+    const { nodes, edges } = getEdgeNodes(flatTree, expand);
 
+    setMainTree(mainTree);
     setNodes(nodes);
     setEdges(edges);
-  }, [json, expand]);
+  }, [json, expand, navigationMode]);
 
   const onCanvasClick = () => {
     const input = document.querySelector("input:focus") as HTMLInputElement;
@@ -86,6 +93,15 @@ export const Graph: React.FC<GraphProps & CanvasContainerProps> = ({
     e: React.MouseEvent<SVGElement>,
     props: NodeProps
   ) => {
+    if (navigationMode) {
+      const subTree = searchSubTree(mainTree, props.id);
+      if (subTree.length) {
+        const flatTree = flattenTree(subTree)
+        const { nodes, edges } = getEdgeNodes(flatTree, expand);
+        setNodes(nodes);
+        setEdges(edges);
+      }
+    }
     if (e.detail === 2) {
       toast("Object copied to clipboard!");
       navigator.clipboard.writeText(JSON.stringify(props.properties.text));
@@ -132,3 +148,17 @@ export const Graph: React.FC<GraphProps & CanvasContainerProps> = ({
     </StyledEditorWrapper>
   );
 };
+
+const searchSubTree = (trees, id) => {
+  for (let i=0; i<trees.length; i++) {
+    let tree = trees[i];
+    const cond = tree.id == id
+    if (cond) return [tree];
+  }
+  for (let i=0; i<trees.length; i++) {
+    let tree = trees[i];
+    let result = searchSubTree(tree.children, id)
+    if (result.length) return result
+  }
+  return []
+}

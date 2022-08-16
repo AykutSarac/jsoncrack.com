@@ -16,6 +16,7 @@ import {
   AiOutlineSave,
   AiOutlineFileAdd,
   AiOutlineLink,
+  AiOutlineApartment,
 } from "react-icons/ai";
 
 import { Tooltip } from "src/components/Tooltip";
@@ -140,7 +141,7 @@ export const Sidebar: React.FC = () => {
   const json = useConfig((state) => state.json);
   const updateSetting = useConfig((state) => state.updateSetting);
 
-  const { expand, performance, layout } = useConfig((state) => state.settings);
+  const { expand, performance, layout, navigationMode } = useConfig((state) => state.settings);
   const router = useRouter();
   const [uploadVisible, setUploadVisible] = React.useState(false);
   const [clearVisible, setClearVisible] = React.useState(false);
@@ -171,6 +172,10 @@ export const Sidebar: React.FC = () => {
     });
 
     updateSetting("performance", !performance);
+  };
+
+  const setNavigationMode = () => {
+    updateSetting("navigationMode", !navigationMode);
   };
 
   const toggleLayout = () => {
@@ -224,6 +229,11 @@ export const Sidebar: React.FC = () => {
         <Tooltip title="Clear JSON">
           <StyledElement onClick={() => setClearVisible(true)}>
             <AiOutlineDelete />
+          </StyledElement>
+        </Tooltip>
+        <Tooltip title="Navigation mode">
+          <StyledElement onClick={() => setNavigationMode(true)}>
+            <AiOutlineApartment/>
           </StyledElement>
         </Tooltip>
         <Tooltip title="Share">

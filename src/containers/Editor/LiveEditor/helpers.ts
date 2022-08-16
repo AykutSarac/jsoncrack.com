@@ -15,13 +15,12 @@ const toString = (value: string | object) => {
 };
 
 export function getEdgeNodes(
-  graph: string,
+  elements: any,
   isExpanded: boolean = true
 ): {
   nodes: NodeData[];
   edges: EdgeData[];
 } {
-  const elements = parser(JSON.parse(graph));
 
   let nodes: NodeData[] = [],
     edges: EdgeData[] = [];

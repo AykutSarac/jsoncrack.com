@@ -41,7 +41,7 @@ function generateChildren(object: Object, nextId: () => string) {
           id: nextId(),
           text: k,
           parent: true,
-          children: extract(v, nextId),
+          children: extractTree(v, nextId),
         },
       ];
     });
@@ -58,7 +58,7 @@ function generateNodeData(object: Object | number) {
   return String(object);
 }
 
-const extract = (
+export const extractTree = (
   os: string[] | object[] | null,
   nextId = (
     (id) => () =>
@@ -89,11 +89,16 @@ const relationships = (xs: { id: string; children: never[] }[]) => {
   ]);
 };
 
+export const flattenTree = tree => {
+  const res = [...flatten(tree), ...relationships(tree)];
+  return res;
+};
+ 
 export const parser = (input: string | string[]) => {
   try {
     if (!Array.isArray(input)) input = [input];
 
-    const mappedElements = extract(input);
+    const mappedElements = extractTree(input);
     const res = [...flatten(mappedElements), ...relationships(mappedElements)];
 
     return res;
