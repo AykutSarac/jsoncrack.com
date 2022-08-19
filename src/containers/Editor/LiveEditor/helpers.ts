@@ -1,19 +1,6 @@
 import { CanvasDirection, NodeData, EdgeData } from "reaflow";
 import { parser } from "src/utils/json-editor-parser";
 
-const toString = (value: string | object) => {
-  const isObject = value instanceof Object;
-
-  if (isObject) {
-    const entries = Object.entries(value);
-    const stringObj = entries.map((val) => [val[0], String(val[1])]);
-
-    return Object.fromEntries(stringObj);
-  }
-
-  return String(value);
-};
-
 export function getEdgeNodes(
   elements: any,
   isExpanded: boolean = true
@@ -40,11 +27,11 @@ export function getEdgeNodes(
 
       nodes.push({
         id: el.id,
-        text: toString(el.text),
+        text: el.text,
         data: {
           isParent: el.parent,
         },
-        width: isExpanded ? 35 + longestLine * 8 : 180,
+        width: isExpanded ? 35 + longestLine * (el.parent ? 9 : 8) : 180,
         height,
       });
     } else {

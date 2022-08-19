@@ -27,8 +27,7 @@ import { ShareModal } from "src/containers/Modals/ShareModal";
 import { IoAlertCircleSharp } from "react-icons/io5";
 import useConfig from "src/hooks/store/useConfig";
 import { getNextLayout } from "src/containers/Editor/LiveEditor/helpers";
-import { FaRegHeart } from "react-icons/fa";
-import { HiHeart, HiOutlineHeart } from "react-icons/hi";
+import { HiHeart } from "react-icons/hi";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -46,7 +45,7 @@ const StyledElement = styled.div<{ beta?: boolean }>`
   display: flex;
   justify-content: center;
   text-align: center;
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 600;
   width: 100%;
   color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
@@ -138,18 +137,18 @@ const StyledAlertIcon = styled(IoAlertCircleSharp)`
 `;
 
 export const Sidebar: React.FC = () => {
-  const json = useConfig((state) => state.json);
+  const getJson = useConfig((state) => state.getJson);
   const updateSetting = useConfig((state) => state.updateSetting);
 
   const { expand, performance, layout, navigationMode } = useConfig((state) => state.settings);
-  const router = useRouter();
+  const { push } = useRouter();
   const [uploadVisible, setUploadVisible] = React.useState(false);
   const [clearVisible, setClearVisible] = React.useState(false);
   const [shareVisible, setShareVisible] = React.useState(false);
 
   const handleSave = () => {
     const a = document.createElement("a");
-    const file = new Blob([json], { type: "text/plain" });
+    const file = new Blob([getJson()], { type: "text/plain" });
 
     a.href = window.URL.createObjectURL(file);
     a.download = "jsonvisio.json";
@@ -174,7 +173,7 @@ export const Sidebar: React.FC = () => {
     updateSetting("performance", !performance);
   };
 
-  const setNavigationMode = () => {
+  const setNavigationMode = (value: boolean) => {
     updateSetting("navigationMode", !navigationMode);
   };
 
@@ -187,7 +186,7 @@ export const Sidebar: React.FC = () => {
     <StyledSidebar>
       <StyledTopWrapper>
         <Link passHref href="/">
-          <StyledElement onClick={() => router.push("/")}>
+          <StyledElement onClick={() => push("/")}>
             <StyledLogo>
               <StyledText>J</StyledText>
               <StyledText secondary>V</StyledText>

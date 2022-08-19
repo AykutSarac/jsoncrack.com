@@ -4,30 +4,20 @@ import {
   TransformComponent,
   TransformWrapper,
 } from "react-zoom-pan-pinch";
-import {
-  Canvas,
-  CanvasContainerProps,
-  EdgeData,
-  ElkRoot,
-  NodeData,
-  NodeProps,
-} from "reaflow";
+import { Canvas, EdgeData, ElkRoot, NodeData, NodeProps } from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
+import { NodeModal } from "src/containers/Modals/NodeModal";
 import { getEdgeNodes } from "src/containers/Editor/LiveEditor/helpers";
 import useConfig from "src/hooks/store/useConfig";
 import styled from "styled-components";
 import shallow from "zustand/shallow";
-import toast from "react-hot-toast";
 import { flattenTree, extractTree } from "src/utils/json-editor-parser";
 
-interface GraphProps {
-  json: string;
-  isWidget?: boolean;
+interface LayoutProps {
+  isWidget: boolean;
+  openModal: () => void;
+  setSelectedNode: (node: object) => void;
 }
-
-const wheelOptions = {
-  step: 0.05,
-};
 
 const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
   position: absolute;
@@ -44,21 +34,12 @@ const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
   }
 `;
 
-export const Graph: React.FC<GraphProps & CanvasContainerProps> = ({
-  json,
-  isWidget = false,
-  ...props
-}) => {
-  const updateSetting = useConfig((state) => state.updateSetting);
-  const [expand, layout, navigationMode] = useConfig(
-    (state) => [state.settings.expand, state.settings.layout, state.settings.navigationMode],
-    shallow
-  );
-
-  const onInit = (ref: ReactZoomPanPinchRef) => {
-    updateSetting("zoomPanPinch", ref);
-  };
-
+const MemoizedGraph = React.memo(function Layout({
+  isWidget,
+  openModal,
+  setSelectedNode,
+}: LayoutProps) {
+  const json = useConfig((state) => state.json);
   const [nodes, setNodes] = React.useState<NodeData[]>([]);
   const [mainTree, setMainTree] = React.useState([]);
   const [edges, setEdges] = React.useState<EdgeData[]>([]);
@@ -66,6 +47,12 @@ export const Graph: React.FC<GraphProps & CanvasContainerProps> = ({
     width: 2000,
     height: 2000,
   });
+
+  const updateSetting = useConfig((state) => state.updateSetting);
+  const [expand, layout, navigationMode] = useConfig(
+    (state) => [state.settings.expand, state.settings.layout, state.settings.navigationMode],
+    shallow
+  );
 
   React.useEffect(() => {
     let parsedJson = JSON.parse(json)
@@ -77,7 +64,11 @@ export const Graph: React.FC<GraphProps & CanvasContainerProps> = ({
     setMainTree(mainTree);
     setNodes(nodes);
     setEdges(edges);
-  }, [json, expand, navigationMode]);
+  }, [json, expand]);
+
+  const onInit = (ref: ReactZoomPanPinchRef) => {
+    updateSetting("zoomPanPinch", ref);
+  };
 
   const onCanvasClick = () => {
     const input = document.querySelector("input:focus") as HTMLInputElement;
@@ -89,33 +80,41 @@ export const Graph: React.FC<GraphProps & CanvasContainerProps> = ({
       setSize({ width: layout.width, height: layout.height });
   };
 
-  const handleNodeClick = (
-    e: React.MouseEvent<SVGElement>,
-    props: NodeProps
-  ) => {
-    if (navigationMode) {
-      const subTree = searchSubTree(mainTree, props.id);
-      if (subTree.length) {
-        const flatTree = flattenTree(subTree)
-        const { nodes, edges } = getEdgeNodes(flatTree, expand);
-        setNodes(nodes);
-        setEdges(edges);
+  const handleNodeClick = React.useCallback(
+    (e: React.MouseEvent<SVGElement>, props: NodeProps) => {
+      if (navigationMode) {
+        const subTree = searchSubTree(mainTree, props.id);
+        if (subTree.length) {
+          const flatTree = flattenTree(subTree)
+          const { nodes, edges } = getEdgeNodes(flatTree, expand);
+          setNodes(nodes);
+          setEdges(edges);
+        }
+      } else {
+        setSelectedNode(props.properties.text);
+        openModal();
       }
-    }
-    if (e.detail === 2) {
-      toast("Object copied to clipboard!");
-      navigator.clipboard.writeText(JSON.stringify(props.properties.text));
-    }
-  };
+    },
+    [expand, mainTree, navigationMode, openModal, setSelectedNode]
+  );
+
+  const node = React.useCallback(
+    (props) => (
+      <CustomNode onClick={(e) => handleNodeClick(e, props)} {...props} />
+    ),
+    [handleNodeClick]
+  );
 
   return (
     <StyledEditorWrapper isWidget={isWidget}>
       <TransformWrapper
+        onInit={onInit}
         maxScale={1.8}
         minScale={0.4}
         initialScale={0.7}
-        wheel={wheelOptions}
-        onInit={onInit}
+        wheel={{
+          step: 0.05,
+        }}
       >
         <TransformComponent
           wrapperStyle={{
@@ -131,21 +130,38 @@ export const Graph: React.FC<GraphProps & CanvasContainerProps> = ({
             maxHeight={size.height + 100}
             direction={layout}
             key={layout}
-            onCanvasClick={onCanvasClick}
             onLayoutChange={onLayoutChange}
-            node={(props) => (
-              <CustomNode
-                onClick={(e) => handleNodeClick(e, props)}
-                {...props}
-              />
-            )}
+            node={node}
             zoomable={false}
             readonly
-            {...props}
           />
         </TransformComponent>
       </TransformWrapper>
     </StyledEditorWrapper>
+  );
+});
+
+export const Graph = ({ isWidget = false }: { isWidget?: boolean }) => {
+  const [isModalVisible, setModalVisible] = React.useState(false);
+  const [selectedNode, setSelectedNode] = React.useState<object>({});
+
+  const openModal = React.useCallback(() => setModalVisible(true), []);
+
+  return (
+    <>
+      <MemoizedGraph
+        openModal={openModal}
+        setSelectedNode={setSelectedNode}
+        isWidget={isWidget}
+      />
+      {!isWidget && (
+        <NodeModal
+          selectedNode={selectedNode}
+          visible={isModalVisible}
+          closeModal={() => setModalVisible(false)}
+        />
+      )}
+    </>
   );
 };
 

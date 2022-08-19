@@ -24,6 +24,7 @@ const StyledUploadWrapper = styled.label`
   border: 2px dashed ${({ theme }) => theme.BACKGROUND_TERTIARY};
   border-radius: 5px;
   width: 100%;
+  min-height: 200px;
   padding: 16px;
   cursor: pointer;
 

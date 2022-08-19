@@ -7,6 +7,7 @@ import { BiErrorAlt } from "react-icons/bi";
 import { compress } from "compress-json";
 import useConfig from "src/hooks/store/useConfig";
 import { Input } from "src/components/Input";
+import packageJson from "package.json";
 
 const StyledWarning = styled.p``;
 
@@ -46,8 +47,8 @@ export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   const json = useConfig((state) => state.json);
   const [encodedJson, setEncodedJson] = React.useState("");
 
-  const embedText = `<iframe src="https://jsonvisio.com/widget?json=${encodedJson}" width="512" height="384" style="border: 2px solid #b9bbbe; border-radius: 6px;"></iframe>`;
-  const shareURL = `https://jsonvisio.com/editor?json=${encodedJson}`;
+  const embedText = `<iframe src="${packageJson.homepage}/widget?json=${encodedJson}" width="512" height="384" style="border: 2px solid #b9bbbe; border-radius: 6px;"></iframe>`;
+  const shareURL = `${packageJson.homepage}/editor?json=${encodedJson}`;
 
   React.useEffect(() => {
     const jsonEncode = compress(JSON.parse(json));

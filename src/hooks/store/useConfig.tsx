@@ -18,6 +18,7 @@ function getTomorrow() {
 
 export interface Config {
   json: string;
+  getJson: () => string;
   settings: StorageConfig;
   sponsors: {
     users: Sponsor[];
@@ -36,6 +37,7 @@ const useConfig = create(
   persist<Config>(
     (set, get) => ({
       json: JSON.stringify(defaultJson),
+      getJson: () => get().json,
       settings: defaultConfig,
       sponsors: null,
       setSponsors: (users) =>

@@ -77,7 +77,7 @@ export const Sponsors = () => {
     if (!sponsors?.nextDate || sponsors?.nextDate < Date.now()) {
       getSponsors().then(setSponsors);
     }
-  }, []);
+  }, [setSponsors, sponsors?.nextDate]);
 
   if (!sponsors?.users?.length) return null;
 
@@ -86,7 +86,13 @@ export const Sponsors = () => {
       {sponsors.users.map((user) => (
         <StyledSponsor handle={user.handle} key={user.handle}>
           <a href={user.profile}>
-            <img src={user.avatar} alt={user.handle} width="40" height="40" />
+            <img
+              src={user.avatar}
+              alt={user.handle}
+              width="40"
+              height="40"
+              loading="lazy"
+            />
           </a>
         </StyledSponsor>
       ))}

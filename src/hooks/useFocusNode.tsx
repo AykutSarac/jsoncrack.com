@@ -61,7 +61,7 @@ export const useFocusNode = () => {
     return () => {
       if (!content.value) setSelectedNode(0);
     };
-  }, [content.debounced, zoomPanPinch, selectedNode, setSelectedNode]);
+  }, [content.debounced, content.value, selectedNode, zoomPanPinch]);
 
   return [content, setContent, skip] as const;
 };
