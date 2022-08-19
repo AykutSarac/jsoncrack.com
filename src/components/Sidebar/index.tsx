@@ -140,7 +140,9 @@ export const Sidebar: React.FC = () => {
   const getJson = useConfig((state) => state.getJson);
   const updateSetting = useConfig((state) => state.updateSetting);
 
-  const { expand, performance, layout, navigationMode } = useConfig((state) => state.settings);
+  const { expand, performanceMode, layout, navigationMode } = useConfig(
+    (state) => state.settings
+  );
   const { push } = useRouter();
   const [uploadVisible, setUploadVisible] = React.useState(false);
   const [clearVisible, setClearVisible] = React.useState(false);
@@ -161,7 +163,7 @@ export const Sidebar: React.FC = () => {
   };
 
   const togglePerformance = () => {
-    const toastMsg = performance
+    const toastMsg = performanceMode
       ? "Disabled Performance Mode\nSearch Node & Save Image enabled."
       : "Enabled Performance Mode\nSearch Node & Save Image disabled.";
 
@@ -170,11 +172,16 @@ export const Sidebar: React.FC = () => {
       duration: 3000,
     });
 
-    updateSetting("performance", !performance);
+    updateSetting("performanceMode", !performanceMode);
   };
 
-  const setNavigationMode = (value: boolean) => {
+  const toggleNavigationMode = () => {
+    const toastMsg = navigationMode
+      ? "Disabled Navigation Mode"
+      : "Enabled Navigation Mode";
+
     updateSetting("navigationMode", !navigationMode);
+    toast(toastMsg);
   };
 
   const toggleLayout = () => {
@@ -213,11 +220,16 @@ export const Sidebar: React.FC = () => {
         </Tooltip>
         <Tooltip
           title={`${
-            performance ? "Disable" : "Enable"
+            performanceMode ? "Disable" : "Enable"
           } Performance Mode (Beta)`}
         >
           <StyledElement onClick={togglePerformance} beta>
-            <CgPerformance color={performance ? "#0073FF" : undefined} />
+            <CgPerformance color={performanceMode ? "#0073FF" : undefined} />
+          </StyledElement>
+        </Tooltip>
+        <Tooltip title="Navigation mode">
+          <StyledElement onClick={toggleNavigationMode}>
+            <AiOutlineApartment color={navigationMode ? "#0073FF" : undefined} />
           </StyledElement>
         </Tooltip>
         <Tooltip title="Save JSON">
@@ -228,11 +240,6 @@ export const Sidebar: React.FC = () => {
         <Tooltip title="Clear JSON">
           <StyledElement onClick={() => setClearVisible(true)}>
             <AiOutlineDelete />
-          </StyledElement>
-        </Tooltip>
-        <Tooltip title="Navigation mode">
-          <StyledElement onClick={() => setNavigationMode(true)}>
-            <AiOutlineApartment/>
           </StyledElement>
         </Tooltip>
         <Tooltip title="Share">

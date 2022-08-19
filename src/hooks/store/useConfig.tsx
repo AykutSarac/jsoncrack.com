@@ -85,12 +85,12 @@ const useConfig = create(
       name: "config",
       partialize: (state) =>
         ({
-          sponsors: {
-            ...state.sponsors,
-          },
+          sponsors: state.sponsors,
           settings: {
             ...state.settings,
             zoomPanPinch: undefined,
+            navigationMode: false,
+            performanceMode: false,
           },
         } as any),
     }

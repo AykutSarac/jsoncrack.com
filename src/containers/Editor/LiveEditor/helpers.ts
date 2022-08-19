@@ -1,5 +1,4 @@
 import { CanvasDirection, NodeData, EdgeData } from "reaflow";
-import { parser } from "src/utils/json-editor-parser";
 
 export function getEdgeNodes(
   elements: any,
@@ -44,6 +43,24 @@ export function getEdgeNodes(
     edges,
   };
 }
+
+
+export function searchSubTree (trees: any[], id: string) {
+  for (let i = 0; i < trees.length; i++) {
+    let tree = trees[i];
+    const cond = tree.id == id;
+    if (cond) return [tree];
+  }
+
+  for (let i = 0; i < trees.length; i++) {
+    let tree = trees[i];
+    let result = searchSubTree(tree.children, id);
+    if (result.length) return result;
+  }
+
+  return [];
+};
+
 
 export function getNextLayout(layout: CanvasDirection) {
   switch (layout) {

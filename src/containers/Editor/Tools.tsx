@@ -42,10 +42,10 @@ const StyledToolElement = styled.button`
 
 export const Tools: React.FC = () => {
   const [isDownloadVisible, setDownloadVisible] = React.useState(false);
-  const [lightmode, performance, hideEditor] = useConfig(
+  const [lightmode, performanceMode, hideEditor] = useConfig(
     (state) => [
       state.settings.lightmode,
-      state.settings.performance,
+      state.settings.performanceMode,
       state.settings.hideEditor,
     ],
     shallow
@@ -67,8 +67,8 @@ export const Tools: React.FC = () => {
       <StyledToolElement aria-label="switch theme" onClick={toggleTheme}>
         {lightmode ? <HiOutlineMoon /> : <HiOutlineSun />}
       </StyledToolElement>
-      {!performance && <SearchInput />}
-      {!performance && (
+      {!performanceMode && <SearchInput />}
+      {!performanceMode && (
         <StyledToolElement
           aria-label="save"
           onClick={() => setDownloadVisible(true)}

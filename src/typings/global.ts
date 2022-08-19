@@ -9,7 +9,7 @@ export interface StorageConfig {
   hideEditor: boolean;
   zoomPanPinch?: ReactZoomPanPinchRef;
   lightmode: boolean;
-  performance: boolean;
+  performanceMode: boolean;
 }
 
 export type ReactComponent = React.FC<PropsWithChildren<{}>>;
