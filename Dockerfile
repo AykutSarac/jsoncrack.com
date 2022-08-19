@@ -1,18 +1,11 @@
 # Builder
 FROM node:14-buster as builder
-
 WORKDIR /src
-
 COPY . /src
-
-RUN npm install --legacy-peer-deps
-
-RUN npm run build
+RUN yarn install --legacy-peer-deps
+RUN yarn run build
 
 # App
-FROM nginx:alpine
-
+FROM nginxinc/nginx-unprivileged
 COPY --from=builder /src/out /app
-
-RUN rm -rf /usr/share/nginx/html \
-  && ln -s /app /usr/share/nginx/html
+COPY default.conf /etc/nginx/conf.d/default.conf

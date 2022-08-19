@@ -60,7 +60,7 @@ A Docker file is provided in the root of the repository.
 If you want to run JSON Visio locally:
   
 * Build Docker image with `docker build -t jsonvisio .`
-* Run locally with `docker run -p 8888:80 jsonvisio`
+* Run locally with `docker run -p 8888:8080 jsonvisio`
 * Go to [http://localhost:8888]
 ```
 
