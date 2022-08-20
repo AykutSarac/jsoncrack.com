@@ -108,3 +108,7 @@ export const parser = (input: string | string[]) => {
     return [];
   }
 };
+
+export const privateMethods = {
+  relationships, flatten, filterChild, generateChildren,
+}

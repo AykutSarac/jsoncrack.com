@@ -7,6 +7,7 @@
     "dev": "next dev",
     "build": "next build && next export",
     "test": "jest",
+    "watch": "jest --watchAll",
     "start": "next start",
     "lint": "next lint",
     "deploy": "gh-pages -d out -t true"
