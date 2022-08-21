@@ -161,8 +161,6 @@ describe("private_filterChild", () => {
         ]
       }
     ]
-    const a = generateChildren(simpleObject, nextId, "1")
-    // console.log(JSON.stringify(a)) // TODO: Clean up
-    expect(a).toStrictEqual(result)
+    expect(generateChildren(simpleObject, nextId, "1")).toStrictEqual(result)
   })
 })

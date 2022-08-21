@@ -4,93 +4,53 @@ describe("flattenTree", () => {
   it("takes a tree representation of a JSON and flattens it into a set of nodes and edges", () => {
     const tree = [
       {
-        "id": "1",
-        "text": {
-          "name": "root"
-        },
+        "id": "2",
+        "text": "colors",
+        "parent": true,
+        "parent_id": "1",
         "children": [
           {
-            "id": "2",
-            "text": "colors",
-            "parent": true,
-            "children": [
-              {
-                "id": "3",
-                "text": "red",
-                "children": [],
-                "parent": false
-              },
-              {
-                "id": "4",
-                "text": "green",
-                "children": [],
-                "parent": false
-              },
-              {
-                "id": "5",
-                "text": "blue",
-                "children": [],
-                "parent": false
-              }
-            ]
+            "id": "3",
+            "text": "red",
+            "parent_id": "2",
+            "children": [],
+            "parent": false
           }
-        ],
-        "parent": false
+        ]
       }
     ]
+    
     const flatTree = [
       {
         "id": "1",
-        "text": {
-          "name": "root"
-        },
-        "parent": false
+        "text": "parent",
+        "parent": true
       },
       {
         "id": "2",
         "text": "colors",
-        "parent": true
+        "parent": true,
+        "parent_id": "1"
       },
       {
         "id": "3",
         "text": "red",
+        "parent_id": "2",
         "parent": false
       },
       {
-        "id": "4",
-        "text": "green",
-        "parent": false
-      },
-      {
-        "id": "5",
-        "text": "blue",
-        "parent": false
-      },
-      {
-        "id": "e1-2",
-        "from": "1",
-        "to": "2"
+        "id": "e2-1",
+        "from": "2",
+        "to": "1"
       },
       {
         "id": "e2-3",
         "from": "2",
         "to": "3"
-      },
-      {
-        "id": "e2-4",
-        "from": "2",
-        "to": "4"
-      },
-      {
-        "id": "e2-5",
-        "from": "2",
-        "to": "5"
       }
     ]
     
     expect(flattenTree(tree)).toStrictEqual(flatTree)
   })
-
-  // TODO: Add spec to test a subtree with parent id, it should add one "parent" node, and one relation from root to parent
 })
 

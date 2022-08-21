@@ -1,7 +1,6 @@
 import { extractTree } from "src/utils/json-editor-parser"
 
 describe("extractTree", () => {
-  /*
   it("takes a parsed JSON and extracts a tree representation of the JSON", () => {
     const parsedJson = [
       {
@@ -24,34 +23,39 @@ describe("extractTree", () => {
             "id": "2",
             "text": "colors",
             "parent": true,
+            "parent_id": "1",
             "children": [
               {
                 "id": "3",
                 "text": "red",
                 "children": [],
+                "parent_id": "2",
                 "parent": false
               },
               {
                 "id": "4",
                 "text": "green",
                 "children": [],
+                "parent_id": "2",
                 "parent": false
               },
               {
                 "id": "5",
                 "text": "blue",
                 "children": [],
+                "parent_id": "2",
                 "parent": false
               }
             ]
           }
         ],
-        "parent": false
+        "parent": false,
+        "parent_id": null
       }
     ]
     expect(extractTree(parsedJson)).toStrictEqual(tree)
   })
-  */
+  
   it("simple object with two sibblings arrays", () => {
     const simpleObject = {
       "name": "root",
@@ -120,11 +124,9 @@ describe("extractTree", () => {
         "parent": false
       }
     ]
-    const a = extractTree(simpleObject)
-    // console.log(JSON.stringify(a)) // TODO:  Cleanup
-    expect(a).toStrictEqual(result)
+    expect(extractTree(simpleObject)).toStrictEqual(result)
   })
-  /*
+
   it("simple object with no children", () => {
     const simpleObject = [
       {
@@ -140,6 +142,7 @@ describe("extractTree", () => {
           "last_name": "doe"
         },
         "children": [],
+        "parent_id": null,
         "parent": false
       }
     ]
@@ -166,20 +169,22 @@ describe("extractTree", () => {
             "id": "2",
             "text": "colors",
             "parent": true,
+            "parent_id": "1",
             "children": [
               {
                 "id": "3",
                 "text": "red",
                 "children": [],
+                "parent_id": "2",
                 "parent": false
               }
             ]
           }
         ],
-        "parent": false
+        "parent": false,
+        "parent_id": null
       }
     ]
     expect(extractTree(simpleObject)).toStrictEqual(result)
   })
-  */
 })
