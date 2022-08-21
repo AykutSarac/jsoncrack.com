@@ -22,9 +22,8 @@ function generateChildren(object: Object, nextId: () => string, parent_id: strin
 
   return Object.entries(object)
     .filter(filterChild)
-    // .map(([k, v]) => [k, v])
     .map(([k, v]) => [k, v, nextId()])
-    .map(([k, v, id]) => {
+    .flatMap(([k, v, id]) => {
       return [
         {
           id: id,
@@ -34,8 +33,7 @@ function generateChildren(object: Object, nextId: () => string, parent_id: strin
           children: extractTree(v, nextId, id),
         },
       ];
-    })
-    .flat(); // TODO: reduce to flatMap
+    });
 }
 
 function generateNodeData(object: Object | number) {
