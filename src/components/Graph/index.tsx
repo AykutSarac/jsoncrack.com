@@ -114,6 +114,7 @@ const MemoizedGraph = React.memo(function Layout({
             direction={layout}
             key={layout}
             onLayoutChange={onLayoutChange}
+            onCanvasClick={onCanvasClick}
             node={node}
             zoomable={false}
             readonly
