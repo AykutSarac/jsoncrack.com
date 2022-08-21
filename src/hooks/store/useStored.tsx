@@ -28,7 +28,7 @@ export interface Config {
 const useStored = create(
   persist<Config>(
     (set) => ({
-      lightmode: true,
+      lightmode: false,
       sponsors: {
         users: [],
         nextDate: Date.now(),
