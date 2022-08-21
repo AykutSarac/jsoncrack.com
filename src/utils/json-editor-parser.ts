@@ -17,34 +17,25 @@ const filterValues = ([k, v]) => {
   return true;
 };
 
-function generateChildren(object: Object, nextId: () => string) {
+function generateChildren(object: Object, nextId: () => string, parent_id: string) {
   if (!(object instanceof Object)) object = [object];
 
   return Object.entries(object)
     .filter(filterChild)
-    .flatMap(([k, v]) => {
-      // const isObject = v instanceof Object && !Array.isArray(v);
-
-      // if (isObject) {
-      //   return [
-      //     {
-      //       id: nextId(),
-      //       text: k,
-      //       parent: true,
-      //       children: generateChildren(v, nextId),
-      //     },
-      //   ];
-      // }
-
+    // .map(([k, v]) => [k, v])
+    .map(([k, v]) => [k, v, nextId()])
+    .map(([k, v, id]) => {
       return [
         {
-          id: nextId(),
+          id: id,
           text: k,
           parent: true,
-          children: extractTree(v, nextId),
+          parent_id,
+          children: extractTree(v, nextId, id),
         },
       ];
-    });
+    })
+    .flat(); // TODO: reduce to flatMap
 }
 
 function generateNodeData(object: Object | number) {
@@ -63,16 +54,22 @@ export const extractTree = (
   nextId = (
     (id) => () =>
       String(++id)
-  )(0)
+  )(0),
+  parent_id: string | null,
 ) => {
   if (!os) return [];
+  if (parent_id == undefined) parent_id = null;
 
-  return [os].flat().map((o) => ({
-    id: nextId(),
-    text: generateNodeData(o),
-    children: generateChildren(o, nextId),
-    parent: false,
-  }));
+  return [os]
+    .flat()
+    .map((o) => [o, nextId()])
+    .map(([o, id]) => ({
+      id,
+      text: generateNodeData(o),
+      parent_id,
+      children: generateChildren(o, nextId, id),
+      parent: false,
+    }));
 };
 
 const flatten = (xs: { id: string; children: never[] }[]) =>
@@ -98,7 +95,7 @@ export const parser = (input: string | string[]) => {
   try {
     if (!Array.isArray(input)) input = [input];
 
-    const mappedElements = extractTree(input);
+    const mappedElements = extractTree(input, null);
     const res = [...flatten(mappedElements), ...relationships(mappedElements)];
 
     return res;
