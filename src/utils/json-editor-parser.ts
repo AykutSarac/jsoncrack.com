@@ -87,7 +87,18 @@ const relationships = (xs: { id: string; children: never[] }[]) => {
 };
 
 export const flattenTree = tree => {
-  const res = [...flatten(tree), ...relationships(tree)];
+  let res:any;
+  if (tree[0].parent_id != null) {
+    const parent_node = {
+      id: tree[0].parent_id, text: "parent", parent: true
+    }
+    const parent_relation = {
+      id: `e${tree[0].id}-${tree[0].parent_id}`, from: tree[0].id, to: tree[0].parent_id
+    }
+    res = [parent_node, ...flatten(tree), parent_relation, ...relationships(tree)];
+  } else {
+    res = [...flatten(tree), ...relationships(tree)];
+  }
   return res;
 };
  

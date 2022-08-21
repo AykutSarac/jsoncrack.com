@@ -90,5 +90,7 @@ describe("flattenTree", () => {
     
     expect(flattenTree(tree)).toStrictEqual(flatTree)
   })
+
+  // TODO: Add spec to test a subtree with parent id, it should add one "parent" node, and one relation from root to parent
 })
 
