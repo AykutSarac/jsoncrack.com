@@ -11,7 +11,7 @@ const TextNode: React.FC<CustomNodeProps<string>> = ({
   x,
   y,
 }) => {
-  const performanceMode = useConfig((state) => state.settings.performanceMode);
+  const performanceMode = useConfig((state) => state.performanceMode);
 
   return (
     <Styled.StyledForeignObject width={width} height={height} x={0} y={0}>

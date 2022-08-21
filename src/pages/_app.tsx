@@ -11,6 +11,7 @@ import useConfig from "src/hooks/store/useConfig";
 import { decompress } from "compress-json";
 import { useRouter } from "next/router";
 import { isValidJson } from "src/utils/isValidJson";
+import useStored from "src/hooks/store/useStored";
 
 if (process.env.NODE_ENV !== "development") {
   init({
@@ -21,8 +22,8 @@ if (process.env.NODE_ENV !== "development") {
 
 function JsonVisio({ Component, pageProps }: AppProps) {
   const { query } = useRouter();
-  const lightmode = useConfig((state) => state.settings.lightmode);
-  const updateJson = useConfig((state) => state.updateJson);
+  const lightmode = useStored((state) => state.lightmode);
+  const setJson = useConfig((state) => state.setJson);
   const [isRendered, setRendered] = React.useState(false);
 
   React.useEffect(() => {
@@ -34,9 +35,9 @@ function JsonVisio({ Component, pageProps }: AppProps) {
       const jsonDecoded = decompress(JSON.parse(isJsonValid));
       const jsonString = JSON.stringify(jsonDecoded);
 
-      updateJson(jsonString);
+      setJson(jsonString);
     }
-  }, [query.json, updateJson]);
+  }, [query.json, setJson]);
 
   React.useEffect(() => {
     if (!window.matchMedia("(display-mode: standalone)").matches) {

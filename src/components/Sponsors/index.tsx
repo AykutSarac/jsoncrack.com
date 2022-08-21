@@ -1,5 +1,5 @@
 import React from "react";
-import useConfig from "src/hooks/store/useConfig";
+import useStored from "src/hooks/store/useStored";
 import styled from "styled-components";
 
 async function getSponsors() {
@@ -71,7 +71,7 @@ const StyledSponsor = styled.li<{ handle: string }>`
 `;
 
 export const Sponsors = () => {
-  const { sponsors, setSponsors } = useConfig();
+  const { sponsors, setSponsors } = useStored();
 
   React.useEffect(() => {
     if (!sponsors?.nextDate || sponsors?.nextDate < Date.now()) {

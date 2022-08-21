@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 interface TooltipProps {
-  title: string;
+  title?: string;
 }
 
 const StyledTooltipWrapper = styled.div`
@@ -53,7 +53,8 @@ export const Tooltip: React.FC<React.PropsWithChildren<TooltipProps>> = ({
 
   return (
     <StyledTooltipWrapper>
-      <StyledTooltip visible={visible}>{title}</StyledTooltip>
+      { title &&  <StyledTooltip visible={visible}>{title}</StyledTooltip>}
+      
       <StyledChildren
         onMouseEnter={() => setVisible(true)}
         onMouseLeave={() => setVisible(false)}

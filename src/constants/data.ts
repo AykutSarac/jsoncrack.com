@@ -1,5 +1,3 @@
-import { StorageConfig } from "src/typings/global";
-
 // Example taken from https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json
 export const defaultJson = {
   squadName: "Super hero squad",
@@ -37,14 +35,4 @@ export const defaultJson = {
       ],
     },
   ],
-};
-
-export const defaultConfig: StorageConfig = {
-  layout: "RIGHT",
-  expand: true,
-  navigationMode: false,
-  hideEditor: false,
-  zoomPanPinch: undefined,
-  lightmode: false,
-  performanceMode: false,
 };

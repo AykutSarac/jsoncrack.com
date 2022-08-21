@@ -28,6 +28,7 @@ import { IoAlertCircleSharp } from "react-icons/io5";
 import useConfig from "src/hooks/store/useConfig";
 import { getNextLayout } from "src/containers/Editor/LiveEditor/helpers";
 import { HiHeart } from "react-icons/hi";
+import shallow from "zustand/shallow";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -138,15 +139,21 @@ const StyledAlertIcon = styled(IoAlertCircleSharp)`
 
 export const Sidebar: React.FC = () => {
   const getJson = useConfig((state) => state.getJson);
-  const updateSetting = useConfig((state) => state.updateSetting);
-
-  const { expand, performanceMode, layout, navigationMode } = useConfig(
-    (state) => state.settings
-  );
-  const { push } = useRouter();
+  const setConfig = useConfig((state) => state.setConfig);
   const [uploadVisible, setUploadVisible] = React.useState(false);
   const [clearVisible, setClearVisible] = React.useState(false);
   const [shareVisible, setShareVisible] = React.useState(false);
+  const { push } = useRouter();
+
+  const [expand, performanceMode, layout, navigationMode] = useConfig(
+    (state) => [
+      state.expand,
+      state.performanceMode,
+      state.layout,
+      state.navigationMode,
+    ],
+    shallow
+  );
 
   const handleSave = () => {
     const a = document.createElement("a");
@@ -158,7 +165,7 @@ export const Sidebar: React.FC = () => {
   };
 
   const toggleExpandCollapse = () => {
-    updateSetting("expand", !expand);
+    setConfig("expand", !expand);
     toast(`${expand ? "Collapsed" : "Expanded"} nodes.`);
   };
 
@@ -172,7 +179,7 @@ export const Sidebar: React.FC = () => {
       duration: 3000,
     });
 
-    updateSetting("performanceMode", !performanceMode);
+    setConfig("performanceMode", !performanceMode);
   };
 
   const toggleNavigationMode = () => {
@@ -180,13 +187,13 @@ export const Sidebar: React.FC = () => {
       ? "Disabled Navigation Mode"
       : "Enabled Navigation Mode";
 
-    updateSetting("navigationMode", !navigationMode);
+    setConfig("navigationMode", !navigationMode);
     toast(toastMsg);
   };
 
   const toggleLayout = () => {
     const nextLayout = getNextLayout(layout);
-    updateSetting("layout", nextLayout);
+    setConfig("layout", nextLayout);
   };
 
   return (
@@ -210,6 +217,13 @@ export const Sidebar: React.FC = () => {
             <StyledFlowIcon rotate={rotateLayout(layout)} />
           </StyledElement>
         </Tooltip>
+        <Tooltip title="Navigation mode">
+          <StyledElement onClick={toggleNavigationMode}>
+            <AiOutlineApartment
+              color={navigationMode ? "#0073FF" : undefined}
+            />
+          </StyledElement>
+        </Tooltip>
         <Tooltip title={expand ? "Shrink Nodes" : "Expand Nodes"}>
           <StyledElement
             title="Toggle Expand/Collapse"
@@ -225,11 +239,6 @@ export const Sidebar: React.FC = () => {
         >
           <StyledElement onClick={togglePerformance} beta>
             <CgPerformance color={performanceMode ? "#0073FF" : undefined} />
-          </StyledElement>
-        </Tooltip>
-        <Tooltip title="Navigation mode">
-          <StyledElement onClick={toggleNavigationMode}>
-            <AiOutlineApartment color={navigationMode ? "#0073FF" : undefined} />
           </StyledElement>
         </Tooltip>
         <Tooltip title="Save JSON">
