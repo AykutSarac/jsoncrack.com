@@ -12,6 +12,7 @@ import styled from "styled-components";
 import useConfig from "src/hooks/store/useConfig";
 import shallow from "zustand/shallow";
 import { DownloadModal } from "../Modals/DownloadModal";
+import useStored from "src/hooks/store/useStored";
 
 export const StyledTools = styled.div`
   display: flex;
@@ -42,22 +43,21 @@ const StyledToolElement = styled.button`
 
 export const Tools: React.FC = () => {
   const [isDownloadVisible, setDownloadVisible] = React.useState(false);
-  const [lightmode, performance, hideEditor] = useConfig(
-    (state) => [
-      state.settings.lightmode,
-      state.settings.performance,
-      state.settings.hideEditor,
-    ],
+  const lightmode = useStored((state) => state.lightmode);
+  const setLightTheme = useStored((state) => state.setLightTheme);
+
+  const [performanceMode, hideEditor] = useConfig(
+    (state) => [state.performanceMode, state.hideEditor],
     shallow
   );
 
-  const updateSetting = useConfig((state) => state.updateSetting);
+  const setConfig = useConfig((state) => state.setConfig);
 
   const zoomIn = useConfig((state) => state.zoomIn);
   const zoomOut = useConfig((state) => state.zoomOut);
   const centerView = useConfig((state) => state.centerView);
-  const toggleEditor = () => updateSetting("hideEditor", !hideEditor);
-  const toggleTheme = () => updateSetting("lightmode", !lightmode);
+  const toggleEditor = () => setConfig("hideEditor", !hideEditor);
+  const toggleTheme = () => setLightTheme(!lightmode);
 
   return (
     <StyledTools>
@@ -67,8 +67,8 @@ export const Tools: React.FC = () => {
       <StyledToolElement aria-label="switch theme" onClick={toggleTheme}>
         {lightmode ? <HiOutlineMoon /> : <HiOutlineSun />}
       </StyledToolElement>
-      {!performance && <SearchInput />}
-      {!performance && (
+      {!performanceMode && <SearchInput />}
+      {!performanceMode && (
         <StyledToolElement
           aria-label="save"
           onClick={() => setDownloadVisible(true)}

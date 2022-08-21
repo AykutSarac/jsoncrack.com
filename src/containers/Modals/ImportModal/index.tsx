@@ -43,7 +43,7 @@ const StyledUploadMessage = styled.h3`
 `;
 
 export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
-  const updateJson = useConfig((state) => state.updateJson);
+  const setJson = useConfig((state) => state.setJson);
   const [url, setURL] = React.useState("");
   const [jsonFile, setJsonFile] = React.useState<File | null>(null);
 
@@ -59,7 +59,7 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
       return fetch(url)
         .then((res) => res.json())
         .then((json) => {
-          updateJson(JSON.stringify(json));
+          setJson(JSON.stringify(json));
           setVisible(false);
         })
         .catch(() => toast.error("Failed to fetch JSON!"))
@@ -71,7 +71,7 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
 
       reader.readAsText(jsonFile, "UTF-8");
       reader.onload = function (data) {
-        updateJson(data.target?.result as string);
+        setJson(data.target?.result as string);
         setVisible(false);
       };
     }

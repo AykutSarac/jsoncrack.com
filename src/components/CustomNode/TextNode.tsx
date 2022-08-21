@@ -11,11 +11,11 @@ const TextNode: React.FC<CustomNodeProps<string>> = ({
   x,
   y,
 }) => {
-  const performance = useConfig((state) => state.settings.performance);
+  const performanceMode = useConfig((state) => state.performanceMode);
 
   return (
     <Styled.StyledForeignObject width={width} height={height} x={0} y={0}>
-      <ConditionalWrapper condition={performance}>
+      <ConditionalWrapper condition={performanceMode}>
         <Styled.StyledText width={width} height={height}>
           <Styled.StyledKey
             data-x={x}

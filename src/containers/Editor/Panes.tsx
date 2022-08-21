@@ -17,7 +17,7 @@ const LiveEditor = dynamic(() => import("src/containers/Editor/LiveEditor"), {
 });
 
 const Panes: React.FC = () => {
-  const hideEditor = useConfig((state) => state.settings.hideEditor);
+  const hideEditor = useConfig((state) => state.hideEditor);
 
   return (
     <StyledEditor>

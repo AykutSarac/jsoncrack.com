@@ -8,13 +8,12 @@ import {
 import useConfig from "./store/useConfig";
 
 export const useFocusNode = () => {
+  const zoomPanPinch = useConfig((state) => state.zoomPanPinch);
   const [selectedNode, setSelectedNode] = React.useState(0);
   const [content, setContent] = React.useState({
     value: "",
     debounced: "",
   });
-
-  const zoomPanPinch = useConfig((state) => state.settings.zoomPanPinch);
 
   const skip = () => setSelectedNode((current) => current + 1);
 

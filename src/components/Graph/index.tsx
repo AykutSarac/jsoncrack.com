@@ -46,9 +46,9 @@ const MemoizedGraph = React.memo(function Layout({
     height: 2000,
   });
 
-  const updateSetting = useConfig((state) => state.updateSetting);
+  const setConfig = useConfig((state) => state.setConfig);
   const [expand, layout] = useConfig(
-    (state) => [state.settings.expand, state.settings.layout],
+    (state) => [state.expand, state.layout],
     shallow
   );
 
@@ -60,7 +60,7 @@ const MemoizedGraph = React.memo(function Layout({
   }, [json, expand]);
 
   const onInit = (ref: ReactZoomPanPinchRef) => {
-    updateSetting("zoomPanPinch", ref);
+    setConfig("zoomPanPinch", ref);
   };
 
   const onCanvasClick = () => {

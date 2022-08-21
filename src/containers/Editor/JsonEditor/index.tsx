@@ -6,6 +6,7 @@ import { loader } from "@monaco-editor/react";
 import { ErrorContainer } from "src/components/ErrorContainer/ErrorContainer";
 import useConfig from "src/hooks/store/useConfig";
 import { Loading } from "src/components/Loading";
+import useStored from "src/hooks/store/useStored";
 
 loader.config({
   paths: {
@@ -40,8 +41,8 @@ export const JsonEditor: React.FC = () => {
   const [error, setError] = React.useState("");
 
   const json = useConfig((state) => state.json);
-  const lightmode = useConfig((state) => state.settings.lightmode);
-  const updateJson = useConfig((state) => state.updateJson);
+  const lightmode = useStored((state) => state.lightmode);
+  const setJson = useConfig((state) => state.setJson);
 
   const editorTheme = React.useMemo(
     () => (lightmode ? "light" : "vs-dark"),
@@ -57,11 +58,11 @@ export const JsonEditor: React.FC = () => {
       try {
         if (!value) {
           setError("");
-          return updateJson("{}");
+          return setJson("{}");
         }
 
         parseJson(value);
-        updateJson(value);
+        setJson(value);
         setError("");
       } catch (jsonError: any) {
         setError(jsonError.message);
@@ -69,7 +70,7 @@ export const JsonEditor: React.FC = () => {
     }, 1500);
 
     return () => clearTimeout(formatTimer);
-  }, [value, updateJson]);
+  }, [value, setJson]);
 
   return (
     <StyledEditorWrapper>

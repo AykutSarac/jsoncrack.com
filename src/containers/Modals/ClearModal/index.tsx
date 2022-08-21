@@ -5,10 +5,10 @@ import { Modal, ModalProps } from "src/components/Modal";
 import useConfig from "src/hooks/store/useConfig";
 
 export const ClearModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
-  const updateJson = useConfig((state) => state.updateJson);
+  const setJson = useConfig((state) => state.setJson);
 
   const handleClear = () => {
-    updateJson("{}");
+    setJson("{}");
     toast.success(`Cleared JSON and removed from memory.`);
     setVisible(false);
   };

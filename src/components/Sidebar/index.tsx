@@ -27,6 +27,7 @@ import { IoAlertCircleSharp } from "react-icons/io5";
 import useConfig from "src/hooks/store/useConfig";
 import { getNextLayout } from "src/containers/Editor/LiveEditor/helpers";
 import { HiHeart } from "react-icons/hi";
+import shallow from "zustand/shallow";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -137,13 +138,16 @@ const StyledAlertIcon = styled(IoAlertCircleSharp)`
 
 export const Sidebar: React.FC = () => {
   const getJson = useConfig((state) => state.getJson);
-  const updateSetting = useConfig((state) => state.updateSetting);
-
-  const { expand, performance, layout } = useConfig((state) => state.settings);
-  const { push } = useRouter();
+  const setConfig = useConfig((state) => state.setConfig);
   const [uploadVisible, setUploadVisible] = React.useState(false);
   const [clearVisible, setClearVisible] = React.useState(false);
   const [shareVisible, setShareVisible] = React.useState(false);
+  const { push } = useRouter();
+
+  const [expand, performanceMode, layout] = useConfig(
+    (state) => [state.expand, state.performanceMode, state.layout],
+    shallow
+  );
 
   const handleSave = () => {
     const a = document.createElement("a");
@@ -155,12 +159,12 @@ export const Sidebar: React.FC = () => {
   };
 
   const toggleExpandCollapse = () => {
-    updateSetting("expand", !expand);
+    setConfig("expand", !expand);
     toast(`${expand ? "Collapsed" : "Expanded"} nodes.`);
   };
 
   const togglePerformance = () => {
-    const toastMsg = performance
+    const toastMsg = performanceMode
       ? "Disabled Performance Mode\nSearch Node & Save Image enabled."
       : "Enabled Performance Mode\nSearch Node & Save Image disabled.";
 
@@ -169,12 +173,12 @@ export const Sidebar: React.FC = () => {
       duration: 3000,
     });
 
-    updateSetting("performance", !performance);
+    setConfig("performanceMode", !performanceMode);
   };
 
   const toggleLayout = () => {
     const nextLayout = getNextLayout(layout);
-    updateSetting("layout", nextLayout);
+    setConfig("layout", nextLayout);
   };
 
   return (
@@ -208,11 +212,11 @@ export const Sidebar: React.FC = () => {
         </Tooltip>
         <Tooltip
           title={`${
-            performance ? "Disable" : "Enable"
+            performanceMode ? "Disable" : "Enable"
           } Performance Mode (Beta)`}
         >
           <StyledElement onClick={togglePerformance} beta>
-            <CgPerformance color={performance ? "#0073FF" : undefined} />
+            <CgPerformance color={performanceMode ? "#0073FF" : undefined} />
           </StyledElement>
         </Tooltip>
         <Tooltip title="Save JSON">
