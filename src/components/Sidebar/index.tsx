@@ -9,6 +9,7 @@ import {
   CgArrowsShrinkH,
   CgPerformance,
 } from "react-icons/cg";
+import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import {
   AiOutlineDelete,
   AiFillGithub,
@@ -40,13 +41,17 @@ const StyledSidebar = styled.div`
   border-right: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
 `;
 
-const StyledElement = styled.div<{ beta?: boolean }>`
+const StyledElement = styled.div<{ beta?: boolean; isElementLogo?: boolean }>`
   position: relative;
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 8px;
   text-align: center;
   font-size: 26px;
   font-weight: 600;
+  padding: ${({ isElementLogo }) => (isElementLogo ? "0px" : "8px")};
+  box-sizing: border-box;
   width: 100%;
   color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
   cursor: pointer;
@@ -60,7 +65,7 @@ const StyledElement = styled.div<{ beta?: boolean }>`
       justify-content: center;
       align-items: center;
       bottom: 0;
-      right: 0;
+      left: 20px;
       content: 'Beta';
       font-size: 10px;
       font-weight: 500;
@@ -74,17 +79,24 @@ const StyledElement = styled.div<{ beta?: boolean }>`
   `};
 
   svg {
-    padding: 8px;
     vertical-align: middle;
+    position: relative;
   }
 
   a {
     display: flex;
   }
 
-  &:hover :is(a, svg) {
+  &:hover :is(a, svg, span) {
     color: ${({ theme }) => theme.INTERACTIVE_HOVER};
   }
+`;
+
+const StyledNavElementText = styled.span`
+  font-size: 14px;
+  white-space: nowrap;
+  flex: 1;
+  text-align: left;
 `;
 
 const StyledText = styled.span<{ secondary?: boolean }>`
@@ -102,9 +114,25 @@ const StyledTopWrapper = styled.nav`
   flex-direction: column;
   align-items: center;
   width: 100%;
-
+  position: relative;
   & > div:nth-child(n + 1) {
     border-bottom: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
+  }
+`;
+
+const StyledNavExpandCollpaseButton = styled.div`
+  position: absolute;
+  right: -20px;
+  top: 28px;
+  z-index: 2;
+  border-radius: 50%;
+  background-color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
+  color: ${({ theme }) => theme.BACKGROUND_TERTIARY};
+  display: flex;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.INTERACTIVE_HOVER};
+    cursor: pointer;
   }
 `;
 
@@ -140,6 +168,7 @@ export const Sidebar: React.FC = () => {
   const getJson = useConfig((state) => state.getJson);
   const setConfig = useConfig((state) => state.setConfig);
   const [uploadVisible, setUploadVisible] = React.useState(false);
+  const [expandNav, setExpandNav] = React.useState(false);
   const [clearVisible, setClearVisible] = React.useState(false);
   const [shareVisible, setShareVisible] = React.useState(false);
   const { push } = useRouter();
@@ -184,54 +213,90 @@ export const Sidebar: React.FC = () => {
   return (
     <StyledSidebar>
       <StyledTopWrapper>
+        <StyledNavExpandCollpaseButton
+          onClick={() => setExpandNav((prev) => !prev)}
+        >
+          {expandNav ? (
+            <BiChevronLeft size={"30px"} />
+          ) : (
+            <BiChevronRight size={"30px"} />
+          )}
+        </StyledNavExpandCollpaseButton>
         <Link passHref href="/">
-          <StyledElement onClick={() => push("/")}>
+          <StyledElement onClick={() => push("/")} isElementLogo={true}>
             <StyledLogo>
-              <StyledText>J</StyledText>
-              <StyledText secondary>V</StyledText>
+              <StyledText>{!expandNav ? "J" : "JSON "}</StyledText>
+              <StyledText secondary>{!expandNav ? "V" : "Visio"}</StyledText>
             </StyledLogo>
           </StyledElement>
         </Link>
-        <Tooltip title="Import File">
+        <Tooltip title="Import File" disabled={expandNav}>
           <StyledElement onClick={() => setUploadVisible(true)}>
             <AiOutlineFileAdd />
+            {expandNav && (
+              <StyledNavElementText>Import File</StyledNavElementText>
+            )}
           </StyledElement>
         </Tooltip>
-        <Tooltip title="Rotate Layout">
+        <Tooltip title="Rotate Layout" disabled={expandNav}>
           <StyledElement onClick={toggleLayout}>
             <StyledFlowIcon rotate={rotateLayout(layout)} />
+            {expandNav && (
+              <StyledNavElementText>Rotate Layout</StyledNavElementText>
+            )}
           </StyledElement>
         </Tooltip>
-        <Tooltip title={expand ? "Shrink Nodes" : "Expand Nodes"}>
+        <Tooltip
+          title={expand ? "Shrink Nodes" : "Expand Nodes"}
+          disabled={expandNav}
+        >
           <StyledElement
             title="Toggle Expand/Collapse"
             onClick={toggleExpandCollapse}
           >
             {expand ? <CgArrowsMergeAltH /> : <CgArrowsShrinkH />}
+            {expandNav && (
+              <StyledNavElementText>
+                {expand ? "Shrink Nodes" : "Expand Nodes"}
+              </StyledNavElementText>
+            )}
           </StyledElement>
         </Tooltip>
         <Tooltip
           title={`${
             performanceMode ? "Disable" : "Enable"
           } Performance Mode (Beta)`}
+          disabled={expandNav}
         >
           <StyledElement onClick={togglePerformance} beta>
             <CgPerformance color={performanceMode ? "#0073FF" : undefined} />
+            {expandNav && (
+              <StyledNavElementText>
+                {performanceMode ? "Disable" : "Enable"} Performance Mode (Beta)
+              </StyledNavElementText>
+            )}
           </StyledElement>
         </Tooltip>
-        <Tooltip title="Save JSON">
+        <Tooltip title="Save JSON" disabled={expandNav}>
           <StyledElement onClick={handleSave}>
             <AiOutlineSave />
+            {expandNav && (
+              <StyledNavElementText>Save JSON</StyledNavElementText>
+            )}
           </StyledElement>
         </Tooltip>
-        <Tooltip title="Clear JSON">
+        <Tooltip title="Clear JSON" disabled={expandNav}>
           <StyledElement onClick={() => setClearVisible(true)}>
             <AiOutlineDelete />
+            {expandNav && (
+              <StyledNavElementText>Clear JSON</StyledNavElementText>
+            )}
           </StyledElement>
         </Tooltip>
-        <Tooltip title="Share">
+        <Tooltip title="Share" disabled={expandNav}>
           <StyledElement onClick={() => setShareVisible(true)}>
             <AiOutlineLink />
+            {expandNav && <StyledNavElementText>Share</StyledNavElementText>}
           </StyledElement>
         </Tooltip>
       </StyledTopWrapper>
