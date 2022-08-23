@@ -1,18 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   AiOutlineFullscreen,
   AiOutlineMinus,
   AiOutlinePlus,
+  AiOutlineNodeCollapse,
+  AiOutlineNodeExpand,
 } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
 import { HiOutlineSun, HiOutlineMoon } from "react-icons/hi";
-import { MdCenterFocusWeak } from "react-icons/md";
+import {
+  MdCenterFocusWeak,
+  MdOutlineCopyAll,
+  MdOutlineRestartAlt,
+} from "react-icons/md";
 import { SearchInput } from "src/components/SearchInput";
 import styled from "styled-components";
 import useConfig from "src/hooks/store/useConfig";
 import shallow from "zustand/shallow";
 import { DownloadModal } from "../Modals/DownloadModal";
 import useStored from "src/hooks/store/useStored";
+import useNodeTools from "src/hooks/store/useNodeTools";
+import { collapseNodes, expandNodes, restartNodes } from "./NodeTools";
 
 export const StyledTools = styled.div`
   display: flex;
@@ -43,6 +51,8 @@ const StyledToolElement = styled.button`
 
 export const Tools: React.FC = () => {
   const [isDownloadVisible, setDownloadVisible] = React.useState(false);
+  const [expand, setExpand] = React.useState(true);
+  const [isLastNode, setIsLastNode] = React.useState(false);
   const lightmode = useStored((state) => state.lightmode);
   const setLightTheme = useStored((state) => state.setLightTheme);
 
@@ -53,11 +63,49 @@ export const Tools: React.FC = () => {
 
   const setConfig = useConfig((state) => state.setConfig);
 
+  const [
+    selectedNode,
+    nodes,
+    edges,
+    newNodes,
+    newEdges,
+    collapsedNodes,
+    collapsedEdges,
+  ] = useNodeTools(
+    (state) => [
+      state.selectedNode,
+      state.nodes,
+      state.edges,
+      state.newNodes,
+      state.newEdges,
+      state.collapsedNodes,
+      state.collapsedEdges,
+    ],
+    shallow
+  );
+
+  const setNodeTools = useNodeTools((state) => state.setNodeTools);
+  useEffect(() => {
+    if (selectedNode) {
+      const haveChildren = newEdges.find((edge) => edge.from === selectedNode);
+      if (!collapsedNodes[selectedNode] && !haveChildren) {
+        setIsLastNode(true);
+      } else if (haveChildren) {
+        setExpand(true);
+        setIsLastNode(false);
+      } else if (collapsedNodes[selectedNode] && !haveChildren) {
+        setExpand(false);
+        setIsLastNode(false);
+      }
+    }
+  }, [collapsedNodes, newEdges, selectedNode]);
+
   const zoomIn = useConfig((state) => state.zoomIn);
   const zoomOut = useConfig((state) => state.zoomOut);
   const centerView = useConfig((state) => state.centerView);
   const toggleEditor = () => setConfig("hideEditor", !hideEditor);
   const toggleTheme = () => setLightTheme(!lightmode);
+  const selectedNodeColor = "#00D69D";
 
   return (
     <StyledTools>
@@ -68,7 +116,57 @@ export const Tools: React.FC = () => {
         {lightmode ? <HiOutlineMoon /> : <HiOutlineSun />}
       </StyledToolElement>
       {!performanceMode && <SearchInput />}
-      {!performanceMode && (
+      {selectedNode && (
+        <>
+          <StyledToolElement
+            aria-label="copy"
+            onClick={() => setNodeTools("copySelectedNode", true)}
+          >
+            <MdOutlineCopyAll color={selectedNodeColor} />
+          </StyledToolElement>
+          <StyledToolElement
+            aria-label="restart"
+            onClick={() => restartNodes(nodes, edges, newNodes, setNodeTools)}
+          >
+            <MdOutlineRestartAlt color={selectedNodeColor} />
+          </StyledToolElement>
+        </>
+      )}
+      {isLastNode ? null : expand ? (
+        <StyledToolElement
+          aria-label="collapse"
+          onClick={() =>
+            collapseNodes(
+              selectedNode,
+              newNodes,
+              newEdges,
+              collapsedNodes,
+              collapsedEdges,
+              setNodeTools
+            )
+          }
+        >
+          <AiOutlineNodeCollapse color={selectedNodeColor} />
+        </StyledToolElement>
+      ) : (
+        <StyledToolElement
+          aria-label="expand"
+          onClick={() =>
+            expandNodes(
+              selectedNode,
+              newNodes,
+              newEdges,
+              collapsedNodes,
+              collapsedEdges,
+              setNodeTools
+            )
+          }
+        >
+          <AiOutlineNodeExpand color={selectedNodeColor} />
+        </StyledToolElement>
+      )}
+
+      {!performance && (
         <StyledToolElement
           aria-label="save"
           onClick={() => setDownloadVisible(true)}
