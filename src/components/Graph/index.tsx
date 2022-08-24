@@ -65,7 +65,7 @@ const MemoizedGraph = React.memo(function Layout({ isWidget }: LayoutProps) {
     setNodeTools("edges", edges);
     setNodeTools("newNodes", nodes);
     setNodeTools("newEdges", edges);
-  }, [json, expand]);
+  }, [json, expand, setNodeTools]);
 
   const onInit = (ref: ReactZoomPanPinchRef) => {
     setConfig("zoomPanPinch", ref);
@@ -100,6 +100,9 @@ const MemoizedGraph = React.memo(function Layout({ isWidget }: LayoutProps) {
         wheel={{
           step: 0.05,
         }}
+        doubleClick={{
+          disabled: true,
+        }}
       >
         <TransformComponent
           wrapperStyle={{
@@ -117,16 +120,7 @@ const MemoizedGraph = React.memo(function Layout({ isWidget }: LayoutProps) {
             key={layout}
             onLayoutChange={onLayoutChange}
             selections={selections}
-            node={(props) =>
-              newNodes.find((n) => n.id === props.id) ? (
-                <CustomNode
-                  onClick={(e) => onClick && onClick(e, props)}
-                  {...props}
-                />
-              ) : (
-                <></>
-              )
-            }
+            node={(props) => <CustomNode {...props} />}
             edge={(props) =>
               newEdges.find((e) => e.id === props.id) ? <Edge /> : <></>
             }
