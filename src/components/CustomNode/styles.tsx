@@ -23,7 +23,11 @@ export const StyledTextWrapper = styled.div`
   cursor: pointer;
 `;
 
-export const StyledText = styled.pre<{ width: number; height: number }>`
+export const StyledText = styled.pre<{
+  width: number;
+  height: number;
+  parent: boolean;
+}>`
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -31,6 +35,7 @@ export const StyledText = styled.pre<{ width: number; height: number }>`
   height: ${({ height }) => height};
   min-height: 50;
   color: ${({ theme }) => theme.TEXT_NORMAL};
+  padding-right: ${({ parent }) => parent && "20px"};
 `;
 
 export const StyledForeignObject = styled.foreignObject`
