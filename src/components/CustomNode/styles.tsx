@@ -83,12 +83,19 @@ export const StyledKey = styled.span<{
   font-size: ${({ parent }) => parent && "14px"};
 `;
 
-export const StyledRow = styled.span<{ width: number; value: string }>`
+export const StyledRow = styled.span.attrs<{
+  width: string;
+  value: string;
+  theme: DefaultTheme;
+}>((props) => ({
+  style: {
+    width: props.width,
+    color: getTypeColor(props.value, props.theme),
+  },
+}))<{ width: string; value: string; theme: DefaultTheme }>`
   height: 18px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   padding: 0 auto;
-  width: ${({ width }) => `${width - 20}px`};
-  color: ${({ theme, value }) => getTypeColor(value, theme)};
 `;

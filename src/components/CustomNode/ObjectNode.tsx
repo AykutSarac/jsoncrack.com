@@ -22,7 +22,7 @@ const ObjectNode: React.FC<CustomNodeProps<[string, string][]>> = ({
               data-x={x}
               data-y={y}
               key={idx}
-              width={width}
+              width={`${width - 20}px`}
               value={JSON.stringify(val[1])}
             >
               <Styled.StyledKey objectKey>
