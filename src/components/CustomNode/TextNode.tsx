@@ -1,5 +1,5 @@
 import React from "react";
-import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
+import { BiHide } from "react-icons/bi";
 import { NodeData, EdgeData } from "reaflow";
 import { ConditionalWrapper, CustomNodeProps } from "src/components/CustomNode";
 import useConfig from "src/hooks/store/useConfig";
@@ -35,22 +35,26 @@ const TextNode: React.FC<CustomNodeProps<string> & { node: NodeData }> = ({
   y,
 }) => {
   const performanceMode = useConfig((state) => state.performanceMode);
-  const expand = useConfig((state) => state.expand);
-  const [isExpanded, setIsExpanded] = React.useState(!expand);
-  const toggleNode = useGraph((state) => state.toggleNode);
-
-  React.useEffect(() => {
-    setIsExpanded(expand);
-  }, [expand]);
+  const expandNodes = useGraph((state) => state.expandNodes);
+  const collapseNodes = useGraph((state) => state.collapseNodes);
+  const [isExpanded, setIsExpanded] = React.useState(true);
 
   const handleExpand = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    toggleNode(node, isExpanded);
     setIsExpanded(!isExpanded);
+
+    if (isExpanded) collapseNodes(node.id);
+    else expandNodes(node.id);
   };
 
   return (
-    <Styled.StyledForeignObject width={width} height={height} x={0} y={0}>
+    <Styled.StyledForeignObject
+      width={width}
+      height={height}
+      x={0}
+      y={0}
+      data-nodeid={node.id}
+    >
       <ConditionalWrapper condition={performanceMode}>
         <Styled.StyledText parent={isParent} width={width} height={height}>
           <Styled.StyledKey
@@ -67,11 +71,7 @@ const TextNode: React.FC<CustomNodeProps<string> & { node: NodeData }> = ({
       </ConditionalWrapper>
       {isParent && (
         <StyledExpand onClick={handleExpand}>
-          {isExpanded ? (
-            <BiChevronRight size={20} />
-          ) : (
-            <BiChevronLeft size={20} />
-          )}
+          <BiHide size={18} />
         </StyledExpand>
       )}
     </Styled.StyledForeignObject>

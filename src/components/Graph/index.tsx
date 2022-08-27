@@ -4,18 +4,24 @@ import {
   TransformComponent,
   TransformWrapper,
 } from "react-zoom-pan-pinch";
-import { Canvas, Edge, ElkRoot, NodeData, useSelection } from "reaflow";
+import {
+  Canvas,
+  Edge,
+  ElkRoot,
+  NodeData,
+} from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
 import { NodeModal } from "src/containers/Modals/NodeModal";
 import { getEdgeNodes } from "src/containers/Editor/LiveEditor/helpers";
 import useConfig from "src/hooks/store/useConfig";
 import styled from "styled-components";
 import shallow from "zustand/shallow";
-import useNodeTools from "src/hooks/store/useNodeTools";
 import useGraph from "src/hooks/store/useGraph";
 
 interface LayoutProps {
   isWidget: boolean;
+  openModal: () => void;
+  setSelectedNode: (node: object) => void;
 }
 
 const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
@@ -33,7 +39,11 @@ const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
   }
 `;
 
-const MemoizedGraph = React.memo(function Layout({ isWidget }: LayoutProps) {
+const MemoizedGraph = React.memo(function Layout({
+  isWidget,
+  openModal,
+  setSelectedNode,
+}: LayoutProps) {
   const json = useConfig((state) => state.json);
   const nodes = useGraph((state) => state.nodes);
   const edges = useGraph((state) => state.edges);
@@ -50,14 +60,13 @@ const MemoizedGraph = React.memo(function Layout({ isWidget }: LayoutProps) {
     shallow
   );
 
-  React.useEffect(() => {
-    const { nodes, edges } = getEdgeNodes(json, expand);
-
-    setGraphValue("nodes", nodes);
-    setGraphValue("edges", edges);
-    setGraphValue("initialNodes", nodes);
-    setGraphValue("initialEdges", edges);
-  }, [expand, json, setGraphValue]);
+  const handleNodeClick = React.useCallback(
+    (e: React.MouseEvent<SVGElement>, data: NodeData) => {
+      setSelectedNode(data.text);
+      openModal();
+    },
+    [openModal, setSelectedNode]
+  );
 
   const onInit = (ref: ReactZoomPanPinchRef) => {
     setConfig("zoomPanPinch", ref);
@@ -67,6 +76,13 @@ const MemoizedGraph = React.memo(function Layout({ isWidget }: LayoutProps) {
     if (layout.width && layout.height)
       setSize({ width: layout.width, height: layout.height });
   };
+
+  React.useEffect(() => {
+    const { nodes, edges } = getEdgeNodes(json, expand);
+
+    setGraphValue("nodes", nodes);
+    setGraphValue("edges", edges);
+  }, [expand, json, setGraphValue]);
 
   return (
     <StyledEditorWrapper isWidget={isWidget}>
@@ -97,7 +113,12 @@ const MemoizedGraph = React.memo(function Layout({ isWidget }: LayoutProps) {
             direction={layout}
             key={layout}
             onLayoutChange={onLayoutChange}
-            node={(props) => <CustomNode {...props} />}
+            node={(props) => (
+              <CustomNode {...props} onClick={handleNodeClick} />
+            )}
+            edge={(props) => (
+              <Edge {...props} containerClassName={`edge-${props.id}`} />
+            )}
             zoomable={false}
             readonly
           />
@@ -108,20 +129,45 @@ const MemoizedGraph = React.memo(function Layout({ isWidget }: LayoutProps) {
 });
 
 export const Graph = ({ isWidget = false }: { isWidget?: boolean }) => {
-  const [newNodes, selectedNode, copySelectedNode] = useNodeTools(
-    (state) => [state.nodes, state.selectedNode, state.copySelectedNode],
-    shallow
-  );
-  const setNodeTools = useNodeTools((state) => state.setNodeTools);
-  const selectedNodeObject = newNodes.find((n) => n.id === selectedNode);
+  const [isModalVisible, setModalVisible] = React.useState(false);
+  const [selectedNode, setSelectedNode] = React.useState<object>({});
+
+  const openModal = React.useCallback(() => setModalVisible(true), []);
+
+  const collapsedNodes = useGraph((state) => state.collapsedNodes);
+  const collapsedEdges = useGraph((state) => state.collapsedEdges);
+
+  React.useEffect(() => {
+    const nodeList = collapsedNodes.map((id) => `[id*="node-${id}"]`);
+    const edgeList = collapsedEdges.map((id) => `[class*="edge-${id}"]`);
+
+    const nodes = document.querySelectorAll('[id*="node-"]');
+    const edges = document.querySelectorAll('[class*="edge-"]');
+
+    nodes.forEach((node) => node.classList.remove("hide"));
+    edges.forEach((edges) => edges.classList.remove("hide"));
+
+    if (nodeList.length) {
+      const selectedNodes = document.querySelectorAll(nodeList.join(","));
+      const selectedEdges = document.querySelectorAll(edgeList.join(","));
+
+      selectedNodes.forEach((node) => node.classList.add("hide"));
+      selectedEdges.forEach((edge) => edge.classList.add("hide"));
+    }
+  }, [collapsedNodes, collapsedEdges]);
+
   return (
     <>
-      <MemoizedGraph isWidget={isWidget} />
+      <MemoizedGraph
+        openModal={openModal}
+        setSelectedNode={setSelectedNode}
+        isWidget={isWidget}
+      />
       {!isWidget && (
         <NodeModal
-          selectedNode={selectedNodeObject?.text}
-          visible={copySelectedNode}
-          closeModal={() => setNodeTools("copySelectedNode", false)}
+          selectedNode={selectedNode}
+          visible={isModalVisible}
+          closeModal={() => setModalVisible(false)}
         />
       )}
     </>

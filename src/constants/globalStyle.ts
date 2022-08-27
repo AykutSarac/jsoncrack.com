@@ -23,6 +23,10 @@ const GlobalStyle = createGlobalStyle`
       background-size: 15px 15px;
     }
   }
+
+  .hide {
+    display: none;
+  }
   
   a {
     text-decoration: none;
