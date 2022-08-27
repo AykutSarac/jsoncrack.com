@@ -1,8 +1,8 @@
 import create from "zustand";
 import { EdgeData, NodeData } from "reaflow/dist/types";
 import { Graph } from "src/components/Graph";
-import { findEdgeChildren } from "src/utils/findEdgeChildren";
-import { findNodeChildren } from "src/utils/findNodeChildren";
+import { getChildrenEdges } from "src/utils/getChildrenEdges";
+import { getOutgoers } from "src/utils/getOutgoers";
 
 export interface Graph {
   nodes: NodeData[];
@@ -34,12 +34,8 @@ const useGraph = create<Graph & GraphActions>((set) => ({
     }),
   expandNodes: (nodeId) =>
     set((state) => {
-      const childrenNodes = findNodeChildren(nodeId, state.nodes, state.edges);
-      const childrenEdges = findEdgeChildren(
-        nodeId,
-        childrenNodes,
-        state.edges
-      );
+      const childrenNodes = getOutgoers(nodeId, state.nodes, state.edges);
+      const childrenEdges = getChildrenEdges(childrenNodes, state.edges);
 
       const nodeIds = childrenNodes.map((node) => node.id);
       const edgeIds = childrenEdges.map((edge) => edge.id);
@@ -56,12 +52,8 @@ const useGraph = create<Graph & GraphActions>((set) => ({
     }),
   collapseNodes: (nodeId) =>
     set((state) => {
-      const childrenNodes = findNodeChildren(nodeId, state.nodes, state.edges);
-      const childrenEdges = findEdgeChildren(
-        nodeId,
-        childrenNodes,
-        state.edges
-      );
+      const childrenNodes = getOutgoers(nodeId, state.nodes, state.edges);
+      const childrenEdges = getChildrenEdges(childrenNodes, state.edges);
 
       const nodeIds = childrenNodes.map((node) => node.id);
       const edgeIds = childrenEdges.map((edge) => edge.id);
