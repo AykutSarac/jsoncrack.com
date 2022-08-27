@@ -1,7 +1,8 @@
 {
   "name": "json-visio",
   "private": true,
-  "version": "v1.9.5",
+  "version": "v2.0.0",
+  "author": "https://github.com/AykutSarac",
   "homepage": "https://jsonvisio.com",
   "scripts": {
     "dev": "next dev",
