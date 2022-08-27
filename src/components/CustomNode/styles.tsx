@@ -26,8 +26,8 @@ export const StyledTextWrapper = styled.div`
 export const StyledText = styled.div<{
   width: number;
   height: number;
-  parent: boolean;
-  hideCollapse: boolean;
+  parent?: boolean;
+  hideCollapse?: boolean;
 }>`
   display: flex;
   justify-content: center;

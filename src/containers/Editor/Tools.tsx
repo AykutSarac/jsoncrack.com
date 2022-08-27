@@ -78,7 +78,7 @@ export const Tools: React.FC = () => {
       </StyledToolElement>
       {!performanceMode && <SearchInput />}
 
-      {!performance && (
+      {!performanceMode && (
         <StyledToolElement
           aria-label="save"
           onClick={() => setDownloadVisible(true)}
