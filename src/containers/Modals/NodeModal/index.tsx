@@ -31,7 +31,7 @@ export const NodeModal = ({
   closeModal,
 }: NodeModalProps) => {
   const handleClipboard = () => {
-    toast("Content copied to clipboard!");
+    toast.success("Content copied to clipboard!");
     navigator.clipboard.writeText(JSON.stringify(selectedNode));
     closeModal();
   };
