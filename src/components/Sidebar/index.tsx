@@ -4,11 +4,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import { CanvasDirection } from "reaflow";
 import { TiFlowMerge } from "react-icons/ti";
-import {
-  CgArrowsMergeAltH,
-  CgArrowsShrinkH,
-  CgPerformance,
-} from "react-icons/cg";
+import { CgArrowsMergeAltH, CgArrowsShrinkH } from "react-icons/cg";
 import {
   AiOutlineDelete,
   AiFillGithub,
@@ -50,28 +46,6 @@ const StyledElement = styled.div<{ beta?: boolean }>`
   width: 100%;
   color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
   cursor: pointer;
-
-  ${({ theme, beta }) =>
-    beta &&
-    `
-    &::after {
-      position: absolute;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      bottom: 0;
-      right: 0;
-      content: 'Beta';
-      font-size: 10px;
-      font-weight: 500;
-      background: ${theme.BLURPLE};
-      border-radius: 4px;
-      color: ${theme.FULL_WHITE};
-      padding: 2px;
-      height: 14px;
-      z-index: 0;
-    }
-  `};
 
   svg {
     padding: 8px;
@@ -131,10 +105,6 @@ function rotateLayout(layout: CanvasDirection) {
   if (layout === "RIGHT") return 270;
   return 360;
 }
-
-const StyledAlertIcon = styled(IoAlertCircleSharp)`
-  color: ${({ theme }) => theme.ORANGE};
-`;
 
 export const Sidebar: React.FC = () => {
   const getJson = useConfig((state) => state.getJson);

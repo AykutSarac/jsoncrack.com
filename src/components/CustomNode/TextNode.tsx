@@ -37,24 +37,17 @@ const TextNode: React.FC<CustomNodeProps<string> & { node: NodeData }> = ({
 }) => {
   const performanceMode = useConfig((state) => state.performanceMode);
   const hideCollapse = useStored((state) => state.hideCollapse);
-  const expand = useConfig((state) => state.expand);
   const expandNodes = useGraph((state) => state.expandNodes);
   const collapseNodes = useGraph((state) => state.collapseNodes);
-  const [isExpanded, setIsExpanded] = React.useState(!expand);
+  const [isExpanded, setIsExpanded] = React.useState(true);
 
   const handleExpand = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setIsExpanded(!isExpanded);
-  };
 
-  React.useEffect(() => {
-    setIsExpanded(!expand);
-  }, [expand]);
-
-  React.useEffect(() => {
     if (isExpanded) collapseNodes(node.id);
     else expandNodes(node.id);
-  }, [collapseNodes, expand, expandNodes, isExpanded, node.id]);
+  };
 
   return (
     <Styled.StyledForeignObject
