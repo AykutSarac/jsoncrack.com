@@ -4,12 +4,7 @@ import {
   TransformComponent,
   TransformWrapper,
 } from "react-zoom-pan-pinch";
-import {
-  Canvas,
-  Edge,
-  ElkRoot,
-  NodeData,
-} from "reaflow";
+import { Canvas, Edge, ElkRoot, NodeData } from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
 import { NodeModal } from "src/containers/Modals/NodeModal";
 import { getEdgeNodes } from "src/containers/Editor/LiveEditor/helpers";
