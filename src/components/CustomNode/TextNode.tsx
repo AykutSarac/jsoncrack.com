@@ -1,6 +1,6 @@
 import React from "react";
-import { BiHide } from "react-icons/bi";
-import { NodeData, EdgeData } from "reaflow";
+import { MdCompareArrows } from "react-icons/md";
+import { NodeData } from "reaflow/dist/types";
 import { ConditionalWrapper, CustomNodeProps } from "src/components/CustomNode";
 import useConfig from "src/hooks/store/useConfig";
 import useGraph from "src/hooks/store/useGraph";
@@ -35,17 +35,24 @@ const TextNode: React.FC<CustomNodeProps<string> & { node: NodeData }> = ({
   y,
 }) => {
   const performanceMode = useConfig((state) => state.performanceMode);
+  const expand = useConfig((state) => state.expand);
   const expandNodes = useGraph((state) => state.expandNodes);
   const collapseNodes = useGraph((state) => state.collapseNodes);
-  const [isExpanded, setIsExpanded] = React.useState(true);
+  const [isExpanded, setIsExpanded] = React.useState(!expand);
 
   const handleExpand = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setIsExpanded(!isExpanded);
+  };
 
+  React.useEffect(() => {
+    setIsExpanded(!expand);
+  }, [expand]);
+
+  React.useEffect(() => {
     if (isExpanded) collapseNodes(node.id);
     else expandNodes(node.id);
-  };
+  }, [collapseNodes, expand, expandNodes, isExpanded, node.id]);
 
   return (
     <Styled.StyledForeignObject
@@ -71,7 +78,7 @@ const TextNode: React.FC<CustomNodeProps<string> & { node: NodeData }> = ({
       </ConditionalWrapper>
       {isParent && (
         <StyledExpand onClick={handleExpand}>
-          <BiHide size={18} />
+          <MdCompareArrows size={18} />
         </StyledExpand>
       )}
     </Styled.StyledForeignObject>

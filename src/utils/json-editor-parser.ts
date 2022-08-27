@@ -3,7 +3,7 @@
  */
 import toast from "react-hot-toast";
 
-const filterChild = ([k, v]) => {
+const filterChild = ([_, v]) => {
   const isNull = v === null;
   const isArray = Array.isArray(v) && v.length;
   const isObject = v instanceof Object;

@@ -43,8 +43,6 @@ const StyledToolElement = styled.button`
 
 export const Tools: React.FC = () => {
   const [isDownloadVisible, setDownloadVisible] = React.useState(false);
-  const [expand, setExpand] = React.useState(true);
-  const [isLastNode, setIsLastNode] = React.useState(false);
   const lightmode = useStored((state) => state.lightmode);
   const setLightTheme = useStored((state) => state.setLightTheme);
 
@@ -60,7 +58,6 @@ export const Tools: React.FC = () => {
   const centerView = useConfig((state) => state.centerView);
   const toggleEditor = () => setConfig("hideEditor", !hideEditor);
   const toggleTheme = () => setLightTheme(!lightmode);
-  const selectedNodeColor = "#00D69D";
 
   return (
     <StyledTools>

@@ -1,5 +1,5 @@
 import create from "zustand";
-import { EdgeData, NodeData } from "reaflow";
+import { EdgeData, NodeData } from "reaflow/dist/types";
 import { Graph } from "src/components/Graph";
 import { findEdgeChildren } from "src/utils/findEdgeChildren";
 import { findNodeChildren } from "src/utils/findNodeChildren";
@@ -29,6 +29,8 @@ const useGraph = create<Graph & GraphActions>((set) => ({
   setGraphValue: (key, value) =>
     set((state) => ({
       ...state,
+      collapsedNodes: [],
+      collapsedEdges: [],
       [key]: value,
     })),
   expandNodes: (nodeId) =>
