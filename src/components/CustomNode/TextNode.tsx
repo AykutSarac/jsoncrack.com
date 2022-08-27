@@ -1,7 +1,9 @@
 import React from "react";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
+import { NodeData, EdgeData } from "reaflow";
 import { ConditionalWrapper, CustomNodeProps } from "src/components/CustomNode";
 import useConfig from "src/hooks/store/useConfig";
+import useGraph from "src/hooks/store/useGraph";
 import styled from "styled-components";
 import * as Styled from "./styles";
 
@@ -23,7 +25,8 @@ const StyledExpand = styled.button`
   border-left: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
 `;
 
-const TextNode: React.FC<CustomNodeProps<string>> = ({
+const TextNode: React.FC<CustomNodeProps<string> & { node: NodeData }> = ({
+  node,
   width,
   height,
   value,
@@ -34,6 +37,7 @@ const TextNode: React.FC<CustomNodeProps<string>> = ({
   const performanceMode = useConfig((state) => state.performanceMode);
   const expand = useConfig((state) => state.expand);
   const [isExpanded, setIsExpanded] = React.useState(!expand);
+  const toggleNode = useGraph((state) => state.toggleNode);
 
   React.useEffect(() => {
     setIsExpanded(expand);
@@ -41,6 +45,7 @@ const TextNode: React.FC<CustomNodeProps<string>> = ({
 
   const handleExpand = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
+    toggleNode(node, isExpanded);
     setIsExpanded(!isExpanded);
   };
 
