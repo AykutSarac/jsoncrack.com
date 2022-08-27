@@ -23,7 +23,6 @@ import { useRouter } from "next/router";
 import { ImportModal } from "src/containers/Modals/ImportModal";
 import { ClearModal } from "src/containers/Modals/ClearModal";
 import { ShareModal } from "src/containers/Modals/ShareModal";
-import { IoAlertCircleSharp } from "react-icons/io5";
 import useConfig from "src/hooks/store/useConfig";
 import { getNextLayout } from "src/containers/Editor/LiveEditor/helpers";
 import { HiHeart } from "react-icons/hi";

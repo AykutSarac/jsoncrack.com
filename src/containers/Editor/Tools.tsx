@@ -13,6 +13,8 @@ import useConfig from "src/hooks/store/useConfig";
 import shallow from "zustand/shallow";
 import { DownloadModal } from "../Modals/DownloadModal";
 import useStored from "src/hooks/store/useStored";
+import { TbSettings } from "react-icons/tb";
+import { Settings } from "./Settings";
 
 export const StyledTools = styled.div`
   display: flex;
@@ -42,6 +44,7 @@ const StyledToolElement = styled.button`
 `;
 
 export const Tools: React.FC = () => {
+  const [settingsVisible, setSettingsVisible] = React.useState(false);
   const [isDownloadVisible, setDownloadVisible] = React.useState(false);
   const lightmode = useStored((state) => state.lightmode);
   const setLightTheme = useStored((state) => state.setLightTheme);
@@ -63,6 +66,12 @@ export const Tools: React.FC = () => {
     <StyledTools>
       <StyledToolElement aria-label="fullscreen" onClick={toggleEditor}>
         <AiOutlineFullscreen />
+      </StyledToolElement>
+      <StyledToolElement
+        aria-label="settings"
+        onClick={() => setSettingsVisible(true)}
+      >
+        <TbSettings />
       </StyledToolElement>
       <StyledToolElement aria-label="switch theme" onClick={toggleTheme}>
         {lightmode ? <HiOutlineMoon /> : <HiOutlineSun />}
@@ -90,6 +99,7 @@ export const Tools: React.FC = () => {
         visible={isDownloadVisible}
         setVisible={setDownloadVisible}
       />
+      <Settings visible={settingsVisible} setVisible={setSettingsVisible} />
     </StyledTools>
   );
 };
