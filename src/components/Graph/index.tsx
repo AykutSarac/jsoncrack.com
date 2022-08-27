@@ -136,7 +136,7 @@ export const Graph = ({ isWidget = false }: { isWidget?: boolean }) => {
     const nodeList = collapsedNodes.map((id) => `[id*="node-${id}"]`);
     const edgeList = collapsedEdges.map((id) => `[class*="edge-${id}"]`);
 
-    const hiddenItems = document.querySelectorAll("hide");
+    const hiddenItems = document.querySelectorAll(".hide");
     hiddenItems.forEach((item) => item.classList.remove("hide"));
 
     if (nodeList.length) {
