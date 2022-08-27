@@ -28,8 +28,8 @@
       <img width="800" src="/public/jsonvisio-screenshot.webp" alt="preview 1" />
   </p>
 
-
 # JSON Visio (jsonvisio.com)
+
 JSON Visio is a tool that generates graph diagrams from JSON objects. These diagrams are much easier to navigate than the textual format and to make it even more convenient, the tool also allows you to search the nodes. Additionally, the generated diagrams can also be downloaded or clipboard as image.
 
 You can use the web version at [jsonvisio.com](https://jsonvisio.com) or also run it locally as [Docker container](https://github.com/AykutSarac/jsonvisio.com#-docker).
@@ -37,14 +37,14 @@ You can use the web version at [jsonvisio.com](https://jsonvisio.com) or also ru
 > <b><a href="https://jsonvisio.com">JSON Visio - Directly onto graphs</a></b>
 
 ## ⚡️ Features
-* Search Nodes
-* Share links & Create Embed Widgets
-* Download/Clipboard as image
-* Upload JSON locally or fetch from URL
-* Great UI/UX
-* Light/Dark Mode
-* Advanced Error Message
 
+- Search Nodes
+- Share links & Create Embed Widgets
+- Download/Clipboard as image
+- Upload JSON locally or fetch from URL
+- Great UI/UX
+- Light/Dark Mode
+- Advanced Error Messages
 
 ## 🛠 Development Setup
 
@@ -52,13 +52,13 @@ You can use the web version at [jsonvisio.com](https://jsonvisio.com) or also ru
   npm install --legacy-peer-deps
   npm run dev
 ```
-  
+
 ## 🐳 Docker
 
 ```
 A Docker file is provided in the root of the repository.
 If you want to run JSON Visio locally:
-  
+
 * Build Docker image with `docker build -t jsonvisio .`
 * Run locally with `docker run -p 8888:8080 jsonvisio`
 * Go to [http://localhost:8888]

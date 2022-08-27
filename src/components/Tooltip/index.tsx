@@ -53,8 +53,8 @@ export const Tooltip: React.FC<React.PropsWithChildren<TooltipProps>> = ({
 
   return (
     <StyledTooltipWrapper>
-      { title &&  <StyledTooltip visible={visible}>{title}</StyledTooltip>}
-      
+      {title && <StyledTooltip visible={visible}>{title}</StyledTooltip>}
+
       <StyledChildren
         onMouseEnter={() => setVisible(true)}
         onMouseLeave={() => setVisible(false)}
