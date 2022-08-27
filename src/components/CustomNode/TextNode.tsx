@@ -4,6 +4,7 @@ import { NodeData } from "reaflow/dist/types";
 import { ConditionalWrapper, CustomNodeProps } from "src/components/CustomNode";
 import useConfig from "src/hooks/store/useConfig";
 import useGraph from "src/hooks/store/useGraph";
+import useStored from "src/hooks/store/useStored";
 import styled from "styled-components";
 import * as Styled from "./styles";
 
@@ -35,6 +36,7 @@ const TextNode: React.FC<CustomNodeProps<string> & { node: NodeData }> = ({
   y,
 }) => {
   const performanceMode = useConfig((state) => state.performanceMode);
+  const hideCollapse = useStored((state) => state.hideCollapse);
   const expand = useConfig((state) => state.expand);
   const expandNodes = useGraph((state) => state.expandNodes);
   const collapseNodes = useGraph((state) => state.collapseNodes);
@@ -63,7 +65,12 @@ const TextNode: React.FC<CustomNodeProps<string> & { node: NodeData }> = ({
       data-nodeid={node.id}
     >
       <ConditionalWrapper condition={performanceMode}>
-        <Styled.StyledText parent={isParent} width={width} height={height}>
+        <Styled.StyledText
+          hideCollapse={hideCollapse}
+          parent={isParent}
+          width={width}
+          height={height}
+        >
           <Styled.StyledKey
             data-x={x}
             data-y={y}
@@ -76,7 +83,7 @@ const TextNode: React.FC<CustomNodeProps<string> & { node: NodeData }> = ({
           </Styled.StyledKey>
         </Styled.StyledText>
       </ConditionalWrapper>
-      {isParent && (
+      {isParent && !hideCollapse && (
         <StyledExpand onClick={handleExpand}>
           <MdCompareArrows size={18} />
         </StyledExpand>

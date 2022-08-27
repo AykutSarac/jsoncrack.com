@@ -27,6 +27,7 @@ import useConfig from "src/hooks/store/useConfig";
 import { getNextLayout } from "src/containers/Editor/LiveEditor/helpers";
 import { HiHeart } from "react-icons/hi";
 import shallow from "zustand/shallow";
+import { IoAlertCircleSharp } from "react-icons/io5";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -143,8 +144,8 @@ export const Sidebar: React.FC = () => {
   const [shareVisible, setShareVisible] = React.useState(false);
   const { push } = useRouter();
 
-  const [expand, performanceMode, layout] = useConfig(
-    (state) => [state.expand, state.performanceMode, state.layout],
+  const [expand, layout] = useConfig(
+    (state) => [state.expand, state.layout],
     shallow
   );
 
@@ -160,19 +161,6 @@ export const Sidebar: React.FC = () => {
   const toggleExpandCollapse = () => {
     setConfig("expand", !expand);
     toast(`${expand ? "Collapsed" : "Expanded"} nodes.`);
-  };
-
-  const togglePerformance = () => {
-    const toastMsg = performanceMode
-      ? "Disabled Performance Mode\nSearch Node & Save Image enabled."
-      : "Enabled Performance Mode\nSearch Node & Save Image disabled.";
-
-    toast(toastMsg, {
-      icon: <StyledAlertIcon size={36} />,
-      duration: 3000,
-    });
-
-    setConfig("performanceMode", !performanceMode);
   };
 
   const toggleLayout = () => {
@@ -207,15 +195,6 @@ export const Sidebar: React.FC = () => {
             onClick={toggleExpandCollapse}
           >
             {expand ? <CgArrowsMergeAltH /> : <CgArrowsShrinkH />}
-          </StyledElement>
-        </Tooltip>
-        <Tooltip
-          title={`${
-            performanceMode ? "Disable" : "Enable"
-          } Performance Mode (Beta)`}
-        >
-          <StyledElement onClick={togglePerformance} beta>
-            <CgPerformance color={performanceMode ? "#0073FF" : undefined} />
           </StyledElement>
         </Tooltip>
         <Tooltip title="Save JSON">

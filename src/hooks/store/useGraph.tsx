@@ -27,12 +27,11 @@ const initialStates: Graph = {
 const useGraph = create<Graph & GraphActions>((set) => ({
   ...initialStates,
   setGraphValue: (key, value) =>
-    set((state) => ({
-      ...state,
+    set({
       collapsedNodes: [],
       collapsedEdges: [],
       [key]: value,
-    })),
+    }),
   expandNodes: (nodeId) =>
     set((state) => {
       const childrenNodes = findNodeChildren(nodeId, state.nodes, state.edges);
