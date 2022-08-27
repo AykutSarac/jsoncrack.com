@@ -1,12 +1,5 @@
 import "styled-components";
 
-interface ThemeTones {
-  readonly LOWLIGHT?: string;
-  readonly BASE: string;
-  readonly HIGHLIGHT?: string;
-  readonly TINT?: string;
-}
-
 declare module "styled-components" {
   export interface DefaultTheme {
     BLURPLE: string;

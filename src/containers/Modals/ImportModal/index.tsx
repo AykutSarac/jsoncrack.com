@@ -77,13 +77,6 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
     }
   };
 
-  React.useEffect(() => {
-    return () => {
-      setJsonFile(null);
-      setURL("");
-    };
-  }, [visible]);
-
   return (
     <Modal visible={visible} setVisible={setVisible}>
       <Modal.Header>Import JSON</Modal.Header>

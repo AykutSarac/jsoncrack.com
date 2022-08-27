@@ -1,7 +1,6 @@
 import React from "react";
 import toast from "react-hot-toast";
 import { FiCopy } from "react-icons/fi";
-import { NodeData } from "reaflow";
 import { Button } from "src/components/Button";
 import { Modal } from "src/components/Modal";
 import styled from "styled-components";

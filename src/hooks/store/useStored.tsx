@@ -17,37 +17,37 @@ function getTomorrow() {
 
 export interface Config {
   lightmode: boolean;
+  hideCollapse: boolean;
   sponsors: {
     users: Sponsor[];
     nextDate: number;
   };
   setSponsors: (sponsors: Sponsor[]) => void;
   setLightTheme: (theme: boolean) => void;
+  toggleHideCollapse: (value: boolean) => void;
 }
 
 const useStored = create(
   persist<Config>(
     (set) => ({
       lightmode: false,
+      hideCollapse: false,
       sponsors: {
         users: [],
         nextDate: Date.now(),
       },
       setLightTheme: (enabled: boolean) =>
-        set((state) => {
-          return {
-            ...state,
-            lightmode: enabled,
-          };
+        set({
+          lightmode: enabled,
         }),
       setSponsors: (users) =>
-        set((state) => ({
-          ...state,
+        set({
           sponsors: {
             users,
             nextDate: getTomorrow(),
           },
-        })),
+        }),
+      toggleHideCollapse: (value: boolean) => set({ hideCollapse: value }),
     }),
     {
       name: "config",

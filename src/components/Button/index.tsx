@@ -9,8 +9,7 @@ enum ButtonType {
   WARNING = "ORANGE",
 }
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {
   status?: keyof typeof ButtonType;
   block?: boolean;
 }
