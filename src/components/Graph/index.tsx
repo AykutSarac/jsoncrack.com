@@ -103,8 +103,8 @@ const MemoizedGraph = React.memo(function Layout({
           <Canvas
             nodes={nodes}
             edges={edges}
-            maxWidth={size.width + 100}
-            maxHeight={size.height + 100}
+            maxWidth={size.width + 400}
+            maxHeight={size.height + 400}
             direction={layout}
             key={layout}
             onLayoutChange={onLayoutChange}
