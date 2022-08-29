@@ -6,7 +6,9 @@
 
 <p>
     <p align="center">
+      <a href="https://app.travis-ci.com/github/AykutSarac/jsoncrack.com">
         <img alt="travis ci badge" src="https://img.shields.io/travis/com/AykutSarac/jsoncrack.com/main?style=flat-square" />
+      </a>
       <a href="https://github.com/AykutSarac/jsoncrack.com/blob/main/LICENSE">
         <img alt="license badge" src="https://img.shields.io/github/license/AykutSarac/jsoncrack.com?style=flat-square" />
       </a>
