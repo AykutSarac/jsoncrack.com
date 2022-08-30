@@ -83,7 +83,7 @@ const Home: React.FC = () => {
           <Styles.StyledImage
             width="1200"
             height="863"
-            src="/jsonvisio-screenshot.webp"
+            src="/jsoncrack-screenshot.webp"
             alt="preview"
             loading="lazy"
           />

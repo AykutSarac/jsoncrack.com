@@ -1,6 +1,6 @@
 <center>
   <a href="https://jsoncrack.com">
-    <img width="1080" alt="jsonvisio" src="https://user-images.githubusercontent.com/47941171/182015412-f048058e-6e31-4cf6-bcfc-ab9ba3f6e005.png">
+    <img width="1080" alt="jsoncrack" src="https://user-images.githubusercontent.com/47941171/182015412-f048058e-6e31-4cf6-bcfc-ab9ba3f6e005.png">
   </a>
 </center>
 
@@ -25,7 +25,7 @@
   </p>
 
   <p align="center">
-      <img width="800" src="/public/jsonvisio-screenshot.webp" alt="preview 1" />
+      <img width="800" src="/public/jsoncrack-screenshot.webp" alt="preview 1" />
   </p>
 
 # JSON Crack (jsoncrack.com)
@@ -59,8 +59,8 @@ You can use the web version at [jsoncrack.com](https://jsoncrack.com) or also ru
 A Docker file is provided in the root of the repository.
 If you want to run JSON Crack locally:
 
-* Build Docker image with `docker build -t jsonvisio .`
-* Run locally with `docker run -p 8888:8080 jsonvisio`
+* Build Docker image with `docker build -t jsoncrack .`
+* Run locally with `docker run -p 8888:8080 jsoncrack`
 * Go to [http://localhost:8888]
 ```
 

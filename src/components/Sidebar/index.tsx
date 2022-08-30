@@ -124,7 +124,7 @@ export const Sidebar: React.FC = () => {
     const file = new Blob([getJson()], { type: "text/plain" });
 
     a.href = window.URL.createObjectURL(file);
-    a.download = "jsonvisio.json";
+    a.download = "jsoncrack.json";
     a.click();
   };
 
