@@ -18,6 +18,7 @@ export const StyledIncompatible = styled.div`
     height: 100vh;
     justify-content: center;
     align-items: center;
+    z-index: 200;
 
     button {
       margin-top: 60px;
