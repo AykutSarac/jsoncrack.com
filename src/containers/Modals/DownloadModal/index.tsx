@@ -96,7 +96,7 @@ export const DownloadModal: React.FC<ModalProps> = ({
   setVisible,
 }) => {
   const [fileDetails, setFileDetails] = React.useState({
-    filename: "jsonvisio.com",
+    filename: "jsoncrack.com",
     backgroundColor: "transparent",
     quality: 1,
   });

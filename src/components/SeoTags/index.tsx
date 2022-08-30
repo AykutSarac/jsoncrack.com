@@ -24,7 +24,7 @@ export const SeoTags: React.FC<SeoTagsProps> = ({
 
     {/* <!-- Twitter Meta Tags --> */}
     <meta name="twitter:card" content="summary_large_image" />
-    <meta property="twitter:domain" content="jsonvisio.com" />
+    <meta property="twitter:domain" content="jsoncrack.com" />
     <meta property="twitter:url" content={packageJson.homepage} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />

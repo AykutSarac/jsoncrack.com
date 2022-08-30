@@ -39,8 +39,8 @@ class MyDocument extends Document {
         <Head>
           <SeoTags
             description="Simple visualization tool for your JSON data. No forced structure, paste your JSON and view it instantly."
-            title="JSON Visio - Directly onto graphs"
-            image="https://jsonvisio.com/jsonvisio.png"
+            title="JSON Crack - Crack your data into pieces"
+            image="https://jsoncrack.com/jsonvisio.png"
           />
           <meta name="theme-color" content="#36393E" />
           <link rel="manifest" href="/manifest.json" />

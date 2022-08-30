@@ -67,7 +67,7 @@ const WidgetPage = () => {
         target="_blank"
         rel="noreferrer"
       >
-        jsonvisio.com
+        jsoncrack.com
       </StyledAttribute>
     </>
   );

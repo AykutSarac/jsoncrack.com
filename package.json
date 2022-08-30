@@ -3,7 +3,7 @@
   "private": true,
   "version": "v2.0.0",
   "author": "https://github.com/AykutSarac",
-  "homepage": "https://jsonvisio.com",
+  "homepage": "https://jsoncrack.com",
   "scripts": {
     "dev": "next dev",
     "build": "next build && next export",

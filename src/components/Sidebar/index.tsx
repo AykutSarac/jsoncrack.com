@@ -145,7 +145,7 @@ export const Sidebar: React.FC = () => {
           <StyledElement onClick={() => push("/")}>
             <StyledLogo>
               <StyledText>J</StyledText>
-              <StyledText secondary>V</StyledText>
+              <StyledText secondary>C</StyledText>
             </StyledLogo>
           </StyledElement>
         </Link>
@@ -192,7 +192,7 @@ export const Sidebar: React.FC = () => {
           </Link>
         </StyledElement>
         <StyledElement>
-          <Link href="https://github.com/AykutSarac/jsonvisio.com">
+          <Link href="https://github.com/AykutSarac/jsoncrack.com">
             <a aria-label="GitHub" rel="me" target="_blank">
               <AiFillGithub />
             </a>
