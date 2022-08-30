@@ -29,7 +29,7 @@ const Home: React.FC = () => {
   return (
     <Styles.StyledHome>
       <Head>
-        <title>JSON Visio - Directly onto graphs</title>
+        <title>JSON Crack - Crack your data into pieces</title>
       </Head>
       <Styles.StyledNavbar>
         <Styles.StyledNavLink href="/editor">Editor</Styles.StyledNavLink>
@@ -40,7 +40,7 @@ const Home: React.FC = () => {
           <Styles.StyledNavLink>Sponsor</Styles.StyledNavLink>
         </Link>
         <Styles.StyledNavLink
-          href="https://github.com/AykutSarac/jsonvisio.com"
+          href="https://github.com/AykutSarac/jsoncrack.com"
           target="_blank"
           rel="external"
         >
@@ -50,7 +50,7 @@ const Home: React.FC = () => {
 
       <Styles.StyledHeroSection id="main">
         <Styles.StyledTitle>
-          <Styles.StyledGradientText>JSON</Styles.StyledGradientText> Visio
+          <Styles.StyledGradientText>JSON</Styles.StyledGradientText> Crack
         </Styles.StyledTitle>
         <Styles.StyledSubTitle>
           Seamlessly visualize your JSON data{" "}
@@ -70,7 +70,7 @@ const Home: React.FC = () => {
         {!isMobile && (
           <>
             <Styles.StyledSponsorButton onClick={() => setModalVisible(true)}>
-              Help JSON Visio Accomplish It&apos;s Goals
+              Help JSON Crack Accomplish It&apos;s Goals
               <FaHeart />
             </Styles.StyledSponsorButton>
             <GoalsModal visible={isModalVisible} setVisible={setModalVisible} />
@@ -98,7 +98,7 @@ const Home: React.FC = () => {
           <Styles.StyledCardTitle>EASY-TO-USE</Styles.StyledCardTitle>
           <Styles.StyledCardDescription>
             Don&apos;t even bother to update your schema to view your JSON into
-            graphs; directly paste, import or fetch! JSON Visio helps you to
+            graphs; directly paste, import or fetch! JSON Crack helps you to
             visualize without any additional values and save your time.
           </Styles.StyledCardDescription>
         </Styles.StyledSectionCard>
@@ -124,7 +124,7 @@ const Home: React.FC = () => {
           <Styles.StyledCardDescription>
             Download the graph to your local machine and use it wherever you
             want, to your blogs, website or make it a poster and paste to the
-            wall. Who wouldn&apos;t want to see a JSON Visio graph onto their
+            wall. Who wouldn&apos;t want to see a JSON Crack graph onto their
             wall, eh?
           </Styles.StyledCardDescription>
         </Styles.StyledSectionCard>
@@ -159,7 +159,7 @@ const Home: React.FC = () => {
             changes minor to major!
           </Styles.StyledMinorTitle>
           <Styles.StyledButton
-            onClick={() => push("https://github.com/AykutSarac/jsonvisio.com")}
+            onClick={() => push("https://github.com/AykutSarac/jsoncrack.com")}
             status="SECONDARY"
           >
             STAR ON GITHUB
@@ -171,19 +171,19 @@ const Home: React.FC = () => {
         <Styles.StyledSectionArea>
           <Styles.StyledSubTitle>Embed Into Your Website</Styles.StyledSubTitle>
           <Styles.StyledMinorTitle>
-            Easily embed the JSON Visio graph into your website to showcase your
+            Easily embed the JSON Crack graph into your website to showcase your
             visitors, blog readers or anybody else!
           </Styles.StyledMinorTitle>
         </Styles.StyledSectionArea>
         <div>
-          <Styles.StyledIframge src="https://jsonvisio.com/widget?json=%5B%5B%22squadName%22%2C%22homeTown%22%2C%22formed%22%2C%22secretBase%22%2C%22active%22%2C%22members%22%2C%22a%7C0%7C1%7C2%7C3%7C4%7C5%22%2C%22Super%20hero%20squad%22%2C%22Metro%20City%22%2C%22n%7CWW%22%2C%22Super%20tower%22%2C%22b%7CT%22%2C%22name%22%2C%22age%22%2C%22secretIdentity%22%2C%22powers%22%2C%22a%7CC%7CD%7CE%7CF%22%2C%22Molecule%20Man%22%2C%22n%7CT%22%2C%22Dan%20Jukes%22%2C%22Radiation%20resistance%22%2C%22Turning%20tiny%22%2C%22Radiation%20blast%22%2C%22a%7CK%7CL%7CM%22%2C%22o%7CG%7CH%7CI%7CJ%7CN%22%2C%22Madame%20Uppercut%22%2C%22n%7Cd%22%2C%22Jane%20Wilson%22%2C%22Million%20tonne%20punch%22%2C%22Damage%20resistance%22%2C%22Superhuman%20reflexes%22%2C%22a%7CS%7CT%7CU%22%2C%22o%7CG%7CP%7CQ%7CR%7CV%22%2C%22Eternal%20Flame%22%2C%22n%7C4C92%22%2C%22Unknown%22%2C%22Immortality%22%2C%22Heat%20Immunity%22%2C%22Inferno%22%2C%22Teleportation%22%2C%22Interdimensional%20travel%22%2C%22a%7Ca%7Cb%7Cc%7Cd%7Ce%22%2C%22o%7CG%7CX%7CY%7CZ%7Cf%22%2C%22a%7CO%7CW%7Cg%22%2C%22o%7C6%7C7%7C8%7C9%7CA%7CB%7Ch%22%5D%2C%22i%22%5D"></Styles.StyledIframge>
+          <Styles.StyledIframge src="https://jsoncrack.com/widget?json=%5B%5B%22squadName%22%2C%22homeTown%22%2C%22formed%22%2C%22secretBase%22%2C%22active%22%2C%22members%22%2C%22a%7C0%7C1%7C2%7C3%7C4%7C5%22%2C%22Super%20hero%20squad%22%2C%22Metro%20City%22%2C%22n%7CWW%22%2C%22Super%20tower%22%2C%22b%7CT%22%2C%22name%22%2C%22age%22%2C%22secretIdentity%22%2C%22powers%22%2C%22a%7CC%7CD%7CE%7CF%22%2C%22Molecule%20Man%22%2C%22n%7CT%22%2C%22Dan%20Jukes%22%2C%22Radiation%20resistance%22%2C%22Turning%20tiny%22%2C%22Radiation%20blast%22%2C%22a%7CK%7CL%7CM%22%2C%22o%7CG%7CH%7CI%7CJ%7CN%22%2C%22Madame%20Uppercut%22%2C%22n%7Cd%22%2C%22Jane%20Wilson%22%2C%22Million%20tonne%20punch%22%2C%22Damage%20resistance%22%2C%22Superhuman%20reflexes%22%2C%22a%7CS%7CT%7CU%22%2C%22o%7CG%7CP%7CQ%7CR%7CV%22%2C%22Eternal%20Flame%22%2C%22n%7C4C92%22%2C%22Unknown%22%2C%22Immortality%22%2C%22Heat%20Immunity%22%2C%22Inferno%22%2C%22Teleportation%22%2C%22Interdimensional%20travel%22%2C%22a%7Ca%7Cb%7Cc%7Cd%7Ce%22%2C%22o%7CG%7CX%7CY%7CZ%7Cf%22%2C%22a%7CO%7CW%7Cg%22%2C%22o%7C6%7C7%7C8%7C9%7CA%7CB%7Ch%22%5D%2C%22i%22%5D"></Styles.StyledIframge>
         </div>
       </Styles.StyledSection>
 
       <Styles.StyledPaidSection>
         <Styles.StyledProducthunt>
           <Styles.StyledSubTitle>
-            Support JSON Visio at
+            Support JSON Crack at
             <br />
             <Styles.StyledHighlightedText>
               Product Hunt
@@ -200,7 +200,7 @@ const Home: React.FC = () => {
       <Styles.StyledSponsorSection id="sponsor">
         <Styles.StyledSubTitle>Sponsors</Styles.StyledSubTitle>
         <Styles.StyledMinorTitle>
-          Your supports make JSON Visio possible to continue and accessible for
+          Your supports make JSON Crack possible to continue and accessible for
           everyone!
         </Styles.StyledMinorTitle>
         <Styles.StyledButton
@@ -214,11 +214,11 @@ const Home: React.FC = () => {
 
       <Styles.StyledFooter>
         <Styles.StyledFooterText>
-          © 2022 JSON Visio - {pkg.version}
+          © 2022 JSON Crack - {pkg.version}
         </Styles.StyledFooterText>
         <Styles.StyledIconLinks>
           <Styles.StyledNavLink
-            href="https://github.com/AykutSarac/jsonvisio.com"
+            href="https://github.com/AykutSarac/jsoncrack.com"
             target="_blank"
             aria-label="github"
           >

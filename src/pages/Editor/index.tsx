@@ -23,7 +23,7 @@ const EditorPage: React.FC = () => {
   return (
     <StyledEditorWrapper>
       <Head>
-        <title>Editor | JSON Visio</title>
+        <title>Editor | JSON Crack</title>
         <meta
           name="description"
           content="View your JSON data in graphs instantly."

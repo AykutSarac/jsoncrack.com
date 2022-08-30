@@ -38,10 +38,10 @@ export const GoalsModal = ({ visible, setVisible }) => {
 
   return (
     <Modal visible={visible} setVisible={setVisible}>
-      <Modal.Header>Help JSON Visio&apos;s Goals</Modal.Header>
+      <Modal.Header>Help JSON Crack&apos;s Goals</Modal.Header>
       <Modal.Content>
         <StyledTitle>OUR GOAL</StyledTitle>
-        <b>JSON Visio&apos;s Goal</b> is to keep the service completely free and
+        <b>JSON Crack&apos;s Goal</b> is to keep the service completely free and
         open source for everyone! For the contiunity of our service and keep the
         new updates coming we need your support to make that possible ❤️
         <ButtonsWrapper>
@@ -58,8 +58,8 @@ export const GoalsModal = ({ visible, setVisible }) => {
             onClick={() =>
               push(
                 `https://twitter.com/intent/tweet?button=&url=${encodeURIComponent(
-                  "https://jsonvisio.com"
-                )}&text=Looking+to+understand+or+explore+some+JSON?+Just+paste+or+upload+to+visualize+it+as+a+graph+with+JSON+Visio+😍&button=`
+                  "https://jsoncrack.com"
+                )}&text=Looking+to+understand+or+explore+some+JSON?+Just+paste+or+upload+to+visualize+it+as+a+graph+with+JSON+Crack+😍&button=`
               )
             }
             block

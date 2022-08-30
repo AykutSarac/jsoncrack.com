@@ -20,7 +20,7 @@ if (process.env.NODE_ENV !== "development") {
   });
 }
 
-function JsonVisio({ Component, pageProps }: AppProps) {
+function JsonCrack({ Component, pageProps }: AppProps) {
   const { query } = useRouter();
   const lightmode = useStored((state) => state.lightmode);
   const setJson = useConfig((state) => state.setJson);
@@ -78,4 +78,4 @@ function JsonVisio({ Component, pageProps }: AppProps) {
   );
 }
 
-export default JsonVisio;
+export default JsonCrack;
