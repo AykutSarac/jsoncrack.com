@@ -1,6 +1,6 @@
 <center>
   <a href="https://jsoncrack.com">
-    <img width="1080" alt="jsoncrack" src="https://user-images.githubusercontent.com/47941171/182015412-f048058e-6e31-4cf6-bcfc-ab9ba3f6e005.png">
+    <img width="1080" alt="jsoncrack" src="https://user-images.githubusercontent.com/47941171/187418000-8edea92b-b3ac-4b07-9c4c-e42f6763817d.png">
   </a>
 </center>
 
