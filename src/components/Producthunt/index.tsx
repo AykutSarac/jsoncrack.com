@@ -16,7 +16,7 @@ export const Producthunt = () => {
   return (
     <StyledProducthuntWrapper>
       <a
-        href="https://www.producthunt.com/posts/json-visio?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-json-visio"
+        href="https://www.producthunt.com/posts/json-crack?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-json&#0045;crack"
         target="_blank"
         rel="noreferrer"
       >

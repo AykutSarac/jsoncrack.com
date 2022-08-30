@@ -25,8 +25,11 @@ export const StyledTools = styled.div`
   padding: 4px 16px;
   background: ${({ theme }) => theme.BACKGROUND_PRIMARY};
   color: ${({ theme }) => theme.SILVER};
-
   box-shadow: 0 1px 0px ${({ theme }) => theme.BACKGROUND_TERTIARY};
+
+  @media only screen and (max-width: 568px) {
+    display: none;
+  }
 `;
 
 const StyledToolElement = styled.button`

@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 400;
     font-size: 16px;
     scroll-behavior: smooth;
+    height: 100%;
 
     background-color: #000000;
     opacity: 1;
