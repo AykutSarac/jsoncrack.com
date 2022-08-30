@@ -60,11 +60,8 @@ const Home: React.FC = () => {
         <Styles.StyledMinorTitle>
           Paste - Import - Fetch!
         </Styles.StyledMinorTitle>
-        <Styles.StyledButton
-          onClick={() => window.location.replace("/editor")}
-          disabled={isMobile}
-        >
-          {isMobile ? "Incompatible Device" : "GO TO EDITOR"}
+        <Styles.StyledButton onClick={() => window.location.replace("/editor")}>
+          GO TO EDITOR
         </Styles.StyledButton>
 
         {!isMobile && (

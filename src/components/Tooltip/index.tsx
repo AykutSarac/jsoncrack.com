@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-interface TooltipProps {
+interface TooltipProps extends React.ComponentPropsWithoutRef<"div"> {
   title?: string;
 }
 
@@ -41,6 +41,10 @@ const StyledTooltip = styled.div<{ visible: boolean }>`
     border-color: transparent ${({ theme }) => theme.BACKGROUND_PRIMARY}
       transparent transparent;
   }
+
+  @media only screen and (max-width: 568px) {
+    display: none;
+  }
 `;
 
 const StyledChildren = styled.div``;
@@ -48,11 +52,12 @@ const StyledChildren = styled.div``;
 export const Tooltip: React.FC<React.PropsWithChildren<TooltipProps>> = ({
   children,
   title,
+  ...props
 }) => {
   const [visible, setVisible] = React.useState(false);
 
   return (
-    <StyledTooltipWrapper>
+    <StyledTooltipWrapper {...props}>
       {title && <StyledTooltip visible={visible}>{title}</StyledTooltip>}
 
       <StyledChildren

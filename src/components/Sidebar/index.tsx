@@ -12,6 +12,7 @@ import {
   AiOutlineSave,
   AiOutlineFileAdd,
   AiOutlineLink,
+  AiOutlineEdit,
 } from "react-icons/ai";
 
 import { Tooltip } from "src/components/Tooltip";
@@ -23,7 +24,7 @@ import useConfig from "src/hooks/store/useConfig";
 import { getNextLayout } from "src/containers/Editor/LiveEditor/helpers";
 import { HiHeart } from "react-icons/hi";
 import shallow from "zustand/shallow";
-import { IoAlertCircleSharp } from "react-icons/io5";
+import { MdCenterFocusWeak } from "react-icons/md";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -34,6 +35,11 @@ const StyledSidebar = styled.div`
   background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
   padding: 4px;
   border-right: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
+
+  @media only screen and (max-width: 568px) {
+    flex-direction: row;
+    width: 100%;
+  }
 `;
 
 const StyledElement = styled.div<{ beta?: boolean }>`
@@ -80,6 +86,26 @@ const StyledTopWrapper = styled.nav`
   & > div:nth-child(n + 1) {
     border-bottom: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
   }
+
+  .mobile {
+    display: none;
+  }
+
+  @media only screen and (max-width: 568px) {
+    flex-direction: row;
+
+    & > div:nth-child(n + 1) {
+      border-bottom: none;
+    }
+
+    .mobile {
+      display: initial;
+    }
+
+    .desktop {
+      display: none;
+    }
+  }
 `;
 
 const StyledBottomWrapper = styled.nav`
@@ -92,6 +118,10 @@ const StyledBottomWrapper = styled.nav`
   & > div,
   a:nth-child(0) {
     border-top: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
+  }
+
+  @media only screen and (max-width: 568px) {
+    display: none;
   }
 `;
 
@@ -109,13 +139,14 @@ function rotateLayout(layout: CanvasDirection) {
 export const Sidebar: React.FC = () => {
   const getJson = useConfig((state) => state.getJson);
   const setConfig = useConfig((state) => state.setConfig);
+  const centerView = useConfig((state) => state.centerView);
   const [uploadVisible, setUploadVisible] = React.useState(false);
   const [clearVisible, setClearVisible] = React.useState(false);
   const [shareVisible, setShareVisible] = React.useState(false);
   const { push } = useRouter();
 
-  const [expand, layout] = useConfig(
-    (state) => [state.expand, state.layout],
+  const [expand, layout, hideEditor] = useConfig(
+    (state) => [state.expand, state.layout, state.hideEditor],
     shallow
   );
 
@@ -149,6 +180,11 @@ export const Sidebar: React.FC = () => {
             </StyledLogo>
           </StyledElement>
         </Link>
+        <Tooltip className="mobile" title="Edit JSON">
+          <StyledElement onClick={() => setConfig("hideEditor", !hideEditor)}>
+            <AiOutlineEdit />
+          </StyledElement>
+        </Tooltip>
         <Tooltip title="Import File">
           <StyledElement onClick={() => setUploadVisible(true)}>
             <AiOutlineFileAdd />
@@ -159,7 +195,15 @@ export const Sidebar: React.FC = () => {
             <StyledFlowIcon rotate={rotateLayout(layout)} />
           </StyledElement>
         </Tooltip>
-        <Tooltip title={expand ? "Shrink Nodes" : "Expand Nodes"}>
+        <Tooltip className="mobile" title="Center View">
+          <StyledElement onClick={centerView}>
+            <MdCenterFocusWeak />
+          </StyledElement>
+        </Tooltip>
+        <Tooltip
+          className="desktop"
+          title={expand ? "Shrink Nodes" : "Expand Nodes"}
+        >
           <StyledElement
             title="Toggle Expand/Collapse"
             onClick={toggleExpandCollapse}
@@ -167,7 +211,7 @@ export const Sidebar: React.FC = () => {
             {expand ? <CgArrowsMergeAltH /> : <CgArrowsShrinkH />}
           </StyledElement>
         </Tooltip>
-        <Tooltip title="Save JSON">
+        <Tooltip className="desktop" title="Save JSON">
           <StyledElement onClick={handleSave}>
             <AiOutlineSave />
           </StyledElement>
@@ -177,7 +221,7 @@ export const Sidebar: React.FC = () => {
             <AiOutlineDelete />
           </StyledElement>
         </Tooltip>
-        <Tooltip title="Share">
+        <Tooltip className="desktop" title="Share">
           <StyledElement onClick={() => setShareVisible(true)}>
             <AiOutlineLink />
           </StyledElement>
