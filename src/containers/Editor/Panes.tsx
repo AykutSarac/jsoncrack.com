@@ -18,7 +18,12 @@ const LiveEditor = dynamic(() => import("src/containers/Editor/LiveEditor"), {
 
 const Panes: React.FC = () => {
   const hideEditor = useConfig((state) => state.hideEditor);
+  const setConfig = useConfig((state) => state.setConfig);
   const isMobile = window.innerWidth <= 768;
+
+  React.useEffect(() => {
+    if (isMobile) setConfig("hideEditor", true);
+  }, [isMobile, setConfig]);
 
   return (
     <StyledEditor proportionalLayout={false} vertical={isMobile}>
@@ -30,7 +35,10 @@ const Panes: React.FC = () => {
       >
         <JsonEditor />
       </Allotment.Pane>
-      <Allotment.Pane minSize={0} maxSize={isMobile && !hideEditor ? 0 : Infinity}>
+      <Allotment.Pane
+        minSize={0}
+        maxSize={isMobile && !hideEditor ? 0 : Infinity}
+      >
         <LiveEditor />
       </Allotment.Pane>
     </StyledEditor>

@@ -64,15 +64,11 @@ const Home: React.FC = () => {
           GO TO EDITOR
         </Styles.StyledButton>
 
-        {!isMobile && (
-          <>
-            <Styles.StyledSponsorButton onClick={() => setModalVisible(true)}>
-              Help JSON Crack Accomplish It&apos;s Goals
-              <FaHeart />
-            </Styles.StyledSponsorButton>
-            <GoalsModal visible={isModalVisible} setVisible={setModalVisible} />
-          </>
-        )}
+        <Styles.StyledSponsorButton onClick={() => setModalVisible(true)}>
+          Help JSON Crack&apos;s Goals
+          <FaHeart />
+        </Styles.StyledSponsorButton>
+        <GoalsModal visible={isModalVisible} setVisible={setModalVisible} />
       </Styles.StyledHeroSection>
 
       <Styles.StyledPreviewSection>
