@@ -37,7 +37,7 @@ const StyledButton = styled.button<{
   }
 
   @media only screen and (max-width: 768px) {
-    font-size: 18px;
+    font-size: 14px;
   }
 `;
 

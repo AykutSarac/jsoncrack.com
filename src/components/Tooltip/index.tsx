@@ -42,7 +42,7 @@ const StyledTooltip = styled.div<{ visible: boolean }>`
       transparent transparent;
   }
 
-  @media only screen and (max-width: 568px) {
+  @media only screen and (max-width: 768px) {
     display: none;
   }
 `;

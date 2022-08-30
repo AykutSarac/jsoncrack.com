@@ -10,7 +10,7 @@ export const StyledPageWrapper = styled.div`
   height: 100vh;
   width: 100%;
 
-  @media only screen and (max-width: 568px) {
+  @media only screen and (max-width: 768px) {
     position: fixed;
     height: -webkit-fill-available;
     flex-direction: column;

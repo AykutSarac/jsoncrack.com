@@ -27,7 +27,7 @@ export const StyledTools = styled.div`
   color: ${({ theme }) => theme.SILVER};
   box-shadow: 0 1px 0px ${({ theme }) => theme.BACKGROUND_TERTIARY};
 
-  @media only screen and (max-width: 568px) {
+  @media only screen and (max-width: 768px) {
     display: none;
   }
 `;

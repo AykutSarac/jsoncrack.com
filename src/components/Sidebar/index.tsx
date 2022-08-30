@@ -36,7 +36,7 @@ const StyledSidebar = styled.div`
   padding: 4px;
   border-right: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
 
-  @media only screen and (max-width: 568px) {
+  @media only screen and (max-width: 768px) {
     flex-direction: row;
     width: 100%;
   }
@@ -91,7 +91,7 @@ const StyledTopWrapper = styled.nav`
     display: none;
   }
 
-  @media only screen and (max-width: 568px) {
+  @media only screen and (max-width: 768px) {
     flex-direction: row;
 
     & > div:nth-child(n + 1) {
@@ -120,7 +120,7 @@ const StyledBottomWrapper = styled.nav`
     border-top: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
   }
 
-  @media only screen and (max-width: 568px) {
+  @media only screen and (max-width: 768px) {
     display: none;
   }
 `;

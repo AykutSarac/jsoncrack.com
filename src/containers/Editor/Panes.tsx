@@ -18,7 +18,7 @@ const LiveEditor = dynamic(() => import("src/containers/Editor/LiveEditor"), {
 
 const Panes: React.FC = () => {
   const hideEditor = useConfig((state) => state.hideEditor);
-  const isMobile = window.innerWidth <= 568;
+  const isMobile = window.innerWidth <= 768;
 
   return (
     <StyledEditor proportionalLayout={false} vertical={isMobile}>
