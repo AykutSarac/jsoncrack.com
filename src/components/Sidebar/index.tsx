@@ -1,10 +1,6 @@
 import React from "react";
-import toast from "react-hot-toast";
 import Link from "next/link";
 import styled from "styled-components";
-import { CanvasDirection } from "reaflow";
-import { TiFlowMerge } from "react-icons/ti";
-import { CgArrowsMergeAltH, CgArrowsShrinkH } from "react-icons/cg";
 import {
   AiOutlineDelete,
   AiFillGithub,
@@ -21,10 +17,11 @@ import { ImportModal } from "src/containers/Modals/ImportModal";
 import { ClearModal } from "src/containers/Modals/ClearModal";
 import { ShareModal } from "src/containers/Modals/ShareModal";
 import useConfig from "src/hooks/store/useConfig";
-import { getNextLayout } from "src/containers/Editor/LiveEditor/helpers";
 import { HiHeart } from "react-icons/hi";
 import shallow from "zustand/shallow";
 import { MdCenterFocusWeak } from "react-icons/md";
+import { TbSettings } from "react-icons/tb";
+import { Settings } from "src/containers/Editor/Settings";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -56,6 +53,7 @@ const StyledElement = styled.div<{ beta?: boolean }>`
   svg {
     padding: 8px;
     vertical-align: middle;
+    width: 24px;
   }
 
   a {
@@ -72,20 +70,12 @@ const StyledText = styled.span<{ secondary?: boolean }>`
     secondary ? theme.INTERACTIVE_NORMAL : theme.ORANGE};
 `;
 
-const StyledFlowIcon = styled(TiFlowMerge)<{ rotate: number }>`
-  transform: rotate(${({ rotate }) => `${rotate}deg`});
-`;
-
 const StyledTopWrapper = styled.nav`
   display: flex;
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
   width: 100%;
-
-  & > div:nth-child(n + 1) {
-    border-bottom: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
-  }
 
   .mobile {
     display: none;
@@ -115,11 +105,6 @@ const StyledBottomWrapper = styled.nav`
   align-items: center;
   width: 100%;
 
-  & > div,
-  a:nth-child(0) {
-    border-top: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
-  }
-
   @media only screen and (max-width: 768px) {
     display: none;
   }
@@ -129,13 +114,6 @@ const StyledLogo = styled.div`
   color: ${({ theme }) => theme.FULL_WHITE};
 `;
 
-function rotateLayout(layout: CanvasDirection) {
-  if (layout === "LEFT") return 90;
-  if (layout === "UP") return 180;
-  if (layout === "RIGHT") return 270;
-  return 360;
-}
-
 export const Sidebar: React.FC = () => {
   const getJson = useConfig((state) => state.getJson);
   const setConfig = useConfig((state) => state.setConfig);
@@ -143,10 +121,11 @@ export const Sidebar: React.FC = () => {
   const [uploadVisible, setUploadVisible] = React.useState(false);
   const [clearVisible, setClearVisible] = React.useState(false);
   const [shareVisible, setShareVisible] = React.useState(false);
+  const [settingsVisible, setSettingsVisible] = React.useState(false);
   const { push } = useRouter();
 
-  const [expand, layout, hideEditor] = useConfig(
-    (state) => [state.expand, state.layout, state.hideEditor],
+  const [expand, hideEditor] = useConfig(
+    (state) => [state.expand, state.hideEditor],
     shallow
   );
 
@@ -157,16 +136,6 @@ export const Sidebar: React.FC = () => {
     a.href = window.URL.createObjectURL(file);
     a.download = "jsoncrack.json";
     a.click();
-  };
-
-  const toggleExpandCollapse = () => {
-    setConfig("expand", !expand);
-    toast(`${expand ? "Collapsed" : "Expanded"} nodes.`);
-  };
-
-  const toggleLayout = () => {
-    const nextLayout = getNextLayout(layout);
-    setConfig("layout", nextLayout);
   };
 
   return (
@@ -190,25 +159,9 @@ export const Sidebar: React.FC = () => {
             <AiOutlineFileAdd />
           </StyledElement>
         </Tooltip>
-        <Tooltip title="Rotate Layout">
-          <StyledElement onClick={toggleLayout}>
-            <StyledFlowIcon rotate={rotateLayout(layout)} />
-          </StyledElement>
-        </Tooltip>
         <Tooltip className="mobile" title="Center View">
           <StyledElement onClick={centerView}>
             <MdCenterFocusWeak />
-          </StyledElement>
-        </Tooltip>
-        <Tooltip
-          className="desktop"
-          title={expand ? "Shrink Nodes" : "Expand Nodes"}
-        >
-          <StyledElement
-            title="Toggle Expand/Collapse"
-            onClick={toggleExpandCollapse}
-          >
-            {expand ? <CgArrowsMergeAltH /> : <CgArrowsShrinkH />}
           </StyledElement>
         </Tooltip>
         <Tooltip className="desktop" title="Save JSON">
@@ -224,6 +177,14 @@ export const Sidebar: React.FC = () => {
         <Tooltip className="desktop" title="Share">
           <StyledElement onClick={() => setShareVisible(true)}>
             <AiOutlineLink />
+          </StyledElement>
+        </Tooltip>
+        <Tooltip className="desktop" title="Settings">
+          <StyledElement
+            aria-label="settings"
+            onClick={() => setSettingsVisible(true)}
+          >
+            <TbSettings />
           </StyledElement>
         </Tooltip>
       </StyledTopWrapper>
@@ -253,6 +214,7 @@ export const Sidebar: React.FC = () => {
       <ImportModal visible={uploadVisible} setVisible={setUploadVisible} />
       <ClearModal visible={clearVisible} setVisible={setClearVisible} />
       <ShareModal visible={shareVisible} setVisible={setShareVisible} />
+      <Settings visible={settingsVisible} setVisible={setSettingsVisible} />
     </StyledSidebar>
   );
 };
