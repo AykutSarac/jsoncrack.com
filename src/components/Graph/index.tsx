@@ -86,12 +86,9 @@ const MemoizedGraph = React.memo(function Layout({
         maxScale={1.8}
         minScale={0.4}
         initialScale={0.7}
-        wheel={{
-          step: 0.05,
-        }}
-        doubleClick={{
-          disabled: true,
-        }}
+        wheel={{ step: 0.1 }}
+        zoomAnimation={{ animationType: "linear" }}
+        doubleClick={{ disabled: true }}
       >
         <TransformComponent
           wrapperStyle={{
@@ -115,7 +112,11 @@ const MemoizedGraph = React.memo(function Layout({
               <Edge {...props} containerClassName={`edge-${props.id}`} />
             )}
             zoomable={false}
-            readonly
+            animated={false}
+            readonly={true}
+            dragEdge={null}
+            dragNode={null}
+            fit={true}
           />
         </TransformComponent>
       </TransformWrapper>
@@ -133,8 +134,8 @@ export const Graph = ({ isWidget = false }: { isWidget?: boolean }) => {
   const collapsedEdges = useGraph((state) => state.collapsedEdges);
 
   React.useEffect(() => {
-    const nodeList = collapsedNodes.map((id) => `[id*="node-${id}"]`);
-    const edgeList = collapsedEdges.map((id) => `[class*="edge-${id}"]`);
+    const nodeList = collapsedNodes.map((id) => `[id$="node-${id}"]`);
+    const edgeList = collapsedEdges.map((id) => `[class$="edge-${id}"]`);
 
     const hiddenItems = document.querySelectorAll(".hide");
     hiddenItems.forEach((item) => item.classList.remove("hide"));

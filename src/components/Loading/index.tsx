@@ -39,7 +39,7 @@ export const Loading: React.FC<LoadingProps> = ({ message }) => {
   return (
     <StyledLoading>
       <StyledLogo>
-        <StyledText>JSON</StyledText> Visio
+        <StyledText>JSON</StyledText> Crack
       </StyledLogo>
       <StyledMessage>
         {message ?? "Preparing the environment for you..."}
