@@ -27,12 +27,15 @@ export const Settings: React.FC<{
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ visible, setVisible }) => {
+  const setLightTheme = useStored((state) => state.setLightTheme);
   const performanceMode = useConfig((state) => state.performanceMode);
   const [toggleHideCollapse, hideCollapse] = useStored(
     (state) => [state.toggleHideCollapse, state.hideCollapse],
     shallow
   );
   const setConfig = useConfig((state) => state.setConfig);
+  const lightmode = useStored((state) => state.lightmode);
+  const toggleTheme = () => setLightTheme(!lightmode);
 
   const togglePerformance = () => {
     const toastMsg = performanceMode
@@ -57,6 +60,9 @@ export const Settings: React.FC<{
           </StyledToggle>
           <StyledToggle onChange={togglePerformance} checked={performanceMode}>
             Performance Mode (Experimental)
+          </StyledToggle>
+          <StyledToggle onChange={toggleTheme} checked={!lightmode}>
+            Dark Mode
           </StyledToggle>
         </StyledModalWrapper>
       </Modal.Content>

@@ -59,6 +59,10 @@ const StyledFlowIcon = styled(TiFlowMerge)<{ rotate: number }>`
   transform: rotate(${({ rotate }) => `${rotate}deg`});
 `;
 
+const SearchInputWrapper = styled.div`
+  margin-right: auto;
+`;
+
 function rotateLayout(layout: CanvasDirection) {
   if (layout === "LEFT") return 90;
   if (layout === "UP") return 180;
@@ -68,8 +72,6 @@ function rotateLayout(layout: CanvasDirection) {
 
 export const Tools: React.FC = () => {
   const [isDownloadVisible, setDownloadVisible] = React.useState(false);
-  const lightmode = useStored((state) => state.lightmode);
-  const setLightTheme = useStored((state) => state.setLightTheme);
 
   const [performanceMode, layout, expand, hideEditor] = useConfig(
     (state) => [
@@ -87,7 +89,6 @@ export const Tools: React.FC = () => {
   const zoomOut = useConfig((state) => state.zoomOut);
   const centerView = useConfig((state) => state.centerView);
   const toggleEditor = () => setConfig("hideEditor", !hideEditor);
-  const toggleTheme = () => setLightTheme(!lightmode);
   const toggleLayout = () => {
     const nextLayout = getNextLayout(layout);
     setConfig("layout", nextLayout);
@@ -103,10 +104,6 @@ export const Tools: React.FC = () => {
       <StyledToolElement aria-label="fullscreen" onClick={toggleEditor}>
         <AiOutlineFullscreen />
       </StyledToolElement>
-      <StyledToolElement aria-label="switch theme" onClick={toggleTheme}>
-        {lightmode ? <HiOutlineMoon /> : <HiOutlineSun />}
-      </StyledToolElement>
-      {!performanceMode && <SearchInput />}
 
       {!performanceMode && (
         <StyledToolElement
@@ -140,6 +137,11 @@ export const Tools: React.FC = () => {
         visible={isDownloadVisible}
         setVisible={setDownloadVisible}
       />
+      {!performanceMode && (
+        <SearchInputWrapper>
+          <SearchInput />
+        </SearchInputWrapper>
+      )}
     </StyledTools>
   );
 };
