@@ -1,5 +1,3 @@
-import { NodeData, EdgeData } from "reaflow/dist/types";
-
 export const getOutgoers = (
   nodeId: string,
   nodes: NodeData[],

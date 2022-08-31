@@ -39,11 +39,9 @@ export const CustomNode = (nodeProps: NodeProps) => {
     <Node {...nodeProps} label={<Label style={baseLabelStyle} />}>
       {({ width, height, x, y, node }) => {
         if (properties.text instanceof Object) {
-          const entries = Object.entries<string>(properties.text);
-
           return (
             <ObjectNode
-              value={entries}
+              value={properties.text}
               width={width}
               height={height}
               x={x}
@@ -59,6 +57,7 @@ export const CustomNode = (nodeProps: NodeProps) => {
             value={properties.text}
             width={width}
             height={height}
+            hasCollapse={properties.data.hasChild}
             x={x}
             y={y}
           />

@@ -1,7 +1,6 @@
 import create from "zustand";
 import { defaultJson } from "src/constants/data";
 import { ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
-import { CanvasDirection } from "reaflow";
 
 interface ConfigActions {
   setJson: (json: string) => void;
@@ -15,7 +14,7 @@ interface ConfigActions {
 export interface Config {
   json: string;
   cursorMode: "move" | "navigation";
-  layout: CanvasDirection;
+  layout: "LEFT" | "RIGHT" | "DOWN" | "UP";
   expand: boolean;
   hideEditor: boolean;
   zoomPanPinch?: ReactZoomPanPinchRef;
@@ -34,7 +33,7 @@ const initialStates: Config = {
 const useConfig = create<Config & ConfigActions>()((set, get) => ({
   ...initialStates,
   getJson: () => get().json,
-  setJson: (json: string) => set((state) => ({ ...state, json })),
+  setJson: (json: string) => set({ json }),
   zoomIn: () => {
     const zoomPanPinch = get().zoomPanPinch;
     if (zoomPanPinch) {
@@ -57,13 +56,10 @@ const useConfig = create<Config & ConfigActions>()((set, get) => ({
   },
   centerView: () => {
     const zoomPanPinch = get().zoomPanPinch;
-    if (zoomPanPinch) zoomPanPinch.resetTransform();
+    if (zoomPanPinch) zoomPanPinch.centerView(0.6);
   },
   setConfig: (setting: keyof Config, value: unknown) =>
-    set((state) => ({
-      ...state,
-      [setting]: value,
-    })),
+    set({ [setting]: value }),
 }));
 
 export default useConfig;

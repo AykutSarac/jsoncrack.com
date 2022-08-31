@@ -30,9 +30,13 @@ export const NodeModal = ({
   visible,
   closeModal,
 }: NodeModalProps) => {
+  const nodeData = Array.isArray(selectedNode)
+    ? Object.fromEntries(selectedNode)
+    : selectedNode;
+
   const handleClipboard = () => {
     toast.success("Content copied to clipboard!");
-    navigator.clipboard.writeText(JSON.stringify(selectedNode));
+    navigator.clipboard.writeText(JSON.stringify(nodeData));
     closeModal();
   };
 
@@ -42,8 +46,8 @@ export const NodeModal = ({
       <Modal.Content>
         <StyledTextarea
           defaultValue={JSON.stringify(
-            selectedNode,
-            (k, v) => {
+            nodeData,
+            (_, v) => {
               if (typeof v === "string") return v.replaceAll('"', "");
               return v;
             },

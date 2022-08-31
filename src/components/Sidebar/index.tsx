@@ -2,7 +2,6 @@ import React from "react";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import styled from "styled-components";
-import { CanvasDirection } from "reaflow";
 import { TiFlowMerge } from "react-icons/ti";
 import { CgArrowsMergeAltH, CgArrowsShrinkH } from "react-icons/cg";
 import {
@@ -21,10 +20,10 @@ import { ImportModal } from "src/containers/Modals/ImportModal";
 import { ClearModal } from "src/containers/Modals/ClearModal";
 import { ShareModal } from "src/containers/Modals/ShareModal";
 import useConfig from "src/hooks/store/useConfig";
-import { getNextLayout } from "src/containers/Editor/LiveEditor/helpers";
 import { HiHeart } from "react-icons/hi";
 import shallow from "zustand/shallow";
 import { MdCenterFocusWeak } from "react-icons/md";
+import { getNextLayout } from "src/utils/getNextLayout";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -129,7 +128,7 @@ const StyledLogo = styled.div`
   color: ${({ theme }) => theme.FULL_WHITE};
 `;
 
-function rotateLayout(layout: CanvasDirection) {
+function rotateLayout(layout: "LEFT" | "RIGHT" | "DOWN" | "UP") {
   if (layout === "LEFT") return 90;
   if (layout === "UP") return 180;
   if (layout === "RIGHT") return 270;

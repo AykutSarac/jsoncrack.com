@@ -1,5 +1,4 @@
 import create from "zustand";
-import { EdgeData, NodeData } from "reaflow/dist/types";
 import { Graph } from "src/components/Graph";
 import { getChildrenEdges } from "src/utils/getChildrenEdges";
 import { getOutgoers } from "src/utils/getOutgoers";
@@ -24,7 +23,7 @@ const initialStates: Graph = {
   collapsedEdges: [],
 };
 
-const useGraph = create<Graph & GraphActions>((set) => ({
+const useGraph = create<Graph & GraphActions>((set, get) => ({
   ...initialStates,
   setGraphValue: (key, value) =>
     set({
@@ -32,38 +31,34 @@ const useGraph = create<Graph & GraphActions>((set) => ({
       collapsedEdges: [],
       [key]: value,
     }),
-  expandNodes: (nodeId) =>
-    set((state) => {
-      const childrenNodes = getOutgoers(nodeId, state.nodes, state.edges);
-      const childrenEdges = getChildrenEdges(childrenNodes, state.edges);
+  expandNodes: (nodeId) => {
+    const childrenNodes = getOutgoers(nodeId, get().nodes, get().edges);
+    const childrenEdges = getChildrenEdges(childrenNodes, get().edges);
 
-      const nodeIds = childrenNodes.map((node) => node.id);
-      const edgeIds = childrenEdges.map((edge) => edge.id);
+    const nodeIds = childrenNodes.map((node) => node.id);
+    const edgeIds = childrenEdges.map((edge) => edge.id);
 
-      return {
-        ...state,
-        collapsedNodes: state.collapsedNodes.filter(
-          (nodeId) => !nodeIds.includes(nodeId)
-        ),
-        collapsedEdges: state.collapsedEdges.filter(
-          (edgeId) => !edgeIds.includes(edgeId)
-        ),
-      };
-    }),
-  collapseNodes: (nodeId) =>
-    set((state) => {
-      const childrenNodes = getOutgoers(nodeId, state.nodes, state.edges);
-      const childrenEdges = getChildrenEdges(childrenNodes, state.edges);
+    set({
+      collapsedNodes: get().collapsedNodes.filter(
+        (nodeId) => !nodeIds.includes(nodeId)
+      ),
+      collapsedEdges: get().collapsedEdges.filter(
+        (edgeId) => !edgeIds.includes(edgeId)
+      ),
+    });
+  },
+  collapseNodes: (nodeId) => {
+    const childrenNodes = getOutgoers(nodeId, get().nodes, get().edges);
+    const childrenEdges = getChildrenEdges(childrenNodes, get().edges);
 
-      const nodeIds = childrenNodes.map((node) => node.id);
-      const edgeIds = childrenEdges.map((edge) => edge.id);
+    const nodeIds = childrenNodes.map((node) => node.id);
+    const edgeIds = childrenEdges.map((edge) => edge.id);
 
-      return {
-        ...state,
-        collapsedNodes: state.collapsedNodes.concat(nodeIds),
-        collapsedEdges: state.collapsedEdges.concat(edgeIds),
-      };
-    }),
+    set({
+      collapsedNodes: get().collapsedNodes.concat(nodeIds),
+      collapsedEdges: get().collapsedEdges.concat(edgeIds),
+    });
+  },
 }));
 
 export default useGraph;

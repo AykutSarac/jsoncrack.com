@@ -1,6 +1,5 @@
 import React from "react";
 import { MdCompareArrows } from "react-icons/md";
-import { NodeData } from "reaflow/dist/types";
 import { ConditionalWrapper, CustomNodeProps } from "src/components/CustomNode";
 import useConfig from "src/hooks/store/useConfig";
 import useGraph from "src/hooks/store/useGraph";
@@ -26,12 +25,15 @@ const StyledExpand = styled.button`
   border-left: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
 `;
 
-const TextNode: React.FC<CustomNodeProps<string> & { node: NodeData }> = ({
+const TextNode: React.FC<
+  CustomNodeProps<string> & { node: NodeData; hasCollapse: boolean }
+> = ({
   node,
   width,
   height,
   value,
   isParent = false,
+  hasCollapse = false,
   x,
   y,
 }) => {
@@ -60,7 +62,7 @@ const TextNode: React.FC<CustomNodeProps<string> & { node: NodeData }> = ({
       <ConditionalWrapper condition={performanceMode}>
         <Styled.StyledText
           hideCollapse={hideCollapse}
-          parent={isParent}
+          hasCollapse={isParent && hasCollapse}
           width={width}
           height={height}
         >
@@ -76,7 +78,7 @@ const TextNode: React.FC<CustomNodeProps<string> & { node: NodeData }> = ({
           </Styled.StyledKey>
         </Styled.StyledText>
       </ConditionalWrapper>
-      {isParent && !hideCollapse && (
+      {isParent && hasCollapse && !hideCollapse && (
         <StyledExpand onClick={handleExpand}>
           <MdCompareArrows size={18} />
         </StyledExpand>
