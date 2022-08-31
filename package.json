@@ -8,6 +8,8 @@
     "dev": "next dev",
     "build": "next build && next export",
     "test": "jest",
+    "test:e2e": "playwright test",
+    "report:e2e": "playwright show-report",
     "start": "next start",
     "lint": "next lint",
     "deploy": "gh-pages -d out -t true"
@@ -35,6 +37,7 @@
     "zustand": "^4.0.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.25.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^14.4.2",
