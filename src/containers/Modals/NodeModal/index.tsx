@@ -53,6 +53,7 @@ export const NodeModal = ({
             },
             2
           )}
+          readOnly
         />
       </Modal.Content>
       <Modal.Controls setVisible={closeModal}>

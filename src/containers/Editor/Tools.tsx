@@ -5,18 +5,16 @@ import {
   AiOutlinePlus,
 } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
-import { HiOutlineSun, HiOutlineMoon } from "react-icons/hi";
 import { MdCenterFocusWeak } from "react-icons/md";
 import { SearchInput } from "src/components/SearchInput";
 import styled from "styled-components";
 import useConfig from "src/hooks/store/useConfig";
-import shallow from "zustand/shallow";
 import { DownloadModal } from "../Modals/DownloadModal";
-import useStored from "src/hooks/store/useStored";
 import { TbSettings } from "react-icons/tb";
-import { Settings } from "./Settings";
+import { SettingsModal } from "src/containers/Modals/SettingsModal";
 
 export const StyledTools = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -26,6 +24,7 @@ export const StyledTools = styled.div`
   background: ${({ theme }) => theme.BACKGROUND_PRIMARY};
   color: ${({ theme }) => theme.SILVER};
   box-shadow: 0 1px 0px ${({ theme }) => theme.BACKGROUND_TERTIARY};
+  z-index: 36;
 
   @media only screen and (max-width: 768px) {
     display: none;
@@ -38,6 +37,12 @@ const StyledToolElement = styled.button`
   font-size: 20px;
   background: none;
   color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
+  padding: 6px;
+  border-radius: 3px;
+
+  &:hover {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0 0);
+  }
 
   &:hover {
     color: ${({ theme }) => theme.INTERACTIVE_HOVER};
@@ -49,8 +54,6 @@ const StyledToolElement = styled.button`
 export const Tools: React.FC = () => {
   const [settingsVisible, setSettingsVisible] = React.useState(false);
   const [isDownloadVisible, setDownloadVisible] = React.useState(false);
-  const lightmode = useStored((state) => state.lightmode);
-  const setLightTheme = useStored((state) => state.setLightTheme);
 
   const hideEditor = useConfig((state) => state.hideEditor);
   const setConfig = useConfig((state) => state.setConfig);
@@ -59,7 +62,6 @@ export const Tools: React.FC = () => {
   const zoomOut = useConfig((state) => state.zoomOut);
   const centerView = useConfig((state) => state.centerView);
   const toggleEditor = () => setConfig("hideEditor", !hideEditor);
-  const toggleTheme = () => setLightTheme(!lightmode);
 
   return (
     <StyledTools>
@@ -71,9 +73,6 @@ export const Tools: React.FC = () => {
         onClick={() => setSettingsVisible(true)}
       >
         <TbSettings />
-      </StyledToolElement>
-      <StyledToolElement aria-label="switch theme" onClick={toggleTheme}>
-        {lightmode ? <HiOutlineMoon /> : <HiOutlineSun />}
       </StyledToolElement>
       <SearchInput />
       <StyledToolElement
@@ -95,7 +94,10 @@ export const Tools: React.FC = () => {
         visible={isDownloadVisible}
         setVisible={setDownloadVisible}
       />
-      <Settings visible={settingsVisible} setVisible={setSettingsVisible} />
+      <SettingsModal
+        visible={settingsVisible}
+        setVisible={setSettingsVisible}
+      />
     </StyledTools>
   );
 };

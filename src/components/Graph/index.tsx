@@ -24,6 +24,9 @@ const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
   width: 100%;
   height: ${({ isWidget }) => (isWidget ? "100vh" : "calc(100vh - 36px)")};
   background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
+  background-image:  ${({ theme }) => `radial-gradient(#505050 0.5px, ${theme.BACKGROUND_SECONDARY} 0.5px)`}; 
+    background-size: 10px 10px;
+    z-index: 0;
 
   :active {
     cursor: move;
