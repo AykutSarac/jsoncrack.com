@@ -91,11 +91,11 @@ export const Tools: React.FC = () => {
         <StyledToolElement aria-label="zoom in" onClick={zoomIn}>
           <AiOutlinePlus />
         </StyledToolElement>
-        <DownloadModal
-          visible={isDownloadVisible}
-          setVisible={setDownloadVisible}
-        />
       </StyledTools>
+      <DownloadModal
+        visible={isDownloadVisible}
+        setVisible={setDownloadVisible}
+      />
       <SettingsModal
         visible={settingsVisible}
         setVisible={setSettingsVisible}
