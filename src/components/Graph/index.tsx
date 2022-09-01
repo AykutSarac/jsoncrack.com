@@ -79,6 +79,11 @@ const MemoizedGraph = React.memo(function Layout({
     }
   }, []);
 
+  const onCanvasClick = React.useCallback(() => {
+    const input = document.querySelector("input:focus") as HTMLInputElement;
+    if (input) input.blur();
+  }, []);
+
   React.useEffect(() => {
     const { nodes, edges } = parser(json, expand);
 
@@ -111,6 +116,7 @@ const MemoizedGraph = React.memo(function Layout({
             maxHeight={size.height}
             direction={layout}
             onLayoutChange={onLayoutChange}
+            onCanvasClick={onCanvasClick}
             key={layout}
             zoomable={false}
             animated={false}
