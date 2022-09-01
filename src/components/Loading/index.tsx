@@ -15,7 +15,7 @@ const StyledLoading = styled.div`
   height: 100vh;
   text-align: center;
   background: ${({ theme }) => theme.BLACK_DARK};
-  z-index: 10;
+  z-index: 100;
 `;
 
 const StyledLogo = styled.h2`
