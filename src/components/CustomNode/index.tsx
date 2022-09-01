@@ -1,8 +1,6 @@
 import React from "react";
-import RenderIfVisible from "react-render-if-visible";
 import { Label, Node, NodeProps } from "reaflow";
 import ObjectNode from "./ObjectNode";
-import { StyledTextWrapper } from "./styles";
 import TextNode from "./TextNode";
 
 export interface CustomNodeProps<T> {
@@ -19,18 +17,6 @@ const baseLabelStyle = {
   stroke: "transparent",
   strokeWidth: 0,
 };
-
-export const ConditionalWrapper: React.FC<{
-  condition?: boolean;
-  children: React.ReactNode;
-}> = ({ condition, children }) =>
-  condition ? (
-    <RenderIfVisible rootElementClass="renderVisible">
-      {children}
-    </RenderIfVisible>
-  ) : (
-    <StyledTextWrapper>{children}</StyledTextWrapper>
-  );
 
 export const CustomNode = (nodeProps: NodeProps) => {
   const { properties } = nodeProps;

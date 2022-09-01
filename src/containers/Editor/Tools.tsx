@@ -52,11 +52,7 @@ export const Tools: React.FC = () => {
   const lightmode = useStored((state) => state.lightmode);
   const setLightTheme = useStored((state) => state.setLightTheme);
 
-  const [performanceMode, hideEditor] = useConfig(
-    (state) => [state.performanceMode, state.hideEditor],
-    shallow
-  );
-
+  const hideEditor = useConfig((state) => state.hideEditor);
   const setConfig = useConfig((state) => state.setConfig);
 
   const zoomIn = useConfig((state) => state.zoomIn);
@@ -79,16 +75,13 @@ export const Tools: React.FC = () => {
       <StyledToolElement aria-label="switch theme" onClick={toggleTheme}>
         {lightmode ? <HiOutlineMoon /> : <HiOutlineSun />}
       </StyledToolElement>
-      {!performanceMode && <SearchInput />}
-
-      {!performanceMode && (
-        <StyledToolElement
-          aria-label="save"
-          onClick={() => setDownloadVisible(true)}
-        >
-          <FiDownload />
-        </StyledToolElement>
-      )}
+      <SearchInput />
+      <StyledToolElement
+        aria-label="save"
+        onClick={() => setDownloadVisible(true)}
+      >
+        <FiDownload />
+      </StyledToolElement>
       <StyledToolElement aria-label="center canvas" onClick={centerView}>
         <MdCenterFocusWeak />
       </StyledToolElement>
