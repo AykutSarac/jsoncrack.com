@@ -22,7 +22,7 @@ export interface Config {
 }
 
 const initialStates: Config = {
-  json: JSON.stringify(defaultJson),
+  json: defaultJson,
   cursorMode: "move",
   layout: "RIGHT",
   expand: true,

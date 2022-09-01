@@ -8,6 +8,7 @@ import {
 import useConfig from "./store/useConfig";
 
 export const useFocusNode = () => {
+  const setConfig = useConfig((state) => state.setConfig);
   const zoomPanPinch = useConfig((state) => state.zoomPanPinch);
   const [selectedNode, setSelectedNode] = React.useState(0);
   const [content, setContent] = React.useState({
@@ -18,12 +19,14 @@ export const useFocusNode = () => {
   const skip = () => setSelectedNode((current) => current + 1);
 
   React.useEffect(() => {
+    setConfig("performanceMode", !content.value.length);
+
     const debouncer = setTimeout(() => {
       setContent((val) => ({ ...val, debounced: content.value }));
     }, 1500);
 
     return () => clearTimeout(debouncer);
-  }, [content.value]);
+  }, [content.value, setConfig]);
 
   React.useEffect(() => {
     if (!zoomPanPinch) return;

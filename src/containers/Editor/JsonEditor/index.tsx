@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import Editor from "@monaco-editor/react";
 import parseJson from "parse-json";
-import { loader } from "@monaco-editor/react";
+import MonacoEditor, { loader } from "@monaco-editor/react";
 import { ErrorContainer } from "src/components/ErrorContainer/ErrorContainer";
 import useConfig from "src/hooks/store/useConfig";
 import { Loading } from "src/components/Loading";
@@ -76,7 +75,7 @@ export const JsonEditor: React.FC = () => {
     <StyledEditorWrapper>
       <ErrorContainer error={error} />
       <StyledWrapper>
-        <Editor
+        <MonacoEditor
           height="100%"
           defaultLanguage="json"
           value={value}

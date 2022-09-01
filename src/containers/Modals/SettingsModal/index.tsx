@@ -16,10 +16,12 @@ const StyledModalWrapper = styled.div`
   gap: 20px;
 `;
 
-export const Settings: React.FC<{
+export const SettingsModal: React.FC<{
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ visible, setVisible }) => {
+  const lightmode = useStored((state) => state.lightmode);
+  const setLightTheme = useStored((state) => state.setLightTheme);
   const [toggleHideCollapse, hideCollapse] = useStored(
     (state) => [state.toggleHideCollapse, state.hideCollapse],
     shallow
@@ -32,6 +34,12 @@ export const Settings: React.FC<{
         <StyledModalWrapper>
           <StyledToggle onChange={toggleHideCollapse} checked={hideCollapse}>
             Hide Collapse/Expand Button
+          </StyledToggle>
+          <StyledToggle
+            onChange={() => setLightTheme(!lightmode)}
+            checked={lightmode}
+          >
+            Enable Light Theme
           </StyledToggle>
         </StyledModalWrapper>
       </Modal.Content>

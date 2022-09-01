@@ -35,26 +35,14 @@ const GlobalStyle = createGlobalStyle`
   }
 
   button {
-    min-height: 32px;
     border: none;
-    border-radius: 3px;
     outline: none;
-    font-family: 'Catamaran', sans-serif;
-    font-weight: 500;
-    font-size: 14px;
-    background-image: none;
+    -webkit-tap-highlight-color: transparent;
+    background: transparent;
+    width: fit-content;
+    margin: 0;
+    padding: 0;
     cursor: pointer;
-
-    div {
-      white-space: normal;
-      margin: 0 auto;
-      text-overflow: ellipsis;
-      overflow: hidden;
-    }
-
-    &:hover {
-      background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0 0);
-    }
   }
 
   #carbonads * {

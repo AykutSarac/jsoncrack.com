@@ -36,9 +36,9 @@ const useStored = create(
         users: [],
         nextDate: Date.now(),
       },
-      setLightTheme: (enabled: boolean) =>
+      setLightTheme: (value: boolean) =>
         set({
-          lightmode: enabled,
+          lightmode: value,
         }),
       setSponsors: (users) =>
         set({

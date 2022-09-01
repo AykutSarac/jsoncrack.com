@@ -28,12 +28,29 @@ const StyledButton = styled.button<{
   color: #ffffff;
   padding: 8px 16px;
   min-width: 60px;
+  min-height: 32px;
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: "Catamaran", sans-serif;
   width: ${({ block }) => (block ? "100%" : "fit-content")};
   height: 40px;
+  background-image: none;
 
   :disabled {
     cursor: not-allowed;
     opacity: 0.5;
+  }
+
+  div {
+    white-space: normal;
+    margin: 0 auto;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  &:hover {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0 0);
   }
 
   @media only screen and (max-width: 768px) {

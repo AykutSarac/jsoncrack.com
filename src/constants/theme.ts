@@ -24,6 +24,7 @@ export const darkTheme: DefaultTheme = {
   SILVER_DARK: "#4D4D4D",
   NODE_KEY: "#FAA81A",
   OBJECT_KEY: "#59b8ff",
+  SIDEBAR_ICONS: "#8B8E90",
 
   INTERACTIVE_NORMAL: "#b9bbbe",
   INTERACTIVE_HOVER: "#dcddde",
@@ -44,6 +45,7 @@ export const lightTheme: DefaultTheme = {
   SILVER_DARK: "#CCCCCC",
   NODE_KEY: "#DC3790",
   OBJECT_KEY: "#0260E8",
+  SIDEBAR_ICONS: "#6D6E70",
 
   INTERACTIVE_NORMAL: "#4f5660",
   INTERACTIVE_HOVER: "#2e3338",
