@@ -1,6 +1,7 @@
 import React from "react";
 import { MdCompareArrows } from "react-icons/md";
-import { ConditionalWrapper, CustomNodeProps } from "src/components/CustomNode";
+import { useInViewport } from "react-in-viewport";
+import { CustomNodeProps } from "src/components/CustomNode";
 import useConfig from "src/hooks/store/useConfig";
 import useGraph from "src/hooks/store/useGraph";
 import useStored from "src/hooks/store/useStored";
@@ -37,7 +38,10 @@ const TextNode: React.FC<
   x,
   y,
 }) => {
+  const ref = React.useRef(null);
+  const { inViewport } = useInViewport(ref);
   const performanceMode = useConfig((state) => state.performanceMode);
+
   const hideCollapse = useStored((state) => state.hideCollapse);
   const expandNodes = useGraph((state) => state.expandNodes);
   const collapseNodes = useGraph((state) => state.collapseNodes);
@@ -58,27 +62,31 @@ const TextNode: React.FC<
       x={0}
       y={0}
       data-nodeid={node.id}
+      ref={ref}
     >
-      <ConditionalWrapper condition={performanceMode}>
-        <Styled.StyledText
-          hideCollapse={hideCollapse}
-          hasCollapse={isParent && hasCollapse}
-          width={width}
-          height={height}
-        >
-          <Styled.StyledKey
-            data-x={x}
-            data-y={y}
-            data-key={JSON.stringify(value)}
-            parent={isParent}
+      {(!performanceMode || inViewport) && (
+        <Styled.StyledTextWrapper>
+          <Styled.StyledText
+            hideCollapse={hideCollapse}
+            hasCollapse={isParent && hasCollapse}
+            width={width}
+            height={height}
           >
-            <Styled.StyledLinkItUrl>
-              {JSON.stringify(value).replaceAll('"', "")}
-            </Styled.StyledLinkItUrl>
-          </Styled.StyledKey>
-        </Styled.StyledText>
-      </ConditionalWrapper>
-      {isParent && hasCollapse && !hideCollapse && (
+            <Styled.StyledKey
+              data-x={x}
+              data-y={y}
+              data-key={JSON.stringify(value)}
+              parent={isParent}
+            >
+              <Styled.StyledLinkItUrl>
+                {JSON.stringify(value).replaceAll('"', "")}
+              </Styled.StyledLinkItUrl>
+            </Styled.StyledKey>
+          </Styled.StyledText>
+        </Styled.StyledTextWrapper>
+      )}
+
+      {inViewport && isParent && hasCollapse && !hideCollapse && (
         <StyledExpand onClick={handleExpand}>
           <MdCompareArrows size={18} />
         </StyledExpand>

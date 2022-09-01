@@ -27,7 +27,7 @@ const initialStates: Config = {
   layout: "RIGHT",
   expand: true,
   hideEditor: false,
-  performanceMode: false,
+  performanceMode: true,
 };
 
 const useConfig = create<Config & ConfigActions>()((set, get) => ({
