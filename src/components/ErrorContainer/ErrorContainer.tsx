@@ -26,10 +26,10 @@ const StyledErrorExpand = styled.button<{ error: boolean }>`
   background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
   box-shadow: 0 1px 0px ${({ theme }) => theme.BACKGROUND_TERTIARY};
   cursor: pointer;
-  z-index: 100;
 
   &:hover {
     color: ${({ theme }) => theme.TEXT_DANGER};
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0 0);
   }
 `;
 

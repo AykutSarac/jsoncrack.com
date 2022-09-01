@@ -16,7 +16,7 @@ const StyledTooltip = styled.div<{ visible: boolean }>`
   top: 0;
   right: 0;
   transform: translate(calc(100% + 15px), 25%);
-  z-index: 5;
+  z-index: 2;
   background: ${({ theme }) => theme.BACKGROUND_PRIMARY};
   color: ${({ theme }) => theme.TEXT_NORMAL};
   border-radius: 5px;

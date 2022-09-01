@@ -59,7 +59,6 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #carbonads {
-    z-index: 100;
     display: inline-block;
 
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',

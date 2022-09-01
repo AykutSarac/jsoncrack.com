@@ -24,7 +24,7 @@ export const StyledTools = styled.div`
   background: ${({ theme }) => theme.BACKGROUND_PRIMARY};
   color: ${({ theme }) => theme.SILVER};
   box-shadow: 0 1px 0px ${({ theme }) => theme.BACKGROUND_TERTIARY};
-  z-index: 36;
+  z-index: 1;
 
   @media only screen and (max-width: 768px) {
     display: none;
@@ -64,40 +64,42 @@ export const Tools: React.FC = () => {
   const toggleEditor = () => setConfig("hideEditor", !hideEditor);
 
   return (
-    <StyledTools>
-      <StyledToolElement aria-label="fullscreen" onClick={toggleEditor}>
-        <AiOutlineFullscreen />
-      </StyledToolElement>
-      <StyledToolElement
-        aria-label="settings"
-        onClick={() => setSettingsVisible(true)}
-      >
-        <TbSettings />
-      </StyledToolElement>
-      <SearchInput />
-      <StyledToolElement
-        aria-label="save"
-        onClick={() => setDownloadVisible(true)}
-      >
-        <FiDownload />
-      </StyledToolElement>
-      <StyledToolElement aria-label="center canvas" onClick={centerView}>
-        <MdCenterFocusWeak />
-      </StyledToolElement>
-      <StyledToolElement aria-label="zoom out" onClick={zoomOut}>
-        <AiOutlineMinus />
-      </StyledToolElement>
-      <StyledToolElement aria-label="zoom in" onClick={zoomIn}>
-        <AiOutlinePlus />
-      </StyledToolElement>
-      <DownloadModal
-        visible={isDownloadVisible}
-        setVisible={setDownloadVisible}
-      />
+    <>
+      <StyledTools>
+        <StyledToolElement aria-label="fullscreen" onClick={toggleEditor}>
+          <AiOutlineFullscreen />
+        </StyledToolElement>
+        <StyledToolElement
+          aria-label="settings"
+          onClick={() => setSettingsVisible(true)}
+        >
+          <TbSettings />
+        </StyledToolElement>
+        <SearchInput />
+        <StyledToolElement
+          aria-label="save"
+          onClick={() => setDownloadVisible(true)}
+        >
+          <FiDownload />
+        </StyledToolElement>
+        <StyledToolElement aria-label="center canvas" onClick={centerView}>
+          <MdCenterFocusWeak />
+        </StyledToolElement>
+        <StyledToolElement aria-label="zoom out" onClick={zoomOut}>
+          <AiOutlineMinus />
+        </StyledToolElement>
+        <StyledToolElement aria-label="zoom in" onClick={zoomIn}>
+          <AiOutlinePlus />
+        </StyledToolElement>
+        <DownloadModal
+          visible={isDownloadVisible}
+          setVisible={setDownloadVisible}
+        />
+      </StyledTools>
       <SettingsModal
         visible={settingsVisible}
         setVisible={setSettingsVisible}
       />
-    </StyledTools>
+    </>
   );
 };

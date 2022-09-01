@@ -15,7 +15,7 @@ export const ModalWrapper = styled.div`
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.85);
-  z-index: 100;
+  z-index: 36;
 
   * {
     box-sizing: border-box;
