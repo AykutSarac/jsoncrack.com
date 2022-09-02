@@ -11,6 +11,7 @@ script:
   - npm run test
   - npm run lint
   - npm run build
+  - npm run test:e2e
 deploy:
   provider: pages
   skip_cleanup: true
