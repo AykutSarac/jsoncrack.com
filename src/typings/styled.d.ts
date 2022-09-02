@@ -20,6 +20,7 @@ declare module "styled-components" {
     PRIMARY: string;
     NODE_KEY: string;
     OBJECT_KEY: string;
+    SIDEBAR_ICONS: string;
 
     INTERACTIVE_NORMAL: string;
     INTERACTIVE_HOVER: string;

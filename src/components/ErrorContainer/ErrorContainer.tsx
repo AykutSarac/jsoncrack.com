@@ -12,6 +12,7 @@ const StyledErrorWrapper = styled.div`
 `;
 
 const StyledErrorExpand = styled.button<{ error: boolean }>`
+  position: relative;
   display: flex;
   width: 100%;
   padding: 4px 16px;
@@ -28,7 +29,7 @@ const StyledErrorExpand = styled.button<{ error: boolean }>`
 
   &:hover {
     color: ${({ theme }) => theme.TEXT_DANGER};
-    box-shadow: none;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0 0);
   }
 `;
 

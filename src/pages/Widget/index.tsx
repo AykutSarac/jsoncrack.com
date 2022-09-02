@@ -43,7 +43,7 @@ const WidgetPage = () => {
 
   React.useEffect(() => {
     if (!query.json) {
-      setJson(JSON.stringify(defaultJson));
+      setJson(defaultJson);
     } else {
       const jsonURI = decodeURIComponent(query.json as string);
       const isJsonValid = isValidJson(jsonURI);

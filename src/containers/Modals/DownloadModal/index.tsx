@@ -8,6 +8,7 @@ import { TwitterPicker } from "react-color";
 import { TwitterPickerStylesProps } from "react-color/lib/components/twitter/Twitter";
 import styled from "styled-components";
 import toast from "react-hot-toast";
+import useConfig from "src/hooks/store/useConfig";
 
 const ColorPickerStyles: Partial<TwitterPickerStylesProps> = {
   card: {
@@ -95,6 +96,7 @@ export const DownloadModal: React.FC<ModalProps> = ({
   visible,
   setVisible,
 }) => {
+  const setConfig = useConfig((state) => state.setConfig);
   const [fileDetails, setFileDetails] = React.useState({
     filename: "jsoncrack.com",
     backgroundColor: "transparent",
@@ -104,6 +106,7 @@ export const DownloadModal: React.FC<ModalProps> = ({
   const clipboardImage = async () => {
     try {
       toast.loading("Copying to clipboard...", { id: "toastClipboard" });
+      setConfig("performanceMode", false);
 
       const imageElement = document.querySelector(
         "svg[id*='ref']"
@@ -128,12 +131,14 @@ export const DownloadModal: React.FC<ModalProps> = ({
     } finally {
       toast.dismiss("toastClipboard");
       setVisible(false);
+      setConfig("performanceMode", true);
     }
   };
 
   const exportAsImage = async () => {
     try {
       toast.loading("Downloading...", { id: "toastDownload" });
+      setConfig("performanceMode", false);
 
       const imageElement = document.querySelector(
         "svg[id*='ref']"
@@ -150,6 +155,7 @@ export const DownloadModal: React.FC<ModalProps> = ({
     } finally {
       toast.dismiss("toastDownload");
       setVisible(false);
+      setConfig("performanceMode", true);
     }
   };
 

@@ -1,5 +1,5 @@
 // Example taken from https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json
-export const defaultJson = {
+export const defaultJson = JSON.stringify({
   squadName: "Super hero squad",
   homeTown: "Metro City",
   formed: 2016,
@@ -35,4 +35,4 @@ export const defaultJson = {
       ],
     },
   ],
-};
+});

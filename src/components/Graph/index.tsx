@@ -4,19 +4,19 @@ import {
   TransformComponent,
   TransformWrapper,
 } from "react-zoom-pan-pinch";
-import { Canvas, Edge, ElkRoot, NodeData } from "reaflow";
+import { Canvas, Edge, ElkRoot } from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
 import { NodeModal } from "src/containers/Modals/NodeModal";
-import { getEdgeNodes } from "src/containers/Editor/LiveEditor/helpers";
 import useConfig from "src/hooks/store/useConfig";
 import styled from "styled-components";
 import shallow from "zustand/shallow";
 import useGraph from "src/hooks/store/useGraph";
+import { parser } from "src/utils/jsonParser";
 
 interface LayoutProps {
   isWidget: boolean;
   openModal: () => void;
-  setSelectedNode: (node: object) => void;
+  setSelectedNode: (node: [string, string][]) => void;
 }
 
 const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
@@ -24,6 +24,9 @@ const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
   width: 100%;
   height: ${({ isWidget }) => (isWidget ? "100vh" : "calc(100vh - 36px)")};
   background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
+  background-image: ${({ theme }) =>
+    `radial-gradient(#505050 0.5px, ${theme.BACKGROUND_SECONDARY} 0.5px)`};
+  background-size: 10px 10px;
 
   :active {
     cursor: move;
@@ -40,6 +43,7 @@ const MemoizedGraph = React.memo(function Layout({
   setSelectedNode,
 }: LayoutProps) {
   const json = useConfig((state) => state.json);
+  const setConfig = useConfig((state) => state.setConfig);
   const nodes = useGraph((state) => state.nodes);
   const edges = useGraph((state) => state.edges);
   const setGraphValue = useGraph((state) => state.setGraphValue);
@@ -49,7 +53,6 @@ const MemoizedGraph = React.memo(function Layout({
     height: 2000,
   });
 
-  const setConfig = useConfig((state) => state.setConfig);
   const [expand, layout] = useConfig(
     (state) => [state.expand, state.layout],
     shallow
@@ -63,17 +66,26 @@ const MemoizedGraph = React.memo(function Layout({
     [openModal, setSelectedNode]
   );
 
-  const onInit = (ref: ReactZoomPanPinchRef) => {
-    setConfig("zoomPanPinch", ref);
-  };
+  const onInit = React.useCallback(
+    (ref: ReactZoomPanPinchRef) => {
+      setConfig("zoomPanPinch", ref);
+    },
+    [setConfig]
+  );
 
-  const onLayoutChange = (layout: ElkRoot) => {
-    if (layout.width && layout.height)
-      setSize({ width: layout.width, height: layout.height });
-  };
+  const onLayoutChange = React.useCallback((layout: ElkRoot) => {
+    if (layout.width && layout.height) {
+      setSize({ width: layout.width + 400, height: layout.height + 400 });
+    }
+  }, []);
+
+  const onCanvasClick = React.useCallback(() => {
+    const input = document.querySelector("input:focus") as HTMLInputElement;
+    if (input) input.blur();
+  }, []);
 
   React.useEffect(() => {
-    const { nodes, edges } = getEdgeNodes(json, expand);
+    const { nodes, edges } = parser(json, expand);
 
     setGraphValue("nodes", nodes);
     setGraphValue("edges", edges);
@@ -82,13 +94,13 @@ const MemoizedGraph = React.memo(function Layout({
   return (
     <StyledEditorWrapper isWidget={isWidget}>
       <TransformWrapper
-        onInit={onInit}
-        maxScale={1.8}
-        minScale={0.4}
+        maxScale={2}
+        minScale={0.5}
         initialScale={0.7}
-        wheel={{ step: 0.1 }}
+        wheel={{ step: 0.05 }}
         zoomAnimation={{ animationType: "linear" }}
         doubleClick={{ disabled: true }}
+        onInit={onInit}
       >
         <TransformComponent
           wrapperStyle={{
@@ -100,23 +112,24 @@ const MemoizedGraph = React.memo(function Layout({
           <Canvas
             nodes={nodes}
             edges={edges}
-            maxWidth={size.width + 400}
-            maxHeight={size.height + 400}
+            maxWidth={size.width}
+            maxHeight={size.height}
             direction={layout}
-            key={layout}
             onLayoutChange={onLayoutChange}
-            node={(props) => (
-              <CustomNode {...props} onClick={handleNodeClick} />
-            )}
-            edge={(props) => (
-              <Edge {...props} containerClassName={`edge-${props.id}`} />
-            )}
+            onCanvasClick={onCanvasClick}
+            key={layout}
             zoomable={false}
             animated={false}
             readonly={true}
             dragEdge={null}
             dragNode={null}
             fit={true}
+            node={(props) => (
+              <CustomNode {...props} onClick={handleNodeClick} />
+            )}
+            edge={(props) => (
+              <Edge {...props} containerClassName={`edge-${props.id}`} />
+            )}
           />
         </TransformComponent>
       </TransformWrapper>
@@ -126,7 +139,9 @@ const MemoizedGraph = React.memo(function Layout({
 
 export const Graph = ({ isWidget = false }: { isWidget?: boolean }) => {
   const [isModalVisible, setModalVisible] = React.useState(false);
-  const [selectedNode, setSelectedNode] = React.useState<object>({});
+  const [selectedNode, setSelectedNode] = React.useState<[string, string][]>(
+    []
+  );
 
   const openModal = React.useCallback(() => setModalVisible(true), []);
 
