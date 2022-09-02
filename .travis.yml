@@ -7,10 +7,14 @@ branches:
 cache:
   directories:
     - node_modules
+    - ~./cache/ms-playwright
 script:
   - npm run test
   - npm run lint
   - npm run build
+  - npx playwright install-deps
+  - npx playwright install chromium
+  - npm run test:e2e
 deploy:
   provider: pages
   skip_cleanup: true
