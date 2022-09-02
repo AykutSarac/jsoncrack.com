@@ -7,7 +7,6 @@ branches:
 cache:
   directories:
     - node_modules
-    - ~./cache/ms-playwright
 script:
   - npm run test
   - npm run lint
