@@ -25,7 +25,7 @@
   </p>
 
   <p align="center">
-      <img width="800" src="/public/jsoncrack-screenshot.webp" alt="preview 1" />
+      <img width="800" src="./public/jsoncrack-screenshot.webp" alt="preview 1" />
   </p>
 
 # JSON Crack (jsoncrack.com)
@@ -59,7 +59,7 @@ You can use the web version at [jsoncrack.com](https://jsoncrack.com) or also ru
 A Docker file is provided in the root of the repository.
 If you want to run JSON Crack locally:
 
-* Build Docker image with `docker build -t jsoncrack .`
+* Build Docker image with `docker build -t jsoncrack --build-arg jsoncrack_host=localhost:8888 .`
 * Run locally with `docker run -p 8888:8080 jsoncrack`
 * Go to [http://localhost:8888]
 ```
