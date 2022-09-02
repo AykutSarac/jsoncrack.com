@@ -11,7 +11,6 @@ script:
   - npm run test
   - npm run lint
   - npm run build
-  - npx playwright install-deps
   - npx playwright install chromium
   - npm run test:e2e
 deploy:
