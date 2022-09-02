@@ -8,6 +8,8 @@ import useStored from "src/hooks/store/useStored";
 import styled from "styled-components";
 import * as Styled from "./styles";
 
+const inViewport = true;
+
 const StyledExpand = styled.button`
   pointer-events: all;
   position: absolute;
@@ -39,7 +41,7 @@ const TextNode: React.FC<
   y,
 }) => {
   const ref = React.useRef(null);
-  const { inViewport } = useInViewport(ref);
+  // const { inViewport } = useInViewport(ref);
   const performanceMode = useConfig((state) => state.performanceMode);
 
   const hideCollapse = useStored((state) => state.hideCollapse);

@@ -4,6 +4,8 @@ import useConfig from "src/hooks/store/useConfig";
 import { useInViewport } from "react-in-viewport";
 import * as Styled from "./styles";
 
+const inViewport = true;
+
 const ObjectNode: React.FC<CustomNodeProps<[string, string][]>> = ({
   width,
   height,
@@ -12,7 +14,7 @@ const ObjectNode: React.FC<CustomNodeProps<[string, string][]>> = ({
   y,
 }) => {
   const ref = React.useRef(null);
-  const { inViewport } = useInViewport(ref);
+  // const { inViewport } = useInViewport(ref);
   const performanceMode = useConfig((state) => state.performanceMode);
 
   return (
