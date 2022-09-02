@@ -43,12 +43,14 @@ const StyledContainer = styled.div`
   }
 `;
 
+const jsoncrackHost = process.env.NEXT_PUBLIC_JSONCRACK_HOST || packageJson.homepage;
+
 export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   const json = useConfig((state) => state.json);
   const [encodedJson, setEncodedJson] = React.useState("");
 
-  const embedText = `<iframe src="${packageJson.homepage}/widget?json=${encodedJson}" width="512" height="384" style="border: 2px solid #b9bbbe; border-radius: 6px;"></iframe>`;
-  const shareURL = `${packageJson.homepage}/editor?json=${encodedJson}`;
+  const embedText = `<iframe src="${jsoncrackHost}/widget?json=${encodedJson}" width="512" height="384" style="border: 2px solid #b9bbbe; border-radius: 6px;"></iframe>`;
+  const shareURL = `${jsoncrackHost}/editor?json=${encodedJson}`;
 
   React.useEffect(() => {
     const jsonEncode = compress(JSON.parse(json));
