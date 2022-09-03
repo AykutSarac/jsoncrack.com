@@ -26,10 +26,14 @@ const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
   background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
   background-image: ${({ theme }) =>
     `radial-gradient(#505050 0.5px, ${theme.BACKGROUND_SECONDARY} 0.5px)`};
-  background-size: 10px 10px;
+  background-size: 15px 15px;
 
   :active {
     cursor: move;
+  }
+
+  .dragging {
+    pointer-events: none;
   }
 
   rect {
@@ -101,6 +105,12 @@ const MemoizedGraph = React.memo(function Layout({
         zoomAnimation={{ animationType: "linear" }}
         doubleClick={{ disabled: true }}
         onInit={onInit}
+        onPanning={(ref) =>
+          ref.instance.wrapperComponent?.classList.add("dragging")
+        }
+        onPanningStop={(ref) =>
+          ref.instance.wrapperComponent?.classList.remove("dragging")
+        }
       >
         <TransformComponent
           wrapperStyle={{

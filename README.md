@@ -6,7 +6,9 @@
 
 <p>
     <p align="center">
+      <a href="https://app.travis-ci.com/github/AykutSarac/jsoncrack.com">
         <img alt="travis ci badge" src="https://img.shields.io/travis/com/AykutSarac/jsoncrack.com/main?style=flat-square" />
+      </a>
       <a href="https://github.com/AykutSarac/jsoncrack.com/blob/main/LICENSE">
         <img alt="license badge" src="https://img.shields.io/github/license/AykutSarac/jsoncrack.com?style=flat-square" />
       </a>
@@ -55,14 +57,12 @@ You can use the web version at [jsoncrack.com](https://jsoncrack.com) or also ru
 
 ## 🐳 Docker
 
-```
-A Docker file is provided in the root of the repository.
+A [`Dockerfile`](Dockerfile) is provided in the root of the repository.
 If you want to run JSON Crack locally:
 
-* Build Docker image with `docker build -t jsoncrack --build-arg jsoncrack_host=localhost:8888 .`
+* Build a Docker image with `docker build -t jsoncrack --build-arg jsoncrack_host=localhost:8888 .`
 * Run locally with `docker run -p 8888:8080 jsoncrack`
-* Go to [http://localhost:8888]
-```
+* Go to http://localhost:8888
 
 ## License
 
