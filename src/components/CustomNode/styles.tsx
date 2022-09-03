@@ -12,35 +12,21 @@ export const StyledLinkItUrl = styled(LinkItUrl)`
   pointer-events: all;
 `;
 
-export const StyledTextWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 12px;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  cursor: pointer;
-`;
-
-export const StyledText = styled.div<{
-  width: number;
-  height: number;
+export const StyledForeignObject = styled.foreignObject<{
   hasCollapse?: boolean;
   hideCollapse?: boolean;
+  isObject?: boolean;
 }>`
   display: flex;
+  text-align: ${({ isObject }) => !isObject && "center"};
+  align-items: center;
   justify-content: center;
+  font-size: 12px;
   flex-direction: column;
-  width: ${({ width }) => width};
-  height: ${({ height }) => height};
-  min-height: 50;
+  overflow: hidden;
+  padding: 10px;
   color: ${({ theme }) => theme.TEXT_NORMAL};
-  padding-right: ${({ hasCollapse, hideCollapse }) =>
-    hasCollapse && !hideCollapse && "20px"};
-`;
-
-export const StyledForeignObject = styled.foreignObject`
+  cursor: pointer;
   pointer-events: none;
 
   * {
@@ -72,6 +58,7 @@ export const StyledForeignObject = styled.foreignObject`
 export const StyledKey = styled.span<{
   objectKey?: boolean;
   parent?: boolean;
+  hasToggle?: boolean;
 }>`
   font-weight: 500;
   color: ${({ theme, objectKey, parent }) =>
@@ -81,18 +68,19 @@ export const StyledKey = styled.span<{
       ? theme.OBJECT_KEY
       : theme.TEXT_POSITIVE};
   font-size: ${({ parent }) => parent && "14px"};
+  padding-right: ${({ hasToggle }) => hasToggle && "30px"};
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const StyledRow = styled.span.attrs<{
-  width: string;
   value: string;
   theme: DefaultTheme;
 }>((props) => ({
   style: {
-    width: props.width,
     color: getTypeColor(props.value, props.theme),
   },
-}))<{ width: string; value: string; theme: DefaultTheme }>`
+}))<{ value: string; theme: DefaultTheme }>`
   height: 18px;
   overflow: hidden;
   text-overflow: ellipsis;

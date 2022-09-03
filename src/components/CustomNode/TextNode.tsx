@@ -65,27 +65,21 @@ const TextNode: React.FC<
       y={0}
       data-nodeid={node.id}
       ref={ref}
+      hideCollapse={hideCollapse}
+      hasCollapse={isParent && hasCollapse}
     >
       {(!performanceMode || inViewport) && (
-        <Styled.StyledTextWrapper>
-          <Styled.StyledText
-            hideCollapse={hideCollapse}
-            hasCollapse={isParent && hasCollapse}
-            width={width}
-            height={height}
-          >
-            <Styled.StyledKey
-              data-x={x}
-              data-y={y}
-              data-key={JSON.stringify(value)}
-              parent={isParent}
-            >
-              <Styled.StyledLinkItUrl>
-                {JSON.stringify(value).replaceAll('"', "")}
-              </Styled.StyledLinkItUrl>
-            </Styled.StyledKey>
-          </Styled.StyledText>
-        </Styled.StyledTextWrapper>
+        <Styled.StyledKey
+          data-x={x}
+          data-y={y}
+          data-key={JSON.stringify(value)}
+          parent={isParent}
+          hasToggle={hasCollapse}
+        >
+          <Styled.StyledLinkItUrl>
+            {JSON.stringify(value).replaceAll('"', "")}
+          </Styled.StyledLinkItUrl>
+        </Styled.StyledKey>
       )}
 
       {inViewport && isParent && hasCollapse && !hideCollapse && (
