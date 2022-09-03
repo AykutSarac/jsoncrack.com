@@ -15,7 +15,7 @@ body:
       placeholder: |
         Steps to reproduce with below code sample:
         1. do thing
-        2. do thing in Discord client
+        2. click...
         3. observe behavior
         4. see error logs below
     validations:
