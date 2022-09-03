@@ -34,7 +34,8 @@ body:
       value: |
        - OS: [e.g. iOS]:
        - Browser [e.g. chrome, safari]:
-       - Version [e.g. 22]:
+       
+       - Any other details...
   - type: dropdown
     id: priority
     attributes:
