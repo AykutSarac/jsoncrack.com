@@ -1,6 +1,6 @@
 name: Feature request
 description: Request a new feature
-labels: [feature request]
+labels: [feature]
 body:
   - type: textarea
     id: description
