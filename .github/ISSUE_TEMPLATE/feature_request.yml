@@ -15,8 +15,8 @@ body:
     attributes:
       label: Is the feature mobile responsive?
       options:
-        - Yes
-        - No
+        - "Yes" 
+        - "No"
     validations:
       required: false
   - type: textarea
