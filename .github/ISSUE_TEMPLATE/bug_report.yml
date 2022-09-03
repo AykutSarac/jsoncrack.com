@@ -5,6 +5,7 @@ title: "[BUG]: <Context of the issue>"
 labels: bug
 assignees: AykutSarac
 ---
+body:
   - type: textarea
     id: description
     attributes:
