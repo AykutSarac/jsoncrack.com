@@ -10,15 +10,6 @@ body:
       placeholder: I'm always frustrated when..., Discord has recently released..., A good addition would be...
     validations:
       required: true
-  - type: dropdown
-    id: package
-    attributes:
-      label: Is the feature mobile responsive?
-      options:
-        - "Yes" 
-        - "No"
-    validations:
-      required: false
   - type: textarea
     id: alternatives
     attributes:
