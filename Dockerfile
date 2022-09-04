@@ -1,5 +1,7 @@
 # Builder
 FROM node:14-buster as builder
+ARG jsoncrack_host
+ENV NEXT_PUBLIC_JSONCRACK_HOST $jsoncrack_host
 WORKDIR /src
 COPY . /src
 RUN yarn install --legacy-peer-deps
