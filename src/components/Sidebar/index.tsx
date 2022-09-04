@@ -178,11 +178,9 @@ export const Sidebar: React.FC = () => {
     <StyledSidebar>
       <StyledTopWrapper>
         <Link passHref href="/">
-          <StyledElement onClick={() => push("/")}>
-            <StyledLogo>
-              <StyledText>J</StyledText>
-              <StyledText secondary>C</StyledText>
-            </StyledLogo>
+          <StyledElement as={StyledLogo}>
+            <StyledText>J</StyledText>
+            <StyledText secondary>C</StyledText>
           </StyledElement>
         </Link>
         <Tooltip className="mobile" title="Edit JSON">
