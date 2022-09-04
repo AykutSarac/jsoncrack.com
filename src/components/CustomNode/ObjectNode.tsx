@@ -33,7 +33,6 @@ const ObjectNode: React.FC<CustomNodeProps<[string, string][]>> = ({
             data-x={x}
             data-y={y}
             key={idx}
-            value={JSON.stringify(val[1])}
           >
             <Styled.StyledKey objectKey>
               {JSON.stringify(val[0]).replaceAll('"', "")}:{" "}

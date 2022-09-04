@@ -11,12 +11,12 @@ const StyledErrorWrapper = styled.div`
   z-index: 1;
 `;
 
-const StyledErrorExpand = styled.button<{ error: boolean }>`
+const StyledErrorExpand = styled.div<{ error: boolean }>`
   position: relative;
   display: flex;
   width: 100%;
   padding: 4px 16px;
-  height: 36px;
+  height: 28px;
   border-radius: 0;
   justify-content: space-between;
   align-items: center;
@@ -25,12 +25,6 @@ const StyledErrorExpand = styled.button<{ error: boolean }>`
   pointer-events: ${({ error }) => !error && "none"};
   background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
   box-shadow: 0 1px 0px ${({ theme }) => theme.BACKGROUND_TERTIARY};
-  cursor: pointer;
-
-  &:hover {
-    color: ${({ theme }) => theme.TEXT_DANGER};
-    background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0 0);
-  }
 `;
 
 const StyledTitle = styled.span`
@@ -52,31 +46,19 @@ const StyledError = styled.pre`
   white-space: pre-line;
 `;
 
-export const ErrorContainer = ({ error }: { error: string }) => {
-  const [isErrorExpanded, setErrorExpanded] = React.useState(true);
-
+export const ErrorContainer = ({ hasError }: { hasError: boolean }) => {
   return (
     <StyledErrorWrapper>
-      <StyledErrorExpand
-        error={!!error.length}
-        onClick={() => setErrorExpanded(!isErrorExpanded)}
-      >
+      <StyledErrorExpand error={hasError}>
         <StyledTitle>
-          {error ? (
+          {hasError ? (
             <MdReportGmailerrorred size={20} />
           ) : (
             <MdOutlineCheckCircleOutline size={20} />
           )}
-          {error ? "Error" : "JSON Valid"}
+          {hasError ? "Invalid JSON" : "JSON Valid"}
         </StyledTitle>
-        {error &&
-          (isErrorExpanded ? (
-            <MdExpandLess size={22} />
-          ) : (
-            <MdExpandMore size={22} />
-          ))}
       </StyledErrorExpand>
-      {isErrorExpanded && error && <StyledError>{error}</StyledError>}
     </StyledErrorWrapper>
   );
 };
