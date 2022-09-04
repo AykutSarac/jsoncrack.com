@@ -78,7 +78,6 @@ const Home: React.FC = () => {
             height="863"
             src="/jsoncrack-screenshot.webp"
             alt="preview"
-            loading="lazy"
           />
         </Styles.StyledImageWrapper>
       </Styles.StyledPreviewSection>
