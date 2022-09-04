@@ -16,7 +16,7 @@ test('editor page test: search data', async ({ page }) => {
   // verify search result
   const searchData = page.locator("(//*[name()='rect'][@class='Node-module_rect__1Eal3'])[8]");
   await searchData.click();
-  const searchResult = page.locator('.sc-olbas.hrCqnL');
+  const searchResult = page.locator('.sc-jfmDQi.fzHPKh');
   await expect(searchResult).toContainText('Madame Uppercut');
   // close modals
   const buttonClose = page.locator('button:has-text("Close")');
