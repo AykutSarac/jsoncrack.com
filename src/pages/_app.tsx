@@ -20,7 +20,7 @@ if (process.env.NODE_ENV !== "development") {
   });
 }
 
-function JsonVisio({ Component, pageProps }: AppProps) {
+function JsonCrack({ Component, pageProps }: AppProps) {
   const { query } = useRouter();
   const lightmode = useStored((state) => state.lightmode);
   const setJson = useConfig((state) => state.setJson);
@@ -40,18 +40,18 @@ function JsonVisio({ Component, pageProps }: AppProps) {
   }, [query.json, setJson]);
 
   React.useEffect(() => {
-    if (!window.matchMedia("(display-mode: standalone)").matches) {
-      navigator.serviceWorker
-        ?.getRegistrations()
-        .then(function (registrations) {
-          for (let registration of registrations) {
-            registration.unregister();
-          }
-        })
-        .catch(function (err) {
-          console.error("Service Worker registration failed: ", err);
-        });
-    }
+    // if (!window.matchMedia("(display-mode: standalone)").matches) {
+    //   navigator.serviceWorker
+    //     ?.getRegistrations()
+    //     .then(function (registrations) {
+    //       for (let registration of registrations) {
+    //         registration.unregister();
+    //       }
+    //     })
+    //     .catch(function (err) {
+    //       console.error("Service Worker registration failed: ", err);
+    //     });
+    // }
 
     setRendered(true);
   }, []);
@@ -78,4 +78,4 @@ function JsonVisio({ Component, pageProps }: AppProps) {
   );
 }
 
-export default JsonVisio;
+export default JsonCrack;

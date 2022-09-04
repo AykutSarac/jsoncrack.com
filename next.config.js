@@ -1,14 +1,9 @@
-// const withPWA = require("next-pwa");
-
-// const pwaConfig = {
-//   pwa: {
-//     disable: true, // disable temp until issue #61 solved
-//     dest: "public",
-//     fallbacks: {
-//       document: "/editor",
-//     },
-//   },
-// };
+const withPWA = require("next-pwa")({
+  dest: "public",
+  register: true,
+  disable: process.env.NODE_ENV === "development",
+  scope: "/editor",
+});
 
 /**
  * @type {import('next').NextConfig}
@@ -20,7 +15,6 @@ const nextConfig = {
     "/editor": { page: "/Editor" },
     "/widget": { page: "/Widget" },
   }),
-  //...pwaConfig,
 };
 
-module.exports = nextConfig;
+module.exports = withPWA(nextConfig);

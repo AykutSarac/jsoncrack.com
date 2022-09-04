@@ -1,5 +1,3 @@
-import { NodeData, EdgeData } from "reaflow/dist/types";
-
 export const getChildrenEdges = (
   nodes: NodeData[],
   edges: EdgeData[]

@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 400;
     font-size: 16px;
     scroll-behavior: smooth;
+    height: 100%;
 
     background-color: #000000;
     opacity: 1;
@@ -24,6 +25,10 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   .hide {
     display: none;
   }
@@ -31,29 +36,19 @@ const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
     color: unset;
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
   }
 
   button {
-    min-height: 32px;
     border: none;
-    border-radius: 3px;
     outline: none;
-    font-family: 'Catamaran', sans-serif;
-    font-weight: 500;
-    font-size: 14px;
-    background-image: none;
+    background: transparent;
+    width: fit-content;
+    margin: 0;
+    padding: 0;
     cursor: pointer;
-
-    div {
-      white-space: normal;
-      margin: 0 auto;
-      text-overflow: ellipsis;
-      overflow: hidden;
-    }
-
-    &:hover {
-      background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0 0);
-    }
   }
 
   #carbonads * {
@@ -70,7 +65,6 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #carbonads {
-    z-index: 100;
     display: inline-block;
 
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',

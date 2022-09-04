@@ -1,8 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Editor from "@monaco-editor/react";
-import parseJson from "parse-json";
-import { loader } from "@monaco-editor/react";
+import MonacoEditor, { loader } from "@monaco-editor/react";
 import { ErrorContainer } from "src/components/ErrorContainer/ErrorContainer";
 import useConfig from "src/hooks/store/useConfig";
 import { Loading } from "src/components/Loading";
@@ -38,7 +36,7 @@ const StyledWrapper = styled.div`
 
 export const JsonEditor: React.FC = () => {
   const [value, setValue] = React.useState<string | undefined>("");
-  const [error, setError] = React.useState("");
+  const [hasError, setHasError] = React.useState(false);
 
   const json = useConfig((state) => state.json);
   const lightmode = useStored((state) => state.lightmode);
@@ -57,15 +55,15 @@ export const JsonEditor: React.FC = () => {
     const formatTimer = setTimeout(() => {
       try {
         if (!value) {
-          setError("");
+          setHasError(false);
           return setJson("{}");
         }
 
-        parseJson(value);
+        JSON.parse(value);
         setJson(value);
-        setError("");
+        setHasError(false);
       } catch (jsonError: any) {
-        setError(jsonError.message);
+        setHasError(true);
       }
     }, 1500);
 
@@ -74,9 +72,9 @@ export const JsonEditor: React.FC = () => {
 
   return (
     <StyledEditorWrapper>
-      <ErrorContainer error={error} />
+      <ErrorContainer hasError={hasError} />
       <StyledWrapper>
-        <Editor
+        <MonacoEditor
           height="100%"
           defaultLanguage="json"
           value={value}

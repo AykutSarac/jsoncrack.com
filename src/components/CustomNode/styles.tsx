@@ -12,36 +12,17 @@ export const StyledLinkItUrl = styled(LinkItUrl)`
   pointer-events: all;
 `;
 
-export const StyledTextWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 12px;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  cursor: pointer;
-`;
-
-export const StyledText = styled.div<{
-  width: number;
-  height: number;
-  parent?: boolean;
+export const StyledForeignObject = styled.foreignObject<{
+  hasCollapse?: boolean;
   hideCollapse?: boolean;
+  isObject?: boolean;
 }>`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  width: ${({ width }) => width};
-  height: ${({ height }) => height};
-  min-height: 50;
+  text-align: ${({ isObject }) => !isObject && "center"};
+  font-size: 12px;
+  overflow: hidden;
   color: ${({ theme }) => theme.TEXT_NORMAL};
-  padding-right: ${({ parent, hideCollapse }) =>
-    parent && !hideCollapse && "20px"};
-`;
-
-export const StyledForeignObject = styled.foreignObject`
   pointer-events: none;
+  padding: ${({ isObject }) => isObject && "10px"};
 
   * {
     font-family: "Roboto Mono", monospace;
@@ -69,30 +50,37 @@ export const StyledForeignObject = styled.foreignObject`
   }
 `;
 
+function getKeyColor(theme: DefaultTheme, parent: boolean, objectKey: boolean) {
+  if (parent) return theme.NODE_KEY;
+  if (objectKey) return theme.OBJECT_KEY;
+  return theme.TEXT_POSITIVE;
+}
+
 export const StyledKey = styled.span<{
   objectKey?: boolean;
   parent?: boolean;
+  value?: string;
 }>`
+  display: inline;
+  flex: 1;
   font-weight: 500;
-  color: ${({ theme, objectKey, parent }) =>
-    parent
-      ? theme.NODE_KEY
-      : objectKey
-      ? theme.OBJECT_KEY
-      : theme.TEXT_POSITIVE};
+  color: ${({ theme, objectKey = false, parent = false }) =>
+    getKeyColor(theme, parent, objectKey)};
   font-size: ${({ parent }) => parent && "14px"};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: ${({ parent }) => parent && "10px"};
 `;
 
 export const StyledRow = styled.span.attrs<{
-  width: string;
-  value: string;
+  'data-key': string;
   theme: DefaultTheme;
 }>((props) => ({
   style: {
-    width: props.width,
-    color: getTypeColor(props.value, props.theme),
+    color: getTypeColor(props["data-key"], props.theme),
   },
-}))<{ width: string; value: string; theme: DefaultTheme }>`
+}))<{ 'data-key': string; theme: DefaultTheme }>`
+  display: block;
   height: 18px;
   overflow: hidden;
   text-overflow: ellipsis;
