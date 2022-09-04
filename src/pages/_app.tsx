@@ -40,18 +40,18 @@ function JsonCrack({ Component, pageProps }: AppProps) {
   }, [query.json, setJson]);
 
   React.useEffect(() => {
-    if (!window.matchMedia("(display-mode: standalone)").matches) {
-      navigator.serviceWorker
-        ?.getRegistrations()
-        .then(function (registrations) {
-          for (let registration of registrations) {
-            registration.unregister();
-          }
-        })
-        .catch(function (err) {
-          console.error("Service Worker registration failed: ", err);
-        });
-    }
+    // if (!window.matchMedia("(display-mode: standalone)").matches) {
+    //   navigator.serviceWorker
+    //     ?.getRegistrations()
+    //     .then(function (registrations) {
+    //       for (let registration of registrations) {
+    //         registration.unregister();
+    //       }
+    //     })
+    //     .catch(function (err) {
+    //       console.error("Service Worker registration failed: ", err);
+    //     });
+    // }
 
     setRendered(true);
   }, []);

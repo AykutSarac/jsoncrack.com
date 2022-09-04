@@ -9,10 +9,18 @@ enum ButtonType {
   WARNING = "ORANGE",
 }
 
-export interface ButtonProps extends React.ComponentPropsWithoutRef<"button"> {
+interface ButtonProps {
   status?: keyof typeof ButtonType;
   block?: boolean;
 }
+
+type ConditionalProps =
+  | ({
+      link?: boolean;
+    } & React.ComponentPropsWithoutRef<"a">)
+  | ({
+      link?: never;
+    } & React.ComponentPropsWithoutRef<"button">);
 
 function getButtonStatus(status: keyof typeof ButtonType, theme: DefaultTheme) {
   return theme[ButtonType[status]];
@@ -67,14 +75,16 @@ const StyledButtonContent = styled.div`
   text-overflow: ellipsis;
 `;
 
-export const Button: React.FC<ButtonProps> = ({
+export const Button: React.FC<ButtonProps & ConditionalProps> = ({
   children,
   status,
   block = false,
+  link = false,
   ...props
 }) => {
   return (
     <StyledButton
+      as={link ? "a" : "button"}
       type="button"
       status={status ?? "PRIMARY"}
       block={block}

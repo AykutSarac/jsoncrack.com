@@ -85,7 +85,7 @@ export const Sponsors = () => {
     <StyledSponsorsWrapper>
       {sponsors.users.map((user) => (
         <StyledSponsor handle={user.handle} key={user.handle}>
-          <a href={user.profile}>
+          <a href={user.profile} target="_blank" rel="noreferrer">
             <img
               src={user.avatar}
               alt={user.handle}

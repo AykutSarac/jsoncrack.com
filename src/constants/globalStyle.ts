@@ -32,6 +32,9 @@ const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
     color: unset;
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
   }
 
   button {

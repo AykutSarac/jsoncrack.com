@@ -24,7 +24,7 @@ export const CustomNode = (nodeProps: NodeProps) => {
   return (
     <Node {...nodeProps} label={<Label style={baseLabelStyle} />}>
       {({ width, height, x, y, node }) => {
-        if (properties.text instanceof Object) {
+        if (Array.isArray(properties.text)) {
           return (
             <ObjectNode
               value={properties.text}
@@ -38,7 +38,7 @@ export const CustomNode = (nodeProps: NodeProps) => {
 
         return (
           <TextNode
-            node={node}
+            node={node as NodeData}
             isParent={properties.data.isParent}
             value={properties.text}
             width={width}

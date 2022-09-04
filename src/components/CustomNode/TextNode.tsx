@@ -8,6 +8,8 @@ import useStored from "src/hooks/store/useStored";
 import styled from "styled-components";
 import * as Styled from "./styles";
 
+const inViewport = true;
+
 const StyledExpand = styled.button`
   pointer-events: all;
   position: absolute;
@@ -39,7 +41,7 @@ const TextNode: React.FC<
   y,
 }) => {
   const ref = React.useRef(null);
-  const { inViewport } = useInViewport(ref);
+  // const { inViewport } = useInViewport(ref);
   const performanceMode = useConfig((state) => state.performanceMode);
 
   const hideCollapse = useStored((state) => state.hideCollapse);
@@ -63,27 +65,21 @@ const TextNode: React.FC<
       y={0}
       data-nodeid={node.id}
       ref={ref}
+      hideCollapse={hideCollapse}
+      hasCollapse={isParent && hasCollapse}
     >
       {(!performanceMode || inViewport) && (
-        <Styled.StyledTextWrapper>
-          <Styled.StyledText
-            hideCollapse={hideCollapse}
-            hasCollapse={isParent && hasCollapse}
-            width={width}
-            height={height}
-          >
-            <Styled.StyledKey
-              data-x={x}
-              data-y={y}
-              data-key={JSON.stringify(value)}
-              parent={isParent}
-            >
-              <Styled.StyledLinkItUrl>
-                {JSON.stringify(value).replaceAll('"', "")}
-              </Styled.StyledLinkItUrl>
-            </Styled.StyledKey>
-          </Styled.StyledText>
-        </Styled.StyledTextWrapper>
+        <Styled.StyledKey
+          data-x={x}
+          data-y={y}
+          data-key={JSON.stringify(value)}
+          parent={isParent}
+          hasToggle={hasCollapse}
+        >
+          <Styled.StyledLinkItUrl>
+            {JSON.stringify(value).replaceAll('"', "")}
+          </Styled.StyledLinkItUrl>
+        </Styled.StyledKey>
       )}
 
       {inViewport && isParent && hasCollapse && !hideCollapse && (

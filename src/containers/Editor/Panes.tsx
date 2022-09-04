@@ -1,4 +1,4 @@
-import { Allotment, LayoutPriority } from "allotment";
+import { Allotment } from "allotment";
 import React from "react";
 import { JsonEditor } from "src/containers/Editor/JsonEditor";
 import dynamic from "next/dynamic";
