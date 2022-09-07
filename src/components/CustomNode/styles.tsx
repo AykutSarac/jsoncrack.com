@@ -17,17 +17,12 @@ export const StyledForeignObject = styled.foreignObject<{
   hideCollapse?: boolean;
   isObject?: boolean;
 }>`
-  display: flex;
   text-align: ${({ isObject }) => !isObject && "center"};
-  align-items: center;
-  justify-content: center;
   font-size: 12px;
-  flex-direction: column;
   overflow: hidden;
-  padding: 10px;
   color: ${({ theme }) => theme.TEXT_NORMAL};
-  cursor: pointer;
   pointer-events: none;
+  padding: ${({ isObject }) => isObject && "10px"};
 
   * {
     font-family: "Roboto Mono", monospace;
@@ -55,32 +50,37 @@ export const StyledForeignObject = styled.foreignObject<{
   }
 `;
 
+function getKeyColor(theme: DefaultTheme, parent: boolean, objectKey: boolean) {
+  if (parent) return theme.NODE_KEY;
+  if (objectKey) return theme.OBJECT_KEY;
+  return theme.TEXT_POSITIVE;
+}
+
 export const StyledKey = styled.span<{
   objectKey?: boolean;
   parent?: boolean;
-  hasToggle?: boolean;
+  value?: string;
 }>`
+  display: inline;
+  flex: 1;
   font-weight: 500;
-  color: ${({ theme, objectKey, parent }) =>
-    parent
-      ? theme.NODE_KEY
-      : objectKey
-      ? theme.OBJECT_KEY
-      : theme.TEXT_POSITIVE};
+  color: ${({ theme, objectKey = false, parent = false }) =>
+    getKeyColor(theme, parent, objectKey)};
   font-size: ${({ parent }) => parent && "14px"};
-  padding-right: ${({ hasToggle }) => hasToggle && "30px"};
   overflow: hidden;
   text-overflow: ellipsis;
+  padding: ${({ parent }) => parent && "10px"};
 `;
 
 export const StyledRow = styled.span.attrs<{
-  value: string;
+  'data-key': string;
   theme: DefaultTheme;
 }>((props) => ({
   style: {
-    color: getTypeColor(props.value, props.theme),
+    color: getTypeColor(props["data-key"], props.theme),
   },
-}))<{ value: string; theme: DefaultTheme }>`
+}))<{ 'data-key': string; theme: DefaultTheme }>`
+  display: block;
   height: 18px;
   overflow: hidden;
   text-overflow: ellipsis;

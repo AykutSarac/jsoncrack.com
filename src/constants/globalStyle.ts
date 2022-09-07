@@ -25,6 +25,10 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   .hide {
     display: none;
   }
@@ -40,7 +44,6 @@ const GlobalStyle = createGlobalStyle`
   button {
     border: none;
     outline: none;
-    -webkit-tap-highlight-color: transparent;
     background: transparent;
     width: fit-content;
     margin: 0;

@@ -6,6 +6,9 @@
 
 <p>
     <p align="center">
+      <a href="https://discord.gg/yVyTtCRueq">
+        <img alt="github sponsors" src="https://dcbadge.vercel.app/api/server/yVyTtCRueq?style=flat-square" />
+      </a>
       <a href="https://app.travis-ci.com/github/AykutSarac/jsoncrack.com">
         <img alt="travis ci badge" src="https://img.shields.io/travis/com/AykutSarac/jsoncrack.com/main?style=flat-square" />
       </a>

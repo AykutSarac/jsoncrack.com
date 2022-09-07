@@ -10,11 +10,13 @@ const StyledInputWrapper = styled.div`
   justify-content: space-between;
   background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
   border-radius: 4px;
-  padding: 4px 6px;
+  height: 28px;
 `;
 
 const StyledForm = styled.form`
   display: flex;
+  align-items: center;
+  padding: 4px 6px;
 `;
 
 const StyledInput = styled.input`
@@ -59,6 +61,11 @@ export const SearchInput: React.FC = () => {
     skip();
   };
 
+  const handleClear = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setContent({ value: "", debounced: "" });
+  };
+
   return (
     <StyledInputWrapper>
       <StyledForm onSubmit={onSubmit}>
@@ -70,17 +77,18 @@ export const SearchInput: React.FC = () => {
           }
           placeholder="Search Node"
         />
+        <StyledSearchButton
+          type="reset"
+          aria-label="search"
+          onClick={handleClear}
+        >
+          {content.value ? (
+            <IoCloseSharp size={18} />
+          ) : (
+            <AiOutlineSearch size={18} />
+          )}
+        </StyledSearchButton>
       </StyledForm>
-      <StyledSearchButton
-        aria-label="search"
-        onClick={() => setContent({ value: "", debounced: "" })}
-      >
-        {content.value ? (
-          <IoCloseSharp size={18} />
-        ) : (
-          <AiOutlineSearch size={18} />
-        )}
-      </StyledSearchButton>
     </StyledInputWrapper>
   );
 };

@@ -12,20 +12,27 @@ const inViewport = true;
 
 const StyledExpand = styled.button`
   pointer-events: all;
-  position: absolute;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  top: 0;
-  right: 0;
-  padding: 0;
   color: ${({ theme }) => theme.TEXT_NORMAL};
   background: rgba(0, 0, 0, 0.1);
-  min-height: 0;
   height: 100%;
   width: 40px;
-  border-radius: 0;
   border-left: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
+
+  &:hover {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0 0);
+  }
+`;
+
+const StyledTextNodeWrapper = styled.div<{ hasCollapse: boolean }>`
+  display: flex;
+  justify-content: ${({ hasCollapse }) =>
+    hasCollapse ? "space-between" : "center"};
+  align-items: center;
+  height: 100%;
+  width: 100%;
 `;
 
 const TextNode: React.FC<
@@ -68,25 +75,26 @@ const TextNode: React.FC<
       hideCollapse={hideCollapse}
       hasCollapse={isParent && hasCollapse}
     >
-      {(!performanceMode || inViewport) && (
-        <Styled.StyledKey
-          data-x={x}
-          data-y={y}
-          data-key={JSON.stringify(value)}
-          parent={isParent}
-          hasToggle={hasCollapse}
-        >
-          <Styled.StyledLinkItUrl>
-            {JSON.stringify(value).replaceAll('"', "")}
-          </Styled.StyledLinkItUrl>
-        </Styled.StyledKey>
-      )}
+      <StyledTextNodeWrapper hasCollapse={isParent && !hideCollapse}>
+        {(!performanceMode || inViewport) && (
+          <Styled.StyledKey
+            data-x={x}
+            data-y={y}
+            data-key={JSON.stringify(value)}
+            parent={isParent}
+          >
+            <Styled.StyledLinkItUrl>
+              {JSON.stringify(value).replaceAll('"', "")}
+            </Styled.StyledLinkItUrl>
+          </Styled.StyledKey>
+        )}
 
-      {inViewport && isParent && hasCollapse && !hideCollapse && (
-        <StyledExpand onClick={handleExpand}>
-          <MdCompareArrows size={18} />
-        </StyledExpand>
-      )}
+        {inViewport && isParent && hasCollapse && !hideCollapse && (
+          <StyledExpand onClick={handleExpand}>
+            <MdCompareArrows size={18} />
+          </StyledExpand>
+        )}
+      </StyledTextNodeWrapper>
     </Styled.StyledForeignObject>
   );
 };
