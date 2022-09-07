@@ -34,8 +34,8 @@ export const StyledForeignObject = styled.foreignObject<{
   }
 
   .highlight {
-    background-color: rgba(255, 0, 255, 0.5);
-    filter: hue-rotate();
+    border: 2px dashed #FF2970;
+    background: rgba(255, 214, 0, 0.3);
   }
 
   .renderVisible {
