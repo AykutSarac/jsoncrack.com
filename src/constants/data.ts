@@ -1,3 +1,5 @@
+export const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+
 // Example taken from https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json
 export const defaultJson = JSON.stringify({
   squadName: "Super hero squad",

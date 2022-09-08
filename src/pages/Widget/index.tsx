@@ -2,10 +2,9 @@ import { decompress } from "compress-json";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React from "react";
-import { defaultJson } from "src/constants/data";
+import { baseURL, defaultJson } from "src/constants/data";
 import { isValidJson } from "src/utils/isValidJson";
 import styled from "styled-components";
-import packageJson from "package.json";
 
 const Graph = dynamic<any>(
   () => import("src/components/Graph").then((c) => c.Graph),
@@ -63,7 +62,7 @@ const WidgetPage = () => {
     <>
       <Graph json={json} isWidget />
       <StyledAttribute
-        href={`${packageJson.homepage}/editor?json=${query.json}`}
+        href={`${baseURL}/editor?json=${query.json}`}
         target="_blank"
         rel="noreferrer"
       >

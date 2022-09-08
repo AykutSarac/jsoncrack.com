@@ -7,7 +7,7 @@ import { BiErrorAlt } from "react-icons/bi";
 import { compress } from "compress-json";
 import useConfig from "src/hooks/store/useConfig";
 import { Input } from "src/components/Input";
-import packageJson from "package.json";
+import { baseURL } from "src/constants/data";
 
 const StyledWarning = styled.p``;
 
@@ -43,14 +43,12 @@ const StyledContainer = styled.div`
   }
 `;
 
-const jsoncrackHost = process.env.NEXT_PUBLIC_JSONCRACK_HOST || packageJson.homepage;
-
 export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   const json = useConfig((state) => state.json);
   const [encodedJson, setEncodedJson] = React.useState("");
 
-  const embedText = `<iframe src="${jsoncrackHost}/widget?json=${encodedJson}" width="512" height="384" style="border: 2px solid #b9bbbe; border-radius: 6px;"></iframe>`;
-  const shareURL = `${jsoncrackHost}/editor?json=${encodedJson}`;
+  const embedText = `<iframe src="${baseURL}/widget?json=${encodedJson}" width="512" height="384" style="border: 2px solid #b9bbbe; border-radius: 6px;"></iframe>`;
+  const shareURL = `${baseURL}/editor?json=${encodedJson}`;
 
   React.useEffect(() => {
     const jsonEncode = compress(JSON.parse(json));
