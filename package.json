@@ -1,7 +1,7 @@
 {
   "name": "json-crack",
   "private": true,
-  "version": "v2.0.1",
+  "version": "v2.0.2",
   "author": "https://github.com/AykutSarac",
   "homepage": "https://jsoncrack.com",
   "scripts": {
