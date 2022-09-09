@@ -51,11 +51,13 @@ export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   const shareURL = `${baseURL}/editor?json=${encodedJson}`;
 
   React.useEffect(() => {
-    const jsonEncode = compress(JSON.parse(json));
-    const jsonString = JSON.stringify(jsonEncode);
-
-    setEncodedJson(encodeURIComponent(jsonString));
-  }, [json]);
+    if (visible) {
+      const jsonEncode = compress(JSON.parse(json));
+      const jsonString = JSON.stringify(jsonEncode);
+  
+      setEncodedJson(encodeURIComponent(jsonString));
+    }
+  }, [json, visible]);
 
   const handleShare = (value: string) => {
     navigator.clipboard.writeText(value);
