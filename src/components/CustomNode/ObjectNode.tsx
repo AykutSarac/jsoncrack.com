@@ -6,7 +6,9 @@ import * as Styled from "./styles";
 
 const inViewport = true;
 
-const ObjectNode: React.FC<CustomNodeProps<[string, string][]>> = ({
+type ObjectNodeProps = CustomNodeProps<[string, string][]>;
+
+const ObjectNode: React.FC<ObjectNodeProps> = ({
   width,
   height,
   value,
@@ -46,4 +48,8 @@ const ObjectNode: React.FC<CustomNodeProps<[string, string][]>> = ({
   );
 };
 
-export default ObjectNode;
+function propsAreEqual(prev: ObjectNodeProps, next: ObjectNodeProps) {
+  return prev.width === next.width && prev.height === next.height;
+}
+
+export default React.memo(ObjectNode, propsAreEqual);
