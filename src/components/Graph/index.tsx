@@ -38,7 +38,7 @@ const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
   }
 `;
 
-export const Graph = ({
+const GraphComponent = ({
   isWidget,
   openModal,
   setSelectedNode,
@@ -130,3 +130,5 @@ export const Graph = ({
     </StyledEditorWrapper>
   );
 };
+
+export const Graph = React.memo(GraphComponent);
