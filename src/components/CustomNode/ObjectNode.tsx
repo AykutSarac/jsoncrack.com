@@ -49,7 +49,7 @@ const ObjectNode: React.FC<ObjectNodeProps> = ({
 };
 
 function propsAreEqual(prev: ObjectNodeProps, next: ObjectNodeProps) {
-  return prev.width === next.width && prev.height === next.height;
+  return String(prev.value) === String(next.value);
 }
 
 export default React.memo(ObjectNode, propsAreEqual);
