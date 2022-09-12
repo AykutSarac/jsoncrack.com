@@ -21,11 +21,11 @@ To get an overview of the project, read the [README](README.md). Here are some r
 
 Join the [Discord channel](https://discord.gg/yVyTtCRueq). If you have questions or feedback, this is the best place to reach the team and other contributors directly.
 
+If you're already familar with Open Source contributions, we **highly recommend** you to take a look at our [TODO List](/TODO.md).
+
 ### Issues
 
 #### Create a new issue
-
-If you're already familar with Open Source contributions, we highly recommend you to take a look at our [TODO List](/TODO.md).
 
 If you spot a problem, [search if an issue already exists](https://github.com/AykutSarac/jsoncrack.com/issues). If a related issue doesn't exist, you can open a new issue using a relevant [issue form](https://github.com/AykutSarac/jsoncrack.com/issues/new/choose).
 
