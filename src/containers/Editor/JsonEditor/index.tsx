@@ -14,7 +14,7 @@ export const JsonEditor: React.FC = () => {
   const [hasError, setHasError] = React.useState(false);
 
   return (
-    <StyledEditorWrapper>
+    <StyledEditorWrapper id="testing-this">
       <ErrorContainer hasError={hasError} />
       <MonacoEditor setHasError={setHasError} />
     </StyledEditorWrapper>
