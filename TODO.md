@@ -5,7 +5,6 @@
 
 ## Enhancements:
 
-- [ ] Prevent expand button expanding all nodes, should expand only target node
 - [ ] Clear rewrite of [parsing algorithm](/src/utils/jsonParser.ts)
 - [ ] Performance Optimization
 - [ ] Fix `useInViewport` hook for performance
