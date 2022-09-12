@@ -1,9 +1,10 @@
 {
   "rules": {
-    "@next/next/no-img-element": "off"
+    "@next/next/no-img-element": "off",
+    "unused-imports/no-unused-imports": "error"
   },
   "extends": ["next/core-web-vitals"],
-  "plugins": ["testing-library"],
+  "plugins": ["testing-library", "unused-imports"],
   "overrides": [
     // Only uses Testing Library lint rules in test files
     {

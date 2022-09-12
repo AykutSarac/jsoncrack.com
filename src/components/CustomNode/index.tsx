@@ -1,6 +1,5 @@
 import React from "react";
 import { Node, NodeProps } from "reaflow";
-import useGraph from "src/hooks/store/useGraph";
 import ObjectNode from "./ObjectNode";
 import TextNode from "./TextNode";
 
