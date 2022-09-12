@@ -38,15 +38,11 @@ const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
   }
 `;
 
-const GraphComponent = ({
-  isWidget,
-  openModal,
-  setSelectedNode,
-}: LayoutProps) => {
-  const setConfig = useConfig((state) => state.setConfig);
-  const layout = useConfig((state) => state.layout);
-  const nodes = useGraph((state) => state.nodes);
-  const edges = useGraph((state) => state.edges);
+const GraphComponent = ({ isWidget, openModal, setSelectedNode }: LayoutProps) => {
+  const setConfig = useConfig(state => state.setConfig);
+  const layout = useConfig(state => state.layout);
+  const nodes = useGraph(state => state.nodes);
+  const edges = useGraph(state => state.edges);
 
   const [size, setSize] = React.useState({
     width: 2000,
@@ -89,10 +85,8 @@ const GraphComponent = ({
         zoomAnimation={{ animationType: "linear" }}
         doubleClick={{ disabled: true }}
         onInit={onInit}
-        onPanning={(ref) =>
-          ref.instance.wrapperComponent?.classList.add("dragging")
-        }
-        onPanningStop={(ref) =>
+        onPanning={ref => ref.instance.wrapperComponent?.classList.add("dragging")}
+        onPanningStop={ref =>
           ref.instance.wrapperComponent?.classList.remove("dragging")
         }
       >
@@ -118,10 +112,8 @@ const GraphComponent = ({
             dragEdge={null}
             dragNode={null}
             fit={true}
-            node={(props) => (
-              <CustomNode {...props} onClick={handleNodeClick} />
-            )}
-            edge={(props) => (
+            node={props => <CustomNode {...props} onClick={handleNodeClick} />}
+            edge={props => (
               <Edge {...props} containerClassName={`edge-${props.id}`} />
             )}
           />

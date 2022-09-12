@@ -1,6 +1,6 @@
-import create from "zustand";
-import { defaultJson } from "src/constants/data";
 import { ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
+import { defaultJson } from "src/constants/data";
+import create from "zustand";
 
 interface ConfigActions {
   setJson: (json: string) => void;
@@ -58,8 +58,7 @@ const useConfig = create<Config & ConfigActions>()((set, get) => ({
     const zoomPanPinch = get().zoomPanPinch;
     if (zoomPanPinch) zoomPanPinch.centerView(0.6);
   },
-  setConfig: (setting: keyof Config, value: unknown) =>
-    set({ [setting]: value }),
+  setConfig: (setting: keyof Config, value: unknown) => set({ [setting]: value }),
 }));
 
 export default useConfig;

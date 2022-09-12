@@ -1,17 +1,16 @@
-import { decompress } from "compress-json";
+import React from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import React from "react";
+import { decompress } from "compress-json";
 import { baseURL } from "src/constants/data";
 import useGraph from "src/hooks/store/useGraph";
 import { isValidJson } from "src/utils/isValidJson";
 import { parser } from "src/utils/jsonParser";
 import styled from "styled-components";
 
-const Graph = dynamic<any>(
-  () => import("src/components/Graph").then((c) => c.Graph),
-  { ssr: false }
-);
+const Graph = dynamic<any>(() => import("src/components/Graph").then(c => c.Graph), {
+  ssr: false,
+});
 
 const StyledAttribute = styled.a`
   position: fixed;
@@ -40,7 +39,7 @@ function inIframe() {
 
 const WidgetPage = () => {
   const { query, push } = useRouter();
-  const setGraphValue = useGraph((state) => state.setGraphValue);
+  const setGraphValue = useGraph(state => state.setGraphValue);
 
   React.useEffect(() => {
     if (query.json) {

@@ -1,14 +1,14 @@
 import React from "react";
-import { FiCopy, FiDownload } from "react-icons/fi";
 import { toBlob, toPng } from "html-to-image";
+import { TwitterPicker } from "react-color";
+import { TwitterPickerStylesProps } from "react-color/lib/components/twitter/Twitter";
+import toast from "react-hot-toast";
+import { FiCopy, FiDownload } from "react-icons/fi";
 import { Button } from "src/components/Button";
 import { Input } from "src/components/Input";
 import { Modal, ModalProps } from "src/components/Modal";
-import { TwitterPicker } from "react-color";
-import { TwitterPickerStylesProps } from "react-color/lib/components/twitter/Twitter";
-import styled from "styled-components";
-import toast from "react-hot-toast";
 import useConfig from "src/hooks/store/useConfig";
+import styled from "styled-components";
 
 const ColorPickerStyles: Partial<TwitterPickerStylesProps> = {
   card: {
@@ -92,11 +92,8 @@ const StyledColorIndicator = styled.div<{ color: string }>`
   border-color: rgba(0, 0, 0, 0.1);
 `;
 
-export const DownloadModal: React.FC<ModalProps> = ({
-  visible,
-  setVisible,
-}) => {
-  const setConfig = useConfig((state) => state.setConfig);
+export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
+  const setConfig = useConfig(state => state.setConfig);
   const [fileDetails, setFileDetails] = React.useState({
     filename: "jsoncrack.com",
     backgroundColor: "transparent",
@@ -108,9 +105,7 @@ export const DownloadModal: React.FC<ModalProps> = ({
       toast.loading("Copying to clipboard...", { id: "toastClipboard" });
       setConfig("performanceMode", false);
 
-      const imageElement = document.querySelector(
-        "svg[id*='ref']"
-      ) as HTMLElement;
+      const imageElement = document.querySelector("svg[id*='ref']") as HTMLElement;
 
       const blob = await toBlob(imageElement, {
         quality: fileDetails.quality,
@@ -140,9 +135,7 @@ export const DownloadModal: React.FC<ModalProps> = ({
       toast.loading("Downloading...", { id: "toastDownload" });
       setConfig("performanceMode", false);
 
-      const imageElement = document.querySelector(
-        "svg[id*='ref']"
-      ) as HTMLElement;
+      const imageElement = document.querySelector("svg[id*='ref']") as HTMLElement;
 
       const dataURI = await toPng(imageElement, {
         quality: fileDetails.quality,
@@ -159,10 +152,8 @@ export const DownloadModal: React.FC<ModalProps> = ({
     }
   };
 
-  const updateDetails = (
-    key: keyof typeof fileDetails,
-    value: string | number
-  ) => setFileDetails({ ...fileDetails, [key]: value });
+  const updateDetails = (key: keyof typeof fileDetails, value: string | number) =>
+    setFileDetails({ ...fileDetails, [key]: value });
 
   return (
     <Modal visible={visible} setVisible={setVisible}>
@@ -174,7 +165,7 @@ export const DownloadModal: React.FC<ModalProps> = ({
             <Input
               placeholder="File Name"
               value={fileDetails.filename}
-              onChange={(e) => updateDetails("filename", e.target.value)}
+              onChange={e => updateDetails("filename", e.target.value)}
             />
           </StyledColorWrapper>
         </StyledContainer>
@@ -185,7 +176,7 @@ export const DownloadModal: React.FC<ModalProps> = ({
               triangle="hide"
               colors={defaultColors}
               color={fileDetails.backgroundColor}
-              onChange={(color) => updateDetails("backgroundColor", color.hex)}
+              onChange={color => updateDetails("backgroundColor", color.hex)}
               styles={{
                 default: ColorPickerStyles,
               }}

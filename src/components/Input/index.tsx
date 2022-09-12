@@ -16,6 +16,4 @@ const StyledInput = styled.input`
 
 type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
 
-export const Input: React.FC<InputProps> = (props) => (
-  <StyledInput {...props} />
-);
+export const Input: React.FC<InputProps> = props => <StyledInput {...props} />;

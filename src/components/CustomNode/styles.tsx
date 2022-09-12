@@ -1,5 +1,5 @@
-import styled, { DefaultTheme } from "styled-components";
 import { LinkItUrl } from "react-linkify-it";
+import styled, { DefaultTheme } from "styled-components";
 
 function getTypeColor(value: string, theme: DefaultTheme) {
   if (!Number.isNaN(+value)) return "#FD0079";
@@ -34,7 +34,7 @@ export const StyledForeignObject = styled.foreignObject<{
   }
 
   .highlight {
-    border: 2px dashed #FF2970;
+    border: 2px dashed #ff2970;
     background: rgba(255, 214, 0, 0.3);
   }
 
@@ -73,13 +73,13 @@ export const StyledKey = styled.span<{
 `;
 
 export const StyledRow = styled.span.attrs<{
-  'data-key': string;
+  "data-key": string;
   theme: DefaultTheme;
-}>((props) => ({
+}>(props => ({
   style: {
     color: getTypeColor(props["data-key"], props.theme),
   },
-}))<{ 'data-key': string; theme: DefaultTheme }>`
+}))<{ "data-key": string; theme: DefaultTheme }>`
   display: block;
   height: 18px;
   overflow: hidden;

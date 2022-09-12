@@ -41,9 +41,9 @@ export const GoalsModal = ({ visible, setVisible }) => {
       <Modal.Header>Help JSON Crack&apos;s Goals</Modal.Header>
       <Modal.Content>
         <StyledTitle>OUR GOAL</StyledTitle>
-        <b>JSON Crack&apos;s Goal</b> is to keep the service completely free and
-        open source for everyone! For the contiunity of our service and keep the
-        new updates coming we need your support to make that possible ❤️
+        <b>JSON Crack&apos;s Goal</b> is to keep the service completely free and open
+        source for everyone! For the contiunity of our service and keep the new
+        updates coming we need your support to make that possible ❤️
         <ButtonsWrapper>
           <Button
             href="https://github.com/sponsors/AykutSarac"

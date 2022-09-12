@@ -25,11 +25,7 @@ const StyledTextarea = styled.textarea`
   border: none;
 `;
 
-export const NodeModal = ({
-  selectedNode,
-  visible,
-  closeModal,
-}: NodeModalProps) => {
+export const NodeModal = ({ selectedNode, visible, closeModal }: NodeModalProps) => {
   const nodeData = Array.isArray(selectedNode)
     ? Object.fromEntries(selectedNode)
     : selectedNode;

@@ -2,7 +2,6 @@ import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { TwitterTweetEmbed } from "react-twitter-embed";
 import { FaGithub, FaHeart, FaLinkedin, FaTwitter } from "react-icons/fa";
 import {
   HiCursorClick,
@@ -10,8 +9,9 @@ import {
   HiOutlineDownload,
   HiOutlineSearchCircle,
 } from "react-icons/hi";
-import { Producthunt } from "src/components/Producthunt";
+import { TwitterTweetEmbed } from "react-twitter-embed";
 import { CarbonAds } from "src/components/CarbonAds";
+import { Producthunt } from "src/components/Producthunt";
 import { Sponsors } from "src/components/Sponsors";
 import { GoalsModal } from "src/containers/Modals/GoalsModal";
 import pkg from "../../../package.json";
@@ -46,8 +46,8 @@ const HeroSection = () => {
       </Styles.StyledTitle>
       <Styles.StyledSubTitle>
         Seamlessly visualize your JSON data{" "}
-        <Styles.StyledHighlightedText>instantly</Styles.StyledHighlightedText>{" "}
-        into graphs.
+        <Styles.StyledHighlightedText>instantly</Styles.StyledHighlightedText> into
+        graphs.
       </Styles.StyledSubTitle>
       <Styles.StyledMinorTitle>Paste - Import - Fetch!</Styles.StyledMinorTitle>
       <Styles.StyledButton rel="prefetch" href="/editor" target="_blank" link>
@@ -84,9 +84,9 @@ const FeaturesSection = () => (
       </Styles.StyledCardIcon>
       <Styles.StyledCardTitle>EASY-TO-USE</Styles.StyledCardTitle>
       <Styles.StyledCardDescription>
-        Don&apos;t even bother to update your schema to view your JSON into
-        graphs; directly paste, import or fetch! JSON Crack helps you to
-        visualize without any additional values and save your time.
+        Don&apos;t even bother to update your schema to view your JSON into graphs;
+        directly paste, import or fetch! JSON Crack helps you to visualize without
+        any additional values and save your time.
       </Styles.StyledCardDescription>
     </Styles.StyledSectionCard>
 
@@ -97,9 +97,8 @@ const FeaturesSection = () => (
       <Styles.StyledCardTitle>SEARCH</Styles.StyledCardTitle>
       <Styles.StyledCardDescription>
         Have a huge file of values, keys or arrays? Worry no more, type in the
-        keyword you are looking for into search input and it will take you to
-        each node with matching result highlighting the line to understand
-        better!
+        keyword you are looking for into search input and it will take you to each
+        node with matching result highlighting the line to understand better!
       </Styles.StyledCardDescription>
     </Styles.StyledSectionCard>
 
@@ -109,8 +108,8 @@ const FeaturesSection = () => (
       </Styles.StyledCardIcon>
       <Styles.StyledCardTitle>DOWNLOAD</Styles.StyledCardTitle>
       <Styles.StyledCardDescription>
-        Download the graph to your local machine and use it wherever you want,
-        to your blogs, website or make it a poster and paste to the wall. Who
+        Download the graph to your local machine and use it wherever you want, to
+        your blogs, website or make it a poster and paste to the wall. Who
         wouldn&apos;t want to see a JSON Crack graph onto their wall, eh?
       </Styles.StyledCardDescription>
     </Styles.StyledSectionCard>
@@ -121,10 +120,9 @@ const FeaturesSection = () => (
       </Styles.StyledCardIcon>
       <Styles.StyledCardTitle>LIVE</Styles.StyledCardTitle>
       <Styles.StyledCardDescription>
-        With Microsoft&apos;s Monaco Editor which is also used by VS Code,
-        easily edit your JSON and directly view through the graphs. Also
-        there&apos;s a JSON validator above of it to make sure there is no type
-        error.
+        With Microsoft&apos;s Monaco Editor which is also used by VS Code, easily
+        edit your JSON and directly view through the graphs. Also there&apos;s a JSON
+        validator above of it to make sure there is no type error.
       </Styles.StyledCardDescription>
     </Styles.StyledSectionCard>
   </Styles.StyledFeaturesSection>
@@ -143,8 +141,8 @@ const GitHubSection = () => (
       <Styles.StyledSubTitle>Open Source Community</Styles.StyledSubTitle>
       <Styles.StyledMinorTitle>
         Join the Open Source Community by suggesting new ideas, support by
-        contributing; implementing new features, fixing bugs and doing changes
-        minor to major!
+        contributing; implementing new features, fixing bugs and doing changes minor
+        to major!
       </Styles.StyledMinorTitle>
       <Styles.StyledButton
         href="https://github.com/AykutSarac/jsoncrack.com"
@@ -178,9 +176,7 @@ const SupportSection = () => (
       <Styles.StyledSubTitle>
         Support JSON Crack at
         <br />
-        <Styles.StyledHighlightedText>
-          Product Hunt
-        </Styles.StyledHighlightedText>
+        <Styles.StyledHighlightedText>Product Hunt</Styles.StyledHighlightedText>
       </Styles.StyledSubTitle>
       <Producthunt />
     </Styles.StyledProducthunt>
@@ -195,8 +191,7 @@ const SponsorSection = () => (
   <Styles.StyledSponsorSection id="sponsor">
     <Styles.StyledSubTitle>Sponsors</Styles.StyledSubTitle>
     <Styles.StyledMinorTitle>
-      Your supports make JSON Crack possible to continue and accessible for
-      everyone!
+      Your supports make JSON Crack possible to continue and accessible for everyone!
     </Styles.StyledMinorTitle>
     <Styles.StyledButton
       href="https://github.com/sponsors/AykutSarac"

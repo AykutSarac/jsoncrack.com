@@ -114,7 +114,7 @@ export const StyledMinorTitle = styled.p`
 export const StyledButton = styled(Button)`
   background: ${({ status }) => !status && "#a13cc2"};
   padding: 12px 24px;
-  
+
   div {
     font-family: "Roboto", sans-serif;
     font-weight: 700;

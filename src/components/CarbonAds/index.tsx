@@ -1,5 +1,5 @@
-import Script from "next/script";
 import React from "react";
+import Script from "next/script";
 import { IoMdClose } from "react-icons/io";
 import styled from "styled-components";
 
@@ -52,9 +52,7 @@ const StyledWrapper = styled.span<{ editor?: boolean }>`
   }
 `;
 
-export const CarbonAds: React.FC<{ editor?: boolean }> = ({
-  editor = false,
-}) => {
+export const CarbonAds: React.FC<{ editor?: boolean }> = ({ editor = false }) => {
   const [isHidden, setIsHidden] = React.useState(false);
 
   if (isHidden) return null;

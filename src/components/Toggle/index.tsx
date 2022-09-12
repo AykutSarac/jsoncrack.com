@@ -1,6 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 import { IoIosCheckmarkCircle, IoMdCloseCircle } from "react-icons/io";
+import styled from "styled-components";
 
 interface ToggleProps {
   checked?: boolean;
@@ -39,11 +39,7 @@ const StyledToggle = styled.div<{ active: boolean }>`
   }
 `;
 
-const Toggle: React.FC<ToggleProps> = ({
-  children,
-  checked = false,
-  onChange,
-}) => {
+const Toggle: React.FC<ToggleProps> = ({ children, checked = false, onChange }) => {
   const [isChecked, setIsChecked] = React.useState(checked);
 
   const handleClick = () => {

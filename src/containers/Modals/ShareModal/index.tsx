@@ -1,13 +1,13 @@
 import React from "react";
-import toast from "react-hot-toast";
-import styled from "styled-components";
-import { Modal, ModalProps } from "src/components/Modal";
-import { Button } from "src/components/Button";
-import { BiErrorAlt } from "react-icons/bi";
 import { compress } from "compress-json";
-import useConfig from "src/hooks/store/useConfig";
+import toast from "react-hot-toast";
+import { BiErrorAlt } from "react-icons/bi";
+import { Button } from "src/components/Button";
 import { Input } from "src/components/Input";
+import { Modal, ModalProps } from "src/components/Modal";
 import { baseURL } from "src/constants/data";
+import useConfig from "src/hooks/store/useConfig";
+import styled from "styled-components";
 
 const StyledWarning = styled.p``;
 
@@ -44,7 +44,7 @@ const StyledContainer = styled.div`
 `;
 
 export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
-  const json = useConfig((state) => state.json);
+  const json = useConfig(state => state.json);
   const [encodedJson, setEncodedJson] = React.useState("");
 
   const embedText = `<iframe src="${baseURL}/widget?json=${encodedJson}" width="512" height="384" style="border: 2px solid #b9bbbe; border-radius: 6px;"></iframe>`;
@@ -54,7 +54,7 @@ export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
     if (visible) {
       const jsonEncode = compress(JSON.parse(json));
       const jsonString = JSON.stringify(jsonEncode);
-  
+
       setEncodedJson(encodeURIComponent(jsonString));
     }
   }, [json, visible]);
@@ -73,8 +73,8 @@ export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
           <StyledErrorWrapper>
             <BiErrorAlt size={60} />
             <StyledWarning>
-              Link size exceeds 5000 characters, unable to generate link for
-              file of this size!
+              Link size exceeds 5000 characters, unable to generate link for file of
+              this size!
             </StyledWarning>
           </StyledErrorWrapper>
         ) : (
@@ -83,10 +83,7 @@ export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
               Share Link
               <StyledFlex>
                 <Input value={shareURL} type="url" readOnly />
-                <Button
-                  status="SECONDARY"
-                  onClick={() => handleShare(shareURL)}
-                >
+                <Button status="SECONDARY" onClick={() => handleShare(shareURL)}>
                   Copy
                 </Button>
               </StyledFlex>
@@ -95,10 +92,7 @@ export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
               Embed into your website
               <StyledFlex>
                 <Input value={embedText} type="url" readOnly />
-                <Button
-                  status="SECONDARY"
-                  onClick={() => handleShare(embedText)}
-                >
+                <Button status="SECONDARY" onClick={() => handleShare(embedText)}>
                   Copy
                 </Button>
               </StyledFlex>

@@ -1,5 +1,5 @@
 import React from "react";
-import { MdCompareArrows } from "react-icons/md";
+import { MdLink, MdLinkOff } from "react-icons/md";
 import { useInViewport } from "react-in-viewport";
 import { CustomNodeProps } from "src/components/CustomNode";
 import useConfig from "src/hooks/store/useConfig";
@@ -52,18 +52,17 @@ const TextNode: React.FC<TextNodeProps> = ({
 }) => {
   const ref = React.useRef(null);
   // const { inViewport } = useInViewport(ref);
-  const performanceMode = useConfig((state) => state.performanceMode);
+  const performanceMode = useConfig(state => state.performanceMode);
 
-  const hideCollapse = useStored((state) => state.hideCollapse);
-  const expandNodes = useGraph((state) => state.expandNodes);
-  const collapseNodes = useGraph((state) => state.collapseNodes);
-  const [isExpanded, setIsExpanded] = React.useState(true);
+  const hideCollapse = useStored(state => state.hideCollapse);
+  const expandNodes = useGraph(state => state.expandNodes);
+  const collapseNodes = useGraph(state => state.collapseNodes);
+  const isExpanded = useGraph(state => state.collapsedParents.includes(node.id));
 
   const handleExpand = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    setIsExpanded(!isExpanded);
 
-    if (isExpanded) collapseNodes(node.id);
+    if (!isExpanded) collapseNodes(node.id);
     else expandNodes(node.id);
   };
 
@@ -94,7 +93,7 @@ const TextNode: React.FC<TextNodeProps> = ({
 
         {inViewport && isParent && hasCollapse && !hideCollapse && (
           <StyledExpand onClick={handleExpand}>
-            <MdCompareArrows size={18} />
+            {isExpanded ? <MdLinkOff size={18} /> : <MdLink size={18} />}
           </StyledExpand>
         )}
       </StyledTextNodeWrapper>

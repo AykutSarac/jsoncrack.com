@@ -8,7 +8,7 @@ async function getSponsors() {
     const data = await res.json();
 
     if (data.sponsors) {
-      return data.sponsors.map((user) => ({
+      return data.sponsors.map(user => ({
         handle: user.handle,
         avatar: user.avatar,
         profile: user.profile,
@@ -83,7 +83,7 @@ export const Sponsors = () => {
 
   return (
     <StyledSponsorsWrapper>
-      {sponsors.users.map((user) => (
+      {sponsors.users.map(user => (
         <StyledSponsor handle={user.handle} key={user.handle}>
           <a href={user.profile} target="_blank" rel="noreferrer">
             <img

@@ -1,12 +1,11 @@
 import React from "react";
-import styled from "styled-components";
 import toast from "react-hot-toast";
-
-import { Modal, ModalProps } from "src/components/Modal";
+import { AiOutlineUpload } from "react-icons/ai";
 import { Button } from "src/components/Button";
 import { Input } from "src/components/Input";
-import { AiOutlineUpload } from "react-icons/ai";
+import { Modal, ModalProps } from "src/components/Modal";
 import useConfig from "src/hooks/store/useConfig";
+import styled from "styled-components";
 
 const StyledModalContent = styled(Modal.Content)`
   display: flex;
@@ -43,7 +42,7 @@ const StyledUploadMessage = styled.h3`
 `;
 
 export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
-  const setJson = useConfig((state) => state.setJson);
+  const setJson = useConfig(state => state.setJson);
   const [url, setURL] = React.useState("");
   const [jsonFile, setJsonFile] = React.useState<File | null>(null);
 
@@ -57,8 +56,8 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
 
       toast.loading("Loading...", { id: "toastFetch" });
       return fetch(url)
-        .then((res) => res.json())
-        .then((json) => {
+        .then(res => res.json())
+        .then(json => {
           setJson(JSON.stringify(json));
           setVisible(false);
         })
@@ -83,7 +82,7 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
       <StyledModalContent>
         <Input
           value={url}
-          onChange={(e) => setURL(e.target.value)}
+          onChange={e => setURL(e.target.value)}
           type="url"
           placeholder="URL of JSON to fetch"
         />

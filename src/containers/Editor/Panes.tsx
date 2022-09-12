@@ -1,10 +1,10 @@
-import { Allotment } from "allotment";
 import React from "react";
-import { JsonEditor } from "src/containers/Editor/JsonEditor";
 import dynamic from "next/dynamic";
+import { Allotment } from "allotment";
+import "allotment/dist/style.css";
+import { JsonEditor } from "src/containers/Editor/JsonEditor";
 import useConfig from "src/hooks/store/useConfig";
 import styled from "styled-components";
-import "allotment/dist/style.css";
 
 export const StyledEditor = styled(Allotment)`
   position: relative !important;
@@ -17,8 +17,8 @@ const LiveEditor = dynamic(() => import("src/containers/Editor/LiveEditor"), {
 });
 
 const Panes: React.FC = () => {
-  const hideEditor = useConfig((state) => state.hideEditor);
-  const setConfig = useConfig((state) => state.setConfig);
+  const hideEditor = useConfig(state => state.hideEditor);
+  const setConfig = useConfig(state => state.setConfig);
   const isMobile = window.innerWidth <= 768;
 
   React.useEffect(() => {
@@ -35,10 +35,7 @@ const Panes: React.FC = () => {
       >
         <JsonEditor />
       </Allotment.Pane>
-      <Allotment.Pane
-        minSize={0}
-        maxSize={isMobile && !hideEditor ? 0 : Infinity}
-      >
+      <Allotment.Pane minSize={0} maxSize={isMobile && !hideEditor ? 0 : Infinity}>
         <LiveEditor />
       </Allotment.Pane>
     </StyledEditor>

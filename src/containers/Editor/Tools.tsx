@@ -1,17 +1,13 @@
 import React from "react";
-import {
-  AiOutlineFullscreen,
-  AiOutlineMinus,
-  AiOutlinePlus,
-} from "react-icons/ai";
+import { AiOutlineFullscreen, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
 import { MdCenterFocusWeak } from "react-icons/md";
-import { SearchInput } from "src/components/SearchInput";
-import styled from "styled-components";
-import useConfig from "src/hooks/store/useConfig";
-import { DownloadModal } from "../Modals/DownloadModal";
 import { TbSettings } from "react-icons/tb";
+import { SearchInput } from "src/components/SearchInput";
 import { SettingsModal } from "src/containers/Modals/SettingsModal";
+import useConfig from "src/hooks/store/useConfig";
+import styled from "styled-components";
+import { DownloadModal } from "../Modals/DownloadModal";
 
 export const StyledTools = styled.div`
   position: relative;
@@ -55,12 +51,12 @@ export const Tools: React.FC = () => {
   const [settingsVisible, setSettingsVisible] = React.useState(false);
   const [isDownloadVisible, setDownloadVisible] = React.useState(false);
 
-  const hideEditor = useConfig((state) => state.hideEditor);
-  const setConfig = useConfig((state) => state.setConfig);
+  const hideEditor = useConfig(state => state.hideEditor);
+  const setConfig = useConfig(state => state.setConfig);
 
-  const zoomIn = useConfig((state) => state.zoomIn);
-  const zoomOut = useConfig((state) => state.zoomOut);
-  const centerView = useConfig((state) => state.centerView);
+  const zoomIn = useConfig(state => state.zoomIn);
+  const zoomOut = useConfig(state => state.zoomOut);
+  const centerView = useConfig(state => state.centerView);
   const toggleEditor = () => setConfig("hideEditor", !hideEditor);
 
   return (
@@ -92,14 +88,8 @@ export const Tools: React.FC = () => {
           <AiOutlinePlus />
         </StyledToolElement>
       </StyledTools>
-      <DownloadModal
-        visible={isDownloadVisible}
-        setVisible={setDownloadVisible}
-      />
-      <SettingsModal
-        visible={settingsVisible}
-        setVisible={setSettingsVisible}
-      />
+      <DownloadModal visible={isDownloadVisible} setVisible={setDownloadVisible} />
+      <SettingsModal visible={settingsVisible} setVisible={setSettingsVisible} />
     </>
   );
 };

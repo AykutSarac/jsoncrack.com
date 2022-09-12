@@ -1,11 +1,11 @@
 import React from "react";
-import styled from "styled-components";
 import Editor, { loader } from "@monaco-editor/react";
 import { Loading } from "src/components/Loading";
-import { parser } from "src/utils/jsonParser";
 import useConfig from "src/hooks/store/useConfig";
-import useStored from "src/hooks/store/useStored";
 import useGraph from "src/hooks/store/useGraph";
+import useStored from "src/hooks/store/useStored";
+import { parser } from "src/utils/jsonParser";
+import styled from "styled-components";
 
 loader.config({
   paths: {
@@ -32,15 +32,13 @@ export const MonacoEditor = ({
 }: {
   setHasError: (value: boolean) => void;
 }) => {
-  const json = useConfig((state) => state.json);
-  const expand = useConfig((state) => state.expand);
-  const setJson = useConfig((state) => state.setJson);
-  const setGraphValue = useGraph((state) => state.setGraphValue);
+  const json = useConfig(state => state.json);
+  const expand = useConfig(state => state.expand);
+  const setJson = useConfig(state => state.setJson);
+  const setGraphValue = useGraph(state => state.setGraphValue);
   const [value, setValue] = React.useState<string | undefined>("");
 
-  const lightmode = useStored((state) =>
-    state.lightmode ? "light" : "vs-dark"
-  );
+  const lightmode = useStored(state => (state.lightmode ? "light" : "vs-dark"));
 
   React.useEffect(() => {
     const { nodes, edges } = parser(json, expand);

@@ -29,7 +29,7 @@ export interface Config {
 
 const useStored = create(
   persist<Config>(
-    (set) => ({
+    set => ({
       lightmode: false,
       hideCollapse: false,
       sponsors: {
@@ -40,7 +40,7 @@ const useStored = create(
         set({
           lightmode: value,
         }),
-      setSponsors: (users) =>
+      setSponsors: users =>
         set({
           sponsors: {
             users,

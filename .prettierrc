@@ -2,8 +2,18 @@
   "trailingComma": "es5",
   "singleQuote": false,
   "semi": true,
-  "printWidth": 80,
-  "importOrder": ["^[~]", "^[./]"],
-  "importOrderSortSpecifiers": true,
+  "printWidth": 85,
+  "arrowParens": "avoid",
+  "importOrder": [
+    "^(react/(.*)$)|^(react$)",
+    "^(next/(.*)$)|^(next$)",
+    "<THIRD_PARTY_MODULES>",
+    "next-seo.config",
+    "^components/(.*)$",
+    "^utils/(.*)$",
+    "^assets/(.*)$",
+    "^@fontsource/(.*)$",
+    "^[./]"
+  ],
   "importOrderParserPlugins": ["typescript", "jsx", "decorators-legacy"]
 }
