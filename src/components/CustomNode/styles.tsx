@@ -31,6 +31,7 @@ export const StyledForeignObject = styled.foreignObject<{
   &.searched {
     border: 2px solid ${({ theme }) => theme.TEXT_POSITIVE};
     border-radius: 2px;
+    box-sizing: border-box;
   }
 
   .highlight {
@@ -69,7 +70,8 @@ export const StyledKey = styled.span<{
   font-size: ${({ parent }) => parent && "14px"};
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: ${({ parent }) => parent && "10px"};
+  padding: ${({ parent }) => parent && "7px"};
+  height: 18px;
 `;
 
 export const StyledRow = styled.span.attrs<{
