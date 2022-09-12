@@ -35,9 +35,12 @@ const StyledTextNodeWrapper = styled.div<{ hasCollapse: boolean }>`
   width: 100%;
 `;
 
-const TextNode: React.FC<
-  CustomNodeProps<string> & { node: NodeData; hasCollapse: boolean }
-> = ({
+type TextNodeProps = CustomNodeProps<string> & {
+  node: NodeData;
+  hasCollapse: boolean;
+};
+
+const TextNode: React.FC<TextNodeProps> = ({
   node,
   width,
   height,
@@ -99,4 +102,8 @@ const TextNode: React.FC<
   );
 };
 
-export default TextNode;
+function propsAreEqual(prev: TextNodeProps, next: TextNodeProps) {
+  return prev.value === next.value;
+}
+
+export default React.memo(TextNode, propsAreEqual);

@@ -1,5 +1,5 @@
 import React from "react";
-import { Label, Node, NodeProps } from "reaflow";
+import { Node, NodeProps } from "reaflow";
 import ObjectNode from "./ObjectNode";
 import TextNode from "./TextNode";
 
@@ -12,17 +12,11 @@ export interface CustomNodeProps<T> {
   y: number;
 }
 
-const baseLabelStyle = {
-  fill: "transparent",
-  stroke: "transparent",
-  strokeWidth: 0,
-};
-
 export const CustomNode = (nodeProps: NodeProps) => {
   const { properties } = nodeProps;
 
   return (
-    <Node {...nodeProps} label={<Label style={baseLabelStyle} />}>
+    <Node {...nodeProps} label={<React.Fragment />}>
       {({ width, height, x, y, node }) => {
         if (Array.isArray(properties.text)) {
           return (

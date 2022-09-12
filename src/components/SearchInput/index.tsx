@@ -10,7 +10,7 @@ const StyledInputWrapper = styled.div`
   justify-content: space-between;
   background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
   border-radius: 4px;
-  height: 28px;
+  height: 25px;
 `;
 
 const StyledForm = styled.form`

@@ -2,10 +2,11 @@ import { decompress } from "compress-json";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import React from "react";
-import { defaultJson } from "src/constants/data";
+import { baseURL } from "src/constants/data";
+import useGraph from "src/hooks/store/useGraph";
 import { isValidJson } from "src/utils/isValidJson";
+import { parser } from "src/utils/jsonParser";
 import styled from "styled-components";
-import packageJson from "package.json";
 
 const Graph = dynamic<any>(
   () => import("src/components/Graph").then((c) => c.Graph),
@@ -39,31 +40,30 @@ function inIframe() {
 
 const WidgetPage = () => {
   const { query, push } = useRouter();
-  const [json, setJson] = React.useState("");
+  const setGraphValue = useGraph((state) => state.setGraphValue);
 
   React.useEffect(() => {
-    if (!query.json) {
-      setJson(defaultJson);
-    } else {
+    if (query.json) {
       const jsonURI = decodeURIComponent(query.json as string);
       const isJsonValid = isValidJson(jsonURI);
 
       if (isJsonValid) {
         const jsonDecoded = decompress(JSON.parse(isJsonValid));
-        const jsonString = JSON.stringify(jsonDecoded);
+        const { nodes, edges } = parser(JSON.stringify(jsonDecoded));
 
-        setJson(jsonString);
+        setGraphValue("nodes", nodes);
+        setGraphValue("edges", edges);
       }
     }
 
     if (!inIframe()) push("/");
-  }, [query?.json, push]);
+  }, [push, query.json, setGraphValue]);
 
   return (
     <>
-      <Graph json={json} isWidget />
+      <Graph isWidget />
       <StyledAttribute
-        href={`${packageJson.homepage}/editor?json=${query.json}`}
+        href={`${baseURL}/editor?json=${query.json}`}
         target="_blank"
         rel="noreferrer"
       >

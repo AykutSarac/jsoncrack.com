@@ -114,7 +114,7 @@ export const StyledMinorTitle = styled.p`
 export const StyledButton = styled(Button)`
   background: ${({ status }) => !status && "#a13cc2"};
   padding: 12px 24px;
-
+  
   div {
     font-family: "Roboto", sans-serif;
     font-weight: 700;
@@ -145,7 +145,7 @@ export const StyledFeaturesSection = styled.section`
   max-width: 85%;
   margin: 0 auto;
   gap: 2rem;
-  padding: 60px 3%;
+  padding: 50px 3%;
 
   @media only screen and (max-width: 768px) {
     flex-direction: column;
@@ -194,7 +194,7 @@ export const StyledSection = styled.section<{ reverse?: boolean }>`
   margin: 0 auto;
   gap: 4rem;
   line-height: 1.5;
-  padding: 60px 3%;
+  padding: 50px 3%;
 
   & > div {
     width: 100%;
@@ -221,14 +221,11 @@ export const StyledSectionArea = styled.div`
 
   @media only screen and (max-width: 768px) {
     width: 100%;
+    align-items: center;
 
     h2,
     p {
       text-align: center;
-    }
-
-    button {
-      align-self: center;
     }
   }
 `;
@@ -242,7 +239,7 @@ export const StyledSponsorSection = styled.section`
   margin: 0 auto;
   gap: 2rem;
   line-height: 1.5;
-  padding: 60px 3%;
+  padding: 50px 3%;
 
   @media only screen and (max-width: 768px) {
     max-width: 80%;
@@ -258,7 +255,7 @@ export const StyledEmbedSection = styled.section`
   margin: 0 auto;
   gap: 2rem;
   line-height: 1.5;
-  padding: 60px 3%;
+  padding: 50px 3%;
 
   @media only screen and (max-width: 768px) {
     max-width: 80%;
@@ -338,7 +335,7 @@ export const StyledPaidSection = styled.section`
   max-width: 85%;
   margin: 0 auto;
   gap: 2rem;
-  padding: 60px 3%;
+  padding: 50px 3%;
 
   @media only screen and (max-width: 768px) {
     flex-direction: column;

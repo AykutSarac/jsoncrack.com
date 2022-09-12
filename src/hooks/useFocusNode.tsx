@@ -23,7 +23,7 @@ export const useFocusNode = () => {
 
     const debouncer = setTimeout(() => {
       setContent((val) => ({ ...val, debounced: content.value }));
-    }, 1500);
+    }, 800);
 
     return () => clearTimeout(debouncer);
   }, [content.value, setConfig]);

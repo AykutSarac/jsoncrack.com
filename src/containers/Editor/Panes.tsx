@@ -30,7 +30,7 @@ const Panes: React.FC = () => {
       <Allotment.Pane
         preferredSize={isMobile ? "100%" : 400}
         minSize={hideEditor ? 0 : 300}
-        maxSize={isMobile ? Infinity : 500}
+        maxSize={isMobile ? Infinity : 800}
         visible={!hideEditor}
       >
         <JsonEditor />
