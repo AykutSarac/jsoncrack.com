@@ -28,6 +28,7 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
   ...initialStates,
   setGraphValue: (key, value) =>
     set({
+      collapsedParents: [],
       collapsedNodes: [],
       collapsedEdges: [],
       [key]: value,
