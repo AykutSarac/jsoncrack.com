@@ -1,17 +1,16 @@
 import React from "react";
 import type { AppProps } from "next/app";
-import { Toaster } from "react-hot-toast";
-import { ThemeProvider } from "styled-components";
+import { useRouter } from "next/router";
 import { init } from "@sentry/nextjs";
-
+import { decompress } from "compress-json";
+import { Toaster } from "react-hot-toast";
+import { GoogleAnalytics } from "src/components/GoogleAnalytics";
 import GlobalStyle from "src/constants/globalStyle";
 import { darkTheme, lightTheme } from "src/constants/theme";
-import { GoogleAnalytics } from "src/components/GoogleAnalytics";
 import useConfig from "src/hooks/store/useConfig";
-import { decompress } from "compress-json";
-import { useRouter } from "next/router";
-import { isValidJson } from "src/utils/isValidJson";
 import useStored from "src/hooks/store/useStored";
+import { isValidJson } from "src/utils/isValidJson";
+import { ThemeProvider } from "styled-components";
 
 if (process.env.NODE_ENV !== "development") {
   init({
@@ -22,14 +21,13 @@ if (process.env.NODE_ENV !== "development") {
 
 function JsonCrack({ Component, pageProps }: AppProps) {
   const { query } = useRouter();
-  const lightmode = useStored((state) => state.lightmode);
-  const setJson = useConfig((state) => state.setJson);
+  const lightmode = useStored(state => state.lightmode);
+  const setJson = useConfig(state => state.setJson);
   const [isRendered, setRendered] = React.useState(false);
 
   React.useEffect(() => {
     const isJsonValid =
-      typeof query.json === "string" &&
-      isValidJson(decodeURIComponent(query.json));
+      typeof query.json === "string" && isValidJson(decodeURIComponent(query.json));
 
     if (isJsonValid) {
       const jsonDecoded = decompress(JSON.parse(isJsonValid));
@@ -40,19 +38,6 @@ function JsonCrack({ Component, pageProps }: AppProps) {
   }, [query.json, setJson]);
 
   React.useEffect(() => {
-    // if (!window.matchMedia("(display-mode: standalone)").matches) {
-    //   navigator.serviceWorker
-    //     ?.getRegistrations()
-    //     .then(function (registrations) {
-    //       for (let registration of registrations) {
-    //         registration.unregister();
-    //       }
-    //     })
-    //     .catch(function (err) {
-    //       console.error("Service Worker registration failed: ", err);
-    //     });
-    // }
-
     setRendered(true);
   }, []);
 

@@ -1,9 +1,6 @@
 import React from "react";
+import { MdReportGmailerrorred, MdOutlineCheckCircleOutline } from "react-icons/md";
 import styled from "styled-components";
-import {
-  MdReportGmailerrorred,
-  MdOutlineCheckCircleOutline,
-} from "react-icons/md";
 
 const StyledErrorWrapper = styled.div`
   z-index: 1;
@@ -18,8 +15,7 @@ const StyledErrorExpand = styled.div<{ error: boolean }>`
   border-radius: 0;
   justify-content: space-between;
   align-items: center;
-  color: ${({ theme, error }) =>
-    error ? theme.TEXT_DANGER : theme.TEXT_POSITIVE};
+  color: ${({ theme, error }) => (error ? theme.TEXT_DANGER : theme.TEXT_POSITIVE)};
   pointer-events: ${({ error }) => !error && "none"};
   background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
   box-shadow: 0 1px 0px ${({ theme }) => theme.BACKGROUND_TERTIARY};

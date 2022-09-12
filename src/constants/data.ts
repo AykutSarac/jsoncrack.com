@@ -18,11 +18,7 @@ const sampleJson = Object.freeze({
       name: "Madame Uppercut",
       age: 39,
       secretIdentity: "Jane Wilson",
-      powers: [
-        "Million tonne punch",
-        "Damage resistance",
-        "Superhuman reflexes",
-      ],
+      powers: ["Million tonne punch", "Damage resistance", "Superhuman reflexes"],
     },
     {
       name: "Eternal Flame",

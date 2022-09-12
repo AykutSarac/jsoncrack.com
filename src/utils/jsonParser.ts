@@ -11,7 +11,7 @@ const calculateSize = (
   else value = text.map(([k, v]) => `${k}: ${v}`).join("\n");
 
   const lineCount = value.split("\n");
-  const lineLengths = lineCount.map((line) => line.length);
+  const lineLengths = lineCount.map(line => line.length);
   const longestLine = lineLengths.sort((a, b) => b - a)[0];
 
   const getWidth = () => {
@@ -44,11 +44,7 @@ const filterValues = ([k, v]) => {
   return true;
 };
 
-function generateChildren(
-  object: Object,
-  isExpanded = true,
-  nextId: () => string
-) {
+function generateChildren(object: Object, isExpanded = true, nextId: () => string) {
   if (!(object instanceof Object)) object = [object];
 
   return Object.entries(object)
@@ -86,13 +82,13 @@ const extract = (
   os: string[] | object[] | null,
   isExpanded = true,
   nextId = (
-    (id) => () =>
+    id => () =>
       String(++id)
   )(0)
 ) => {
   if (!os) return [];
 
-  return [os].flat().map((o) => {
+  return [os].flat().map(o => {
     const text = generateNodeData(o);
     const { width, height } = calculateSize(text, false, isExpanded);
 
@@ -134,7 +130,7 @@ export const parser = (jsonStr: string, isExpanded = true) => {
     const mappedElements = extract(json, isExpanded);
     const res = [...flatten(mappedElements), ...relationships(mappedElements)];
 
-    res.forEach((data) => {
+    res.forEach(data => {
       if (isNode(data)) {
         nodes.push(data);
       } else {

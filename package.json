@@ -10,6 +10,7 @@
     "test": "jest",
     "start": "next start",
     "lint": "next lint",
+    "lint:fix": "prettier --write \"./**/*.{ts,tsx,json}\"",
     "deploy": "gh-pages -d out -t true"
   },
   "dependencies": {
@@ -38,6 +39,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^14.4.3",
+    "@trivago/prettier-plugin-sort-imports": "^3.3.0",
     "@types/enzyme": "^3.10.12",
     "@types/jest": "^29.0.0",
     "@types/node": "^18.7.14",

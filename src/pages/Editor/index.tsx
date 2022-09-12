@@ -1,8 +1,8 @@
 import React from "react";
 import Head from "next/head";
-import styled from "styled-components";
-import Panes from "src/containers/Editor/Panes";
 import { Sidebar } from "src/components/Sidebar";
+import Panes from "src/containers/Editor/Panes";
+import styled from "styled-components";
 
 export const StyledPageWrapper = styled.div`
   display: flex;

@@ -38,8 +38,8 @@ const StyledTooltip = styled.div<{ visible: boolean }>`
     transform: translate(-90%, 50%);
     border-width: 8px;
     border-style: solid;
-    border-color: transparent ${({ theme }) => theme.BACKGROUND_PRIMARY}
-      transparent transparent;
+    border-color: transparent ${({ theme }) => theme.BACKGROUND_PRIMARY} transparent
+      transparent;
   }
 
   @media only screen and (max-width: 768px) {

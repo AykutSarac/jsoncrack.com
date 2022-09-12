@@ -6,11 +6,7 @@ interface SeoTagsProps {
   image: string;
 }
 
-export const SeoTags: React.FC<SeoTagsProps> = ({
-  description,
-  title,
-  image,
-}) => (
+export const SeoTags: React.FC<SeoTagsProps> = ({ description, title, image }) => (
   <>
     <meta name="description" content={description} />
 

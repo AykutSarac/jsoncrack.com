@@ -20,10 +20,10 @@ export const SettingsModal: React.FC<{
   visible: boolean;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }> = ({ visible, setVisible }) => {
-  const lightmode = useStored((state) => state.lightmode);
-  const setLightTheme = useStored((state) => state.setLightTheme);
+  const lightmode = useStored(state => state.lightmode);
+  const setLightTheme = useStored(state => state.setLightTheme);
   const [toggleHideCollapse, hideCollapse] = useStored(
-    (state) => [state.toggleHideCollapse, state.hideCollapse],
+    state => [state.toggleHideCollapse, state.hideCollapse],
     shallow
   );
 

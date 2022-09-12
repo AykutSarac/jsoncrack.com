@@ -52,18 +52,15 @@ const TextNode: React.FC<TextNodeProps> = ({
 }) => {
   const ref = React.useRef(null);
   // const { inViewport } = useInViewport(ref);
-  const performanceMode = useConfig((state) => state.performanceMode);
+  const performanceMode = useConfig(state => state.performanceMode);
 
-  const hideCollapse = useStored((state) => state.hideCollapse);
-  const expandNodes = useGraph((state) => state.expandNodes);
-  const collapseNodes = useGraph((state) => state.collapseNodes);
-  const isExpanded = useGraph((state) =>
-    state.collapsedParents.includes(node.id)
-  );
+  const hideCollapse = useStored(state => state.hideCollapse);
+  const expandNodes = useGraph(state => state.expandNodes);
+  const collapseNodes = useGraph(state => state.collapseNodes);
+  const isExpanded = useGraph(state => state.collapsedParents.includes(node.id));
 
   const handleExpand = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
-    // setIsExpanded(!isExpanded);
 
     if (!isExpanded) collapseNodes(node.id);
     else expandNodes(node.id);
@@ -96,11 +93,7 @@ const TextNode: React.FC<TextNodeProps> = ({
 
         {inViewport && isParent && hasCollapse && !hideCollapse && (
           <StyledExpand onClick={handleExpand}>
-            {isExpanded ? (
-              <MdLinkOff size={18} />
-            ) : (
-              <MdLink size={18} />
-            )}
+            {isExpanded ? <MdLinkOff size={18} /> : <MdLink size={18} />}
           </StyledExpand>
         )}
       </StyledTextNodeWrapper>

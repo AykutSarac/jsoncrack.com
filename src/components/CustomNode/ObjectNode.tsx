@@ -1,23 +1,17 @@
 import React from "react";
+import { useInViewport } from "react-in-viewport";
 import { CustomNodeProps } from "src/components/CustomNode";
 import useConfig from "src/hooks/store/useConfig";
-import { useInViewport } from "react-in-viewport";
 import * as Styled from "./styles";
 
 const inViewport = true;
 
 type ObjectNodeProps = CustomNodeProps<[string, string][]>;
 
-const ObjectNode: React.FC<ObjectNodeProps> = ({
-  width,
-  height,
-  value,
-  x,
-  y,
-}) => {
+const ObjectNode: React.FC<ObjectNodeProps> = ({ width, height, value, x, y }) => {
   const ref = React.useRef(null);
   // const { inViewport } = useInViewport(ref);
-  const performanceMode = useConfig((state) => state.performanceMode);
+  const performanceMode = useConfig(state => state.performanceMode);
 
   return (
     <Styled.StyledForeignObject
@@ -39,9 +33,7 @@ const ObjectNode: React.FC<ObjectNodeProps> = ({
             <Styled.StyledKey objectKey>
               {JSON.stringify(val[0]).replaceAll('"', "")}:{" "}
             </Styled.StyledKey>
-            <Styled.StyledLinkItUrl>
-              {JSON.stringify(val[1])}
-            </Styled.StyledLinkItUrl>
+            <Styled.StyledLinkItUrl>{JSON.stringify(val[1])}</Styled.StyledLinkItUrl>
           </Styled.StyledRow>
         ))}
     </Styled.StyledForeignObject>

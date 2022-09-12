@@ -1,9 +1,7 @@
 import React from "react";
-import toast from "react-hot-toast";
 import Link from "next/link";
-import styled from "styled-components";
-import { TiFlowMerge } from "react-icons/ti";
-import { CgArrowsMergeAltH, CgArrowsShrinkH } from "react-icons/cg";
+import { useRouter } from "next/router";
+import toast from "react-hot-toast";
 import {
   AiOutlineDelete,
   AiFillGithub,
@@ -13,19 +11,20 @@ import {
   AiOutlineLink,
   AiOutlineEdit,
 } from "react-icons/ai";
+import { CgArrowsMergeAltH, CgArrowsShrinkH } from "react-icons/cg";
 import { FiDownload } from "react-icons/fi";
-
+import { HiHeart } from "react-icons/hi";
+import { MdCenterFocusWeak } from "react-icons/md";
+import { TiFlowMerge } from "react-icons/ti";
 import { Tooltip } from "src/components/Tooltip";
-import { useRouter } from "next/router";
-import { ImportModal } from "src/containers/Modals/ImportModal";
 import { ClearModal } from "src/containers/Modals/ClearModal";
+import { DownloadModal } from "src/containers/Modals/DownloadModal";
+import { ImportModal } from "src/containers/Modals/ImportModal";
 import { ShareModal } from "src/containers/Modals/ShareModal";
 import useConfig from "src/hooks/store/useConfig";
-import { HiHeart } from "react-icons/hi";
-import shallow from "zustand/shallow";
-import { MdCenterFocusWeak } from "react-icons/md";
 import { getNextLayout } from "src/utils/getNextLayout";
-import { DownloadModal } from "src/containers/Modals/DownloadModal";
+import styled from "styled-components";
+import shallow from "zustand/shallow";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -141,9 +140,9 @@ function rotateLayout(layout: "LEFT" | "RIGHT" | "DOWN" | "UP") {
 }
 
 export const Sidebar: React.FC = () => {
-  const getJson = useConfig((state) => state.getJson);
-  const setConfig = useConfig((state) => state.setConfig);
-  const centerView = useConfig((state) => state.centerView);
+  const getJson = useConfig(state => state.getJson);
+  const setConfig = useConfig(state => state.setConfig);
+  const centerView = useConfig(state => state.centerView);
   const [uploadVisible, setUploadVisible] = React.useState(false);
   const [clearVisible, setClearVisible] = React.useState(false);
   const [shareVisible, setShareVisible] = React.useState(false);
@@ -151,7 +150,7 @@ export const Sidebar: React.FC = () => {
   const { push } = useRouter();
 
   const [expand, layout, hideEditor] = useConfig(
-    (state) => [state.expand, state.layout, state.hideEditor],
+    state => [state.expand, state.layout, state.hideEditor],
     shallow
   );
 
@@ -261,10 +260,7 @@ export const Sidebar: React.FC = () => {
       <ImportModal visible={uploadVisible} setVisible={setUploadVisible} />
       <ClearModal visible={clearVisible} setVisible={setClearVisible} />
       <ShareModal visible={shareVisible} setVisible={setShareVisible} />
-      <DownloadModal
-        visible={isDownloadVisible}
-        setVisible={setDownloadVisible}
-      />
+      <DownloadModal visible={isDownloadVisible} setVisible={setDownloadVisible} />
     </StyledSidebar>
   );
 };

@@ -1,6 +1,6 @@
-import create from "zustand";
 import { getChildrenEdges } from "src/utils/getChildrenEdges";
 import { getOutgoers } from "src/utils/getOutgoers";
+import create from "zustand";
 
 export interface Graph {
   nodes: NodeData[];
@@ -32,7 +32,7 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       collapsedEdges: [],
       [key]: value,
     }),
-  expandNodes: (nodeId) => {
+  expandNodes: nodeId => {
     const [childrenNodes, matchingNodes] = getOutgoers(
       nodeId,
       get().nodes,
@@ -41,12 +41,16 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
     );
     const childrenEdges = getChildrenEdges(childrenNodes, get().edges);
 
-    const nodeIds = childrenNodes.map((node) => node.id).concat(matchingNodes);
-    const edgeIds = childrenEdges.map((edge) => edge.id);
+    const nodeIds = childrenNodes.map(node => node.id).concat(matchingNodes);
+    const edgeIds = childrenEdges.map(edge => edge.id);
 
-    const collapsedParents = get().collapsedParents.filter((cp) => cp !== nodeId);
-    const collapsedNodes = get().collapsedNodes.filter((nodeId) => !nodeIds.includes(nodeId));
-    const collapsedEdges = get().collapsedEdges.filter((edgeId) => !edgeIds.includes(edgeId));
+    const collapsedParents = get().collapsedParents.filter(cp => cp !== nodeId);
+    const collapsedNodes = get().collapsedNodes.filter(
+      nodeId => !nodeIds.includes(nodeId)
+    );
+    const collapsedEdges = get().collapsedEdges.filter(
+      edgeId => !edgeIds.includes(edgeId)
+    );
 
     set({
       collapsedParents,
@@ -54,12 +58,12 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       collapsedEdges,
     });
   },
-  collapseNodes: (nodeId) => {
+  collapseNodes: nodeId => {
     const [childrenNodes] = getOutgoers(nodeId, get().nodes, get().edges);
     const childrenEdges = getChildrenEdges(childrenNodes, get().edges);
 
-    const nodeIds = childrenNodes.map((node) => node.id);
-    const edgeIds = childrenEdges.map((edge) => edge.id);
+    const nodeIds = childrenNodes.map(node => node.id);
+    const edgeIds = childrenEdges.map(edge => edge.id);
 
     set({
       collapsedParents: get().collapsedParents.concat(nodeId),
