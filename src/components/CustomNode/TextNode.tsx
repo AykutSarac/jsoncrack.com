@@ -102,7 +102,7 @@ const TextNode: React.FC<TextNodeProps> = ({
 };
 
 function propsAreEqual(prev: TextNodeProps, next: TextNodeProps) {
-  return prev.value === next.value;
+  return prev.value === next.value && prev.width === next.width;
 }
 
 export default React.memo(TextNode, propsAreEqual);
