@@ -6,12 +6,13 @@ import * as Styled from "./styles";
 
 const inViewport = true;
 
-type ObjectNodeProps = CustomNodeProps<[string, string][]>;
-
-const ObjectNode: React.FC<ObjectNodeProps> = ({ width, height, value, x, y }) => {
+const ObjectNode: React.FC<CustomNodeProps> = ({ node, x, y }) => {
+  const { text, width, height, data } = node;
   const ref = React.useRef(null);
-  // const { inViewport } = useInViewport(ref);
   const performanceMode = useConfig(state => state.performanceMode);
+  // const { inViewport } = useInViewport(ref);
+
+  if (data.isEmpty) return null;
 
   return (
     <Styled.StyledForeignObject
@@ -23,7 +24,7 @@ const ObjectNode: React.FC<ObjectNodeProps> = ({ width, height, value, x, y }) =
       isObject
     >
       {(!performanceMode || inViewport) &&
-        value.map((val, idx) => (
+        text.map((val, idx) => (
           <Styled.StyledRow
             data-key={JSON.stringify(val[1])}
             data-x={x}
@@ -40,8 +41,11 @@ const ObjectNode: React.FC<ObjectNodeProps> = ({ width, height, value, x, y }) =
   );
 };
 
-function propsAreEqual(prev: ObjectNodeProps, next: ObjectNodeProps) {
-  return String(prev.value) === String(next.value) && prev.width === next.width;
+function propsAreEqual(prev: CustomNodeProps, next: CustomNodeProps) {
+  return (
+    String(prev.node.text) === String(next.node.text) &&
+    prev.node.width === next.node.width
+  );
 }
 
 export default React.memo(ObjectNode, propsAreEqual);

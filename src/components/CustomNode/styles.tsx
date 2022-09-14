@@ -70,6 +70,7 @@ export const StyledKey = styled.span<{
   font-size: ${({ parent }) => parent && "14px"};
   overflow: hidden;
   text-overflow: ellipsis;
+  padding: ${({ objectKey }) => !objectKey && 10}px;
 `;
 
 export const StyledRow = styled.span.attrs<{

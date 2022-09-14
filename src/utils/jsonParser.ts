@@ -15,8 +15,9 @@ const calculateSize = (
   const longestLine = lineLengths.sort((a, b) => b - a)[0];
 
   const getWidth = () => {
+    if (Array.isArray(text) && !text.length) return 40;
     if (isExpanded) return 35 + longestLine * 8 + (isParent ? 60 : 0);
-    if (isParent) return 150;
+    if (isParent) return 170;
     return 200;
   };
 
@@ -101,6 +102,7 @@ const extract = (
       data: {
         isParent: false,
         hasChild: false,
+        isEmpty: !text.length,
       },
     };
   });
