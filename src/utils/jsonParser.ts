@@ -1,4 +1,3 @@
-import toast from "react-hot-toast";
 
 const calculateSize = (
   text: string | [string, string][],
@@ -143,7 +142,6 @@ export const parser = (jsonStr: string, isExpanded = true) => {
     return { nodes, edges };
   } catch (error) {
     console.error(error);
-    toast.error("An error occured while parsing JSON data!");
     return {
       nodes: [],
       edges: [],
