@@ -1,7 +1,7 @@
 {
   "name": "json-crack",
   "private": true,
-  "version": "v2.0.2",
+  "version": "v2.0.3",
   "author": "https://github.com/AykutSarac",
   "homepage": "https://jsoncrack.com",
   "scripts": {
@@ -19,7 +19,7 @@
     "allotment": "^1.17.0",
     "compress-json": "^2.1.1",
     "html-to-image": "^1.10.8",
-    "next": "^12.2.5",
+    "next": "^12.3.0",
     "next-transpile-modules": "^9.0.0",
     "parse-json": "^6.0.2",
     "react": "^18.2.0",

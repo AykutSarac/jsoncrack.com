@@ -36,9 +36,9 @@ export const MonacoEditor = ({
   const expand = useConfig(state => state.expand);
   const setJson = useConfig(state => state.setJson);
   const setGraphValue = useGraph(state => state.setGraphValue);
+  const lightmode = useStored(state => (state.lightmode ? "light" : "vs-dark"));
   const [value, setValue] = React.useState<string | undefined>("");
 
-  const lightmode = useStored(state => (state.lightmode ? "light" : "vs-dark"));
 
   React.useEffect(() => {
     const { nodes, edges } = parser(json, expand);
