@@ -16,6 +16,7 @@ const StyledLoading = styled.div`
   text-align: center;
   background: ${({ theme }) => theme.BLACK_DARK};
   z-index: 36;
+  pointer-events: none;
 `;
 
 const StyledLogo = styled.h2`
@@ -35,15 +36,13 @@ const StyledMessage = styled.div`
   font-weight: 500;
 `;
 
-export const Loading: React.FC<LoadingProps> = ({ message }) => {
-  return (
-    <StyledLoading>
-      <StyledLogo>
-        <StyledText>JSON</StyledText> Crack
-      </StyledLogo>
-      <StyledMessage>
-        {message ?? "Preparing the environment for you..."}
-      </StyledMessage>
-    </StyledLoading>
-  );
-};
+export const Loading: React.FC<LoadingProps> = ({ message }) => (
+  <StyledLoading>
+    <StyledLogo>
+      <StyledText>JSON</StyledText> Crack
+    </StyledLogo>
+    <StyledMessage>
+      {message ?? "Preparing the environment for you..."}
+    </StyledMessage>
+  </StyledLoading>
+);

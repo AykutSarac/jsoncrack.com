@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 const StyledLiveEditor = styled.div`
   position: relative;
+  height: 100%;
 `;
 
 const LiveEditor: React.FC = () => {
