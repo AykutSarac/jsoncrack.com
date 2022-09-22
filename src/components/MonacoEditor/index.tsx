@@ -42,9 +42,9 @@ export const MonacoEditor = ({
   React.useEffect(() => {
     const { nodes, edges } = parser(json, expand);
 
+    setGraphValue("loading", true);
     setGraphValue("nodes", nodes);
     setGraphValue("edges", edges);
-    setGraphValue("loading", true);
     setValue(json);
   }, [expand, json, setGraphValue]);
 
@@ -65,7 +65,7 @@ export const MonacoEditor = ({
     }, 1200);
 
     return () => clearTimeout(formatTimer);
-  }, [value, setJson, setHasError, setGraphValue]);
+  }, [value, setJson, setHasError]);
 
   return (
     <StyledWrapper>

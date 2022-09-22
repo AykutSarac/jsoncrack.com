@@ -26,9 +26,8 @@ const StyledLoading = styled.div`
   background: ${({ theme }) => theme.BLACK_DARK};
   z-index: 36;
   pointer-events: none;
-  animation: 0.5s ${fadeIn};
+  animation: 0.2s ${fadeIn};
   animation-fill-mode: forwards;
-
   visibility: hidden;
 `;
 

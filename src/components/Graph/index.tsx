@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React from "react";
 import {
   ReactZoomPanPinchRef,
@@ -44,9 +43,9 @@ const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
 const GraphComponent = ({ isWidget, openModal, setSelectedNode }: LayoutProps) => {
   const setConfig = useConfig(state => state.setConfig);
   const setGraphValue = useGraph(state => state.setGraphValue);
+  const loading = useGraph(state => state.loading);
   const layout = useConfig(state => state.layout);
   const nodes = useGraph(state => state.nodes);
-  const loading = useGraph(state => state.loading);
   const edges = useGraph(state => state.edges);
 
   const [size, setSize] = React.useState({
@@ -88,7 +87,7 @@ const GraphComponent = ({ isWidget, openModal, setSelectedNode }: LayoutProps) =
     if (input) input.blur();
   }, []);
 
-  if (nodes.length > 5_000) return <ErrorView />;
+  if (nodes.length > 8_000) return <ErrorView />;
 
   return (
     <StyledEditorWrapper isWidget={isWidget}>
@@ -111,7 +110,7 @@ const GraphComponent = ({ isWidget, openModal, setSelectedNode }: LayoutProps) =
             width: "100%",
             height: "100%",
             overflow: "hidden",
-            display: loading ? "none" : "block"
+            display: loading ? "none" : "block",
           }}
         >
           <Canvas
