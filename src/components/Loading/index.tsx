@@ -1,9 +1,18 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 interface LoadingProps {
   message?: string;
 }
+
+const fadeIn = keyframes`
+ 99% {
+    visibility: hidden;
+  }
+  100% {
+    visibility: visible;
+  }
+`;
 
 const StyledLoading = styled.div`
   position: fixed;
@@ -17,6 +26,10 @@ const StyledLoading = styled.div`
   background: ${({ theme }) => theme.BLACK_DARK};
   z-index: 36;
   pointer-events: none;
+  animation: 0.5s ${fadeIn};
+  animation-fill-mode: forwards;
+
+  visibility: hidden;
 `;
 
 const StyledLogo = styled.h2`

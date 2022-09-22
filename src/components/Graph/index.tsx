@@ -111,6 +111,7 @@ const GraphComponent = ({ isWidget, openModal, setSelectedNode }: LayoutProps) =
             width: "100%",
             height: "100%",
             overflow: "hidden",
+            display: loading ? "none" : "block"
           }}
         >
           <Canvas
