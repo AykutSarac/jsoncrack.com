@@ -1,12 +1,13 @@
 import React from "react";
 import { Button } from "src/components/Button";
 import useKeyPress from "src/hooks/useKeyPress";
-import { ReactComponent } from "src/typings/global";
 import * as Styled from "./styles";
 
 type ControlProps = React.PropsWithChildren<{
   setVisible: (status: boolean) => void;
 }>;
+
+export type ReactComponent = React.FC<React.PropsWithChildren<{}>>;
 
 type ModalTypes = {
   Header: ReactComponent;
