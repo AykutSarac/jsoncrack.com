@@ -1,28 +1,24 @@
+import { Graph } from "src/components/Graph";
 import { getChildrenEdges } from "src/utils/getChildrenEdges";
 import { getOutgoers } from "src/utils/getOutgoers";
 import create from "zustand";
 
-export interface Graph {
-  nodes: NodeData[];
-  edges: EdgeData[];
-  collapsedNodes: string[];
-  collapsedEdges: string[];
-  collapsedParents: string[];
-}
+const initialStates = {
+  loading: false,
+  nodes: [] as NodeData[],
+  edges: [] as EdgeData[],
+  collapsedNodes: [] as string[],
+  collapsedEdges: [] as string[],
+  collapsedParents: [] as string[],
+};
+
+export type Graph = typeof initialStates;
 
 interface GraphActions {
   setGraphValue: (key: keyof Graph, value: any) => void;
   expandNodes: (nodeId: string) => void;
   collapseNodes: (nodeId: string) => void;
 }
-
-const initialStates: Graph = {
-  nodes: [],
-  edges: [],
-  collapsedNodes: [],
-  collapsedEdges: [],
-  collapsedParents: [],
-};
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
   ...initialStates,

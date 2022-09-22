@@ -1,4 +1,3 @@
-
 const calculateSize = (
   text: string | [string, string][],
   isParent = false,

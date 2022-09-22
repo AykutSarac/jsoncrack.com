@@ -39,12 +39,12 @@ export const MonacoEditor = ({
   const lightmode = useStored(state => (state.lightmode ? "light" : "vs-dark"));
   const [value, setValue] = React.useState<string | undefined>("");
 
-
   React.useEffect(() => {
     const { nodes, edges } = parser(json, expand);
 
     setGraphValue("nodes", nodes);
     setGraphValue("edges", edges);
+    setGraphValue("loading", true);
     setValue(json);
   }, [expand, json, setGraphValue]);
 
@@ -65,7 +65,7 @@ export const MonacoEditor = ({
     }, 1200);
 
     return () => clearTimeout(formatTimer);
-  }, [value, setJson, setHasError]);
+  }, [value, setJson, setHasError, setGraphValue]);
 
   return (
     <StyledWrapper>

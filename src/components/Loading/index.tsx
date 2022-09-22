@@ -1,9 +1,18 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 interface LoadingProps {
   message?: string;
 }
+
+const fadeIn = keyframes`
+ 99% {
+    visibility: hidden;
+  }
+  100% {
+    visibility: visible;
+  }
+`;
 
 const StyledLoading = styled.div`
   position: fixed;
@@ -16,6 +25,11 @@ const StyledLoading = styled.div`
   text-align: center;
   background: ${({ theme }) => theme.BLACK_DARK};
   z-index: 36;
+  pointer-events: none;
+  animation: 0.5s ${fadeIn};
+  animation-fill-mode: forwards;
+
+  visibility: hidden;
 `;
 
 const StyledLogo = styled.h2`
@@ -35,15 +49,13 @@ const StyledMessage = styled.div`
   font-weight: 500;
 `;
 
-export const Loading: React.FC<LoadingProps> = ({ message }) => {
-  return (
-    <StyledLoading>
-      <StyledLogo>
-        <StyledText>JSON</StyledText> Crack
-      </StyledLogo>
-      <StyledMessage>
-        {message ?? "Preparing the environment for you..."}
-      </StyledMessage>
-    </StyledLoading>
-  );
-};
+export const Loading: React.FC<LoadingProps> = ({ message }) => (
+  <StyledLoading>
+    <StyledLogo>
+      <StyledText>JSON</StyledText> Crack
+    </StyledLogo>
+    <StyledMessage>
+      {message ?? "Preparing the environment for you..."}
+    </StyledMessage>
+  </StyledLoading>
+);

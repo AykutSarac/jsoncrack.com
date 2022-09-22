@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 import {
   ReactZoomPanPinchRef,
@@ -9,6 +10,8 @@ import { CustomNode } from "src/components/CustomNode";
 import useConfig from "src/hooks/store/useConfig";
 import useGraph from "src/hooks/store/useGraph";
 import styled from "styled-components";
+import { Loading } from "../Loading";
+import { ErrorView } from "./ErrorView";
 
 interface LayoutProps {
   isWidget: boolean;
@@ -40,8 +43,10 @@ const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
 
 const GraphComponent = ({ isWidget, openModal, setSelectedNode }: LayoutProps) => {
   const setConfig = useConfig(state => state.setConfig);
+  const setGraphValue = useGraph(state => state.setGraphValue);
   const layout = useConfig(state => state.layout);
   const nodes = useGraph(state => state.nodes);
+  const loading = useGraph(state => state.loading);
   const edges = useGraph(state => state.edges);
 
   const [size, setSize] = React.useState({
@@ -64,19 +69,30 @@ const GraphComponent = ({ isWidget, openModal, setSelectedNode }: LayoutProps) =
     [setConfig]
   );
 
-  const onLayoutChange = React.useCallback((layout: ElkRoot) => {
-    if (layout.width && layout.height) {
-      setSize({ width: layout.width + 400, height: layout.height + 400 });
-    }
-  }, []);
+  const onLayoutChange = React.useCallback(
+    (layout: ElkRoot) => {
+      if (layout.width && layout.height) {
+        setSize({ width: layout.width + 400, height: layout.height + 400 });
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            setGraphValue("loading", false);
+          }, 0);
+        });
+      }
+    },
+    [setGraphValue]
+  );
 
   const onCanvasClick = React.useCallback(() => {
     const input = document.querySelector("input:focus") as HTMLInputElement;
     if (input) input.blur();
   }, []);
 
+  if (nodes.length > 5_000) return <ErrorView />;
+
   return (
     <StyledEditorWrapper isWidget={isWidget}>
+      {loading && <Loading message="Painting graph..." />}
       <TransformWrapper
         maxScale={2}
         minScale={0.5}
@@ -95,6 +111,7 @@ const GraphComponent = ({ isWidget, openModal, setSelectedNode }: LayoutProps) =
             width: "100%",
             height: "100%",
             overflow: "hidden",
+            display: loading ? "none" : "block"
           }}
         >
           <Canvas
