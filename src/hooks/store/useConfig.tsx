@@ -14,6 +14,7 @@ interface ConfigActions {
 
 const initialStates = {
   json: defaultJson,
+  maxZoom: 0.07,
   cursorMode: "move" as "move" | "navigation",
   layout: "RIGHT" as CanvasDirection,
   expand: true,
@@ -51,7 +52,7 @@ const useConfig = create<Config & ConfigActions>()((set, get) => ({
   },
   centerView: () => {
     const zoomPanPinch = get().zoomPanPinch;
-    if (zoomPanPinch) zoomPanPinch.centerView(0.6);
+    if (zoomPanPinch) zoomPanPinch.centerView(get().maxZoom);
   },
   setConfig: (setting: keyof Config, value: unknown) => set({ [setting]: value }),
 }));

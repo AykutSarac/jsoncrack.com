@@ -42,6 +42,7 @@ const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
 
 const GraphComponent = ({ isWidget, openModal, setSelectedNode }: LayoutProps) => {
   const setConfig = useConfig(state => state.setConfig);
+  const maxZoom = useConfig(state => state.maxZoom);
   const setGraphValue = useGraph(state => state.setGraphValue);
   const loading = useGraph(state => state.loading);
   const layout = useConfig(state => state.layout);
@@ -71,6 +72,20 @@ const GraphComponent = ({ isWidget, openModal, setSelectedNode }: LayoutProps) =
   const onLayoutChange = React.useCallback(
     (layout: ElkRoot) => {
       if (layout.width && layout.height) {
+        let newHeight = 0;
+        let newWidth = 0;
+
+        layout?.children?.forEach(node => {
+          if (node.y + node.height > newHeight) newHeight = node.y + node.height;
+          if (node.x + node.width > newWidth) newWidth = node.x + node.width;
+        });
+
+        if (layout === "LEFT" || layout === "RIGHT") {
+          setConfig("maxZoom", (1380 * 0.6) / newHeight);
+        } else {
+          setConfig("maxZoom", (1380 * 0.6) / newWidth);
+        }
+
         setSize({ width: layout.width + 400, height: layout.height + 400 });
         requestAnimationFrame(() => {
           setTimeout(() => {
@@ -79,7 +94,7 @@ const GraphComponent = ({ isWidget, openModal, setSelectedNode }: LayoutProps) =
         });
       }
     },
-    [setGraphValue]
+    [setConfig, setGraphValue]
   );
 
   const onCanvasClick = React.useCallback(() => {
@@ -94,7 +109,7 @@ const GraphComponent = ({ isWidget, openModal, setSelectedNode }: LayoutProps) =
       {loading && <Loading message="Painting graph..." />}
       <TransformWrapper
         maxScale={2}
-        minScale={0.5}
+        minScale={maxZoom}
         initialScale={0.7}
         wheel={{ step: 0.05 }}
         zoomAnimation={{ animationType: "linear" }}
