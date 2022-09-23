@@ -1,5 +1,5 @@
 import React from "react";
-import { AiOutlineFullscreen, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineFullscreen, AiOutlineMinus, AiOutlinePlus ,AiOutlineSwap } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
 import { MdCenterFocusWeak } from "react-icons/md";
 import { TbSettings } from "react-icons/tb";
@@ -27,7 +27,7 @@ export const StyledTools = styled.div`
   }
 `;
 
-const StyledToolElement = styled.button`
+const StyledToolElement = styled.button<{vertical?:boolean}>`
   display: grid;
   place-content: center;
   font-size: 20px;
@@ -35,6 +35,7 @@ const StyledToolElement = styled.button`
   color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
   padding: 6px;
   border-radius: 3px;
+  transform: ${({vertical}) => (vertical ? 'rotate(90deg)' : '')};
 
   &:hover {
     background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0 0);
@@ -52,11 +53,16 @@ export const Tools: React.FC = () => {
   const [isDownloadVisible, setDownloadVisible] = React.useState(false);
 
   const hideEditor = useConfig(state => state.hideEditor);
+  const layout = useConfig(state => state.layout);
   const setConfig = useConfig(state => state.setConfig);
 
   const zoomIn = useConfig(state => state.zoomIn);
   const zoomOut = useConfig(state => state.zoomOut);
   const centerView = useConfig(state => state.centerView);
+  // direction layout
+  const toggleHorizontalDirection = () => setConfig("layout" , layout == 'LEFT' ? 'RIGHT' : 'LEFT')
+  const toggleVerticalDirection = () => setConfig("layout" , layout == 'UP' ? 'DOWN' : 'UP')
+  
   const toggleEditor = () => setConfig("hideEditor", !hideEditor);
 
   return (
@@ -86,6 +92,12 @@ export const Tools: React.FC = () => {
         </StyledToolElement>
         <StyledToolElement aria-label="zoom in" onClick={zoomIn}>
           <AiOutlinePlus />
+        </StyledToolElement>
+        <StyledToolElement aria-label="toggle Horizontal direction" onClick={toggleHorizontalDirection}>
+          <AiOutlineSwap />
+        </StyledToolElement>
+        <StyledToolElement aria-label="toggle Vertical direction" vertical={true} onClick={toggleVerticalDirection}>
+          <AiOutlineSwap />
         </StyledToolElement>
       </StyledTools>
       <DownloadModal visible={isDownloadVisible} setVisible={setDownloadVisible} />
