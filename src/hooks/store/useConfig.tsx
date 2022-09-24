@@ -51,7 +51,8 @@ const useConfig = create<Config & ConfigActions>()((set, get) => ({
   },
   centerView: () => {
     const zoomPanPinch = get().zoomPanPinch;
-    if (zoomPanPinch) zoomPanPinch.centerView(0.4);
+    const canvas = document.querySelector(".jsoncrack-canvas") as HTMLElement;
+    if (zoomPanPinch && canvas) zoomPanPinch.zoomToElement(canvas);
   },
   setConfig: (setting: keyof Config, value: unknown) => set({ [setting]: value }),
 }));
