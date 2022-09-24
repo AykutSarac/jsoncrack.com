@@ -12,11 +12,17 @@ import styled from "styled-components";
 import { Loading } from "../Loading";
 import { ErrorView } from "./ErrorView";
 
-interface LayoutProps {
-  isWidget: boolean;
-  openModal: () => void;
-  setSelectedNode: (node: [string, string][]) => void;
-}
+type LayoutProps =
+  | {
+      isWidget?: never;
+      openModal: () => void;
+      setSelectedNode: (node: [string, string][]) => void;
+    }
+  | {
+      isWidget: boolean;
+      openModal?: () => never;
+      setSelectedNode?: () => never;
+    };
 
 const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
   position: absolute;
@@ -40,7 +46,11 @@ const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
   }
 `;
 
-const GraphComponent = ({ isWidget, openModal, setSelectedNode }: LayoutProps) => {
+const GraphComponent = ({
+  isWidget = false,
+  openModal,
+  setSelectedNode,
+}: LayoutProps) => {
   const [minScale, setMinScale] = React.useState(0.3);
   const setGraphValue = useGraph(state => state.setGraphValue);
   const setConfig = useConfig(state => state.setConfig);
@@ -56,8 +66,8 @@ const GraphComponent = ({ isWidget, openModal, setSelectedNode }: LayoutProps) =
 
   const handleNodeClick = React.useCallback(
     (e: React.MouseEvent<SVGElement>, data: NodeData) => {
-      setSelectedNode(data.text);
-      openModal();
+      if (setSelectedNode) setSelectedNode(data.text);
+      if (openModal) openModal();
     },
     [openModal, setSelectedNode]
   );
