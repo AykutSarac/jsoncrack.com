@@ -43,10 +43,14 @@ const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
 const GraphComponent = ({ isWidget, openModal, setSelectedNode }: LayoutProps) => {
   const setGraphValue = useGraph(state => state.setGraphValue);
   const setConfig = useConfig(state => state.setConfig);
+  const canvasRef = React.useRef(null);
+  const setCanvasRef = useConfig(state => state.setCanvasRef);
   const loading = useGraph(state => state.loading);
   const layout = useConfig(state => state.layout);
   const nodes = useGraph(state => state.nodes);
   const edges = useGraph(state => state.edges);
+
+  
 
   const [size, setSize] = React.useState({
     width: 2000,
@@ -86,6 +90,10 @@ const GraphComponent = ({ isWidget, openModal, setSelectedNode }: LayoutProps) =
     const input = document.querySelector("input:focus") as HTMLInputElement;
     if (input) input.blur();
   }, []);
+
+  React.useEffect(()=>{
+    setCanvasRef(canvasRef)
+  })
 
   if (nodes.length > 8_000) return <ErrorView />;
 
@@ -127,6 +135,7 @@ const GraphComponent = ({ isWidget, openModal, setSelectedNode }: LayoutProps) =
             readonly={true}
             dragEdge={null}
             dragNode={null}
+            ref={canvasRef}
             fit={true}
             node={props => <CustomNode {...props} onClick={handleNodeClick} />}
             edge={props => (
