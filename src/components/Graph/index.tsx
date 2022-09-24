@@ -41,16 +41,13 @@ const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
 `;
 
 const GraphComponent = ({ isWidget, openModal, setSelectedNode }: LayoutProps) => {
+  const [minScale, setMinScale] = React.useState(0.3);
   const setGraphValue = useGraph(state => state.setGraphValue);
   const setConfig = useConfig(state => state.setConfig);
-  const canvasRef = React.useRef(null);
-  const setCanvasRef = useConfig(state => state.setCanvasRef);
   const loading = useGraph(state => state.loading);
   const layout = useConfig(state => state.layout);
   const nodes = useGraph(state => state.nodes);
   const edges = useGraph(state => state.edges);
-
-  
 
   const [size, setSize] = React.useState({
     width: 2000,
@@ -75,7 +72,11 @@ const GraphComponent = ({ isWidget, openModal, setSelectedNode }: LayoutProps) =
   const onLayoutChange = React.useCallback(
     (layout: ElkRoot) => {
       if (layout.width && layout.height) {
+        const areaSize = layout.width * layout.height;
+
+        setMinScale((1_000_000 * 0.5) / areaSize);
         setSize({ width: layout.width + 400, height: layout.height + 400 });
+
         requestAnimationFrame(() => {
           setTimeout(() => {
             setGraphValue("loading", false);
@@ -91,10 +92,6 @@ const GraphComponent = ({ isWidget, openModal, setSelectedNode }: LayoutProps) =
     if (input) input.blur();
   }, []);
 
-  React.useEffect(()=>{
-    setCanvasRef(canvasRef)
-  })
-
   if (nodes.length > 8_000) return <ErrorView />;
 
   return (
@@ -102,9 +99,9 @@ const GraphComponent = ({ isWidget, openModal, setSelectedNode }: LayoutProps) =
       {loading && <Loading message="Painting graph..." />}
       <TransformWrapper
         maxScale={2}
-        minScale={0.25}
-        initialScale={0.7}
-        wheel={{ step: 0.05 }}
+        minScale={minScale}
+        initialScale={0.4}
+        wheel={{ step: 0.08 }}
         zoomAnimation={{ animationType: "linear" }}
         doubleClick={{ disabled: true }}
         onInit={onInit}
@@ -122,6 +119,7 @@ const GraphComponent = ({ isWidget, openModal, setSelectedNode }: LayoutProps) =
           }}
         >
           <Canvas
+            className="jsoncrack-canvas"
             nodes={nodes}
             edges={edges}
             maxWidth={size.width}
@@ -135,7 +133,6 @@ const GraphComponent = ({ isWidget, openModal, setSelectedNode }: LayoutProps) =
             readonly={true}
             dragEdge={null}
             dragNode={null}
-            ref={canvasRef}
             fit={true}
             node={props => <CustomNode {...props} onClick={handleNodeClick} />}
             edge={props => (
