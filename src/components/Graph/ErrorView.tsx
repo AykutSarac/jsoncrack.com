@@ -27,7 +27,7 @@ const StyledInfo = styled.p`
 export const ErrorView = () => (
   <StyledErrorView>
     <img
-      src="assets/undraw_qa_engineers_dg-5-p.svg"
+      src="/assets/undraw_qa_engineers_dg-5-p.svg"
       width="200"
       height="200"
       alt="oops"
