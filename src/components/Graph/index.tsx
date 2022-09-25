@@ -12,17 +12,11 @@ import styled from "styled-components";
 import { Loading } from "../Loading";
 import { ErrorView } from "./ErrorView";
 
-type LayoutProps =
-  | {
-      isWidget?: never;
-      openModal: () => void;
-      setSelectedNode: (node: [string, string][]) => void;
-    }
-  | {
-      isWidget: boolean;
-      openModal?: () => never;
-      setSelectedNode?: () => never;
-    };
+interface LayoutProps {
+  isWidget?: boolean;
+  openModal: () => void;
+  setSelectedNode: (node: [string, string][]) => void;
+}
 
 const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
   position: absolute;
