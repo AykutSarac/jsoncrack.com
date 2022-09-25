@@ -7,6 +7,7 @@ interface ConfigActions {
   setJson: (json: string) => void;
   setConfig: (key: keyof Config, value: unknown) => void;
   getJson: () => string;
+  setExtension: () => (extension: number) => void;
   zoomIn: () => void;
   zoomOut: () => void;
   centerView: () => void;
@@ -18,6 +19,7 @@ const initialStates = {
   layout: "RIGHT" as CanvasDirection,
   expand: true,
   hideEditor: false,
+  extension: 0,
   performanceMode: true,
   disableLoading: false,
   zoomPanPinch: undefined as ReactZoomPanPinchRef | undefined,
@@ -29,6 +31,7 @@ const useConfig = create<Config & ConfigActions>()((set, get) => ({
   ...initialStates,
   getJson: () => get().json,
   setJson: (json: string) => set({ json }),
+  setExtension: (extension: number) => set({ extension }),
   zoomIn: () => {
     const zoomPanPinch = get().zoomPanPinch;
     if (zoomPanPinch) {

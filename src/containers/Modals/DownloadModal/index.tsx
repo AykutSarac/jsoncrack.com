@@ -1,11 +1,11 @@
 import React from "react";
-import { toBlob, toPng } from "html-to-image";
+import { toBlob, toPng,toSvg } from "html-to-image";
 import { TwitterPicker } from "react-color";
 import { TwitterPickerStylesProps } from "react-color/lib/components/twitter/Twitter";
 import toast from "react-hot-toast";
 import { FiCopy, FiDownload } from "react-icons/fi";
 import { Button } from "src/components/Button";
-import { Input } from "src/components/Input";
+import { FileInput } from "src/components/FileInput";
 import { Modal, ModalProps } from "src/components/Modal";
 import useConfig from "src/hooks/store/useConfig";
 import styled from "styled-components";
@@ -92,8 +92,14 @@ const StyledColorIndicator = styled.div<{ color: string }>`
   border-color: rgba(0, 0, 0, 0.1);
 `;
 
+enum Extensions {
+  svg,
+  png
+}
 export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   const setConfig = useConfig(state => state.setConfig);
+
+  const [extension, setExtension] = React.useState(Extensions.svg)
   const [fileDetails, setFileDetails] = React.useState({
     filename: "jsoncrack.com",
     backgroundColor: "transparent",
@@ -137,12 +143,14 @@ export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => 
 
       const imageElement = document.querySelector("svg[id*='ref']") as HTMLElement;
 
-      const dataURI = await toPng(imageElement, {
+      let exportImage = extension === Extensions.svg ? toSvg : toPng
+
+      const dataURI = await exportImage(imageElement, {
         quality: fileDetails.quality,
         backgroundColor: fileDetails.backgroundColor,
       });
 
-      downloadURI(dataURI, `${fileDetails.filename}.png`);
+      downloadURI(dataURI, `${fileDetails.filename}.${Extensions[extension]}`);
     } catch (error) {
       toast.error("Failed to download image!");
     } finally {
@@ -162,10 +170,11 @@ export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => 
         <StyledContainer>
           File Name
           <StyledColorWrapper>
-            <Input
-              placeholder="File Name"
+            <FileInput
               value={fileDetails.filename}
               onChange={e => updateDetails("filename", e.target.value)}
+              setExtension={(ext:number)=> setExtension(ext)}
+              extensions={Object.keys(Extensions).filter((v) => isNaN(Number(v)))}
             />
           </StyledColorWrapper>
         </StyledContainer>
