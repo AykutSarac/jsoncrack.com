@@ -174,6 +174,7 @@ export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => 
               value={fileDetails.filename}
               onChange={e => updateDetails("filename", e.target.value)}
               setExtension={(ext:number)=> setExtension(ext)}
+              activeExtension={extension}
               extensions={Object.keys(Extensions).filter((v) => isNaN(Number(v)))}
             />
           </StyledColorWrapper>

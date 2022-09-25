@@ -32,25 +32,31 @@ const StyledButton = styled.button`
   color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
   padding: 0 10px;
   min-height: unset;
-
+  text-transform: uppercase;
+  
   &:hover {
     box-shadow: none;
   }
   
   &.active {
-    background: ${({ theme }) => theme.PRIMARY};;
+    background: ${({ theme }) => theme.PRIMARY};
+    color: white;
+    outline: 3px solid ${({ theme }) => theme.BACKGROUND_TERTIARY};
+    border-radius: 10px;
   }
 `;
 
 export interface ModalProps {
     value:string | number | readonly string[] | undefined,
     extensions:string[]
+    activeExtension:number
     setExtension: Function,
     onChange: React.ChangeEventHandler<HTMLInputElement> | undefined,
 }
 export const FileInput: React.FC<ModalProps> = (props) => {
 
-    const {setExtension, onChange,extensions,value } = props
+  const {setExtension, activeExtension, onChange,extensions,value } = props
+
   return (
     <StyledInputWrapper>
       <StyledForm>
@@ -60,9 +66,11 @@ export const FileInput: React.FC<ModalProps> = (props) => {
           value={value}
           placeholder="File Name"
         />
-          {extensions.map((ext,key)=> (<StyledButton key={key} aria-label="search" onClick={()=> setExtension(key)}>
+          {extensions.map((ext, key) => (
+            <StyledButton className={`${activeExtension === key && "active"}`} key={key} aria-label="search" onClick={() => setExtension(key)}>
               {ext}
-          </StyledButton>))}
+            </StyledButton>)
+          )}
 
       </StyledForm>
     </StyledInputWrapper>
