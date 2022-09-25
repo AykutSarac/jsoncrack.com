@@ -30,7 +30,7 @@
   </p>
 
   <p align="center">
-      <img width="800" src="./public/jsoncrack-screenshot.webp" alt="preview 1" />
+      <img width="800" src="./public/assets/jsoncrack-screenshot.webp" alt="preview 1" />
   </p>
 
 # JSON Crack (jsoncrack.com)

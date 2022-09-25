@@ -68,7 +68,7 @@ const PreviewSection = () => (
       <Styles.StyledImage
         width="1200"
         height="863"
-        src="/jsoncrack-screenshot.webp"
+        src="/assets/jsoncrack-screenshot.webp"
         alt="preview"
       />
     </Styles.StyledImageWrapper>

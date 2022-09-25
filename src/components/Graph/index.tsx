@@ -13,7 +13,7 @@ import { Loading } from "../Loading";
 import { ErrorView } from "./ErrorView";
 
 interface LayoutProps {
-  isWidget: boolean;
+  isWidget?: boolean;
   openModal: () => void;
   setSelectedNode: (node: [string, string][]) => void;
 }
@@ -40,24 +40,29 @@ const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
   }
 `;
 
-const GraphComponent = ({ isWidget, openModal, setSelectedNode }: LayoutProps) => {
-  const [minScale, setMinScale] = React.useState(0.3);
+const GraphComponent = ({
+  isWidget = false,
+  openModal,
+  setSelectedNode,
+}: LayoutProps) => {
+  const [minScale, setMinScale] = React.useState(0.4);
   const setGraphValue = useGraph(state => state.setGraphValue);
   const setConfig = useConfig(state => state.setConfig);
+  const centerView = useConfig(state => state.centerView);
   const loading = useGraph(state => state.loading);
   const layout = useConfig(state => state.layout);
   const nodes = useGraph(state => state.nodes);
   const edges = useGraph(state => state.edges);
 
   const [size, setSize] = React.useState({
-    width: 2000,
-    height: 2000,
+    width: 1,
+    height: 1,
   });
 
   const handleNodeClick = React.useCallback(
     (e: React.MouseEvent<SVGElement>, data: NodeData) => {
-      setSelectedNode(data.text);
-      openModal();
+      if (setSelectedNode) setSelectedNode(data.text);
+      if (openModal) openModal();
     },
     [openModal, setSelectedNode]
   );
@@ -73,18 +78,25 @@ const GraphComponent = ({ isWidget, openModal, setSelectedNode }: LayoutProps) =
     (layout: ElkRoot) => {
       if (layout.width && layout.height) {
         const areaSize = layout.width * layout.height;
+        const changeRatio = Math.abs(
+          (areaSize * 100) / (size.width * size.height) - 100
+        );
 
-        setMinScale((1_000_000 * 0.5) / areaSize);
+        const MIN_SCALE = Math.round((450_000 / areaSize) * 100) / 100;
+        const scale = MIN_SCALE > 2 ? 1 : MIN_SCALE <= 0 ? 0.1 : MIN_SCALE;
+
+        setMinScale(scale);
         setSize({ width: layout.width + 400, height: layout.height + 400 });
 
         requestAnimationFrame(() => {
           setTimeout(() => {
             setGraphValue("loading", false);
+            setTimeout(() => changeRatio > 100 && centerView(), 0);
           }, 0);
         });
       }
     },
-    [setGraphValue]
+    [centerView, setGraphValue, size.height, size.width]
   );
 
   const onCanvasClick = React.useCallback(() => {
