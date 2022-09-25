@@ -54,7 +54,7 @@ You can use the web version at [jsoncrack.com](https://jsoncrack.com) or also ru
 ## 🛠 Development Setup
 
 ```console
-  npm install --legacy-peer-deps
+  npm install
   npm run dev
 ```
 
