@@ -229,7 +229,7 @@ const Footer = () => (
       </Styles.StyledNavLink>
 
       <Styles.StyledNavLink
-        href="https://twitter.com/aykutsarach"
+        href="https://twitter.com/jsoncrack"
         rel="me"
         target="_blank"
         aria-label="twitter"

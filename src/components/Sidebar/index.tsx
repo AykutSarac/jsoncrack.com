@@ -236,7 +236,7 @@ export const Sidebar: React.FC = () => {
       </StyledTopWrapper>
       <StyledBottomWrapper>
         <StyledElement>
-          <Link href="https://twitter.com/aykutsarach">
+          <Link href="https://twitter.com/jsoncrack">
             <a aria-label="Twitter" rel="me" target="_blank">
               <AiOutlineTwitter />
             </a>
