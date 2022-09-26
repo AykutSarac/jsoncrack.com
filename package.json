@@ -1,13 +1,12 @@
 {
   "name": "json-crack",
   "private": true,
-  "version": "v2.0.3",
+  "version": "v2.0.4",
   "author": "https://github.com/AykutSarac",
   "homepage": "https://jsoncrack.com",
   "scripts": {
     "dev": "next dev",
     "build": "next build && next export",
-    "test": "jest",
     "start": "next start",
     "lint": "next lint",
     "lint:fix": "prettier --write \"./**/*.{ts,tsx,json}\"",
