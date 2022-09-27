@@ -1,7 +1,6 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { decompress } from "compress-json";
 import { baseURL } from "src/constants/data";
 import useGraph from "src/hooks/store/useGraph";
 import { isValidJson } from "src/utils/isValidJson";
@@ -38,17 +37,22 @@ function inIframe() {
 }
 
 const WidgetPage = () => {
-  const { query, push } = useRouter();
+  const { push } = useRouter();
+  const [json, setJson] = React.useState<string | null>(null);
   const setGraphValue = useGraph(state => state.setGraphValue);
 
   React.useEffect(() => {
-    if (query.json) {
-      const jsonURI = decodeURIComponent(query.json as string);
+    const dataJson = window.self.frameElement?.getAttribute("data-json");
+    if (dataJson) setJson(dataJson);
+  }, []);
+
+  React.useEffect(() => {
+    if (json) {
+      const jsonURI = decodeURIComponent(json);
       const isJsonValid = isValidJson(jsonURI);
 
       if (isJsonValid) {
-        const jsonDecoded = decompress(JSON.parse(isJsonValid));
-        const { nodes, edges } = parser(JSON.stringify(jsonDecoded));
+        const { nodes, edges } = parser(jsonURI);
 
         setGraphValue("nodes", nodes);
         setGraphValue("edges", edges);
@@ -56,16 +60,12 @@ const WidgetPage = () => {
     }
 
     if (!inIframe()) push("/");
-  }, [push, query.json, setGraphValue]);
+  }, [push, json, setGraphValue]);
 
   return (
     <>
       <Graph isWidget />
-      <StyledAttribute
-        href={`${baseURL}/editor?json=${query.json}`}
-        target="_blank"
-        rel="noreferrer"
-      >
+      <StyledAttribute href={`${baseURL}/editor`} target="_blank" rel="noreferrer">
         jsoncrack.com
       </StyledAttribute>
     </>
