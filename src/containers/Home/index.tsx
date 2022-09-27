@@ -8,6 +8,7 @@ import {
   HiOutlineDownload,
   HiOutlineSearchCircle,
 } from "react-icons/hi";
+import { SiVisualstudiocode } from "react-icons/si";
 import { TwitterTweetEmbed } from "react-twitter-embed";
 import { CarbonAds } from "src/components/CarbonAds";
 import { Producthunt } from "src/components/Producthunt";
@@ -49,9 +50,21 @@ const HeroSection = () => {
         graphs.
       </Styles.StyledSubTitle>
       <Styles.StyledMinorTitle>Paste - Import - Fetch!</Styles.StyledMinorTitle>
-      <Styles.StyledButton rel="prefetch" href="/editor" target="_blank" link>
-        GO TO EDITOR
-      </Styles.StyledButton>
+
+      <Styles.StyledButtonWrapper>
+        <Styles.StyledButton rel="prefetch" href="/editor" target="_blank" link>
+          GO TO EDITOR
+        </Styles.StyledButton>
+        <Link
+          href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode"
+          passHref
+        >
+          <Styles.StyledSponsorButton isBlue>
+            GET IT ON VS CODE
+            <SiVisualstudiocode />
+          </Styles.StyledSponsorButton>
+        </Link>
+      </Styles.StyledButtonWrapper>
 
       <Styles.StyledSponsorButton onClick={() => setModalVisible(true)}>
         Help JSON Crack&apos;s Goals

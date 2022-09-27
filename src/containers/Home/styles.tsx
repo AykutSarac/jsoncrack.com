@@ -1,6 +1,11 @@
 import { Button } from "src/components/Button";
 import styled from "styled-components";
 
+export const StyledButtonWrapper = styled.div`
+  display: flex;
+  gap: 18px;
+`;
+
 export const StyledImageWrapper = styled.div`
   width: 100%;
   height: 100%;
@@ -122,17 +127,17 @@ export const StyledButton = styled(Button)`
   }
 `;
 
-export const StyledSponsorButton = styled(StyledButton)`
+export const StyledSponsorButton = styled(StyledButton)<{ isBlue?: boolean }>`
   background: transparent;
-  border: 1px solid #ee3d48;
+  border: 1px solid ${({ isBlue }) => (isBlue ? "#1F9CF0" : "#ee3d48")};
   transition: all 200ms;
 
   svg {
-    color: #ee3d48;
+    color: ${({ isBlue }) => (isBlue ? "#1F9CF0" : "#ee3d48")};
   }
 
   &:hover {
-    background: #ee3d48;
+    background: ${({ isBlue }) => (isBlue ? "#1F9CF0" : "#ee3d48")};
 
     svg {
       color: white;
