@@ -143,6 +143,10 @@ export const StyledSponsorButton = styled(StyledButton)<{ isBlue?: boolean }>`
       color: white;
     }
   }
+
+  @media only screen and (max-width: 768px) {
+    display: ${({ isBlue }) => isBlue && "none"};
+  }
 `;
 
 export const StyledFeaturesSection = styled.section`
