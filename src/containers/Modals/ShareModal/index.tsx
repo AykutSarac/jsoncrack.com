@@ -47,9 +47,7 @@ export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   const json = useConfig(state => state.json);
   const [encodedJson, setEncodedJson] = React.useState("");
 
-  const embedText = `<iframe src="${baseURL}/widget" data-json="${encodeURIComponent(
-    json
-  )}" width="512" height="384" style="border: 2px solid #b9bbbe; border-radius: 6px;"></iframe>`;
+  const embedText = `<iframe src="${baseURL}/widget?json=${encodedJson}" width="512" height="384" style="border: 2px solid #b9bbbe; border-radius: 6px;"></iframe>`;
   const shareURL = `${baseURL}/editor?json=${encodedJson}`;
 
   React.useEffect(() => {
@@ -90,17 +88,17 @@ export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
                 </Button>
               </StyledFlex>
             </StyledContainer>
+            <StyledContainer>
+              Embed into your website
+              <StyledFlex>
+                <Input value={embedText} type="url" readOnly />
+                <Button status="SECONDARY" onClick={() => handleShare(embedText)}>
+                  Copy
+                </Button>
+              </StyledFlex>
+            </StyledContainer>
           </>
         )}
-        <StyledContainer>
-          Embed into your website
-          <StyledFlex>
-            <Input value={embedText} type="url" readOnly />
-            <Button status="SECONDARY" onClick={() => handleShare(embedText)}>
-              Copy
-            </Button>
-          </StyledFlex>
-        </StyledContainer>
       </Modal.Content>
       <Modal.Controls setVisible={setVisible}></Modal.Controls>
     </Modal>
