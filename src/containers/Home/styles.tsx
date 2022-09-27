@@ -127,10 +127,17 @@ export const StyledButton = styled(Button)`
   }
 `;
 
-export const StyledSponsorButton = styled(StyledButton)<{ isBlue?: boolean }>`
+export const StyledSponsorButton = styled(Button)<{ isBlue?: boolean }>`
   background: transparent;
   border: 1px solid ${({ isBlue }) => (isBlue ? "#1F9CF0" : "#ee3d48")};
   transition: all 200ms;
+  padding: 12px 24px;
+
+  div {
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+  }
 
   svg {
     color: ${({ isBlue }) => (isBlue ? "#1F9CF0" : "#ee3d48")};
