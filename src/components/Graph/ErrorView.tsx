@@ -32,11 +32,11 @@ export const ErrorView = () => (
       height="200"
       alt="oops"
     />
-    <StyledTitle>JSON Crack unable to handle this file!</StyledTitle>
+    <StyledTitle>JSON Crack is unable to handle this file!</StyledTitle>
     <StyledInfo>
-      We apologize for the problem you encountered, we are doing our best as Open
-      Source community to improve our service. JSON Crack is currently unable to
-      handle such a huge file.
+      We apologize for the problem you encountered. We are doing our best as an Open
+      Source community to improve our service. Unfortunately, JSON Crack is currently unable to
+      handle such a large file.
     </StyledInfo>
   </StyledErrorView>
 );
