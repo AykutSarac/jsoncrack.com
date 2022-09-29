@@ -1,8 +1,8 @@
 export const isValidJson = (str: string) => {
   try {
-    JSON.parse(str);
-  } catch (e) {
-    return false;
+    var obj = JSON.parse(str);
+    if (obj && typeof obj === "object") return obj;
   }
-  return str;
+  catch (e) { }
+  return false;
 };
