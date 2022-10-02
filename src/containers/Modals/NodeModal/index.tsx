@@ -1,12 +1,14 @@
 import React from "react";
 import toast from "react-hot-toast";
 import { FiCopy } from "react-icons/fi";
+import { getParentsForNodeId } from "reaflow";
 import { Button } from "src/components/Button";
 import { Modal } from "src/components/Modal";
+import useGraph from "src/hooks/store/useGraph";
 import styled from "styled-components";
 
 interface NodeModalProps {
-  selectedNode: object;
+  selectedNode: NodeData;
   visible: boolean;
   closeModal: () => void;
 }
@@ -25,16 +27,23 @@ const StyledTextarea = styled.textarea`
   border: none;
 `;
 
-export const NodeModal = ({ selectedNode, visible, closeModal }: NodeModalProps) => {
-  const nodeData = Array.isArray(selectedNode)
-    ? Object.fromEntries(selectedNode)
-    : selectedNode;
+export const NodeModal = ({
+  selectedNode: { text, id },
+  visible,
+  closeModal,
+}: NodeModalProps) => {
+  const { nodes, edges } = useGraph();
+  const nodeData = Array.isArray(text) ? Object.fromEntries(text) : text;
 
-  const handleClipboard = () => {
+  const handleClipboard = content => {
     toast.success("Content copied to clipboard!");
-    navigator.clipboard.writeText(JSON.stringify(nodeData));
+    navigator.clipboard.writeText(JSON.stringify(content));
     closeModal();
   };
+
+  const nodeDataToClipboard = () => handleClipboard(nodeData);
+  const parentNodesDataToClipboard = () =>
+    handleClipboard(getParentsForNodeId(nodes, edges, id));
 
   return (
     <Modal visible={visible} setVisible={closeModal}>
@@ -53,7 +62,10 @@ export const NodeModal = ({ selectedNode, visible, closeModal }: NodeModalProps)
         />
       </Modal.Content>
       <Modal.Controls setVisible={closeModal}>
-        <Button status="SECONDARY" onClick={handleClipboard}>
+        <Button status="SECONDARY" onClick={parentNodesDataToClipboard}>
+          <FiCopy size={18} /> Parent Nodes to Clipboard
+        </Button>
+        <Button status="SECONDARY" onClick={nodeDataToClipboard}>
           <FiCopy size={18} /> Clipboard
         </Button>
       </Modal.Controls>

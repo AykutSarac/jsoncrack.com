@@ -15,7 +15,7 @@ import { ErrorView } from "./ErrorView";
 interface LayoutProps {
   isWidget?: boolean;
   openModal: () => void;
-  setSelectedNode: (node: [string, string][]) => void;
+  setSelectedNode: (node: NodeData) => void;
 }
 
 const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
@@ -61,7 +61,7 @@ const GraphComponent = ({
 
   const handleNodeClick = React.useCallback(
     (e: React.MouseEvent<SVGElement>, data: NodeData) => {
-      if (setSelectedNode) setSelectedNode(data.text);
+      if (setSelectedNode) setSelectedNode(data);
       if (openModal) openModal();
     },
     [openModal, setSelectedNode]
@@ -146,7 +146,14 @@ const GraphComponent = ({
             dragEdge={null}
             dragNode={null}
             fit={true}
-            node={props => <CustomNode {...props} onClick={handleNodeClick} />}
+            node={props => (
+              <CustomNode
+                {...props}
+                nodes={nodes}
+                edges={edges}
+                onClick={handleNodeClick}
+              />
+            )}
             edge={props => (
               <Edge {...props} containerClassName={`edge-${props.id}`} />
             )}

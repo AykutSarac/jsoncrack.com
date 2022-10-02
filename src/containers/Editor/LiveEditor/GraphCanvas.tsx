@@ -5,7 +5,7 @@ import useGraph from "src/hooks/store/useGraph";
 
 export const GraphCanvas = ({ isWidget = false }: { isWidget?: boolean }) => {
   const [isModalVisible, setModalVisible] = React.useState(false);
-  const [selectedNode, setSelectedNode] = React.useState<[string, string][]>([]);
+  const [selectedNode, setSelectedNode] = React.useState<NodeData>({ id: "0" });
 
   const openModal = React.useCallback(() => setModalVisible(true), []);
 
