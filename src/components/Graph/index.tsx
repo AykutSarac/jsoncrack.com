@@ -146,14 +146,7 @@ const GraphComponent = ({
             dragEdge={null}
             dragNode={null}
             fit={true}
-            node={props => (
-              <CustomNode
-                {...props}
-                nodes={nodes}
-                edges={edges}
-                onClick={handleNodeClick}
-              />
-            )}
+            node={props => <CustomNode {...props} onClick={handleNodeClick} />}
             edge={props => (
               <Edge {...props} containerClassName={`edge-${props.id}`} />
             )}
