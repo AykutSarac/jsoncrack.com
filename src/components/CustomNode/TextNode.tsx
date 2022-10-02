@@ -4,6 +4,7 @@ import { MdLink, MdLinkOff } from "react-icons/md";
 import { CustomNodeProps } from "src/components/CustomNode";
 import useConfig from "src/hooks/store/useConfig";
 import useGraph from "src/hooks/store/useGraph";
+import usePanningStore from "src/hooks/store/usePanning";
 import useStored from "src/hooks/store/useStored";
 import styled from "styled-components";
 import * as Styled from "./styles";
@@ -48,13 +49,26 @@ const TextNode: React.FC<CustomNodeProps> = ({
   const collapseNodes = useGraph(state => state.collapseNodes);
   const isExpanded = useGraph(state => state.collapsedParents.includes(id));
   const performanceMode = useConfig(state => state.performanceMode);
+  const panning = usePanningStore(state => state.panning);
+  const setPanning = usePanningStore(state => state.setPanning);
   // const { inViewport } = useInViewport(ref);
 
   const handleExpand = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
-    if (!isExpanded) collapseNodes(id);
-    else expandNodes(id);
+    // Panning = true if the expand button was clicked down and then a panning
+    // event occurred, which indicates that the user was panning on top of an
+    // expand button, so we should disable its functionality for this press.
+    if (!panning) {
+      if (!isExpanded) collapseNodes(id);
+      else expandNodes(id);
+    }
+  };
+
+  const handleMouseDown = (e: React.MouseEvent<HTMLButtonElement>) => {
+    // Reset state of panning to detect whether a panning event occurs after
+    // this mouseDown event specifically
+    setPanning(false);
   };
 
   return (
@@ -82,7 +96,7 @@ const TextNode: React.FC<CustomNodeProps> = ({
         )}
 
         {inViewport && data.isParent && hasCollapse && !hideCollapse && (
-          <StyledExpand onClick={handleExpand}>
+          <StyledExpand onClick={handleExpand} onMouseDown={handleMouseDown}>
             {isExpanded ? <MdLinkOff size={18} /> : <MdLink size={18} />}
           </StyledExpand>
         )}
