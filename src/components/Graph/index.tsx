@@ -8,6 +8,7 @@ import { Canvas, Edge, ElkRoot } from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
 import useConfig from "src/hooks/store/useConfig";
 import useGraph from "src/hooks/store/useGraph";
+import usePanningStore from "src/hooks/store/usePanning";
 import styled from "styled-components";
 import { Loading } from "../Loading";
 import { ErrorView } from "./ErrorView";
@@ -48,6 +49,7 @@ const GraphComponent = ({
   const [minScale, setMinScale] = React.useState(0.4);
   const setGraphValue = useGraph(state => state.setGraphValue);
   const setConfig = useConfig(state => state.setConfig);
+  const setPanning = usePanningStore(state => state.setPanning);
   const centerView = useConfig(state => state.centerView);
   const loading = useGraph(state => state.loading);
   const layout = useConfig(state => state.layout);
@@ -117,7 +119,10 @@ const GraphComponent = ({
         zoomAnimation={{ animationType: "linear" }}
         doubleClick={{ disabled: true }}
         onInit={onInit}
-        onPanning={ref => ref.instance.wrapperComponent?.classList.add("dragging")}
+        onPanning={ref => {
+          ref.instance.wrapperComponent?.classList.add("dragging");
+          setPanning(true);
+        }}
         onPanningStop={ref =>
           ref.instance.wrapperComponent?.classList.remove("dragging")
         }
