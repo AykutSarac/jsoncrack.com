@@ -41,7 +41,7 @@ export const NodeModal = ({
     closeModal();
   };
 
-  const nodeDataToClipboard = () => handleClipboard(nodeData);
+  const nodeDataToClipboard = () => handleClipboard(text);
   const parentNodesDataToClipboard = () =>
     handleClipboard(getParentsForNodeId(nodes, edges, id));
 
