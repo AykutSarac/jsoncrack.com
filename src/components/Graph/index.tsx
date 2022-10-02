@@ -109,7 +109,7 @@ const GraphComponent = ({
   if (nodes.length > 8_000) return <ErrorView />;
 
   return (
-    <StyledEditorWrapper isWidget={isWidget}>
+    <StyledEditorWrapper isWidget={isWidget} onContextMenu={e => e.preventDefault()}>
       {loading && <Loading message="Painting graph..." />}
       <TransformWrapper
         maxScale={2}
