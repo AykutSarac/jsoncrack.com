@@ -8,8 +8,10 @@ import { Canvas, Edge, ElkRoot } from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
 import useConfig from "src/hooks/store/useConfig";
 import useGraph from "src/hooks/store/useGraph";
+import { isSafari } from "src/utils/isSafari";
 import styled from "styled-components";
 import { Loading } from "../Loading";
+import CustomArrow from "./CustomArrow";
 import { ErrorView } from "./ErrorView";
 
 interface LayoutProps {
@@ -146,6 +148,7 @@ const GraphComponent = ({
             dragEdge={null}
             dragNode={null}
             fit={true}
+            arrow={isSafari ? <CustomArrow layout={layout} /> : undefined}
             node={props => <CustomNode {...props} onClick={handleNodeClick} />}
             edge={props => (
               <Edge {...props} containerClassName={`edge-${props.id}`} />
