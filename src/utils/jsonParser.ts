@@ -123,21 +123,25 @@ const relationships = (xs: { id: string; children: never[] }[]) => {
 export const parser = (jsonStr: string, isExpanded = true) => {
   try {
     let json = JSON.parse(jsonStr);
+    
+    if(Array.isArray(json)) {
+      json = {"list": json};
+    }
+    
     if (!Array.isArray(json)) json = [json];
     const nodes: NodeData[] = [];
     const edges: EdgeData[] = [];
-
+    
     const mappedElements = extract(json, isExpanded);
     const res = [...flatten(mappedElements), ...relationships(mappedElements)];
 
     res.forEach(data => {
       if (isNode(data)) {
-        nodes.push(data);
+        nodes.push(data); 
       } else {
         edges.push(data);
       }
     });
-
     return { nodes, edges };
   } catch (error) {
     console.error(error);
