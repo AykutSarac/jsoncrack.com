@@ -63,7 +63,7 @@ function generateChildren(object: Object, isExpanded = true, nextId: () => strin
           height,
           data: {
             isParent: true,
-            hasChild: !!children.length,
+            childrenCount: children.length,
           },
         },
       ];
@@ -101,7 +101,7 @@ const extract = (
       children: generateChildren(o, isExpanded, nextId),
       data: {
         isParent: false,
-        hasChild: false,
+        childrenCount: 0,
         isEmpty: !text.length,
       },
     };

@@ -18,6 +18,7 @@ function getTomorrow() {
 export interface Config {
   lightmode: boolean;
   hideCollapse: boolean;
+  hideChildrenCount: boolean;
   sponsors: {
     users: Sponsor[];
     nextDate: number;
@@ -25,6 +26,7 @@ export interface Config {
   setSponsors: (sponsors: Sponsor[]) => void;
   setLightTheme: (theme: boolean) => void;
   toggleHideCollapse: (value: boolean) => void;
+  toggleHideChildrenCount: (value: boolean) => void;
 }
 
 const useStored = create(
@@ -32,6 +34,7 @@ const useStored = create(
     set => ({
       lightmode: false,
       hideCollapse: false,
+      hideChildrenCount: true,
       sponsors: {
         users: [],
         nextDate: Date.now(),
@@ -48,6 +51,7 @@ const useStored = create(
           },
         }),
       toggleHideCollapse: (value: boolean) => set({ hideCollapse: value }),
+      toggleHideChildrenCount: (value: boolean) => set({ hideChildrenCount: value }),
     }),
     {
       name: "config",
