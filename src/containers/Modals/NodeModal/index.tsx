@@ -3,10 +3,13 @@ import toast from "react-hot-toast";
 import { FiCopy } from "react-icons/fi";
 import { Button } from "src/components/Button";
 import { Modal } from "src/components/Modal";
+import useGraph from "src/hooks/store/useGraph";
 import styled from "styled-components";
+import { parser } from "src/utils/jsonParser";
+import { isValidJson } from "src/utils/isValidJson";
 
 interface NodeModalProps {
-  selectedNode: object;
+  selectedNode: NodeData;
   visible: boolean;
   closeModal: () => void;
 }
@@ -26,14 +29,29 @@ const StyledTextarea = styled.textarea`
 `;
 
 export const NodeModal = ({ selectedNode, visible, closeModal }: NodeModalProps) => {
-  const nodeData = Array.isArray(selectedNode)
-    ? Object.fromEntries(selectedNode)
-    : selectedNode;
-
+  const setGraphValue = useGraph(state => state.setGraphValue);
+  const nodes = useGraph(state => state.nodes);
+  const nodeData = Array.isArray(selectedNode.text)
+    ? Object.fromEntries(selectedNode.text)
+    : selectedNode.text;
+  const [text, setText] = React.useState(nodeData);
+    
   const handleClipboard = () => {
     toast.success("Content copied to clipboard!");
-    navigator.clipboard.writeText(JSON.stringify(nodeData));
+    navigator.clipboard.writeText(JSON.stringify(text));
     closeModal();
+  };
+  
+  const update = (newText:string) => {
+    if(isValidJson(newText)){
+      const parsedNode = parser(newText);
+      const parsedText = parsedNode?.nodes[0]?.text;
+      Array.isArray(parsedText)
+        ? setText(Object.fromEntries(parsedText))
+        : setText(parsedText);
+      const updatedNode = {...selectedNode, text: parsedText}  
+      setGraphValue("nodes", [...nodes.filter(({id}) => id !== selectedNode.id), updatedNode]);        
+    };
   };
 
   return (
@@ -49,7 +67,7 @@ export const NodeModal = ({ selectedNode, visible, closeModal }: NodeModalProps)
             },
             2
           )}
-          readOnly
+          onChange={(e)=> update(e.target.value)}
         />
       </Modal.Content>
       <Modal.Controls setVisible={closeModal}>
