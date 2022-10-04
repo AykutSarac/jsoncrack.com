@@ -77,6 +77,20 @@ function generateNodeData(object: Object) {
   return String(object);
 }
 
+function labelNumOfChildren(children: any[]) {
+  return children.map(child => {
+    if (
+      typeof child.text === "string" &&
+      child.children &&
+      child.children.length > 1
+    ) {
+      child.text = `${child.text} (${child.children.length})`;
+      child.children = labelNumOfChildren(child.children);
+    }
+    return child;
+  });
+}
+
 const extract = (
   os: string[] | object[] | null,
   isExpanded = true,
@@ -89,6 +103,8 @@ const extract = (
 
   return [os].flat().map(o => {
     const text = generateNodeData(o);
+    let children = generateChildren(o, isExpanded, nextId);
+    children = labelNumOfChildren(children);
     const { width, height } = calculateSize(text, false, isExpanded);
 
     return {
@@ -96,7 +112,7 @@ const extract = (
       text,
       width,
       height,
-      children: generateChildren(o, isExpanded, nextId),
+      children,
       data: {
         isParent: false,
         hasChild: false,
