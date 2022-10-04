@@ -7,6 +7,7 @@ import useGraph from "src/hooks/store/useGraph";
 import styled from "styled-components";
 import { parser } from "src/utils/jsonParser";
 import { isValidJson } from "src/utils/isValidJson";
+import { ErrorContainer } from "src/components/ErrorContainer";
 
 interface NodeModalProps {
   selectedNode: NodeData;
@@ -35,7 +36,8 @@ export const NodeModal = ({ selectedNode, visible, closeModal }: NodeModalProps)
     ? Object.fromEntries(selectedNode.text)
     : selectedNode.text;
   const [text, setText] = React.useState(nodeData);
-    
+  const [error, hasError] = React.useState(false);
+
   const handleClipboard = () => {
     toast.success("Content copied to clipboard!");
     navigator.clipboard.writeText(JSON.stringify(text));
@@ -49,8 +51,12 @@ export const NodeModal = ({ selectedNode, visible, closeModal }: NodeModalProps)
       Array.isArray(parsedText)
         ? setText(Object.fromEntries(parsedText))
         : setText(parsedText);
-      const updatedNode = {...selectedNode, text: parsedText}  
-      setGraphValue("nodes", [...nodes.filter(({id}) => id !== selectedNode.id), updatedNode]);        
+      const updatedNode = {...selectedNode, text: parsedText} ; 
+      setGraphValue("nodes", [...nodes.filter(({id}) => id !== selectedNode.id), updatedNode]);  
+      hasError(false);      
+    }
+    else {
+      hasError(true);
     };
   };
 
@@ -58,6 +64,7 @@ export const NodeModal = ({ selectedNode, visible, closeModal }: NodeModalProps)
     <Modal visible={visible} setVisible={closeModal}>
       <Modal.Header>Node Content</Modal.Header>
       <Modal.Content>
+      <ErrorContainer hasError={error} />
         <StyledTextarea
           defaultValue={JSON.stringify(
             nodeData,
