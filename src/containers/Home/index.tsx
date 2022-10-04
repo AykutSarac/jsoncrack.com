@@ -51,10 +51,15 @@ const HeroSection = () => {
       </Styles.StyledSubTitle>
       <Styles.StyledMinorTitle>Paste - Import - Fetch!</Styles.StyledMinorTitle>
 
+      <Styles.StyledButton rel="prefetch" href="/editor" target="_blank" link>
+        GO TO EDITOR
+      </Styles.StyledButton>
+
       <Styles.StyledButtonWrapper>
-        <Styles.StyledButton rel="prefetch" href="/editor" target="_blank" link>
-          GO TO EDITOR
-        </Styles.StyledButton>
+        <Styles.StyledSponsorButton onClick={() => setModalVisible(true)}>
+          Help JSON Crack&apos;s Goals
+          <FaHeart />
+        </Styles.StyledSponsorButton>
         <Link
           href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode"
           passHref
@@ -64,13 +69,8 @@ const HeroSection = () => {
             <SiVisualstudiocode />
           </Styles.StyledSponsorButton>
         </Link>
+        <GoalsModal visible={isModalVisible} setVisible={setModalVisible} />
       </Styles.StyledButtonWrapper>
-
-      <Styles.StyledSponsorButton onClick={() => setModalVisible(true)}>
-        Help JSON Crack&apos;s Goals
-        <FaHeart />
-      </Styles.StyledSponsorButton>
-      <GoalsModal visible={isModalVisible} setVisible={setModalVisible} />
     </Styles.StyledHeroSection>
   );
 };
