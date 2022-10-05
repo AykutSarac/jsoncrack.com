@@ -11,7 +11,12 @@ import {
   AiOutlineLink,
   AiOutlineEdit,
 } from "react-icons/ai";
-import { CgArrowsMergeAltH, CgArrowsShrinkH } from "react-icons/cg";
+import {
+  CgArrowsMergeAltH,
+  CgArrowsMergeAltV,
+  CgArrowsShrinkH,
+  CgArrowsShrinkV,
+} from "react-icons/cg";
 import { FiDownload } from "react-icons/fi";
 import { HiHeart } from "react-icons/hi";
 import { MdCenterFocusWeak } from "react-icons/md";
@@ -22,6 +27,7 @@ import { DownloadModal } from "src/containers/Modals/DownloadModal";
 import { ImportModal } from "src/containers/Modals/ImportModal";
 import { ShareModal } from "src/containers/Modals/ShareModal";
 import useConfig from "src/hooks/store/useConfig";
+import useGraph from "src/hooks/store/useGraph";
 import { getNextLayout } from "src/utils/getNextLayout";
 import styled from "styled-components";
 import shallow from "zustand/shallow";
@@ -154,6 +160,8 @@ export const Sidebar: React.FC = () => {
     shallow
   );
 
+  const { collapseGraph, expandGraph, graphCollapsed } = useGraph();
+
   const handleSave = () => {
     const a = document.createElement("a");
     const file = new Blob([getJson()], { type: "text/plain" });
@@ -163,14 +171,23 @@ export const Sidebar: React.FC = () => {
     a.click();
   };
 
-  const toggleExpandCollapse = () => {
+  const toggleExpandShrink = () => {
     setConfig("expand", !expand);
-    toast(`${expand ? "Collapsed" : "Expanded"} nodes.`);
+    toast(`${expand ? "Shrunk" : "Expanded"} nodes.`);
   };
 
   const toggleLayout = () => {
     const nextLayout = getNextLayout(layout);
     setConfig("layout", nextLayout);
+  };
+
+  const toggleExpandCollapseGraph = () => {
+    if (graphCollapsed) {
+      expandGraph();
+    } else {
+      collapseGraph();
+    }
+    toast(`${graphCollapsed ? "Expanded" : "Collapsed"} graph.`);
   };
 
   return (
@@ -206,11 +223,19 @@ export const Sidebar: React.FC = () => {
           className="desktop"
           title={expand ? "Shrink Nodes" : "Expand Nodes"}
         >
-          <StyledElement
-            title="Toggle Expand/Collapse"
-            onClick={toggleExpandCollapse}
-          >
+          <StyledElement title="Toggle Expand/Shrink" onClick={toggleExpandShrink}>
             {expand ? <CgArrowsMergeAltH /> : <CgArrowsShrinkH />}
+          </StyledElement>
+        </Tooltip>
+        <Tooltip
+          className="desktop"
+          title={graphCollapsed ? "Expand Graph" : "Collapse Graph"}
+        >
+          <StyledElement
+            title="Expand/Collapse Graph"
+            onClick={toggleExpandCollapseGraph}
+          >
+            {graphCollapsed ? <CgArrowsShrinkV /> : <CgArrowsMergeAltV />}
           </StyledElement>
         </Tooltip>
         <Tooltip className="desktop" title="Save JSON">
