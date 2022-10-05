@@ -1,10 +1,12 @@
 import React from "react";
+import { useRouter } from "next/router";
 import Editor, { loader, Monaco } from "@monaco-editor/react";
 import { parse } from "jsonc-parser";
 import { Loading } from "src/components/Loading";
 import useConfig from "src/hooks/store/useConfig";
 import useGraph from "src/hooks/store/useGraph";
 import useStored from "src/hooks/store/useStored";
+import fetchFileFromUrl from "src/utils/fetchFileFromUrl";
 import { parser } from "src/utils/jsonParser";
 import styled from "styled-components";
 
@@ -46,6 +48,14 @@ export const MonacoEditor = ({
   const setGraphValue = useGraph(state => state.setGraphValue);
   const lightmode = useStored(state => (state.lightmode ? "light" : "vs-dark"));
   const [value, setValue] = React.useState<string | undefined>("");
+  const router = useRouter();
+  const url = router.query.url;
+
+  React.useEffect(() => {
+    if (typeof url === "string") {
+      fetchFileFromUrl(url).then(json => setJson(json));
+    }
+  }, [setJson, url]);
 
   React.useEffect(() => {
     const { nodes, edges } = parser(json, expand);
