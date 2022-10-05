@@ -8,6 +8,8 @@ import styled from "styled-components";
 import { parser } from "src/utils/jsonParser";
 import { isValidJson } from "src/utils/isValidJson";
 import { ErrorContainer } from "src/components/ErrorContainer";
+import useConfig from "src/hooks/store/useConfig";
+import { graphParser } from "src/utils/graphParser";
 
 interface NodeModalProps {
   selectedNode: NodeData;
@@ -32,6 +34,8 @@ const StyledTextarea = styled.textarea`
 export const NodeModal = ({ selectedNode, visible, closeModal }: NodeModalProps) => {
   const setGraphValue = useGraph(state => state.setGraphValue);
   const nodes = useGraph(state => state.nodes);
+  const edges = useGraph(state => state.edges);
+  const setJson = useConfig(state => state.setJson);
   const nodeData = Array.isArray(selectedNode.text)
     ? Object.fromEntries(selectedNode.text)
     : selectedNode.text;
@@ -51,9 +55,12 @@ export const NodeModal = ({ selectedNode, visible, closeModal }: NodeModalProps)
       Array.isArray(parsedText)
         ? setText(Object.fromEntries(parsedText))
         : setText(parsedText);
-      const updatedNode = {...selectedNode, text: parsedText} ; 
-      setGraphValue("nodes", [...nodes.filter(({id}) => id !== selectedNode.id), updatedNode]);  
-      hasError(false);      
+      const updatedNode = {...selectedNode, text: parsedText};
+      const newNodes = nodes.map((node)=> node.id===selectedNode.id ? updatedNode : node); 
+
+      setGraphValue("nodes", newNodes);  
+      hasError(false);  
+      setJson(JSON.stringify(graphParser(newNodes, edges)));
     }
     else {
       hasError(true);
