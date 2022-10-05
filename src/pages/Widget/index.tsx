@@ -2,6 +2,7 @@ import React from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { decompress } from "compress-json";
+import { parse } from "jsonc-parser";
 import { baseURL } from "src/constants/data";
 import useGraph from "src/hooks/store/useGraph";
 import { isValidJson } from "src/utils/isValidJson";
@@ -47,7 +48,7 @@ const WidgetPage = () => {
       const isJsonValid = isValidJson(jsonURI);
 
       if (isJsonValid) {
-        const jsonDecoded = decompress(JSON.parse(isJsonValid));
+        const jsonDecoded = decompress(parse(isJsonValid));
         const { nodes, edges } = parser(JSON.stringify(jsonDecoded));
 
         setGraphValue("nodes", nodes);
