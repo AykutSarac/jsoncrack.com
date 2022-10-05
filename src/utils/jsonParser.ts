@@ -1,3 +1,5 @@
+import { parse } from "jsonc-parser";
+
 const calculateSize = (
   text: string | [string, string][],
   isParent = false,
@@ -122,7 +124,7 @@ const relationships = (xs: { id: string; children: never[] }[]) => {
 
 export const parser = (jsonStr: string, isExpanded = true) => {
   try {
-    let json = JSON.parse(jsonStr);
+    let json = parse(jsonStr);
     if (!Array.isArray(json)) json = [json];
     const nodes: NodeData[] = [];
     const edges: EdgeData[] = [];

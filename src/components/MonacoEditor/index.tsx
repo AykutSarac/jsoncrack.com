@@ -1,5 +1,6 @@
 import React from "react";
-import Editor, { loader } from "@monaco-editor/react";
+import Editor, { loader, Monaco } from "@monaco-editor/react";
+import { parse } from "jsonc-parser";
 import { Loading } from "src/components/Loading";
 import useConfig from "src/hooks/store/useConfig";
 import useGraph from "src/hooks/store/useGraph";
@@ -26,6 +27,13 @@ const StyledWrapper = styled.div`
   grid-template-columns: 100%;
   grid-template-rows: minmax(0, 1fr);
 `;
+
+function handleEditorWillMount(monaco: Monaco) {
+  monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+    allowComments: true,
+    comments: "ignore",
+  });
+}
 
 export const MonacoEditor = ({
   setHasError,
@@ -56,7 +64,7 @@ export const MonacoEditor = ({
           return setJson("{}");
         }
 
-        const parsedJSON = JSON.stringify(JSON.parse(value), null, 2);
+        const parsedJSON = JSON.stringify(parse(value), null, 2);
         setJson(parsedJSON);
         setHasError(false);
       } catch (jsonError: any) {
@@ -77,6 +85,7 @@ export const MonacoEditor = ({
         options={editorOptions}
         onChange={setValue}
         loading={<Loading message="Loading Editor..." />}
+        beforeMount={handleEditorWillMount}
       />
     </StyledWrapper>
   );
