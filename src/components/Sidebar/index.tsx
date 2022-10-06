@@ -231,10 +231,7 @@ export const Sidebar: React.FC = () => {
           className="desktop"
           title={graphCollapsed ? "Expand Graph" : "Collapse Graph"}
         >
-          <StyledElement
-            title="Expand/Collapse Graph"
-            onClick={toggleExpandCollapseGraph}
-          >
+          <StyledElement onClick={toggleExpandCollapseGraph}>
             {graphCollapsed ? <CgArrowsShrinkV /> : <CgArrowsMergeAltV />}
           </StyledElement>
         </Tooltip>
