@@ -44,6 +44,7 @@ const TextNode: React.FC<CustomNodeProps> = ({
   const { id, text, width, height, data } = node;
   const ref = React.useRef(null);
   const hideCollapse = useStored(state => state.hideCollapse);
+  const hideChildrenCount = useStored(state => state.hideChildrenCount);
   const expandNodes = useGraph(state => state.expandNodes);
   const collapseNodes = useGraph(state => state.collapseNodes);
   const isExpanded = useGraph(state => state.collapsedParents.includes(id));
@@ -79,6 +80,12 @@ const TextNode: React.FC<CustomNodeProps> = ({
               {JSON.stringify(text).replaceAll('"', "")}
             </Styled.StyledLinkItUrl>
           </Styled.StyledKey>
+        )}
+
+        {data.isParent && data.childrenCount > 0 && !hideChildrenCount && (
+          <Styled.StyledChildrenCount>
+            ({data.childrenCount})
+          </Styled.StyledChildrenCount>
         )}
 
         {inViewport && data.isParent && hasCollapse && !hideCollapse && (

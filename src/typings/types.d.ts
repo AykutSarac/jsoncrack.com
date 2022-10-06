@@ -2,7 +2,7 @@ type CanvasDirection = "LEFT" | "RIGHT" | "DOWN" | "UP";
 
 interface CustomNodeData {
   isParent: true;
-  hasChild: number;
+  childrenCount: children.length;
   children: NodeData[];
 }
 
