@@ -2,6 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import Editor, { loader, Monaco } from "@monaco-editor/react";
 import { parse } from "jsonc-parser";
+import toast from "react-hot-toast";
 import { Loading } from "src/components/Loading";
 import useConfig from "src/hooks/store/useConfig";
 import useGraph from "src/hooks/store/useGraph";
@@ -53,9 +54,19 @@ export const MonacoEditor = ({
 
   React.useEffect(() => {
     if (typeof url === "string") {
-      fetchFileFromUrl(url).then(json => setJson(json));
+      setGraphValue("loading", true);
+      fetchFileFromUrl(url)
+        .then(json => {
+          setJson(json);
+        })
+        .catch(() => {
+          toast.error("Failed to fetch remote file");
+        })
+        .finally(() => {
+          setGraphValue("loading", false);
+        });
     }
-  }, [setJson, url]);
+  }, [setGraphValue, setHasError, setJson, url]);
 
   React.useEffect(() => {
     const { nodes, edges } = parser(json, expand);

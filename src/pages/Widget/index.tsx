@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { decompress } from "compress-json";
 import { parse } from "jsonc-parser";
+import toast from "react-hot-toast";
 import { baseURL } from "src/constants/data";
 import useGraph from "src/hooks/store/useGraph";
 import fetchFileFromUrl from "src/utils/fetchFileFromUrl";
@@ -45,12 +46,22 @@ const WidgetPage = () => {
 
   React.useEffect(() => {
     if (typeof query.url === "string") {
-      fetchFileFromUrl(query.url).then(json => {
-        const { nodes, edges } = parser(json);
+      setGraphValue("loading", true);
+      setGraphValue("loading", true);
+      fetchFileFromUrl(query.url)
+        .then(json => {
+          const { nodes, edges } = parser(json);
 
-        setGraphValue("nodes", nodes);
-        setGraphValue("edges", edges);
-      });
+          setGraphValue("nodes", nodes);
+          setGraphValue("edges", edges);
+          setGraphValue("loading", false);
+        })
+        .catch(() => {
+          toast.error("Failed to fetch remote file");
+        })
+        .finally(() => {
+          setGraphValue("loading", false);
+        });
     } else if (query.json) {
       const jsonURI = decodeURIComponent(query.json as string);
       const isJsonValid = isValidJson(jsonURI);
