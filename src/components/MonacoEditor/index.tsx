@@ -58,18 +58,17 @@ export const MonacoEditor = ({
 
   React.useEffect(() => {
     const formatTimer = setTimeout(() => {
-      try {
-        if (!value) {
-          setHasError(false);
-          return setJson("{}");
-        }
-
-        const parsedJSON = JSON.stringify(parse(value), null, 2);
-        setJson(parsedJSON);
+      if (!value) {
         setHasError(false);
-      } catch (jsonError: any) {
-        setHasError(true);
+        return setJson("{}");
       }
+
+      const errors = [];
+      const parsedJSON = JSON.stringify(parse(value, errors), null, 2);
+      if (errors.length) return setHasError(true);
+
+      setJson(parsedJSON);
+      setHasError(false);
     }, 1200);
 
     return () => clearTimeout(formatTimer);
