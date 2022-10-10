@@ -53,22 +53,32 @@ export const MonacoEditor = ({
     setGraphValue("loading", true);
     setGraphValue("nodes", nodes);
     setGraphValue("edges", edges);
-    setValue(json);
+    //Checking if there is a json in local storage otherwise set the json in editor to default json
+    var localJson = localStorage.getItem("json")
+    
+    if(localJson === null || localJson==="{}") setValue(json)
+    else setValue(localJson);
+
   }, [expand, json, setGraphValue]);
 
   React.useEffect(() => {
     const formatTimer = setTimeout(() => {
-      if (!value) {
+      try {
+        if (!value) {
+          setHasError(false);
+          localStorage.removeItem("json")
+          return setJson("{}");
+        }
+
+        // Updating the local Storage as the json in editor is changed every 1200ms
+        localStorage.setItem("json", value)
+
+        const parsedJSON = JSON.stringify(parse(value), null, 2);
+        setJson(parsedJSON);
         setHasError(false);
-        return setJson("{}");
+      } catch (jsonError: any) {
+        setHasError(true);
       }
-
-      const errors = [];
-      const parsedJSON = JSON.stringify(parse(value, errors), null, 2);
-      if (errors.length) return setHasError(true);
-
-      setJson(parsedJSON);
-      setHasError(false);
     }, 1200);
 
     return () => clearTimeout(formatTimer);
