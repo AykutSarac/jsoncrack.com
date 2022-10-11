@@ -5,6 +5,7 @@ import { init } from "@sentry/nextjs";
 import { decompress } from "compress-json";
 import { Toaster } from "react-hot-toast";
 import { GoogleAnalytics } from "src/components/GoogleAnalytics";
+import { SupportButton } from "src/components/SupportButton";
 import GlobalStyle from "src/constants/globalStyle";
 import { darkTheme, lightTheme } from "src/constants/theme";
 import useConfig from "src/hooks/store/useConfig";
@@ -58,6 +59,7 @@ function JsonCrack({ Component, pageProps }: AppProps) {
             },
           }}
         />
+        <SupportButton />
       </ThemeProvider>
     </>
   );
