@@ -47,6 +47,7 @@ const GraphComponent = ({
 }: LayoutProps) => {
   const [minScale, setMinScale] = React.useState(0.4);
   const setGraphValue = useGraph(state => state.setGraphValue);
+  const setLoading = useGraph(state => state.setLoading);
   const setConfig = useConfig(state => state.setConfig);
   const centerView = useConfig(state => state.centerView);
   const loading = useGraph(state => state.loading);
@@ -85,12 +86,13 @@ const GraphComponent = ({
         const MIN_SCALE = Math.round((450_000 / areaSize) * 100) / 100;
         const scale = MIN_SCALE > 2 ? 1 : MIN_SCALE <= 0 ? 0.1 : MIN_SCALE;
 
+        setLoading(true);
         setMinScale(scale);
         setSize({ width: layout.width + 400, height: layout.height + 400 });
 
         requestAnimationFrame(() => {
           setTimeout(() => {
-            setGraphValue("loading", false);
+            setLoading(false);
             setTimeout(() => changeRatio > 100 && centerView(), 0);
           }, 0);
         });

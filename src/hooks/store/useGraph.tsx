@@ -17,6 +17,7 @@ export type Graph = typeof initialStates;
 
 interface GraphActions {
   setGraphValue: (key: keyof Graph, value: any) => void;
+  setLoading: (loading: boolean) => void;
   expandNodes: (nodeId: string) => void;
   collapseNodes: (nodeId: string) => void;
   collapseGraph: () => void;
@@ -32,6 +33,7 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       collapsedEdges: [],
       [key]: value,
     }),
+  setLoading: loading => set({ loading }),
   expandNodes: nodeId => {
     const [childrenNodes, matchingNodes] = getOutgoers(
       nodeId,
