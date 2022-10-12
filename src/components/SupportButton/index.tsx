@@ -43,6 +43,8 @@ const StyledSupportButton = styled.a`
 `;
 
 export const SupportButton = () => {
+  if (location.pathname.includes("widget")) return null;
+
   return (
     <StyledSupportButton
       href="https://github.com/sponsors/AykutSarac"
