@@ -23,14 +23,15 @@
       </a>
   </p>
 
-  **English** | [中文](./README.zh-CN.md)
-  
+  **中文** | [English](./README.md)
+
   <p align="center">
-    <i>Simple json visualization tool for your data.</i>
+    <i>用于 json 数据可视化的简易工具</i>
     <p align="center">
     <a href="https://www.producthunt.com/posts/json-crack?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-json&#0045;crack" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=332281&theme=light" alt="JSON&#0032;Crack - Simple&#0032;visualization&#0032;tool&#0032;for&#0032;your&#0032;JSON&#0032;data&#0046; | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
     </p>
   </p>
+
 
   <p align="center">
       <img width="800" src="./public/assets/jsoncrack-screenshot.webp" alt="preview 1" />
@@ -38,23 +39,25 @@
 
 # JSON Crack (jsoncrack.com)
 
-JSON Crack is a tool that generates graph diagrams from JSON objects. These diagrams are much easier to navigate than the textual format and to make it even more convenient, the tool also allows you to search the nodes. Additionally, the generated diagrams can also be downloaded or clipboard as image.
+JSON Crack 是一个根据 JSON 对象生成图表的工具。这些图表比文本格式更易于导航，使得更为方便，该工具还允许你去搜索节点。除此之外，也可以作为图片来下载或复制数据到剪切板。
 
-You can use the web version at [jsoncrack.com](https://jsoncrack.com) or also run it locally as [Docker container](https://github.com/AykutSarac/jsoncrack.com#-docker).
 
-> <b><a href="https://jsoncrack.com">JSON Crack - Crack your data into pieces</a></b>
 
-## ⚡️ Features
+你可以在 [jsoncrack.com](https://jsoncrack.com) 上使用 web 版本，或者也可以将其作为 [Docker container](https://github.com/AykutSarac/jsoncrack.com#-docker) 在本地运行。
 
-- Search Nodes
-- Share links & Create Embed Widgets
-- Download/Clipboard as image
-- Upload JSON locally or fetch from URL
-- Great UI/UX
-- Light/Dark Mode
-- Advanced Error Messages
+> <b><a href="https://jsoncrack.com">JSON Crack - 把你的数据分解成碎片</a></b>
 
-## 🛠 Development Setup
+## ⚡️ 功能
+
+- 搜索节点
+- 分享链接和生成可嵌入的小部件
+- 下载为图片或复制到剪切板
+- 上传本地的 JSON 数据或者通过 URL 请求来展示
+- 创建 UI/UX
+- 昼夜模式
+- 高级错误消息
+
+## 🛠 本地开发
 
 ```console
   npm install
@@ -63,13 +66,14 @@ You can use the web version at [jsoncrack.com](https://jsoncrack.com) or also ru
 
 ## 🐳 Docker
 
-A [`Dockerfile`](Dockerfile) is provided in the root of the repository.
-If you want to run JSON Crack locally:
+在仓库根目录下提供一个 [`Dockerfile`](Dockerfile) 文件
 
-* Build a Docker image with `docker build -t jsoncrack .`
-* Run locally with `docker run -p 8888:8080 jsoncrack`
-* Go to http://localhost:8888
+如果你想在本地运行 JSON Crack:
 
-## License
+* 用 `docker build -t jsoncrack` 构建一个 Docker 镜像
+* 用 `docker run -p 8888:8080 jsoncrack` 本地运行
+* 前往 http://localhost:8888
 
-This project is open source and available under the [GNU General Public License v3.0](LICENSE).
+## 协议
+
+此项目开源并在 [GNU General Public License v3.0](LICENSE) 下可用
