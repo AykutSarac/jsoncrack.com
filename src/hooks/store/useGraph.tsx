@@ -43,7 +43,14 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
     );
     const childrenEdges = getChildrenEdges(childrenNodes, get().edges);
 
-    const nodeIds = childrenNodes.map(node => node.id).concat(matchingNodes);
+
+    let nodesConnectedToParent = childrenEdges.reduce((nodes: string[], edge) => {
+      edge.from && !nodes.includes(edge.from) && nodes.push(edge.from)
+      edge.to && !nodes.includes(edge.to) && nodes.push(edge.to)
+      return nodes
+    }, []);
+    const matchingNodesConnectedToParent = matchingNodes.filter(node => nodesConnectedToParent.includes(node));
+    const nodeIds = childrenNodes.map(node => node.id).concat(matchingNodesConnectedToParent);
     const edgeIds = childrenEdges.map(edge => edge.id);
 
     const collapsedParents = get().collapsedParents.filter(cp => cp !== nodeId);
