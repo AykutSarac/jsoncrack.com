@@ -1,11 +1,12 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { decompress } from "compress-json";
 import { parse } from "jsonc-parser";
-import { baseURL } from "src/constants/data";
+import toast from "react-hot-toast";
+import { baseURL, defaultJson } from "src/constants/data";
+import { NodeModal } from "src/containers/Modals/NodeModal";
+import useConfig from "src/hooks/store/useConfig";
 import useGraph from "src/hooks/store/useGraph";
-import { isValidJson } from "src/utils/isValidJson";
 import { parser } from "src/utils/jsonParser";
 import styled from "styled-components";
 
@@ -39,34 +40,68 @@ function inIframe() {
 }
 
 const WidgetPage = () => {
-  const { query, push } = useRouter();
+  const [json, setJson] = React.useState(defaultJson);
+  const [isModalVisible, setModalVisible] = React.useState(false);
+  const [selectedNode, setSelectedNode] = React.useState<[string, string][]>([]);
+
+  const collapsedNodes = useGraph(state => state.collapsedNodes);
+  const collapsedEdges = useGraph(state => state.collapsedEdges);
+  const loading = useGraph(state => state.loading);
   const setGraphValue = useGraph(state => state.setGraphValue);
+  const centerView = useConfig(state => state.centerView);
+  const { push } = useRouter();
+
+  const openModal = React.useCallback(() => setModalVisible(true), []);
+  React.useEffect(() => {
+    const nodeList = collapsedNodes.map(id => `[id$="node-${id}"]`);
+    const edgeList = collapsedEdges.map(id => `[class$="edge-${id}"]`);
+
+    const hiddenItems = document.querySelectorAll(".hide");
+    hiddenItems.forEach(item => item.classList.remove("hide"));
+
+    if (nodeList.length) {
+      const selectedNodes = document.querySelectorAll(nodeList.join(","));
+      const selectedEdges = document.querySelectorAll(edgeList.join(","));
+
+      selectedNodes.forEach(node => node.classList.add("hide"));
+      selectedEdges.forEach(edge => edge.classList.add("hide"));
+    }
+  }, [collapsedNodes, collapsedEdges, loading]);
 
   React.useEffect(() => {
-    if (query.json) {
-      const jsonURI = decodeURIComponent(query.json as string);
-      const isJsonValid = isValidJson(jsonURI);
-
-      if (isJsonValid) {
-        const jsonDecoded = decompress(parse(isJsonValid));
-        const { nodes, edges } = parser(JSON.stringify(jsonDecoded));
-
-        setGraphValue("nodes", nodes);
-        setGraphValue("edges", edges);
+    const handler = (event: { data: string }) => {
+      try {
+        const parsedJson = JSON.stringify(parse(event.data));
+        setJson(parsedJson);
+      } catch (error) {
+        toast.error("Invalid JSON!");
       }
+    };
+
+    window.addEventListener("message", handler);
+    return () => window.removeEventListener("message", handler);
+  }, []);
+
+  React.useEffect(() => {
+    if (json) {
+      const { nodes, edges } = parser(json);
+
+      setGraphValue("nodes", nodes);
+      setGraphValue("edges", edges);
     }
 
     if (!inIframe()) push("/");
-  }, [push, query.json, setGraphValue]);
+  }, [push, json, setGraphValue, centerView]);
 
   return (
     <>
-      <Graph isWidget />
-      <StyledAttribute
-        href={`${baseURL}/editor?json=${query.json}`}
-        target="_blank"
-        rel="noreferrer"
-      >
+      <Graph openModal={openModal} setSelectedNode={setSelectedNode} isWidget />
+      <NodeModal
+        selectedNode={selectedNode}
+        visible={isModalVisible}
+        closeModal={() => setModalVisible(false)}
+      />
+      <StyledAttribute href={`${baseURL}/editor`} target="_blank" rel="noreferrer">
         jsoncrack.com
       </StyledAttribute>
     </>

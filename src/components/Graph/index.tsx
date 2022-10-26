@@ -46,7 +46,6 @@ const GraphComponent = ({
   setSelectedNode,
 }: LayoutProps) => {
   const [minScale, setMinScale] = React.useState(0.4);
-  const setGraphValue = useGraph(state => state.setGraphValue);
   const setLoading = useGraph(state => state.setLoading);
   const setConfig = useConfig(state => state.setConfig);
   const centerView = useConfig(state => state.centerView);
@@ -98,7 +97,7 @@ const GraphComponent = ({
         });
       }
     },
-    [centerView, setGraphValue, size.height, size.width]
+    [centerView, setLoading, size.height, size.width]
   );
 
   const onCanvasClick = React.useCallback(() => {
