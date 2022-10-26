@@ -14,8 +14,6 @@ const Embed = () => {
       title="Untitled"
       src="https://codepen.io/AykutSarac/embed/PoawZYo?default-tab=html%2Cresult"
       loading="lazy"
-      allowTransparency
-      allowFullScreen
     >
       See the Pen <a href="https://codepen.io/AykutSarac/pen/PoawZYo">Untitled</a> by
       Aykut Saraç (<a href="https://codepen.io/AykutSarac">@AykutSarac</a>) on{" "}
