@@ -39,6 +39,13 @@ function inIframe() {
   }
 }
 
+interface EmbedMessage {
+  data: {
+    json?: string;
+    options?: any;
+  };
+}
+
 const WidgetPage = () => {
   const [json, setJson] = React.useState(defaultJson);
   const [isModalVisible, setModalVisible] = React.useState(false);
@@ -69,9 +76,10 @@ const WidgetPage = () => {
   }, [collapsedNodes, collapsedEdges, loading]);
 
   React.useEffect(() => {
-    const handler = (event: { data: string }) => {
+    const handler = (event: EmbedMessage) => {
       try {
-        const parsedJson = JSON.stringify(parse(event.data));
+        if (!event.data?.json) return;
+        const parsedJson = JSON.stringify(parse(event.data.json));
         setJson(parsedJson);
       } catch (error) {
         toast.error("Invalid JSON!");
