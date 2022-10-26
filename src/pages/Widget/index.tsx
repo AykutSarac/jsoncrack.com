@@ -47,7 +47,19 @@ interface EmbedMessage {
 }
 
 const WidgetPage = () => {
+  const { query, push } = useRouter();
   const [json, setJson] = React.useState(defaultJson);
+
+  React.useEffect(() => {
+    if (query.json)
+      setJson(
+        JSON.stringify({
+          warning: "⚠️ Query params are deprecated now",
+          new: "Check out https://jsoncrack.com/embed",
+        })
+      );
+  }, [query.json]);
+
   const [isModalVisible, setModalVisible] = React.useState(false);
   const [selectedNode, setSelectedNode] = React.useState<[string, string][]>([]);
 
@@ -56,9 +68,9 @@ const WidgetPage = () => {
   const loading = useGraph(state => state.loading);
   const setGraphValue = useGraph(state => state.setGraphValue);
   const centerView = useConfig(state => state.centerView);
-  const { push } = useRouter();
 
   const openModal = React.useCallback(() => setModalVisible(true), []);
+
   React.useEffect(() => {
     const nodeList = collapsedNodes.map(id => `[id$="node-${id}"]`);
     const edgeList = collapsedEdges.map(id => `[class$="edge-${id}"]`);
