@@ -92,12 +92,12 @@ const GraphComponent = ({
         requestAnimationFrame(() => {
           setTimeout(() => {
             setLoading(false);
-            setTimeout(() => changeRatio > 100 && centerView(), 0);
+            setTimeout(() => (changeRatio > 100 || isWidget) && centerView(), 0);
           }, 0);
         });
       }
     },
-    [centerView, setLoading, size.height, size.width]
+    [centerView, isWidget, setLoading, size.height, size.width]
   );
 
   const onCanvasClick = React.useCallback(() => {
