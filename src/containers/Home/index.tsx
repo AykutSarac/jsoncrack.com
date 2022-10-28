@@ -13,6 +13,7 @@ import { TwitterTweetEmbed } from "react-twitter-embed";
 import { CarbonAds } from "src/components/CarbonAds";
 import { Producthunt } from "src/components/Producthunt";
 import { Sponsors } from "src/components/Sponsors";
+import { defaultJson } from "src/constants/data";
 import { GoalsModal } from "src/containers/Modals/GoalsModal";
 import pkg from "../../../package.json";
 import * as Styles from "./styles";
@@ -177,7 +178,17 @@ const EmbedSection = () => (
       </Styles.StyledMinorTitle>
     </Styles.StyledSectionArea>
     <div>
-      <Styles.StyledIframge src="https://jsoncrack.com/widget"></Styles.StyledIframge>
+      <Styles.StyledIframge
+        src="//localhost:3000/widget"
+        onLoad={e => {
+          const frame = e.currentTarget.contentWindow;
+          setTimeout(() => {
+            frame?.postMessage({
+              json: defaultJson,
+            });
+          }, 500);
+        }}
+      ></Styles.StyledIframge>
     </div>
   </Styles.StyledSection>
 );

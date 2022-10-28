@@ -21,48 +21,52 @@ if (process.env.NODE_ENV !== "development") {
 }
 
 function JsonCrack({ Component, pageProps }: AppProps) {
-  const { query } = useRouter();
+  const { query, pathname } = useRouter();
   const lightmode = useStored(state => state.lightmode);
   const setJson = useConfig(state => state.setJson);
   const [isRendered, setRendered] = React.useState(false);
 
   React.useEffect(() => {
-    const isJsonValid =
-      typeof query.json === "string" && isValidJson(decodeURIComponent(query.json));
+    try {
+      if (pathname !== "editor") return;
+      const isJsonValid =
+        typeof query.json === "string" &&
+        isValidJson(decodeURIComponent(query.json));
 
-    if (isJsonValid) {
-      const jsonDecoded = decompress(JSON.parse(isJsonValid));
-      const jsonString = JSON.stringify(jsonDecoded);
-
-      setJson(jsonString);
+      if (isJsonValid) {
+        const jsonDecoded = decompress(JSON.parse(isJsonValid));
+        const jsonString = JSON.stringify(jsonDecoded);
+        setJson(jsonString);
+      }
+    } catch (error) {
+      console.error(error);
     }
-  }, [query.json, setJson]);
+  }, [pathname, query.json, setJson]);
 
   React.useEffect(() => {
     setRendered(true);
   }, []);
 
-  if (!isRendered) return null;
-
-  return (
-    <>
-      <GoogleAnalytics />
-      <ThemeProvider theme={lightmode ? lightTheme : darkTheme}>
-        <GlobalStyle />
-        <Component {...pageProps} />
-        <Toaster
-          position="bottom-right"
-          toastOptions={{
-            style: {
-              background: "#4D4D4D",
-              color: "#B9BBBE",
-            },
-          }}
-        />
-        <SupportButton />
-      </ThemeProvider>
-    </>
-  );
+  if (isRendered)
+    return (
+      <>
+        <GoogleAnalytics />
+        <ThemeProvider theme={lightmode ? lightTheme : darkTheme}>
+          <GlobalStyle />
+          <Component {...pageProps} />
+          <Toaster
+            position="bottom-right"
+            toastOptions={{
+              style: {
+                background: "#4D4D4D",
+                color: "#B9BBBE",
+              },
+            }}
+          />
+          <SupportButton />
+        </ThemeProvider>
+      </>
+    );
 }
 
 export default JsonCrack;

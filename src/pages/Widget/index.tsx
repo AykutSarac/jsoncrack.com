@@ -1,11 +1,9 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { parse } from "jsonc-parser";
 import toast from "react-hot-toast";
-import { baseURL, defaultJson } from "src/constants/data";
+import { baseURL } from "src/constants/data";
 import { NodeModal } from "src/containers/Modals/NodeModal";
-import useConfig from "src/hooks/store/useConfig";
 import useGraph from "src/hooks/store/useGraph";
 import { parser } from "src/utils/jsonParser";
 import styled from "styled-components";
@@ -46,19 +44,21 @@ interface EmbedMessage {
   };
 }
 
+const StyledDeprecated = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+
+  a {
+    text-decoration: underline;
+  }
+`;
+
 const WidgetPage = () => {
   const { query, push } = useRouter();
-  const [json, setJson] = React.useState(defaultJson);
-
-  React.useEffect(() => {
-    if (query.json)
-      setJson(
-        JSON.stringify({
-          warning: "⚠️ Query params are deprecated now",
-          new: "Check out https://jsoncrack.com/embed",
-        })
-      );
-  }, [query.json]);
 
   const [isModalVisible, setModalVisible] = React.useState(false);
   const [selectedNode, setSelectedNode] = React.useState<[string, string][]>([]);
@@ -67,7 +67,6 @@ const WidgetPage = () => {
   const collapsedEdges = useGraph(state => state.collapsedEdges);
   const loading = useGraph(state => state.loading);
   const setGraphValue = useGraph(state => state.setGraphValue);
-  const centerView = useConfig(state => state.centerView);
 
   const openModal = React.useCallback(() => setModalVisible(true), []);
 
@@ -85,33 +84,38 @@ const WidgetPage = () => {
       selectedNodes.forEach(node => node.classList.add("hide"));
       selectedEdges.forEach(edge => edge.classList.add("hide"));
     }
-  }, [collapsedNodes, collapsedEdges, loading]);
+
+    if (!inIframe()) push("/");
+  }, [collapsedNodes, collapsedEdges, loading, push]);
 
   React.useEffect(() => {
     const handler = (event: EmbedMessage) => {
       try {
         if (!event.data?.json) return;
-        const parsedJson = JSON.stringify(parse(event.data.json));
-        setJson(parsedJson);
+        const { nodes, edges } = parser(event.data.json);
+
+        setGraphValue("nodes", nodes);
+        setGraphValue("edges", edges);
       } catch (error) {
+        console.error(error);
         toast.error("Invalid JSON!");
       }
     };
 
     window.addEventListener("message", handler);
     return () => window.removeEventListener("message", handler);
-  }, []);
+  }, [setGraphValue]);
 
-  React.useEffect(() => {
-    if (json) {
-      const { nodes, edges } = parser(json);
-
-      setGraphValue("nodes", nodes);
-      setGraphValue("edges", edges);
-    }
-
-    if (!inIframe()) push("/");
-  }, [push, json, setGraphValue, centerView]);
+  if (query.json)
+    return (
+      <StyledDeprecated>
+        <h1>⚠️ Deprecated ⚠️</h1>
+        <br />
+        <a href="https://jsoncrack.com/embed" target="_blank" rel="noreferrer">
+          https://jsoncrack.com/embed
+        </a>
+      </StyledDeprecated>
+    );
 
   return (
     <>
