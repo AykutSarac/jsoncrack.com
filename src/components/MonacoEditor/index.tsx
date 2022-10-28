@@ -50,7 +50,6 @@ export const MonacoEditor = ({
   React.useEffect(() => {
     const { nodes, edges } = parser(json, expand);
 
-    setGraphValue("loading", true);
     setGraphValue("nodes", nodes);
     setGraphValue("edges", edges);
     setValue(json);

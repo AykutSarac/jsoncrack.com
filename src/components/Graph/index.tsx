@@ -85,7 +85,6 @@ const GraphComponent = ({
         const MIN_SCALE = Math.round((450_000 / areaSize) * 100) / 100;
         const scale = MIN_SCALE > 2 ? 1 : MIN_SCALE <= 0 ? 0.1 : MIN_SCALE;
 
-        setLoading(true);
         setMinScale(scale);
         setSize({ width: layout.width + 400, height: layout.height + 400 });
 

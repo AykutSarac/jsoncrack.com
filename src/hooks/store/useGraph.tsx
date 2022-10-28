@@ -31,6 +31,7 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       collapsedParents: [],
       collapsedNodes: [],
       collapsedEdges: [],
+      loading: true,
       [key]: value,
     }),
   setLoading: loading => set({ loading }),
@@ -43,14 +44,17 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
     );
     const childrenEdges = getChildrenEdges(childrenNodes, get().edges);
 
-
     let nodesConnectedToParent = childrenEdges.reduce((nodes: string[], edge) => {
-      edge.from && !nodes.includes(edge.from) && nodes.push(edge.from)
-      edge.to && !nodes.includes(edge.to) && nodes.push(edge.to)
-      return nodes
+      edge.from && !nodes.includes(edge.from) && nodes.push(edge.from);
+      edge.to && !nodes.includes(edge.to) && nodes.push(edge.to);
+      return nodes;
     }, []);
-    const matchingNodesConnectedToParent = matchingNodes.filter(node => nodesConnectedToParent.includes(node));
-    const nodeIds = childrenNodes.map(node => node.id).concat(matchingNodesConnectedToParent);
+    const matchingNodesConnectedToParent = matchingNodes.filter(node =>
+      nodesConnectedToParent.includes(node)
+    );
+    const nodeIds = childrenNodes
+      .map(node => node.id)
+      .concat(matchingNodesConnectedToParent);
     const edgeIds = childrenEdges.map(edge => edge.id);
 
     const collapsedParents = get().collapsedParents.filter(cp => cp !== nodeId);
