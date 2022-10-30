@@ -9,7 +9,6 @@ import {
   HiOutlineSearchCircle,
 } from "react-icons/hi";
 import { SiVisualstudiocode } from "react-icons/si";
-import { TwitterTweetEmbed } from "react-twitter-embed";
 import { CarbonAds } from "src/components/CarbonAds";
 import { Producthunt } from "src/components/Producthunt";
 import { Sponsors } from "src/components/Sponsors";
@@ -17,6 +16,7 @@ import { defaultJson } from "src/constants/data";
 import { GoalsModal } from "src/containers/Modals/GoalsModal";
 import pkg from "../../../package.json";
 import * as Styles from "./styles";
+import Script from "next/script";
 
 const Navbar = () => (
   <Styles.StyledNavbar>
@@ -143,13 +143,35 @@ const FeaturesSection = () => (
 
 const GitHubSection = () => (
   <Styles.StyledSection id="github" reverse>
-    <TwitterTweetEmbed
-      tweetId="1519363257794015233"
-      options={{
-        width: "600",
-        align: "center",
-      }}
-    />
+    <Styles.StyledTwitterQuote>
+      <blockquote
+        className="twitter-tweet"
+        data-lang="en"
+        data-dnt="true"
+        data-theme="light"
+      >
+        <p lang="en" dir="ltr">
+          Looking to understand or explore some JSON? Just paste or upload to
+          visualize it as a graph with{" "}
+          <a href="https://t.co/HlKSrhKryJ">https://t.co/HlKSrhKryJ</a> 😍 <br />
+          <br />
+          Thanks to{" "}
+          <a href="https://twitter.com/aykutsarach?ref_src=twsrc%5Etfw">
+            @aykutsarach
+          </a>
+          ! <a href="https://t.co/0LyPUL8Ezz">pic.twitter.com/0LyPUL8Ezz</a>
+        </p>
+        &mdash; GitHub (@github){" "}
+        <a href="https://twitter.com/github/status/1519363257794015233?ref_src=twsrc%5Etfw">
+          April 27, 2022
+        </a>
+      </blockquote>{" "}
+      <Script
+        async
+        src="https://platform.twitter.com/widgets.js"
+        charSet="utf-8"
+      ></Script>
+    </Styles.StyledTwitterQuote>
     <Styles.StyledSectionArea>
       <Styles.StyledSubTitle>Open Source Community</Styles.StyledSubTitle>
       <Styles.StyledMinorTitle>
