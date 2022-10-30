@@ -170,7 +170,7 @@ export const Sidebar: React.FC = () => {
 
   const toggleFoldNodes = () => {
     setConfig("foldNodes", !foldNodes);
-    toast(`${foldNodes ? "Fold" : "Unfold"} nodes.`);
+    toast(`${foldNodes ? "Unfolded" : "Folded"} nodes`);
   };
 
   const toggleLayout = () => {
@@ -216,10 +216,10 @@ export const Sidebar: React.FC = () => {
         </Tooltip>
         <Tooltip
           className="desktop"
-          title={foldNodes ? "Fold Nodes" : "Unfold Nodes"}
+          title={foldNodes ? "Unfold Nodes" : "Fold Nodes"}
         >
           <StyledElement onClick={toggleFoldNodes}>
-            {foldNodes ? <CgArrowsMergeAltH /> : <CgArrowsShrinkH />}
+            {foldNodes ? <CgArrowsShrinkH /> : <CgArrowsMergeAltH />}
           </StyledElement>
         </Tooltip>
         <Tooltip

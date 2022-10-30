@@ -3,7 +3,7 @@ import { parse } from "jsonc-parser";
 const calculateSize = (
   text: string | [string, string][],
   isParent = false,
-  isExpanded: boolean
+  isFolded: boolean
 ) => {
   let value = "";
 
@@ -16,7 +16,7 @@ const calculateSize = (
 
   const getWidth = () => {
     if (Array.isArray(text) && !text.length) return 40;
-    if (isExpanded) return 35 + longestLine * 8 + (isParent ? 60 : 0);
+    if (!isFolded) return 35 + longestLine * 8 + (isParent ? 60 : 0);
     if (isParent) return 170;
     return 200;
   };
@@ -45,14 +45,14 @@ const filterValues = ([k, v]) => {
   return true;
 };
 
-function generateChildren(object: Object, isExpanded = true, nextId: () => string) {
+function generateChildren(object: Object, isFolded = false, nextId: () => string) {
   if (!(object instanceof Object)) object = [object];
 
   return Object.entries(object)
     .filter(filterChild)
     .flatMap(([key, v]) => {
-      const { width, height } = calculateSize(key, true, isExpanded);
-      const children = extract(v, isExpanded, nextId);
+      const { width, height } = calculateSize(key, true, isFolded);
+      const children = extract(v, isFolded, nextId);
 
       return [
         {
@@ -81,7 +81,7 @@ function generateNodeData(object: Object) {
 
 const extract = (
   os: string[] | object[] | null,
-  isExpanded = true,
+  isFolded = false,
   nextId = (
     id => () =>
       String(++id)
@@ -91,14 +91,14 @@ const extract = (
 
   return [os].flat().map(o => {
     const text = generateNodeData(o);
-    const { width, height } = calculateSize(text, false, isExpanded);
+    const { width, height } = calculateSize(text, false, isFolded);
 
     return {
       id: nextId(),
       text,
       width,
       height,
-      children: generateChildren(o, isExpanded, nextId),
+      children: generateChildren(o, isFolded, nextId),
       data: {
         isParent: false,
         childrenCount: 0,
@@ -122,14 +122,14 @@ const relationships = (xs: { id: string; children: never[] }[]) => {
   ]);
 };
 
-export const parser = (jsonStr: string, isExpanded = true) => {
+export const parser = (jsonStr: string, isFolded = false) => {
   try {
     let json = parse(jsonStr);
     if (!Array.isArray(json)) json = [json];
     const nodes: NodeData[] = [];
     const edges: EdgeData[] = [];
 
-    const mappedElements = extract(json, isExpanded);
+    const mappedElements = extract(json, isFolded);
     const res = [...flatten(mappedElements), ...relationships(mappedElements)];
 
     res.forEach(data => {
