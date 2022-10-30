@@ -56,6 +56,9 @@ function JsonCrack({ Component, pageProps }: AppProps) {
           <Component {...pageProps} />
           <Toaster
             position="bottom-right"
+            containerStyle={{
+              right: 60,
+            }}
             toastOptions={{
               style: {
                 background: "#4D4D4D",

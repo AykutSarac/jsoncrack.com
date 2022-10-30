@@ -52,7 +52,7 @@ const HeroSection = () => {
       </Styles.StyledSubTitle>
       <Styles.StyledMinorTitle>Paste - Import - Fetch!</Styles.StyledMinorTitle>
 
-      <Styles.StyledButton rel="prefetch" href="/editor" target="_blank" link>
+      <Styles.StyledButton rel="prefetch" href="/editor" link>
         GO TO EDITOR
       </Styles.StyledButton>
 

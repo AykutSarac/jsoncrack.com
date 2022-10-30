@@ -41,19 +41,19 @@ export const MonacoEditor = ({
   setHasError: (value: boolean) => void;
 }) => {
   const json = useConfig(state => state.json);
-  const expand = useConfig(state => state.expand);
+  const foldNodes = useConfig(state => state.foldNodes);
   const setJson = useConfig(state => state.setJson);
   const setGraphValue = useGraph(state => state.setGraphValue);
   const lightmode = useStored(state => (state.lightmode ? "light" : "vs-dark"));
   const [value, setValue] = React.useState<string | undefined>("");
 
   React.useEffect(() => {
-    const { nodes, edges } = parser(json, expand);
+    const { nodes, edges } = parser(json, foldNodes);
 
     setGraphValue("nodes", nodes);
     setGraphValue("edges", edges);
     setValue(json);
-  }, [expand, json, setGraphValue]);
+  }, [foldNodes, json, setGraphValue]);
 
   React.useEffect(() => {
     const formatTimer = setTimeout(() => {

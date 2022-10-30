@@ -69,7 +69,7 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       collapsedParents,
       collapsedNodes,
       collapsedEdges,
-      graphCollapsed: false,
+      graphCollapsed: !!collapsedNodes.length,
     });
   },
   collapseNodes: nodeId => {
@@ -83,6 +83,7 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       collapsedParents: get().collapsedParents.concat(nodeId),
       collapsedNodes: get().collapsedNodes.concat(nodeIds),
       collapsedEdges: get().collapsedEdges.concat(edgeIds),
+      graphCollapsed: !!get().collapsedNodes.concat(nodeIds).length,
     });
   },
   collapseGraph: () => {
