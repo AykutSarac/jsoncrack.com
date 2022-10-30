@@ -21,8 +21,6 @@ To get an overview of the project, read the [README](README.md). Here are some r
 
 Join the [Discord channel](https://discord.gg/yVyTtCRueq). If you have questions or feedback, this is the best place to reach the team and other contributors directly.
 
-If you're already familar with Open Source contributions, we **highly recommend** you to take a look at our [TODO List](/TODO.md).
-
 ### Issues
 
 #### Create a new issue
