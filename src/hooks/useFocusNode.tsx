@@ -4,7 +4,7 @@ import {
   cleanupHighlight,
   highlightMatchedNodes,
 } from "src/utils/search";
-import useConfig from "./store/useConfig";
+import useConfig from "../store/useConfig";
 
 export const useFocusNode = () => {
   const setConfig = useConfig(state => state.setConfig);

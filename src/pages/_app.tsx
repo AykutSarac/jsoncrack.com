@@ -8,8 +8,8 @@ import { GoogleAnalytics } from "src/components/GoogleAnalytics";
 import { SupportButton } from "src/components/SupportButton";
 import GlobalStyle from "src/constants/globalStyle";
 import { darkTheme, lightTheme } from "src/constants/theme";
-import useConfig from "src/hooks/store/useConfig";
-import useStored from "src/hooks/store/useStored";
+import useConfig from "src/store/useConfig";
+import useStored from "src/store/useStored";
 import { isValidJson } from "src/utils/isValidJson";
 import { ThemeProvider } from "styled-components";
 

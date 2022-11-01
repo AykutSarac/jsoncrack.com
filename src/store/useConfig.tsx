@@ -1,5 +1,4 @@
 import { ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
-import { CanvasDirection } from "reaflow";
 import { defaultJson } from "src/constants/data";
 import create from "zustand";
 
@@ -15,7 +14,6 @@ interface ConfigActions {
 const initialStates = {
   json: defaultJson,
   cursorMode: "move" as "move" | "navigation",
-  layout: "RIGHT" as CanvasDirection,
   foldNodes: false,
   hideEditor: false,
   performanceMode: true,

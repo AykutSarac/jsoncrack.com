@@ -2,9 +2,9 @@ import React from "react";
 import Editor, { loader, Monaco } from "@monaco-editor/react";
 import { parse } from "jsonc-parser";
 import { Loading } from "src/components/Loading";
-import useConfig from "src/hooks/store/useConfig";
-import useGraph from "src/hooks/store/useGraph";
-import useStored from "src/hooks/store/useStored";
+import useConfig from "src/store/useConfig";
+import useGraph from "src/store/useGraph";
+import useStored from "src/store/useStored";
 import { parser } from "src/utils/jsonParser";
 import styled from "styled-components";
 
@@ -40,12 +40,13 @@ export const MonacoEditor = ({
 }: {
   setHasError: (value: boolean) => void;
 }) => {
-  const json = useConfig(state => state.json);
-  const foldNodes = useConfig(state => state.foldNodes);
+  const [value, setValue] = React.useState<string | undefined>("");
   const setJson = useConfig(state => state.setJson);
   const setGraphValue = useGraph(state => state.setGraphValue);
+
+  const json = useConfig(state => state.json);
+  const foldNodes = useConfig(state => state.foldNodes);
   const lightmode = useStored(state => (state.lightmode ? "light" : "vs-dark"));
-  const [value, setValue] = React.useState<string | undefined>("");
 
   React.useEffect(() => {
     const { nodes, edges } = parser(json, foldNodes);

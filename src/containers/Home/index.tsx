@@ -1,6 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import Link from "next/link";
+import Script from "next/script";
 import { FaGithub, FaHeart, FaLinkedin, FaTwitter } from "react-icons/fa";
 import {
   HiCursorClick,
@@ -16,7 +17,6 @@ import { defaultJson } from "src/constants/data";
 import { GoalsModal } from "src/containers/Modals/GoalsModal";
 import pkg from "../../../package.json";
 import * as Styles from "./styles";
-import Script from "next/script";
 
 const Navbar = () => (
   <Styles.StyledNavbar>

@@ -1,7 +1,7 @@
 import React from "react";
 // import { useInViewport } from "react-in-viewport";
 import { CustomNodeProps } from "src/components/CustomNode";
-import useConfig from "src/hooks/store/useConfig";
+import useConfig from "src/store/useConfig";
 import * as Styled from "./styles";
 
 const inViewport = true;

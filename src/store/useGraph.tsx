@@ -1,3 +1,4 @@
+import { CanvasDirection } from "reaflow";
 import { Graph } from "src/components/Graph";
 import { getChildrenEdges } from "src/utils/getChildrenEdges";
 import { getOutgoers } from "src/utils/getOutgoers";
@@ -5,6 +6,7 @@ import create from "zustand";
 
 const initialStates = {
   loading: false,
+  direction: "RIGHT" as CanvasDirection,
   graphCollapsed: false,
   nodes: [] as NodeData[],
   edges: [] as EdgeData[],
@@ -18,6 +20,7 @@ export type Graph = typeof initialStates;
 interface GraphActions {
   setGraphValue: (key: keyof Graph, value: any) => void;
   setLoading: (loading: boolean) => void;
+  setDirection: (direction: CanvasDirection) => void;
   expandNodes: (nodeId: string) => void;
   collapseNodes: (nodeId: string) => void;
   collapseGraph: () => void;
@@ -26,6 +29,7 @@ interface GraphActions {
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
   ...initialStates,
+  setDirection: direction => set({ direction }),
   setGraphValue: (key, value) =>
     set({
       collapsedParents: [],

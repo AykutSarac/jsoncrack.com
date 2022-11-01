@@ -4,7 +4,7 @@ import { AiOutlineUpload } from "react-icons/ai";
 import { Button } from "src/components/Button";
 import { Input } from "src/components/Input";
 import { Modal, ModalProps } from "src/components/Modal";
-import useConfig from "src/hooks/store/useConfig";
+import useConfig from "src/store/useConfig";
 import styled from "styled-components";
 
 const StyledModalContent = styled(Modal.Content)`

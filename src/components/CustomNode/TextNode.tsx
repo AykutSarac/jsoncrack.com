@@ -2,9 +2,9 @@ import React from "react";
 import { MdLink, MdLinkOff } from "react-icons/md";
 // import { useInViewport } from "react-in-viewport";
 import { CustomNodeProps } from "src/components/CustomNode";
-import useConfig from "src/hooks/store/useConfig";
-import useGraph from "src/hooks/store/useGraph";
-import useStored from "src/hooks/store/useStored";
+import useConfig from "src/store/useConfig";
+import useGraph from "src/store/useGraph";
+import useStored from "src/store/useStored";
 import styled from "styled-components";
 import * as Styled from "./styles";
 

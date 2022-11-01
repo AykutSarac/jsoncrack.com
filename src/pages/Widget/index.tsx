@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import { baseURL } from "src/constants/data";
 import { NodeModal } from "src/containers/Modals/NodeModal";
-import useGraph from "src/hooks/store/useGraph";
+import useGraph from "src/store/useGraph";
 import { parser } from "src/utils/jsonParser";
 import styled from "styled-components";
 
