@@ -33,232 +33,243 @@ const calculateSize = (
 };
 
 export const parser = (jsonStr: string, isFolded = false) => {
-try{  
-  let json = parseTree(jsonStr);
-  console.log(json);
-  let nodes: NodeData[] = [];
-  let edges: EdgeData[] = [];
+  try {
+    let json = parseTree(jsonStr);
+    let nodes: NodeData[] = [];
+    let edges: EdgeData[] = [];
 
-  const addNodes = (
-    text: any,
-    width: number,
-    height: number,
-    parent: boolean,
-    isEmpty?: boolean
-  ) => {
-    let actualId = String(nodes.length + 1);
-    nodes = [
-      ...nodes,
-      {
-        id: actualId,
-        text: text,
-        width: width,
-        height: height,
-        data: {
-          isParent: parent,
-          childrenCount: parent ? 1 : 0,
-          isEmpty: isEmpty,
+    const addNodes = (
+      text: any,
+      width: number,
+      height: number,
+      parent: boolean,
+      isEmpty?: boolean
+    ) => {
+      let actualId = String(nodes.length + 1);
+      nodes = [
+        ...nodes,
+        {
+          id: actualId,
+          text: text,
+          width: width,
+          height: height,
+          data: {
+            isParent: parent,
+            childrenCount: parent ? 1 : 0,
+            isEmpty: isEmpty,
+          },
         },
-      },
-    ];
-    return actualId;
-  };
+      ];
+      return actualId;
+    };
 
-  const addEdges = (from: string, to: string) => {
-    edges = [
-      ...edges,
-      {
-        id: `e${from}-${to}`,
-        from: from,
-        to: to,
-      },
-    ];
-  };
+    const addEdges = (from: string, to: string) => {
+      edges = [
+        ...edges,
+        {
+          id: `e${from}-${to}`,
+          from: from,
+          to: to,
+        },
+      ];
+    };
 
-  let parentName: string = "";
-  let bracketOpen: string[] = [];
-  let objectsFromArray: number[] = [];
-  let notHaveParent: string[] = [];
-  let brothersNode: [string, string][] = [];
-  let brothersParentId: string | undefined = "";
-  let brotherKey: string = "";
-  let brothersNodeProps: {
-    id: string;
-    parentId: string | undefined;
-    objectsFromArrayId: number | undefined;
-  }[] = [];
+    let parentName: string = "";
+    let bracketOpen: { id: string; type: string }[] = [];
+    let objectsFromArray: number[] = [];
+    let notHaveParent: string[] = [];
+    let brothersNode: [string, string][] = [];
+    let brothersParentId: string | undefined = "";
+    let brotherKey: string = "";
+    let brothersNodeProps: {
+      id: string;
+      parentId: string | undefined;
+      objectsFromArrayId: number | undefined;
+    }[] = [];
 
-  const traverse = (
-    objectToTraverse: Node,
-    parentType?: string,
-    myParentId?: string,
-    nextType?: string
-  ) => {
-    let { type, children, value } = objectToTraverse;
+    const traverse = (
+      objectToTraverse: Node,
+      parentType?: string,
+      myParentId?: string,
+      nextType?: string
+    ) => {
+      let { type, children, value } = objectToTraverse;
 
-    if (!children) {
-      if (value !== undefined) {
-        if (
-          parentType === "property" &&
-          nextType !== "object" &&
-          nextType !== "array"
-        ) {
-          brothersParentId = myParentId;
-          if (nextType === undefined) {
-            // add key and value to brothers node
-            brothersNode = [...brothersNode, [brotherKey, value]];
-          } else {
-            brotherKey = value;
+      if (!children) {
+        if (value !== undefined) {
+          if (
+            parentType === "property" &&
+            nextType !== "object" &&
+            nextType !== "array"
+          ) {
+            brothersParentId = myParentId;
+            if (nextType === undefined) {
+              // add key and value to brothers node
+              brothersNode = [...brothersNode, [brotherKey, value]];
+            } else {
+              brotherKey = value;
+            }
+          } else if (parentType === "array") {
+            const { width, height } = calculateSize(String(value), false, isFolded);
+            const nodeFromArrayId = addNodes(String(value), width, height, false);
+            if (myParentId) {
+              addEdges(myParentId, nodeFromArrayId);
+            }
           }
-        } else if (parentType === "array") {
-          const { width, height } = calculateSize(String(value), false, isFolded);
-          const nodeFromArrayId = addNodes(String(value), width, height, false);
-          if (myParentId) {
-            addEdges(myParentId, nodeFromArrayId);
+          if (nextType && parentType !== "array") {
+            if (nextType === "object" || nextType === "array") {
+              parentName = value;
+            }
           }
         }
-        if (nextType && parentType !== "array") {
-          if (nextType === "object" || nextType === "array") {
-            parentName = value;
+      } else if (children) {
+        let parentId: string | undefined;
+
+        if (type !== "property" && parentName !== "") {
+          // add last brothers node and add parent node
+          if (brothersNode.length > 0) {
+            // end brothers node
+            const { width, height } = calculateSize(brothersNode, false, isFolded);
+            const brothersNodeId = addNodes(brothersNode, width, height, false);
+            brothersNode = [];
+            if (brothersParentId) {
+              addEdges(brothersParentId, brothersNodeId);
+            } else {
+              notHaveParent = [...notHaveParent, brothersNodeId];
+            }
+
+            brothersNodeProps = [
+              ...brothersNodeProps,
+              {
+                id: brothersNodeId,
+                parentId: brothersParentId,
+                objectsFromArrayId: objectsFromArray[objectsFromArray.length - 1],
+              },
+            ];
           }
-        }
-      }
-    } else if (children) {
-      let parentId: string | undefined;
+          // add parent node
+          const { width, height } = calculateSize(parentName, true, isFolded);
+          parentId = addNodes(parentName, width, height, true);
+          bracketOpen = [...bracketOpen, { id: parentId, type: type }];
+          parentName = "";
 
-      if (type !== "property" && parentName !== "") {
-        // add last brothers node and add parent node
-        if (brothersNode.length > 0) {
-          // end brothers node
-          const { width, height } = calculateSize(brothersNode, false, isFolded);
-          const brothersNodeId = addNodes(brothersNode, width, height, false);
-          brothersNode = [];
-          if (brothersParentId) {
-            addEdges(brothersParentId, brothersNodeId);
-          } else {
-            notHaveParent = [...notHaveParent, brothersNodeId];
-          }
-
-          brothersNodeProps = [
-            ...brothersNodeProps,
-            {
-              id: brothersNodeId,
-              parentId: brothersParentId,
-              objectsFromArrayId: objectsFromArray[objectsFromArray.length - 1],
-            },
-          ];
-        }
-        // add parent node
-        const { width, height } = calculateSize(parentName, true, isFolded);
-        parentId = addNodes(parentName, width, height, true);
-        bracketOpen = [...bracketOpen, parentId];
-        parentName = "";
-
-        // add edges from parent node
-        let brothersProps = brothersNodeProps.filter(
-          e =>
-            e.parentId === myParentId &&
-            e.objectsFromArrayId === objectsFromArray[objectsFromArray.length - 1]
-        );
-        if (brothersProps.length > 0) {
-          addEdges(brothersProps[brothersProps.length - 1].id, parentId);
-        } else if (myParentId) {
-          addEdges(myParentId, parentId);
-        } else {
-          notHaveParent = [...notHaveParent, parentId];
-        }
-      } else if (parentType === "array") {
-        objectsFromArray = [...objectsFromArray, objectsFromArray.length + 1];
-      }
-
-      children.forEach((branch, index, array) => {
-        if (array[index + 1]) {
-          traverse(
-            branch,
-            type,
-            bracketOpen[bracketOpen.length - 1],
-            array[index + 1].type
+          // add edges from parent node
+          let brothersProps = brothersNodeProps.filter(
+            e =>
+              e.parentId === myParentId &&
+              e.objectsFromArrayId === objectsFromArray[objectsFromArray.length - 1]
           );
-        } else {
-          traverse(branch, type, bracketOpen[bracketOpen.length - 1]);
-        }
-      });
-
-      if (type !== "property") {
-        // when children end
-        if (parentType !== "array") {
-          if (bracketOpen.length > 0) {
-            let newBracketOpen = [...bracketOpen];
-            newBracketOpen.splice(newBracketOpen.length - 1);
-            bracketOpen = [...newBracketOpen];
+          if (
+            (brothersProps.length > 0 &&
+              bracketOpen[bracketOpen.length - 2] &&
+              bracketOpen[bracketOpen.length - 2].type !== "object") ||
+            (brothersProps.length > 0 && bracketOpen.length === 1)
+          ) {
+            addEdges(brothersProps[brothersProps.length - 1].id, parentId);
+          } else if (myParentId) {
+            addEdges(myParentId, parentId);
+          } else {
+            notHaveParent = [...notHaveParent, parentId];
           }
         } else if (parentType === "array") {
-          if (objectsFromArray.length > 0) {
-            let newobjectsFromArray = [...objectsFromArray];
-            newobjectsFromArray.splice(newobjectsFromArray.length - 1);
-            objectsFromArray = [...newobjectsFromArray];
-          }
+          objectsFromArray = [...objectsFromArray, objectsFromArray.length + 1];
         }
 
-        // add brothers node when is the last node
-        if (brothersNode.length > 0) {
-          const { width, height } = calculateSize(brothersNode, false, isFolded);
-          const brothersNodeId = addNodes(brothersNode, width, height, false);
-          brothersNode = [];
-          if (brothersParentId) {
-            addEdges(brothersParentId, brothersNodeId);
+        children.forEach((branch, index, array) => {
+          if (array[index + 1]) {
+            traverse(
+              branch,
+              type,
+              bracketOpen[bracketOpen.length - 1]
+                ? bracketOpen[bracketOpen.length - 1].id
+                : undefined,
+              array[index + 1].type
+            );
           } else {
-            notHaveParent = [...notHaveParent, brothersNodeId];
+            traverse(
+              branch,
+              type,
+              bracketOpen[bracketOpen.length - 1]
+                ? bracketOpen[bracketOpen.length - 1].id
+                : undefined
+            );
           }
-          brothersNodeProps = [
-            ...brothersNodeProps,
-            {
-              id: brothersNodeId,
-              parentId: brothersParentId,
-              objectsFromArrayId: objectsFromArray[objectsFromArray.length - 1],
-            },
-          ];
-        }
+        });
 
-        if (parentId) {
-          let myChildrens = edges.filter(e => e.from === parentId);
-          let myIndex = nodes.findIndex(e => e.id === parentId);
+        if (type !== "property") {
+          // when children end
+          if (parentType !== "array") {
+            if (bracketOpen.length > 0) {
+              let newBracketOpen = [...bracketOpen];
+              newBracketOpen.splice(newBracketOpen.length - 1);
+              bracketOpen = [...newBracketOpen];
+            }
+          } else if (parentType === "array") {
+            if (objectsFromArray.length > 0) {
+              let newobjectsFromArray = [...objectsFromArray];
+              newobjectsFromArray.splice(newobjectsFromArray.length - 1);
+              objectsFromArray = [...newobjectsFromArray];
+            }
+          }
 
-          let ModifyNodes = [...nodes];
-          if (ModifyNodes[myIndex]) {
-            ModifyNodes[myIndex].data.childrenCount = myChildrens.length;
-            nodes = [...ModifyNodes];
+          // add brothers node when is the last node
+          if (brothersNode.length > 0) {
+            const { width, height } = calculateSize(brothersNode, false, isFolded);
+            const brothersNodeId = addNodes(brothersNode, width, height, false);
+            brothersNode = [];
+            if (brothersParentId) {
+              addEdges(brothersParentId, brothersNodeId);
+            } else {
+              notHaveParent = [...notHaveParent, brothersNodeId];
+            }
+            brothersNodeProps = [
+              ...brothersNodeProps,
+              {
+                id: brothersNodeId,
+                parentId: brothersParentId,
+                objectsFromArrayId: objectsFromArray[objectsFromArray.length - 1],
+              },
+            ];
+          }
+
+          if (parentId) {
+            let myChildrens = edges.filter(e => e.from === parentId);
+            let myIndex = nodes.findIndex(e => e.id === parentId);
+
+            let ModifyNodes = [...nodes];
+            if (ModifyNodes[myIndex]) {
+              ModifyNodes[myIndex].data.childrenCount = myChildrens.length;
+              nodes = [...ModifyNodes];
+            }
           }
         }
       }
+    };
+    if (json) {
+      traverse(json);
     }
-  };
-  if (json) {
-    traverse(json);
-  }
-  if (notHaveParent.length > 1) {
-    console.log(notHaveParent);
-    const text = "";
-    const { width, height } = calculateSize(text, false, isFolded);
-    const emptyId = addNodes(text, width, height, false, true);
-    notHaveParent.forEach(children => {
-      addEdges(emptyId, children);
-    });
-  }
-  if (nodes.length === 0 && json) {
-    if (json.type === "array") {
-      const text = "[]";
+    if (notHaveParent.length > 1) {
+      const text = "";
       const { width, height } = calculateSize(text, false, isFolded);
-      addNodes(text, width, height, false);
-    } else {
-      const text = "{}";
-      const { width, height } = calculateSize(text, false, isFolded);
-      addNodes(text, width, height, false);
+      const emptyId = addNodes(text, width, height, false, true);
+      notHaveParent.forEach(children => {
+        addEdges(emptyId, children);
+      });
     }
-  }
+    if (nodes.length === 0 && json) {
+      if (json.type === "array") {
+        const text = "[]";
+        const { width, height } = calculateSize(text, false, isFolded);
+        addNodes(text, width, height, false);
+      } else {
+        const text = "{}";
+        const { width, height } = calculateSize(text, false, isFolded);
+        addNodes(text, width, height, false);
+      }
+    }
 
-  return { nodes, edges };
-} catch (error) {
+    return { nodes, edges };
+  } catch (error) {
     console.error(error);
     return {
       nodes: [],
