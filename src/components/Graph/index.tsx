@@ -31,7 +31,8 @@ const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
     cursor: move;
   }
 
-  .dragging, .dragging button {
+  .dragging,
+  .dragging button {
     pointer-events: none;
   }
 
@@ -45,7 +46,6 @@ const GraphComponent = ({
   openModal,
   setSelectedNode,
 }: LayoutProps) => {
-  const [minScale, setMinScale] = React.useState(0.4);
   const setLoading = useGraph(state => state.setLoading);
   const setConfig = useConfig(state => state.setConfig);
   const centerView = useConfig(state => state.centerView);
@@ -82,22 +82,44 @@ const GraphComponent = ({
           (areaSize * 100) / (size.width * size.height) - 100
         );
 
-        const MIN_SCALE = Math.round((450_000 / areaSize) * 100) / 100;
-        const scale = MIN_SCALE > 2 ? 1 : MIN_SCALE <= 0 ? 0.1 : MIN_SCALE;
-
-        setMinScale(scale);
         setSize({ width: layout.width + 400, height: layout.height + 400 });
 
         requestAnimationFrame(() => {
           setTimeout(() => {
             setLoading(false);
-            setTimeout(() => (changeRatio > 100 || isWidget) && centerView(), 0);
+            setTimeout(() => (changeRatio > 75 || isWidget) && centerView(), 0);
           }, 0);
         });
       }
     },
-    [centerView, isWidget, setLoading, size.height, size.width]
+    [size.width, size.height, setLoading, isWidget, centerView]
   );
+
+  // const onLayoutChange = React.useCallback(
+  //   (layout: ElkRoot) => {
+  //     if (layout.width && layout.height) {
+  //       const areaSize = layout.width * layout.height;
+  //       const changeRatio = Math.abs(
+  //         (areaSize * 100) / (size.width * size.height) - 100
+  //       );
+
+  //       const MIN_SCALE = Math.round((400_000 / areaSize) * 100) / 100;
+
+  //       const scale = MIN_SCALE > 2 ? 1 : MIN_SCALE <= 0 ? 0.1 : MIN_SCALE;
+
+  //       setMinScale(scale);
+  //       setSize({ width: layout.width + 400, height: layout.height + 400 });
+
+  //       requestAnimationFrame(() => {
+  //         setTimeout(() => {
+  //           setLoading(false);
+  //           setTimeout(() => (changeRatio > 50 || isWidget) && centerView(), 0);
+  //         }, 0);
+  //       });
+  //     }
+  //   },
+  //   [centerView, isWidget, setLoading, size.height, size.width]
+  // );
 
   const onCanvasClick = React.useCallback(() => {
     const input = document.querySelector("input:focus") as HTMLInputElement;
@@ -111,7 +133,7 @@ const GraphComponent = ({
       {loading && <Loading message="Painting graph..." />}
       <TransformWrapper
         maxScale={2}
-        minScale={minScale}
+        minScale={0.05}
         initialScale={0.4}
         wheel={{ step: 0.08 }}
         zoomAnimation={{ animationType: "linear" }}
