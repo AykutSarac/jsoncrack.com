@@ -77,6 +77,7 @@ export const parser = (jsonStr: string, isFolded = false) => {
     let parentName: string = "";
     let bracketOpen: { id: string; type: string }[] = [];
     let objectsFromArray: number[] = [];
+    let objectsFromArrayId = 0;
     let notHaveParent: string[] = [];
     let brothersNode: [string, string][] = [];
     let brothersParentId: string | undefined = "";
@@ -127,15 +128,16 @@ export const parser = (jsonStr: string, isFolded = false) => {
 
         if (type !== "property" && parentName !== "") {
           // add last brothers node and add parent node
+          
           if (brothersNode.length > 0) {
             // add or concat brothers node of same parent
             let findBrothersNode = brothersNodeProps.find(
               e =>
                 e.parentId === brothersParentId &&
                 e.objectsFromArrayId ===
-                  objectsFromArray[objectsFromArray.length - 2]
+                  objectsFromArray[objectsFromArray.length - 1]
             );
-            if (findBrothersNode && parentType !== "array") {
+            if (findBrothersNode) {
               let ModifyNodes = [...nodes];
               let findNode = nodes.findIndex(e => e.id === findBrothersNode?.id);
 
@@ -199,9 +201,8 @@ export const parser = (jsonStr: string, isFolded = false) => {
             notHaveParent = [...notHaveParent, parentId];
           }
         } else if (parentType === "array") {
-          objectsFromArray = [...objectsFromArray, objectsFromArray.length + 1];
-        }
-
+            objectsFromArray = [...objectsFromArray, objectsFromArrayId++];
+          }
         children.forEach((branch, index, array) => {
           if (array[index + 1]) {
             traverse(
@@ -225,19 +226,6 @@ export const parser = (jsonStr: string, isFolded = false) => {
 
         if (type !== "property") {
           // when children end
-          if (parentType !== "array") {
-            if (bracketOpen.length > 0) {
-              let newBracketOpen = [...bracketOpen];
-              newBracketOpen.splice(newBracketOpen.length - 1);
-              bracketOpen = [...newBracketOpen];
-            }
-          } else if (parentType === "array") {
-            if (objectsFromArray.length > 0) {
-              let newobjectsFromArray = [...objectsFromArray];
-              newobjectsFromArray.splice(newobjectsFromArray.length - 1);
-              objectsFromArray = [...newobjectsFromArray];
-            }
-          }
 
           // add or concat brothers node when it is the last parent node
           if (brothersNode.length > 0) {
@@ -245,9 +233,9 @@ export const parser = (jsonStr: string, isFolded = false) => {
               e =>
                 e.parentId === brothersParentId &&
                 e.objectsFromArrayId ===
-                  objectsFromArray[objectsFromArray.length - 2]
+                  objectsFromArray[objectsFromArray.length - 1]
             );
-            if (findBrothersNode && parentType !== "array") {
+            if (findBrothersNode) {
               let ModifyNodes = [...nodes];
               let findNode = nodes.findIndex(e => e.id === findBrothersNode?.id);
 
@@ -283,6 +271,21 @@ export const parser = (jsonStr: string, isFolded = false) => {
                   objectsFromArrayId: objectsFromArray[objectsFromArray.length - 1],
                 },
               ];
+            }
+          }
+
+          // close brackets
+          if (parentType !== "array") {
+            if (bracketOpen.length > 0) {
+              let newBracketOpen = [...bracketOpen];
+              newBracketOpen.splice(newBracketOpen.length - 1);
+              bracketOpen = [...newBracketOpen];
+            }
+          } else if (parentType === "array") {
+            if (objectsFromArray.length > 0) {
+              let newobjectsFromArray = [...objectsFromArray];
+              newobjectsFromArray.splice(newobjectsFromArray.length - 1);
+              objectsFromArray = [...newobjectsFromArray];
             }
           }
 
@@ -322,6 +325,7 @@ export const parser = (jsonStr: string, isFolded = false) => {
       }
     }
 
+    console.log(nodes);
     return { nodes, edges };
   } catch (error) {
     console.error(error);
