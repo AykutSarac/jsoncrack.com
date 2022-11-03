@@ -1,6 +1,5 @@
 import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import {
   AiOutlineDelete,
@@ -16,12 +15,14 @@ import { FiDownload } from "react-icons/fi";
 import { HiHeart } from "react-icons/hi";
 import { MdCenterFocusWeak } from "react-icons/md";
 import { TiFlowMerge } from "react-icons/ti";
+import { VscCollapseAll, VscExpandAll } from "react-icons/vsc";
 import { Tooltip } from "src/components/Tooltip";
 import { ClearModal } from "src/containers/Modals/ClearModal";
 import { DownloadModal } from "src/containers/Modals/DownloadModal";
 import { ImportModal } from "src/containers/Modals/ImportModal";
 import { ShareModal } from "src/containers/Modals/ShareModal";
 import useConfig from "src/hooks/store/useConfig";
+import useGraph from "src/hooks/store/useGraph";
 import { getNextLayout } from "src/utils/getNextLayout";
 import styled from "styled-components";
 import shallow from "zustand/shallow";
@@ -143,14 +144,18 @@ export const Sidebar: React.FC = () => {
   const getJson = useConfig(state => state.getJson);
   const setConfig = useConfig(state => state.setConfig);
   const centerView = useConfig(state => state.centerView);
+
+  const collapseGraph = useGraph(state => state.collapseGraph);
+  const expandGraph = useGraph(state => state.expandGraph);
+  const graphCollapsed = useGraph(state => state.graphCollapsed);
+
   const [uploadVisible, setUploadVisible] = React.useState(false);
   const [clearVisible, setClearVisible] = React.useState(false);
   const [shareVisible, setShareVisible] = React.useState(false);
   const [isDownloadVisible, setDownloadVisible] = React.useState(false);
-  const { push } = useRouter();
 
-  const [expand, layout, hideEditor] = useConfig(
-    state => [state.expand, state.layout, state.hideEditor],
+  const [foldNodes, layout, hideEditor] = useConfig(
+    state => [state.foldNodes, state.layout, state.hideEditor],
     shallow
   );
 
@@ -163,14 +168,21 @@ export const Sidebar: React.FC = () => {
     a.click();
   };
 
-  const toggleExpandCollapse = () => {
-    setConfig("expand", !expand);
-    toast(`${expand ? "Collapsed" : "Expanded"} nodes.`);
+  const toggleFoldNodes = () => {
+    setConfig("foldNodes", !foldNodes);
+    toast(`${foldNodes ? "Unfolded" : "Folded"} nodes`);
   };
 
   const toggleLayout = () => {
     const nextLayout = getNextLayout(layout);
     setConfig("layout", nextLayout);
+  };
+
+  const toggleExpandCollapseGraph = () => {
+    if (graphCollapsed) expandGraph();
+    else collapseGraph();
+
+    toast(`${graphCollapsed ? "Expanded" : "Collapsed"} graph.`);
   };
 
   return (
@@ -204,13 +216,18 @@ export const Sidebar: React.FC = () => {
         </Tooltip>
         <Tooltip
           className="desktop"
-          title={expand ? "Shrink Nodes" : "Expand Nodes"}
+          title={foldNodes ? "Unfold Nodes" : "Fold Nodes"}
         >
-          <StyledElement
-            title="Toggle Expand/Collapse"
-            onClick={toggleExpandCollapse}
-          >
-            {expand ? <CgArrowsMergeAltH /> : <CgArrowsShrinkH />}
+          <StyledElement onClick={toggleFoldNodes}>
+            {foldNodes ? <CgArrowsShrinkH /> : <CgArrowsMergeAltH />}
+          </StyledElement>
+        </Tooltip>
+        <Tooltip
+          className="desktop"
+          title={graphCollapsed ? "Expand Graph" : "Collapse Graph"}
+        >
+          <StyledElement onClick={toggleExpandCollapseGraph}>
+            {graphCollapsed ? <VscExpandAll /> : <VscCollapseAll />}
           </StyledElement>
         </Tooltip>
         <Tooltip className="desktop" title="Save JSON">

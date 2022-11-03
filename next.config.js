@@ -14,6 +14,7 @@ const nextConfig = {
     "/": { page: "/" },
     "/editor": { page: "/Editor" },
     "/widget": { page: "/Widget" },
+    "/embed": { page: "/Embed" },
   }),
 };
 

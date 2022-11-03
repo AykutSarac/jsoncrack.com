@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "next/router";
 import { compress } from "compress-json";
 import toast from "react-hot-toast";
 import { BiErrorAlt } from "react-icons/bi";
@@ -46,8 +47,9 @@ const StyledContainer = styled.div`
 export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   const json = useConfig(state => state.json);
   const [encodedJson, setEncodedJson] = React.useState("");
+  const navigate = useRouter();
 
-  const embedText = `<iframe src="${baseURL}/widget?json=${encodedJson}" width="512" height="384" style="border: 2px solid #b9bbbe; border-radius: 6px;"></iframe>`;
+  const embedText = `<iframe id="jsoncrackEmbed" src="${baseURL}/widget></iframe>`;
   const shareURL = `${baseURL}/editor?json=${encodedJson}`;
 
   React.useEffect(() => {
@@ -91,9 +93,12 @@ export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
             <StyledContainer>
               Embed into your website
               <StyledFlex>
-                <Input value={embedText} type="url" readOnly />
-                <Button status="SECONDARY" onClick={() => handleShare(embedText)}>
-                  Copy
+                <Button
+                  status="SUCCESS"
+                  onClick={() => navigate.push("/embed")}
+                  block
+                >
+                  Learn How to Embed
                 </Button>
               </StyledFlex>
             </StyledContainer>

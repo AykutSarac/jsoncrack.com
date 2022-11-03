@@ -9,13 +9,14 @@ import {
   HiOutlineSearchCircle,
 } from "react-icons/hi";
 import { SiVisualstudiocode } from "react-icons/si";
-import { TwitterTweetEmbed } from "react-twitter-embed";
 import { CarbonAds } from "src/components/CarbonAds";
 import { Producthunt } from "src/components/Producthunt";
 import { Sponsors } from "src/components/Sponsors";
+import { defaultJson } from "src/constants/data";
 import { GoalsModal } from "src/containers/Modals/GoalsModal";
 import pkg from "../../../package.json";
 import * as Styles from "./styles";
+import Script from "next/script";
 
 const Navbar = () => (
   <Styles.StyledNavbar>
@@ -51,10 +52,15 @@ const HeroSection = () => {
       </Styles.StyledSubTitle>
       <Styles.StyledMinorTitle>Paste - Import - Fetch!</Styles.StyledMinorTitle>
 
+      <Styles.StyledButton rel="prefetch" href="/editor" link>
+        GO TO EDITOR
+      </Styles.StyledButton>
+
       <Styles.StyledButtonWrapper>
-        <Styles.StyledButton rel="prefetch" href="/editor" target="_blank" link>
-          GO TO EDITOR
-        </Styles.StyledButton>
+        <Styles.StyledSponsorButton onClick={() => setModalVisible(true)}>
+          Help JSON Crack&apos;s Goals
+          <FaHeart />
+        </Styles.StyledSponsorButton>
         <Link
           href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode"
           passHref
@@ -64,13 +70,8 @@ const HeroSection = () => {
             <SiVisualstudiocode />
           </Styles.StyledSponsorButton>
         </Link>
+        <GoalsModal visible={isModalVisible} setVisible={setModalVisible} />
       </Styles.StyledButtonWrapper>
-
-      <Styles.StyledSponsorButton onClick={() => setModalVisible(true)}>
-        Help JSON Crack&apos;s Goals
-        <FaHeart />
-      </Styles.StyledSponsorButton>
-      <GoalsModal visible={isModalVisible} setVisible={setModalVisible} />
     </Styles.StyledHeroSection>
   );
 };
@@ -142,13 +143,35 @@ const FeaturesSection = () => (
 
 const GitHubSection = () => (
   <Styles.StyledSection id="github" reverse>
-    <TwitterTweetEmbed
-      tweetId="1519363257794015233"
-      options={{
-        width: "600",
-        align: "center",
-      }}
-    />
+    <Styles.StyledTwitterQuote>
+      <blockquote
+        className="twitter-tweet"
+        data-lang="en"
+        data-dnt="true"
+        data-theme="light"
+      >
+        <p lang="en" dir="ltr">
+          Looking to understand or explore some JSON? Just paste or upload to
+          visualize it as a graph with{" "}
+          <a href="https://t.co/HlKSrhKryJ">https://t.co/HlKSrhKryJ</a> 😍 <br />
+          <br />
+          Thanks to{" "}
+          <a href="https://twitter.com/aykutsarach?ref_src=twsrc%5Etfw">
+            @aykutsarach
+          </a>
+          ! <a href="https://t.co/0LyPUL8Ezz">pic.twitter.com/0LyPUL8Ezz</a>
+        </p>
+        &mdash; GitHub (@github){" "}
+        <a href="https://twitter.com/github/status/1519363257794015233?ref_src=twsrc%5Etfw">
+          April 27, 2022
+        </a>
+      </blockquote>{" "}
+      <Script
+        async
+        src="https://platform.twitter.com/widgets.js"
+        charSet="utf-8"
+      ></Script>
+    </Styles.StyledTwitterQuote>
     <Styles.StyledSectionArea>
       <Styles.StyledSubTitle>Open Source Community</Styles.StyledSubTitle>
       <Styles.StyledMinorTitle>
@@ -177,7 +200,17 @@ const EmbedSection = () => (
       </Styles.StyledMinorTitle>
     </Styles.StyledSectionArea>
     <div>
-      <Styles.StyledIframge src="https://jsoncrack.com/widget?json=%5B%5B%22squadName%22%2C%22homeTown%22%2C%22formed%22%2C%22secretBase%22%2C%22active%22%2C%22members%22%2C%22a%7C0%7C1%7C2%7C3%7C4%7C5%22%2C%22Super%20hero%20squad%22%2C%22Metro%20City%22%2C%22n%7CWW%22%2C%22Super%20tower%22%2C%22b%7CT%22%2C%22name%22%2C%22age%22%2C%22secretIdentity%22%2C%22powers%22%2C%22a%7CC%7CD%7CE%7CF%22%2C%22Molecule%20Man%22%2C%22n%7CT%22%2C%22Dan%20Jukes%22%2C%22Radiation%20resistance%22%2C%22Turning%20tiny%22%2C%22Radiation%20blast%22%2C%22a%7CK%7CL%7CM%22%2C%22o%7CG%7CH%7CI%7CJ%7CN%22%2C%22Madame%20Uppercut%22%2C%22n%7Cd%22%2C%22Jane%20Wilson%22%2C%22Million%20tonne%20punch%22%2C%22Damage%20resistance%22%2C%22Superhuman%20reflexes%22%2C%22a%7CS%7CT%7CU%22%2C%22o%7CG%7CP%7CQ%7CR%7CV%22%2C%22Eternal%20Flame%22%2C%22n%7C4C92%22%2C%22Unknown%22%2C%22Immortality%22%2C%22Heat%20Immunity%22%2C%22Inferno%22%2C%22Teleportation%22%2C%22Interdimensional%20travel%22%2C%22a%7Ca%7Cb%7Cc%7Cd%7Ce%22%2C%22o%7CG%7CX%7CY%7CZ%7Cf%22%2C%22a%7CO%7CW%7Cg%22%2C%22o%7C6%7C7%7C8%7C9%7CA%7CB%7Ch%22%5D%2C%22i%22%5D"></Styles.StyledIframge>
+      <Styles.StyledIframge
+        src="https://jsoncrack.com/widget"
+        onLoad={e => {
+          const frame = e.currentTarget.contentWindow;
+          setTimeout(() => {
+            frame?.postMessage({
+              json: defaultJson,
+            });
+          }, 500);
+        }}
+      ></Styles.StyledIframge>
     </div>
   </Styles.StyledSection>
 );

@@ -88,3 +88,9 @@ export const StyledRow = styled.span.attrs<{
   white-space: nowrap;
   padding: 0 auto;
 `;
+
+export const StyledChildrenCount = styled.span`
+  color: ${({ theme }) => theme.TEXT_POSITIVE};
+  padding: 10px;
+  margin-left: -15px;
+`;

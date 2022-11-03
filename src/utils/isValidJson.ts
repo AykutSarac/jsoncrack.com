@@ -1,6 +1,8 @@
+import { parse } from "jsonc-parser";
+
 export const isValidJson = (str: string) => {
   try {
-    JSON.parse(str);
+    parse(str);
   } catch (e) {
     return false;
   }

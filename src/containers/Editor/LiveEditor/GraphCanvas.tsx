@@ -11,6 +11,7 @@ export const GraphCanvas = ({ isWidget = false }: { isWidget?: boolean }) => {
 
   const collapsedNodes = useGraph(state => state.collapsedNodes);
   const collapsedEdges = useGraph(state => state.collapsedEdges);
+  const loading = useGraph(state => state.loading);
 
   React.useEffect(() => {
     const nodeList = collapsedNodes.map(id => `[id$="node-${id}"]`);
@@ -26,7 +27,7 @@ export const GraphCanvas = ({ isWidget = false }: { isWidget?: boolean }) => {
       selectedNodes.forEach(node => node.classList.add("hide"));
       selectedEdges.forEach(edge => edge.classList.add("hide"));
     }
-  }, [collapsedNodes, collapsedEdges]);
+  }, [collapsedNodes, collapsedEdges, loading]);
 
   return (
     <>

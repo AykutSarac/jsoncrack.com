@@ -66,7 +66,7 @@ export const CarbonAds: React.FC<{ editor?: boolean }> = ({ editor = false }) =>
       )}
       <Script
         type="text/javascript"
-        src="https://cdn.carbonads.com/carbon.js?serve=CE7IPKQL&placement=jsonvisiocom"
+        src="//cdn.carbonads.com/carbon.js?serve=CE7IPKQL&placement=jsoncrackcom"
         id="_carbonads_js"
         strategy="lazyOnload"
         onLoad={() => {
@@ -75,7 +75,6 @@ export const CarbonAds: React.FC<{ editor?: boolean }> = ({ editor = false }) =>
             const ads = document.getElementById("carbonads");
 
             if (ads === null) return setTimeout(() => init(), 500);
-
             parent?.appendChild(ads);
           };
 

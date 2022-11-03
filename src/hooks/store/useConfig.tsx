@@ -16,7 +16,7 @@ const initialStates = {
   json: defaultJson,
   cursorMode: "move" as "move" | "navigation",
   layout: "RIGHT" as CanvasDirection,
-  expand: true,
+  foldNodes: false,
   hideEditor: false,
   performanceMode: true,
   disableLoading: false,

@@ -26,6 +26,10 @@ export const SettingsModal: React.FC<{
     state => [state.toggleHideCollapse, state.hideCollapse],
     shallow
   );
+  const [toggleHideChildrenCount, hideChildrenCount] = useStored(
+    state => [state.toggleHideChildrenCount, state.hideChildrenCount],
+    shallow
+  );
 
   return (
     <Modal visible={visible} setVisible={setVisible}>
@@ -34,6 +38,12 @@ export const SettingsModal: React.FC<{
         <StyledModalWrapper>
           <StyledToggle onChange={toggleHideCollapse} checked={hideCollapse}>
             Hide Collapse/Expand Button
+          </StyledToggle>
+          <StyledToggle
+            onChange={toggleHideChildrenCount}
+            checked={hideChildrenCount}
+          >
+            Hide Children Count
           </StyledToggle>
           <StyledToggle
             onChange={() => setLightTheme(!lightmode)}
