@@ -1,11 +1,11 @@
 import React from "react";
 import toast from "react-hot-toast";
 import { FiCopy } from "react-icons/fi";
-import { getParentsForNodeId } from "reaflow";
 import { Button } from "src/components/Button";
 import { Modal } from "src/components/Modal";
 import useGraph from "src/hooks/store/useGraph";
 import styled from "styled-components";
+import { getPathToNode } from "../../../utils/getPathToNode";
 
 interface NodeModalProps {
   selectedNode: NodeData;
@@ -42,8 +42,7 @@ export const NodeModal = ({
   };
 
   const nodeDataToClipboard = () => handleClipboard(nodeData);
-  const parentNodesDataToClipboard = () =>
-    handleClipboard(getParentsForNodeId(nodes, edges, id));
+  const parentNodesDataToClipboard = () => handleClipboard(getPathToNode(nodes, edges, id));
 
   return (
     <Modal visible={visible} setVisible={closeModal}>
