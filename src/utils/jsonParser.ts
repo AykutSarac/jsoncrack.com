@@ -128,25 +128,52 @@ export const parser = (jsonStr: string, isFolded = false) => {
         if (type !== "property" && parentName !== "") {
           // add last brothers node and add parent node
           if (brothersNode.length > 0) {
-            // end brothers node
-            const { width, height } = calculateSize(brothersNode, false, isFolded);
-            const brothersNodeId = addNodes(brothersNode, width, height, false);
-            brothersNode = [];
-            if (brothersParentId) {
-              addEdges(brothersParentId, brothersNodeId);
-            } else {
-              notHaveParent = [...notHaveParent, brothersNodeId];
-            }
+            // add or concat brothers node of same parent
+            let findBrothersNode = brothersNodeProps.find(
+              e =>
+                e.parentId === brothersParentId &&
+                e.objectsFromArrayId ===
+                  objectsFromArray[objectsFromArray.length - 2]
+            );
+            if (findBrothersNode && parentType !== "array") {
+              let ModifyNodes = [...nodes];
+              let findNode = nodes.findIndex(e => e.id === findBrothersNode?.id);
 
-            brothersNodeProps = [
-              ...brothersNodeProps,
-              {
-                id: brothersNodeId,
-                parentId: brothersParentId,
-                objectsFromArrayId: objectsFromArray[objectsFromArray.length - 1],
-              },
-            ];
+              if (ModifyNodes[findNode]) {
+                ModifyNodes[findNode].text =
+                  ModifyNodes[findNode].text.concat(brothersNode);
+                const { width, height } = calculateSize(
+                  ModifyNodes[findNode].text,
+                  false,
+                  isFolded
+                );
+                ModifyNodes[findNode].width = width;
+                ModifyNodes[findNode].height = height;
+                nodes = [...ModifyNodes];
+                brothersNode = [];
+              }
+            } else {
+              const { width, height } = calculateSize(brothersNode, false, isFolded);
+              const brothersNodeId = addNodes(brothersNode, width, height, false);
+              brothersNode = [];
+
+              if (brothersParentId) {
+                addEdges(brothersParentId, brothersNodeId);
+              } else {
+                notHaveParent = [...notHaveParent, brothersNodeId];
+              }
+
+              brothersNodeProps = [
+                ...brothersNodeProps,
+                {
+                  id: brothersNodeId,
+                  parentId: brothersParentId,
+                  objectsFromArrayId: objectsFromArray[objectsFromArray.length - 1],
+                },
+              ];
+            }
           }
+
           // add parent node
           const { width, height } = calculateSize(parentName, true, isFolded);
           parentId = addNodes(parentName, width, height, true);
@@ -212,24 +239,51 @@ export const parser = (jsonStr: string, isFolded = false) => {
             }
           }
 
-          // add brothers node when is the last node
+          // add or concat brothers node when it is the last parent node
           if (brothersNode.length > 0) {
-            const { width, height } = calculateSize(brothersNode, false, isFolded);
-            const brothersNodeId = addNodes(brothersNode, width, height, false);
-            brothersNode = [];
-            if (brothersParentId) {
-              addEdges(brothersParentId, brothersNodeId);
+            let findBrothersNode = brothersNodeProps.find(
+              e =>
+                e.parentId === brothersParentId &&
+                e.objectsFromArrayId ===
+                  objectsFromArray[objectsFromArray.length - 2]
+            );
+            if (findBrothersNode && parentType !== "array") {
+              let ModifyNodes = [...nodes];
+              let findNode = nodes.findIndex(e => e.id === findBrothersNode?.id);
+
+              if (ModifyNodes[findNode]) {
+                ModifyNodes[findNode].text =
+                  ModifyNodes[findNode].text.concat(brothersNode);
+                const { width, height } = calculateSize(
+                  ModifyNodes[findNode].text,
+                  false,
+                  isFolded
+                );
+                ModifyNodes[findNode].width = width;
+                ModifyNodes[findNode].height = height;
+                nodes = [...ModifyNodes];
+                brothersNode = [];
+              }
             } else {
-              notHaveParent = [...notHaveParent, brothersNodeId];
+              const { width, height } = calculateSize(brothersNode, false, isFolded);
+              const brothersNodeId = addNodes(brothersNode, width, height, false);
+              brothersNode = [];
+
+              if (brothersParentId) {
+                addEdges(brothersParentId, brothersNodeId);
+              } else {
+                notHaveParent = [...notHaveParent, brothersNodeId];
+              }
+
+              brothersNodeProps = [
+                ...brothersNodeProps,
+                {
+                  id: brothersNodeId,
+                  parentId: brothersParentId,
+                  objectsFromArrayId: objectsFromArray[objectsFromArray.length - 1],
+                },
+              ];
             }
-            brothersNodeProps = [
-              ...brothersNodeProps,
-              {
-                id: brothersNodeId,
-                parentId: brothersParentId,
-                objectsFromArrayId: objectsFromArray[objectsFromArray.length - 1],
-              },
-            ];
           }
 
           if (parentId) {
