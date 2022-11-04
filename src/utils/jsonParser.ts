@@ -302,30 +302,34 @@ export const parser = (jsonStr: string, isFolded = false) => {
         }
       }
     };
+    
     if (json) {
       traverse(json);
-    }
-    if (notHaveParent.length > 1) {
-      const text = "";
-      const { width, height } = calculateSize(text, false, isFolded);
-      const emptyId = addNodes(text, width, height, false, true);
-      notHaveParent.forEach(children => {
-        addEdges(emptyId, children);
-      });
-    }
-    if (nodes.length === 0 && json) {
-      if (json.type === "array") {
-        const text = "[]";
-        const { width, height } = calculateSize(text, false, isFolded);
-        addNodes(text, width, height, false);
-      } else {
-        const text = "{}";
-        const { width, height } = calculateSize(text, false, isFolded);
-        addNodes(text, width, height, false);
+
+      if (notHaveParent.length > 1) {
+        if (json.type !== "array") {
+          const text = "";
+          const { width, height } = calculateSize(text, false, isFolded);
+          const emptyId = addNodes(text, width, height, false, true);
+          notHaveParent.forEach(children => {
+            addEdges(emptyId, children);
+          });
+        }
+      }
+      
+      if (nodes.length === 0) {
+        if (json.type === "array") {
+          const text = "[]";
+          const { width, height } = calculateSize(text, false, isFolded);
+          addNodes(text, width, height, false);
+        } else {
+          const text = "{}";
+          const { width, height } = calculateSize(text, false, isFolded);
+          addNodes(text, width, height, false);
+        }
       }
     }
 
-    console.log(nodes);
     return { nodes, edges };
   } catch (error) {
     console.error(error);
