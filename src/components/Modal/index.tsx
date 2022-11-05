@@ -17,7 +17,9 @@ type ModalTypes = {
 
 export interface ModalProps {
   visible: boolean;
-  setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setVisible:
+    | React.Dispatch<React.SetStateAction<boolean>>
+    | ((visible: boolean) => void);
   size?: "md" | "lg";
 }
 
@@ -56,7 +58,7 @@ const Modal: React.FC<React.PropsWithChildren<ModalProps>> & ModalTypes = ({
 }) => {
   const onClick = (e: React.SyntheticEvent<HTMLDivElement>) => {
     if (e.currentTarget === e.target) {
-      setVisible(v => !v);
+      setVisible(false);
     }
   };
 

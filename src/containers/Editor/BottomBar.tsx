@@ -5,8 +5,9 @@ import {
   AiOutlineUnlock,
 } from "react-icons/ai";
 import { VscAccount, VscHeart } from "react-icons/vsc";
+import useModal from "src/store/useModal";
+import useUser from "src/store/useUser";
 import styled from "styled-components";
-import { ShareModal } from "../Modals/ShareModal";
 
 const StyledBottomBar = styled.div`
   display: flex;
@@ -51,14 +52,15 @@ const StyledBottomBarItem = styled.button`
 `;
 
 export const BottomBar = () => {
-  const [shareVisible, setShareVisible] = React.useState(false);
+  const user = useUser(state => state.user);
+  const setVisible = useModal(state => state.setVisible);
 
   return (
     <StyledBottomBar>
       <StyledLeft>
         <StyledBottomBarItem>
           <VscAccount />
-          Aykut Saraç
+          {user ? user.name : "Login"}
         </StyledBottomBarItem>
         <StyledBottomBarItem>
           <AiOutlineCloudUpload />
@@ -68,7 +70,7 @@ export const BottomBar = () => {
           <AiOutlineUnlock />
           Public
         </StyledBottomBarItem>
-        <StyledBottomBarItem onClick={() => setShareVisible(true)}>
+        <StyledBottomBarItem onClick={() => setVisible("share")(true)}>
           <AiOutlineLink />
           Share
         </StyledBottomBarItem>
@@ -79,7 +81,6 @@ export const BottomBar = () => {
           Support JSON Crack
         </StyledBottomBarItem>
       </StyledRight>
-      <ShareModal visible={shareVisible} setVisible={setShareVisible} />
     </StyledBottomBar>
   );
 };

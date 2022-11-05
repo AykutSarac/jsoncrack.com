@@ -19,13 +19,9 @@ import {
   VscSettingsGear,
 } from "react-icons/vsc";
 import { Tooltip } from "src/components/Tooltip";
-import { ClearModal } from "src/containers/Modals/ClearModal";
-import { CloudModal } from "src/containers/Modals/CloudModal";
-import { DownloadModal } from "src/containers/Modals/DownloadModal";
-import { ImportModal } from "src/containers/Modals/ImportModal";
-import { SettingsModal } from "src/containers/Modals/SettingsModal";
 import useConfig from "src/store/useConfig";
 import useGraph from "src/store/useGraph";
+import useModal from "src/store/useModal";
 import { getNextDirection } from "src/utils/getNextDirection";
 import styled from "styled-components";
 import shallow from "zustand/shallow";
@@ -144,12 +140,7 @@ function rotateLayout(direction: "LEFT" | "RIGHT" | "DOWN" | "UP") {
 }
 
 export const Sidebar: React.FC = () => {
-  const [cloudmodalVisible, setCloudmodalVisible] = React.useState(false);
-  const [settingsVisible, setSettingsVisible] = React.useState(false);
-  const [uploadVisible, setUploadVisible] = React.useState(false);
-  const [clearVisible, setClearVisible] = React.useState(false);
-  const [isDownloadVisible, setDownloadVisible] = React.useState(false);
-
+  const setVisible = useModal(state => state.setVisible);
   const getJson = useConfig(state => state.getJson);
   const setDirection = useGraph(state => state.setDirection);
   const setConfig = useConfig(state => state.setConfig);
@@ -210,7 +201,7 @@ export const Sidebar: React.FC = () => {
         </Tooltip>
 
         <Tooltip title="Import File">
-          <StyledElement onClick={() => setUploadVisible(true)}>
+          <StyledElement onClick={() => setVisible("import")(true)}>
             <AiOutlineFileAdd />
           </StyledElement>
         </Tooltip>
@@ -252,40 +243,35 @@ export const Sidebar: React.FC = () => {
         </Tooltip>
 
         <Tooltip className="mobile" title="Download Image">
-          <StyledElement onClick={() => setDownloadVisible(true)}>
+          <StyledElement onClick={() => setVisible("download")(true)}>
             <FiDownload />
           </StyledElement>
         </Tooltip>
 
         <Tooltip title="Clear JSON">
-          <StyledElement onClick={() => setClearVisible(true)}>
+          <StyledElement onClick={() => setVisible("clear")(true)}>
             <AiOutlineDelete />
           </StyledElement>
         </Tooltip>
 
         <Tooltip className="desktop" title="View Saved JSON">
-          <StyledElement onClick={() => setCloudmodalVisible(true)}>
+          <StyledElement onClick={() => setVisible("cloud")(true)}>
             <VscCloud />
           </StyledElement>
         </Tooltip>
       </StyledTopWrapper>
       <StyledBottomWrapper>
         <Tooltip title="Account">
-          <StyledElement>
+          <StyledElement onClick={() => setVisible("login")(true)}>
             <VscAccount />
           </StyledElement>
         </Tooltip>
         <Tooltip title="Setings">
-          <StyledElement onClick={() => setSettingsVisible(true)}>
+          <StyledElement onClick={() => setVisible("settings")(true)}>
             <VscSettingsGear />
           </StyledElement>
         </Tooltip>
       </StyledBottomWrapper>
-      <ImportModal visible={uploadVisible} setVisible={setUploadVisible} />
-      <ClearModal visible={clearVisible} setVisible={setClearVisible} />
-      <DownloadModal visible={isDownloadVisible} setVisible={setDownloadVisible} />
-      <SettingsModal visible={settingsVisible} setVisible={setSettingsVisible} />
-      <CloudModal visible={cloudmodalVisible} setVisible={setCloudmodalVisible} />
     </StyledSidebar>
   );
 };

@@ -4,8 +4,8 @@ import { FiDownload } from "react-icons/fi";
 import { MdCenterFocusWeak } from "react-icons/md";
 import { SearchInput } from "src/components/SearchInput";
 import useConfig from "src/store/useConfig";
+import useModal from "src/store/useModal";
 import styled from "styled-components";
-import { DownloadModal } from "../Modals/DownloadModal";
 
 export const StyledTools = styled.div`
   position: relative;
@@ -46,7 +46,7 @@ const StyledToolElement = styled.button`
 `;
 
 export const Tools: React.FC = () => {
-  const [isDownloadVisible, setDownloadVisible] = React.useState(false);
+  const setVisible = useModal(state => state.setVisible);
 
   const hideEditor = useConfig(state => state.hideEditor);
   const setConfig = useConfig(state => state.setConfig);
@@ -65,7 +65,7 @@ export const Tools: React.FC = () => {
         <SearchInput />
         <StyledToolElement
           aria-label="save"
-          onClick={() => setDownloadVisible(true)}
+          onClick={() => setVisible("download")(true)}
         >
           <FiDownload />
         </StyledToolElement>
@@ -79,7 +79,6 @@ export const Tools: React.FC = () => {
           <AiOutlinePlus />
         </StyledToolElement>
       </StyledTools>
-      <DownloadModal visible={isDownloadVisible} setVisible={setDownloadVisible} />
     </>
   );
 };

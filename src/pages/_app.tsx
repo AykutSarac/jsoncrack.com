@@ -1,14 +1,17 @@
 import React from "react";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import { init } from "@sentry/nextjs";
 import { decompress } from "compress-json";
 import { Toaster } from "react-hot-toast";
 import { GoogleAnalytics } from "src/components/GoogleAnalytics";
+import { ModalController } from "src/components/ModalController";
 import GlobalStyle from "src/constants/globalStyle";
 import { darkTheme, lightTheme } from "src/constants/theme";
 import useConfig from "src/store/useConfig";
 import useStored from "src/store/useStored";
+import useUser from "src/store/useUser";
 import { isValidJson } from "src/utils/isValidJson";
 import { ThemeProvider } from "styled-components";
 
@@ -24,6 +27,7 @@ function JsonCrack({ Component, pageProps }: AppProps) {
   const lightmode = useStored(state => state.lightmode);
   const setJson = useConfig(state => state.setJson);
   const [isRendered, setRendered] = React.useState(false);
+  const checkSession = useUser(state => state.checkSession);
 
   React.useEffect(() => {
     try {
@@ -48,7 +52,10 @@ function JsonCrack({ Component, pageProps }: AppProps) {
 
   if (isRendered)
     return (
-      <>
+      <GoogleOAuthProvider
+        onScriptLoadSuccess={() => checkSession()}
+        clientId="34440253867-g7s6qhtaqe7lumj1vutctm49t8dhvcf9.apps.googleusercontent.com"
+      >
         <GoogleAnalytics />
         <ThemeProvider theme={lightmode ? lightTheme : darkTheme}>
           <GlobalStyle />
@@ -58,7 +65,7 @@ function JsonCrack({ Component, pageProps }: AppProps) {
             containerStyle={{
               top: 40,
               right: 6,
-              fontSize: 14
+              fontSize: 14,
             }}
             toastOptions={{
               style: {
@@ -67,8 +74,9 @@ function JsonCrack({ Component, pageProps }: AppProps) {
               },
             }}
           />
+          <ModalController />
         </ThemeProvider>
-      </>
+      </GoogleOAuthProvider>
     );
 }
 

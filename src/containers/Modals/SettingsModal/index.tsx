@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal } from "src/components/Modal";
+import { Modal, ModalProps } from "src/components/Modal";
 import Toggle from "src/components/Toggle";
 import useStored from "src/store/useStored";
 import styled from "styled-components";
@@ -16,10 +16,7 @@ const StyledModalWrapper = styled.div`
   gap: 20px;
 `;
 
-export const SettingsModal: React.FC<{
-  visible: boolean;
-  setVisible: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ visible, setVisible }) => {
+export const SettingsModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   const lightmode = useStored(state => state.lightmode);
   const setLightTheme = useStored(state => state.setLightTheme);
   const [toggleHideCollapse, hideCollapse] = useStored(
