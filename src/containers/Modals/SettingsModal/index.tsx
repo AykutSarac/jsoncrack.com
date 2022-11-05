@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "src/components/Modal";
 import Toggle from "src/components/Toggle";
-import useStored from "src/hooks/store/useStored";
+import useStored from "src/store/useStored";
 import styled from "styled-components";
 import shallow from "zustand/shallow";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Graph } from "src/components/Graph";
 import { NodeModal } from "src/containers/Modals/NodeModal";
-import useGraph from "src/hooks/store/useGraph";
+import useGraph from "src/store/useGraph";
 
 export const GraphCanvas = ({ isWidget = false }: { isWidget?: boolean }) => {
   const [isModalVisible, setModalVisible] = React.useState(false);

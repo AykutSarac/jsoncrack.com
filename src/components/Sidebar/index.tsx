@@ -21,9 +21,9 @@ import { ClearModal } from "src/containers/Modals/ClearModal";
 import { DownloadModal } from "src/containers/Modals/DownloadModal";
 import { ImportModal } from "src/containers/Modals/ImportModal";
 import { ShareModal } from "src/containers/Modals/ShareModal";
-import useConfig from "src/hooks/store/useConfig";
-import useGraph from "src/hooks/store/useGraph";
-import { getNextLayout } from "src/utils/getNextLayout";
+import useConfig from "src/store/useConfig";
+import useGraph from "src/store/useGraph";
+import { getNextDirection } from "src/utils/getNextDirection";
 import styled from "styled-components";
 import shallow from "zustand/shallow";
 
@@ -133,29 +133,33 @@ const StyledLogo = styled.a`
   }
 `;
 
-function rotateLayout(layout: "LEFT" | "RIGHT" | "DOWN" | "UP") {
-  if (layout === "LEFT") return 90;
-  if (layout === "UP") return 180;
-  if (layout === "RIGHT") return 270;
+function rotateLayout(direction: "LEFT" | "RIGHT" | "DOWN" | "UP") {
+  if (direction === "LEFT") return 90;
+  if (direction === "UP") return 180;
+  if (direction === "RIGHT") return 270;
   return 360;
 }
 
 export const Sidebar: React.FC = () => {
-  const getJson = useConfig(state => state.getJson);
-  const setConfig = useConfig(state => state.setConfig);
-  const centerView = useConfig(state => state.centerView);
-
-  const collapseGraph = useGraph(state => state.collapseGraph);
-  const expandGraph = useGraph(state => state.expandGraph);
-  const graphCollapsed = useGraph(state => state.graphCollapsed);
-
   const [uploadVisible, setUploadVisible] = React.useState(false);
   const [clearVisible, setClearVisible] = React.useState(false);
   const [shareVisible, setShareVisible] = React.useState(false);
   const [isDownloadVisible, setDownloadVisible] = React.useState(false);
 
-  const [foldNodes, layout, hideEditor] = useConfig(
-    state => [state.foldNodes, state.layout, state.hideEditor],
+  const getJson = useConfig(state => state.getJson);
+  const setDirection = useGraph(state => state.setDirection);
+  const setConfig = useConfig(state => state.setConfig);
+  const centerView = useConfig(state => state.centerView);
+  const collapseGraph = useGraph(state => state.collapseGraph);
+  const expandGraph = useGraph(state => state.expandGraph);
+
+  const [graphCollapsed, direction] = useGraph(state => [
+    state.graphCollapsed,
+    state.direction,
+  ]);
+
+  const [foldNodes, hideEditor] = useConfig(
+    state => [state.foldNodes, state.hideEditor],
     shallow
   );
 
@@ -173,9 +177,9 @@ export const Sidebar: React.FC = () => {
     toast(`${foldNodes ? "Unfolded" : "Folded"} nodes`);
   };
 
-  const toggleLayout = () => {
-    const nextLayout = getNextLayout(layout);
-    setConfig("layout", nextLayout);
+  const toggleDirection = () => {
+    const nextDirection = getNextDirection(direction);
+    setDirection(nextDirection);
   };
 
   const toggleExpandCollapseGraph = () => {
@@ -205,8 +209,8 @@ export const Sidebar: React.FC = () => {
           </StyledElement>
         </Tooltip>
         <Tooltip title="Rotate Layout">
-          <StyledElement onClick={toggleLayout}>
-            <StyledFlowIcon rotate={rotateLayout(layout)} />
+          <StyledElement onClick={toggleDirection}>
+            <StyledFlowIcon rotate={rotateLayout(direction)} />
           </StyledElement>
         </Tooltip>
         <Tooltip className="mobile" title="Center View">

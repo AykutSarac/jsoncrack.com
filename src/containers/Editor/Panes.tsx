@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
 import { JsonEditor } from "src/containers/Editor/JsonEditor";
-import useConfig from "src/hooks/store/useConfig";
+import useConfig from "src/store/useConfig";
 import styled from "styled-components";
 
 export const StyledEditor = styled(Allotment)`

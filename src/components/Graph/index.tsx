@@ -6,13 +6,13 @@ import {
 } from "react-zoom-pan-pinch";
 import { Canvas, Edge, ElkRoot } from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
-import useConfig from "src/hooks/store/useConfig";
-import useGraph from "src/hooks/store/useGraph";
+import useConfig from "src/store/useConfig";
+import useGraph from "src/store/useGraph";
 import styled from "styled-components";
 import { Loading } from "../Loading";
 import { ErrorView } from "./ErrorView";
 
-interface LayoutProps {
+interface GraphProps {
   isWidget?: boolean;
   openModal: () => void;
   setSelectedNode: (node: [string, string][]) => void;
@@ -45,12 +45,13 @@ const GraphComponent = ({
   isWidget = false,
   openModal,
   setSelectedNode,
-}: LayoutProps) => {
+}: GraphProps) => {
   const setLoading = useGraph(state => state.setLoading);
   const setConfig = useConfig(state => state.setConfig);
   const centerView = useConfig(state => state.centerView);
+
   const loading = useGraph(state => state.loading);
-  const layout = useConfig(state => state.layout);
+  const direction = useGraph(state => state.direction);
   const nodes = useGraph(state => state.nodes);
   const edges = useGraph(state => state.edges);
 
@@ -158,16 +159,16 @@ const GraphComponent = ({
             edges={edges}
             maxWidth={size.width}
             maxHeight={size.height}
-            direction={layout}
+            direction={direction}
             onLayoutChange={onLayoutChange}
             onCanvasClick={onCanvasClick}
-            key={layout}
             zoomable={false}
             animated={false}
             readonly={true}
             dragEdge={null}
             dragNode={null}
             fit={true}
+            key={direction}
             node={props => <CustomNode {...props} onClick={handleNodeClick} />}
             edge={props => (
               <Edge {...props} containerClassName={`edge-${props.id}`} />

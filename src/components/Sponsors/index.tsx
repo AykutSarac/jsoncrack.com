@@ -1,5 +1,5 @@
 import React from "react";
-import useStored from "src/hooks/store/useStored";
+import useStored from "src/store/useStored";
 import styled from "styled-components";
 
 async function getSponsors() {

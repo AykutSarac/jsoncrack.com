@@ -2,7 +2,7 @@ import React from "react";
 import toast from "react-hot-toast";
 import { Button } from "src/components/Button";
 import { Modal, ModalProps } from "src/components/Modal";
-import useConfig from "src/hooks/store/useConfig";
+import useConfig from "src/store/useConfig";
 
 export const ClearModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   const setJson = useConfig(state => state.setJson);

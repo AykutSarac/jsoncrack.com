@@ -5,7 +5,7 @@ import { MdCenterFocusWeak } from "react-icons/md";
 import { TbSettings } from "react-icons/tb";
 import { SearchInput } from "src/components/SearchInput";
 import { SettingsModal } from "src/containers/Modals/SettingsModal";
-import useConfig from "src/hooks/store/useConfig";
+import useConfig from "src/store/useConfig";
 import styled from "styled-components";
 import { DownloadModal } from "../Modals/DownloadModal";
 
