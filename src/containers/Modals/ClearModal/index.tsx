@@ -1,5 +1,4 @@
 import React from "react";
-import toast from "react-hot-toast";
 import { Button } from "src/components/Button";
 import { Modal, ModalProps } from "src/components/Modal";
 import useConfig from "src/store/useConfig";
@@ -9,7 +8,6 @@ export const ClearModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
 
   const handleClear = () => {
     setJson("{}");
-    toast.success(`Cleared JSON and removed from memory.`);
     setVisible(false);
   };
 

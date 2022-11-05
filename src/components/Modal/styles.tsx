@@ -22,9 +22,9 @@ export const ModalWrapper = styled.div`
   }
 `;
 
-export const ModalInnerWrapper = styled.div`
+export const ModalInnerWrapper = styled.div<{ size: "md" | "lg" }>`
   min-width: 440px;
-  max-width: 490px;
+  max-width: ${({ size }) => (size === "md" ? "490px" : "90%")};
   width: fit-content;
   animation: ${appearAnimation} 220ms ease-in-out;
   line-height: 20px;
@@ -58,7 +58,7 @@ export const ControlsWrapper = styled.div`
   display: flex;
   flex-direction: row-reverse;
   background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
-  padding: 16px;
+  padding: 12px;
   border-radius: 0 0 5px 5px;
   gap: 10px;
 `;

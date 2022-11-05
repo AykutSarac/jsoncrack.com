@@ -3,24 +3,27 @@ import Link from "next/link";
 import toast from "react-hot-toast";
 import {
   AiOutlineDelete,
-  AiFillGithub,
-  AiOutlineTwitter,
   AiOutlineSave,
   AiOutlineFileAdd,
-  AiOutlineLink,
   AiOutlineEdit,
 } from "react-icons/ai";
 import { CgArrowsMergeAltH, CgArrowsShrinkH } from "react-icons/cg";
 import { FiDownload } from "react-icons/fi";
-import { HiHeart } from "react-icons/hi";
 import { MdCenterFocusWeak } from "react-icons/md";
 import { TiFlowMerge } from "react-icons/ti";
-import { VscCollapseAll, VscExpandAll } from "react-icons/vsc";
+import {
+  VscAccount,
+  VscCloud,
+  VscCollapseAll,
+  VscExpandAll,
+  VscSettingsGear,
+} from "react-icons/vsc";
 import { Tooltip } from "src/components/Tooltip";
 import { ClearModal } from "src/containers/Modals/ClearModal";
+import { CloudModal } from "src/containers/Modals/CloudModal";
 import { DownloadModal } from "src/containers/Modals/DownloadModal";
 import { ImportModal } from "src/containers/Modals/ImportModal";
-import { ShareModal } from "src/containers/Modals/ShareModal";
+import { SettingsModal } from "src/containers/Modals/SettingsModal";
 import useConfig from "src/store/useConfig";
 import useGraph from "src/store/useGraph";
 import { getNextDirection } from "src/utils/getNextDirection";
@@ -48,7 +51,7 @@ const StyledElement = styled.button`
   display: flex;
   justify-content: center;
   text-align: center;
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 600;
   width: fit-content;
   color: ${({ theme }) => theme.SIDEBAR_ICONS};
@@ -141,9 +144,10 @@ function rotateLayout(direction: "LEFT" | "RIGHT" | "DOWN" | "UP") {
 }
 
 export const Sidebar: React.FC = () => {
+  const [cloudmodalVisible, setCloudmodalVisible] = React.useState(false);
+  const [settingsVisible, setSettingsVisible] = React.useState(false);
   const [uploadVisible, setUploadVisible] = React.useState(false);
   const [clearVisible, setClearVisible] = React.useState(false);
-  const [shareVisible, setShareVisible] = React.useState(false);
   const [isDownloadVisible, setDownloadVisible] = React.useState(false);
 
   const getJson = useConfig(state => state.getJson);
@@ -198,26 +202,31 @@ export const Sidebar: React.FC = () => {
             <StyledText secondary>C</StyledText>
           </StyledElement>
         </Link>
+
         <Tooltip className="mobile" title="Edit JSON">
           <StyledElement onClick={() => setConfig("hideEditor", !hideEditor)}>
             <AiOutlineEdit />
           </StyledElement>
         </Tooltip>
+
         <Tooltip title="Import File">
           <StyledElement onClick={() => setUploadVisible(true)}>
             <AiOutlineFileAdd />
           </StyledElement>
         </Tooltip>
+
         <Tooltip title="Rotate Layout">
           <StyledElement onClick={toggleDirection}>
             <StyledFlowIcon rotate={rotateLayout(direction)} />
           </StyledElement>
         </Tooltip>
+
         <Tooltip className="mobile" title="Center View">
           <StyledElement onClick={centerView}>
             <MdCenterFocusWeak />
           </StyledElement>
         </Tooltip>
+
         <Tooltip
           className="desktop"
           title={foldNodes ? "Unfold Nodes" : "Fold Nodes"}
@@ -226,6 +235,7 @@ export const Sidebar: React.FC = () => {
             {foldNodes ? <CgArrowsShrinkH /> : <CgArrowsMergeAltH />}
           </StyledElement>
         </Tooltip>
+
         <Tooltip
           className="desktop"
           title={graphCollapsed ? "Expand Graph" : "Collapse Graph"}
@@ -234,54 +244,48 @@ export const Sidebar: React.FC = () => {
             {graphCollapsed ? <VscExpandAll /> : <VscCollapseAll />}
           </StyledElement>
         </Tooltip>
-        <Tooltip className="desktop" title="Save JSON">
+
+        <Tooltip className="desktop" title="Download JSON">
           <StyledElement onClick={handleSave}>
             <AiOutlineSave />
           </StyledElement>
         </Tooltip>
+
         <Tooltip className="mobile" title="Download Image">
           <StyledElement onClick={() => setDownloadVisible(true)}>
             <FiDownload />
           </StyledElement>
         </Tooltip>
+
         <Tooltip title="Clear JSON">
           <StyledElement onClick={() => setClearVisible(true)}>
             <AiOutlineDelete />
           </StyledElement>
         </Tooltip>
-        <Tooltip className="desktop" title="Share">
-          <StyledElement onClick={() => setShareVisible(true)}>
-            <AiOutlineLink />
+
+        <Tooltip className="desktop" title="View Saved JSON">
+          <StyledElement onClick={() => setCloudmodalVisible(true)}>
+            <VscCloud />
           </StyledElement>
         </Tooltip>
       </StyledTopWrapper>
       <StyledBottomWrapper>
-        <StyledElement>
-          <Link href="https://twitter.com/jsoncrack">
-            <a aria-label="Twitter" rel="me" target="_blank">
-              <AiOutlineTwitter />
-            </a>
-          </Link>
-        </StyledElement>
-        <StyledElement>
-          <Link href="https://github.com/AykutSarac/jsoncrack.com">
-            <a aria-label="GitHub" rel="me" target="_blank">
-              <AiFillGithub />
-            </a>
-          </Link>
-        </StyledElement>
-        <StyledElement>
-          <Link href="https://github.com/sponsors/AykutSarac">
-            <a aria-label="GitHub Sponsors" rel="me" target="_blank">
-              <HiHeart />
-            </a>
-          </Link>
-        </StyledElement>
+        <Tooltip title="Account">
+          <StyledElement>
+            <VscAccount />
+          </StyledElement>
+        </Tooltip>
+        <Tooltip title="Setings">
+          <StyledElement onClick={() => setSettingsVisible(true)}>
+            <VscSettingsGear />
+          </StyledElement>
+        </Tooltip>
       </StyledBottomWrapper>
       <ImportModal visible={uploadVisible} setVisible={setUploadVisible} />
       <ClearModal visible={clearVisible} setVisible={setClearVisible} />
-      <ShareModal visible={shareVisible} setVisible={setShareVisible} />
       <DownloadModal visible={isDownloadVisible} setVisible={setDownloadVisible} />
+      <SettingsModal visible={settingsVisible} setVisible={setSettingsVisible} />
+      <CloudModal visible={cloudmodalVisible} setVisible={setCloudmodalVisible} />
     </StyledSidebar>
   );
 };

@@ -5,7 +5,6 @@ import { init } from "@sentry/nextjs";
 import { decompress } from "compress-json";
 import { Toaster } from "react-hot-toast";
 import { GoogleAnalytics } from "src/components/GoogleAnalytics";
-import { SupportButton } from "src/components/SupportButton";
 import GlobalStyle from "src/constants/globalStyle";
 import { darkTheme, lightTheme } from "src/constants/theme";
 import useConfig from "src/store/useConfig";
@@ -55,9 +54,11 @@ function JsonCrack({ Component, pageProps }: AppProps) {
           <GlobalStyle />
           <Component {...pageProps} />
           <Toaster
-            position="bottom-right"
+            position="top-right"
             containerStyle={{
-              right: 60,
+              top: 40,
+              right: 6,
+              fontSize: 14
             }}
             toastOptions={{
               style: {
@@ -66,7 +67,6 @@ function JsonCrack({ Component, pageProps }: AppProps) {
               },
             }}
           />
-          <SupportButton />
         </ThemeProvider>
       </>
     );

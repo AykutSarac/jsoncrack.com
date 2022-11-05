@@ -13,6 +13,7 @@ import { SiVisualstudiocode } from "react-icons/si";
 import { CarbonAds } from "src/components/CarbonAds";
 import { Producthunt } from "src/components/Producthunt";
 import { Sponsors } from "src/components/Sponsors";
+import { SupportButton } from "src/components/SupportButton";
 import { defaultJson } from "src/constants/data";
 import { GoalsModal } from "src/containers/Modals/GoalsModal";
 import pkg from "../../../package.json";
@@ -301,6 +302,7 @@ const Home: React.FC = () => {
       <SupportSection />
       <SponsorSection />
       <Footer />
+      <SupportButton />
     </Styles.StyledHome>
   );
 };

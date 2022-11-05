@@ -2,9 +2,7 @@ import React from "react";
 import { AiOutlineFullscreen, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
 import { MdCenterFocusWeak } from "react-icons/md";
-import { TbSettings } from "react-icons/tb";
 import { SearchInput } from "src/components/SearchInput";
-import { SettingsModal } from "src/containers/Modals/SettingsModal";
 import useConfig from "src/store/useConfig";
 import styled from "styled-components";
 import { DownloadModal } from "../Modals/DownloadModal";
@@ -48,7 +46,6 @@ const StyledToolElement = styled.button`
 `;
 
 export const Tools: React.FC = () => {
-  const [settingsVisible, setSettingsVisible] = React.useState(false);
   const [isDownloadVisible, setDownloadVisible] = React.useState(false);
 
   const hideEditor = useConfig(state => state.hideEditor);
@@ -64,12 +61,6 @@ export const Tools: React.FC = () => {
       <StyledTools>
         <StyledToolElement aria-label="fullscreen" onClick={toggleEditor}>
           <AiOutlineFullscreen />
-        </StyledToolElement>
-        <StyledToolElement
-          aria-label="settings"
-          onClick={() => setSettingsVisible(true)}
-        >
-          <TbSettings />
         </StyledToolElement>
         <SearchInput />
         <StyledToolElement
@@ -89,7 +80,6 @@ export const Tools: React.FC = () => {
         </StyledToolElement>
       </StyledTools>
       <DownloadModal visible={isDownloadVisible} setVisible={setDownloadVisible} />
-      <SettingsModal visible={settingsVisible} setVisible={setSettingsVisible} />
     </>
   );
 };

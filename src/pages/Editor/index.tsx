@@ -1,13 +1,14 @@
 import React from "react";
 import Head from "next/head";
 import { Sidebar } from "src/components/Sidebar";
+import { BottomBar } from "src/containers/Editor/BottomBar";
 import Panes from "src/containers/Editor/Panes";
 import styled from "styled-components";
 
 export const StyledPageWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  height: 100vh;
+  height: calc(100vh - 28px);
   width: 100%;
 
   @media only screen and (max-width: 768px) {
@@ -39,6 +40,7 @@ const EditorPage: React.FC = () => {
           <Panes />
         </StyledEditorWrapper>
       </StyledPageWrapper>
+      <BottomBar />
     </StyledEditorWrapper>
   );
 };
