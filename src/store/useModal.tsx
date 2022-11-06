@@ -1,6 +1,3 @@
-// TODO: handle all modals here
-// put all modals into a global place
-// display auth modal for unauthorized modal access actions
 import create from "zustand";
 import useUser from "./useUser";
 
@@ -29,7 +26,7 @@ export type ModalStates = typeof initialStates;
 const useModal = create<ModalStates & ModalActions>()(set => ({
   ...initialStates,
   setVisible: modal => visible => {
-    if (authModals.includes(modal) && !useUser.getState().isAuthorized) {
+    if (authModals.includes(modal) && !useUser.getState().isAuthenticated) {
       return set({ login: true });
     }
 

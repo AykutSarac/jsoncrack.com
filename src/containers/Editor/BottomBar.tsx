@@ -58,7 +58,7 @@ export const BottomBar = () => {
   return (
     <StyledBottomBar>
       <StyledLeft>
-        <StyledBottomBarItem>
+        <StyledBottomBarItem onClick={() => setVisible("login")(true)}>
           <VscAccount />
           {user ? user.name : "Login"}
         </StyledBottomBarItem>
@@ -78,7 +78,11 @@ export const BottomBar = () => {
       <StyledRight>
         <StyledBottomBarItem>
           <VscHeart />
-          Support JSON Crack
+          <img
+            height="15"
+            src="https://cdn.discordapp.com/attachments/1016404295639388210/1022558676491440218/component_38.png"
+            alt="powered by buildable"
+          />
         </StyledBottomBarItem>
       </StyledRight>
     </StyledBottomBar>

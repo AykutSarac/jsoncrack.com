@@ -254,7 +254,7 @@ export const Sidebar: React.FC = () => {
           </StyledElement>
         </Tooltip>
 
-        <Tooltip className="desktop" title="View Saved JSON">
+        <Tooltip className="desktop" title="View Cloud">
           <StyledElement onClick={() => setVisible("cloud")(true)}>
             <VscCloud />
           </StyledElement>
