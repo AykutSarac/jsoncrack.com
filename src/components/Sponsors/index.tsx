@@ -24,7 +24,7 @@ async function getSponsors() {
 
 const StyledSponsorsWrapper = styled.ul`
   display: flex;
-  width: 100%;
+  width: 70%;
   margin: 0;
   padding: 0;
   list-style: none;
