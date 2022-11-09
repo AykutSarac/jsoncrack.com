@@ -7,9 +7,29 @@ function getTypeColor(value: string, theme: DefaultTheme) {
   if (value === "false") return theme.TEXT_DANGER;
 }
 
+function getNodeKeyTypeColor(theme: DefaultTheme) {
+  return theme.OBJECT_KEY;
+}
+
 export const StyledLinkItUrl = styled(LinkItUrl)`
   text-decoration: underline;
   pointer-events: all;
+`;
+
+export const StyledKeyType = styled.span<{
+  nodeKeyType: string;
+  parent?: boolean;
+  value?: string;
+}>`
+  display: inline;
+  flex: 1;
+  font-weight: 500;
+  color: ${({ theme }) =>
+    getNodeKeyTypeColor(theme)};
+  font-size: ${({ parent }) => parent && "14px"};
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: ${({ nodeKeyType }) => !nodeKeyType && 10}px;
 `;
 
 export const StyledForeignObject = styled.foreignObject<{

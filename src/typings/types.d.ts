@@ -10,6 +10,7 @@ interface NodeData<T = any> {
   id: string;
   disabled?: boolean;
   text?: any;
+  keyType?: string,
   height?: number;
   width?: number;
   parent?: string;

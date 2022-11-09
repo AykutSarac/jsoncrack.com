@@ -41,7 +41,7 @@ const TextNode: React.FC<CustomNodeProps> = ({
   y,
   hasCollapse = false,
 }) => {
-  const { id, text, width, height, data } = node;
+  const { id, text, width, height, data, keyType } = node;
   const ref = React.useRef(null);
   const hideCollapse = useStored(state => state.hideCollapse);
   const hideChildrenCount = useStored(state => state.hideChildrenCount);
@@ -77,8 +77,15 @@ const TextNode: React.FC<CustomNodeProps> = ({
             parent={data.isParent}
           >
             <Styled.StyledLinkItUrl>
-              {JSON.stringify(text).replaceAll('"', "")}
+              { keyType ? 
+                JSON.stringify(text).replaceAll('"', "").concat(": ") : JSON.stringify(text).replaceAll('"', "")
+              }
             </Styled.StyledLinkItUrl>
+            <Styled.StyledKeyType 
+              nodeKeyType={`${keyType}`}
+            >
+              {keyType}
+            </Styled.StyledKeyType>
           </Styled.StyledKey>
         )}
 

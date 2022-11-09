@@ -53,11 +53,20 @@ function generateChildren(object: Object, isFolded = false, nextId: () => string
     .flatMap(([key, v]) => {
       const { width, height } = calculateSize(key, true, isFolded);
       const children = extract(v, isFolded, nextId);
+      let keyType = "";
+
+      if(Array.isArray(v)) {
+        keyType = "[]"
+      }
+      else if((typeof v) === 'object') {
+        keyType = "{}"
+      }
 
       return [
         {
           id: nextId(),
           text: key,
+          keyType: keyType,
           children,
           width,
           height,
