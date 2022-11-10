@@ -19,7 +19,6 @@ export const StyledLinkItUrl = styled(LinkItUrl)`
 export const StyledKeyType = styled.span<{
   nodeKeyType: string;
   parent?: boolean;
-  value?: string;
 }>`
   display: inline;
   flex: 1;

@@ -71,6 +71,7 @@ const TextNode: React.FC<CustomNodeProps> = ({
       <StyledTextNodeWrapper hasCollapse={data.isParent && !hideCollapse}>
         {(!performanceMode || inViewport) && (
           <Styled.StyledKey
+            objectKey
             data-x={x}
             data-y={y}
             data-key={JSON.stringify(text)}

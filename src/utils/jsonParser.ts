@@ -99,8 +99,12 @@ const extract = (
   if (!os) return [];
 
   return [os].flat().map(o => {
-    const text = generateNodeData(o);
+    let text = generateNodeData(o);
     const { width, height } = calculateSize(text, false, isFolded);
+  
+    if(Array.isArray(text) && text.length == 0) {
+      text = "{}"
+    }
 
     return {
       id: nextId(),
