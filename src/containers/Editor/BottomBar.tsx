@@ -4,7 +4,7 @@ import {
   AiOutlineLink,
   AiOutlineUnlock,
 } from "react-icons/ai";
-import { VscAccount, VscHeart } from "react-icons/vsc";
+import { VscAccount } from "react-icons/vsc";
 import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
 import styled from "styled-components";
@@ -77,10 +77,10 @@ export const BottomBar = () => {
       </StyledLeft>
       <StyledRight>
         <StyledBottomBarItem>
-          <VscHeart />
+          Powered by
           <img
-            height="15"
-            src="https://cdn.discordapp.com/attachments/1016404295639388210/1022558676491440218/component_38.png"
+            height="20"
+            src="https://regexlearn.com/altogic.svg"
             alt="powered by buildable"
           />
         </StyledBottomBarItem>
