@@ -2,9 +2,12 @@ import { ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
 import { defaultJson } from "src/constants/data";
 import create from "zustand";
 
+type StateType = keyof typeof initialStates;
+type StateKey<T extends StateType> = typeof initialStates[T];
+
 interface ConfigActions {
   setJson: (json: string) => void;
-  setConfig: (key: keyof Config, value: unknown) => void;
+  setConfig: <T extends StateType, K extends StateKey<T>>(key: T, value: K) => void;
   getJson: () => string;
   zoomIn: () => void;
   zoomOut: () => void;

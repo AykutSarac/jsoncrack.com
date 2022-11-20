@@ -17,8 +17,14 @@ const initialStates = {
 
 export type Graph = typeof initialStates;
 
+type StateType = keyof typeof initialStates;
+type StateKey<T extends StateType> = typeof initialStates[T];
+
 interface GraphActions {
-  setGraphValue: (key: keyof Graph, value: any) => void;
+  setGraphValue: <T extends StateType, K extends StateKey<T>>(
+    key: T,
+    value: K
+  ) => void;
   setLoading: (loading: boolean) => void;
   setDirection: (direction: CanvasDirection) => void;
   expandNodes: (nodeId: string) => void;
