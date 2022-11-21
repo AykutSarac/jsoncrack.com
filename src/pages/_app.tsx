@@ -2,7 +2,6 @@ import React from "react";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { init } from "@sentry/nextjs";
-import { decompress } from "compress-json";
 import { Toaster } from "react-hot-toast";
 import { GoogleAnalytics } from "src/components/GoogleAnalytics";
 import { SupportButton } from "src/components/SupportButton";
@@ -28,13 +27,13 @@ function JsonCrack({ Component, pageProps }: AppProps) {
 
   React.useEffect(() => {
     try {
-      if (pathname !== "editor") return;
+      if (pathname !== "/Editor") return;
       const isJsonValid =
         typeof query.json === "string" &&
         isValidJson(decodeURIComponent(query.json));
 
       if (isJsonValid) {
-        const jsonDecoded = decompress(JSON.parse(isJsonValid));
+        const jsonDecoded = JSON.parse(isJsonValid);
         const jsonString = JSON.stringify(jsonDecoded);
         setJson(jsonString);
       }
