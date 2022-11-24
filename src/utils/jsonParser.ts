@@ -42,7 +42,7 @@ export const parser = (jsonStr: string, isFolded = false) => {
       text: any,
       width: number,
       height: number,
-      parent: boolean,
+      parent: "string" | "number" | "boolean" | "object" | "array" | "null" | false,
       isEmpty?: boolean
     ) => {
       let actualId = String(nodes.length + 1);
@@ -54,7 +54,7 @@ export const parser = (jsonStr: string, isFolded = false) => {
           width: width,
           height: height,
           data: {
-            isParent: parent,
+            parent: parent === "array" || parent === "object" ? parent : false,
             childrenCount: parent ? 1 : 0,
             isEmpty: isEmpty,
           },
@@ -128,7 +128,7 @@ export const parser = (jsonStr: string, isFolded = false) => {
 
         if (type !== "property" && parentName !== "") {
           // add last brothers node and add parent node
-          
+
           if (brothersNode.length > 0) {
             // add or concat brothers node of same parent
             let findBrothersNode = brothersNodeProps.find(
@@ -178,7 +178,7 @@ export const parser = (jsonStr: string, isFolded = false) => {
 
           // add parent node
           const { width, height } = calculateSize(parentName, true, isFolded);
-          parentId = addNodes(parentName, width, height, true);
+          parentId = addNodes(parentName, width, height, type);
           bracketOpen = [...bracketOpen, { id: parentId, type: type }];
           parentName = "";
 
@@ -201,8 +201,8 @@ export const parser = (jsonStr: string, isFolded = false) => {
             notHaveParent = [...notHaveParent, parentId];
           }
         } else if (parentType === "array") {
-            objectsFromArray = [...objectsFromArray, objectsFromArrayId++];
-          }
+          objectsFromArray = [...objectsFromArray, objectsFromArrayId++];
+        }
         children.forEach((branch, index, array) => {
           if (array[index + 1]) {
             traverse(
@@ -302,7 +302,7 @@ export const parser = (jsonStr: string, isFolded = false) => {
         }
       }
     };
-    
+
     if (json) {
       traverse(json);
 
@@ -316,7 +316,7 @@ export const parser = (jsonStr: string, isFolded = false) => {
           });
         }
       }
-      
+
       if (nodes.length === 0) {
         if (json.type === "array") {
           const text = "[]";
