@@ -28,7 +28,7 @@ function JsonCrack({ Component, pageProps }: AppProps) {
 
   React.useEffect(() => {
     try {
-      if (pathname !== "editor") return;
+      if (pathname !== "/Editor") return;
       const isJsonValid =
         typeof query.json === "string" &&
         isValidJson(decodeURIComponent(query.json));
