@@ -71,7 +71,7 @@ export const darkTheme = {
   MODAL_BACKGROUND: "#36393E",
   TEXT_NORMAL: "#dcddde",
   TEXT_POSITIVE: "hsl(139,calc(var(--saturation-factor, 1)*51.6%),52.2%)",
-} as const;
+};
 
 export const lightTheme = {
   ...fixedColors,
@@ -93,7 +93,7 @@ export const lightTheme = {
   MODAL_BACKGROUND: "#FFFFFF",
   TEXT_NORMAL: "#2e3338",
   TEXT_POSITIVE: "#008736",
-} as const;
+};
 
 const themeDs = {
   ...lightTheme,
