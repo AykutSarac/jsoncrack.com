@@ -13,7 +13,6 @@ const StyledTitle = styled.p`
   color: ${({ theme }) => theme.TEXT_POSITIVE};
   flex: 1;
   font-weight: 700;
-  font-family: "Catamaran", sans-serif;
   margin-top: 0;
 
   &::after {

@@ -1,12 +1,25 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
+  @font-face {
+    font-family: 'Mona Sans';
+    src:
+      url('assets/Mona-Sans.woff2') format('woff2 supports variations'),
+      url('assets/Mona-Sans.woff2') format('woff2-variations');
+    font-weight: 200 900;
+    font-stretch: 75% 125%;
+  }
+
+  h1, h2, h3, h4, p {
+    font-family: 'Mona Sans';
+  }
+
   html, body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     color: ${({ theme }) => theme.FULL_WHITE};
-    font-family: 'Catamaran', sans-serif;
+    font-family: 'Mona Sans';
     font-weight: 400;
     font-size: 16px;
     scroll-behavior: smooth;
@@ -42,6 +55,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   button {
+    font-family: 'Mona Sans';
     border: none;
     outline: none;
     background: transparent;
@@ -49,6 +63,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     cursor: pointer;
+    font-weight: 800;
   }
 
   #carbonads * {

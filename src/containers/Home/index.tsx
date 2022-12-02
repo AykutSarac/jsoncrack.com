@@ -44,7 +44,7 @@ const HeroSection = () => {
   return (
     <Styles.StyledHeroSection id="main">
       <Styles.StyledTitle>
-        <Styles.StyledGradientText>JSON</Styles.StyledGradientText> Crack
+        <Styles.StyledGradientText>JSON</Styles.StyledGradientText> CRACK
       </Styles.StyledTitle>
       <Styles.StyledSubTitle>
         Seamlessly visualize your JSON data{" "}

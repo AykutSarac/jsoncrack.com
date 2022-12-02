@@ -33,6 +33,7 @@ const StyledUploadWrapper = styled.label`
 `;
 
 const StyledFileName = styled.span`
+  padding-top: 14px;
   color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
 `;
 

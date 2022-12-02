@@ -43,6 +43,7 @@ const StyledBottomBarItem = styled.button`
   height: 28px;
   padding: 4px;
   font-size: 12px;
+  font-weight: 400;
   color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
 
   &:hover {

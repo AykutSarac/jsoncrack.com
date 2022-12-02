@@ -32,7 +32,7 @@ const StyledLoading = styled.div`
 `;
 
 const StyledLogo = styled.h2`
-  font-weight: 600;
+  font-weight: 800;
   font-size: 56px;
   pointer-events: none;
   margin-bottom: 10px;

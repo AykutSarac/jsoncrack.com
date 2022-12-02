@@ -20,12 +20,13 @@ const StyledTooltip = styled.div<{ visible: boolean }>`
   background: ${({ theme }) => theme.BACKGROUND_PRIMARY};
   color: ${({ theme }) => theme.TEXT_NORMAL};
   border-radius: 5px;
-  padding: 4px 8px;
+  padding: 6px 8px;
   display: ${({ visible }) => (visible ? "initial" : "none")};
   white-space: nowrap;
+  font-family: 'Mona Sans';
   font-size: 16px;
   user-select: none;
-  font-weight: 500;
+  font-weight: 600;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
     0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
     0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);

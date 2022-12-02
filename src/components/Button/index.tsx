@@ -40,7 +40,6 @@ const StyledButton = styled.button<{
   border-radius: 3px;
   font-size: 14px;
   font-weight: 500;
-  font-family: "Catamaran", sans-serif;
   width: ${({ block }) => (block ? "100%" : "fit-content")};
   height: 40px;
   background-image: none;

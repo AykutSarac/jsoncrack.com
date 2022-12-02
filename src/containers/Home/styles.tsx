@@ -122,9 +122,9 @@ export const StyledNavLink = styled.a`
 `;
 
 export const StyledTitle = styled.h1`
-  font-size: 5rem;
   font-weight: 900;
   margin: 0;
+  font-size: min(10vw, 64px);
 
   @media only screen and (max-width: 768px) {
     font-size: 3rem;
