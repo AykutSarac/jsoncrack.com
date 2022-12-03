@@ -127,7 +127,7 @@ export const StyledTitle = styled.h1`
   font-size: min(10vw, 64px);
 
   @media only screen and (max-width: 768px) {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
 `;
 
@@ -139,7 +139,7 @@ export const StyledSubTitle = styled.h2`
   margin: 0;
 
   @media only screen and (max-width: 768px) {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
   }
 `;
 
@@ -297,7 +297,7 @@ export const StyledSponsorSection = styled.section`
   padding: 50px 3%;
 
   @media only screen and (max-width: 768px) {
-    max-width: 80%;
+    max-width: 90%;
   }
 `;
 
