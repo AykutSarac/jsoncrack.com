@@ -1,5 +1,6 @@
 import React from "react";
 import { MdReportGmailerrorred, MdOutlineCheckCircleOutline } from "react-icons/md";
+import useConfig from "src/store/useConfig";
 import styled from "styled-components";
 
 const StyledErrorWrapper = styled.div`
@@ -40,7 +41,9 @@ const StyledError = styled.pre`
   white-space: pre-line;
 `;
 
-export const ErrorContainer = ({ hasError }: { hasError: boolean }) => {
+export const ErrorContainer = () => {
+  const hasError = useConfig(state => state.hasError);
+
   return (
     <StyledErrorWrapper>
       <StyledErrorExpand error={hasError}>

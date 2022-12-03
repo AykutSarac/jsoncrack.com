@@ -1,10 +1,10 @@
 import React from "react";
 import { Button } from "src/components/Button";
 import { Modal, ModalProps } from "src/components/Modal";
-import useConfig from "src/store/useConfig";
+import useGraph from "src/store/useGraph";
 
 export const ClearModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
-  const setJson = useConfig(state => state.setJson);
+  const setJson = useGraph(state => state.setJson);
 
   const handleClear = () => {
     setJson("{}");

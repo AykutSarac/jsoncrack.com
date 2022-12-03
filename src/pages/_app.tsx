@@ -1,18 +1,14 @@
 import React from "react";
 import type { AppProps } from "next/app";
-import { useRouter } from "next/router";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { init } from "@sentry/nextjs";
-import { decompress } from "compress-json";
 import { Toaster } from "react-hot-toast";
 import { GoogleAnalytics } from "src/components/GoogleAnalytics";
 import GlobalStyle from "src/constants/globalStyle";
 import { darkTheme, lightTheme } from "src/constants/theme";
 import { ModalController } from "src/containers/ModalController";
-import useConfig from "src/store/useConfig";
 import useStored from "src/store/useStored";
 import useUser from "src/store/useUser";
-import { isValidJson } from "src/utils/isValidJson";
 import { ThemeProvider } from "styled-components";
 
 if (process.env.NODE_ENV !== "development") {
@@ -23,28 +19,9 @@ if (process.env.NODE_ENV !== "development") {
 }
 
 function JsonCrack({ Component, pageProps }: AppProps) {
-  const { query, pathname } = useRouter();
   const lightmode = useStored(state => state.lightmode);
-  const setJson = useConfig(state => state.setJson);
   const [isRendered, setRendered] = React.useState(false);
   const checkSession = useUser(state => state.checkSession);
-
-  React.useEffect(() => {
-    try {
-      if (pathname !== "editor") return;
-      const isJsonValid =
-        typeof query.json === "string" &&
-        isValidJson(decodeURIComponent(query.json));
-
-      if (isJsonValid) {
-        const jsonDecoded = decompress(JSON.parse(isJsonValid));
-        const jsonString = JSON.stringify(jsonDecoded);
-        setJson(jsonString);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  }, [pathname, query.json, setJson]);
 
   React.useEffect(() => {
     setRendered(true);

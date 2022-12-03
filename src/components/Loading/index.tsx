@@ -1,4 +1,5 @@
 import React from "react";
+import useGraph from "src/store/useGraph";
 import styled, { keyframes } from "styled-components";
 
 interface LoadingProps {
@@ -48,13 +49,19 @@ const StyledMessage = styled.div`
   font-weight: 500;
 `;
 
-export const Loading: React.FC<LoadingProps> = ({ message }) => (
-  <StyledLoading>
-    <StyledLogo>
-      <StyledText>JSON</StyledText> Crack
-    </StyledLogo>
-    <StyledMessage>
-      {message ?? "Preparing the environment for you..."}
-    </StyledMessage>
-  </StyledLoading>
-);
+export const Loading: React.FC<LoadingProps> = ({ message }) => {
+  const loading = useGraph(state => state.loading);
+
+  if (!loading) return null;
+
+  return (
+    <StyledLoading>
+      <StyledLogo>
+        <StyledText>JSON</StyledText> Crack
+      </StyledLogo>
+      <StyledMessage>
+        {message ?? "Preparing the environment for you..."}
+      </StyledMessage>
+    </StyledLoading>
+  );
+};

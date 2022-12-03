@@ -1,10 +1,15 @@
 import React from "react";
+import { useRouter } from "next/router";
 import {
+  AiOutlineCloudSync,
   AiOutlineCloudUpload,
   AiOutlineLink,
   AiOutlineUnlock,
 } from "react-icons/ai";
 import { VscAccount } from "react-icons/vsc";
+import { saveJson } from "src/services/db/json";
+import useConfig from "src/store/useConfig";
+import useGraph from "src/store/useGraph";
 import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
 import styled from "styled-components";
@@ -53,8 +58,21 @@ const StyledBottomBarItem = styled.button`
 `;
 
 export const BottomBar = () => {
+  const { replace, query } = useRouter();
   const user = useUser(state => state.user);
   const setVisible = useModal(state => state.setVisible);
+  const getJson = useGraph(state => state.getJson);
+  const hasChanges = useConfig(state => state.hasChanges);
+  const setConfig = useConfig(state => state.setConfig);
+
+  const handleSaveJson = async () => {
+    if (hasChanges) {
+      await saveJson({ id: query.json, data: getJson() }).then(res => {
+        if (res.data._id) replace({ query: { json: res.data._id } });
+        setConfig("hasChanges", false);
+      });
+    }
+  };
 
   return (
     <StyledBottomBar>
@@ -63,9 +81,9 @@ export const BottomBar = () => {
           <VscAccount />
           {user ? user.name : "Login"}
         </StyledBottomBarItem>
-        <StyledBottomBarItem>
-          <AiOutlineCloudUpload />
-          Unsaved Changes
+        <StyledBottomBarItem onClick={handleSaveJson}>
+          {hasChanges ? <AiOutlineCloudUpload /> : <AiOutlineCloudSync />}
+          {hasChanges ? "Unsaved Changes" : "Saved"}
         </StyledBottomBarItem>
         <StyledBottomBarItem>
           <AiOutlineUnlock />

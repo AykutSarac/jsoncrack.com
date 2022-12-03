@@ -1,11 +1,10 @@
 import React from "react";
 import Editor, { loader, Monaco } from "@monaco-editor/react";
-import { parse } from "jsonc-parser";
+import debounce from "lodash.debounce";
 import { Loading } from "src/components/Loading";
 import useConfig from "src/store/useConfig";
 import useGraph from "src/store/useGraph";
 import useStored from "src/store/useStored";
-import { parser } from "src/utils/jsonParser";
 import styled from "styled-components";
 
 loader.config({
@@ -28,61 +27,55 @@ const StyledWrapper = styled.div`
   grid-template-rows: minmax(0, 1fr);
 `;
 
-function handleEditorWillMount(monaco: Monaco) {
-  monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
-    allowComments: true,
-    comments: "ignore",
-  });
-}
+export const MonacoEditor = () => {
+  const json = useGraph(state => state.json);
+  const setJson = useGraph(state => state.setJson);
+  const setConfig = useConfig(state => state.setConfig);
+  const [value, setValue] = React.useState<string | undefined>(json);
 
-export const MonacoEditor = ({
-  setHasError,
-}: {
-  setHasError: (value: boolean) => void;
-}) => {
-  const [value, setValue] = React.useState<string | undefined>("");
-  const setJson = useConfig(state => state.setJson);
-  const setGraphValue = useGraph(state => state.setGraphValue);
-
-  const json = useConfig(state => state.json);
-  const foldNodes = useConfig(state => state.foldNodes);
+  const hasError = useConfig(state => state.hasError);
   const lightmode = useStored(state => (state.lightmode ? "light" : "vs-dark"));
 
+  const handleEditorWillMount = React.useCallback(
+    (monaco: Monaco) => {
+      monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+        allowComments: true,
+        comments: "ignore",
+      });
+
+      monaco.editor.onDidChangeMarkers(([uri]) => {
+        const markers = monaco.editor.getModelMarkers({ resource: uri });
+        setConfig("hasError", !!markers.length);
+      });
+    },
+    [setConfig]
+  );
+
+  const debouncedSetJson = React.useMemo(
+    () =>
+      debounce(value => {
+        if (!value) return;
+        setJson(value);
+      }, 1200),
+    [setJson]
+  );
+
   React.useEffect(() => {
-    const { nodes, edges } = parser(json, foldNodes);
-
-    setGraphValue("nodes", nodes);
-    setGraphValue("edges", edges);
-    setValue(json);
-  }, [foldNodes, json, setGraphValue]);
-
-  React.useEffect(() => {
-    const formatTimer = setTimeout(() => {
-      if (!value) {
-        setHasError(false);
-        return setJson("{}");
-      }
-
-      const errors = [];
-      const parsedJSON = JSON.stringify(parse(value, errors), null, 2);
-      if (errors.length) return setHasError(true);
-
-      setJson(parsedJSON);
-      setHasError(false);
-    }, 1200);
-
-    return () => clearTimeout(formatTimer);
-  }, [value, setJson, setHasError]);
+    if (!hasError) debouncedSetJson(value);
+  }, [debouncedSetJson, hasError, value]);
 
   return (
     <StyledWrapper>
       <Editor
         height="100%"
         defaultLanguage="json"
-        value={value}
+        value={json}
         theme={lightmode}
         options={editorOptions}
-        onChange={setValue}
+        onChange={val => {
+          if (json) setConfig("hasChanges", true);
+          setValue(val);
+        }}
         loading={<Loading message="Loading Editor..." />}
         beforeMount={handleEditorWillMount}
       />

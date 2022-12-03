@@ -1,10 +1,14 @@
+import { parse } from "jsonc-parser";
 import { CanvasDirection } from "reaflow";
 import { Graph } from "src/components/Graph";
 import { getChildrenEdges } from "src/utils/getChildrenEdges";
 import { getOutgoers } from "src/utils/getOutgoers";
+import { parser } from "src/utils/jsonParser";
 import create from "zustand";
+import useConfig from "./useConfig";
 
 const initialStates = {
+  json: null as unknown as string,
   loading: false,
   direction: "RIGHT" as CanvasDirection,
   graphCollapsed: false,
@@ -17,14 +21,10 @@ const initialStates = {
 
 export type Graph = typeof initialStates;
 
-type StateType = keyof typeof initialStates;
-type StateKey<T extends StateType> = typeof initialStates[T];
-
 interface GraphActions {
-  setGraphValue: <T extends StateType, K extends StateKey<T>>(
-    key: T,
-    value: K
-  ) => void;
+  setJson: (json: string) => void;
+  getJson: () => string;
+  setNodeEdges: (nodes: NodeData[], edges: EdgeData[]) => void;
   setLoading: (loading: boolean) => void;
   setDirection: (direction: CanvasDirection) => void;
   expandNodes: (nodeId: string) => void;
@@ -35,15 +35,22 @@ interface GraphActions {
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
   ...initialStates,
+  getJson: () => get().json,
+  setJson: (json: string) => {
+    const { nodes, edges } = parser(json, useConfig.getState().foldNodes);
+    set({ json: JSON.stringify(parse(json), null, 2) });
+    get().setNodeEdges(nodes, edges);
+  },
   setDirection: direction => set({ direction }),
-  setGraphValue: (key, value) =>
+  setNodeEdges: (nodes, edges) =>
     set({
+      nodes,
+      edges,
       collapsedParents: [],
       collapsedNodes: [],
       collapsedEdges: [],
       graphCollapsed: false,
       loading: true,
-      [key]: value,
     }),
   setLoading: loading => set({ loading }),
   expandNodes: nodeId => {

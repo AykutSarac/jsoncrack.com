@@ -12,9 +12,9 @@ const nextConfig = {
   reactStrictMode: true,
   exportPathMap: async () => ({
     "/": { page: "/" },
-    "/editor": { page: "/Editor" },
-    "/widget": { page: "/Widget" },
-    "/embed": { page: "/Embed" },
+    "/editor": { page: "/editor", query: { json: 'string' } },
+    "/widget": { page: "/widget" },
+    "/embed": { page: "/embed" },
   }),
 };
 

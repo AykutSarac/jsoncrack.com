@@ -83,12 +83,14 @@ const GraphComponent = ({
           (areaSize * 100) / (size.width * size.height) - 100
         );
 
-        setSize({ width: layout.width + 400, height: layout.height + 400 });
-
         requestAnimationFrame(() => {
+          setSize({
+            width: (layout.width as number) + 400,
+            height: (layout.height as number) + 400,
+          });
           setTimeout(() => {
             setLoading(false);
-            setTimeout(() => (changeRatio > 75 || isWidget) && centerView(), 0);
+            setTimeout(() => (changeRatio > 65 || isWidget) && centerView(), 0);
           }, 0);
         });
       }
@@ -96,42 +98,18 @@ const GraphComponent = ({
     [size.width, size.height, setLoading, isWidget, centerView]
   );
 
-  // const onLayoutChange = React.useCallback(
-  //   (layout: ElkRoot) => {
-  //     if (layout.width && layout.height) {
-  //       const areaSize = layout.width * layout.height;
-  //       const changeRatio = Math.abs(
-  //         (areaSize * 100) / (size.width * size.height) - 100
-  //       );
-
-  //       const MIN_SCALE = Math.round((400_000 / areaSize) * 100) / 100;
-
-  //       const scale = MIN_SCALE > 2 ? 1 : MIN_SCALE <= 0 ? 0.1 : MIN_SCALE;
-
-  //       setMinScale(scale);
-  //       setSize({ width: layout.width + 400, height: layout.height + 400 });
-
-  //       requestAnimationFrame(() => {
-  //         setTimeout(() => {
-  //           setLoading(false);
-  //           setTimeout(() => (changeRatio > 50 || isWidget) && centerView(), 0);
-  //         }, 0);
-  //       });
-  //     }
-  //   },
-  //   [centerView, isWidget, setLoading, size.height, size.width]
-  // );
-
   const onCanvasClick = React.useCallback(() => {
-    const input = document.querySelector("input:focus") as HTMLInputElement;
-    if (input) input.blur();
+    requestAnimationFrame(() => {
+      const input = document.querySelector("input:focus") as HTMLInputElement;
+      if (input) input.blur();
+    });
   }, []);
 
   if (nodes.length > 8_000) return <ErrorView />;
 
   return (
     <StyledEditorWrapper isWidget={isWidget} onContextMenu={e => e.preventDefault()}>
-      {loading && <Loading message="Painting graph..." />}
+      <Loading message="Painting graph..." />
       <TransformWrapper
         maxScale={2}
         minScale={0.05}

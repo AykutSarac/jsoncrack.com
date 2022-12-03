@@ -1,35 +1,29 @@
 import { ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
-import { defaultJson } from "src/constants/data";
 import create from "zustand";
 
 type StateType = keyof typeof initialStates;
 type StateKey<T extends StateType> = typeof initialStates[T];
 
 interface ConfigActions {
-  setJson: (json: string) => void;
   setConfig: <T extends StateType, K extends StateKey<T>>(key: T, value: K) => void;
-  getJson: () => string;
   zoomIn: () => void;
   zoomOut: () => void;
   centerView: () => void;
 }
 
 const initialStates = {
-  json: defaultJson,
-  cursorMode: "move" as "move" | "navigation",
   foldNodes: false,
   hideEditor: false,
   performanceMode: true,
-  disableLoading: false,
   zoomPanPinch: undefined as ReactZoomPanPinchRef | undefined,
+  hasChanges: false,
+  hasError: false
 };
 
 export type Config = typeof initialStates;
 
 const useConfig = create<Config & ConfigActions>()((set, get) => ({
   ...initialStates,
-  getJson: () => get().json,
-  setJson: (json: string) => set({ json }),
   zoomIn: () => {
     const zoomPanPinch = get().zoomPanPinch;
     if (zoomPanPinch) {

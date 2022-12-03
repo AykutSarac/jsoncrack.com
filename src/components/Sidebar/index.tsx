@@ -24,7 +24,6 @@ import useGraph from "src/store/useGraph";
 import useModal from "src/store/useModal";
 import { getNextDirection } from "src/utils/getNextDirection";
 import styled from "styled-components";
-import shallow from "zustand/shallow";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -141,22 +140,17 @@ function rotateLayout(direction: "LEFT" | "RIGHT" | "DOWN" | "UP") {
 
 export const Sidebar: React.FC = () => {
   const setVisible = useModal(state => state.setVisible);
-  const getJson = useConfig(state => state.getJson);
+  const getJson = useGraph(state => state.getJson);
   const setDirection = useGraph(state => state.setDirection);
   const setConfig = useConfig(state => state.setConfig);
   const centerView = useConfig(state => state.centerView);
   const collapseGraph = useGraph(state => state.collapseGraph);
   const expandGraph = useGraph(state => state.expandGraph);
 
-  const [graphCollapsed, direction] = useGraph(state => [
-    state.graphCollapsed,
-    state.direction,
-  ]);
-
-  const [foldNodes, hideEditor] = useConfig(
-    state => [state.foldNodes, state.hideEditor],
-    shallow
-  );
+  const graphCollapsed = useGraph(state => state.graphCollapsed);
+  const direction = useGraph(state => state.direction);
+  const foldNodes = useConfig(state => state.foldNodes);
+  const hideEditor = useConfig(state => state.hideEditor);
 
   const handleSave = () => {
     const a = document.createElement("a");
@@ -266,7 +260,7 @@ export const Sidebar: React.FC = () => {
             <VscAccount />
           </StyledElement>
         </Tooltip>
-        <Tooltip title="Setings">
+        <Tooltip title="Settings">
           <StyledElement onClick={() => setVisible("settings")(true)}>
             <VscSettingsGear />
           </StyledElement>

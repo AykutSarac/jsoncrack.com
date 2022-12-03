@@ -4,7 +4,7 @@ import { AiOutlineUpload } from "react-icons/ai";
 import { Button } from "src/components/Button";
 import { Input } from "src/components/Input";
 import { Modal, ModalProps } from "src/components/Modal";
-import useConfig from "src/store/useConfig";
+import useGraph from "src/store/useGraph";
 import styled from "styled-components";
 
 const StyledModalContent = styled(Modal.Content)`
@@ -43,7 +43,7 @@ const StyledUploadMessage = styled.h3`
 `;
 
 export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
-  const setJson = useConfig(state => state.setJson);
+  const setJson = useGraph(state => state.setJson);
   const [url, setURL] = React.useState("");
   const [jsonFile, setJsonFile] = React.useState<File | null>(null);
 

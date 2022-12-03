@@ -66,7 +66,7 @@ const WidgetPage = () => {
   const collapsedNodes = useGraph(state => state.collapsedNodes);
   const collapsedEdges = useGraph(state => state.collapsedEdges);
   const loading = useGraph(state => state.loading);
-  const setGraphValue = useGraph(state => state.setGraphValue);
+  const setNodeEdges = useGraph(state => state.setNodeEdges);
 
   const openModal = React.useCallback(() => setModalVisible(true), []);
 
@@ -94,8 +94,7 @@ const WidgetPage = () => {
         if (!event.data?.json) return;
         const { nodes, edges } = parser(event.data.json);
 
-        setGraphValue("nodes", nodes);
-        setGraphValue("edges", edges);
+        setNodeEdges(nodes, edges);
       } catch (error) {
         console.error(error);
         toast.error("Invalid JSON!");
@@ -104,7 +103,7 @@ const WidgetPage = () => {
 
     window.addEventListener("message", handler);
     return () => window.removeEventListener("message", handler);
-  }, [setGraphValue]);
+  }, [setNodeEdges]);
 
   if (query.json)
     return (
