@@ -3,11 +3,11 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import { baseURL } from "src/constants/data";
+import { darkTheme, lightTheme } from "src/constants/theme";
 import { NodeModal } from "src/containers/Modals/NodeModal";
 import useGraph from "src/store/useGraph";
 import { parser } from "src/utils/jsonParser";
 import styled, { ThemeProvider } from "styled-components";
-import { darkTheme, lightTheme } from "src/constants/theme";
 
 const Graph = dynamic<any>(() => import("src/components/Graph").then(c => c.Graph), {
   ssr: false,
@@ -90,21 +90,22 @@ const WidgetPage = () => {
     if (!inIframe()) push("/");
   }, [collapsedNodes, collapsedEdges, loading, push]);
 
-
   React.useEffect(() => {
     const handler = (event: EmbedMessage) => {
       try {
         if (!event.data?.json) return;
-        
+
         const { nodes, edges } = parser(event.data.json);
 
         const options = {
           direction: "RIGHT",
-          ...event.data.options
+          theme,
+          ...event.data.options,
         };
 
         setGraphValue("direction", options.direction);
-        if (options.theme === "light" || options.theme === "dark") setTheme(options.theme);
+        if (options.theme === "light" || options.theme === "dark")
+          setTheme(options.theme);
 
         setGraphValue("nodes", nodes);
         setGraphValue("edges", edges);
@@ -116,7 +117,7 @@ const WidgetPage = () => {
 
     window.addEventListener("message", handler);
     return () => window.removeEventListener("message", handler);
-  }, [setGraphValue]);
+  }, [setGraphValue, theme]);
 
   if (query.json)
     return (
