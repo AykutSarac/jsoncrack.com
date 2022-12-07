@@ -98,9 +98,10 @@ const FeaturesSection = () => (
       </Styles.StyledCardIcon>
       <Styles.StyledCardTitle>EASY-TO-USE</Styles.StyledCardTitle>
       <Styles.StyledCardDescription>
-        Don&apos;t even bother to update your schema to view your JSON into graphs;
-        directly paste, import or fetch! JSON Crack helps you to visualize without
-        any additional values and save your time.
+        We believe that powerful software doesn&apos;t have to be difficult to use.
+        That&apos;s why we&apos;ve designed our app to be as intuitive and
+        easy-to-use as possible. You can quickly and easily load your JSON data and
+        start exploring and analyzing it right away!
       </Styles.StyledCardDescription>
     </Styles.StyledSectionCard>
 
@@ -176,9 +177,20 @@ const GitHubSection = () => (
     <Styles.StyledSectionArea>
       <Styles.StyledSubTitle>Open Source Community</Styles.StyledSubTitle>
       <Styles.StyledMinorTitle>
-        Join the Open Source Community by suggesting new ideas, support by
-        contributing; implementing new features, fixing bugs and doing changes minor
-        to major!
+        At JSON Crack, we believe in the power of open source software and the
+        communities that support it. That&apos;s why we&apos;re proud to be part of
+        the open source community and to contribute to the development and growth of
+        open source tools and technologies.
+        <br />
+        <br /> As part of our commitment to the open source community, we&apos;ve
+        made our app freely available to anyone who wants to use it, and we welcome
+        contributions from anyone who&apos;s interested in helping to improve it.
+        Whether you&apos;re a developer, a data scientist, or just someone who&apos;s
+        passionate about open source, we&apos;d love to have you join our community
+        and help us make JSON Crack the best it can be.
+        <br />
+        <br /> So why not join us and become part of the JSON Crack open source
+        community today? We can&apos;t wait to see what we can accomplish together!
       </Styles.StyledMinorTitle>
       <Styles.StyledButton
         href="https://github.com/AykutSarac/jsoncrack.com"
@@ -196,8 +208,17 @@ const EmbedSection = () => (
     <Styles.StyledSectionArea>
       <Styles.StyledSubTitle>Embed Into Your Website</Styles.StyledSubTitle>
       <Styles.StyledMinorTitle>
-        Easily embed the JSON Crack graph into your website to showcase your
-        visitors, blog readers or anybody else!
+        JSON Crack provides users with the necessary code to embed the app into a
+        website easily using an iframe. This code can be easily copied and pasted
+        into the desired location on the website, allowing users to quickly and
+        easily integrate JSON Crack into existing workflows.
+        <br />
+        <br /> Once the app is embedded, users can use it to view and analyze JSON
+        data directly on the website. This can be useful for a variety of purposes,
+        such as quickly checking the structure of a JSON file or verifying the data
+        contained within it. JSON Crack&apos;s intuitive interface makes it easy to
+        navigate and understand even complex JSON data, making it a valuable tool for
+        anyone working with JSON.
       </Styles.StyledMinorTitle>
     </Styles.StyledSectionArea>
     <div>

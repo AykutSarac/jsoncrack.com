@@ -20,7 +20,7 @@ export interface ModalProps {
   setVisible:
     | React.Dispatch<React.SetStateAction<boolean>>
     | ((visible: boolean) => void);
-  size?: "md" | "lg";
+  size?: "sm" | "md" | "lg";
 }
 
 const Header: ReactComponent = ({ children }) => {
@@ -54,7 +54,7 @@ const Modal: React.FC<React.PropsWithChildren<ModalProps>> & ModalTypes = ({
   children,
   visible,
   setVisible,
-  size = "md",
+  size = "sm",
 }) => {
   const onClick = (e: React.SyntheticEvent<HTMLDivElement>) => {
     if (e.currentTarget === e.target) {

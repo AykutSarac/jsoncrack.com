@@ -146,7 +146,7 @@ export const StyledSubTitle = styled.h2`
 export const StyledMinorTitle = styled.p`
   color: #b4b4b4;
   text-align: center;
-  font-size: 1.25rem;
+  font-size: 1rem;
   margin: 0;
   letter-spacing: 1.2px;
 

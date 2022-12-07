@@ -1,27 +1,20 @@
-import jwt_decode from "jwt-decode";
 import toast from "react-hot-toast";
-import { validateToken } from "src/services/google";
+import { altogic } from "src/services/altogic";
+import { AltogicAuth } from "src/typings/altogic";
 import create from "zustand";
 
-interface GoogleUser {
-  iss: string;
-  nbf: number;
-  aud: string;
-  sub: string;
+type User = {
+  _id: string;
+  provider: string;
+  providerUserId: string;
   email: string;
-  email_verified: boolean;
-  azp: string;
   name: string;
-  picture: string;
-  given_name: string;
-  family_name: string;
-  iat: number;
-  exp: number;
-  jti: string;
-}
-
+  profilePicture: string;
+  signUpAt: Date;
+  lastLoginAt: Date;
+};
 interface UserActions {
-  login: (credential: string) => void;
+  login: (response: AltogicAuth) => void;
   logout: () => void;
   setUser: (key: keyof typeof initialStates, value: any) => void;
   checkSession: () => void;
@@ -29,7 +22,7 @@ interface UserActions {
 
 const initialStates = {
   isAuthenticated: false,
-  user: null as GoogleUser | null,
+  user: null as User | null,
 };
 
 export type UserStates = typeof initialStates;
@@ -39,24 +32,20 @@ const useUser = create<UserStates & UserActions>()(set => ({
   setUser: (key, value) => set({ [key]: value }),
   logout: () => {
     localStorage.removeItem("auth_token");
-    set(initialStates);
     toast.success("Logged out.");
+    set(initialStates);
   },
-  login: credential => {
-    const googleUser = jwt_decode<GoogleUser>(credential);
-    localStorage.setItem("auth_token", credential);
-    set({ user: googleUser, isAuthenticated: true });
+  login: response => {
+    // localStorage.setItem("auth_token", response.session.token);
+    set({ user: response.user, isAuthenticated: true });
   },
-  checkSession: async () => {
-    const token = localStorage.getItem("auth_token");
+  checkSession: () => {
+    const currentSession = altogic.auth.getSession();
+    const currentUser = altogic.auth.getUser();
 
-    if (token) {
-      try {
-        const { data: user } = await validateToken<GoogleUser>(token);
-        set({ user, isAuthenticated: true });
-      } catch (error) {
-        set({ isAuthenticated: false });
-      }
+    if (currentSession) {
+      altogic.auth.setSession(currentSession);
+      set({ user: currentUser as any, isAuthenticated: true });
     }
   },
 }));

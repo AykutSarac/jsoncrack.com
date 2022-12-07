@@ -1,13 +1,17 @@
 import React from "react";
 import { useRouter } from "next/router";
+import { useQuery } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import {
   AiOutlineCloudSync,
   AiOutlineCloudUpload,
   AiOutlineLink,
+  AiOutlineLock,
   AiOutlineUnlock,
 } from "react-icons/ai";
 import { VscAccount } from "react-icons/vsc";
-import { saveJson } from "src/services/db/json";
+import { altogic } from "src/services/altogic";
+import { getJson, saveJson, updateJson } from "src/services/db/json";
 import useConfig from "src/store/useConfig";
 import useGraph from "src/store/useGraph";
 import useModal from "src/store/useModal";
@@ -58,26 +62,58 @@ const StyledBottomBarItem = styled.button`
 `;
 
 export const BottomBar = () => {
-  const { replace, query } = useRouter();
+  const { isReady, replace, query } = useRouter();
+
+  const { data } = useQuery(
+    ["dbJson", query.json],
+    () => getJson(query.json as string),
+    {
+      enabled: isReady && !!query.json,
+    }
+  );
+
   const user = useUser(state => state.user);
   const setVisible = useModal(state => state.setVisible);
-  const getJson = useGraph(state => state.getJson);
+  const getJsonState = useGraph(state => state.getJson);
   const hasChanges = useConfig(state => state.hasChanges);
   const setConfig = useConfig(state => state.setConfig);
+  const [isPrivate, setIsPrivate] = React.useState(true);
 
-  const handleSaveJson = async () => {
+  React.useEffect(() => {
+    if (data) setIsPrivate(data.data.private);
+  }, [data]);
+
+  const handleSaveJson = React.useCallback(() => {
     if (hasChanges) {
-      await saveJson({ id: query.json, data: getJson() }).then(res => {
-        if (res.data._id) replace({ query: { json: res.data._id } });
-        setConfig("hasChanges", false);
-      });
+      toast.promise(
+        saveJson({ id: query.json, data: getJsonState() }).then(res => {
+          if (res.data._id) replace({ query: { json: res.data._id } });
+          setConfig("hasChanges", false);
+        }),
+        {
+          loading: "Saving JSON...",
+          success: "JSON saved to cloud",
+          error: "Failed to save JSON to cloud",
+        }
+      );
     }
+  }, [getJsonState, hasChanges, query.json, replace, setConfig]);
+
+  const handleLoginClick = () => {
+    if (user) return setVisible("account")(true);
+    altogic.auth.signInWithProvider("google");
+  };
+
+  const setPrivate = () => {
+    if (!query.json) return handleSaveJson();
+    updateJson(query.json as string, { private: !isPrivate });
+    setIsPrivate(!isPrivate);
   };
 
   return (
     <StyledBottomBar>
       <StyledLeft>
-        <StyledBottomBarItem onClick={() => setVisible("login")(true)}>
+        <StyledBottomBarItem onClick={handleLoginClick}>
           <VscAccount />
           {user ? user.name : "Login"}
         </StyledBottomBarItem>
@@ -85,9 +121,9 @@ export const BottomBar = () => {
           {hasChanges ? <AiOutlineCloudUpload /> : <AiOutlineCloudSync />}
           {hasChanges ? "Unsaved Changes" : "Saved"}
         </StyledBottomBarItem>
-        <StyledBottomBarItem>
-          <AiOutlineUnlock />
-          Public
+        <StyledBottomBarItem onClick={setPrivate}>
+          {isPrivate ? <AiOutlineLock /> : <AiOutlineUnlock />}
+          {isPrivate ? "Private" : "Public"}
         </StyledBottomBarItem>
         <StyledBottomBarItem onClick={() => setVisible("share")(true)}>
           <AiOutlineLink />

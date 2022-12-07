@@ -22,9 +22,9 @@ export const ModalWrapper = styled.div`
   }
 `;
 
-export const ModalInnerWrapper = styled.div<{ size: "md" | "lg" }>`
+export const ModalInnerWrapper = styled.div<{ size: "sm" | "md" | "lg" }>`
   min-width: 440px;
-  max-width: ${({ size }) => (size === "md" ? "490px" : "90%")};
+  max-width: ${({ size }) => (size === "sm" ? "490px" : size === "md" ? "50%" : "90%")};
   width: fit-content;
   animation: ${appearAnimation} 220ms ease-in-out;
   line-height: 20px;

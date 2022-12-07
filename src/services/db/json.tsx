@@ -1,23 +1,38 @@
-import { compressToBase64, decompressFromBase64 } from "lz-string";
-import { HttpClient } from "src/api/interceptor";
+import { compressToBase64 } from "lz-string";
+import { altogic } from "../altogic";
 
-const saveJson = async ({ id, data }) => {
+type JSON = {
+  _id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  name: string;
+  private: boolean;
+  json: string;
+};
+
+const saveJson = async ({ id, data }): Promise<{ data: { _id: string } }> => {
   const compressedData = compressToBase64(data);
 
   if (id) {
-    return await HttpClient.put<{ _id: string }>(`json/${id}`, {
-      data: compressedData,
+    return await altogic.endpoint.put(`json/${id}`, {
+      json: compressedData,
     });
   }
 
-  return await HttpClient.post<{ _id: string }>("json", {
-    data: compressedData,
+  return await altogic.endpoint.post("json", {
+    json: compressedData,
   });
 };
 
-const getJson = async (id: string) =>
-  await HttpClient.get(`json/${id}`).then(res =>
-    decompressFromBase64(res.data.data)
-  );
+const getAllJson = async (): Promise<{ data: JSON[] }> =>
+  await altogic.endpoint.get(`json`);
 
-export { saveJson, getJson };
+const getJson = async (id: string): Promise<{ data: JSON }> =>
+  await altogic.endpoint.get(`json/${id}`);
+
+const updateJson = async (id: string, data: object) =>
+  await altogic.endpoint.put(`json/${id}`, {
+    ...data,
+  });
+
+export { saveJson, getJson, getAllJson, updateJson };

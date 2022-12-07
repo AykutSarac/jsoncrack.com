@@ -36,13 +36,37 @@ export const GoalsModal = ({ visible, setVisible }) => {
   const { push } = useRouter();
 
   return (
-    <Modal visible={visible} setVisible={setVisible}>
+    <Modal visible={visible} setVisible={setVisible} size="md">
       <Modal.Header>Help JSON Crack&apos;s Goals</Modal.Header>
       <Modal.Content>
         <StyledTitle>OUR GOAL</StyledTitle>
-        <b>JSON Crack&apos;s Goal</b> is to keep the service completely free and open
-        source for everyone! For the contiunity of our service and keep the new
-        updates coming we need your support to make that possible ❤️
+        Dear user,
+        <br />
+        <br />
+        We are the team behind JSON Crack, an open-source JSON visualization app that
+        helps users better understand and work with complex JSON data. We are
+        passionate about making JSON data more accessible and user-friendly, and we
+        believe our app has the potential to make a real difference for developers
+        and data analysts alike.
+        <br />
+        <br />
+        However, developing and maintaining JSON Crack takes time and resources, and
+        we would love your support in helping us continue to improve the app and make
+        it even more useful for our users. As a sponsor, your support would help us
+        to continue to develop and maintain JSON Crack, and would allow us to add new
+        features and capabilities to the app.
+        <br />
+        <br />
+        We believe that JSON Crack has the potential to make a real difference for
+        developers and data analysts, and we would be grateful for your support in
+        helping us continue to improve the app. Thank you for considering sponsoring
+        JSON Crack.
+        <br />
+        <br />
+        Sincerely,
+        <br />
+        <br />
+        The JSON Crack team
         <ButtonsWrapper>
           <Button
             href="https://github.com/sponsors/AykutSarac"

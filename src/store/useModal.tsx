@@ -11,7 +11,7 @@ const initialStates = {
   download: false,
   goals: false,
   import: false,
-  login: false,
+  account: false,
   node: false,
   settings: false,
   share: false,
@@ -27,7 +27,7 @@ const useModal = create<ModalStates & ModalActions>()(set => ({
   ...initialStates,
   setVisible: modal => visible => {
     if (authModals.includes(modal) && !useUser.getState().isAuthenticated) {
-      return set({ login: true });
+      return set({ account: true });
     }
 
     set({ [modal]: visible });

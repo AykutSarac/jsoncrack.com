@@ -1,6 +1,4 @@
 import React from "react";
-import { GoogleLogin } from "@react-oauth/google";
-import toast from "react-hot-toast";
 import { IoRocketSharp } from "react-icons/io5";
 import { Button } from "src/components/Button";
 import { Modal, ModalProps } from "src/components/Modal";
@@ -74,41 +72,6 @@ const StyledContainer = styled.div`
   }
 `;
 
-const LoginView: React.FC<Pick<ModalProps, "setVisible">> = ({ setVisible }) => {
-  const login = useUser(state => state.login);
-
-  return (
-    <>
-      <Modal.Header>Login to JSON Crack</Modal.Header>
-      <Modal.Content>
-        <StyledTitle>Join Now!</StyledTitle>
-        <StyledModalContent>
-          Login to JSON Crack to{" "}
-          <b>
-            save your JSON files, share links and directly embed into your websites
-          </b>{" "}
-          without JavaScript instantly!
-        </StyledModalContent>
-        <StyledLoginWrapper>
-          <GoogleLogin
-            auto_select
-            width="210"
-            onSuccess={credentialResponse => {
-              if (credentialResponse.credential) {
-                login(credentialResponse.credential);
-              }
-            }}
-            onError={() => {
-              toast.error("Unable to login to Google account!");
-            }}
-          />
-        </StyledLoginWrapper>
-      </Modal.Content>
-      <Modal.Controls setVisible={setVisible} />
-    </>
-  );
-};
-
 const AccountView: React.FC<Pick<ModalProps, "setVisible">> = ({ setVisible }) => {
   const user = useUser(state => state.user);
   const logout = useUser(state => state.logout);
@@ -117,12 +80,12 @@ const AccountView: React.FC<Pick<ModalProps, "setVisible">> = ({ setVisible }) =
     <>
       <Modal.Header>Account (FREE)</Modal.Header>
       <Modal.Content>
-        <StyledTitle>Hello, {user?.given_name}!</StyledTitle>
+        <StyledTitle>Hello, {user?.name}!</StyledTitle>
         <StyledAccountWrapper>
           <StyledAvatar
             width="80"
             height="80"
-            src={user?.picture}
+            src={user?.profilePicture}
             alt={user?.name}
           />
           <StyledContainer>
@@ -154,16 +117,10 @@ const AccountView: React.FC<Pick<ModalProps, "setVisible">> = ({ setVisible }) =
   );
 };
 
-export const LoginModal: React.FC<ModalProps> = ({ setVisible, visible }) => {
-  const isAuthenticated = useUser(state => state.isAuthenticated);
-
+export const AccountModal: React.FC<ModalProps> = ({ setVisible, visible }) => {
   return (
     <Modal visible={visible} setVisible={setVisible}>
-      {isAuthenticated ? (
-        <AccountView setVisible={setVisible} />
-      ) : (
-        <LoginView setVisible={setVisible} />
-      )}
+      <AccountView setVisible={setVisible} />
     </Modal>
   );
 };

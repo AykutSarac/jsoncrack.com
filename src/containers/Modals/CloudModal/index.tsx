@@ -1,13 +1,18 @@
 import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { AiOutlinePlus } from "react-icons/ai";
 import { Modal, ModalProps } from "src/components/Modal";
+import { getAllJson } from "src/services/db/json";
 import styled from "styled-components";
+
+dayjs.extend(relativeTime);
 
 const StyledModalContent = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
-  height: 70vh;
   overflow: auto;
 `;
 
@@ -55,9 +60,10 @@ interface GraphCardProsp {
 }
 
 const GraphCard: React.FC<{ data: GraphCardProsp }> = ({
-  data: { id = "#", details, preview, title },
+  data: { id = "", details, preview, title },
+  ...props
 }) => (
-  <StyledJsonCard href={`?id=${id}`}>
+  <StyledJsonCard href={`?json=${id}`} {...props}>
     <StyledImg width="200" height="100" src={preview}></StyledImg>
     <StyledInfo>
       <StyledTitle>{title}</StyledTitle>
@@ -84,268 +90,26 @@ const CreateCard: React.FC = () => (
 );
 
 export const CloudModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
+  const { data, isLoading } = useQuery(["allJson"], () => getAllJson());
+
+  if (isLoading) return <div>loading</div>;
   return (
     <StyledModal size="lg" visible={visible} setVisible={setVisible}>
       <Modal.Header>Saved On The Cloud</Modal.Header>
       <Modal.Content>
         <StyledModalContent>
-          <GraphCard
-            data={{
-              id: "ffuds9fds97",
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
-          <GraphCard
-            data={{
-              title: "Virtual Metric DB",
-              details: "3 days ago",
-              preview:
-                "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-            }}
-          />
+          {data?.data?.result?.map(json => (
+            <GraphCard
+              data={{
+                id: json._id,
+                title: json.name,
+                details: `Last modified ${dayjs(json.updatedAt).fromNow()}`,
+                preview:
+                  "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
+              }}
+              key={json.id}
+            />
+          ))}
           <CreateCard />
         </StyledModalContent>
       </Modal.Content>

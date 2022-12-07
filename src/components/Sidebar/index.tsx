@@ -256,7 +256,7 @@ export const Sidebar: React.FC = () => {
       </StyledTopWrapper>
       <StyledBottomWrapper>
         <Tooltip title="Account">
-          <StyledElement onClick={() => setVisible("login")(true)}>
+          <StyledElement onClick={() => setVisible("account")(true)}>
             <VscAccount />
           </StyledElement>
         </Tooltip>

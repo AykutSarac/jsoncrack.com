@@ -1,9 +1,9 @@
 import React from "react";
+import { AccountModal } from "src/containers/Modals/AccountModal";
 import { ClearModal } from "src/containers/Modals/ClearModal";
 import { CloudModal } from "src/containers/Modals/CloudModal";
 import { DownloadModal } from "src/containers/Modals/DownloadModal";
 import { ImportModal } from "src/containers/Modals/ImportModal";
-import { LoginModal } from "src/containers/Modals/LoginModal";
 import { SettingsModal } from "src/containers/Modals/SettingsModal";
 import { ShareModal } from "src/containers/Modals/ShareModal";
 import useModal from "src/store/useModal";
@@ -19,7 +19,7 @@ export const ModalController = () => {
       <DownloadModal visible={state.download} setVisible={setVisible("download")} />
       <SettingsModal visible={state.settings} setVisible={setVisible("settings")} />
       <CloudModal visible={state.cloud} setVisible={setVisible("cloud")} />
-      <LoginModal visible={state.login} setVisible={setVisible("login")} />
+      <AccountModal visible={state.account} setVisible={setVisible("account")} />
       <ShareModal visible={state.share} setVisible={setVisible("share")} />
     </>
   );

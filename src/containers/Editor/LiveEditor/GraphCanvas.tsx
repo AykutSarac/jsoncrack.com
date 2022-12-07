@@ -20,7 +20,7 @@ export const GraphCanvas = ({ isWidget = false }: { isWidget?: boolean }) => {
     const hiddenItems = document.querySelectorAll(".hide");
     hiddenItems.forEach(item => item.classList.remove("hide"));
 
-    if (nodeList.length) {
+    if (nodeList.length > 1) {
       const selectedNodes = document.querySelectorAll(nodeList.join(","));
       const selectedEdges = document.querySelectorAll(edgeList.join(","));
 

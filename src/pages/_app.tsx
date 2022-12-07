@@ -1,14 +1,13 @@
 import React from "react";
 import type { AppProps } from "next/app";
-import { GoogleOAuthProvider } from "@react-oauth/google";
 import { init } from "@sentry/nextjs";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import { GoogleAnalytics } from "src/components/GoogleAnalytics";
 import GlobalStyle from "src/constants/globalStyle";
 import { darkTheme, lightTheme } from "src/constants/theme";
 import { ModalController } from "src/containers/ModalController";
 import useStored from "src/store/useStored";
-import useUser from "src/store/useUser";
 import { ThemeProvider } from "styled-components";
 
 if (process.env.NODE_ENV !== "development") {
@@ -18,21 +17,26 @@ if (process.env.NODE_ENV !== "development") {
   });
 }
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: false,
+    },
+  },
+});
+
 function JsonCrack({ Component, pageProps }: AppProps) {
+  const [isReady, setReady] = React.useState(false);
   const lightmode = useStored(state => state.lightmode);
-  const [isRendered, setRendered] = React.useState(false);
-  const checkSession = useUser(state => state.checkSession);
 
   React.useEffect(() => {
-    setRendered(true);
+    setReady(true);
   }, []);
 
-  if (isRendered)
+  if (isReady)
     return (
-      <GoogleOAuthProvider
-        onScriptLoadSuccess={() => checkSession()}
-        clientId="34440253867-g7s6qhtaqe7lumj1vutctm49t8dhvcf9.apps.googleusercontent.com"
-      >
+      <QueryClientProvider client={queryClient}>
         <GoogleAnalytics />
         <ThemeProvider theme={lightmode ? lightTheme : darkTheme}>
           <GlobalStyle />
@@ -53,7 +57,7 @@ function JsonCrack({ Component, pageProps }: AppProps) {
           />
           <ModalController />
         </ThemeProvider>
-      </GoogleOAuthProvider>
+      </QueryClientProvider>
     );
 }
 
