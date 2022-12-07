@@ -214,6 +214,10 @@ const EmbedSection = () => (
             frame?.postMessage(
               {
                 json: defaultJson,
+                options: {
+                  theme: "dark",
+                  direction: "DOWN"
+                }
               },
               "*"
             );
