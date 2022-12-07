@@ -6,7 +6,8 @@ import { baseURL } from "src/constants/data";
 import { NodeModal } from "src/containers/Modals/NodeModal";
 import useGraph from "src/store/useGraph";
 import { parser } from "src/utils/jsonParser";
-import styled from "styled-components";
+import styled, { ThemeProvider } from "styled-components";
+import { darkTheme, lightTheme } from "src/constants/theme";
 
 const Graph = dynamic<any>(() => import("src/components/Graph").then(c => c.Graph), {
   ssr: false,
@@ -62,6 +63,7 @@ const WidgetPage = () => {
 
   const [isModalVisible, setModalVisible] = React.useState(false);
   const [selectedNode, setSelectedNode] = React.useState<[string, string][]>([]);
+  const [theme, setTheme] = React.useState("dark");
 
   const collapsedNodes = useGraph(state => state.collapsedNodes);
   const collapsedEdges = useGraph(state => state.collapsedEdges);
@@ -88,11 +90,21 @@ const WidgetPage = () => {
     if (!inIframe()) push("/");
   }, [collapsedNodes, collapsedEdges, loading, push]);
 
+
   React.useEffect(() => {
     const handler = (event: EmbedMessage) => {
       try {
         if (!event.data?.json) return;
+        
         const { nodes, edges } = parser(event.data.json);
+
+        const options = {
+          direction: "RIGHT",
+          ...event.data.options
+        };
+
+        setGraphValue("direction", options.direction);
+        if (options.theme === "light" || options.theme === "dark") setTheme(options.theme);
 
         setGraphValue("nodes", nodes);
         setGraphValue("edges", edges);
@@ -118,7 +130,7 @@ const WidgetPage = () => {
     );
 
   return (
-    <>
+    <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
       <Graph openModal={openModal} setSelectedNode={setSelectedNode} isWidget />
       <NodeModal
         selectedNode={selectedNode}
@@ -128,7 +140,7 @@ const WidgetPage = () => {
       <StyledAttribute href={`${baseURL}/editor`} target="_blank" rel="noreferrer">
         jsoncrack.com
       </StyledAttribute>
-    </>
+    </ThemeProvider>
   );
 };
 

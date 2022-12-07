@@ -207,7 +207,7 @@ const EmbedSection = () => (
           setTimeout(() => {
             frame?.postMessage({
               json: defaultJson,
-            });
+            }, "*");
           }, 500);
         }}
       ></Styles.StyledIframge>
