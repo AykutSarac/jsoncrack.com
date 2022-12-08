@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 // import { useInViewport } from "react-in-viewport";
 import { CustomNodeProps } from "src/components/CustomNode";
 import useConfig from "src/store/useConfig";
