@@ -10,12 +10,6 @@ const withPWA = require("next-pwa")({
  */
 const nextConfig = {
   reactStrictMode: true,
-  exportPathMap: async () => ({
-    "/": { page: "/" },
-    "/editor": { page: "/editor", query: { json: 'string' } },
-    "/widget": { page: "/widget" },
-    "/embed": { page: "/embed" },
-  }),
 };
 
 module.exports = withPWA(nextConfig);
