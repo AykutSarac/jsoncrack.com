@@ -40,7 +40,7 @@ const ObjectNode: React.FC<CustomNodeProps> = ({ node, x, y }) => {
             <Styled.StyledKey objectKey>
               {JSON.stringify(val[0]).replaceAll('"', "")}:{" "}
             </Styled.StyledKey>
-            <Styled.StyledLinkItUrl>getNodeValue(JSON.stringify(val[1]))}</Styled.StyledLinkItUrl>
+            <Styled.StyledLinkItUrl>{getNodeValue(JSON.stringify(val[1]))}</Styled.StyledLinkItUrl>
           </Styled.StyledRow>
         ))}
     </Styled.StyledForeignObject>
