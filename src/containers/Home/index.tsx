@@ -62,15 +62,14 @@ const HeroSection = () => {
           Help JSON Crack&apos;s Goals
           <FaHeart />
         </Styles.StyledSponsorButton>
-        <Link
+        <Styles.StyledSponsorButton
           href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode"
-          passHref
+          link
+          isBlue
         >
-          <Styles.StyledSponsorButton isBlue>
-            GET IT ON VS CODE
-            <SiVisualstudiocode />
-          </Styles.StyledSponsorButton>
-        </Link>
+          GET IT ON VS CODE
+          <SiVisualstudiocode />
+        </Styles.StyledSponsorButton>
         <GoalsModal visible={isModalVisible} setVisible={setModalVisible} />
       </Styles.StyledButtonWrapper>
     </Styles.StyledHeroSection>
@@ -220,6 +219,13 @@ const EmbedSection = () => (
         navigate and understand even complex JSON data, making it a valuable tool for
         anyone working with JSON.
       </Styles.StyledMinorTitle>
+      <Styles.StyledButton
+        href="https://jsoncrack.com/embed"
+        status="SECONDARY"
+        link
+      >
+        LEARN TO EMBED
+      </Styles.StyledButton>
     </Styles.StyledSectionArea>
     <div>
       <Styles.StyledIframge
@@ -227,9 +233,16 @@ const EmbedSection = () => (
         onLoad={e => {
           const frame = e.currentTarget.contentWindow;
           setTimeout(() => {
-            frame?.postMessage({
-              json: defaultJson,
-            });
+            frame?.postMessage(
+              {
+                json: defaultJson,
+                options: {
+                  theme: "dark",
+                  direction: "DOWN"
+                }
+              },
+              "*"
+            );
           }, 500);
         }}
       ></Styles.StyledIframge>

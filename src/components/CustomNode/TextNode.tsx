@@ -65,16 +65,16 @@ const TextNode: React.FC<CustomNodeProps> = ({
       x={0}
       y={0}
       hideCollapse={hideCollapse}
-      hasCollapse={data.isParent && hasCollapse}
+      hasCollapse={data.parent && hasCollapse}
       ref={ref}
     >
-      <StyledTextNodeWrapper hasCollapse={data.isParent && !hideCollapse}>
+      <StyledTextNodeWrapper hasCollapse={data.parent && !hideCollapse}>
         {(!performanceMode || inViewport) && (
           <Styled.StyledKey
             data-x={x}
             data-y={y}
             data-key={JSON.stringify(text)}
-            parent={data.isParent}
+            parent={data.parent}
           >
             <Styled.StyledLinkItUrl>
               {JSON.stringify(text).replaceAll('"', "")}
@@ -82,13 +82,13 @@ const TextNode: React.FC<CustomNodeProps> = ({
           </Styled.StyledKey>
         )}
 
-        {data.isParent && data.childrenCount > 0 && !hideChildrenCount && (
+        {data.parent && data.childrenCount > 0 && !hideChildrenCount && (
           <Styled.StyledChildrenCount>
             ({data.childrenCount})
           </Styled.StyledChildrenCount>
         )}
 
-        {inViewport && data.isParent && hasCollapse && !hideCollapse && (
+        {inViewport && data.parent && hasCollapse && !hideCollapse && (
           <StyledExpand onClick={handleExpand}>
             {isExpanded ? <MdLinkOff size={18} /> : <MdLink size={18} />}
           </StyledExpand>

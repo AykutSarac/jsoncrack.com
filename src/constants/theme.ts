@@ -1,5 +1,3 @@
-import { DefaultTheme } from "styled-components";
-
 const fixedColors = {
   CRIMSON: "#DC143C",
   BLURPLE: "#5865F2",
@@ -18,8 +16,44 @@ const fixedColors = {
   TEXT_DANGER: "#db662e",
 };
 
-export const darkTheme: DefaultTheme = {
+const nodeColors = {
+  dark: {
+    NODE_COLORS: {
+      TEXT: "#35D073",
+      NODE_KEY: "#59b8ff",
+      NODE_VALUE: "#DCE5E7",
+      INTEGER: "#e8c479",
+      NULL: "#939598",
+      BOOL: {
+        FALSE: "#F85C50",
+        TRUE: "#00DC7D",
+      },
+      PARENT_ARR: "#FC9A40",
+      PARENT_OBJ: "#59b8ff",
+      CHILD_COUNT: "white",
+    },
+  },
+  light: {
+    NODE_COLORS: {
+      TEXT: "#748700",
+      NODE_KEY: "#761CEA",
+      NODE_VALUE: "#535353",
+      INTEGER: "#A771FE",
+      NULL: "#afafaf",
+      BOOL: {
+        FALSE: "#FF0000",
+        TRUE: "#748700",
+      },
+      PARENT_ARR: "#FF6B00",
+      PARENT_OBJ: "#761CEA",
+      CHILD_COUNT: "#535353",
+    },
+  },
+};
+
+export const darkTheme = {
   ...fixedColors,
+  ...nodeColors.dark,
   BLACK_SECONDARY: "#23272A",
   SILVER_DARK: "#4D4D4D",
   NODE_KEY: "#FAA81A",
@@ -37,10 +71,11 @@ export const darkTheme: DefaultTheme = {
   MODAL_BACKGROUND: "#36393E",
   TEXT_NORMAL: "#dcddde",
   TEXT_POSITIVE: "hsl(139,calc(var(--saturation-factor, 1)*51.6%),52.2%)",
-} as const;
+};
 
-export const lightTheme: DefaultTheme = {
+export const lightTheme = {
   ...fixedColors,
+  ...nodeColors.light,
   BLACK_SECONDARY: "#F2F2F2",
   SILVER_DARK: "#CCCCCC",
   NODE_KEY: "#DC3790",
@@ -58,4 +93,11 @@ export const lightTheme: DefaultTheme = {
   MODAL_BACKGROUND: "#FFFFFF",
   TEXT_NORMAL: "#2e3338",
   TEXT_POSITIVE: "#008736",
-} as const;
+};
+
+const themeDs = {
+  ...lightTheme,
+  ...darkTheme,
+};
+
+export default themeDs;
