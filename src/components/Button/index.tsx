@@ -35,7 +35,7 @@ const StyledButton = styled.button<{
   background: ${({ status, theme }) => getButtonStatus(status, theme)};
   color: #ffffff;
   padding: 8px 16px;
-  min-width: 60px;
+  min-width: 70px;
   min-height: 32px;
   border-radius: 3px;
   font-size: 14px;

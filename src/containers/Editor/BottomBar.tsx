@@ -10,7 +10,7 @@ import {
   AiOutlineUnlock,
 } from "react-icons/ai";
 import { VscAccount } from "react-icons/vsc";
-import { altogic } from "src/services/altogic";
+import { altogic } from "src/api/altogic";
 import { getJson, saveJson, updateJson } from "src/services/db/json";
 import useConfig from "src/store/useConfig";
 import useGraph from "src/store/useGraph";
@@ -125,10 +125,12 @@ export const BottomBar = () => {
           {isPrivate ? <AiOutlineLock /> : <AiOutlineUnlock />}
           {isPrivate ? "Private" : "Public"}
         </StyledBottomBarItem>
-        <StyledBottomBarItem onClick={() => setVisible("share")(true)}>
-          <AiOutlineLink />
-          Share
-        </StyledBottomBarItem>
+        {query.json && (
+          <StyledBottomBarItem onClick={() => setVisible("share")(true)}>
+            <AiOutlineLink />
+            Share
+          </StyledBottomBarItem>
+        )}
       </StyledLeft>
       <StyledRight>
         <StyledBottomBarItem>

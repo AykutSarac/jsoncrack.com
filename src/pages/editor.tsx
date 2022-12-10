@@ -34,7 +34,7 @@ export const StyledEditorWrapper = styled.div`
 const EditorPage: React.FC = () => {
   const { query, isReady } = useRouter();
   const checkSession = useUser(state => state.checkSession);
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, status } = useQuery(
     ["dbJson", query.json],
     () => getJson(query.json as string),
     {
@@ -52,12 +52,15 @@ const EditorPage: React.FC = () => {
   React.useEffect(() => {
     if (isReady) {
       if (query.json) {
+        
         if (isLoading) return setLoading(true);
+        if (status || !data) setJson(defaultJson);
+        
         if (data?.data) setJson(decompressFromBase64(data.data.json) as string);
         setLoading(false);
       } else setJson(defaultJson);
     }
-  }, [data, isLoading, isReady, query.json, setJson, setLoading]);
+  }, [data, status, isLoading, isReady, query.json, setJson, setLoading]);
 
   return (
     <StyledEditorWrapper>

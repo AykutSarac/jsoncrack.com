@@ -1,5 +1,5 @@
 import { compressToBase64 } from "lz-string";
-import { altogic } from "../altogic";
+import { altogic } from "src/api/altogic";
 
 type JSON = {
   _id: string;
@@ -35,4 +35,6 @@ const updateJson = async (id: string, data: object) =>
     ...data,
   });
 
-export { saveJson, getJson, getAllJson, updateJson };
+const deleteJson = async (id: string) => await altogic.endpoint.delete(`json/${id}`);
+
+export { saveJson, getJson, getAllJson, updateJson, deleteJson };

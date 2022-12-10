@@ -54,14 +54,16 @@ export const MonacoEditor = () => {
   const debouncedSetJson = React.useMemo(
     () =>
       debounce(value => {
-        if (!value) return;
+        if (!value || hasError) return;
         setJson(value);
       }, 1200),
-    [setJson]
+    [hasError, setJson]
   );
 
   React.useEffect(() => {
     if (!hasError) debouncedSetJson(value);
+
+    return () => debouncedSetJson.cancel();
   }, [debouncedSetJson, hasError, value]);
 
   return (
@@ -73,8 +75,8 @@ export const MonacoEditor = () => {
         theme={lightmode}
         options={editorOptions}
         onChange={val => {
-          if (json) setConfig("hasChanges", true);
           setValue(val);
+          if (json) setConfig("hasChanges", true);
         }}
         loading={<Loading message="Loading Editor..." />}
         beforeMount={handleEditorWillMount}

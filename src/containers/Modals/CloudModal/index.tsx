@@ -6,6 +6,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { Modal, ModalProps } from "src/components/Modal";
 import { getAllJson } from "src/services/db/json";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 dayjs.extend(relativeTime);
 
@@ -64,7 +65,7 @@ const GraphCard: React.FC<{ data: GraphCardProsp }> = ({
   ...props
 }) => (
   <StyledJsonCard href={`?json=${id}`} {...props}>
-    <StyledImg width="200" height="100" src={preview}></StyledImg>
+    <StyledImg width="200" height="100" src={preview} />
     <StyledInfo>
       <StyledTitle>{title}</StyledTitle>
       <StyledDetils>{details}</StyledDetils>
@@ -90,7 +91,8 @@ const CreateCard: React.FC = () => (
 );
 
 export const CloudModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
-  const { data, isLoading } = useQuery(["allJson"], () => getAllJson());
+  const { query } = useRouter();
+  const { data, isLoading } = useQuery(["allJson", query], () => getAllJson());
 
   if (isLoading) return <div>loading</div>;
   return (

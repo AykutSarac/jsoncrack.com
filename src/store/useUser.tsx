@@ -1,5 +1,5 @@
 import toast from "react-hot-toast";
-import { altogic } from "src/services/altogic";
+import { altogic } from "src/api/altogic";
 import { AltogicAuth } from "src/typings/altogic";
 import create from "zustand";
 
@@ -31,12 +31,12 @@ const useUser = create<UserStates & UserActions>()(set => ({
   ...initialStates,
   setUser: (key, value) => set({ [key]: value }),
   logout: () => {
-    localStorage.removeItem("auth_token");
+    altogic.auth.signOut();
+
     toast.success("Logged out.");
     set(initialStates);
   },
   login: response => {
-    // localStorage.setItem("auth_token", response.session.token);
     set({ user: response.user, isAuthenticated: true });
   },
   checkSession: () => {
@@ -44,6 +44,8 @@ const useUser = create<UserStates & UserActions>()(set => ({
     const currentUser = altogic.auth.getUser();
 
     if (currentSession) {
+      alert("has");
+      
       altogic.auth.setSession(currentSession);
       set({ user: currentUser as any, isAuthenticated: true });
     }
