@@ -78,8 +78,6 @@ export const BottomBar = () => {
   const [isPrivate, setIsPrivate] = React.useState(true);
 
   React.useEffect(() => {
-    console.log(data);
-
     setIsPrivate(data?.data.private ?? true);
   }, [data]);
 
@@ -107,6 +105,7 @@ export const BottomBar = () => {
 
   const setPrivate = () => {
     if (!query.json) return handleSaveJson();
+    setIsPrivate(!isPrivate);
     updateJson(query.json as string, { private: !isPrivate });
   };
 
