@@ -289,7 +289,7 @@ const SponsorSection = () => (
 const Footer = () => (
   <Styles.StyledFooter>
     <Styles.StyledFooterText>
-      © <img width="100" src="assets/icon.png" alt="icon" />
+      © <img width="100" src="assets/icon.png" alt="icon" loading="lazy" />
       {new Date().getFullYear()} - {pkg.version}
     </Styles.StyledFooterText>
     <Styles.StyledIconLinks>
