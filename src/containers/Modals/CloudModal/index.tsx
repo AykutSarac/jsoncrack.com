@@ -3,9 +3,14 @@ import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { AiOutlinePlus } from "react-icons/ai";
+import {
+  AiOutlineEdit,
+  AiOutlineLock,
+  AiOutlinePlus,
+  AiOutlineUnlock,
+} from "react-icons/ai";
 import { Modal, ModalProps } from "src/components/Modal";
-import { getAllJson } from "src/services/db/json";
+import { getAllJson, updateJson } from "src/services/db/json";
 import useUser from "src/store/useUser";
 import styled from "styled-components";
 
@@ -41,11 +46,24 @@ const StyledInfo = styled.div`
 `;
 
 const StyledTitle = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
   font-size: 14px;
+  font-weight: 500;
+
+  span {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;
 
 const StyledDetils = styled.div`
+  display: flex;
+  align-items: center;
   font-size: 12px;
+  gap: 4px;
 `;
 
 const StyledModal = styled(Modal)`
@@ -61,18 +79,53 @@ interface GraphCardProsp {
   details: string;
 }
 
-const GraphCard: React.FC<{ data: GraphCardProsp }> = ({
-  data: { id = "", details, preview, title },
-  ...props
-}) => (
-  <StyledJsonCard href={`?json=${id}`} {...props}>
-    <StyledImg width="200" height="100" src={preview} />
-    <StyledInfo>
-      <StyledTitle>{title}</StyledTitle>
-      <StyledDetils>{details}</StyledDetils>
-    </StyledInfo>
-  </StyledJsonCard>
-);
+const GraphCard: React.FC<{ data: any }> = ({ data, ...props }) => {
+  const [editMode, setEditMode] = React.useState(false);
+  const [name, setName] = React.useState(data.name);
+
+  const onSubmit = () => {
+    updateJson(data._id, { name });
+    setEditMode(false);
+  };
+
+  return (
+    <StyledJsonCard href={`?json=${data._id}`} {...props}>
+      <StyledImg
+        width="200"
+        height="100"
+        src="https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png"
+      />
+      <StyledInfo>
+        {editMode ? (
+          <form onSubmit={onSubmit}>
+            <input
+              value={name}
+              onChange={e => setName(e.currentTarget.value)}
+              onClick={e => e.preventDefault()}
+            />
+            <input type="submit" hidden />
+          </form>
+        ) : (
+          <StyledTitle
+            onClick={e => {
+              e.preventDefault();
+              e.stopPropagation();
+              setEditMode(true);
+            }}
+          >
+            <span>{name}</span>
+            <AiOutlineEdit />
+          </StyledTitle>
+        )}
+        <StyledDetils>
+          {data.private ? <AiOutlineLock /> : <AiOutlineUnlock />}
+          Last modified {dayjs(data.updatedAt).fromNow()}
+        </StyledDetils>
+        <StyledDetils></StyledDetils>
+      </StyledInfo>
+    </StyledJsonCard>
+  );
+};
 
 const StyledCreateWrapper = styled.div`
   display: flex;
@@ -109,16 +162,7 @@ export const CloudModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
       <Modal.Content>
         <StyledModalContent>
           {data?.data?.result?.map(json => (
-            <GraphCard
-              data={{
-                id: json._id,
-                title: json.name,
-                details: `Last modified ${dayjs(json.updatedAt).fromNow()}`,
-                preview:
-                  "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
-              }}
-              key={json._id}
-            />
+            <GraphCard data={json} key={json._id} />
           ))}
           <CreateCard />
         </StyledModalContent>
