@@ -26,18 +26,6 @@ const StyledTitle = styled.p`
   }
 `;
 
-const StyledModalContent = styled.div`
-  margin-bottom: 20px;
-`;
-
-const StyledLoginWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const StyledButton = styled(Button)``;
-
 const StyledAccountWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;

@@ -48,13 +48,13 @@ const StyledToolElement = styled.button`
 export const Tools: React.FC = () => {
   const setVisible = useModal(state => state.setVisible);
 
-  const hideEditor = useConfig(state => state.hideEditor);
+  const fullscreen = useConfig(state => state.fullscreen);
   const setConfig = useConfig(state => state.setConfig);
 
   const zoomIn = useConfig(state => state.zoomIn);
   const zoomOut = useConfig(state => state.zoomOut);
   const centerView = useConfig(state => state.centerView);
-  const toggleEditor = () => setConfig("hideEditor", !hideEditor);
+  const toggleEditor = () => setConfig("fullscreen", !fullscreen);
 
   return (
     <>

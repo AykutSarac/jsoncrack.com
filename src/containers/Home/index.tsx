@@ -2,6 +2,7 @@ import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Script from "next/script";
+import { AiOutlineRight } from "react-icons/ai";
 import { FaGithub, FaHeart, FaLinkedin, FaTwitter } from "react-icons/fa";
 import {
   HiCursorClick,
@@ -51,10 +52,10 @@ const HeroSection = () => {
         <Styles.StyledHighlightedText>instantly</Styles.StyledHighlightedText> into
         graphs.
       </Styles.StyledSubTitle>
-      <Styles.StyledMinorTitle>Paste - Import - Fetch!</Styles.StyledMinorTitle>
 
       <Styles.StyledButton rel="prefetch" href="/editor" link>
         GO TO EDITOR
+        <AiOutlineRight strokeWidth="30px" />
       </Styles.StyledButton>
 
       <Styles.StyledButtonWrapper>
@@ -238,8 +239,8 @@ const EmbedSection = () => (
                 json: defaultJson,
                 options: {
                   theme: "dark",
-                  direction: "DOWN"
-                }
+                  direction: "DOWN",
+                },
               },
               "*"
             );
@@ -288,7 +289,8 @@ const SponsorSection = () => (
 const Footer = () => (
   <Styles.StyledFooter>
     <Styles.StyledFooterText>
-      © 2022 JSON Crack - {pkg.version}
+      © <img width="100" src="assets/icon.png" alt="icon" />
+      {new Date().getFullYear()} - {pkg.version}
     </Styles.StyledFooterText>
     <Styles.StyledIconLinks>
       <Styles.StyledNavLink
@@ -335,8 +337,8 @@ const Home: React.FC = () => {
       <EmbedSection />
       <SupportSection />
       <SponsorSection />
-      <Footer />
       <SupportButton />
+      <Footer />
     </Styles.StyledHome>
   );
 };

@@ -9,7 +9,7 @@ import useConfig from "./useConfig";
 
 const initialStates = {
   json: null as unknown as string,
-  loading: false,
+  loading: true,
   direction: "RIGHT" as CanvasDirection,
   graphCollapsed: false,
   nodes: [] as NodeData[],

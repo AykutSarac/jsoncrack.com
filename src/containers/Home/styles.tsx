@@ -137,6 +137,7 @@ export const StyledSubTitle = styled.h2`
   font-size: 2.5rem;
   max-width: 40rem;
   margin: 0;
+  margin-bottom: 25px;
 
   @media only screen and (max-width: 768px) {
     font-size: 1.5rem;
@@ -158,11 +159,12 @@ export const StyledMinorTitle = styled.p`
 export const StyledButton = styled(Button)`
   background: ${({ status }) => !status && "#a13cc2"};
   padding: 12px 24px;
+  height: 46px;
 
   div {
-    font-family: "Roboto", sans-serif;
+    font-family: "Mona Sans";
     font-weight: 700;
-    font-size: 16px;
+    font-size: 1rem;
   }
 `;
 
@@ -196,11 +198,15 @@ export const StyledSponsorButton = styled(Button)<{ isBlue?: boolean }>`
 `;
 
 export const StyledFeaturesSection = styled.section`
-  display: flex;
-  max-width: 85%;
+  max-width: 60%;
   margin: 0 auto;
-  gap: 2rem;
-  padding: 50px 3%;
+  padding: 0 3%;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 60px;
+  grid-row-gap: 60px;
 
   @media only screen and (max-width: 768px) {
     flex-direction: column;
@@ -211,6 +217,16 @@ export const StyledFeaturesSection = styled.section`
 export const StyledSectionCard = styled.div`
   text-align: center;
   flex: 1;
+  border: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
+  background: rgb(48, 0, 65);
+  background: linear-gradient(
+    138deg,
+    rgba(48, 0, 65, 0.8870141806722689) 0%,
+    rgba(72, 12, 84, 0.40802258403361347) 33%,
+    rgba(65, 8, 92, 0.6012998949579832) 100%
+  );
+  border-radius: 6px;
+  padding: 16px;
 `;
 
 export const StyledCardTitle = styled.div`
@@ -350,6 +366,9 @@ export const StyledFooter = styled.footer`
 `;
 
 export const StyledFooterText = styled.p`
+  display: flex;
+  align-items: center;
+  gap: 5px;
   color: #b4b4b4;
 `;
 

@@ -15,11 +15,12 @@ const initialStates = {
   node: false,
   settings: false,
   share: false,
+  login: false
 };
 
 type ModalType = keyof typeof initialStates;
 
-const authModals: ModalType[] = ["cloud", "share"];
+const authModals: ModalType[] = ["cloud", "share", "account"];
 
 export type ModalStates = typeof initialStates;
 
@@ -27,7 +28,7 @@ const useModal = create<ModalStates & ModalActions>()(set => ({
   ...initialStates,
   setVisible: modal => visible => {
     if (authModals.includes(modal) && !useUser.getState().isAuthenticated) {
-      return set({ account: true });
+      return set({ login: true });
     }
 
     set({ [modal]: visible });

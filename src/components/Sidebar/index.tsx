@@ -150,7 +150,7 @@ export const Sidebar: React.FC = () => {
   const graphCollapsed = useGraph(state => state.graphCollapsed);
   const direction = useGraph(state => state.direction);
   const foldNodes = useConfig(state => state.foldNodes);
-  const hideEditor = useConfig(state => state.hideEditor);
+  const fullscreen = useConfig(state => state.fullscreen);
 
   const handleSave = () => {
     const a = document.createElement("a");
@@ -189,7 +189,7 @@ export const Sidebar: React.FC = () => {
         </Link>
 
         <Tooltip className="mobile" title="Edit JSON">
-          <StyledElement onClick={() => setConfig("hideEditor", !hideEditor)}>
+          <StyledElement onClick={() => setConfig("fullscreen", !fullscreen)}>
             <AiOutlineEdit />
           </StyledElement>
         </Tooltip>

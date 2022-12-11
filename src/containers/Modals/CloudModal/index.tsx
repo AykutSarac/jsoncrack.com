@@ -1,12 +1,13 @@
 import React from "react";
+import { useRouter } from "next/router";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { AiOutlinePlus } from "react-icons/ai";
 import { Modal, ModalProps } from "src/components/Modal";
 import { getAllJson } from "src/services/db/json";
+import useUser from "src/store/useUser";
 import styled from "styled-components";
-import { useRouter } from "next/router";
 
 dayjs.extend(relativeTime);
 
@@ -91,8 +92,15 @@ const CreateCard: React.FC = () => (
 );
 
 export const CloudModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
-  const { query } = useRouter();
-  const { data, isLoading } = useQuery(["allJson", query], () => getAllJson());
+  const { isReady, query } = useRouter();
+  const user = useUser(state => state.user);
+  const { data, isLoading } = useQuery(
+    ["allJson", query, user],
+    () => getAllJson(),
+    {
+      enabled: isReady,
+    }
+  );
 
   if (isLoading) return <div>loading</div>;
   return (
@@ -109,7 +117,7 @@ export const CloudModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
                 preview:
                   "https://blog.shevarezo.fr/uploads/posts/bulk/FNj3yQLp_visualiser-donnees-json-diagramme-json-crack_rotate3.png",
               }}
-              key={json.id}
+              key={json._id}
             />
           ))}
           <CreateCard />

@@ -13,11 +13,11 @@ interface ConfigActions {
 
 const initialStates = {
   foldNodes: false,
-  hideEditor: false,
+  fullscreen: false,
   performanceMode: true,
   zoomPanPinch: undefined as ReactZoomPanPinchRef | undefined,
   hasChanges: false,
-  hasError: false
+  hasError: false,
 };
 
 export type Config = typeof initialStates;
@@ -49,7 +49,14 @@ const useConfig = create<Config & ConfigActions>()((set, get) => ({
     const canvas = document.querySelector(".jsoncrack-canvas") as HTMLElement;
     if (zoomPanPinch && canvas) zoomPanPinch.zoomToElement(canvas);
   },
-  setConfig: (setting: keyof Config, value: unknown) => set({ [setting]: value }),
+  setConfig: (setting, value) => {
+    if (setting === "fullscreen" && value) {
+      set({ fullscreen: true });
+      return get().centerView();
+    }
+
+    set({ [setting]: value });
+  },
 }));
 
 export default useConfig;

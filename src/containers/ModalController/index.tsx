@@ -4,23 +4,48 @@ import { ClearModal } from "src/containers/Modals/ClearModal";
 import { CloudModal } from "src/containers/Modals/CloudModal";
 import { DownloadModal } from "src/containers/Modals/DownloadModal";
 import { ImportModal } from "src/containers/Modals/ImportModal";
+import { LoginModal } from "src/containers/Modals/LoginModal";
 import { SettingsModal } from "src/containers/Modals/SettingsModal";
 import { ShareModal } from "src/containers/Modals/ShareModal";
 import useModal from "src/store/useModal";
+import shallow from "zustand/shallow";
 
 export const ModalController = () => {
   const setVisible = useModal(state => state.setVisible);
-  const state = useModal(state => state);
+
+  const [
+    importModal,
+    clearModal,
+    downloadModal,
+    settingsModal,
+    cloudModal,
+    accountModal,
+    loginModal,
+    shareModal,
+  ] = useModal(
+    state => [
+      state.import,
+      state.clear,
+      state.download,
+      state.settings,
+      state.cloud,
+      state.account,
+      state.login,
+      state.share,
+    ],
+    shallow
+  );
 
   return (
     <>
-      <ImportModal visible={state.import} setVisible={setVisible("import")} />
-      <ClearModal visible={state.clear} setVisible={setVisible("clear")} />
-      <DownloadModal visible={state.download} setVisible={setVisible("download")} />
-      <SettingsModal visible={state.settings} setVisible={setVisible("settings")} />
-      <CloudModal visible={state.cloud} setVisible={setVisible("cloud")} />
-      <AccountModal visible={state.account} setVisible={setVisible("account")} />
-      <ShareModal visible={state.share} setVisible={setVisible("share")} />
+      <ImportModal visible={importModal} setVisible={setVisible("import")} />
+      <ClearModal visible={clearModal} setVisible={setVisible("clear")} />
+      <DownloadModal visible={downloadModal} setVisible={setVisible("download")} />
+      <SettingsModal visible={settingsModal} setVisible={setVisible("settings")} />
+      <CloudModal visible={cloudModal} setVisible={setVisible("cloud")} />
+      <AccountModal visible={accountModal} setVisible={setVisible("account")} />
+      <LoginModal visible={loginModal} setVisible={setVisible("login")} />
+      <ShareModal visible={shareModal} setVisible={setVisible("share")} />
     </>
   );
 };

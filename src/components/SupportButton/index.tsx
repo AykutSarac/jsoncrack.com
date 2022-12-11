@@ -29,6 +29,7 @@ const StyledSupportButton = styled.a`
     0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
     0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
   opacity: 0.7;
+  box-sizing: content-box !important;
 
   &:hover {
     width: 180px;
@@ -43,8 +44,6 @@ const StyledSupportButton = styled.a`
 `;
 
 export const SupportButton = () => {
-  if (location.pathname.includes("widget")) return null;
-
   return (
     <StyledSupportButton
       href="https://github.com/sponsors/AykutSarac"

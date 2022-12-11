@@ -1,6 +1,5 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import {
   AiOutlineCloudSync,
@@ -10,11 +9,12 @@ import {
   AiOutlineUnlock,
 } from "react-icons/ai";
 import { VscAccount } from "react-icons/vsc";
-import { altogic } from "src/api/altogic";
-import { getJson, saveJson, updateJson } from "src/services/db/json";
+import { useJson } from "src/hooks/useFetchedJson";
+import { saveJson, updateJson } from "src/services/db/json";
 import useConfig from "src/store/useConfig";
 import useGraph from "src/store/useGraph";
 import useModal from "src/store/useModal";
+import useStored from "src/store/useStored";
 import useUser from "src/store/useUser";
 import styled from "styled-components";
 
@@ -61,29 +61,30 @@ const StyledBottomBarItem = styled.button`
   }
 `;
 
-export const BottomBar = () => {
-  const { isReady, replace, query } = useRouter();
+const StyledImg = styled.img<{ light: boolean }>`
+  filter: ${({ light }) => light && "invert(100%)"};
+`;
 
-  const { data } = useQuery(
-    ["dbJson", query.json],
-    () => getJson(query.json as string),
-    {
-      enabled: isReady && !!query.json,
-    }
-  );
+export const BottomBar = () => {
+  const { replace, query } = useRouter();
+  const { data } = useJson();
 
   const user = useUser(state => state.user);
   const setVisible = useModal(state => state.setVisible);
   const getJsonState = useGraph(state => state.getJson);
   const hasChanges = useConfig(state => state.hasChanges);
   const setConfig = useConfig(state => state.setConfig);
+  const lightmode = useStored(state => state.lightmode);
   const [isPrivate, setIsPrivate] = React.useState(true);
 
   React.useEffect(() => {
-    if (data) setIsPrivate(data.data.private);
+    console.log(data);
+
+    setIsPrivate(data?.data.private ?? true);
   }, [data]);
 
   const handleSaveJson = React.useCallback(() => {
+    if (!user) return setVisible("login")(true);
     if (hasChanges) {
       toast.promise(
         saveJson({ id: query.json, data: getJsonState() }).then(res => {
@@ -97,17 +98,16 @@ export const BottomBar = () => {
         }
       );
     }
-  }, [getJsonState, hasChanges, query.json, replace, setConfig]);
+  }, [getJsonState, hasChanges, query.json, replace, setConfig, setVisible, user]);
 
   const handleLoginClick = () => {
     if (user) return setVisible("account")(true);
-    altogic.auth.signInWithProvider("google");
+    else setVisible("login")(true);
   };
 
   const setPrivate = () => {
     if (!query.json) return handleSaveJson();
     updateJson(query.json as string, { private: !isPrivate });
-    setIsPrivate(!isPrivate);
   };
 
   return (
@@ -121,26 +121,35 @@ export const BottomBar = () => {
           {hasChanges ? <AiOutlineCloudUpload /> : <AiOutlineCloudSync />}
           {hasChanges ? "Unsaved Changes" : "Saved"}
         </StyledBottomBarItem>
-        <StyledBottomBarItem onClick={setPrivate}>
-          {isPrivate ? <AiOutlineLock /> : <AiOutlineUnlock />}
-          {isPrivate ? "Private" : "Public"}
-        </StyledBottomBarItem>
         {query.json && (
-          <StyledBottomBarItem onClick={() => setVisible("share")(true)}>
-            <AiOutlineLink />
-            Share
-          </StyledBottomBarItem>
+          <>
+            <StyledBottomBarItem onClick={setPrivate}>
+              {isPrivate ? <AiOutlineLock /> : <AiOutlineUnlock />}
+              {isPrivate ? "Private" : "Public"}
+            </StyledBottomBarItem>
+            <StyledBottomBarItem onClick={() => setVisible("share")(true)}>
+              <AiOutlineLink />
+              Share
+            </StyledBottomBarItem>
+          </>
         )}
       </StyledLeft>
       <StyledRight>
-        <StyledBottomBarItem>
-          Powered by
-          <img
-            height="20"
-            src="https://regexlearn.com/altogic.svg"
-            alt="powered by buildable"
-          />
-        </StyledBottomBarItem>
+        <a
+          href="https://www.altogic.com/?utm_source=jsoncrack&utm_medium=referral&utm_campaign=sponsorship"
+          rel="sponsored noreferrer"
+          target="_blank"
+        >
+          <StyledBottomBarItem>
+            Powered by
+            <StyledImg
+              height="20"
+              src="https://regexlearn.com/altogic.svg"
+              alt="powered by buildable"
+              light={lightmode}
+            />
+          </StyledBottomBarItem>
+        </a>
       </StyledRight>
     </StyledBottomBar>
   );
