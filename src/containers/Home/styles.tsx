@@ -4,6 +4,10 @@ import styled from "styled-components";
 export const StyledButtonWrapper = styled.div`
   display: flex;
   gap: 18px;
+
+  @media only screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 export const StyledTwitterQuote = styled.div`
@@ -191,19 +195,14 @@ export const StyledSponsorButton = styled(Button)<{ isBlue?: boolean }>`
       color: white;
     }
   }
-
-  @media only screen and (max-width: 768px) {
-    display: ${({ isBlue }) => isBlue && "none"};
-  }
 `;
 
 export const StyledFeaturesSection = styled.section`
-  max-width: 60%;
-  margin: 0 auto;
-  padding: 0 3%;
-
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  margin: 0 auto;
+  max-width: 60%;
+  justify-content: center;
+  grid-template-columns: repeat(2, 40%);
   grid-template-rows: repeat(2, 1fr);
   grid-column-gap: 60px;
   grid-row-gap: 60px;
@@ -211,6 +210,7 @@ export const StyledFeaturesSection = styled.section`
   @media only screen and (max-width: 768px) {
     flex-direction: column;
     max-width: 80%;
+    display: flex;
   }
 `;
 
@@ -271,7 +271,7 @@ export const StyledSection = styled.section<{ reverse?: boolean }>`
     width: 100%;
   }
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 1200px) {
     flex-direction: ${({ reverse }) => (reverse ? "column-reverse" : "column")};
     max-width: 80%;
   }
@@ -294,8 +294,7 @@ export const StyledSectionArea = styled.div`
     width: 100%;
     align-items: center;
 
-    h2,
-    p {
+    h2 {
       text-align: center;
     }
   }
@@ -343,7 +342,6 @@ export const StyledPreviewSection = styled.section`
 
   @media only screen and (max-width: 768px) {
     display: none;
-    max-width: 80%;
   }
 `;
 
@@ -367,8 +365,8 @@ export const StyledFooter = styled.footer`
 
 export const StyledFooterText = styled.p`
   display: flex;
-  align-items: center;
-  gap: 5px;
+  flex-direction: column;
+  gap: 20px;
   color: #b4b4b4;
 `;
 
