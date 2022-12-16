@@ -28,14 +28,13 @@ function JsonCrack({ Component, pageProps }: AppProps) {
 
   React.useEffect(() => {
     try {
-      if (pathname !== "editor") return;
+      if (pathname !== "/editor") return;
       if (!query.json) return;
       const _isJsonValid =
         typeof query.json === "string" &&
         isJsonValid(decodeURIComponent(query.json));
-
       if (_isJsonValid) {
-        const jsonDecoded = decompress(JSON.parse(_isJsonValid));
+        const jsonDecoded = decompress(JSON.parse(query.json as string));
         const jsonString = JSON.stringify(jsonDecoded);
         setJson(jsonString);
       }
