@@ -10,7 +10,7 @@ import GlobalStyle from "src/constants/globalStyle";
 import { darkTheme, lightTheme } from "src/constants/theme";
 import useConfig from "src/store/useConfig";
 import useStored from "src/store/useStored";
-import { isValidJson } from "src/utils/isValidJson";
+import { isJsonValid } from "src/utils/isJsonValid";
 import { ThemeProvider } from "styled-components";
 
 if (process.env.NODE_ENV !== "development") {
@@ -29,12 +29,13 @@ function JsonCrack({ Component, pageProps }: AppProps) {
   React.useEffect(() => {
     try {
       if (pathname !== "editor") return;
-      const isJsonValid =
+      if (!query.json) return;
+      const _isJsonValid =
         typeof query.json === "string" &&
-        isValidJson(decodeURIComponent(query.json));
+        isJsonValid(decodeURIComponent(query.json));
 
-      if (isJsonValid) {
-        const jsonDecoded = decompress(JSON.parse(isJsonValid));
+      if (_isJsonValid) {
+        const jsonDecoded = decompress(JSON.parse(_isJsonValid));
         const jsonString = JSON.stringify(jsonDecoded);
         setJson(jsonString);
       }
