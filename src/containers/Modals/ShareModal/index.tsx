@@ -49,7 +49,6 @@ export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   const [encodedJson, setEncodedJson] = React.useState("");
   const navigate = useRouter();
 
-  const embedText = `<iframe id="jsoncrackEmbed" src="${baseURL}/widget></iframe>`;
   const shareURL = `${baseURL}/editor?json=${encodedJson}`;
 
   React.useEffect(() => {
