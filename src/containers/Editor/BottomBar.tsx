@@ -119,7 +119,7 @@ export const BottomBar = () => {
           {hasChanges ? <AiOutlineCloudUpload /> : <AiOutlineCloudSync />}
           {hasChanges ? "Unsaved Changes" : "Saved"}
         </StyledBottomBarItem>
-        {query.json && (
+        {data && (
           <>
             <StyledBottomBarItem onClick={setPrivate}>
               {isPrivate ? <AiOutlineLock /> : <AiOutlineUnlock />}

@@ -36,13 +36,17 @@ const useJson = create<JsonStates & JsonActions>()((set, get) => ({
   getJson: () => get().json,
   fetchJson: async jsonId => {
     if (jsonId) {
-      const { data } = await altogic.endpoint.get(`json/${jsonId}`);
+      const { data, errors } = await altogic.endpoint.get(`json/${jsonId}`);
 
-      if (data) {
+      if (!errors) {
         const decompressedData = decompressFromBase64(data.json);
         if (decompressedData) {
           useGraph.getState().setGraph(decompressedData);
-          return set({ data, json: decompressedData ?? undefined, loading: false });
+          return set({
+            data: data,
+            json: decompressedData ?? undefined,
+            loading: false,
+          });
         }
       }
     }
