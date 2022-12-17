@@ -1,7 +1,7 @@
 import React from "react";
 // import { useInViewport } from "react-in-viewport";
 import { CustomNodeProps } from "src/components/CustomNode";
-import useConfig from "src/store/useConfig";
+import useGraph from "src/store/useGraph";
 import * as Styled from "./styles";
 
 const inViewport = true;
@@ -9,7 +9,7 @@ const inViewport = true;
 const ObjectNode: React.FC<CustomNodeProps> = ({ node, x, y }) => {
   const { text, width, height, data } = node;
   const ref = React.useRef(null);
-  const performanceMode = useConfig(state => state.performanceMode);
+  const performanceMode = useGraph(state => state.performanceMode);
   // const { inViewport } = useInViewport(ref);
 
   if (data.isEmpty) return null;

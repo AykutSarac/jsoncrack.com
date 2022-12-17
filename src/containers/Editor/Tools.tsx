@@ -3,7 +3,7 @@ import { AiOutlineFullscreen, AiOutlineMinus, AiOutlinePlus } from "react-icons/
 import { FiDownload } from "react-icons/fi";
 import { MdCenterFocusWeak } from "react-icons/md";
 import { SearchInput } from "src/components/SearchInput";
-import useConfig from "src/store/useConfig";
+import useGraph from "src/store/useGraph";
 import useModal from "src/store/useModal";
 import styled from "styled-components";
 
@@ -48,13 +48,13 @@ const StyledToolElement = styled.button`
 export const Tools: React.FC = () => {
   const setVisible = useModal(state => state.setVisible);
 
-  const fullscreen = useConfig(state => state.fullscreen);
-  const setConfig = useConfig(state => state.setConfig);
+  const fullscreen = useGraph(state => state.fullscreen);
+  const toggleFullscreen = useGraph(state => state.toggleFullscreen);
 
-  const zoomIn = useConfig(state => state.zoomIn);
-  const zoomOut = useConfig(state => state.zoomOut);
-  const centerView = useConfig(state => state.centerView);
-  const toggleEditor = () => setConfig("fullscreen", !fullscreen);
+  const zoomIn = useGraph(state => state.zoomIn);
+  const zoomOut = useGraph(state => state.zoomOut);
+  const centerView = useGraph(state => state.centerView);
+  const toggleEditor = () => toggleFullscreen(!fullscreen);
 
   return (
     <>

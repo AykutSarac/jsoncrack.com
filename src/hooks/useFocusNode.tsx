@@ -1,14 +1,14 @@
 import React from "react";
+import useGraph from "src/store/useGraph";
 import {
   searchQuery,
   cleanupHighlight,
   highlightMatchedNodes,
 } from "src/utils/search";
-import useConfig from "../store/useConfig";
 
 export const useFocusNode = () => {
-  const setConfig = useConfig(state => state.setConfig);
-  const zoomPanPinch = useConfig(state => state.zoomPanPinch);
+  const togglePerfMode = useGraph(state => state.togglePerfMode);
+  const zoomPanPinch = useGraph(state => state.zoomPanPinch);
   const [selectedNode, setSelectedNode] = React.useState(0);
   const [content, setContent] = React.useState({
     value: "",
@@ -18,14 +18,14 @@ export const useFocusNode = () => {
   const skip = () => setSelectedNode(current => current + 1);
 
   React.useEffect(() => {
-    setConfig("performanceMode", !content.value.length);
+    togglePerfMode(!content.value.length);
 
     const debouncer = setTimeout(() => {
       setContent(val => ({ ...val, debounced: content.value }));
     }, 800);
 
     return () => clearTimeout(debouncer);
-  }, [content.value, setConfig]);
+  }, [content.value, togglePerfMode]);
 
   React.useEffect(() => {
     if (!zoomPanPinch) return;

@@ -3,8 +3,8 @@ import dynamic from "next/dynamic";
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
 import { JsonEditor } from "src/containers/Editor/JsonEditor";
-import useConfig from "src/store/useConfig";
 import styled from "styled-components";
+import useGraph from "src/store/useGraph";
 
 export const StyledEditor = styled(Allotment)`
   position: relative !important;
@@ -17,13 +17,13 @@ const LiveEditor = dynamic(() => import("src/containers/Editor/LiveEditor"), {
 });
 
 const Panes: React.FC = () => {
-  const fullscreen = useConfig(state => state.fullscreen);
-  const setConfig = useConfig(state => state.setConfig);
+  const fullscreen = useGraph(state => state.fullscreen);
+  const toggleFullscreen = useGraph(state => state.toggleFullscreen);
   const isMobile = React.useMemo(() => window.innerWidth <= 768, []);
 
   React.useEffect(() => {
-    if (isMobile) setConfig("fullscreen", true);
-  }, [isMobile, setConfig]);
+    if (isMobile) toggleFullscreen(true);
+  }, [isMobile, toggleFullscreen]);
 
   return (
     <StyledEditor proportionalLayout={false} vertical={isMobile}>

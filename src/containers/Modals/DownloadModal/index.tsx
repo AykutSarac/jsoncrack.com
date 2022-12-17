@@ -7,8 +7,8 @@ import { FiCopy, FiDownload } from "react-icons/fi";
 import { Button } from "src/components/Button";
 import { Input } from "src/components/Input";
 import { Modal, ModalProps } from "src/components/Modal";
-import useConfig from "src/store/useConfig";
 import styled from "styled-components";
+import useGraph from "src/store/useGraph";
 
 const ColorPickerStyles: Partial<TwitterPickerStylesProps> = {
   card: {
@@ -93,7 +93,7 @@ const StyledColorIndicator = styled.div<{ color: string }>`
 `;
 
 export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
-  const setConfig = useConfig(state => state.setConfig);
+  const togglePerfMode = useGraph(state => state.togglePerfMode);
   const [fileDetails, setFileDetails] = React.useState({
     filename: "jsoncrack.com",
     backgroundColor: "transparent",
@@ -103,7 +103,7 @@ export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => 
   const clipboardImage = async () => {
     try {
       toast.loading("Copying to clipboard...", { id: "toastClipboard" });
-      setConfig("performanceMode", false);
+      togglePerfMode(false);
 
       const imageElement = document.querySelector("svg[id*='ref']") as HTMLElement;
 
@@ -126,14 +126,14 @@ export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => 
     } finally {
       toast.dismiss("toastClipboard");
       setVisible(false);
-      setConfig("performanceMode", true);
+      togglePerfMode(true);
     }
   };
 
   const exportAsImage = async () => {
     try {
       toast.loading("Downloading...", { id: "toastDownload" });
-      setConfig("performanceMode", false);
+      togglePerfMode(false);
 
       const imageElement = document.querySelector("svg[id*='ref']") as HTMLElement;
 
@@ -148,7 +148,7 @@ export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => 
     } finally {
       toast.dismiss("toastDownload");
       setVisible(false);
-      setConfig("performanceMode", true);
+      togglePerfMode(true);
     }
   };
 

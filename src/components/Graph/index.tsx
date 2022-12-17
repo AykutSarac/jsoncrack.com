@@ -6,7 +6,6 @@ import {
 } from "react-zoom-pan-pinch";
 import { Canvas, Edge, ElkRoot } from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
-import useConfig from "src/store/useConfig";
 import useGraph from "src/store/useGraph";
 import styled from "styled-components";
 import { Loading } from "../Loading";
@@ -47,8 +46,8 @@ const GraphComponent = ({
   setSelectedNode,
 }: GraphProps) => {
   const setLoading = useGraph(state => state.setLoading);
-  const setConfig = useConfig(state => state.setConfig);
-  const centerView = useConfig(state => state.centerView);
+  const setZoomPanPinch = useGraph(state => state.setZoomPanPinch);
+  const centerView = useGraph(state => state.centerView);
 
   const loading = useGraph(state => state.loading);
   const direction = useGraph(state => state.direction);
@@ -70,9 +69,9 @@ const GraphComponent = ({
 
   const onInit = React.useCallback(
     (ref: ReactZoomPanPinchRef) => {
-      setConfig("zoomPanPinch", ref);
+      setZoomPanPinch(ref);
     },
-    [setConfig]
+    [setZoomPanPinch]
   );
 
   const onLayoutChange = React.useCallback(

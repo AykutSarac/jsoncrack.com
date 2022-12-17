@@ -15,6 +15,7 @@ interface Json {
 
 interface JsonActions {
   setJson: (json: string) => void;
+  getJson: () => string;
   fetchJson: (jsonId: string | string[] | undefined) => void;
   setError: (hasError: boolean) => void;
   setHasChanges: (hasChanges: boolean) => void;
@@ -30,8 +31,9 @@ const initialStates = {
 
 export type JsonStates = typeof initialStates;
 
-const useJson = create<JsonStates & JsonActions>()(set => ({
+const useJson = create<JsonStates & JsonActions>()((set, get) => ({
   ...initialStates,
+  getJson: () => get().json,
   fetchJson: async jsonId => {
     if (jsonId) {
       const { data } = await altogic.endpoint.get(`json/${jsonId}`);

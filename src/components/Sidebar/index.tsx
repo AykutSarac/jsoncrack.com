@@ -19,11 +19,11 @@ import {
   VscSettingsGear,
 } from "react-icons/vsc";
 import { Tooltip } from "src/components/Tooltip";
-import useConfig from "src/store/useConfig";
 import useGraph from "src/store/useGraph";
 import useModal from "src/store/useModal";
 import { getNextDirection } from "src/utils/getNextDirection";
 import styled from "styled-components";
+import useJson from "src/store/useJson";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -140,17 +140,19 @@ function rotateLayout(direction: "LEFT" | "RIGHT" | "DOWN" | "UP") {
 
 export const Sidebar: React.FC = () => {
   const setVisible = useModal(state => state.setVisible);
-  const getJson = useGraph(state => state.getJson);
   const setDirection = useGraph(state => state.setDirection);
-  const setConfig = useConfig(state => state.setConfig);
-  const centerView = useConfig(state => state.centerView);
+  const getJson = useJson(state => state.getJson);
+  
   const collapseGraph = useGraph(state => state.collapseGraph);
   const expandGraph = useGraph(state => state.expandGraph);
+  const centerView = useGraph(state => state.centerView);
+  const toggleFold = useGraph(state => state.toggleFold);
+  const toggleFullscreen = useGraph(state => state.toggleFullscreen);
 
-  const graphCollapsed = useGraph(state => state.graphCollapsed);
   const direction = useGraph(state => state.direction);
-  const foldNodes = useConfig(state => state.foldNodes);
-  const fullscreen = useConfig(state => state.fullscreen);
+  const foldNodes = useGraph(state => state.foldNodes);
+  const fullscreen = useGraph(state => state.fullscreen);
+  const graphCollapsed = useGraph(state => state.graphCollapsed);
 
   const handleSave = () => {
     const a = document.createElement("a");
@@ -162,7 +164,7 @@ export const Sidebar: React.FC = () => {
   };
 
   const toggleFoldNodes = () => {
-    setConfig("foldNodes", !foldNodes);
+    toggleFold(!foldNodes);
     toast(`${foldNodes ? "Unfolded" : "Folded"} nodes`);
   };
 
@@ -189,7 +191,7 @@ export const Sidebar: React.FC = () => {
         </Link>
 
         <Tooltip className="mobile" title="Edit JSON">
-          <StyledElement onClick={() => setConfig("fullscreen", !fullscreen)}>
+          <StyledElement onClick={() => toggleFullscreen(!fullscreen)}>
             <AiOutlineEdit />
           </StyledElement>
         </Tooltip>

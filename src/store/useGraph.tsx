@@ -1,17 +1,19 @@
-import { parse } from "jsonc-parser";
+import { ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
 import { CanvasDirection } from "reaflow";
 import { Graph } from "src/components/Graph";
 import { getChildrenEdges } from "src/utils/getChildrenEdges";
 import { getOutgoers } from "src/utils/getOutgoers";
 import { parser } from "src/utils/jsonParser";
 import create from "zustand";
-import useConfig from "./useConfig";
 
 const initialStates = {
-  json: null as unknown as string,
-  loading: true,
+  zoomPanPinch: undefined as ReactZoomPanPinchRef | undefined,
   direction: "RIGHT" as CanvasDirection,
+  loading: true,
   graphCollapsed: false,
+  foldNodes: false,
+  fullscreen: false,
+  performanceMode: true,
   nodes: [] as NodeData[],
   edges: [] as EdgeData[],
   collapsedNodes: [] as string[],
@@ -23,25 +25,36 @@ export type Graph = typeof initialStates;
 
 interface GraphActions {
   setGraph: (json: string) => void;
-  getJson: () => string;
   setNodeEdges: (nodes: NodeData[], edges: EdgeData[]) => void;
   setLoading: (loading: boolean) => void;
   setDirection: (direction: CanvasDirection) => void;
+  setZoomPanPinch: (ref: ReactZoomPanPinchRef) => void;
   expandNodes: (nodeId: string) => void;
   collapseNodes: (nodeId: string) => void;
   collapseGraph: () => void;
   expandGraph: () => void;
+  toggleFold: (value: boolean) => void;
+  toggleFullscreen: (value: boolean) => void;
+  togglePerfMode: (value: boolean) => void;
+  zoomIn: () => void;
+  zoomOut: () => void;
+  centerView: () => void;
 }
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
   ...initialStates,
-  getJson: () => get().json,
   setGraph: (data: string) => {
-    const { nodes, edges } = parser(data, useConfig.getState().foldNodes);
-    const json = JSON.stringify(parse(data), null, 2);
+    const { nodes, edges } = parser(data, get().foldNodes);
 
-    set({ json, loading: true });
-    get().setNodeEdges(nodes, edges);
+    set({
+      nodes,
+      edges,
+      collapsedParents: [],
+      collapsedNodes: [],
+      collapsedEdges: [],
+      graphCollapsed: false,
+      loading: true
+    });
   },
   setDirection: direction => set({ direction }),
   setNodeEdges: (nodes, edges) =>
@@ -52,6 +65,7 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       collapsedNodes: [],
       collapsedEdges: [],
       graphCollapsed: false,
+      loading: true
     }),
   setLoading: loading => set({ loading }),
   expandNodes: nodeId => {
@@ -141,6 +155,36 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       graphCollapsed: false,
     });
   },
+
+  zoomIn: () => {
+    const zoomPanPinch = get().zoomPanPinch;
+    if (zoomPanPinch) {
+      zoomPanPinch.setTransform(
+        zoomPanPinch?.state.positionX,
+        zoomPanPinch?.state.positionY,
+        zoomPanPinch?.state.scale + 0.4
+      );
+    }
+  },
+  zoomOut: () => {
+    const zoomPanPinch = get().zoomPanPinch;
+    if (zoomPanPinch) {
+      zoomPanPinch.setTransform(
+        zoomPanPinch?.state.positionX,
+        zoomPanPinch?.state.positionY,
+        zoomPanPinch?.state.scale - 0.4
+      );
+    }
+  },
+  centerView: () => {
+    const zoomPanPinch = get().zoomPanPinch;
+    const canvas = document.querySelector(".jsoncrack-canvas") as HTMLElement;
+    if (zoomPanPinch && canvas) zoomPanPinch.zoomToElement(canvas);
+  },
+  toggleFold: foldNodes => set({ foldNodes }),
+  togglePerfMode: performanceMode => set({ performanceMode }),
+  toggleFullscreen: fullscreen => set({ fullscreen }),
+  setZoomPanPinch: zoomPanPinch => set({ zoomPanPinch }),
 }));
 
 export default useGraph;

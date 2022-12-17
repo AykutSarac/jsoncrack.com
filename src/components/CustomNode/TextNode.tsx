@@ -2,7 +2,6 @@ import React from "react";
 import { MdLink, MdLinkOff } from "react-icons/md";
 // import { useInViewport } from "react-in-viewport";
 import { CustomNodeProps } from "src/components/CustomNode";
-import useConfig from "src/store/useConfig";
 import useGraph from "src/store/useGraph";
 import useStored from "src/store/useStored";
 import styled from "styled-components";
@@ -48,7 +47,7 @@ const TextNode: React.FC<CustomNodeProps> = ({
   const expandNodes = useGraph(state => state.expandNodes);
   const collapseNodes = useGraph(state => state.collapseNodes);
   const isExpanded = useGraph(state => state.collapsedParents.includes(id));
-  const performanceMode = useConfig(state => state.performanceMode);
+  const performanceMode = useGraph(state => state.performanceMode);
   // const { inViewport } = useInViewport(ref);
 
   const handleExpand = (e: React.MouseEvent<HTMLButtonElement>) => {
