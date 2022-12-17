@@ -109,6 +109,10 @@ export const StyledHeroSection = styled.section`
   gap: 1.5em;
   min-height: 40vh;
   padding: 0 3%;
+
+  h2 {
+    margin-bottom: 25px;
+  }
 `;
 
 export const StyledNavLink = styled.a`
@@ -141,7 +145,6 @@ export const StyledSubTitle = styled.h2`
   font-size: 2.5rem;
   max-width: 40rem;
   margin: 0;
-  margin-bottom: 25px;
 
   @media only screen and (max-width: 768px) {
     font-size: 1.5rem;

@@ -9,14 +9,13 @@ import {
   AiOutlineUnlock,
 } from "react-icons/ai";
 import { VscAccount } from "react-icons/vsc";
-import { useJson } from "src/hooks/useFetchedJson";
 import { saveJson, updateJson } from "src/services/db/json";
-import useConfig from "src/store/useConfig";
 import useGraph from "src/store/useGraph";
 import useModal from "src/store/useModal";
 import useStored from "src/store/useStored";
 import useUser from "src/store/useUser";
 import styled from "styled-components";
+import useJson from "src/store/useJson";
 
 const StyledBottomBar = styled.div`
   display: flex;
@@ -67,27 +66,28 @@ const StyledImg = styled.img<{ light: boolean }>`
 
 export const BottomBar = () => {
   const { replace, query } = useRouter();
-  const { data } = useJson();
-
+  const data = useJson(state => state.data);
   const user = useUser(state => state.user);
-  const setVisible = useModal(state => state.setVisible);
-  const getJsonState = useGraph(state => state.getJson);
-  const hasChanges = useConfig(state => state.hasChanges);
-  const setConfig = useConfig(state => state.setConfig);
   const lightmode = useStored(state => state.lightmode);
-  const [isPrivate, setIsPrivate] = React.useState(true);
-
+  const hasChanges = useJson(state => state.hasChanges);
+  
+  const getJsonState = useGraph(state => state.getJson);
+  const setVisible = useModal(state => state.setVisible);
+  const setHasChanges = useJson(state => state.setHasChanges);
+  const [isPrivate, setIsPrivate] = React.useState(false);
+  
   React.useEffect(() => {
-    setIsPrivate(data?.data.private ?? true);
+    setIsPrivate(data?.private ?? false);
   }, [data]);
 
   const handleSaveJson = React.useCallback(() => {
     if (!user) return setVisible("login")(true);
+
     if (hasChanges) {
       toast.promise(
         saveJson({ id: query.json, data: getJsonState() }).then(res => {
           if (res.data._id) replace({ query: { json: res.data._id } });
-          setConfig("hasChanges", false);
+          setHasChanges(false);
         }),
         {
           loading: "Saving JSON...",
@@ -96,7 +96,7 @@ export const BottomBar = () => {
         }
       );
     }
-  }, [getJsonState, hasChanges, query.json, replace, setConfig, setVisible, user]);
+  }, [getJsonState, hasChanges, query.json, replace, setHasChanges, setVisible, user]);
 
   const handleLoginClick = () => {
     if (user) return setVisible("account")(true);

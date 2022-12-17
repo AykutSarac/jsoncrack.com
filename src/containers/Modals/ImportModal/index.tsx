@@ -4,7 +4,7 @@ import { AiOutlineUpload } from "react-icons/ai";
 import { Button } from "src/components/Button";
 import { Input } from "src/components/Input";
 import { Modal, ModalProps } from "src/components/Modal";
-import useGraph from "src/store/useGraph";
+import useJson from "src/store/useJson";
 import styled from "styled-components";
 
 const StyledModalContent = styled(Modal.Content)`
@@ -43,7 +43,7 @@ const StyledUploadMessage = styled.h3`
 `;
 
 export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
-  const setJson = useGraph(state => state.setJson);
+  const setJson = useJson(state => state.setJson);
   const [url, setURL] = React.useState("");
   const [jsonFile, setJsonFile] = React.useState<File | null>(null);
 
@@ -59,7 +59,7 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
       return fetch(url)
         .then(res => res.json())
         .then(json => {
-          setJson(JSON.stringify(json));
+          setJson(JSON.stringify(json, null, 2));
           setVisible(false);
         })
         .catch(() => toast.error("Failed to fetch JSON!"))

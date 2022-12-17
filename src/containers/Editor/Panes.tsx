@@ -19,7 +19,7 @@ const LiveEditor = dynamic(() => import("src/containers/Editor/LiveEditor"), {
 const Panes: React.FC = () => {
   const fullscreen = useConfig(state => state.fullscreen);
   const setConfig = useConfig(state => state.setConfig);
-  const isMobile = window.innerWidth <= 768;
+  const isMobile = React.useMemo(() => window.innerWidth <= 768, []);
 
   React.useEffect(() => {
     if (isMobile) setConfig("fullscreen", true);

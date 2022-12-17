@@ -72,6 +72,7 @@ const StyledButtonContent = styled.div`
   gap: 8px;
   white-space: nowrap;
   text-overflow: ellipsis;
+  font-weight: 600;
 `;
 
 export const Button: React.FC<ButtonProps & ConditionalProps> = ({

@@ -3,10 +3,10 @@ import { useRouter } from "next/router";
 import { Button } from "src/components/Button";
 import { Modal, ModalProps } from "src/components/Modal";
 import { deleteJson } from "src/services/db/json";
-import useGraph from "src/store/useGraph";
+import useJson from "src/store/useJson";
 
 export const ClearModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
-  const setJson = useGraph(state => state.setJson);
+  const setJson = useJson(state => state.setJson);
   const { query, replace } = useRouter();
 
   const handleClear = () => {

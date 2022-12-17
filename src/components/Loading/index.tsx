@@ -1,8 +1,8 @@
 import React from "react";
-import useGraph from "src/store/useGraph";
 import styled, { keyframes } from "styled-components";
 
 interface LoadingProps {
+  loading?: boolean;
   message?: string;
 }
 
@@ -49,9 +49,7 @@ const StyledMessage = styled.div`
   font-weight: 500;
 `;
 
-export const Loading: React.FC<LoadingProps> = ({ message }) => {
-  const loading = useGraph(state => state.loading);
-
+export const Loading: React.FC<LoadingProps> = ({ loading = true, message }) => {
   if (!loading) return null;
 
   return (

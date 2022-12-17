@@ -52,6 +52,7 @@ export const ContentWrapper = styled.div`
   background: ${({ theme }) => theme.MODAL_BACKGROUND};
   padding: 16px;
   overflow: hidden auto;
+  max-height: 500px;
 `;
 
 export const ControlsWrapper = styled.div`

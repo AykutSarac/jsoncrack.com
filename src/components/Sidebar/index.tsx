@@ -242,7 +242,7 @@ export const Sidebar: React.FC = () => {
           </StyledElement>
         </Tooltip>
 
-        <Tooltip title="Clear JSON">
+        <Tooltip title="Delete JSON">
           <StyledElement onClick={() => setVisible("clear")(true)}>
             <AiOutlineDelete />
           </StyledElement>

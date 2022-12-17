@@ -16,8 +16,6 @@ const initialStates = {
   fullscreen: false,
   performanceMode: true,
   zoomPanPinch: undefined as ReactZoomPanPinchRef | undefined,
-  hasChanges: false,
-  hasError: false,
 };
 
 export type Config = typeof initialStates;

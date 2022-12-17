@@ -290,9 +290,9 @@ const Footer = () => (
   <Styles.StyledFooter>
     <Styles.StyledFooterText>
       <img width="120" src="assets/icon.png" alt="icon" loading="lazy" />
-      <div>
+      <span>
       © {new Date().getFullYear()} JSON Crack - {pkg.version}
-      </div>
+      </span>
     </Styles.StyledFooterText>
     <Styles.StyledIconLinks>
       <Styles.StyledNavLink

@@ -22,7 +22,7 @@ const initialStates = {
 export type Graph = typeof initialStates;
 
 interface GraphActions {
-  setJson: (json: string) => void;
+  setGraph: (json: string) => void;
   getJson: () => string;
   setNodeEdges: (nodes: NodeData[], edges: EdgeData[]) => void;
   setLoading: (loading: boolean) => void;
@@ -36,9 +36,11 @@ interface GraphActions {
 const useGraph = create<Graph & GraphActions>((set, get) => ({
   ...initialStates,
   getJson: () => get().json,
-  setJson: (json: string) => {
-    const { nodes, edges } = parser(json, useConfig.getState().foldNodes);
-    set({ json: JSON.stringify(parse(json), null, 2) });
+  setGraph: (data: string) => {
+    const { nodes, edges } = parser(data, useConfig.getState().foldNodes);
+    const json = JSON.stringify(parse(data), null, 2);
+
+    set({ json, loading: true });
     get().setNodeEdges(nodes, edges);
   },
   setDirection: direction => set({ direction }),
@@ -50,7 +52,6 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       collapsedNodes: [],
       collapsedEdges: [],
       graphCollapsed: false,
-      loading: true,
     }),
   setLoading: loading => set({ loading }),
   expandNodes: nodeId => {
