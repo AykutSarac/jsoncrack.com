@@ -10,7 +10,6 @@ import {
 } from "react-icons/ai";
 import { VscAccount } from "react-icons/vsc";
 import { saveJson, updateJson } from "src/services/db/json";
-import useGraph from "src/store/useGraph";
 import useModal from "src/store/useModal";
 import useStored from "src/store/useStored";
 import useUser from "src/store/useUser";
@@ -71,7 +70,7 @@ export const BottomBar = () => {
   const lightmode = useStored(state => state.lightmode);
   const hasChanges = useJson(state => state.hasChanges);
   
-  const getJsonState = useGraph(state => state.getJson);
+  const getJson = useJson(state => state.getJson);
   const setVisible = useModal(state => state.setVisible);
   const setHasChanges = useJson(state => state.setHasChanges);
   const [isPrivate, setIsPrivate] = React.useState(false);
@@ -85,7 +84,7 @@ export const BottomBar = () => {
 
     if (hasChanges) {
       toast.promise(
-        saveJson({ id: query.json, data: getJsonState() }).then(res => {
+        saveJson({ id: query.json, data: getJson() }).then(res => {
           if (res.data._id) replace({ query: { json: res.data._id } });
           setHasChanges(false);
         }),
@@ -96,7 +95,7 @@ export const BottomBar = () => {
         }
       );
     }
-  }, [getJsonState, hasChanges, query.json, replace, setHasChanges, setVisible, user]);
+  }, [getJson, hasChanges, query.json, replace, setHasChanges, setVisible, user]);
 
   const handleLoginClick = () => {
     if (user) return setVisible("account")(true);
