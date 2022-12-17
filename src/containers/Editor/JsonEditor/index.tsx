@@ -11,7 +11,6 @@ const StyledEditorWrapper = styled.div`
   user-select: none;
 `;
 export const JsonEditor: React.FC = () => {
-
   return (
     <StyledEditorWrapper>
       <ErrorContainer />

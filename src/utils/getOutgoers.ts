@@ -19,7 +19,7 @@ export const getOutgoers = (
         matchingNodes.push(n.id);
       return outgoerIds.includes(n.id) && !parent.includes(n.id);
     });
-    
+
     outgoerNodes.push(...nodeList);
     nodeList.forEach(node => runner(node.id));
   };

@@ -7,8 +7,8 @@ import { FiCopy, FiDownload } from "react-icons/fi";
 import { Button } from "src/components/Button";
 import { Input } from "src/components/Input";
 import { Modal, ModalProps } from "src/components/Modal";
-import styled from "styled-components";
 import useGraph from "src/store/useGraph";
+import styled from "styled-components";
 
 const ColorPickerStyles: Partial<TwitterPickerStylesProps> = {
   card: {

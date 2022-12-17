@@ -15,7 +15,7 @@ const initialStates = {
   node: false,
   settings: false,
   share: false,
-  login: false
+  login: false,
 };
 
 type ModalType = keyof typeof initialStates;

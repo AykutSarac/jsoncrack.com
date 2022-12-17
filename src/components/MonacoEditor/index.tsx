@@ -52,10 +52,11 @@ export const MonacoEditor = () => {
   );
 
   const debouncedSetJson = React.useMemo(
-    () => debounce(value => {
-      if (hasError) return;
-      setJson(value || "[]");
-    }, 1200),
+    () =>
+      debounce(value => {
+        if (hasError) return;
+        setJson(value || "[]");
+      }, 1200),
     [hasError, setJson]
   );
 

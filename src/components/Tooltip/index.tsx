@@ -23,7 +23,7 @@ const StyledTooltip = styled.div<{ visible: boolean }>`
   padding: 6px 8px;
   display: ${({ visible }) => (visible ? "initial" : "none")};
   white-space: nowrap;
-  font-family: 'Mona Sans';
+  font-family: "Mona Sans";
   font-size: 16px;
   user-select: none;
   font-weight: 500;

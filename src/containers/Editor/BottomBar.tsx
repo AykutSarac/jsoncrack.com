@@ -10,11 +10,11 @@ import {
 } from "react-icons/ai";
 import { VscAccount } from "react-icons/vsc";
 import { saveJson, updateJson } from "src/services/db/json";
+import useJson from "src/store/useJson";
 import useModal from "src/store/useModal";
 import useStored from "src/store/useStored";
 import useUser from "src/store/useUser";
 import styled from "styled-components";
-import useJson from "src/store/useJson";
 
 const StyledBottomBar = styled.div`
   display: flex;
@@ -69,12 +69,12 @@ export const BottomBar = () => {
   const user = useUser(state => state.user);
   const lightmode = useStored(state => state.lightmode);
   const hasChanges = useJson(state => state.hasChanges);
-  
+
   const getJson = useJson(state => state.getJson);
   const setVisible = useModal(state => state.setVisible);
   const setHasChanges = useJson(state => state.setHasChanges);
   const [isPrivate, setIsPrivate] = React.useState(false);
-  
+
   React.useEffect(() => {
     setIsPrivate(data?.private ?? false);
   }, [data]);

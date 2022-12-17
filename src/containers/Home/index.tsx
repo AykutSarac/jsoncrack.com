@@ -291,7 +291,7 @@ const Footer = () => (
     <Styles.StyledFooterText>
       <img width="120" src="assets/icon.png" alt="icon" loading="lazy" />
       <span>
-      © {new Date().getFullYear()} JSON Crack - {pkg.version}
+        © {new Date().getFullYear()} JSON Crack - {pkg.version}
       </span>
     </Styles.StyledFooterText>
     <Styles.StyledIconLinks>

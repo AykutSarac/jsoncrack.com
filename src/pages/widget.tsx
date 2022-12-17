@@ -108,7 +108,7 @@ const WidgetPage = () => {
         if (options.theme === "light" || options.theme === "dark")
           setTheme(options.theme);
 
-          setNodeEdges(nodes, edges);
+        setNodeEdges(nodes, edges);
       } catch (error) {
         console.error(error);
         toast.error("Invalid JSON!");

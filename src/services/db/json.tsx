@@ -27,9 +27,6 @@ const saveJson = async ({ id, data }): Promise<{ data: { _id: string } }> => {
 const getAllJson = async (): Promise<{ data: JSON[] }> =>
   await altogic.endpoint.get(`json`);
 
-const getJson = async (id: string): Promise<{ data: JSON }> =>
-  await altogic.endpoint.get(`json/${id}`)
-
 const updateJson = async (id: string, data: object) =>
   await altogic.endpoint.put(`json/${id}`, {
     ...data,
@@ -37,4 +34,4 @@ const updateJson = async (id: string, data: object) =>
 
 const deleteJson = async (id: string) => await altogic.endpoint.delete(`json/${id}`);
 
-export { saveJson, getJson, getAllJson, updateJson, deleteJson };
+export { saveJson, getAllJson, updateJson, deleteJson };

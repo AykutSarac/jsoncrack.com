@@ -20,10 +20,10 @@ import {
 } from "react-icons/vsc";
 import { Tooltip } from "src/components/Tooltip";
 import useGraph from "src/store/useGraph";
+import useJson from "src/store/useJson";
 import useModal from "src/store/useModal";
 import { getNextDirection } from "src/utils/getNextDirection";
 import styled from "styled-components";
-import useJson from "src/store/useJson";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -142,7 +142,7 @@ export const Sidebar: React.FC = () => {
   const setVisible = useModal(state => state.setVisible);
   const setDirection = useGraph(state => state.setDirection);
   const getJson = useJson(state => state.getJson);
-  
+
   const collapseGraph = useGraph(state => state.collapseGraph);
   const expandGraph = useGraph(state => state.expandGraph);
   const centerView = useGraph(state => state.centerView);

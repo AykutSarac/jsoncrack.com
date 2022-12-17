@@ -53,7 +53,7 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       collapsedNodes: [],
       collapsedEdges: [],
       graphCollapsed: false,
-      loading: true
+      loading: true,
     });
   },
   setDirection: direction => set({ direction }),
@@ -65,7 +65,7 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       collapsedNodes: [],
       collapsedEdges: [],
       graphCollapsed: false,
-      loading: true
+      loading: true,
     }),
   setLoading: loading => set({ loading }),
   expandNodes: nodeId => {

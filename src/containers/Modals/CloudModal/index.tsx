@@ -27,7 +27,8 @@ const StyledModalContent = styled.div`
 const StyledJsonCard = styled.a<{ active?: boolean }>`
   display: block;
   background: ${({ theme }) => theme.BLACK_SECONDARY};
-  border: 2px solid ${({ theme, active }) => active ? theme.SEAGREEN : theme.BLACK_SECONDARY};
+  border: 2px solid
+    ${({ theme, active }) => (active ? theme.SEAGREEN : theme.BLACK_SECONDARY)};
   border-radius: 5px;
   overflow: hidden;
   flex: 1;
@@ -87,7 +88,7 @@ const StyledNameInput = styled.input`
   font-weight: 600;
 `;
 
-const GraphCard: React.FC<{ data: any; refetch: () => void, active: boolean }> = ({
+const GraphCard: React.FC<{ data: any; refetch: () => void; active: boolean }> = ({
   data,
   refetch,
   active,
@@ -178,7 +179,12 @@ export const CloudModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
             <>
               <CreateCard />
               {data?.data?.result?.map(json => (
-                <GraphCard data={json} key={json._id} refetch={refetch} active={query.json === json._id} />
+                <GraphCard
+                  data={json}
+                  key={json._id}
+                  refetch={refetch}
+                  active={query.json === json._id}
+                />
               ))}
             </>
           )}
