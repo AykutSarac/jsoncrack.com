@@ -33,14 +33,8 @@ const StyledTextNodeWrapper = styled.div<{ hasCollapse: boolean }>`
   width: 100%;
 `;
 
-const StyledImageWrapper = styled.div`
-  padding: 5px;
-`;
-
 const StyledImage = styled.img`
-  border-radius: 2px;
   object-fit: contain;
-  background: ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
 `;
 
 const TextNode: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) => {
@@ -48,13 +42,10 @@ const TextNode: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }
   const ref = React.useRef(null);
   const hideCollapse = useStored(state => state.hideCollapse);
   const childrenCount = useStored(state => state.childrenCount);
-  const imagePreview = useStored(state => state.imagePreview);
   const expandNodes = useGraph(state => state.expandNodes);
   const collapseNodes = useGraph(state => state.collapseNodes);
   const isExpanded = useGraph(state => state.collapsedParents.includes(id));
   const performanceMode = useGraph(state => state.performanceMode);
-  const isImage =
-    !Array.isArray(text) && /(https?:\/\/.*\.(?:png|jpg|gif))/i.test(text) && imagePreview;
   // const { inViewport } = useInViewport(ref);
 
   const handleExpand = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -73,35 +64,31 @@ const TextNode: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }
       hasCollapse={data.parent && hasCollapse}
       ref={ref}
     >
-      {isImage ? (
-        <StyledImageWrapper>
-          <StyledImage src={text} width="70" height="70" />
-        </StyledImageWrapper>
-      ) : (
-        <StyledTextNodeWrapper hasCollapse={data.parent && hideCollapse}>
-          {(!performanceMode || inViewport) && (
-            <Styled.StyledKey
-              data-x={x}
-              data-y={y}
-              data-key={JSON.stringify(text)}
-              parent={data.parent}
-            >
-              <Styled.StyledLinkItUrl>
-                {JSON.stringify(text).replaceAll('"', "")}
-              </Styled.StyledLinkItUrl>
-            </Styled.StyledKey>
-          )}
-          {data.parent && data.childrenCount > 0 && childrenCount && (
-            <Styled.StyledChildrenCount>({data.childrenCount})</Styled.StyledChildrenCount>
-          )}
+      <StyledTextNodeWrapper hasCollapse={data.parent && hideCollapse}>
+        {(!performanceMode || inViewport) && (
+          <Styled.StyledKey
+            data-x={x}
+            data-y={y}
+            data-key={JSON.stringify(text)}
+            parent={data.parent}
+          >
+            <Styled.StyledLinkItUrl>
+              {JSON.stringify(text).replaceAll('"', "")}
+            </Styled.StyledLinkItUrl>
+          </Styled.StyledKey>
+        )}
+        <StyledImage src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Cat03.jpg/1200px-Cat03.jpg" alt="" />
 
-          {inViewport && data.parent && hasCollapse && hideCollapse && (
-            <StyledExpand onClick={handleExpand}>
-              {isExpanded ? <MdLinkOff size={18} /> : <MdLink size={18} />}
-            </StyledExpand>
-          )}
-        </StyledTextNodeWrapper>
-      )}
+        {data.parent && data.childrenCount > 0 && childrenCount && (
+          <Styled.StyledChildrenCount>({data.childrenCount})</Styled.StyledChildrenCount>
+        )}
+
+        {inViewport && data.parent && hasCollapse && hideCollapse && (
+          <StyledExpand onClick={handleExpand}>
+            {isExpanded ? <MdLinkOff size={18} /> : <MdLink size={18} />}
+          </StyledExpand>
+        )}
+      </StyledTextNodeWrapper>
     </Styled.StyledForeignObject>
   );
 };

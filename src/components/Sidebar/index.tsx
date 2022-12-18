@@ -148,8 +148,6 @@ export const Sidebar: React.FC = () => {
   const fullscreen = useGraph(state => state.fullscreen);
   const graphCollapsed = useGraph(state => state.graphCollapsed);
 
-  console.log(graphCollapsed, foldNodes);
-
   const handleSave = () => {
     const a = document.createElement("a");
     const file = new Blob([getJson()], { type: "text/plain" });

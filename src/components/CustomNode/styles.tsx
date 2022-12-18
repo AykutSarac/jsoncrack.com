@@ -16,7 +16,6 @@ export const StyledLinkItUrl = styled(LinkItUrl)`
 
 export const StyledForeignObject = styled.foreignObject<{
   hasCollapse?: boolean;
-  hideCollapse?: boolean;
   isObject?: boolean;
 }>`
   text-align: ${({ isObject }) => !isObject && "center"};

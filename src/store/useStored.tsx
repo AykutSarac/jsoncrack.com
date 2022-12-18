@@ -1,5 +1,6 @@
 import create from "zustand";
 import { persist } from "zustand/middleware";
+import useGraph from "./useGraph";
 
 type Sponsor = {
   handle: string;
@@ -15,30 +16,29 @@ function getTomorrow() {
   return new Date(tomorrow).getTime();
 }
 
-export interface Config {
-  lightmode: boolean;
-  hideCollapse: boolean;
-  hideChildrenCount: boolean;
+const initialStates = {
+  lightmode: false,
+  hideCollapse: true,
+  childrenCount: true,
+  imagePreview: true,
   sponsors: {
-    users: Sponsor[];
-    nextDate: number;
-  };
+    users: [] as Sponsor[],
+    nextDate: Date.now(),
+  },
+};
+
+export interface ConfigActions {
   setSponsors: (sponsors: Sponsor[]) => void;
   setLightTheme: (theme: boolean) => void;
   toggleHideCollapse: (value: boolean) => void;
-  toggleHideChildrenCount: (value: boolean) => void;
+  toggleChildrenCount: (value: boolean) => void;
+  toggleImagePreview: (value: boolean) => void;
 }
 
 const useStored = create(
-  persist<Config>(
+  persist<typeof initialStates & ConfigActions>(
     set => ({
-      lightmode: false,
-      hideCollapse: false,
-      hideChildrenCount: true,
-      sponsors: {
-        users: [],
-        nextDate: Date.now(),
-      },
+      ...initialStates,
       setLightTheme: (value: boolean) =>
         set({
           lightmode: value,
@@ -51,7 +51,11 @@ const useStored = create(
           },
         }),
       toggleHideCollapse: (value: boolean) => set({ hideCollapse: value }),
-      toggleHideChildrenCount: (value: boolean) => set({ hideChildrenCount: value }),
+      toggleChildrenCount: (value: boolean) => set({ childrenCount: value }),
+      toggleImagePreview: (value: boolean) => {
+        set({ imagePreview: value });
+        useGraph.getState().setGraph();
+      },
     }),
     {
       name: "config",

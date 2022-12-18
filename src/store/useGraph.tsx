@@ -25,7 +25,7 @@ const initialStates = {
 export type Graph = typeof initialStates;
 
 interface GraphActions {
-  setGraph: (json: string) => void;
+  setGraph: (json?: string) => void;
   setNodeEdges: (nodes: NodeData[], edges: EdgeData[]) => void;
   setLoading: (loading: boolean) => void;
   setDirection: (direction: CanvasDirection) => void;
@@ -44,8 +44,8 @@ interface GraphActions {
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
   ...initialStates,
-  setGraph: (data: string) => {
-    const { nodes, edges } = parser(data, get().foldNodes);
+  setGraph: (data?: string) => {
+    const { nodes, edges } = parser(data ?? useJson.getState().json);
 
     set({
       nodes,
@@ -177,10 +177,8 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
     if (zoomPanPinch && canvas) zoomPanPinch.zoomToElement(canvas);
   },
   toggleFold: foldNodes => {
-    const { json } = useJson.getState();
-    const { nodes, edges } = parser(json, foldNodes);
-
-    set({ nodes, edges, foldNodes });
+    set({ foldNodes });
+    get().setGraph();
   },
   togglePerfMode: performanceMode => set({ performanceMode }),
   toggleFullscreen: fullscreen => set({ fullscreen }),

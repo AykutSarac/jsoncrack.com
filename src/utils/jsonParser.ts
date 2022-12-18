@@ -1,6 +1,11 @@
 import { Node, parseTree } from "jsonc-parser";
+import useGraph from "src/store/useGraph";
+import useStored from "src/store/useStored";
 
-const calculateSize = (text: string | [string, string][], isParent = false, isFolded: boolean) => {
+const calculateSize = (text: string | [string, string][], isParent = false) => {
+  const isFolded = useGraph.getState().foldNodes;
+  const isImagePreview = useStored.getState().imagePreview;
+
   let value = "";
 
   if (typeof text === "string") value = text;
@@ -22,13 +27,16 @@ const calculateSize = (text: string | [string, string][], isParent = false, isFo
     return (lineCount.length + 1) * 18;
   };
 
+  const isImage =
+    !Array.isArray(text) && /(https?:\/\/.*\.(?:png|jpg|gif))/i.test(text) && isImagePreview;
+
   return {
-    width: getWidth(),
-    height: getHeight(),
+    width: isImage ? 80 : getWidth(),
+    height: isImage ? 80 : getHeight(),
   };
 };
 
-export const parser = (jsonStr: string, isFolded = false) => {
+export const parser = (jsonStr: string) => {
   try {
     let json = parseTree(jsonStr);
     let nodes: NodeData[] = [];
@@ -103,7 +111,7 @@ export const parser = (jsonStr: string, isFolded = false) => {
               brotherKey = value;
             }
           } else if (parentType === "array") {
-            const { width, height } = calculateSize(String(value), false, isFolded);
+            const { width, height } = calculateSize(String(value), false);
             const nodeFromArrayId = addNodes(String(value), width, height, false);
             if (myParentId) {
               addEdges(myParentId, nodeFromArrayId);
@@ -134,18 +142,14 @@ export const parser = (jsonStr: string, isFolded = false) => {
 
               if (ModifyNodes[findNode]) {
                 ModifyNodes[findNode].text = ModifyNodes[findNode].text.concat(brothersNode);
-                const { width, height } = calculateSize(
-                  ModifyNodes[findNode].text,
-                  false,
-                  isFolded
-                );
+                const { width, height } = calculateSize(ModifyNodes[findNode].text, false);
                 ModifyNodes[findNode].width = width;
                 ModifyNodes[findNode].height = height;
                 nodes = [...ModifyNodes];
                 brothersNode = [];
               }
             } else {
-              const { width, height } = calculateSize(brothersNode, false, isFolded);
+              const { width, height } = calculateSize(brothersNode, false);
               const brothersNodeId = addNodes(brothersNode, width, height, false);
               brothersNode = [];
 
@@ -167,7 +171,7 @@ export const parser = (jsonStr: string, isFolded = false) => {
           }
 
           // add parent node
-          const { width, height } = calculateSize(parentName, true, isFolded);
+          const { width, height } = calculateSize(parentName, true);
           parentId = addNodes(parentName, width, height, type);
           bracketOpen = [...bracketOpen, { id: parentId, type: type }];
           parentName = "";
@@ -230,18 +234,14 @@ export const parser = (jsonStr: string, isFolded = false) => {
 
               if (ModifyNodes[findNode]) {
                 ModifyNodes[findNode].text = ModifyNodes[findNode].text.concat(brothersNode);
-                const { width, height } = calculateSize(
-                  ModifyNodes[findNode].text,
-                  false,
-                  isFolded
-                );
+                const { width, height } = calculateSize(ModifyNodes[findNode].text, false);
                 ModifyNodes[findNode].width = width;
                 ModifyNodes[findNode].height = height;
                 nodes = [...ModifyNodes];
                 brothersNode = [];
               }
             } else {
-              const { width, height } = calculateSize(brothersNode, false, isFolded);
+              const { width, height } = calculateSize(brothersNode, false);
               const brothersNodeId = addNodes(brothersNode, width, height, false);
               brothersNode = [];
 
@@ -297,7 +297,7 @@ export const parser = (jsonStr: string, isFolded = false) => {
       if (notHaveParent.length > 1) {
         if (json.type !== "array") {
           const text = "";
-          const { width, height } = calculateSize(text, false, isFolded);
+          const { width, height } = calculateSize(text, false);
           const emptyId = addNodes(text, width, height, false, true);
           notHaveParent.forEach(children => {
             addEdges(emptyId, children);
@@ -308,11 +308,11 @@ export const parser = (jsonStr: string, isFolded = false) => {
       if (nodes.length === 0) {
         if (json.type === "array") {
           const text = "[]";
-          const { width, height } = calculateSize(text, false, isFolded);
+          const { width, height } = calculateSize(text, false);
           addNodes(text, width, height, false);
         } else {
           const text = "{}";
-          const { width, height } = calculateSize(text, false, isFolded);
+          const { width, height } = calculateSize(text, false);
           addNodes(text, width, height, false);
         }
       }
