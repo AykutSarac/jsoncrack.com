@@ -43,24 +43,21 @@ export const GoalsModal = ({ visible, setVisible }) => {
         Dear user,
         <br />
         <br />
-        We are the team behind JSON Crack, an open-source JSON visualization app that
-        helps users better understand and work with complex JSON data. We are
-        passionate about making JSON data more accessible and user-friendly, and we
-        believe our app has the potential to make a real difference for developers
-        and data analysts alike.
+        We are the team behind JSON Crack, an open-source JSON visualization app that helps users
+        better understand and work with complex JSON data. We are passionate about making JSON data
+        more accessible and user-friendly, and we believe our app has the potential to make a real
+        difference for developers and data analysts alike.
         <br />
         <br />
-        However, developing and maintaining JSON Crack takes time and resources, and
-        we would love your support in helping us continue to improve the app and make
-        it even more useful for our users. As a sponsor, your support would help us
-        to continue to develop and maintain JSON Crack, and would allow us to add new
-        features and capabilities to the app.
+        However, developing and maintaining JSON Crack takes time and resources, and we would love
+        your support in helping us continue to improve the app and make it even more useful for our
+        users. As a sponsor, your support would help us to continue to develop and maintain JSON
+        Crack, and would allow us to add new features and capabilities to the app.
         <br />
         <br />
-        We believe that JSON Crack has the potential to make a real difference for
-        developers and data analysts, and we would be grateful for your support in
-        helping us continue to improve the app. Thank you for considering sponsoring
-        JSON Crack.
+        We believe that JSON Crack has the potential to make a real difference for developers and
+        data analysts, and we would be grateful for your support in helping us continue to improve
+        the app. Thank you for considering sponsoring JSON Crack.
         <br />
         <br />
         Sincerely,

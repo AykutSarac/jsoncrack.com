@@ -36,16 +36,10 @@ export const SettingsModal: React.FC<ModalProps> = ({ visible, setVisible }) => 
           <StyledToggle onChange={toggleHideCollapse} checked={hideCollapse}>
             Hide Collapse/Expand Button
           </StyledToggle>
-          <StyledToggle
-            onChange={toggleHideChildrenCount}
-            checked={hideChildrenCount}
-          >
+          <StyledToggle onChange={toggleHideChildrenCount} checked={hideChildrenCount}>
             Hide Children Count
           </StyledToggle>
-          <StyledToggle
-            onChange={() => setLightTheme(!lightmode)}
-            checked={lightmode}
-          >
+          <StyledToggle onChange={() => setLightTheme(!lightmode)} checked={lightmode}>
             Enable Light Theme
           </StyledToggle>
         </StyledModalWrapper>

@@ -13,10 +13,7 @@ const Embed = () => {
     <>
       <Head>
         <title>Creating JSON Crack Embed | JSON Crack</title>
-        <meta
-          name="description"
-          content="Embedding JSON Crack tutorial into your websites."
-        />
+        <meta name="description" content="Embedding JSON Crack tutorial into your websites." />
       </Head>
       <StyledPageWrapper
         scrolling="no"
@@ -24,8 +21,8 @@ const Embed = () => {
         src="https://codepen.io/AykutSarac/embed/PoawZYo?default-tab=html%2Cresult"
         loading="lazy"
       >
-        See the Pen <a href="https://codepen.io/AykutSarac/pen/PoawZYo">Untitled</a>{" "}
-        by Aykut Saraç (<a href="https://codepen.io/AykutSarac">@AykutSarac</a>) on{" "}
+        See the Pen <a href="https://codepen.io/AykutSarac/pen/PoawZYo">Untitled</a> by Aykut Saraç
+        (<a href="https://codepen.io/AykutSarac">@AykutSarac</a>) on{" "}
         <a href="https://codepen.io">CodePen</a>.
       </StyledPageWrapper>
     </>

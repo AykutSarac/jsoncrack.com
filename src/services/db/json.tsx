@@ -24,8 +24,7 @@ const saveJson = async ({ id, data }): Promise<{ data: { _id: string } }> => {
   });
 };
 
-const getAllJson = async (): Promise<{ data: JSON[] }> =>
-  await altogic.endpoint.get(`json`);
+const getAllJson = async (): Promise<{ data: JSON[] }> => await altogic.endpoint.get(`json`);
 
 const updateJson = async (id: string, data: object) =>
   await altogic.endpoint.put(`json/${id}`, {

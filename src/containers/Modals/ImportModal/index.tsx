@@ -100,11 +100,7 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
         </StyledUploadWrapper>
       </StyledModalContent>
       <Modal.Controls setVisible={setVisible}>
-        <Button
-          status="SECONDARY"
-          onClick={handleImportFile}
-          disabled={!(jsonFile || url)}
-        >
+        <Button status="SECONDARY" onClick={handleImportFile} disabled={!(jsonFile || url)}>
           Import
         </Button>
       </Modal.Controls>

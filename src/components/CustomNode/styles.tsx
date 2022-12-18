@@ -53,11 +53,7 @@ export const StyledForeignObject = styled.foreignObject<{
   }
 `;
 
-function getKeyColor(
-  theme: DefaultTheme,
-  parent: "array" | "object" | false,
-  objectKey: boolean
-) {
+function getKeyColor(theme: DefaultTheme, parent: "array" | "object" | false, objectKey: boolean) {
   if (parent) {
     if (parent === "array") return theme.NODE_COLORS.PARENT_ARR;
     return theme.NODE_COLORS.PARENT_OBJ;
@@ -74,8 +70,7 @@ export const StyledKey = styled.span<{
   display: inline;
   flex: 1;
   font-weight: 500;
-  color: ${({ theme, objectKey = false, parent = false }) =>
-    getKeyColor(theme, parent, objectKey)};
+  color: ${({ theme, objectKey = false, parent = false }) => getKeyColor(theme, parent, objectKey)};
   font-size: ${({ parent }) => parent && "14px"};
   overflow: hidden;
   text-overflow: ellipsis;

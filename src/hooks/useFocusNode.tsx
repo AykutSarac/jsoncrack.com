@@ -1,10 +1,6 @@
 import React from "react";
 import useGraph from "src/store/useGraph";
-import {
-  searchQuery,
-  cleanupHighlight,
-  highlightMatchedNodes,
-} from "src/utils/search";
+import { searchQuery, cleanupHighlight, highlightMatchedNodes } from "src/utils/search";
 
 export const useFocusNode = () => {
   const togglePerfMode = useGraph(state => state.togglePerfMode);

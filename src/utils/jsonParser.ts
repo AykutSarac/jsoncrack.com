@@ -1,10 +1,6 @@
 import { Node, parseTree } from "jsonc-parser";
 
-const calculateSize = (
-  text: string | [string, string][],
-  isParent = false,
-  isFolded: boolean
-) => {
+const calculateSize = (text: string | [string, string][], isParent = false, isFolded: boolean) => {
   let value = "";
 
   if (typeof text === "string") value = text;
@@ -98,11 +94,7 @@ export const parser = (jsonStr: string, isFolded = false) => {
 
       if (!children) {
         if (value !== undefined) {
-          if (
-            parentType === "property" &&
-            nextType !== "object" &&
-            nextType !== "array"
-          ) {
+          if (parentType === "property" && nextType !== "object" && nextType !== "array") {
             brothersParentId = myParentId;
             if (nextType === undefined) {
               // add key and value to brothers node
@@ -134,16 +126,14 @@ export const parser = (jsonStr: string, isFolded = false) => {
             let findBrothersNode = brothersNodeProps.find(
               e =>
                 e.parentId === brothersParentId &&
-                e.objectsFromArrayId ===
-                  objectsFromArray[objectsFromArray.length - 1]
+                e.objectsFromArrayId === objectsFromArray[objectsFromArray.length - 1]
             );
             if (findBrothersNode) {
               let ModifyNodes = [...nodes];
               let findNode = nodes.findIndex(e => e.id === findBrothersNode?.id);
 
               if (ModifyNodes[findNode]) {
-                ModifyNodes[findNode].text =
-                  ModifyNodes[findNode].text.concat(brothersNode);
+                ModifyNodes[findNode].text = ModifyNodes[findNode].text.concat(brothersNode);
                 const { width, height } = calculateSize(
                   ModifyNodes[findNode].text,
                   false,
@@ -232,16 +222,14 @@ export const parser = (jsonStr: string, isFolded = false) => {
             let findBrothersNode = brothersNodeProps.find(
               e =>
                 e.parentId === brothersParentId &&
-                e.objectsFromArrayId ===
-                  objectsFromArray[objectsFromArray.length - 1]
+                e.objectsFromArrayId === objectsFromArray[objectsFromArray.length - 1]
             );
             if (findBrothersNode) {
               let ModifyNodes = [...nodes];
               let findNode = nodes.findIndex(e => e.id === findBrothersNode?.id);
 
               if (ModifyNodes[findNode]) {
-                ModifyNodes[findNode].text =
-                  ModifyNodes[findNode].text.concat(brothersNode);
+                ModifyNodes[findNode].text = ModifyNodes[findNode].text.concat(brothersNode);
                 const { width, height } = calculateSize(
                   ModifyNodes[findNode].text,
                   false,

@@ -15,22 +15,10 @@ const ObjectNode: React.FC<CustomNodeProps> = ({ node, x, y }) => {
   if (data.isEmpty) return null;
 
   return (
-    <Styled.StyledForeignObject
-      width={width}
-      height={height}
-      x={0}
-      y={0}
-      ref={ref}
-      isObject
-    >
+    <Styled.StyledForeignObject width={width} height={height} x={0} y={0} ref={ref} isObject>
       {(!performanceMode || inViewport) &&
         text.map((val, idx) => (
-          <Styled.StyledRow
-            data-key={JSON.stringify(val[1])}
-            data-x={x}
-            data-y={y}
-            key={idx}
-          >
+          <Styled.StyledRow data-key={JSON.stringify(val[1])} data-x={x} data-y={y} key={idx}>
             <Styled.StyledKey objectKey>
               {JSON.stringify(val[0]).replaceAll('"', "")}:{" "}
             </Styled.StyledKey>
@@ -42,10 +30,7 @@ const ObjectNode: React.FC<CustomNodeProps> = ({ node, x, y }) => {
 };
 
 function propsAreEqual(prev: CustomNodeProps, next: CustomNodeProps) {
-  return (
-    String(prev.node.text) === String(next.node.text) &&
-    prev.node.width === next.node.width
-  );
+  return String(prev.node.text) === String(next.node.text) && prev.node.width === next.node.width;
 }
 
 export default React.memo(ObjectNode, propsAreEqual);

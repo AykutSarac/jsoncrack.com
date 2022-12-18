@@ -70,12 +70,7 @@ const AccountView: React.FC<Pick<ModalProps, "setVisible">> = ({ setVisible }) =
       <Modal.Content>
         <StyledTitle>Hello, {user?.name}!</StyledTitle>
         <StyledAccountWrapper>
-          <StyledAvatar
-            width="80"
-            height="80"
-            src={user?.profilePicture}
-            alt={user?.name}
-          />
+          <StyledAvatar width="80" height="80" src={user?.profilePicture} alt={user?.name} />
           <StyledContainer>
             USERNAME
             <div>{user?.name}</div>

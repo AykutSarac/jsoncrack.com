@@ -49,10 +49,7 @@ const EditorPage: React.FC = () => {
     <StyledEditorWrapper>
       <Head>
         <title>Editor | JSON Crack</title>
-        <meta
-          name="description"
-          content="View your JSON data in graphs instantly."
-        />
+        <meta name="description" content="View your JSON data in graphs instantly." />
       </Head>
       <StyledPageWrapper>
         <Sidebar />

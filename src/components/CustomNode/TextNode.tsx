@@ -27,19 +27,13 @@ const StyledExpand = styled.button`
 
 const StyledTextNodeWrapper = styled.div<{ hasCollapse: boolean }>`
   display: flex;
-  justify-content: ${({ hasCollapse }) =>
-    hasCollapse ? "space-between" : "center"};
+  justify-content: ${({ hasCollapse }) => (hasCollapse ? "space-between" : "center")};
   align-items: center;
   height: 100%;
   width: 100%;
 `;
 
-const TextNode: React.FC<CustomNodeProps> = ({
-  node,
-  x,
-  y,
-  hasCollapse = false,
-}) => {
+const TextNode: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) => {
   const { id, text, width, height, data } = node;
   const ref = React.useRef(null);
   const hideCollapse = useStored(state => state.hideCollapse);
@@ -82,9 +76,7 @@ const TextNode: React.FC<CustomNodeProps> = ({
         )}
 
         {data.parent && data.childrenCount > 0 && !hideChildrenCount && (
-          <Styled.StyledChildrenCount>
-            ({data.childrenCount})
-          </Styled.StyledChildrenCount>
+          <Styled.StyledChildrenCount>({data.childrenCount})</Styled.StyledChildrenCount>
         )}
 
         {inViewport && data.parent && hasCollapse && !hideCollapse && (

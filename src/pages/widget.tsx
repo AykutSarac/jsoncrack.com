@@ -107,8 +107,7 @@ const WidgetPage = () => {
         };
 
         setDirection(options.direction);
-        if (options.theme === "light" || options.theme === "dark")
-          setTheme(options.theme);
+        if (options.theme === "light" || options.theme === "dark") setTheme(options.theme);
 
         setNodeEdges(nodes, edges);
       } catch (error) {

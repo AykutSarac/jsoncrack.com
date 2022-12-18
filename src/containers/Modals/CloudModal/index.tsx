@@ -4,12 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import toast from "react-hot-toast";
-import {
-  AiOutlineEdit,
-  AiOutlineLock,
-  AiOutlinePlus,
-  AiOutlineUnlock,
-} from "react-icons/ai";
+import { AiOutlineEdit, AiOutlineLock, AiOutlinePlus, AiOutlineUnlock } from "react-icons/ai";
 import { Modal, ModalProps } from "src/components/Modal";
 import { Spinner } from "src/components/Spinner";
 import { getAllJson, updateJson } from "src/services/db/json";
@@ -27,8 +22,7 @@ const StyledModalContent = styled.div`
 const StyledJsonCard = styled.a<{ active?: boolean }>`
   display: block;
   background: ${({ theme }) => theme.BLACK_SECONDARY};
-  border: 2px solid
-    ${({ theme, active }) => (active ? theme.SEAGREEN : theme.BLACK_SECONDARY)};
+  border: 2px solid ${({ theme, active }) => (active ? theme.SEAGREEN : theme.BLACK_SECONDARY)};
   border-radius: 5px;
   overflow: hidden;
   flex: 1;
@@ -160,13 +154,9 @@ const CreateCard: React.FC = () => (
 export const CloudModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   const { isReady, query } = useRouter();
 
-  const { data, isFetching, refetch } = useQuery(
-    ["allJson", query],
-    () => getAllJson(),
-    {
-      enabled: isReady,
-    }
-  );
+  const { data, isFetching, refetch } = useQuery(["allJson", query], () => getAllJson(), {
+    enabled: isReady,
+  });
 
   return (
     <StyledModal visible={visible} setVisible={setVisible}>

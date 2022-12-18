@@ -74,13 +74,7 @@ export const StyledHome = styled.div`
 
 export const StyledGradientText = styled.span`
   background: #ffb76b;
-  background: linear-gradient(
-    to right,
-    #ffb76b 0%,
-    #ffa73d 30%,
-    #ff7c00 60%,
-    #ff7f04 100%
-  );
+  background: linear-gradient(to right, #ffb76b 0%, #ffa73d 30%, #ff7c00 60%, #ff7f04 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

@@ -63,10 +63,7 @@ export const Tools: React.FC = () => {
           <AiOutlineFullscreen />
         </StyledToolElement>
         <SearchInput />
-        <StyledToolElement
-          aria-label="save"
-          onClick={() => setVisible("download")(true)}
-        >
+        <StyledToolElement aria-label="save" onClick={() => setVisible("download")(true)}>
           <FiDownload />
         </StyledToolElement>
         <StyledToolElement aria-label="center canvas" onClick={centerView}>

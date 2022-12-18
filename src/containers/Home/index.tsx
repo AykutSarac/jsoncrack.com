@@ -49,8 +49,7 @@ const HeroSection = () => {
       </Styles.StyledTitle>
       <Styles.StyledSubTitle>
         Seamlessly visualize your JSON data{" "}
-        <Styles.StyledHighlightedText>instantly</Styles.StyledHighlightedText> into
-        graphs.
+        <Styles.StyledHighlightedText>instantly</Styles.StyledHighlightedText> into graphs.
       </Styles.StyledSubTitle>
 
       <Styles.StyledButton rel="prefetch" href="/editor" link>
@@ -98,10 +97,9 @@ const FeaturesSection = () => (
       </Styles.StyledCardIcon>
       <Styles.StyledCardTitle>EASY-TO-USE</Styles.StyledCardTitle>
       <Styles.StyledCardDescription>
-        We believe that powerful software doesn&apos;t have to be difficult to use.
-        That&apos;s why we&apos;ve designed our app to be as intuitive and
-        easy-to-use as possible. You can quickly and easily load your JSON data and
-        start exploring and analyzing it right away!
+        We believe that powerful software doesn&apos;t have to be difficult to use. That&apos;s why
+        we&apos;ve designed our app to be as intuitive and easy-to-use as possible. You can quickly
+        and easily load your JSON data and start exploring and analyzing it right away!
       </Styles.StyledCardDescription>
     </Styles.StyledSectionCard>
 
@@ -111,9 +109,9 @@ const FeaturesSection = () => (
       </Styles.StyledCardIcon>
       <Styles.StyledCardTitle>SEARCH</Styles.StyledCardTitle>
       <Styles.StyledCardDescription>
-        Have a huge file of values, keys or arrays? Worry no more, type in the
-        keyword you are looking for into search input and it will take you to each
-        node with matching result highlighting the line to understand better!
+        Have a huge file of values, keys or arrays? Worry no more, type in the keyword you are
+        looking for into search input and it will take you to each node with matching result
+        highlighting the line to understand better!
       </Styles.StyledCardDescription>
     </Styles.StyledSectionCard>
 
@@ -123,9 +121,9 @@ const FeaturesSection = () => (
       </Styles.StyledCardIcon>
       <Styles.StyledCardTitle>DOWNLOAD</Styles.StyledCardTitle>
       <Styles.StyledCardDescription>
-        Download the graph to your local machine and use it wherever you want, to
-        your blogs, website or make it a poster and paste to the wall. Who
-        wouldn&apos;t want to see a JSON Crack graph onto their wall, eh?
+        Download the graph to your local machine and use it wherever you want, to your blogs,
+        website or make it a poster and paste to the wall. Who wouldn&apos;t want to see a JSON
+        Crack graph onto their wall, eh?
       </Styles.StyledCardDescription>
     </Styles.StyledSectionCard>
 
@@ -135,9 +133,9 @@ const FeaturesSection = () => (
       </Styles.StyledCardIcon>
       <Styles.StyledCardTitle>LIVE</Styles.StyledCardTitle>
       <Styles.StyledCardDescription>
-        With Microsoft&apos;s Monaco Editor which is also used by VS Code, easily
-        edit your JSON and directly view through the graphs. Also there&apos;s a JSON
-        validator above of it to make sure there is no type error.
+        With Microsoft&apos;s Monaco Editor which is also used by VS Code, easily edit your JSON and
+        directly view through the graphs. Also there&apos;s a JSON validator above of it to make
+        sure there is no type error.
       </Styles.StyledCardDescription>
     </Styles.StyledSectionCard>
   </Styles.StyledFeaturesSection>
@@ -146,51 +144,36 @@ const FeaturesSection = () => (
 const GitHubSection = () => (
   <Styles.StyledSection id="github" reverse>
     <Styles.StyledTwitterQuote>
-      <blockquote
-        className="twitter-tweet"
-        data-lang="en"
-        data-dnt="true"
-        data-theme="light"
-      >
+      <blockquote className="twitter-tweet" data-lang="en" data-dnt="true" data-theme="light">
         <p lang="en" dir="ltr">
-          Looking to understand or explore some JSON? Just paste or upload to
-          visualize it as a graph with{" "}
-          <a href="https://t.co/HlKSrhKryJ">https://t.co/HlKSrhKryJ</a> 😍 <br />
+          Looking to understand or explore some JSON? Just paste or upload to visualize it as a
+          graph with <a href="https://t.co/HlKSrhKryJ">https://t.co/HlKSrhKryJ</a> 😍 <br />
           <br />
-          Thanks to{" "}
-          <a href="https://twitter.com/aykutsarach?ref_src=twsrc%5Etfw">
-            @aykutsarach
-          </a>
-          ! <a href="https://t.co/0LyPUL8Ezz">pic.twitter.com/0LyPUL8Ezz</a>
+          Thanks to <a href="https://twitter.com/aykutsarach?ref_src=twsrc%5Etfw">@aykutsarach</a>!{" "}
+          <a href="https://t.co/0LyPUL8Ezz">pic.twitter.com/0LyPUL8Ezz</a>
         </p>
         &mdash; GitHub (@github){" "}
         <a href="https://twitter.com/github/status/1519363257794015233?ref_src=twsrc%5Etfw">
           April 27, 2022
         </a>
       </blockquote>{" "}
-      <Script
-        async
-        src="https://platform.twitter.com/widgets.js"
-        charSet="utf-8"
-      ></Script>
+      <Script async src="https://platform.twitter.com/widgets.js" charSet="utf-8"></Script>
     </Styles.StyledTwitterQuote>
     <Styles.StyledSectionArea>
       <Styles.StyledSubTitle>Open Source Community</Styles.StyledSubTitle>
       <Styles.StyledMinorTitle>
-        At JSON Crack, we believe in the power of open source software and the
-        communities that support it. That&apos;s why we&apos;re proud to be part of
-        the open source community and to contribute to the development and growth of
-        open source tools and technologies.
+        At JSON Crack, we believe in the power of open source software and the communities that
+        support it. That&apos;s why we&apos;re proud to be part of the open source community and to
+        contribute to the development and growth of open source tools and technologies.
         <br />
-        <br /> As part of our commitment to the open source community, we&apos;ve
-        made our app freely available to anyone who wants to use it, and we welcome
-        contributions from anyone who&apos;s interested in helping to improve it.
-        Whether you&apos;re a developer, a data scientist, or just someone who&apos;s
-        passionate about open source, we&apos;d love to have you join our community
-        and help us make JSON Crack the best it can be.
+        <br /> As part of our commitment to the open source community, we&apos;ve made our app
+        freely available to anyone who wants to use it, and we welcome contributions from anyone
+        who&apos;s interested in helping to improve it. Whether you&apos;re a developer, a data
+        scientist, or just someone who&apos;s passionate about open source, we&apos;d love to have
+        you join our community and help us make JSON Crack the best it can be.
         <br />
-        <br /> So why not join us and become part of the JSON Crack open source
-        community today? We can&apos;t wait to see what we can accomplish together!
+        <br /> So why not join us and become part of the JSON Crack open source community today? We
+        can&apos;t wait to see what we can accomplish together!
       </Styles.StyledMinorTitle>
       <Styles.StyledButton
         href="https://github.com/AykutSarac/jsoncrack.com"
@@ -208,23 +191,17 @@ const EmbedSection = () => (
     <Styles.StyledSectionArea>
       <Styles.StyledSubTitle>Embed Into Your Website</Styles.StyledSubTitle>
       <Styles.StyledMinorTitle>
-        JSON Crack provides users with the necessary code to embed the app into a
-        website easily using an iframe. This code can be easily copied and pasted
-        into the desired location on the website, allowing users to quickly and
-        easily integrate JSON Crack into existing workflows.
+        JSON Crack provides users with the necessary code to embed the app into a website easily
+        using an iframe. This code can be easily copied and pasted into the desired location on the
+        website, allowing users to quickly and easily integrate JSON Crack into existing workflows.
         <br />
-        <br /> Once the app is embedded, users can use it to view and analyze JSON
-        data directly on the website. This can be useful for a variety of purposes,
-        such as quickly checking the structure of a JSON file or verifying the data
-        contained within it. JSON Crack&apos;s intuitive interface makes it easy to
-        navigate and understand even complex JSON data, making it a valuable tool for
-        anyone working with JSON.
+        <br /> Once the app is embedded, users can use it to view and analyze JSON data directly on
+        the website. This can be useful for a variety of purposes, such as quickly checking the
+        structure of a JSON file or verifying the data contained within it. JSON Crack&apos;s
+        intuitive interface makes it easy to navigate and understand even complex JSON data, making
+        it a valuable tool for anyone working with JSON.
       </Styles.StyledMinorTitle>
-      <Styles.StyledButton
-        href="https://jsoncrack.com/embed"
-        status="SECONDARY"
-        link
-      >
+      <Styles.StyledButton href="https://jsoncrack.com/embed" status="SECONDARY" link>
         LEARN TO EMBED
       </Styles.StyledButton>
     </Styles.StyledSectionArea>

@@ -17,9 +17,7 @@ type ModalTypes = {
 
 export interface ModalProps {
   visible: boolean;
-  setVisible:
-    | React.Dispatch<React.SetStateAction<boolean>>
-    | ((visible: boolean) => void);
+  setVisible: React.Dispatch<React.SetStateAction<boolean>> | ((visible: boolean) => void);
   size?: "sm" | "md" | "lg";
 }
 

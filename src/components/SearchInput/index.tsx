@@ -76,11 +76,7 @@ export const SearchInput: React.FC = () => {
           placeholder="Search Node"
         />
         <StyledSearchButton type="reset" aria-label="search" onClick={handleClear}>
-          {content.value ? (
-            <IoCloseSharp size={18} />
-          ) : (
-            <AiOutlineSearch size={18} />
-          )}
+          {content.value ? <IoCloseSharp size={18} /> : <AiOutlineSearch size={18} />}
         </StyledSearchButton>
       </StyledForm>
     </StyledInputWrapper>

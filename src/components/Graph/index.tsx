@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  ReactZoomPanPinchRef,
-  TransformComponent,
-  TransformWrapper,
-} from "react-zoom-pan-pinch";
+import { ReactZoomPanPinchRef, TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import { Canvas, Edge, ElkRoot } from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
 import useGraph from "src/store/useGraph";
@@ -40,11 +36,7 @@ const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
   }
 `;
 
-const GraphComponent = ({
-  isWidget = false,
-  openModal,
-  setSelectedNode,
-}: GraphProps) => {
+const GraphComponent = ({ isWidget = false, openModal, setSelectedNode }: GraphProps) => {
   const setLoading = useGraph(state => state.setLoading);
   const setZoomPanPinch = useGraph(state => state.setZoomPanPinch);
   const centerView = useGraph(state => state.centerView);
@@ -78,9 +70,7 @@ const GraphComponent = ({
     (layout: ElkRoot) => {
       if (layout.width && layout.height) {
         const areaSize = layout.width * layout.height;
-        const changeRatio = Math.abs(
-          (areaSize * 100) / (size.width * size.height) - 100
-        );
+        const changeRatio = Math.abs((areaSize * 100) / (size.width * size.height) - 100);
 
         setSize({
           width: (layout.width as number) + 400,
@@ -119,9 +109,7 @@ const GraphComponent = ({
         doubleClick={{ disabled: true }}
         onInit={onInit}
         onPanning={ref => ref.instance.wrapperComponent?.classList.add("dragging")}
-        onPanningStop={ref =>
-          ref.instance.wrapperComponent?.classList.remove("dragging")
-        }
+        onPanningStop={ref => ref.instance.wrapperComponent?.classList.remove("dragging")}
       >
         <TransformComponent
           wrapperStyle={{
@@ -148,9 +136,7 @@ const GraphComponent = ({
             fit={true}
             key={direction}
             node={props => <CustomNode {...props} onClick={handleNodeClick} />}
-            edge={props => (
-              <Edge {...props} containerClassName={`edge-${props.id}`} />
-            )}
+            edge={props => <Edge {...props} containerClassName={`edge-${props.id}`} />}
           />
         </TransformComponent>
       </TransformWrapper>

@@ -32,11 +32,7 @@ export const GraphCanvas = ({ isWidget = false }: { isWidget?: boolean }) => {
 
   return (
     <>
-      <Graph
-        openModal={openModal}
-        setSelectedNode={setSelectedNode}
-        isWidget={isWidget}
-      />
+      <Graph openModal={openModal} setSelectedNode={setSelectedNode} isWidget={isWidget} />
       {!isWidget && (
         <NodeModal
           selectedNode={selectedNode}

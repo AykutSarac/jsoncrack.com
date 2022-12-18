@@ -1,12 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import toast from "react-hot-toast";
-import {
-  AiOutlineDelete,
-  AiOutlineSave,
-  AiOutlineFileAdd,
-  AiOutlineEdit,
-} from "react-icons/ai";
+import { AiOutlineDelete, AiOutlineSave, AiOutlineFileAdd, AiOutlineEdit } from "react-icons/ai";
 import { CgArrowsMergeAltH, CgArrowsShrinkH } from "react-icons/cg";
 import { FiDownload } from "react-icons/fi";
 import { MdCenterFocusWeak } from "react-icons/md";
@@ -76,8 +71,7 @@ const StyledElement = styled.button`
 `;
 
 const StyledText = styled.span<{ secondary?: boolean }>`
-  color: ${({ theme, secondary }) =>
-    secondary ? theme.INTERACTIVE_HOVER : theme.ORANGE};
+  color: ${({ theme, secondary }) => (secondary ? theme.INTERACTIVE_HOVER : theme.ORANGE)};
 `;
 
 const StyledFlowIcon = styled(TiFlowMerge)<{ rotate: number }>`
@@ -154,6 +148,8 @@ export const Sidebar: React.FC = () => {
   const fullscreen = useGraph(state => state.fullscreen);
   const graphCollapsed = useGraph(state => state.graphCollapsed);
 
+  console.log(graphCollapsed, foldNodes);
+
   const handleSave = () => {
     const a = document.createElement("a");
     const file = new Blob([getJson()], { type: "text/plain" });
@@ -214,19 +210,13 @@ export const Sidebar: React.FC = () => {
           </StyledElement>
         </Tooltip>
 
-        <Tooltip
-          className="desktop"
-          title={foldNodes ? "Unfold Nodes" : "Fold Nodes"}
-        >
+        <Tooltip className="desktop" title={foldNodes ? "Unfold Nodes" : "Fold Nodes"}>
           <StyledElement onClick={toggleFoldNodes}>
             {foldNodes ? <CgArrowsShrinkH /> : <CgArrowsMergeAltH />}
           </StyledElement>
         </Tooltip>
 
-        <Tooltip
-          className="desktop"
-          title={graphCollapsed ? "Expand Graph" : "Collapse Graph"}
-        >
+        <Tooltip className="desktop" title={graphCollapsed ? "Expand Graph" : "Collapse Graph"}>
           <StyledElement onClick={toggleExpandCollapseGraph}>
             {graphCollapsed ? <VscExpandAll /> : <VscCollapseAll />}
           </StyledElement>
