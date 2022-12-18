@@ -80,11 +80,13 @@ const WidgetPage = () => {
     const hiddenItems = document.querySelectorAll(".hide");
     hiddenItems.forEach(item => item.classList.remove("hide"));
 
-    if (nodeList.length > 1) {
+    if (nodeList.length) {
       const selectedNodes = document.querySelectorAll(nodeList.join(","));
-      const selectedEdges = document.querySelectorAll(edgeList.join(","));
-
       selectedNodes.forEach(node => node.classList.add("hide"));
+    }
+
+    if (edgeList.length) {
+      const selectedEdges = document.querySelectorAll(edgeList.join(","));
       selectedEdges.forEach(edge => edge.classList.add("hide"));
     }
 

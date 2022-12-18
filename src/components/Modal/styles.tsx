@@ -39,7 +39,7 @@ export const ModalInnerWrapper = styled.div<{ size: "sm" | "md" | "lg" }>`
 export const Title = styled.h2`
   color: ${({ theme }) => theme.INTERACTIVE_ACTIVE};
   font-size: 20px !important;
-  margin: 0;
+  margin: 0 !important;
 `;
 
 export const HeaderWrapper = styled.div`

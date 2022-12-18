@@ -1,11 +1,5 @@
 type CanvasDirection = "LEFT" | "RIGHT" | "DOWN" | "UP";
 
-interface CustomNodeData {
-  isParent: true;
-  childrenCount: children.length;
-  children: NodeData[];
-}
-
 interface NodeData<T = any> {
   id: string;
   disabled?: boolean;

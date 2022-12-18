@@ -82,26 +82,27 @@ const GraphComponent = ({
           (areaSize * 100) / (size.width * size.height) - 100
         );
 
+        setSize({
+          width: (layout.width as number) + 400,
+          height: (layout.height as number) + 400,
+        });
+
         requestAnimationFrame(() => {
-          setSize({
-            width: (layout.width as number) + 400,
-            height: (layout.height as number) + 400,
-          });
           setTimeout(() => {
             setLoading(false);
-            setTimeout(() => (changeRatio > 65 || isWidget) && centerView(), 0);
-          }, 0);
+            setTimeout(() => {
+              if (changeRatio > 65 || isWidget) centerView();
+            });
+          });
         });
       }
     },
-    [size.width, size.height, setLoading, isWidget, centerView]
+    [centerView, isWidget, setLoading, size.height, size.width]
   );
 
   const onCanvasClick = React.useCallback(() => {
-    requestAnimationFrame(() => {
-      const input = document.querySelector("input:focus") as HTMLInputElement;
-      if (input) input.blur();
-    });
+    const input = document.querySelector("input:focus") as HTMLInputElement;
+    if (input) input.blur();
   }, []);
 
   if (nodes.length > 8_000) return <ErrorView />;

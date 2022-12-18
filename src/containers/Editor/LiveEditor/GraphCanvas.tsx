@@ -7,11 +7,10 @@ export const GraphCanvas = ({ isWidget = false }: { isWidget?: boolean }) => {
   const [isModalVisible, setModalVisible] = React.useState(false);
   const [selectedNode, setSelectedNode] = React.useState<[string, string][]>([]);
 
-  const openModal = React.useCallback(() => setModalVisible(true), []);
-
   const collapsedNodes = useGraph(state => state.collapsedNodes);
   const collapsedEdges = useGraph(state => state.collapsedEdges);
-  const loading = useGraph(state => state.loading);
+
+  const openModal = React.useCallback(() => setModalVisible(true), []);
 
   React.useEffect(() => {
     const nodeList = collapsedNodes.map(id => `[id$="node-${id}"]`);
@@ -20,14 +19,16 @@ export const GraphCanvas = ({ isWidget = false }: { isWidget?: boolean }) => {
     const hiddenItems = document.querySelectorAll(".hide");
     hiddenItems.forEach(item => item.classList.remove("hide"));
 
-    if (nodeList.length > 1) {
+    if (nodeList.length) {
       const selectedNodes = document.querySelectorAll(nodeList.join(","));
-      const selectedEdges = document.querySelectorAll(edgeList.join(","));
-
       selectedNodes.forEach(node => node.classList.add("hide"));
+    }
+
+    if (edgeList.length) {
+      const selectedEdges = document.querySelectorAll(edgeList.join(","));
       selectedEdges.forEach(edge => edge.classList.add("hide"));
     }
-  }, [collapsedNodes, collapsedEdges, loading]);
+  }, [collapsedNodes, collapsedEdges]);
 
   return (
     <>
