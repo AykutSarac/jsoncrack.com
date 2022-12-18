@@ -1,4 +1,5 @@
 import React from "react";
+import { AiOutlineGoogle } from "react-icons/ai";
 import { altogic } from "src/api/altogic";
 import { Button } from "src/components/Button";
 import { Modal, ModalProps } from "src/components/Modal";
@@ -15,7 +16,8 @@ export const LoginModal: React.FC<ModalProps> = ({ setVisible, visible }) => {
         <h2>Welcome Back!</h2>
         <p>Login to unlock full potential of JSON Crack!</p>
         <Button onClick={handleLoginClick} status="SECONDARY" block>
-          Login
+          <AiOutlineGoogle size={24} />
+          Login with Google
         </Button>
       </Modal.Content>
       <Modal.Controls setVisible={setVisible} />
