@@ -5,14 +5,9 @@ interface TooltipProps extends React.ComponentPropsWithoutRef<"div"> {
   title?: string;
 }
 
-const StyledTooltipWrapper = styled.div`
-  position: relative;
-  width: fit-content;
-  height: 100%;
-`;
-
-const StyledTooltip = styled.div<{ visible: boolean }>`
+const StyledTooltip = styled.div`
   position: absolute;
+  display: none;
   top: 0;
   right: 0;
   transform: translate(calc(100% + 15px), 25%);
@@ -21,7 +16,6 @@ const StyledTooltip = styled.div<{ visible: boolean }>`
   color: ${({ theme }) => theme.TEXT_NORMAL};
   border-radius: 5px;
   padding: 6px 8px;
-  display: ${({ visible }) => (visible ? "initial" : "none")};
   white-space: nowrap;
   font-family: "Mona Sans";
   font-size: 16px;
@@ -47,22 +41,23 @@ const StyledTooltip = styled.div<{ visible: boolean }>`
   }
 `;
 
-const StyledChildren = styled.div``;
+const StyledTooltipWrapper = styled.div`
+  position: relative;
+  width: fit-content;
+  height: 100%;
+
+  &:hover ${StyledTooltip} {
+    display: initial;
+  }
+`;
 
 export const Tooltip: React.FC<React.PropsWithChildren<TooltipProps>> = ({
   children,
   title,
   ...props
-}) => {
-  const [visible, setVisible] = React.useState(false);
-
-  return (
-    <StyledTooltipWrapper {...props}>
-      {title && <StyledTooltip visible={visible}>{title}</StyledTooltip>}
-
-      <StyledChildren onMouseEnter={() => setVisible(true)} onMouseLeave={() => setVisible(false)}>
-        {children}
-      </StyledChildren>
-    </StyledTooltipWrapper>
-  );
-};
+}) => (
+  <StyledTooltipWrapper {...props}>
+    {title && <StyledTooltip>{title}</StyledTooltip>}
+    <div>{children}</div>
+  </StyledTooltipWrapper>
+);

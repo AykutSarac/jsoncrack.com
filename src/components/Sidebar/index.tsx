@@ -132,6 +132,19 @@ function rotateLayout(direction: "LEFT" | "RIGHT" | "DOWN" | "UP") {
   return 360;
 }
 
+const SidebarButton: React.FC<{
+  onClick: () => void;
+  deviceDisplay?: "desktop" | "mobile";
+  title: string;
+  component: React.ReactNode;
+}> = ({ onClick, deviceDisplay, title, component }) => {
+  return (
+    <Tooltip className={deviceDisplay} title={title}>
+      <StyledElement onClick={onClick}>{component}</StyledElement>
+    </Tooltip>
+  );
+};
+
 export const Sidebar: React.FC = () => {
   const setVisible = useModal(state => state.setVisible);
   const setDirection = useGraph(state => state.setDirection);
@@ -184,77 +197,84 @@ export const Sidebar: React.FC = () => {
           </StyledElement>
         </Link>
 
-        <Tooltip className="mobile" title="Edit JSON">
-          <StyledElement onClick={() => toggleFullscreen(!fullscreen)}>
-            <AiOutlineEdit />
-          </StyledElement>
-        </Tooltip>
+        <SidebarButton
+          title="Edit JSON"
+          deviceDisplay="mobile"
+          onClick={() => toggleFullscreen(!fullscreen)}
+          component={<AiOutlineEdit />}
+        />
 
-        <Tooltip title="Import File">
-          <StyledElement onClick={() => setVisible("import")(true)}>
-            <AiOutlineFileAdd />
-          </StyledElement>
-        </Tooltip>
+        <SidebarButton
+          title="Import File"
+          onClick={() => setVisible("import")(true)}
+          component={<AiOutlineFileAdd />}
+        />
 
-        <Tooltip title="Rotate Layout">
-          <StyledElement onClick={toggleDirection}>
-            <StyledFlowIcon rotate={rotateLayout(direction)} />
-          </StyledElement>
-        </Tooltip>
+        <SidebarButton
+          title="Rotate Layout"
+          onClick={toggleDirection}
+          component={<StyledFlowIcon rotate={rotateLayout(direction)} />}
+        />
 
-        <Tooltip className="mobile" title="Center View">
-          <StyledElement onClick={centerView}>
-            <MdCenterFocusWeak />
-          </StyledElement>
-        </Tooltip>
+        <SidebarButton
+          title="Center View"
+          deviceDisplay="mobile"
+          onClick={centerView}
+          component={<MdCenterFocusWeak />}
+        />
 
-        <Tooltip className="desktop" title={foldNodes ? "Unfold Nodes" : "Fold Nodes"}>
-          <StyledElement onClick={toggleFoldNodes}>
-            {foldNodes ? <CgArrowsShrinkH /> : <CgArrowsMergeAltH />}
-          </StyledElement>
-        </Tooltip>
+        <SidebarButton
+          title={foldNodes ? "Unfold Nodes" : "Fold Nodes"}
+          deviceDisplay="desktop"
+          onClick={toggleFoldNodes}
+          component={foldNodes ? <CgArrowsShrinkH /> : <CgArrowsMergeAltH />}
+        />
 
-        <Tooltip className="desktop" title={graphCollapsed ? "Expand Graph" : "Collapse Graph"}>
-          <StyledElement onClick={toggleExpandCollapseGraph}>
-            {graphCollapsed ? <VscExpandAll /> : <VscCollapseAll />}
-          </StyledElement>
-        </Tooltip>
+        <SidebarButton
+          title={graphCollapsed ? "Expand Graph" : "Collapse Graph"}
+          deviceDisplay="desktop"
+          onClick={toggleExpandCollapseGraph}
+          component={graphCollapsed ? <VscExpandAll /> : <VscCollapseAll />}
+        />
 
-        <Tooltip className="desktop" title="Download JSON">
-          <StyledElement onClick={handleSave}>
-            <AiOutlineSave />
-          </StyledElement>
-        </Tooltip>
+        <SidebarButton
+          title="Download JSON"
+          deviceDisplay="desktop"
+          onClick={handleSave}
+          component={<AiOutlineSave />}
+        />
 
-        <Tooltip className="mobile" title="Download Image">
-          <StyledElement onClick={() => setVisible("download")(true)}>
-            <FiDownload />
-          </StyledElement>
-        </Tooltip>
+        <SidebarButton
+          title="Download Image"
+          deviceDisplay="mobile"
+          onClick={() => setVisible("download")(true)}
+          component={<FiDownload />}
+        />
 
-        <Tooltip title="Delete JSON">
-          <StyledElement onClick={() => setVisible("clear")(true)}>
-            <AiOutlineDelete />
-          </StyledElement>
-        </Tooltip>
+        <SidebarButton
+          title="Delete JSON"
+          onClick={() => setVisible("clear")(true)}
+          component={<AiOutlineDelete />}
+        />
 
-        <Tooltip className="desktop" title="View Cloud">
-          <StyledElement onClick={() => setVisible("cloud")(true)}>
-            <VscCloud />
-          </StyledElement>
-        </Tooltip>
+        <SidebarButton
+          title="View Cloud"
+          deviceDisplay="desktop"
+          onClick={() => setVisible("cloud")(true)}
+          component={<VscCloud />}
+        />
       </StyledTopWrapper>
       <StyledBottomWrapper>
-        <Tooltip title="Account">
-          <StyledElement onClick={() => setVisible("account")(true)}>
-            <VscAccount />
-          </StyledElement>
-        </Tooltip>
-        <Tooltip title="Settings">
-          <StyledElement onClick={() => setVisible("settings")(true)}>
-            <VscSettingsGear />
-          </StyledElement>
-        </Tooltip>
+        <SidebarButton
+          title="Account"
+          onClick={() => setVisible("account")(true)}
+          component={<VscAccount />}
+        />
+        <SidebarButton
+          title="Settings"
+          onClick={() => setVisible("settings")(true)}
+          component={<VscSettingsGear />}
+        />
       </StyledBottomWrapper>
     </StyledSidebar>
   );

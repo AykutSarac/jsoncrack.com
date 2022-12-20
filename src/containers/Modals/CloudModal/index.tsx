@@ -152,11 +152,9 @@ const CreateCard: React.FC = () => (
 );
 
 export const CloudModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
-  const { isReady, query } = useRouter();
+  const { query } = useRouter();
 
-  const { data, isFetching, refetch } = useQuery(["allJson", query], () => getAllJson(), {
-    enabled: isReady,
-  });
+  const { data, isFetching, refetch } = useQuery(["allJson", query], () => getAllJson());
 
   return (
     <StyledModal visible={visible} setVisible={setVisible}>
