@@ -4,14 +4,16 @@ import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import { baseURL } from "src/constants/data";
 import { darkTheme, lightTheme } from "src/constants/theme";
-import { NodeModal } from "src/containers/Modals/NodeModal";
 import useGraph from "src/store/useGraph";
-import { parser } from "src/utils/jsonParser";
+import useJson from "src/store/useJson";
 import styled, { ThemeProvider } from "styled-components";
 
-const Graph = dynamic<any>(() => import("src/components/Graph").then(c => c.Graph), {
-  ssr: false,
-});
+const GraphCanvas = dynamic(
+  () => import("src/containers/Editor/LiveEditor/GraphCanvas").then(c => c.GraphCanvas),
+  {
+    ssr: false,
+  }
+);
 
 const StyledAttribute = styled.a`
   position: fixed;
@@ -45,71 +47,28 @@ interface EmbedMessage {
   };
 }
 
-const StyledDeprecated = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100vh;
-
-  a {
-    text-decoration: underline;
-  }
-`;
-
 const WidgetPage = () => {
-  const { query, push } = useRouter();
-
-  const [isModalVisible, setModalVisible] = React.useState(false);
-  const [selectedNode, setSelectedNode] = React.useState<[string, string][]>([]);
+  const { query, push, isReady } = useRouter();
   const [theme, setTheme] = React.useState("dark");
-
-  const collapsedNodes = useGraph(state => state.collapsedNodes);
-  const collapsedEdges = useGraph(state => state.collapsedEdges);
-  const loading = useGraph(state => state.loading);
-  const setNodeEdges = useGraph(state => state.setNodeEdges);
-  const setDirection = useGraph(state => state.setDirection);
-
-  const openModal = React.useCallback(() => setModalVisible(true), []);
+  const fetchJson = useJson(state => state.fetchJson);
+  const setGraph = useGraph(state => state.setGraph);
 
   React.useEffect(() => {
-    const nodeList = collapsedNodes.map(id => `[id$="node-${id}"]`);
-    const edgeList = collapsedEdges.map(id => `[class$="edge-${id}"]`);
-
-    const hiddenItems = document.querySelectorAll(".hide");
-    hiddenItems.forEach(item => item.classList.remove("hide"));
-
-    if (nodeList.length) {
-      const selectedNodes = document.querySelectorAll(nodeList.join(","));
-      selectedNodes.forEach(node => node.classList.add("hide"));
+    if (isReady) {
+      fetchJson(query.json);
+      if (!inIframe()) push("/");
     }
-
-    if (edgeList.length) {
-      const selectedEdges = document.querySelectorAll(edgeList.join(","));
-      selectedEdges.forEach(edge => edge.classList.add("hide"));
-    }
-
-    if (!inIframe()) push("/");
-  }, [collapsedNodes, collapsedEdges, loading, push]);
+  }, [fetchJson, isReady, push, query.json]);
 
   React.useEffect(() => {
     const handler = (event: EmbedMessage) => {
       try {
         if (!event.data?.json) return;
+        if (event.data?.options?.theme === "light" || event.data?.options?.theme === "dark") {
+          setTheme(event.data.options.theme);
+        }
 
-        const { nodes, edges } = parser(event.data.json);
-
-        const options = {
-          direction: "RIGHT",
-          theme,
-          ...event.data.options,
-        };
-
-        setDirection(options.direction);
-        if (options.theme === "light" || options.theme === "dark") setTheme(options.theme);
-
-        setNodeEdges(nodes, edges);
+        setGraph(event.data.json, event.data.options);
       } catch (error) {
         console.error(error);
         toast.error("Invalid JSON!");
@@ -118,27 +77,11 @@ const WidgetPage = () => {
 
     window.addEventListener("message", handler);
     return () => window.removeEventListener("message", handler);
-  }, [setDirection, setNodeEdges, theme]);
-
-  if (query.json)
-    return (
-      <StyledDeprecated>
-        <h1>⚠️ Deprecated ⚠️</h1>
-        <br />
-        <a href="https://jsoncrack.com/embed" target="_blank" rel="noreferrer">
-          https://jsoncrack.com/embed
-        </a>
-      </StyledDeprecated>
-    );
+  }, [setGraph, theme]);
 
   return (
     <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
-      <Graph openModal={openModal} setSelectedNode={setSelectedNode} isWidget />
-      <NodeModal
-        selectedNode={selectedNode}
-        visible={isModalVisible}
-        closeModal={() => setModalVisible(false)}
-      />
+      <GraphCanvas isWidget />
       <StyledAttribute href={`${baseURL}/editor`} target="_blank" rel="noreferrer">
         jsoncrack.com
       </StyledAttribute>

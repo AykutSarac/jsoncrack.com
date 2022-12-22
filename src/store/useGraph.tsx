@@ -25,8 +25,7 @@ const initialStates = {
 export type Graph = typeof initialStates;
 
 interface GraphActions {
-  setGraph: (json?: string) => void;
-  setNodeEdges: (nodes: NodeData[], edges: EdgeData[]) => void;
+  setGraph: (json?: string, options?: Partial<Graph>[]) => void;
   setLoading: (loading: boolean) => void;
   setDirection: (direction: CanvasDirection) => void;
   setZoomPanPinch: (ref: ReactZoomPanPinchRef) => void;
@@ -44,7 +43,7 @@ interface GraphActions {
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
   ...initialStates,
-  setGraph: (data?: string) => {
+  setGraph: (data, options) => {
     const { nodes, edges } = parser(data ?? useJson.getState().json);
 
     set({
@@ -55,19 +54,10 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       collapsedEdges: [],
       graphCollapsed: false,
       loading: true,
+      ...options,
     });
   },
   setDirection: direction => set({ direction }),
-  setNodeEdges: (nodes, edges) =>
-    set({
-      nodes,
-      edges,
-      collapsedParents: [],
-      collapsedNodes: [],
-      collapsedEdges: [],
-      graphCollapsed: false,
-      loading: true,
-    }),
   setLoading: loading => set({ loading }),
   expandNodes: nodeId => {
     const [childrenNodes, matchingNodes] = getOutgoers(

@@ -15,7 +15,7 @@ import { CarbonAds } from "src/components/CarbonAds";
 import { Producthunt } from "src/components/Producthunt";
 import { Sponsors } from "src/components/Sponsors";
 import { SupportButton } from "src/components/SupportButton";
-import { defaultJson } from "src/constants/data";
+import { baseURL } from "src/constants/data";
 import { GoalsModal } from "src/containers/Modals/GoalsModal";
 import pkg from "../../../package.json";
 import * as Styles from "./styles";
@@ -52,9 +52,9 @@ const HeroSection = () => {
         <Styles.StyledHighlightedText>instantly</Styles.StyledHighlightedText> into graphs.
       </Styles.StyledSubTitle>
 
-      <Styles.StyledButton rel="prefetch" href="/editor" link>
+      <Styles.StyledButton href="/editor" link>
         GO TO EDITOR
-        <AiOutlineRight strokeWidth="30px" />
+        <AiOutlineRight strokeWidth="80" />
       </Styles.StyledButton>
 
       <Styles.StyledButtonWrapper>
@@ -149,8 +149,9 @@ const GitHubSection = () => (
           Looking to understand or explore some JSON? Just paste or upload to visualize it as a
           graph with <a href="https://t.co/HlKSrhKryJ">https://t.co/HlKSrhKryJ</a> 😍 <br />
           <br />
-          Thanks to <a href="https://twitter.com/aykutsarach?ref_src=twsrc%5Etfw">@aykutsarach</a>!{" "}
-          <a href="https://t.co/0LyPUL8Ezz">pic.twitter.com/0LyPUL8Ezz</a>
+          Thanks to <a href="https://twitter.com/aykutsarach?ref_src=twsrc%5Etfw">
+            @aykutsarach
+          </a>! <a href="https://t.co/0LyPUL8Ezz">pic.twitter.com/0LyPUL8Ezz</a>
         </p>
         &mdash; GitHub (@github){" "}
         <a href="https://twitter.com/github/status/1519363257794015233?ref_src=twsrc%5Etfw">
@@ -207,16 +208,21 @@ const EmbedSection = () => (
     </Styles.StyledSectionArea>
     <div>
       <Styles.StyledIframge
-        src="https://jsoncrack.com/widget"
+        src={`${baseURL}/widget`}
         onLoad={e => {
           const frame = e.currentTarget.contentWindow;
           setTimeout(() => {
             frame?.postMessage(
               {
-                json: defaultJson,
+                json: JSON.stringify({
+                  "random images": [
+                    "https://random.imagecdn.app/50/50?.png",
+                    "https://random.imagecdn.app/80/80?.png",
+                    "https://random.imagecdn.app/100/100?.png",
+                  ],
+                }),
                 options: {
                   theme: "dark",
-                  direction: "DOWN",
                 },
               },
               "*"

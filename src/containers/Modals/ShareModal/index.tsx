@@ -39,6 +39,11 @@ export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
     setVisible(false);
   };
 
+  const onEmbedClick = () => {
+    push("/embed");
+    setVisible(false);
+  }
+
   return (
     <Modal visible={visible} setVisible={setVisible}>
       <Modal.Header>Create a Share Link</Modal.Header>
@@ -55,7 +60,7 @@ export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
         <StyledContainer>
           Embed into your website
           <StyledFlex>
-            <Button status="SUCCESS" onClick={() => push("/embed")} block>
+            <Button status="SUCCESS" onClick={onEmbedClick} block>
               Learn How to Embed
             </Button>
           </StyledFlex>
