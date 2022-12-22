@@ -36,6 +36,9 @@ const Navbar = () => (
     >
       GitHub
     </Styles.StyledNavLink>
+    <Link href="embed" passHref>
+      <Styles.StyledNavLink>Embed API</Styles.StyledNavLink>
+    </Link>
   </Styles.StyledNavbar>
 );
 
