@@ -36,7 +36,7 @@ const Navbar = () => (
     >
       GitHub
     </Styles.StyledNavLink>
-    <Link href="embed" passHref>
+    <Link href="docs" passHref>
       <Styles.StyledNavLink>Embed API</Styles.StyledNavLink>
     </Link>
   </Styles.StyledNavbar>
@@ -205,7 +205,7 @@ const EmbedSection = () => (
         intuitive interface makes it easy to navigate and understand even complex JSON data, making
         it a valuable tool for anyone working with JSON.
       </Styles.StyledMinorTitle>
-      <Styles.StyledButton href="https://jsoncrack.com/embed" status="SECONDARY" link>
+      <Styles.StyledButton href="https://jsoncrack.com/docs" status="SECONDARY" link>
         LEARN TO EMBED
       </Styles.StyledButton>
     </Styles.StyledSectionArea>

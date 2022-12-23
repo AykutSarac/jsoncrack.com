@@ -52,7 +52,7 @@ const StyledHighlight = styled.span<{ link?: boolean; alert?: boolean }>`
   margin: ${({ alert }) => alert && "8px 0"};
 `;
 
-const Embed = () => {
+const Docs = () => {
   return (
     <StyledPage>
       <Head>
@@ -172,4 +172,4 @@ const Embed = () => {
   );
 };
 
-export default Embed;
+export default Docs;
