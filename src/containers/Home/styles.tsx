@@ -349,33 +349,6 @@ export const StyledImage = styled.img`
   filter: drop-shadow(0px 0px 12px rgba(255, 255, 255, 0.6));
 `;
 
-export const StyledFooter = styled.footer`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 80%;
-  margin: 0 auto;
-  padding: 30px 3%;
-  border-top: 1px solid #b4b4b4;
-  opacity: 0.7;
-`;
-
-export const StyledFooterText = styled.p`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  color: #b4b4b4;
-`;
-
-export const StyledIconLinks = styled.div`
-  display: flex;
-  gap: 20px;
-
-  ${StyledNavLink} {
-    color: unset;
-  }
-`;
-
 export const StyledHighlightedText = styled.span`
   text-decoration: underline;
   text-decoration-style: dashed;

@@ -3,7 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Script from "next/script";
 import { AiOutlineRight } from "react-icons/ai";
-import { FaGithub, FaHeart, FaLinkedin, FaTwitter } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
 import {
   HiCursorClick,
   HiLightningBolt,
@@ -12,12 +12,12 @@ import {
 } from "react-icons/hi";
 import { SiVisualstudiocode } from "react-icons/si";
 import { CarbonAds } from "src/components/CarbonAds";
+import { Footer } from "src/components/Footer";
 import { Producthunt } from "src/components/Producthunt";
 import { Sponsors } from "src/components/Sponsors";
 import { SupportButton } from "src/components/SupportButton";
 import { baseURL } from "src/constants/data";
 import { GoalsModal } from "src/containers/Modals/GoalsModal";
-import pkg from "../../../package.json";
 import * as Styles from "./styles";
 
 const Navbar = () => (
@@ -37,7 +37,7 @@ const Navbar = () => (
       GitHub
     </Styles.StyledNavLink>
     <Link href="docs" passHref>
-      <Styles.StyledNavLink>Embed API</Styles.StyledNavLink>
+      <Styles.StyledNavLink>Docs</Styles.StyledNavLink>
     </Link>
   </Styles.StyledNavbar>
 );
@@ -270,45 +270,6 @@ const SponsorSection = () => (
     </Styles.StyledButton>
     <Sponsors />
   </Styles.StyledSponsorSection>
-);
-
-const Footer = () => (
-  <Styles.StyledFooter>
-    <Styles.StyledFooterText>
-      <img width="120" src="assets/icon.png" alt="icon" loading="lazy" />
-      <span>
-        © {new Date().getFullYear()} JSON Crack - {pkg.version}
-      </span>
-    </Styles.StyledFooterText>
-    <Styles.StyledIconLinks>
-      <Styles.StyledNavLink
-        href="https://github.com/AykutSarac/jsoncrack.com"
-        rel="external"
-        target="_blank"
-        aria-label="github"
-      >
-        <FaGithub size={26} />
-      </Styles.StyledNavLink>
-
-      <Styles.StyledNavLink
-        href="https://www.linkedin.com/in/aykutsarac/"
-        rel="me"
-        target="_blank"
-        aria-label="linkedin"
-      >
-        <FaLinkedin size={26} />
-      </Styles.StyledNavLink>
-
-      <Styles.StyledNavLink
-        href="https://twitter.com/jsoncrack"
-        rel="me"
-        target="_blank"
-        aria-label="twitter"
-      >
-        <FaTwitter size={26} />
-      </Styles.StyledNavLink>
-    </Styles.StyledIconLinks>
-  </Styles.StyledFooter>
 );
 
 const Home: React.FC = () => {

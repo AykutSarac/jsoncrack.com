@@ -47,11 +47,11 @@ const useJson = create<JsonStates & JsonActions>()((set, get) => ({
         const jsonStr = JSON.stringify(json, null, 2);
 
         useGraph.getState().setGraph(jsonStr);
-        set({ json: jsonStr, loading: false });
+        return set({ json: jsonStr, loading: false });
       } catch (error) {
         useGraph.getState().setGraph(defaultJson);
         set({ json: defaultJson, loading: false });
-        toast.error('Failed to fetch JSON from URL!');
+        toast.error("Failed to fetch JSON from URL!");
       }
     } else if (jsonId) {
       const { data, errors } = await altogic.endpoint.get(`json/${jsonId}`);
@@ -67,10 +67,10 @@ const useJson = create<JsonStates & JsonActions>()((set, get) => ({
           });
         }
       }
-    } else {
-      useGraph.getState().setGraph(defaultJson);
-      set({ json: defaultJson, loading: false });
     }
+
+    useGraph.getState().setGraph(defaultJson);
+    set({ json: defaultJson, loading: false });
   },
   setJson: json => {
     useGraph.getState().setGraph(json);
