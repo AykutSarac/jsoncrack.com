@@ -121,10 +121,12 @@ export const BottomBar = () => {
         </StyledBottomBarItem>
         {data && (
           <>
-            <StyledBottomBarItem onClick={setPrivate}>
-              {isPrivate ? <AiOutlineLock /> : <AiOutlineUnlock />}
-              {isPrivate ? "Private" : "Public"}
-            </StyledBottomBarItem>
+            {typeof data.private !== "undefined" && (
+              <StyledBottomBarItem onClick={setPrivate}>
+                {isPrivate ? <AiOutlineLock /> : <AiOutlineUnlock />}
+                {isPrivate ? "Private" : "Public"}
+              </StyledBottomBarItem>
+            )}
             <StyledBottomBarItem onClick={() => setVisible("share")(true)}>
               <AiOutlineLink />
               Share
