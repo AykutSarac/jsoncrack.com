@@ -46,6 +46,7 @@ const StyledContentBody = styled.div`
 
 const StyledHighlight = styled.span<{ link?: boolean; alert?: boolean }>`
   text-align: left;
+  white-space: nowrap;
   color: ${({ theme, link, alert }) =>
     alert ? theme.DANGER : link ? theme.BLURPLE : theme.TEXT_POSITIVE};
   background: ${({ theme }) => theme.BACKGROUND_TERTIARY};

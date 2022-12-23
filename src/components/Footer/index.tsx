@@ -1,7 +1,7 @@
+import Link from "next/link";
 import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 import styled from "styled-components";
 import pkg from "../../../package.json";
-
 
 export const StyledFooter = styled.footer`
   display: flex;
@@ -20,7 +20,6 @@ export const StyledFooterText = styled.p`
   gap: 20px;
   color: #b4b4b4;
 `;
-
 
 export const StyledNavLink = styled.a`
   display: flex;
@@ -44,7 +43,11 @@ export const StyledIconLinks = styled.div`
 export const Footer = () => (
   <StyledFooter>
     <StyledFooterText>
-      <img width="120" src="assets/icon.png" alt="icon" loading="lazy" />
+      <Link href="/">
+        <a>
+          <img width="120" src="assets/icon.png" alt="icon" loading="lazy" />
+        </a>
+      </Link>
       <span>
         © {new Date().getFullYear()} JSON Crack - {pkg.version}
       </span>

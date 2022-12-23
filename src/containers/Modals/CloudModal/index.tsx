@@ -155,7 +155,7 @@ export const CloudModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   const { isReady, query } = useRouter();
 
   const { data, isFetching, refetch } = useQuery(["allJson", query], () => getAllJson(), {
-    enabled: isReady
+    enabled: isReady && visible
   });
 
   return (

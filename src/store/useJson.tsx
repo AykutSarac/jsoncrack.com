@@ -54,7 +54,9 @@ const useJson = create<JsonStates & JsonActions>()((set, get) => ({
         toast.error("Failed to fetch JSON from URL!");
       }
     } else if (jsonId) {
-      const { data, errors } = await altogic.endpoint.get(`json/${jsonId}`);
+      const { data, errors } = await altogic.endpoint.get(`json/${jsonId}`, undefined, {
+        userid: altogic.auth.getUser()?._id,
+      });
 
       if (!errors) {
         const decompressedData = decompressFromBase64(data.json);
