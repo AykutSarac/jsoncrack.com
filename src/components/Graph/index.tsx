@@ -81,7 +81,7 @@ const GraphComponent = ({ isWidget = false, openModal, setSelectedNode }: GraphP
           setTimeout(() => {
             setLoading(false);
             setTimeout(() => {
-              if (changeRatio > 65 || isWidget) centerView();
+              if (changeRatio > 70 || isWidget) centerView();
             });
           });
         });
