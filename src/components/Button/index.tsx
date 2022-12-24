@@ -4,6 +4,7 @@ import styled, { DefaultTheme } from "styled-components";
 enum ButtonType {
   PRIMARY = "PRIMARY",
   SECONDARY = "BLURPLE",
+  TERTIARY = "PURPLE",
   DANGER = "DANGER",
   SUCCESS = "SEAGREEN",
   WARNING = "ORANGE",

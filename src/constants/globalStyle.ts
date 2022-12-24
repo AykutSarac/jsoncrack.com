@@ -10,6 +10,10 @@ const GlobalStyle = createGlobalStyle`
     font-stretch: 75% 125%;
   }
 
+  svg {
+    vertical-align: top;
+  }
+
   h1, h2, h3, h4, p {
     font-family: 'Mona Sans';
   }

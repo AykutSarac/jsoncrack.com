@@ -1,4 +1,4 @@
-interface User {
+export interface User {
   _id: string;
   provider: string;
   providerUserId: string;
@@ -7,6 +7,13 @@ interface User {
   profilePicture: string;
   signUpAt: Date;
   lastLoginAt: Date;
+  type: UserType;
+}
+
+
+export enum UserType {
+  "DEFAULT" = 0,
+  "PREMIUM" = 1
 }
 
 interface Device {

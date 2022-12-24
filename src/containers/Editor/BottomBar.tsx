@@ -79,21 +79,26 @@ export const BottomBar = () => {
     setIsPrivate(data?.private ?? false);
   }, [data]);
 
-  const handleSaveJson = React.useCallback(() => {
+  const handleSaveJson = React.useCallback(async () => {
     if (!user) return setVisible("login")(true);
 
     if (hasChanges) {
-      toast.promise(
-        saveJson({ id: query.json, data: getJson() }).then(res => {
-          if (res.data._id) replace({ query: { json: res.data._id } });
-          setHasChanges(false);
-        }),
-        {
-          loading: "Saving JSON...",
-          success: "JSON saved to cloud",
-          error: "Failed to save JSON to cloud",
+      try {
+        toast.loading("Saving JSON...", { id: "jsonSave" });
+        const res = await saveJson({ id: query.json, data: getJson() });
+
+        if (res.errors && res.errors.items.length > 0) throw res.errors;
+        if (res.data._id) replace({ query: { json: res.data._id } });
+
+        toast.success("JSON saved to cloud", { id: "jsonSave" });
+        setHasChanges(false);
+      } catch (error: any) {
+        if (error?.items?.length > 0) {
+          return toast.error(error.items[0].message, { id: "jsonSave", duration: 5000 });
         }
-      );
+
+        toast.error("Failed to save JSON!", { id: "jsonSave" });
+      }
     }
   }, [getJson, hasChanges, query.json, replace, setHasChanges, setVisible, user]);
 

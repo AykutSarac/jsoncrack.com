@@ -1,5 +1,5 @@
 import { compressToBase64 } from "lz-string";
-import { altogic } from "src/api/altogic";
+import { altogic, AltogicResponse } from "src/api/altogic";
 
 type JSON = {
   _id: string;
@@ -10,7 +10,7 @@ type JSON = {
   json: string;
 };
 
-const saveJson = async ({ id, data }): Promise<{ data: { _id: string } }> => {
+const saveJson = async ({ id, data }): Promise<AltogicResponse<{ _id: string }>> => {
   const compressedData = compressToBase64(data);
 
   if (id) {
@@ -24,7 +24,8 @@ const saveJson = async ({ id, data }): Promise<{ data: { _id: string } }> => {
   });
 };
 
-const getAllJson = async (): Promise<{ data: { result: JSON[] } }> => await altogic.endpoint.get(`json`);
+const getAllJson = async (): Promise<AltogicResponse<{ result: JSON[] }>> =>
+  await altogic.endpoint.get(`json`);
 
 const updateJson = async (id: string, data: object) =>
   await altogic.endpoint.put(`json/${id}`, {

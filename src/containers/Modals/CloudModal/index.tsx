@@ -8,7 +8,9 @@ import { AiOutlineEdit, AiOutlineLock, AiOutlinePlus, AiOutlineUnlock } from "re
 import { Modal, ModalProps } from "src/components/Modal";
 import { Spinner } from "src/components/Spinner";
 import { getAllJson, updateJson } from "src/services/db/json";
+import useUser from "src/store/useUser";
 import styled from "styled-components";
+import { IoRocketSharp } from "react-icons/io5";
 
 dayjs.extend(relativeTime);
 
@@ -142,20 +144,34 @@ const GraphCard: React.FC<{ data: any; refetch: () => void; active: boolean }> =
   );
 };
 
-const CreateCard: React.FC = () => (
-  <StyledJsonCard href="/editor">
-    <StyledCreateWrapper>
-      <AiOutlinePlus size="24" />
-      Create New JSON
-    </StyledCreateWrapper>
-  </StyledJsonCard>
-);
+const CreateCard: React.FC<{ reachedLimit: boolean }> = ({ reachedLimit }) => {
+  const isPremium = useUser(state => state.isPremium());
+
+  if (!isPremium && reachedLimit)
+    return (
+      <StyledJsonCard href="/pricing">
+        <StyledCreateWrapper>
+          <IoRocketSharp size="18" />
+          You reached max limit, upgrade to premium for more!
+        </StyledCreateWrapper>
+      </StyledJsonCard>
+    );
+
+  return (
+    <StyledJsonCard href="/editor">
+      <StyledCreateWrapper>
+        <AiOutlinePlus size="24" />
+        Create New JSON
+      </StyledCreateWrapper>
+    </StyledJsonCard>
+  );
+};
 
 export const CloudModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   const { isReady, query } = useRouter();
 
   const { data, isFetching, refetch } = useQuery(["allJson", query], () => getAllJson(), {
-    enabled: isReady && visible
+    enabled: isReady && visible,
   });
 
   return (
@@ -167,7 +183,7 @@ export const CloudModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
             <Spinner />
           ) : (
             <>
-              <CreateCard />
+              <CreateCard reachedLimit={data ? data?.data.result.length > 15 : false} />
               {data?.data?.result?.map(json => (
                 <GraphCard
                   data={json}

@@ -62,7 +62,6 @@ const useJson = create<JsonStates & JsonActions>()((set, get) => ({
         const decompressedData = decompressFromBase64(data.json);
         if (decompressedData) {
           useGraph.getState().setGraph(decompressedData);
-          console.log(data);
           return set({
             data,
             json: decompressedData ?? undefined,

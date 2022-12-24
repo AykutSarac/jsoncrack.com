@@ -1,24 +1,15 @@
 import toast from "react-hot-toast";
 import { altogic } from "src/api/altogic";
-import { AltogicAuth } from "src/typings/altogic";
+import { AltogicAuth, User } from "src/typings/altogic";
 import create from "zustand";
 import useModal from "./useModal";
 
-type User = {
-  _id: string;
-  provider: string;
-  providerUserId: string;
-  email: string;
-  name: string;
-  profilePicture: string;
-  signUpAt: Date;
-  lastLoginAt: Date;
-};
 interface UserActions {
   login: (response: AltogicAuth) => void;
   logout: () => void;
   setUser: (key: keyof typeof initialStates, value: any) => void;
   checkSession: () => void;
+  isPremium: () => boolean;
 }
 
 const initialStates = {
@@ -28,9 +19,15 @@ const initialStates = {
 
 export type UserStates = typeof initialStates;
 
-const useUser = create<UserStates & UserActions>()(set => ({
+const useUser = create<UserStates & UserActions>()((set, get) => ({
   ...initialStates,
   setUser: (key, value) => set({ [key]: value }),
+  isPremium: () => {
+    const user = get().user;
+
+    if (user) return user.type > 0;
+    return false;
+  },
   logout: () => {
     altogic.auth.signOut();
     toast.success("Logged out.");
@@ -38,15 +35,16 @@ const useUser = create<UserStates & UserActions>()(set => ({
     set(initialStates);
   },
   login: response => {
-    set({ user: response.user, isAuthenticated: true });
+    set({ user: response.user as any, isAuthenticated: true });
   },
   checkSession: async () => {
     const currentSession = altogic.auth.getSession();
-    const currentUser = altogic.auth.getUser();
 
     if (currentSession) {
+      const dbUser = await altogic.auth.getUserFromDB();
+      
       altogic.auth.setSession(currentSession);
-      set({ user: currentUser as any, isAuthenticated: true });
+      set({ user: dbUser.user as any, isAuthenticated: true });
     } else {
       if (!new URLSearchParams(window.location.search).get("access_token")) return;
 

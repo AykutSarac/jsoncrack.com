@@ -1,5 +1,6 @@
 import React from "react";
 import { IoRocketSharp } from "react-icons/io5";
+import { MdVerified } from "react-icons/md";
 import { Button } from "src/components/Button";
 import { Modal, ModalProps } from "src/components/Modal";
 import useUser from "src/store/useUser";
@@ -36,7 +37,6 @@ const StyledAccountWrapper = styled.div`
 
   button {
     flex-basis: 100%;
-    background: #9036af;
   }
 `;
 
@@ -49,24 +49,26 @@ const StyledContainer = styled.div`
   flex-direction: column;
   gap: 8px;
   padding: 12px 0;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 16px;
   font-weight: 600;
   color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
 
   & > div {
     font-weight: 400;
+    font-size: 14px;
     color: ${({ theme }) => theme.INTERACTIVE_ACTIVE};
   }
 `;
 
 const AccountView: React.FC<Pick<ModalProps, "setVisible">> = ({ setVisible }) => {
   const user = useUser(state => state.user);
+  const isPremium = useUser(state => state.isPremium());
   const logout = useUser(state => state.logout);
 
   return (
     <>
-      <Modal.Header>Account (FREE)</Modal.Header>
+      <Modal.Header>Account</Modal.Header>
       <Modal.Content>
         <StyledTitle>Hello, {user?.name}!</StyledTitle>
         <StyledAccountWrapper>
@@ -76,13 +78,31 @@ const AccountView: React.FC<Pick<ModalProps, "setVisible">> = ({ setVisible }) =
             <div>{user?.name}</div>
           </StyledContainer>
           <StyledContainer>
+            ACCOUNT STATUS
+            <div>
+              {isPremium ? "PREMIUM " : "Normal"}
+              {isPremium && <MdVerified />}
+            </div>
+          </StyledContainer>
+          <StyledContainer>
             EMAIL
             <div>{user?.email}</div>
           </StyledContainer>
-          <Button block>
-            <IoRocketSharp />
-            UPDATE TO PREMIUM!
-          </Button>
+          <StyledContainer>
+            REGISTRATION
+            <div>{user?.signUpAt && new Date(user.signUpAt).toDateString()}</div>
+          </StyledContainer>
+          {isPremium ? (
+            <Button status="DANGER" block>
+              <IoRocketSharp />
+              Cancel Subscription
+            </Button>
+          ) : (
+            <Button href="/pricing" status="TERTIARY" block link>
+              <IoRocketSharp />
+              UPDATE TO PREMIUM!
+            </Button>
+          )}
         </StyledAccountWrapper>
       </Modal.Content>
       <Modal.Controls setVisible={setVisible}>
