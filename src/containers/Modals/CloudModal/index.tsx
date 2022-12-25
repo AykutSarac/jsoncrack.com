@@ -5,12 +5,16 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import toast from "react-hot-toast";
 import { AiOutlineEdit, AiOutlineLock, AiOutlinePlus, AiOutlineUnlock } from "react-icons/ai";
+import { FaTrash } from "react-icons/fa";
+import { IoRocketSharp } from "react-icons/io5";
+import { Button } from "src/components/Button";
 import { Modal, ModalProps } from "src/components/Modal";
 import { Spinner } from "src/components/Spinner";
-import { getAllJson, updateJson } from "src/services/db/json";
+import { deleteJson, getAllJson, saveJson, updateJson } from "src/services/db/json";
+import useJson from "src/store/useJson";
 import useUser from "src/store/useUser";
+import { Json } from "src/typings/altogic";
 import styled from "styled-components";
-import { IoRocketSharp } from "react-icons/io5";
 
 dayjs.extend(relativeTime);
 
@@ -21,8 +25,10 @@ const StyledModalContent = styled.div`
   overflow: auto;
 `;
 
-const StyledJsonCard = styled.a<{ active?: boolean }>`
-  display: block;
+const StyledJsonCard = styled.a<{ active?: boolean; create?: boolean }>`
+  display: ${({ create }) => (create ? "block" : "flex")};
+  align-items: center;
+  justify-content: space-between;
   background: ${({ theme }) => theme.BLACK_SECONDARY};
   border: 2px solid ${({ theme, active }) => (active ? theme.SEAGREEN : theme.BLACK_SECONDARY)};
   border-radius: 5px;
@@ -63,6 +69,10 @@ const StyledModal = styled(Modal)`
   }
 `;
 
+const StyledDeleteButton = styled(Button)`
+  background: transparent;
+`;
+
 const StyledCreateWrapper = styled.div`
   display: flex;
   height: 100%;
@@ -84,7 +94,7 @@ const StyledNameInput = styled.input`
   font-weight: 600;
 `;
 
-const GraphCard: React.FC<{ data: any; refetch: () => void; active: boolean }> = ({
+const GraphCard: React.FC<{ data: Json; refetch: () => void; active: boolean }> = ({
   data,
   refetch,
   active,
@@ -103,6 +113,18 @@ const GraphCard: React.FC<{ data: any; refetch: () => void; active: boolean }> =
       .then(refetch);
 
     setEditMode(false);
+  };
+
+  const onDeleteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    toast
+      .promise(deleteJson(data._id), {
+        loading: "Deleting JSON file...",
+        error: "An error occured while deleting the file!",
+        success: `Deleted ${name}!`,
+      })
+      .then(refetch);
   };
 
   return (
@@ -127,7 +149,6 @@ const GraphCard: React.FC<{ data: any; refetch: () => void; active: boolean }> =
           <StyledTitle
             onClick={e => {
               e.preventDefault();
-              e.stopPropagation();
               setEditMode(true);
             }}
           >
@@ -140,16 +161,40 @@ const GraphCard: React.FC<{ data: any; refetch: () => void; active: boolean }> =
           Last modified {dayjs(data.updatedAt).fromNow()}
         </StyledDetils>
       </StyledInfo>
+      <StyledDeleteButton onClick={onDeleteClick}>
+        <FaTrash />
+      </StyledDeleteButton>
     </StyledJsonCard>
   );
 };
 
 const CreateCard: React.FC<{ reachedLimit: boolean }> = ({ reachedLimit }) => {
+  const { replace } = useRouter();
   const isPremium = useUser(state => state.isPremium());
+  const getJson = useJson(state => state.getJson);
+  const setHasChanges = useJson(state => state.setHasChanges);
+
+  const onCreate = async () => {
+    try {
+      toast.loading("Saving JSON...", { id: "jsonSave" });
+      const res = await saveJson({ data: getJson() });
+
+      if (res.errors && res.errors.items.length > 0) throw res.errors;
+
+      toast.success("JSON saved to cloud", { id: "jsonSave" });
+      setHasChanges(false);
+      replace({ query: { json: res.data._id } });
+    } catch (error: any) {
+      if (error?.items?.length > 0) {
+        return toast.error(error.items[0].message, { id: "jsonSave", duration: 7000 });
+      }
+      toast.error("Failed to save JSON!", { id: "jsonSave" });
+    }
+  };
 
   if (!isPremium && reachedLimit)
     return (
-      <StyledJsonCard href="/pricing">
+      <StyledJsonCard href="/pricing" create>
         <StyledCreateWrapper>
           <IoRocketSharp size="18" />
           You reached max limit, upgrade to premium for more!
@@ -158,7 +203,7 @@ const CreateCard: React.FC<{ reachedLimit: boolean }> = ({ reachedLimit }) => {
     );
 
   return (
-    <StyledJsonCard href="/editor">
+    <StyledJsonCard onClick={onCreate} create>
       <StyledCreateWrapper>
         <AiOutlinePlus size="24" />
         Create New JSON

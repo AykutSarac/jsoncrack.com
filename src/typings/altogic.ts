@@ -11,6 +11,15 @@ export interface User {
 }
 
 
+export interface Json {
+  _id: string;
+  createdAt: string;
+  updatedAt: string;
+  json: string;
+  name: string;
+  private: false;
+}
+
 export enum UserType {
   "DEFAULT" = 0,
   "PREMIUM" = 1

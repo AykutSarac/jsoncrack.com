@@ -2,17 +2,10 @@ import { decompressFromBase64 } from "lz-string";
 import toast from "react-hot-toast";
 import { altogic } from "src/api/altogic";
 import { defaultJson } from "src/constants/data";
+import { saveJson as saveJsonDB } from "src/services/db/json";
 import useGraph from "src/store/useGraph";
+import { Json } from "src/typings/altogic";
 import create from "zustand";
-
-interface Json {
-  _id: string;
-  createdAt: string;
-  updatedAt: string;
-  json: string;
-  name: string;
-  private: false;
-}
 
 interface JsonActions {
   setJson: (json: string) => void;
@@ -21,6 +14,7 @@ interface JsonActions {
   fetchJson: (jsonId: string | string[] | undefined) => void;
   setError: (hasError: boolean) => void;
   setHasChanges: (hasChanges: boolean) => void;
+  saveJson: (isNew?: boolean) => Promise<string | undefined>;
 }
 
 const initialStates = {
@@ -79,6 +73,30 @@ const useJson = create<JsonStates & JsonActions>()((set, get) => ({
   setJson: json => {
     useGraph.getState().setGraph(json);
     set({ json, hasChanges: true });
+  },
+  saveJson: async (isNew = true) => {
+    try {
+      const url = new URL(window.location.href);
+      const params = new URLSearchParams(url.search);
+      const jsonQuery = params.get("json");
+
+      toast.loading("Saving JSON...", { id: "jsonSave" });
+      const res = await saveJsonDB({ id: isNew ? undefined : jsonQuery, data: get().json });
+
+      if (res.errors && res.errors.items.length > 0) throw res.errors;
+
+      toast.success("JSON saved to cloud", { id: "jsonSave" });
+      set({ hasChanges: false });
+      return res.data._id;
+    } catch (error: any) {
+      if (error?.items?.length > 0) {
+        toast.error(error.items[0].message, { id: "jsonSave", duration: 5000 });
+        return undefined;
+      }
+
+      toast.error("Failed to save JSON!", { id: "jsonSave" });
+      return undefined;
+    }
   },
   setError: (hasError: boolean) => set({ hasError }),
   setHasChanges: (hasChanges: boolean) => set({ hasChanges }),
