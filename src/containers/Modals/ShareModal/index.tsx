@@ -42,7 +42,7 @@ export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   const onEmbedClick = () => {
     push("/docs");
     setVisible(false);
-  }
+  };
 
   return (
     <Modal visible={visible} setVisible={setVisible}>

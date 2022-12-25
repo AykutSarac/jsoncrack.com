@@ -42,7 +42,7 @@ const useUser = create<UserStates & UserActions>()((set, get) => ({
 
     if (currentSession) {
       const dbUser = await altogic.auth.getUserFromDB();
-      
+
       altogic.auth.setSession(currentSession);
       set({ user: dbUser.user as any, isAuthenticated: true });
     } else {

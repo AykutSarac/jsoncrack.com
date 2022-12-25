@@ -10,7 +10,6 @@ export interface User {
   type: UserType;
 }
 
-
 export interface Json {
   _id: string;
   createdAt: string;
@@ -22,7 +21,7 @@ export interface Json {
 
 export enum UserType {
   "DEFAULT" = 0,
-  "PREMIUM" = 1
+  "PREMIUM" = 1,
 }
 
 interface Device {

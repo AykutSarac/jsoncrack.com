@@ -9,6 +9,7 @@ import {
   HiOutlineDownload,
   HiOutlineSearchCircle,
 } from "react-icons/hi";
+import { IoRocketSharp } from "react-icons/io5";
 import { SiVisualstudiocode } from "react-icons/si";
 import { CarbonAds } from "src/components/CarbonAds";
 import { Footer } from "src/components/Footer";
@@ -17,7 +18,6 @@ import { Sponsors } from "src/components/Sponsors";
 import { SupportButton } from "src/components/SupportButton";
 import { baseURL } from "src/constants/data";
 import * as Styles from "./styles";
-import { IoRocketSharp } from "react-icons/io5";
 
 const Navbar = () => (
   <Styles.StyledNavbar>

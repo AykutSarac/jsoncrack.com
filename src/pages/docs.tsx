@@ -2,9 +2,9 @@ import React from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { materialDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import styled from "styled-components";
-import { Footer } from "src/components/Footer";
 import { Button } from "src/components/Button";
+import { Footer } from "src/components/Footer";
+import styled from "styled-components";
 
 const SyntaxHighlighter = dynamic(
   () => import("react-syntax-highlighter").then(c => c.PrismAsync),
@@ -57,7 +57,6 @@ const StyledHighlight = styled.span<{ link?: boolean; alert?: boolean }>`
   margin: ${({ alert }) => alert && "8px 0"};
 `;
 
-
 const Docs = () => {
   return (
     <>
@@ -66,7 +65,9 @@ const Docs = () => {
         <meta name="description" content="Embedding JSON Crack tutorial into your websites." />
       </Head>
       <StyledPage>
-        <Button href="/" link status="SECONDARY">&lt; Go Back</Button>
+        <Button href="/" link status="SECONDARY">
+          &lt; Go Back
+        </Button>
         <h1>Documentation</h1>
         <StyledContent>
           <h2># Fetching from URL</h2>
