@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import toast from "react-hot-toast";
 import { AiOutlineDelete, AiOutlineSave, AiOutlineFileAdd, AiOutlineEdit } from "react-icons/ai";
 import { CgArrowsMergeAltH, CgArrowsShrinkH } from "react-icons/cg";
@@ -190,12 +189,10 @@ export const Sidebar: React.FC = () => {
   return (
     <StyledSidebar>
       <StyledTopWrapper>
-        <Link passHref href="/">
-          <StyledElement as={StyledLogo}>
-            <StyledText>J</StyledText>
-            <StyledText secondary>C</StyledText>
-          </StyledElement>
-        </Link>
+        <StyledElement href="/" as={StyledLogo}>
+          <StyledText>J</StyledText>
+          <StyledText secondary>C</StyledText>
+        </StyledElement>
 
         <SidebarButton
           title="Edit JSON"

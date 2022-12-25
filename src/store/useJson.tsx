@@ -17,6 +17,7 @@ interface Json {
 interface JsonActions {
   setJson: (json: string) => void;
   getJson: () => string;
+  getHasChanges: () => boolean;
   fetchJson: (jsonId: string | string[] | undefined) => void;
   setError: (hasError: boolean) => void;
   setHasChanges: (hasChanges: boolean) => void;
@@ -35,6 +36,7 @@ export type JsonStates = typeof initialStates;
 const useJson = create<JsonStates & JsonActions>()((set, get) => ({
   ...initialStates,
   getJson: () => get().json,
+  getHasChanges: () => get().hasChanges,
   fetchJson: async jsonId => {
     const isURL = new RegExp(
       /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/

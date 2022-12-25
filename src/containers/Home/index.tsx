@@ -37,7 +37,7 @@ const Navbar = () => (
       GitHub
     </Styles.StyledNavLink>
     <Link href="docs" passHref>
-      <Styles.StyledNavLink>Docs</Styles.StyledNavLink>
+      <Styles.StyledNavLink>Documentation</Styles.StyledNavLink>
     </Link>
   </Styles.StyledNavbar>
 );

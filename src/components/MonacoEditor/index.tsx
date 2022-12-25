@@ -34,6 +34,7 @@ export const MonacoEditor = () => {
   const [value, setValue] = React.useState<string | undefined>(json);
 
   const hasError = useJson(state => state.hasError);
+  const getHasChanges = useJson(state => state.getHasChanges);
   const lightmode = useStored(state => (state.lightmode ? "light" : "vs-dark"));
 
   const handleEditorWillMount = React.useCallback(
@@ -67,6 +68,24 @@ export const MonacoEditor = () => {
     return () => debouncedSetJson.cancel();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSetJson, hasError, value]);
+
+  React.useEffect(() => {
+    const beforeunload = (e: BeforeUnloadEvent) => {
+      if (getHasChanges()) {
+        const confirmationMessage =
+          "Unsaved changes, if you leave before saving  your changes will be lost";
+
+        (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+        return confirmationMessage;
+      }
+    };
+
+    window.addEventListener("beforeunload", beforeunload);
+
+    return () => {
+      window.removeEventListener("beforeunload", beforeunload);
+    };
+  }, [getHasChanges]);
 
   return (
     <StyledWrapper>
