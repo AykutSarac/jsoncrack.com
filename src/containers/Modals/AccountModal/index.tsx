@@ -100,7 +100,7 @@ const AccountView: React.FC<Pick<ModalProps, "setVisible">> = ({ setVisible }) =
           ) : (
             <Button href="/pricing" status="TERTIARY" block link>
               <IoRocketSharp />
-              UPDATE TO PREMIUM!
+              UPGRADE TO PREMIUM!
             </Button>
           )}
         </StyledAccountWrapper>
