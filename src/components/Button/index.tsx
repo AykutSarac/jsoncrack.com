@@ -85,8 +85,8 @@ export const Button: React.FC<ButtonProps & ConditionalProps> = ({
 }) => {
   return (
     <StyledButton
-      as={link ? "a" : "button"}
       type="button"
+      as={link ? "a" : "button"}
       status={status ?? "PRIMARY"}
       block={block}
       {...props}
