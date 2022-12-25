@@ -17,7 +17,7 @@ interface ButtonProps {
 
 type ConditionalProps =
   | ({
-      link?: boolean;
+      link: boolean;
     } & React.ComponentPropsWithoutRef<"a">)
   | ({
       link?: never;
@@ -30,18 +30,20 @@ function getButtonStatus(status: keyof typeof ButtonType, theme: DefaultTheme) {
 const StyledButton = styled.button<{
   status: keyof typeof ButtonType;
   block: boolean;
+  link: boolean;
 }>`
   display: inline-flex;
   align-items: center;
   background: ${({ status, theme }) => getButtonStatus(status, theme)};
   color: #ffffff;
-  padding: 8px 16px;
+  padding: ${({ link }) => (link ? "2px 16px" : "8px 16px")};
   min-width: 70px;
   min-height: 32px;
   border-radius: 3px;
+  font-family: "Mona Sans";
   font-size: 14px;
   font-weight: 500;
-  width: ${({ block }) => (block ? "100%" : "fit-content")};
+  width: ${({ block }) => (block ? "-webkit-fill-available" : "fit-content")};
   height: 40px;
   background-image: none;
 
@@ -89,6 +91,7 @@ export const Button: React.FC<ButtonProps & ConditionalProps> = ({
       as={link ? "a" : "button"}
       status={status ?? "PRIMARY"}
       block={block}
+      link={link}
       {...props}
     >
       <StyledButtonContent>{children}</StyledButtonContent>

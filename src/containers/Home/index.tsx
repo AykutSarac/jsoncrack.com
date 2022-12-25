@@ -3,7 +3,6 @@ import Head from "next/head";
 import Link from "next/link";
 import Script from "next/script";
 import { AiOutlineRight } from "react-icons/ai";
-import { FaHeart } from "react-icons/fa";
 import {
   HiCursorClick,
   HiLightningBolt,
@@ -17,8 +16,8 @@ import { Producthunt } from "src/components/Producthunt";
 import { Sponsors } from "src/components/Sponsors";
 import { SupportButton } from "src/components/SupportButton";
 import { baseURL } from "src/constants/data";
-import { GoalsModal } from "src/containers/Modals/GoalsModal";
 import * as Styles from "./styles";
+import { IoRocketSharp } from "react-icons/io5";
 
 const Navbar = () => (
   <Styles.StyledNavbar>
@@ -61,9 +60,9 @@ const HeroSection = () => {
       </Styles.StyledButton>
 
       <Styles.StyledButtonWrapper>
-        <Styles.StyledSponsorButton onClick={() => setModalVisible(true)}>
-          Help JSON Crack&apos;s Goals
-          <FaHeart />
+        <Styles.StyledSponsorButton href="/pricing" link>
+          GET PREMIUM
+          <IoRocketSharp />
         </Styles.StyledSponsorButton>
         <Styles.StyledSponsorButton
           href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode"
@@ -73,7 +72,6 @@ const HeroSection = () => {
           GET IT ON VS CODE
           <SiVisualstudiocode />
         </Styles.StyledSponsorButton>
-        <GoalsModal visible={isModalVisible} setVisible={setModalVisible} />
       </Styles.StyledButtonWrapper>
     </Styles.StyledHeroSection>
   );
@@ -205,7 +203,7 @@ const EmbedSection = () => (
         intuitive interface makes it easy to navigate and understand even complex JSON data, making
         it a valuable tool for anyone working with JSON.
       </Styles.StyledMinorTitle>
-      <Styles.StyledButton href="https://jsoncrack.com/docs" status="SECONDARY" link>
+      <Styles.StyledButton href="/docs" status="SECONDARY" link>
         LEARN TO EMBED
       </Styles.StyledButton>
     </Styles.StyledSectionArea>

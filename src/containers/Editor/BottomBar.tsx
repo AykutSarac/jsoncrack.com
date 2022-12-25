@@ -85,7 +85,7 @@ export const BottomBar = () => {
     if (hasChanges) {
       try {
         toast.loading("Saving JSON...", { id: "jsonSave" });
-        const res = await saveJson({ id: query.json, data: getJson() });
+        const res = await saveJson({ id: query.json as string, data: getJson() });
 
         if (res.errors && res.errors.items.length > 0) throw res.errors;
         if (res.data._id) replace({ query: { json: res.data._id } });
@@ -149,8 +149,8 @@ export const BottomBar = () => {
             Powered by
             <StyledImg
               height="20"
-              src="https://regexlearn.com/altogic.svg"
-              alt="powered by buildable"
+              src="https://www.altogic.com/img/logo_dark.svg"
+              alt="powered by altogic"
               light={lightmode}
             />
           </StyledBottomBarItem>
