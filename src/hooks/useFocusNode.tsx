@@ -35,18 +35,18 @@ export const useFocusNode = () => {
     cleanupHighlight();
 
     if (ref && matchedNode && matchedNode.parentElement) {
-      const newScale = 1;
+      const newScale = 0.4;
       const x = Number(matchedNode.getAttribute("data-x"));
       const y = Number(matchedNode.getAttribute("data-y"));
 
       const newPositionX =
         (ref.offsetLeft - x) * newScale +
-        ref.clientWidth / 2 -
-        matchedNode.getBoundingClientRect().width / 2;
+        ref.clientWidth / 10 -
+        matchedNode.getBoundingClientRect().width / 10;
       const newPositionY =
         (ref.offsetLeft - y) * newScale +
-        ref.clientHeight / 2 -
-        matchedNode.getBoundingClientRect().height / 2;
+        ref.clientHeight / 10 -
+        matchedNode.getBoundingClientRect().height / 10;
 
       highlightMatchedNodes(matchedNodes, selectedNode);
 

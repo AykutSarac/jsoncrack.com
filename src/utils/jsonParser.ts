@@ -5,26 +5,33 @@ import useStored from "src/store/useStored";
 const calculateSize = (text: string | [string, string][], isParent = false) => {
   const isFolded = useGraph.getState().foldNodes;
   const isImagePreview = useStored.getState().imagePreview;
+  let lineCounts = 1;
+  let lineLengths: number[] = [];
 
-  let value = "";
+  if (typeof text === "string") {
+    lineLengths.push(text.length);
+  } else {
+    lineCounts = text.map(([k, v]) => {
+      const length = `${k}: ${v}`.length;
+      const line = length > 150 ? 150 : length;
+      lineLengths.push(line);
+      return `${k}: ${v}`;
+    }).length;
+  }
 
-  if (typeof text === "string") value = text;
-  else value = text.map(([k, v]) => `${k}: ${v}`).join("\n");
-
-  const lineCount = value.split("\n");
-  const lineLengths = lineCount.map(line => line.length);
-  const longestLine = lineLengths.sort((a, b) => b - a)[0];
+  const longestLine = Math.max(...lineLengths);
 
   const getWidth = () => {
+    if (text.length === 0) return 35;
     if (Array.isArray(text) && !text.length) return 40;
-    if (!isFolded) return 35 + longestLine * 8 + (isParent ? 60 : 0);
-    if (isParent) return 170;
+    if (!isFolded) return 35 + longestLine * 7.8 + (isParent ? 60 : 0);
+    if (isParent && isFolded) return 170;
     return 200;
   };
 
   const getHeight = () => {
-    if (lineCount.length * 17.8 < 30) return 40;
-    return (lineCount.length + 1) * 18;
+    if (lineCounts * 17.8 < 30) return 40;
+    return (lineCounts + 1) * 18;
   };
 
   const isImage =
