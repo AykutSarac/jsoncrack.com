@@ -261,7 +261,8 @@ export const CloudModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
       <Modal.Controls setVisible={setVisible}>
         <StyledInfoText>
           <AiOutlineInfoCircle />
-          Cloud Save feature is for ease-of-access only and recommended to not store sensitive data.
+          Cloud Save feature is for ease-of-access only and not recommended to store sensitive data,
+          we don&apos;t guarantee protection of your data.
         </StyledInfoText>
       </Modal.Controls>
     </StyledModal>
