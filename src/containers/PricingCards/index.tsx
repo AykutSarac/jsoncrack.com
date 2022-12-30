@@ -24,7 +24,6 @@ const StyledSectionBody = styled.div`
 
 const StyledPricingCard = styled.div<{ premium?: boolean }>`
   padding: 6px;
-  padding-bottom: 0;
   width: 100%;
   height: 100%;
 
