@@ -66,13 +66,17 @@ const AccountView: React.FC<Pick<ModalProps, "setVisible">> = ({ setVisible }) =
   const isPremium = useUser(state => state.isPremium());
   const logout = useUser(state => state.logout);
 
+  const onImgFail = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    e.currentTarget.setAttribute("src", `https://ui-avatars.com/api/?name=${user?.name}`);
+  }
+
   return (
     <>
       <Modal.Header>Account</Modal.Header>
       <Modal.Content>
         <StyledTitle>Hello, {user?.name}!</StyledTitle>
         <StyledAccountWrapper>
-          <StyledAvatar width="80" height="80" src={user?.profilePicture} alt={user?.name} />
+          <StyledAvatar width="60" height="60" src={user?.profilePicture} alt={user?.name} onError={onImgFail} />
           <StyledContainer>
             USERNAME
             <div>{user?.name}</div>
