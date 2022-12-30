@@ -80,7 +80,7 @@ const AccountView: React.FC<Pick<ModalProps, "setVisible">> = ({ setVisible }) =
           <StyledContainer>
             ACCOUNT STATUS
             <div>
-              {isPremium ? "PREMIUM " : "Normal"}
+              {isPremium ? "PREMIUM " : "Free"}
               {isPremium && <MdVerified />}
             </div>
           </StyledContainer>
@@ -93,7 +93,11 @@ const AccountView: React.FC<Pick<ModalProps, "setVisible">> = ({ setVisible }) =
             <div>{user?.signUpAt && new Date(user.signUpAt).toDateString()}</div>
           </StyledContainer>
           {isPremium ? (
-            <Button status="DANGER" block>
+            <Button
+              status="DANGER"
+              block
+              onClick={() => window.open("https://patreon.com/jsoncrack", "_blank")}
+            >
               <IoRocketSharp />
               Cancel Subscription
             </Button>

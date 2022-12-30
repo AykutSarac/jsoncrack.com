@@ -53,9 +53,14 @@ const StyledBottomBarItem = styled.button`
   font-weight: 400;
   color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
 
-  &:hover {
+  &:hover:not(&:disabled) {
     background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0 0);
     color: ${({ theme }) => theme.INTERACTIVE_HOVER};
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: progress;
   }
 `;
 
@@ -74,6 +79,7 @@ export const BottomBar = () => {
   const setVisible = useModal(state => state.setVisible);
   const setHasChanges = useJson(state => state.setHasChanges);
   const [isPrivate, setIsPrivate] = React.useState(false);
+  const [isUpdating, setIsUpdating] = React.useState(false);
 
   React.useEffect(() => {
     setIsPrivate(data?.private ?? false);
@@ -84,6 +90,7 @@ export const BottomBar = () => {
 
     if (hasChanges) {
       try {
+        setIsUpdating(true);
         toast.loading("Saving JSON...", { id: "jsonSave" });
         const res = await saveJson({ id: query.json as string, data: getJson() });
 
@@ -98,6 +105,8 @@ export const BottomBar = () => {
         }
 
         toast.error("Failed to save JSON!", { id: "jsonSave" });
+      } finally {
+        setIsUpdating(false);
       }
     }
   }, [getJson, hasChanges, query.json, replace, setHasChanges, setVisible, user]);
@@ -107,10 +116,24 @@ export const BottomBar = () => {
     else setVisible("login")(true);
   };
 
-  const setPrivate = () => {
-    if (!query.json) return handleSaveJson();
-    setIsPrivate(!isPrivate);
-    updateJson(query.json as string, { private: !isPrivate });
+  const setPrivate = async () => {
+    try {
+      if (!query.json) return handleSaveJson();
+      if (!isPrivate && user?.type === 0) {
+        return window.open("https://jsoncrack.com/pricing", "_blank");
+      }
+
+      setIsUpdating(true);
+      const res = await updateJson(query.json as string, { private: !isPrivate });
+      if (!res.errors?.items.length) {
+        setIsPrivate(res.data.private);
+        toast.success(`Document set to ${isPrivate ? "public" : "private"}.`);
+      } else throw res.errors;
+    } catch (error) {
+      toast.error("An error occured while updating document!");
+    } finally {
+      setIsUpdating(false);
+    }
   };
 
   return (
@@ -120,14 +143,14 @@ export const BottomBar = () => {
           <VscAccount />
           {user ? user.name : "Login"}
         </StyledBottomBarItem>
-        <StyledBottomBarItem onClick={handleSaveJson}>
+        <StyledBottomBarItem onClick={handleSaveJson} disabled={isUpdating}>
           {hasChanges ? <AiOutlineCloudUpload /> : <AiOutlineCloudSync />}
           {hasChanges ? "Unsaved Changes" : "Saved"}
         </StyledBottomBarItem>
         {data && (
           <>
             {typeof data.private !== "undefined" && (
-              <StyledBottomBarItem onClick={setPrivate}>
+              <StyledBottomBarItem onClick={setPrivate} disabled={isUpdating}>
                 {isPrivate ? <AiOutlineLock /> : <AiOutlineUnlock />}
                 {isPrivate ? "Private" : "Public"}
               </StyledBottomBarItem>

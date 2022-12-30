@@ -18,6 +18,7 @@ import { Sponsors } from "src/components/Sponsors";
 import { SupportButton } from "src/components/SupportButton";
 import { baseURL } from "src/constants/data";
 import * as Styles from "./styles";
+import { PricingCards } from "../PricingCards";
 
 const Navbar = () => (
   <Styles.StyledNavbar>
@@ -282,6 +283,7 @@ const Home: React.FC = () => {
       <FeaturesSection />
       <GitHubSection />
       <EmbedSection />
+      <PricingCards />
       <SupportSection />
       <SponsorSection />
       <SupportButton />

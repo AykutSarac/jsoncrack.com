@@ -4,7 +4,13 @@ import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import toast from "react-hot-toast";
-import { AiOutlineEdit, AiOutlineLock, AiOutlinePlus, AiOutlineUnlock } from "react-icons/ai";
+import {
+  AiOutlineEdit,
+  AiOutlineInfoCircle,
+  AiOutlineLock,
+  AiOutlinePlus,
+  AiOutlineUnlock,
+} from "react-icons/ai";
 import { FaTrash } from "react-icons/fa";
 import { IoRocketSharp } from "react-icons/io5";
 import { Button } from "src/components/Button";
@@ -92,6 +98,16 @@ const StyledNameInput = styled.input`
   width: 90%;
   color: ${({ theme }) => theme.SEAGREEN};
   font-weight: 600;
+`;
+
+const StyledInfoText = styled.span`
+  font-size: 10px;
+  color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
+
+  svg {
+    vertical-align: text-top;
+    margin-right: 4px;
+  }
 `;
 
 const GraphCard: React.FC<{ data: Json; refetch: () => void; active: boolean }> = ({
@@ -241,7 +257,13 @@ export const CloudModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
           )}
         </StyledModalContent>
       </Modal.Content>
-      <Modal.Controls setVisible={setVisible}></Modal.Controls>
+
+      <Modal.Controls setVisible={setVisible}>
+        <StyledInfoText>
+          <AiOutlineInfoCircle />
+          Cloud Save feature is for ease-of-access only and recommended to not store sensitive data.
+        </StyledInfoText>
+      </Modal.Controls>
     </StyledModal>
   );
 };
