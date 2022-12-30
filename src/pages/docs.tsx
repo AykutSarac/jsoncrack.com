@@ -15,9 +15,9 @@ const SyntaxHighlighter = dynamic(
 
 const StyledFrame = styled.iframe`
   border: none;
-  width: 100%;
-  height: 400px;
-  flex: 1;
+  width: 80%;
+  flex: 500px;
+  margin: 3% auto;
 `;
 
 const StyledPage = styled.div`
@@ -35,6 +35,7 @@ const StyledDescription = styled.div``;
 
 const StyledContentBody = styled.div`
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   gap: 15px;
   line-height: 1.8;
@@ -69,6 +70,7 @@ const Docs = () => {
           &lt; Go Back
         </Button>
         <h1>Documentation</h1>
+        <iframe id="jsoncrackEmbed" src="//localhost:3000/widget" width="100%" height="100%"></iframe>
         <StyledContent>
           <h2># Fetching from URL</h2>
           <StyledContentBody>

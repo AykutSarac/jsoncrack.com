@@ -25,6 +25,14 @@ const initialStates = {
   hasError: false,
 };
 
+function inIframe() {
+  try {
+    return window.self !== window.top;
+  } catch (e) {
+    return true;
+  }
+}
+
 export type JsonStates = typeof initialStates;
 
 const useJson = create<JsonStates & JsonActions>()((set, get) => ({
@@ -67,8 +75,13 @@ const useJson = create<JsonStates & JsonActions>()((set, get) => ({
       }
     }
 
-    useGraph.getState().setGraph(defaultJson);
-    set({ json: defaultJson, loading: false });
+    if (inIframe()) {
+      useGraph.getState().setGraph("[]");
+      return set({ json: "[]", loading: false });
+    } else {
+      useGraph.getState().setGraph(defaultJson);
+      set({ json: defaultJson, loading: false });
+    }
   },
   setJson: json => {
     useGraph.getState().setGraph(json);
