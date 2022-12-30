@@ -19,11 +19,6 @@ export interface Json {
   private: false;
 }
 
-export enum UserType {
-  "DEFAULT" = 0,
-  "PREMIUM" = 1,
-}
-
 interface Device {
   family: string;
   major: string;
