@@ -1,33 +1,15 @@
-<center>
+<div align="center" style="display:flex;flex-direction:column;">
   <a href="https://jsoncrack.com">
-    <img width="1080" alt="jsoncrack" src="https://user-images.githubusercontent.com/47941171/187418000-8edea92b-b3ac-4b07-9c4c-e42f6763817d.png">
+    <img width="700" alt="jsoncrack" src="https://user-images.githubusercontent.com/47941171/206401172-74c21f7f-0a32-4532-96cc-4cf6b493c837.png">
   </a>
-</center>
-
-<p>
-    <p align="center">
-      <a href="https://discord.gg/yVyTtCRueq">
-        <img alt="github sponsors" src="https://dcbadge.vercel.app/api/server/yVyTtCRueq?style=flat-square" />
-      </a>
-      <a href="https://app.travis-ci.com/github/AykutSarac/jsoncrack.com">
-        <img alt="travis ci badge" src="https://img.shields.io/travis/com/AykutSarac/jsoncrack.com/main?style=flat-square" />
-      </a>
-      <a href="https://github.com/AykutSarac/jsoncrack.com/blob/main/LICENSE">
-        <img alt="license badge" src="https://img.shields.io/github/license/AykutSarac/jsoncrack.com?style=flat-square" />
-      </a>
-      <a href="https://github.com/AykutSarac/jsoncrack.com/releases">
-        <img alt="version badge" src="https://img.shields.io/github/package-json/v/AykutSarac/jsoncrack.com?color=brightgreen&style=flat-square" />
-      </a>
-      <a href="https://github.com/sponsors/AykutSarac">
-        <img alt="github sponsors" src="https://img.shields.io/github/sponsors/AykutSarac?style=flat-square" />
-      </a>
-  </p>
+  <h3>“Explore, analyze and understand even most complex JSON structures.”</br>Unlock the full potentiel of your data.</h3>
   <p align="center">
-    <i>Simple json visualization tool for your data.</i>
-    <p align="center">
-    <a href="https://www.producthunt.com/posts/json-crack?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-json&#0045;crack" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=332281&theme=light" alt="JSON&#0032;Crack - Simple&#0032;visualization&#0032;tool&#0032;for&#0032;your&#0032;JSON&#0032;data&#0046; | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
-    </p>
+  <a href="https://www.producthunt.com/posts/json-crack?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-json&#0045;crack" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=332281&theme=light" alt="JSON&#0032;Crack - Simple&#0032;visualization&#0032;tool&#0032;for&#0032;your&#0032;JSON&#0032;data&#0046; | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
+    <a href="https://discord.gg/yVyTtCRueq" target="_blank"><img src="https://user-images.githubusercontent.com/47941171/206397224-94da03a4-59d0-48cd-aafc-512624a768d6.png" "style=" height: 54px;" height="54" /></a>
+    </br>
+    <a href="https://github.com/sponsors/AykutSarac" target="_blank"><img src="https://user-images.githubusercontent.com/47941171/206397875-a4e73f02-5d8f-4db0-902b-9a4bc2b22d90.png" "style=" height: 54px;" height="54" /></a>
   </p>
+</div>
 
   <p align="center">
       <img width="800" src="./public/assets/jsoncrack-screenshot.webp" alt="preview 1" />
@@ -35,21 +17,25 @@
 
 # JSON Crack (jsoncrack.com)
 
-Looking for an easy and intuitive way to visualize and analyze your JSON data? Look no further than JSON Crack, the powerful and user-friendly JSON visualization tool. With its advanced features and sleek design, JSON Crack makes it easy to explore and understand even the most complex JSON structures. Whether you're a developer working on a large-scale project or a data enthusiast looking to uncover hidden insights, JSON Crack has the tools you need to unlock the full potential of your data. Try JSON Crack today and experience the power of data visualization like never before.
-
-You can use the web version at [jsoncrack.com](https://jsoncrack.com) or also run it locally as [Docker container](https://github.com/AykutSarac/jsoncrack.com#-docker).
+Introducing JSON Crack – the open-source, free JSON visualization app that will revolutionize the way you work with data. With its intuitive and user-friendly interface, JSON Crack makes it easy to explore, analyze, and understand even the most complex JSON structures. Whether you're a developer working on a large-scale project or a data enthusiast looking to uncover hidden insights, JSON Crack has the tools and features you need to unlock the full potential of your data. Best of all, because JSON Crack is open-source and free, you can use it without breaking the bank. Try JSON Crack today and experience the power of data visualization like never before.
 
 > <b><a href="https://jsoncrack.com">JSON Crack - Crack your data into pieces</a></b>
 
-## ⚡️ Features
+## ⚡️ Key Features
 
 - Search Nodes
 - Share links & Create Embed Widgets
 - Download/Clipboard as image
 - Upload JSON locally or fetch from URL
-- Great UI/UX
+- User-friendly Interface
 - Light/Dark Mode
-- Advanced Error Messages
+
+## ⭐️ Embedding Into Your Website
+
+You can use the JSON Crack to visualize your JSON **at your products or websites**, see our very simple guide: https://jsoncrack.com/embed
+You can choose to **[partner us](https://github.com/sponsors/AykutSarac)** to remove attribute for your commercial products.
+
+<img width="291" alt="Screenshot_2022-12-08_at_11 46 02-removebg-preview" src="https://user-images.githubusercontent.com/47941171/206400503-150f60b6-f4b3-4649-854d-be4a7b826275.png">
 
 ## 🛠 Development Setup
 
