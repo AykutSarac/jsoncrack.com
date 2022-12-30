@@ -17,8 +17,8 @@ import { Producthunt } from "src/components/Producthunt";
 import { Sponsors } from "src/components/Sponsors";
 import { SupportButton } from "src/components/SupportButton";
 import { baseURL } from "src/constants/data";
-import * as Styles from "./styles";
 import { PricingCards } from "../PricingCards";
+import * as Styles from "./styles";
 
 const Navbar = () => (
   <Styles.StyledNavbar>
