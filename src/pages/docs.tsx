@@ -70,7 +70,6 @@ const Docs = () => {
           &lt; Go Back
         </Button>
         <h1>Documentation</h1>
-        <iframe id="jsoncrackEmbed" src="//localhost:3000/widget" width="100%" height="100%"></iframe>
         <StyledContent>
           <h2># Fetching from URL</h2>
           <StyledContentBody>
