@@ -7,7 +7,7 @@ export interface User {
   profilePicture: string;
   signUpAt: Date;
   lastLoginAt: Date;
-  type: UserType;
+  type: 0 | 1;
 }
 
 export interface Json {
