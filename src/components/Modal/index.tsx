@@ -17,7 +17,8 @@ type ModalTypes = {
 
 export interface ModalProps {
   visible: boolean;
-  setVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  setVisible: React.Dispatch<React.SetStateAction<boolean>> | ((visible: boolean) => void);
+  size?: "sm" | "md" | "lg";
 }
 
 const Header: ReactComponent = ({ children }) => {
@@ -51,10 +52,11 @@ const Modal: React.FC<React.PropsWithChildren<ModalProps>> & ModalTypes = ({
   children,
   visible,
   setVisible,
+  size = "sm",
 }) => {
   const onClick = (e: React.SyntheticEvent<HTMLDivElement>) => {
     if (e.currentTarget === e.target) {
-      setVisible(v => !v);
+      setVisible(false);
     }
   };
 
@@ -62,7 +64,7 @@ const Modal: React.FC<React.PropsWithChildren<ModalProps>> & ModalTypes = ({
 
   return (
     <Styled.ModalWrapper onClick={onClick}>
-      <Styled.ModalInnerWrapper>{children}</Styled.ModalInnerWrapper>
+      <Styled.ModalInnerWrapper size={size}>{children}</Styled.ModalInnerWrapper>
     </Styled.ModalWrapper>
   );
 };

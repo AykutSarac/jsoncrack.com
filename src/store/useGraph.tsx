@@ -1,13 +1,20 @@
+import { ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
 import { CanvasDirection } from "reaflow";
 import { Graph } from "src/components/Graph";
 import { getChildrenEdges } from "src/utils/getChildrenEdges";
 import { getOutgoers } from "src/utils/getOutgoers";
+import { parser } from "src/utils/jsonParser";
 import create from "zustand";
+import useJson from "./useJson";
 
 const initialStates = {
-  loading: false,
+  zoomPanPinch: undefined as ReactZoomPanPinchRef | undefined,
   direction: "RIGHT" as CanvasDirection,
+  loading: true,
   graphCollapsed: false,
+  foldNodes: false,
+  fullscreen: false,
+  performanceMode: true,
   nodes: [] as NodeData[],
   edges: [] as EdgeData[],
   collapsedNodes: [] as string[],
@@ -18,27 +25,39 @@ const initialStates = {
 export type Graph = typeof initialStates;
 
 interface GraphActions {
-  setGraphValue: (key: keyof Graph, value: any) => void;
+  setGraph: (json?: string, options?: Partial<Graph>[]) => void;
   setLoading: (loading: boolean) => void;
   setDirection: (direction: CanvasDirection) => void;
+  setZoomPanPinch: (ref: ReactZoomPanPinchRef) => void;
   expandNodes: (nodeId: string) => void;
   collapseNodes: (nodeId: string) => void;
   collapseGraph: () => void;
   expandGraph: () => void;
+  toggleFold: (value: boolean) => void;
+  toggleFullscreen: (value: boolean) => void;
+  togglePerfMode: (value: boolean) => void;
+  zoomIn: () => void;
+  zoomOut: () => void;
+  centerView: () => void;
 }
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
   ...initialStates,
-  setDirection: direction => set({ direction }),
-  setGraphValue: (key, value) =>
+  setGraph: (data, options) => {
+    const { nodes, edges } = parser(data ?? useJson.getState().json);
+
     set({
+      nodes,
+      edges,
       collapsedParents: [],
       collapsedNodes: [],
       collapsedEdges: [],
       graphCollapsed: false,
       loading: true,
-      [key]: value,
-    }),
+      ...options,
+    });
+  },
+  setDirection: direction => set({ direction }),
   setLoading: loading => set({ loading }),
   expandNodes: nodeId => {
     const [childrenNodes, matchingNodes] = getOutgoers(
@@ -57,18 +76,12 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
     const matchingNodesConnectedToParent = matchingNodes.filter(node =>
       nodesConnectedToParent.includes(node)
     );
-    const nodeIds = childrenNodes
-      .map(node => node.id)
-      .concat(matchingNodesConnectedToParent);
+    const nodeIds = childrenNodes.map(node => node.id).concat(matchingNodesConnectedToParent);
     const edgeIds = childrenEdges.map(edge => edge.id);
 
     const collapsedParents = get().collapsedParents.filter(cp => cp !== nodeId);
-    const collapsedNodes = get().collapsedNodes.filter(
-      nodeId => !nodeIds.includes(nodeId)
-    );
-    const collapsedEdges = get().collapsedEdges.filter(
-      edgeId => !edgeIds.includes(edgeId)
-    );
+    const collapsedNodes = get().collapsedNodes.filter(nodeId => !nodeIds.includes(nodeId));
+    const collapsedEdges = get().collapsedEdges.filter(edgeId => !edgeIds.includes(edgeId));
 
     set({
       collapsedParents,
@@ -100,19 +113,19 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       .filter(edge => parentNodesIds.includes(edge.from))
       .map(edge => edge.to);
 
+    const collapsedParents = get()
+      .nodes.filter(node => !parentNodesIds.includes(node.id) && node.data.parent)
+      .map(node => node.id);
+
+    const collapsedNodes = get()
+      .nodes.filter(
+        node => !parentNodesIds.includes(node.id) && !secondDegreeNodesIds.includes(node.id)
+      )
+      .map(node => node.id);
+
     set({
-      collapsedParents: get()
-        .nodes.filter(
-          node => !parentNodesIds.includes(node.id) && node.data.isParent
-        )
-        .map(node => node.id),
-      collapsedNodes: get()
-        .nodes.filter(
-          node =>
-            !parentNodesIds.includes(node.id) &&
-            !secondDegreeNodesIds.includes(node.id)
-        )
-        .map(node => node.id),
+      collapsedParents,
+      collapsedNodes,
       collapsedEdges: get()
         .edges.filter(edge => !parentNodesIds.includes(edge.from))
         .map(edge => edge.id),
@@ -127,6 +140,39 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       graphCollapsed: false,
     });
   },
+
+  zoomIn: () => {
+    const zoomPanPinch = get().zoomPanPinch;
+    if (zoomPanPinch) {
+      zoomPanPinch.setTransform(
+        zoomPanPinch?.state.positionX,
+        zoomPanPinch?.state.positionY,
+        zoomPanPinch?.state.scale + 0.4
+      );
+    }
+  },
+  zoomOut: () => {
+    const zoomPanPinch = get().zoomPanPinch;
+    if (zoomPanPinch) {
+      zoomPanPinch.setTransform(
+        zoomPanPinch?.state.positionX,
+        zoomPanPinch?.state.positionY,
+        zoomPanPinch?.state.scale - 0.4
+      );
+    }
+  },
+  centerView: () => {
+    const zoomPanPinch = get().zoomPanPinch;
+    const canvas = document.querySelector(".jsoncrack-canvas") as HTMLElement;
+    if (zoomPanPinch && canvas) zoomPanPinch.zoomToElement(canvas);
+  },
+  toggleFold: foldNodes => {
+    set({ foldNodes });
+    get().setGraph();
+  },
+  togglePerfMode: performanceMode => set({ performanceMode }),
+  toggleFullscreen: fullscreen => set({ fullscreen }),
+  setZoomPanPinch: zoomPanPinch => set({ zoomPanPinch }),
 }));
 
 export default useGraph;

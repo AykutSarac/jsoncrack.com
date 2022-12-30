@@ -1,14 +1,10 @@
 import React from "react";
-import {
-  searchQuery,
-  cleanupHighlight,
-  highlightMatchedNodes,
-} from "src/utils/search";
-import useConfig from "../store/useConfig";
+import useGraph from "src/store/useGraph";
+import { searchQuery, cleanupHighlight, highlightMatchedNodes } from "src/utils/search";
 
 export const useFocusNode = () => {
-  const setConfig = useConfig(state => state.setConfig);
-  const zoomPanPinch = useConfig(state => state.zoomPanPinch);
+  const togglePerfMode = useGraph(state => state.togglePerfMode);
+  const zoomPanPinch = useGraph(state => state.zoomPanPinch);
   const [selectedNode, setSelectedNode] = React.useState(0);
   const [content, setContent] = React.useState({
     value: "",
@@ -18,14 +14,14 @@ export const useFocusNode = () => {
   const skip = () => setSelectedNode(current => current + 1);
 
   React.useEffect(() => {
-    setConfig("performanceMode", !content.value.length);
+    togglePerfMode(!content.value.length);
 
     const debouncer = setTimeout(() => {
       setContent(val => ({ ...val, debounced: content.value }));
     }, 800);
 
     return () => clearTimeout(debouncer);
-  }, [content.value, setConfig]);
+  }, [content.value, togglePerfMode]);
 
   React.useEffect(() => {
     if (!zoomPanPinch) return;
@@ -39,18 +35,18 @@ export const useFocusNode = () => {
     cleanupHighlight();
 
     if (ref && matchedNode && matchedNode.parentElement) {
-      const newScale = 1;
+      const newScale = 0.4;
       const x = Number(matchedNode.getAttribute("data-x"));
       const y = Number(matchedNode.getAttribute("data-y"));
 
       const newPositionX =
         (ref.offsetLeft - x) * newScale +
-        ref.clientWidth / 2 -
-        matchedNode.getBoundingClientRect().width / 2;
+        ref.clientWidth / 10 -
+        matchedNode.getBoundingClientRect().width / 10;
       const newPositionY =
         (ref.offsetLeft - y) * newScale +
-        ref.clientHeight / 2 -
-        matchedNode.getBoundingClientRect().height / 2;
+        ref.clientHeight / 10 -
+        matchedNode.getBoundingClientRect().height / 10;
 
       highlightMatchedNodes(matchedNodes, selectedNode);
 

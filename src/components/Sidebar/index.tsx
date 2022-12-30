@@ -1,31 +1,23 @@
 import React from "react";
-import Link from "next/link";
 import toast from "react-hot-toast";
-import {
-  AiOutlineDelete,
-  AiFillGithub,
-  AiOutlineTwitter,
-  AiOutlineSave,
-  AiOutlineFileAdd,
-  AiOutlineLink,
-  AiOutlineEdit,
-} from "react-icons/ai";
+import { AiOutlineDelete, AiOutlineSave, AiOutlineFileAdd, AiOutlineEdit } from "react-icons/ai";
 import { CgArrowsMergeAltH, CgArrowsShrinkH } from "react-icons/cg";
 import { FiDownload } from "react-icons/fi";
-import { HiHeart } from "react-icons/hi";
 import { MdCenterFocusWeak } from "react-icons/md";
 import { TiFlowMerge } from "react-icons/ti";
-import { VscCollapseAll, VscExpandAll } from "react-icons/vsc";
+import {
+  VscAccount,
+  VscCloud,
+  VscCollapseAll,
+  VscExpandAll,
+  VscSettingsGear,
+} from "react-icons/vsc";
 import { Tooltip } from "src/components/Tooltip";
-import { ClearModal } from "src/containers/Modals/ClearModal";
-import { DownloadModal } from "src/containers/Modals/DownloadModal";
-import { ImportModal } from "src/containers/Modals/ImportModal";
-import { ShareModal } from "src/containers/Modals/ShareModal";
-import useConfig from "src/store/useConfig";
 import useGraph from "src/store/useGraph";
+import useJson from "src/store/useJson";
+import useModal from "src/store/useModal";
 import { getNextDirection } from "src/utils/getNextDirection";
 import styled from "styled-components";
-import shallow from "zustand/shallow";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -48,7 +40,7 @@ const StyledElement = styled.button`
   display: flex;
   justify-content: center;
   text-align: center;
-  font-size: 26px;
+  font-size: 24px;
   font-weight: 600;
   width: fit-content;
   color: ${({ theme }) => theme.SIDEBAR_ICONS};
@@ -78,8 +70,7 @@ const StyledElement = styled.button`
 `;
 
 const StyledText = styled.span<{ secondary?: boolean }>`
-  color: ${({ theme, secondary }) =>
-    secondary ? theme.INTERACTIVE_HOVER : theme.ORANGE};
+  color: ${({ theme, secondary }) => (secondary ? theme.INTERACTIVE_HOVER : theme.ORANGE)};
 `;
 
 const StyledFlowIcon = styled(TiFlowMerge)<{ rotate: number }>`
@@ -140,28 +131,34 @@ function rotateLayout(direction: "LEFT" | "RIGHT" | "DOWN" | "UP") {
   return 360;
 }
 
-export const Sidebar: React.FC = () => {
-  const [uploadVisible, setUploadVisible] = React.useState(false);
-  const [clearVisible, setClearVisible] = React.useState(false);
-  const [shareVisible, setShareVisible] = React.useState(false);
-  const [isDownloadVisible, setDownloadVisible] = React.useState(false);
+const SidebarButton: React.FC<{
+  onClick: () => void;
+  deviceDisplay?: "desktop" | "mobile";
+  title: string;
+  component: React.ReactNode;
+}> = ({ onClick, deviceDisplay, title, component }) => {
+  return (
+    <Tooltip className={deviceDisplay} title={title}>
+      <StyledElement onClick={onClick}>{component}</StyledElement>
+    </Tooltip>
+  );
+};
 
-  const getJson = useConfig(state => state.getJson);
+export const Sidebar: React.FC = () => {
+  const setVisible = useModal(state => state.setVisible);
   const setDirection = useGraph(state => state.setDirection);
-  const setConfig = useConfig(state => state.setConfig);
-  const centerView = useConfig(state => state.centerView);
+  const getJson = useJson(state => state.getJson);
+
   const collapseGraph = useGraph(state => state.collapseGraph);
   const expandGraph = useGraph(state => state.expandGraph);
+  const centerView = useGraph(state => state.centerView);
+  const toggleFold = useGraph(state => state.toggleFold);
+  const toggleFullscreen = useGraph(state => state.toggleFullscreen);
 
-  const [graphCollapsed, direction] = useGraph(state => [
-    state.graphCollapsed,
-    state.direction,
-  ]);
-
-  const [foldNodes, hideEditor] = useConfig(
-    state => [state.foldNodes, state.hideEditor],
-    shallow
-  );
+  const direction = useGraph(state => state.direction);
+  const foldNodes = useGraph(state => state.foldNodes);
+  const fullscreen = useGraph(state => state.fullscreen);
+  const graphCollapsed = useGraph(state => state.graphCollapsed);
 
   const handleSave = () => {
     const a = document.createElement("a");
@@ -173,7 +170,7 @@ export const Sidebar: React.FC = () => {
   };
 
   const toggleFoldNodes = () => {
-    setConfig("foldNodes", !foldNodes);
+    toggleFold(!foldNodes);
     toast(`${foldNodes ? "Unfolded" : "Folded"} nodes`);
   };
 
@@ -192,96 +189,90 @@ export const Sidebar: React.FC = () => {
   return (
     <StyledSidebar>
       <StyledTopWrapper>
-        <Link passHref href="/">
-          <StyledElement as={StyledLogo}>
-            <StyledText>J</StyledText>
-            <StyledText secondary>C</StyledText>
-          </StyledElement>
-        </Link>
-        <Tooltip className="mobile" title="Edit JSON">
-          <StyledElement onClick={() => setConfig("hideEditor", !hideEditor)}>
-            <AiOutlineEdit />
-          </StyledElement>
-        </Tooltip>
-        <Tooltip title="Import File">
-          <StyledElement onClick={() => setUploadVisible(true)}>
-            <AiOutlineFileAdd />
-          </StyledElement>
-        </Tooltip>
-        <Tooltip title="Rotate Layout">
-          <StyledElement onClick={toggleDirection}>
-            <StyledFlowIcon rotate={rotateLayout(direction)} />
-          </StyledElement>
-        </Tooltip>
-        <Tooltip className="mobile" title="Center View">
-          <StyledElement onClick={centerView}>
-            <MdCenterFocusWeak />
-          </StyledElement>
-        </Tooltip>
-        <Tooltip
-          className="desktop"
+        <StyledElement href="/" as={StyledLogo}>
+          <StyledText>J</StyledText>
+          <StyledText secondary>C</StyledText>
+        </StyledElement>
+
+        <SidebarButton
+          title="Edit JSON"
+          deviceDisplay="mobile"
+          onClick={() => toggleFullscreen(!fullscreen)}
+          component={<AiOutlineEdit />}
+        />
+
+        <SidebarButton
+          title="Import File"
+          onClick={() => setVisible("import")(true)}
+          component={<AiOutlineFileAdd />}
+        />
+
+        <SidebarButton
+          title="Rotate Layout"
+          onClick={toggleDirection}
+          component={<StyledFlowIcon rotate={rotateLayout(direction)} />}
+        />
+
+        <SidebarButton
+          title="Center View"
+          deviceDisplay="mobile"
+          onClick={centerView}
+          component={<MdCenterFocusWeak />}
+        />
+
+        <SidebarButton
           title={foldNodes ? "Unfold Nodes" : "Fold Nodes"}
-        >
-          <StyledElement onClick={toggleFoldNodes}>
-            {foldNodes ? <CgArrowsShrinkH /> : <CgArrowsMergeAltH />}
-          </StyledElement>
-        </Tooltip>
-        <Tooltip
-          className="desktop"
+          deviceDisplay="desktop"
+          onClick={toggleFoldNodes}
+          component={foldNodes ? <CgArrowsShrinkH /> : <CgArrowsMergeAltH />}
+        />
+
+        <SidebarButton
           title={graphCollapsed ? "Expand Graph" : "Collapse Graph"}
-        >
-          <StyledElement onClick={toggleExpandCollapseGraph}>
-            {graphCollapsed ? <VscExpandAll /> : <VscCollapseAll />}
-          </StyledElement>
-        </Tooltip>
-        <Tooltip className="desktop" title="Save JSON">
-          <StyledElement onClick={handleSave}>
-            <AiOutlineSave />
-          </StyledElement>
-        </Tooltip>
-        <Tooltip className="mobile" title="Download Image">
-          <StyledElement onClick={() => setDownloadVisible(true)}>
-            <FiDownload />
-          </StyledElement>
-        </Tooltip>
-        <Tooltip title="Clear JSON">
-          <StyledElement onClick={() => setClearVisible(true)}>
-            <AiOutlineDelete />
-          </StyledElement>
-        </Tooltip>
-        <Tooltip className="desktop" title="Share">
-          <StyledElement onClick={() => setShareVisible(true)}>
-            <AiOutlineLink />
-          </StyledElement>
-        </Tooltip>
+          deviceDisplay="desktop"
+          onClick={toggleExpandCollapseGraph}
+          component={graphCollapsed ? <VscExpandAll /> : <VscCollapseAll />}
+        />
+
+        <SidebarButton
+          title="Download JSON"
+          deviceDisplay="desktop"
+          onClick={handleSave}
+          component={<AiOutlineSave />}
+        />
+
+        <SidebarButton
+          title="Download Image"
+          deviceDisplay="mobile"
+          onClick={() => setVisible("download")(true)}
+          component={<FiDownload />}
+        />
+
+        <SidebarButton
+          title="Delete JSON"
+          onClick={() => setVisible("clear")(true)}
+          component={<AiOutlineDelete />}
+        />
+
+        <SidebarButton
+          title="View Cloud"
+          deviceDisplay="desktop"
+          onClick={() => setVisible("cloud")(true)}
+          component={<VscCloud />}
+        />
       </StyledTopWrapper>
       <StyledBottomWrapper>
-        <StyledElement>
-          <Link href="https://twitter.com/jsoncrack">
-            <a aria-label="Twitter" rel="me" target="_blank">
-              <AiOutlineTwitter />
-            </a>
-          </Link>
-        </StyledElement>
-        <StyledElement>
-          <Link href="https://github.com/AykutSarac/jsoncrack.com">
-            <a aria-label="GitHub" rel="me" target="_blank">
-              <AiFillGithub />
-            </a>
-          </Link>
-        </StyledElement>
-        <StyledElement>
-          <Link href="https://github.com/sponsors/AykutSarac">
-            <a aria-label="GitHub Sponsors" rel="me" target="_blank">
-              <HiHeart />
-            </a>
-          </Link>
-        </StyledElement>
+        <SidebarButton
+          title="Account"
+          onClick={() => setVisible("account")(true)}
+          component={<VscAccount />}
+        />
+        <SidebarButton
+          title="Settings"
+          onClick={() => setVisible("settings")(true)}
+          component={<VscSettingsGear />}
+        />
       </StyledBottomWrapper>
-      <ImportModal visible={uploadVisible} setVisible={setUploadVisible} />
-      <ClearModal visible={clearVisible} setVisible={setClearVisible} />
-      <ShareModal visible={shareVisible} setVisible={setShareVisible} />
-      <DownloadModal visible={isDownloadVisible} setVisible={setDownloadVisible} />
     </StyledSidebar>
   );
 };

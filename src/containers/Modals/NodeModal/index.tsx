@@ -26,9 +26,7 @@ const StyledTextarea = styled.textarea`
 `;
 
 export const NodeModal = ({ selectedNode, visible, closeModal }: NodeModalProps) => {
-  const nodeData = Array.isArray(selectedNode)
-    ? Object.fromEntries(selectedNode)
-    : selectedNode;
+  const nodeData = Array.isArray(selectedNode) ? Object.fromEntries(selectedNode) : selectedNode;
 
   const handleClipboard = () => {
     toast.success("Content copied to clipboard!");

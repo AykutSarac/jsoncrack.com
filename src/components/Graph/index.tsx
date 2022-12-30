@@ -1,12 +1,7 @@
 import React from "react";
-import {
-  ReactZoomPanPinchRef,
-  TransformComponent,
-  TransformWrapper,
-} from "react-zoom-pan-pinch";
+import { ReactZoomPanPinchRef, TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import { Canvas, Edge, ElkRoot } from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
-import useConfig from "src/store/useConfig";
 import useGraph from "src/store/useGraph";
 import styled from "styled-components";
 import { Loading } from "../Loading";
@@ -41,14 +36,10 @@ const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
   }
 `;
 
-const GraphComponent = ({
-  isWidget = false,
-  openModal,
-  setSelectedNode,
-}: GraphProps) => {
+const GraphComponent = ({ isWidget = false, openModal, setSelectedNode }: GraphProps) => {
   const setLoading = useGraph(state => state.setLoading);
-  const setConfig = useConfig(state => state.setConfig);
-  const centerView = useConfig(state => state.centerView);
+  const setZoomPanPinch = useGraph(state => state.setZoomPanPinch);
+  const centerView = useGraph(state => state.centerView);
 
   const loading = useGraph(state => state.loading);
   const direction = useGraph(state => state.direction);
@@ -70,57 +61,34 @@ const GraphComponent = ({
 
   const onInit = React.useCallback(
     (ref: ReactZoomPanPinchRef) => {
-      setConfig("zoomPanPinch", ref);
+      setZoomPanPinch(ref);
     },
-    [setConfig]
+    [setZoomPanPinch]
   );
 
   const onLayoutChange = React.useCallback(
     (layout: ElkRoot) => {
       if (layout.width && layout.height) {
         const areaSize = layout.width * layout.height;
-        const changeRatio = Math.abs(
-          (areaSize * 100) / (size.width * size.height) - 100
-        );
+        const changeRatio = Math.abs((areaSize * 100) / (size.width * size.height) - 100);
 
-        setSize({ width: layout.width + 400, height: layout.height + 400 });
+        setSize({
+          width: (layout.width as number) + 400,
+          height: (layout.height as number) + 400,
+        });
 
         requestAnimationFrame(() => {
           setTimeout(() => {
             setLoading(false);
-            setTimeout(() => (changeRatio > 75 || isWidget) && centerView(), 0);
-          }, 0);
+            setTimeout(() => {
+              if (changeRatio > 70 || isWidget) centerView();
+            });
+          });
         });
       }
     },
-    [size.width, size.height, setLoading, isWidget, centerView]
+    [centerView, isWidget, setLoading, size.height, size.width]
   );
-
-  // const onLayoutChange = React.useCallback(
-  //   (layout: ElkRoot) => {
-  //     if (layout.width && layout.height) {
-  //       const areaSize = layout.width * layout.height;
-  //       const changeRatio = Math.abs(
-  //         (areaSize * 100) / (size.width * size.height) - 100
-  //       );
-
-  //       const MIN_SCALE = Math.round((400_000 / areaSize) * 100) / 100;
-
-  //       const scale = MIN_SCALE > 2 ? 1 : MIN_SCALE <= 0 ? 0.1 : MIN_SCALE;
-
-  //       setMinScale(scale);
-  //       setSize({ width: layout.width + 400, height: layout.height + 400 });
-
-  //       requestAnimationFrame(() => {
-  //         setTimeout(() => {
-  //           setLoading(false);
-  //           setTimeout(() => (changeRatio > 50 || isWidget) && centerView(), 0);
-  //         }, 0);
-  //       });
-  //     }
-  //   },
-  //   [centerView, isWidget, setLoading, size.height, size.width]
-  // );
 
   const onCanvasClick = React.useCallback(() => {
     const input = document.querySelector("input:focus") as HTMLInputElement;
@@ -131,7 +99,7 @@ const GraphComponent = ({
 
   return (
     <StyledEditorWrapper isWidget={isWidget} onContextMenu={e => e.preventDefault()}>
-      {loading && <Loading message="Painting graph..." />}
+      <Loading message="Painting graph..." loading={loading} />
       <TransformWrapper
         maxScale={2}
         minScale={0.05}
@@ -141,9 +109,7 @@ const GraphComponent = ({
         doubleClick={{ disabled: true }}
         onInit={onInit}
         onPanning={ref => ref.instance.wrapperComponent?.classList.add("dragging")}
-        onPanningStop={ref =>
-          ref.instance.wrapperComponent?.classList.remove("dragging")
-        }
+        onPanningStop={ref => ref.instance.wrapperComponent?.classList.remove("dragging")}
       >
         <TransformComponent
           wrapperStyle={{
@@ -170,9 +136,7 @@ const GraphComponent = ({
             fit={true}
             key={direction}
             node={props => <CustomNode {...props} onClick={handleNodeClick} />}
-            edge={props => (
-              <Edge {...props} containerClassName={`edge-${props.id}`} />
-            )}
+            edge={props => <Edge {...props} containerClassName={`edge-${props.id}`} />}
           />
         </TransformComponent>
       </TransformWrapper>

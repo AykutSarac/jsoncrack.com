@@ -2,7 +2,6 @@ import React from "react";
 import { MdLink, MdLinkOff } from "react-icons/md";
 // import { useInViewport } from "react-in-viewport";
 import { CustomNodeProps } from "src/components/CustomNode";
-import useConfig from "src/store/useConfig";
 import useGraph from "src/store/useGraph";
 import useStored from "src/store/useStored";
 import styled from "styled-components";
@@ -28,27 +27,34 @@ const StyledExpand = styled.button`
 
 const StyledTextNodeWrapper = styled.div<{ hasCollapse: boolean }>`
   display: flex;
-  justify-content: ${({ hasCollapse }) =>
-    hasCollapse ? "space-between" : "center"};
+  justify-content: ${({ hasCollapse }) => (hasCollapse ? "space-between" : "center")};
   align-items: center;
   height: 100%;
   width: 100%;
 `;
 
-const TextNode: React.FC<CustomNodeProps> = ({
-  node,
-  x,
-  y,
-  hasCollapse = false,
-}) => {
+const StyledImageWrapper = styled.div`
+  padding: 5px;
+`;
+
+const StyledImage = styled.img`
+  border-radius: 2px;
+  object-fit: contain;
+  background: ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
+`;
+
+const TextNode: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) => {
   const { id, text, width, height, data } = node;
   const ref = React.useRef(null);
   const hideCollapse = useStored(state => state.hideCollapse);
-  const hideChildrenCount = useStored(state => state.hideChildrenCount);
+  const childrenCount = useStored(state => state.childrenCount);
+  const imagePreview = useStored(state => state.imagePreview);
   const expandNodes = useGraph(state => state.expandNodes);
   const collapseNodes = useGraph(state => state.collapseNodes);
   const isExpanded = useGraph(state => state.collapsedParents.includes(id));
-  const performanceMode = useConfig(state => state.performanceMode);
+  const performanceMode = useGraph(state => state.performanceMode);
+  const isImage =
+    !Array.isArray(text) && /(https?:\/\/.*\.(?:png|jpg|gif))/i.test(text) && imagePreview;
   // const { inViewport } = useInViewport(ref);
 
   const handleExpand = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -64,36 +70,38 @@ const TextNode: React.FC<CustomNodeProps> = ({
       height={height}
       x={0}
       y={0}
-      hideCollapse={hideCollapse}
       hasCollapse={data.parent && hasCollapse}
       ref={ref}
     >
-      <StyledTextNodeWrapper hasCollapse={data.parent && !hideCollapse}>
-        {(!performanceMode || inViewport) && (
-          <Styled.StyledKey
-            data-x={x}
-            data-y={y}
-            data-key={JSON.stringify(text)}
-            parent={data.parent}
-          >
-            <Styled.StyledLinkItUrl>
-              {JSON.stringify(text).replaceAll('"', "")}
-            </Styled.StyledLinkItUrl>
-          </Styled.StyledKey>
-        )}
+      {isImage ? (
+        <StyledImageWrapper>
+          <StyledImage src={text} width="70" height="70" />
+        </StyledImageWrapper>
+      ) : (
+        <StyledTextNodeWrapper hasCollapse={data.parent && hideCollapse}>
+          {(!performanceMode || inViewport) && (
+            <Styled.StyledKey
+              data-x={x}
+              data-y={y}
+              data-key={JSON.stringify(text)}
+              parent={data.parent}
+            >
+              <Styled.StyledLinkItUrl>
+                {JSON.stringify(text).replaceAll('"', "")}
+              </Styled.StyledLinkItUrl>
+            </Styled.StyledKey>
+          )}
+          {data.parent && data.childrenCount > 0 && childrenCount && (
+            <Styled.StyledChildrenCount>({data.childrenCount})</Styled.StyledChildrenCount>
+          )}
 
-        {data.parent && data.childrenCount > 0 && !hideChildrenCount && (
-          <Styled.StyledChildrenCount>
-            ({data.childrenCount})
-          </Styled.StyledChildrenCount>
-        )}
-
-        {inViewport && data.parent && hasCollapse && !hideCollapse && (
-          <StyledExpand onClick={handleExpand}>
-            {isExpanded ? <MdLinkOff size={18} /> : <MdLink size={18} />}
-          </StyledExpand>
-        )}
-      </StyledTextNodeWrapper>
+          {inViewport && data.parent && hasCollapse && hideCollapse && (
+            <StyledExpand onClick={handleExpand}>
+              {isExpanded ? <MdLinkOff size={18} /> : <MdLink size={18} />}
+            </StyledExpand>
+          )}
+        </StyledTextNodeWrapper>
+      )}
     </Styled.StyledForeignObject>
   );
 };

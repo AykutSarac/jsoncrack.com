@@ -2,7 +2,7 @@
   "trailingComma": "es5",
   "singleQuote": false,
   "semi": true,
-  "printWidth": 85,
+  "printWidth": 100,
   "arrowParens": "avoid",
   "importOrder": [
     "^(react/(.*)$)|^(react$)",

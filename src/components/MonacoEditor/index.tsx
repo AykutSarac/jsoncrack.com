@@ -1,11 +1,9 @@
 import React from "react";
 import Editor, { loader, Monaco } from "@monaco-editor/react";
-import { parse } from "jsonc-parser";
+import debounce from "lodash.debounce";
 import { Loading } from "src/components/Loading";
-import useConfig from "src/store/useConfig";
-import useGraph from "src/store/useGraph";
+import useJson from "src/store/useJson";
 import useStored from "src/store/useStored";
-import { parser } from "src/utils/jsonParser";
 import styled from "styled-components";
 
 loader.config({
@@ -28,63 +26,78 @@ const StyledWrapper = styled.div`
   grid-template-rows: minmax(0, 1fr);
 `;
 
-function handleEditorWillMount(monaco: Monaco) {
-  monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
-    allowComments: true,
-    comments: "ignore",
-  });
-}
+export const MonacoEditor = () => {
+  const json = useJson(state => state.json);
+  const setJson = useJson(state => state.setJson);
+  const setError = useJson(state => state.setError);
+  const [loaded, setLoaded] = React.useState(false);
+  const [value, setValue] = React.useState<string | undefined>(json);
 
-export const MonacoEditor = ({
-  setHasError,
-}: {
-  setHasError: (value: boolean) => void;
-}) => {
-  const [value, setValue] = React.useState<string | undefined>("");
-  const setJson = useConfig(state => state.setJson);
-  const setGraphValue = useGraph(state => state.setGraphValue);
-
-  const json = useConfig(state => state.json);
-  const foldNodes = useConfig(state => state.foldNodes);
+  const hasError = useJson(state => state.hasError);
+  const getHasChanges = useJson(state => state.getHasChanges);
   const lightmode = useStored(state => (state.lightmode ? "light" : "vs-dark"));
 
-  React.useEffect(() => {
-    const { nodes, edges } = parser(json, foldNodes);
+  const handleEditorWillMount = React.useCallback(
+    (monaco: Monaco) => {
+      monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+        allowComments: true,
+        comments: "ignore",
+      });
 
-    setGraphValue("nodes", nodes);
-    setGraphValue("edges", edges);
-    setValue(json);
-  }, [foldNodes, json, setGraphValue]);
+      monaco.editor.onDidChangeMarkers(([uri]) => {
+        const markers = monaco.editor.getModelMarkers({ resource: uri });
+        setError(!!markers.length);
+      });
+    },
+    [setError]
+  );
+
+  const debouncedSetJson = React.useMemo(
+    () =>
+      debounce(value => {
+        if (hasError) return;
+        setJson(value || "[]");
+      }, 1200),
+    [hasError, setJson]
+  );
 
   React.useEffect(() => {
-    const formatTimer = setTimeout(() => {
-      if (!value) {
-        setHasError(false);
-        return setJson("{}");
+    if ((value || !hasError) && loaded) debouncedSetJson(value);
+    setLoaded(true);
+
+    return () => debouncedSetJson.cancel();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSetJson, hasError, value]);
+
+  React.useEffect(() => {
+    const beforeunload = (e: BeforeUnloadEvent) => {
+      if (getHasChanges()) {
+        const confirmationMessage =
+          "Unsaved changes, if you leave before saving  your changes will be lost";
+
+        (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+        return confirmationMessage;
       }
+    };
 
-      const errors = [];
-      const parsedJSON = JSON.stringify(parse(value, errors), null, 2);
-      if (errors.length) return setHasError(true);
+    window.addEventListener("beforeunload", beforeunload);
 
-      setJson(parsedJSON);
-      setHasError(false);
-    }, 1200);
-
-    return () => clearTimeout(formatTimer);
-  }, [value, setJson, setHasError]);
+    return () => {
+      window.removeEventListener("beforeunload", beforeunload);
+    };
+  }, [getHasChanges]);
 
   return (
     <StyledWrapper>
       <Editor
-        height="100%"
-        defaultLanguage="json"
-        value={value}
+        value={json}
         theme={lightmode}
         options={editorOptions}
         onChange={setValue}
         loading={<Loading message="Loading Editor..." />}
         beforeMount={handleEditorWillMount}
+        defaultLanguage="json"
+        height="100%"
       />
     </StyledWrapper>
   );

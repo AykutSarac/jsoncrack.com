@@ -2,12 +2,10 @@ import React from "react";
 import { AiOutlineFullscreen, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
 import { MdCenterFocusWeak } from "react-icons/md";
-import { TbSettings } from "react-icons/tb";
 import { SearchInput } from "src/components/SearchInput";
-import { SettingsModal } from "src/containers/Modals/SettingsModal";
-import useConfig from "src/store/useConfig";
+import useGraph from "src/store/useGraph";
+import useModal from "src/store/useModal";
 import styled from "styled-components";
-import { DownloadModal } from "../Modals/DownloadModal";
 
 export const StyledTools = styled.div`
   position: relative;
@@ -48,16 +46,15 @@ const StyledToolElement = styled.button`
 `;
 
 export const Tools: React.FC = () => {
-  const [settingsVisible, setSettingsVisible] = React.useState(false);
-  const [isDownloadVisible, setDownloadVisible] = React.useState(false);
+  const setVisible = useModal(state => state.setVisible);
 
-  const hideEditor = useConfig(state => state.hideEditor);
-  const setConfig = useConfig(state => state.setConfig);
+  const fullscreen = useGraph(state => state.fullscreen);
+  const toggleFullscreen = useGraph(state => state.toggleFullscreen);
 
-  const zoomIn = useConfig(state => state.zoomIn);
-  const zoomOut = useConfig(state => state.zoomOut);
-  const centerView = useConfig(state => state.centerView);
-  const toggleEditor = () => setConfig("hideEditor", !hideEditor);
+  const zoomIn = useGraph(state => state.zoomIn);
+  const zoomOut = useGraph(state => state.zoomOut);
+  const centerView = useGraph(state => state.centerView);
+  const toggleEditor = () => toggleFullscreen(!fullscreen);
 
   return (
     <>
@@ -65,17 +62,8 @@ export const Tools: React.FC = () => {
         <StyledToolElement aria-label="fullscreen" onClick={toggleEditor}>
           <AiOutlineFullscreen />
         </StyledToolElement>
-        <StyledToolElement
-          aria-label="settings"
-          onClick={() => setSettingsVisible(true)}
-        >
-          <TbSettings />
-        </StyledToolElement>
         <SearchInput />
-        <StyledToolElement
-          aria-label="save"
-          onClick={() => setDownloadVisible(true)}
-        >
+        <StyledToolElement aria-label="save" onClick={() => setVisible("download")(true)}>
           <FiDownload />
         </StyledToolElement>
         <StyledToolElement aria-label="center canvas" onClick={centerView}>
@@ -88,8 +76,6 @@ export const Tools: React.FC = () => {
           <AiOutlinePlus />
         </StyledToolElement>
       </StyledTools>
-      <DownloadModal visible={isDownloadVisible} setVisible={setDownloadVisible} />
-      <SettingsModal visible={settingsVisible} setVisible={setSettingsVisible} />
     </>
   );
 };
