@@ -1,4 +1,4 @@
-import { Node, parseTree } from "jsonc-parser";
+import { Node, NodeType, parseTree } from "jsonc-parser";
 import useGraph from "src/store/useGraph";
 import useStored from "src/store/useStored";
 
@@ -83,6 +83,25 @@ export const parser = (jsonStr: string) => {
           to: to,
         },
       ];
+    };
+
+    const isPrimitiveOrNullType = (type?: NodeType) => {
+      return (
+        type === "boolean" ||
+        type === "string" ||
+        type === "number" ||
+        type === "null"
+      );
+    };
+
+    const alignChildren = (a: Node, b: Node) => {
+      if (
+        isPrimitiveOrNullType(a?.children?.[1]?.type) &&
+        !isPrimitiveOrNullType(b?.children?.[1]?.type)
+      ) {
+        return -1;
+      }
+      return 0;
     };
 
     let parentName: string = "";
@@ -204,26 +223,28 @@ export const parser = (jsonStr: string) => {
         } else if (parentType === "array") {
           objectsFromArray = [...objectsFromArray, objectsFromArrayId++];
         }
-        children.forEach((branch, index, array) => {
-          if (array[index + 1]) {
-            traverse(
-              branch,
-              type,
-              bracketOpen[bracketOpen.length - 1]
-                ? bracketOpen[bracketOpen.length - 1].id
-                : undefined,
-              array[index + 1].type
-            );
-          } else {
-            traverse(
-              branch,
-              type,
-              bracketOpen[bracketOpen.length - 1]
-                ? bracketOpen[bracketOpen.length - 1].id
-                : undefined
-            );
+        (type === "object" ? children.sort(alignChildren) : children).forEach(
+          (branch, index, array) => {
+            if (array[index + 1]) {
+              traverse(
+                branch,
+                type,
+                bracketOpen[bracketOpen.length - 1]
+                  ? bracketOpen[bracketOpen.length - 1].id
+                  : undefined,
+                array[index + 1].type
+              );
+            } else {
+              traverse(
+                branch,
+                type,
+                bracketOpen[bracketOpen.length - 1]
+                  ? bracketOpen[bracketOpen.length - 1].id
+                  : undefined
+              );
+            }
           }
-        });
+        );
 
         if (type !== "property") {
           // when children end
