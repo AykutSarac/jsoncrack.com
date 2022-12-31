@@ -176,6 +176,7 @@ export const BottomBar = () => {
             Powered by
             <StyledImg
               height="20"
+              width="54"
               src="https://www.altogic.com/img/logo_dark.svg"
               alt="powered by altogic"
               light={lightmode}
