@@ -21,6 +21,7 @@ class MyDocument extends Document {
             rel="stylesheet"
             crossOrigin="anonymous"
           />
+          <link rel="preload" href="assets/Mona-Sans.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         </Head>
         <body>
           <Main />
