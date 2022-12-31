@@ -25,6 +25,10 @@ const StyledBottomBar = styled.div`
   max-height: 28px;
   height: 28px;
   padding: 0 6px;
+
+  @media only screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const StyledLeft = styled.div`
