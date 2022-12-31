@@ -77,6 +77,8 @@ const StyledModal = styled(Modal)`
 
 const StyledDeleteButton = styled(Button)`
   background: transparent;
+  color: ${({ theme }) => theme.CRIMSON};
+  opacity: 0.8;
 `;
 
 const StyledCreateWrapper = styled.div`
