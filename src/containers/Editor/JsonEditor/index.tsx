@@ -11,12 +11,10 @@ const StyledEditorWrapper = styled.div`
   user-select: none;
 `;
 export const JsonEditor: React.FC = () => {
-  const [hasError, setHasError] = React.useState(false);
-
   return (
     <StyledEditorWrapper>
-      <ErrorContainer hasError={hasError} />
-      <MonacoEditor setHasError={setHasError} />
+      <ErrorContainer />
+      <MonacoEditor />
     </StyledEditorWrapper>
   );
 };

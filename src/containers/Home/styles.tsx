@@ -4,6 +4,10 @@ import styled from "styled-components";
 export const StyledButtonWrapper = styled.div`
   display: flex;
   gap: 18px;
+
+  @media only screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 export const StyledTwitterQuote = styled.div`
@@ -70,13 +74,7 @@ export const StyledHome = styled.div`
 
 export const StyledGradientText = styled.span`
   background: #ffb76b;
-  background: linear-gradient(
-    to right,
-    #ffb76b 0%,
-    #ffa73d 30%,
-    #ff7c00 60%,
-    #ff7f04 100%
-  );
+  background: linear-gradient(to right, #ffb76b 0%, #ffa73d 30%, #ff7c00 60%, #ff7f04 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -105,6 +103,10 @@ export const StyledHeroSection = styled.section`
   gap: 1.5em;
   min-height: 40vh;
   padding: 0 3%;
+
+  h2 {
+    margin-bottom: 25px;
+  }
 `;
 
 export const StyledNavLink = styled.a`
@@ -122,12 +124,12 @@ export const StyledNavLink = styled.a`
 `;
 
 export const StyledTitle = styled.h1`
-  font-size: 5rem;
   font-weight: 900;
   margin: 0;
+  font-size: min(10vw, 64px);
 
   @media only screen and (max-width: 768px) {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
 `;
 
@@ -139,14 +141,14 @@ export const StyledSubTitle = styled.h2`
   margin: 0;
 
   @media only screen and (max-width: 768px) {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
   }
 `;
 
 export const StyledMinorTitle = styled.p`
   color: #b4b4b4;
   text-align: center;
-  font-size: 1.25rem;
+  font-size: 1rem;
   margin: 0;
   letter-spacing: 1.2px;
 
@@ -158,11 +160,12 @@ export const StyledMinorTitle = styled.p`
 export const StyledButton = styled(Button)`
   background: ${({ status }) => !status && "#a13cc2"};
   padding: 12px 24px;
+  height: 46px;
 
   div {
-    font-family: "Roboto", sans-serif;
+    font-family: "Mona Sans";
     font-weight: 700;
-    font-size: 16px;
+    font-size: 1rem;
   }
 `;
 
@@ -189,28 +192,38 @@ export const StyledSponsorButton = styled(Button)<{ isBlue?: boolean }>`
       color: white;
     }
   }
-
-  @media only screen and (max-width: 768px) {
-    display: ${({ isBlue }) => isBlue && "none"};
-  }
 `;
 
 export const StyledFeaturesSection = styled.section`
-  display: flex;
-  max-width: 85%;
+  display: grid;
   margin: 0 auto;
-  gap: 2rem;
-  padding: 50px 3%;
+  max-width: 60%;
+  justify-content: center;
+  grid-template-columns: repeat(2, 40%);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 60px;
+  grid-row-gap: 60px;
 
   @media only screen and (max-width: 768px) {
     flex-direction: column;
     max-width: 80%;
+    display: flex;
   }
 `;
 
 export const StyledSectionCard = styled.div`
   text-align: center;
   flex: 1;
+  border: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
+  background: rgb(48, 0, 65);
+  background: linear-gradient(
+    138deg,
+    rgba(48, 0, 65, 0.8870141806722689) 0%,
+    rgba(72, 12, 84, 0.40802258403361347) 33%,
+    rgba(65, 8, 92, 0.6012998949579832) 100%
+  );
+  border-radius: 6px;
+  padding: 16px;
 `;
 
 export const StyledCardTitle = styled.div`
@@ -255,7 +268,7 @@ export const StyledSection = styled.section<{ reverse?: boolean }>`
     width: 100%;
   }
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 1200px) {
     flex-direction: ${({ reverse }) => (reverse ? "column-reverse" : "column")};
     max-width: 80%;
   }
@@ -278,8 +291,7 @@ export const StyledSectionArea = styled.div`
     width: 100%;
     align-items: center;
 
-    h2,
-    p {
+    h2 {
       text-align: center;
     }
   }
@@ -297,7 +309,7 @@ export const StyledSponsorSection = styled.section`
   padding: 50px 3%;
 
   @media only screen and (max-width: 768px) {
-    max-width: 80%;
+    max-width: 90%;
   }
 `;
 
@@ -327,7 +339,6 @@ export const StyledPreviewSection = styled.section`
 
   @media only screen and (max-width: 768px) {
     display: none;
-    max-width: 80%;
   }
 `;
 
@@ -336,30 +347,6 @@ export const StyledImage = styled.img`
   height: 100%;
   object-fit: contain;
   filter: drop-shadow(0px 0px 12px rgba(255, 255, 255, 0.6));
-`;
-
-export const StyledFooter = styled.footer`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 80%;
-  margin: 0 auto;
-  padding: 30px 3%;
-  border-top: 1px solid #b4b4b4;
-  opacity: 0.7;
-`;
-
-export const StyledFooterText = styled.p`
-  color: #b4b4b4;
-`;
-
-export const StyledIconLinks = styled.div`
-  display: flex;
-  gap: 20px;
-
-  ${StyledNavLink} {
-    color: unset;
-  }
 `;
 
 export const StyledHighlightedText = styled.span`

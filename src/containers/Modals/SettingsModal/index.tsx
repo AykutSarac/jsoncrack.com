@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal } from "src/components/Modal";
+import { Modal, ModalProps } from "src/components/Modal";
 import Toggle from "src/components/Toggle";
 import useStored from "src/store/useStored";
 import styled from "styled-components";
@@ -16,18 +16,26 @@ const StyledModalWrapper = styled.div`
   gap: 20px;
 `;
 
-export const SettingsModal: React.FC<{
-  visible: boolean;
-  setVisible: React.Dispatch<React.SetStateAction<boolean>>;
-}> = ({ visible, setVisible }) => {
+export const SettingsModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   const lightmode = useStored(state => state.lightmode);
   const setLightTheme = useStored(state => state.setLightTheme);
-  const [toggleHideCollapse, hideCollapse] = useStored(
-    state => [state.toggleHideCollapse, state.hideCollapse],
-    shallow
-  );
-  const [toggleHideChildrenCount, hideChildrenCount] = useStored(
-    state => [state.toggleHideChildrenCount, state.hideChildrenCount],
+
+  const [
+    toggleHideCollapse,
+    toggleChildrenCount,
+    toggleImagePreview,
+    hideCollapse,
+    childrenCount,
+    imagePreview,
+  ] = useStored(
+    state => [
+      state.toggleHideCollapse,
+      state.toggleChildrenCount,
+      state.toggleImagePreview,
+      state.hideCollapse,
+      state.childrenCount,
+      state.imagePreview,
+    ],
     shallow
   );
 
@@ -36,20 +44,17 @@ export const SettingsModal: React.FC<{
       <Modal.Header>Settings</Modal.Header>
       <Modal.Content>
         <StyledModalWrapper>
+          <StyledToggle onChange={toggleImagePreview} checked={imagePreview}>
+            Live Image Preview
+          </StyledToggle>
           <StyledToggle onChange={toggleHideCollapse} checked={hideCollapse}>
-            Hide Collapse/Expand Button
+            Display Collapse/Expand Button
           </StyledToggle>
-          <StyledToggle
-            onChange={toggleHideChildrenCount}
-            checked={hideChildrenCount}
-          >
-            Hide Children Count
+          <StyledToggle onChange={toggleChildrenCount} checked={childrenCount}>
+            Display Children Count
           </StyledToggle>
-          <StyledToggle
-            onChange={() => setLightTheme(!lightmode)}
-            checked={lightmode}
-          >
-            Enable Light Theme
+          <StyledToggle onChange={() => setLightTheme(!lightmode)} checked={lightmode}>
+            Light Theme
           </StyledToggle>
         </StyledModalWrapper>
       </Modal.Content>

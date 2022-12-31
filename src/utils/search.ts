@@ -11,10 +11,7 @@ export const cleanupHighlight = () => {
   });
 };
 
-export const highlightMatchedNodes = (
-  nodes: NodeListOf<Element>,
-  selectedNode: number
-) => {
+export const highlightMatchedNodes = (nodes: NodeListOf<Element>, selectedNode: number) => {
   nodes?.forEach(node => {
     node.parentElement?.closest("foreignObject")?.classList.add("searched");
   });

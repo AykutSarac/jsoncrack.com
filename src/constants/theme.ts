@@ -1,6 +1,7 @@
 const fixedColors = {
   CRIMSON: "#DC143C",
   BLURPLE: "#5865F2",
+  PURPLE: "#9036AF",
   FULL_WHITE: "#FFFFFF",
   BLACK: "#202225",
   BLACK_DARK: "#2C2F33",

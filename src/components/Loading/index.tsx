@@ -2,6 +2,7 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 
 interface LoadingProps {
+  loading?: boolean;
   message?: string;
 }
 
@@ -32,7 +33,7 @@ const StyledLoading = styled.div`
 `;
 
 const StyledLogo = styled.h2`
-  font-weight: 600;
+  font-weight: 800;
   font-size: 56px;
   pointer-events: none;
   margin-bottom: 10px;
@@ -48,13 +49,15 @@ const StyledMessage = styled.div`
   font-weight: 500;
 `;
 
-export const Loading: React.FC<LoadingProps> = ({ message }) => (
-  <StyledLoading>
-    <StyledLogo>
-      <StyledText>JSON</StyledText> Crack
-    </StyledLogo>
-    <StyledMessage>
-      {message ?? "Preparing the environment for you..."}
-    </StyledMessage>
-  </StyledLoading>
-);
+export const Loading: React.FC<LoadingProps> = ({ loading = true, message }) => {
+  if (!loading) return null;
+
+  return (
+    <StyledLoading>
+      <StyledLogo>
+        <StyledText>JSON</StyledText> Crack
+      </StyledLogo>
+      <StyledMessage>{message ?? "Preparing the environment for you..."}</StyledMessage>
+    </StyledLoading>
+  );
+};
