@@ -58,7 +58,7 @@ const StyledPricingCardPrice = styled.h3`
 `;
 
 const StyledPricingCardDetails = styled.ul`
-  color: ${({ theme }) => theme.TEXT_NORMAL};
+  color: ${({ theme }) => theme.FULL_WHITE};
   line-height: 2.3;
   padding: 20px;
 `;
