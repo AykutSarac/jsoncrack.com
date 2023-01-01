@@ -1,8 +1,10 @@
 # Builder
 FROM node:14-buster as builder
 WORKDIR /src
-COPY . /src
+COPY package.json /src
+COPY yarn.lock /src
 RUN yarn install --legacy-peer-deps
+COPY . /src
 RUN yarn run build
 
 # App
