@@ -54,7 +54,11 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
     e.preventDefault();
 
     if (e.type === 'drop' && e.dataTransfer.files.length) {
-      setJsonFile(e.dataTransfer.files[0])
+      if (e.dataTransfer.files[0].type === 'application/json') {
+        setJsonFile(e.dataTransfer.files[0])
+      } else {
+        toast.error('Please upload JSON file!')
+      }
     }
   }
 
