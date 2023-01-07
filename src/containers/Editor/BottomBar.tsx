@@ -157,7 +157,7 @@ export const BottomBar = () => {
                 {isPrivate ? "Private" : "Public"}
               </StyledBottomBarItem>
             )}
-            <StyledBottomBarItem onClick={() => setVisible("share")(true)}>
+            <StyledBottomBarItem onClick={() => setVisible("share")(true)} disabled={isPrivate}>
               <AiOutlineLink />
               Share
             </StyledBottomBarItem>
