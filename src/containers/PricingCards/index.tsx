@@ -106,7 +106,6 @@ export const PricingCards = () => {
             <StyledPricingCardDetailsItem>
               Create and share up to 200 files
             </StyledPricingCardDetailsItem>
-            <StyledPricingCardDetailsItem>Store private JSON</StyledPricingCardDetailsItem>
             <StyledPricingCardDetailsItem>
               Get access to JSON Crack API to generate JSON remotely
             </StyledPricingCardDetailsItem>

@@ -1,6 +1,6 @@
 import React from "react";
 import { GraphCanvas } from "src/containers/Editor/LiveEditor/GraphCanvas";
-import { Tools } from "src/containers/Editor/Tools";
+import { Tools } from "src/containers/Editor/LiveEditor/Tools";
 import styled from "styled-components";
 
 const StyledLiveEditor = styled.div`

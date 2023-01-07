@@ -86,7 +86,7 @@ export const BottomBar = () => {
   const [isUpdating, setIsUpdating] = React.useState(false);
 
   React.useEffect(() => {
-    setIsPrivate(data?.private ?? false);
+    setIsPrivate(data?.private ?? true);
   }, [data]);
 
   const handleSaveJson = React.useCallback(async () => {
@@ -123,12 +123,10 @@ export const BottomBar = () => {
   const setPrivate = async () => {
     try {
       if (!query.json) return handleSaveJson();
-      if (!isPrivate && user?.type === 0) {
-        return window.open("https://jsoncrack.com/pricing", "_blank");
-      }
-
       setIsUpdating(true);
+
       const res = await updateJson(query.json as string, { private: !isPrivate });
+
       if (!res.errors?.items.length) {
         setIsPrivate(res.data.private);
         toast.success(`Document set to ${isPrivate ? "public" : "private"}.`);
