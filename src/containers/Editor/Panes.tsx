@@ -12,7 +12,7 @@ export const StyledEditor = styled(Allotment)`
   background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
 `;
 
-const LiveEditor = dynamic(() => import("src/containers/Editor/LiveEditor"), {
+const LiveEditor = dynamic(() => import("src/containers/Editor/LiveEditor/LiveEditor"), {
   ssr: false,
 });
 
