@@ -1,12 +1,14 @@
 import React from "react";
-import { AccountModal } from "src/containers/Modals/AccountModal";
-import { ClearModal } from "src/containers/Modals/ClearModal";
-import { CloudModal } from "src/containers/Modals/CloudModal";
-import { DownloadModal } from "src/containers/Modals/DownloadModal";
-import { ImportModal } from "src/containers/Modals/ImportModal";
-import { LoginModal } from "src/containers/Modals/LoginModal";
-import { SettingsModal } from "src/containers/Modals/SettingsModal";
-import { ShareModal } from "src/containers/Modals/ShareModal";
+import {
+  AccountModal,
+  ClearModal,
+  CloudModal,
+  DownloadModal,
+  ImportModal,
+  LoginModal,
+  SettingsModal,
+  ShareModal
+} from "src/containers/Modals";
 import useModal from "src/store/useModal";
 import shallow from "zustand/shallow";
 
