@@ -32,7 +32,7 @@ Introducing JSON Crack – the open-source, free JSON visualization app that wil
 
 ## ⭐️ Embedding Into Your Website
 
-You can use the JSON Crack to visualize your JSON **at your products or websites**, see our very simple guide: https://jsoncrack.com/embed
+You can use the JSON Crack to visualize your JSON **at your products or websites**, see our very simple guide: https://jsoncrack.com/docs
 You can choose to **[partner us](https://github.com/sponsors/AykutSarac)** to remove attribute for your commercial products.
 
 <img width="291" alt="Screenshot_2022-12-08_at_11 46 02-removebg-preview" src="https://user-images.githubusercontent.com/47941171/206400503-150f60b6-f4b3-4649-854d-be4a7b826275.png">
