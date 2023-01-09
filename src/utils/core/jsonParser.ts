@@ -82,3 +82,28 @@ export const parser = (jsonStr: string) => {
     };
   }
 };
+
+export const parseDataToJSON = (nodes: NodeData[], edges: EdgeData[]) => { // this utility function builds a JSON object from the nodes and edges arrays, and returns it stringified
+
+  const isString = (x: any) => Object.prototype.toString.call(x) === "[object String]";
+
+  const buildObjRecursively = (nodeId?: string) => {
+    const filteredNodes = nodes.filter(node => node.id === nodeId);
+    const node = filteredNodes.length === 1 ? filteredNodes[0] : undefined;
+    if (node && node.text) {
+      const childrenIds = edges.filter(edge => edge.from === node.id);
+      const childrenNodes = childrenIds.map(edge => buildObjRecursively(edge.to));
+      if (node.data.parent === false) {
+        if (Array.isArray(node.text) && node.text.length > 0) {
+          return {...Object.fromEntries(node.text), ...childrenNodes.reduce((acc, curr) => acc.concat(curr), [])[0]};
+        } else if (isString(node.text)) {
+          return node.text;
+        }
+      } else if (node.data.parent === 'array' && isString(node.text)) {
+        return {[node.text]: childrenNodes}
+      }
+    }
+  };
+
+  return JSON.stringify(buildObjRecursively("1"));  // start at node 1, root node
+};

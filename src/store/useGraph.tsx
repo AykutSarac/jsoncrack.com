@@ -26,6 +26,7 @@ export type Graph = typeof initialStates;
 
 interface GraphActions {
   setGraph: (json?: string, options?: Partial<Graph>[]) => void;
+  setEdges: (edges: EdgeData[]) => void;
   setLoading: (loading: boolean) => void;
   setDirection: (direction: CanvasDirection) => void;
   setZoomPanPinch: (ref: ReactZoomPanPinchRef) => void;
@@ -57,6 +58,7 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       ...options,
     });
   },
+  setEdges: (edges: EdgeData[]) => set({ edges }),
   setDirection: direction => set({ direction }),
   setLoading: loading => set({ loading }),
   expandNodes: nodeId => {

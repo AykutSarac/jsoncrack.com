@@ -1,11 +1,15 @@
 import React from "react";
+import { Button } from "src/components/Button";
 import { ReactZoomPanPinchRef, TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
-import { Canvas, Edge, ElkRoot } from "reaflow";
+import { Canvas, Edge, ElkRoot, hasLink } from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
 import useGraph from "src/store/useGraph";
+import useJson from "src/store/useJson";
 import styled from "styled-components";
 import { Loading } from "../Loading";
 import { ErrorView } from "./ErrorView";
+import { parseDataToJSON } from "src/utils/core/jsonParser";
+
 
 interface GraphProps {
   isWidget?: boolean;
@@ -26,10 +30,10 @@ const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
     cursor: move;
   }
 
-  .dragging,
+  /* .dragging,
   .dragging button {
     pointer-events: none;
-  }
+  } */
 
   rect {
     fill: ${({ theme }) => theme.BACKGROUND_NODE};
@@ -40,6 +44,10 @@ const GraphComponent = ({ isWidget = false, openModal, setSelectedNode }: GraphP
   const setLoading = useGraph(state => state.setLoading);
   const setZoomPanPinch = useGraph(state => state.setZoomPanPinch);
   const centerView = useGraph(state => state.centerView);
+  // const setGraphValue = useGraph(state => state.setGraph);
+  const setEdges = useGraph(state => state.setEdges);
+  const setJson = useJson(state => state.setJson);
+
 
   const loading = useGraph(state => state.loading);
   const direction = useGraph(state => state.direction);
@@ -50,6 +58,14 @@ const GraphComponent = ({ isWidget = false, openModal, setSelectedNode }: GraphP
     width: 1,
     height: 1,
   });
+
+  const [dragging, setDragging] = React.useState(false);
+  const [updatedJSON, setUpdatedJSON] = React.useState("");
+
+  const updateJSON = () => {
+    setJson(updatedJSON); // this could evidently be done through setGraph
+    setUpdatedJSON("");
+  };
 
   const handleNodeClick = React.useCallback(
     (e: React.MouseEvent<SVGElement>, data: NodeData) => {
@@ -100,6 +116,7 @@ const GraphComponent = ({ isWidget = false, openModal, setSelectedNode }: GraphP
   return (
     <StyledEditorWrapper isWidget={isWidget} onContextMenu={e => e.preventDefault()}>
       <Loading message="Painting graph..." loading={loading} />
+      {updatedJSON && <Button onClick={updateJSON}>Update JSON</Button>}
       <TransformWrapper
         maxScale={2}
         minScale={0.05}
@@ -108,8 +125,9 @@ const GraphComponent = ({ isWidget = false, openModal, setSelectedNode }: GraphP
         zoomAnimation={{ animationType: "linear" }}
         doubleClick={{ disabled: true }}
         onInit={onInit}
-        onPanning={ref => ref.instance.wrapperComponent?.classList.add("dragging")}
-        onPanningStop={ref => ref.instance.wrapperComponent?.classList.remove("dragging")}
+        disabled={dragging}
+        // onPanning={ref => ref.instance.wrapperComponent?.classList.add("dragging")}
+        // onPanningStop={ref => ref.instance.wrapperComponent?.classList.remove("dragging")}
       >
         <TransformComponent
           wrapperStyle={{
@@ -130,13 +148,22 @@ const GraphComponent = ({ isWidget = false, openModal, setSelectedNode }: GraphP
             onCanvasClick={onCanvasClick}
             zoomable={false}
             animated={false}
-            readonly={true}
+            readonly={false} // this has to be false to drag and drop the nodes of the graph
             dragEdge={null}
             dragNode={null}
             fit={true}
             key={direction}
-            node={props => <CustomNode {...props} onClick={handleNodeClick} />}
+            node={props => <CustomNode {...props} onClick={handleNodeClick} onDrag={() => setDragging(true)} onDragEnd={() => setDragging(false)} dragType="node" />}
             edge={props => <Edge {...props} containerClassName={`edge-${props.id}`} />}
+            onNodeLinkCheck={(_event, from: NodeData, to: NodeData) => from.id !== to.id && !hasLink(edges, to, from)}
+            onNodeLink={(_event, from: NodeData, to: NodeData) => {
+              const edgeToRemove = edges.find((edg) => edg.to === from.id);
+              const edgeToAdd = {id: `e${to.id}-${from.id}`, from: `${to.id}`, to: `${from.id}`};
+              const newEdges = [...edges.filter(edge => edgeToRemove && edge.id !== edgeToRemove.id), edgeToAdd];
+              const newJsonStr = parseDataToJSON(nodes, newEdges);
+              setUpdatedJSON(newJsonStr);
+              setEdges(newEdges); // rewrite graph edges
+            }} 
           />
         </TransformComponent>
       </TransformWrapper>
