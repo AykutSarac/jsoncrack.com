@@ -2,7 +2,7 @@
   <a href="https://jsoncrack.com">
     <img width="700" alt="jsoncrack" src="https://user-images.githubusercontent.com/47941171/206401172-74c21f7f-0a32-4532-96cc-4cf6b493c837.png">
   </a>
-  <h3>“Explore, analyze and understand even most complex JSON structures.”</br>Unlock the full potentiel of your data.</h3>
+  <h3>“Explore, analyze and understand even most complex JSON structures.”</br>Unlock the full potential of your data.</h3>
   <p align="center">
   <a href="https://www.producthunt.com/posts/json-crack?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-json&#0045;crack" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=332281&theme=light" alt="JSON&#0032;Crack - Simple&#0032;visualization&#0032;tool&#0032;for&#0032;your&#0032;JSON&#0032;data&#0046; | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
     <a href="https://discord.gg/yVyTtCRueq" target="_blank"><img src="https://user-images.githubusercontent.com/47941171/206397224-94da03a4-59d0-48cd-aafc-512624a768d6.png" "style=" height: 54px;" height="54" /></a>
