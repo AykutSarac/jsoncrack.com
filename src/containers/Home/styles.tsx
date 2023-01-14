@@ -242,16 +242,24 @@ export const StyledCardDescription = styled.p`
   font-size: 0.875rem;
 `;
 
-export const StyledIframge = styled.iframe`
+export const StyledFrame = styled.iframe`
   width: 100%;
   height: 100%;
   min-height: 200px;
-  border: 2px solid ${({ theme }) => theme.INTERACTIVE_NORMAL};
+  border: 2px solid ${({ theme }) => theme.PRIMARY};
   border-radius: 6px;
 
   @media only screen and (min-width: 768px) {
     min-height: 384px;
   }
+`;
+
+export const StyledPreviewFrame = styled(StyledFrame)`
+  border: none;
+  border-left: 2px solid ${({ theme }) => theme.PRIMARY};
+  border-radius: 0;
+  height: 480px;
+  width: 50%;
 `;
 
 export const StyledSection = styled.section<{ reverse?: boolean }>`
@@ -333,12 +341,50 @@ export const StyledPreviewSection = styled.section`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  max-width: 85%;
+  width: 70%;
   margin: 0 auto;
-  padding: 0 3%;
+  background: ${({ theme }) => theme.BLACK_SECONDARY};
+  border: 2px solid ${({ theme }) => theme.PRIMARY};
+  border-radius: 6px;
+  overflow: hidden;
+  height: 480px;
 
-  @media only screen and (max-width: 768px) {
+  @media only screen and (max-width: 992px) {
     display: none;
+  }
+`;
+
+export const StyledHighlightWrapper = styled.div`
+  width: 50%;
+`;
+
+export const StyledTabsWrapper = styled.div`
+  display: flex;
+  gap: 10px;
+  padding: 8px 8px;
+  padding-bottom: 0;
+
+  pre {
+    border-top: 2px solid ${({ theme }) => theme.PRIMARY};
+  }
+`;
+
+export const StyledTab = styled.button<{ active?: boolean }>`
+  border-radius: 6px 6px 0 0;
+  background: ${({ active }) => active && "#1e1e1e"};
+  border: 2px solid ${({ theme, active }) => (active ? theme.PRIMARY : "transparent")};
+  border-bottom: 0;
+  margin-bottom: -2px;
+  padding: 8px 16px;
+  min-width: 80px;
+  max-width: 150px;
+  color: ${({ theme, active }) => (active ? theme.INTERACTIVE_ACTIVE : theme.INTERACTIVE_NORMAL)};
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  &:hover {
+    color: ${({ theme, active }) => !active && theme.INTERACTIVE_HOVER};
   }
 `;
 

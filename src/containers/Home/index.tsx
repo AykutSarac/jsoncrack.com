@@ -1,4 +1,5 @@
 import React from "react";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import Link from "next/link";
 import Script from "next/script";
@@ -9,16 +10,25 @@ import {
   HiOutlineDownload,
   HiOutlineSearchCircle,
 } from "react-icons/hi";
-import { IoRocketSharp } from "react-icons/io5";
+import { IoHeart } from "react-icons/io5";
 import { SiVisualstudiocode } from "react-icons/si";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { CarbonAds } from "src/components/CarbonAds";
 import { Footer } from "src/components/Footer";
 import { Producthunt } from "src/components/Producthunt";
 import { Sponsors } from "src/components/Sponsors";
 import { SupportButton } from "src/components/SupportButton";
 import { baseURL } from "src/constants/data";
+import { TABS } from "src/constants/previewSection";
 import { PricingCards } from "../PricingCards";
 import * as Styles from "./styles";
+
+const SyntaxHighlighter = dynamic(
+  () => import("react-syntax-highlighter").then(c => c.PrismAsync),
+  {
+    ssr: false,
+  }
+);
 
 const Navbar = () => (
   <Styles.StyledNavbar>
@@ -61,9 +71,14 @@ const HeroSection = () => {
       </Styles.StyledButton>
 
       <Styles.StyledButtonWrapper>
-        <Styles.StyledSponsorButton href="/pricing" link>
-          GET PREMIUM
-          <IoRocketSharp />
+        <Styles.StyledSponsorButton
+          href="https://github.com/sponsors/AykutSarac"
+          target="_blank"
+          rel="noreferrer"
+          link
+        >
+          SPONSOR US
+          <IoHeart />
         </Styles.StyledSponsorButton>
         <Styles.StyledSponsorButton
           href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode"
@@ -78,18 +93,54 @@ const HeroSection = () => {
   );
 };
 
-const PreviewSection = () => (
-  <Styles.StyledPreviewSection>
-    <Styles.StyledImageWrapper>
-      <Styles.StyledImage
-        width="1200"
-        height="863"
-        src="/assets/jsoncrack-screenshot.webp"
-        alt="preview"
+const PreviewSection = () => {
+  const [currentTab, setCurrentTab] = React.useState(0);
+
+  const updateTab = (tabId: number) => {
+    const embed = document.getElementById("jcPreview") as HTMLIFrameElement;
+    embed.contentWindow?.postMessage({
+      json: TABS[tabId].json,
+    });
+    setCurrentTab(tabId);
+  };
+
+  return (
+    <Styles.StyledPreviewSection>
+      <Styles.StyledHighlightWrapper>
+        <Styles.StyledTabsWrapper>
+          {TABS.map(tab => (
+            <Styles.StyledTab
+              active={tab.id === currentTab}
+              onClick={() => updateTab(tab.id)}
+              key={tab.id}
+            >
+              {tab.name}
+            </Styles.StyledTab>
+          ))}
+        </Styles.StyledTabsWrapper>
+        <SyntaxHighlighter
+          style={vscDarkPlus}
+          customStyle={{
+            fontSize: "16px",
+            width: "100%",
+            height: "440px",
+            margin: "0",
+            borderTop: "2px solid #4D4D4D",
+          }}
+          language="json"
+          showLineNumbers
+        >
+          {TABS[currentTab].json}
+        </SyntaxHighlighter>
+      </Styles.StyledHighlightWrapper>
+
+      <Styles.StyledPreviewFrame
+        id="jcPreview"
+        src={`${baseURL}/widget?json=63b73305c358219fbc421adf`}
       />
-    </Styles.StyledImageWrapper>
-  </Styles.StyledPreviewSection>
-);
+    </Styles.StyledPreviewSection>
+  );
+};
 
 const FeaturesSection = () => (
   <Styles.StyledFeaturesSection id="features">
@@ -209,29 +260,9 @@ const EmbedSection = () => (
       </Styles.StyledButton>
     </Styles.StyledSectionArea>
     <div>
-      <Styles.StyledIframge
-        src={`${baseURL}/widget`}
-        onLoad={e => {
-          const frame = e.currentTarget.contentWindow;
-          setTimeout(() => {
-            frame?.postMessage(
-              {
-                json: JSON.stringify({
-                  "random images": [
-                    "https://random.imagecdn.app/50/50?.png",
-                    "https://random.imagecdn.app/80/80?.png",
-                    "https://random.imagecdn.app/100/100?.png",
-                  ],
-                }),
-                options: {
-                  theme: "dark",
-                },
-              },
-              "*"
-            );
-          }, 500);
-        }}
-      ></Styles.StyledIframge>
+      <Styles.StyledFrame
+        src={`${baseURL}/widget?json=63c313d32ffa98f29b462315`}
+      ></Styles.StyledFrame>
     </div>
   </Styles.StyledSection>
 );
