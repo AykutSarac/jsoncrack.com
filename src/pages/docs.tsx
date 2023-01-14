@@ -7,7 +7,7 @@ import { Footer } from "src/components/Footer";
 import styled from "styled-components";
 
 const SyntaxHighlighter = dynamic(
-  () => import("react-syntax-highlighter").then(c => c.PrismAsync),
+  () => import("react-syntax-highlighter/dist/esm/prism-async").then(c => c),
   {
     ssr: false,
   }

@@ -45,7 +45,7 @@ export const Footer = () => (
     <StyledFooterText>
       <Link href="/">
         <a>
-          <img width="120" src="assets/icon.png" alt="icon" loading="lazy" />
+          <img width="120" height="20" src="assets/icon.png" alt="icon" loading="lazy" />
         </a>
       </Link>
       <span>

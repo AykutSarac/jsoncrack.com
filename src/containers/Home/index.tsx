@@ -24,7 +24,7 @@ import { PricingCards } from "../PricingCards";
 import * as Styles from "./styles";
 
 const SyntaxHighlighter = dynamic(
-  () => import("react-syntax-highlighter").then(c => c.PrismAsync),
+  () => import("react-syntax-highlighter/dist/esm/prism-async").then(c => c),
   {
     ssr: false,
   }
@@ -52,46 +52,42 @@ const Navbar = () => (
   </Styles.StyledNavbar>
 );
 
-const HeroSection = () => {
-  const [isModalVisible, setModalVisible] = React.useState(false);
+const HeroSection = () => (
+  <Styles.StyledHeroSection id="main">
+    <Styles.StyledTitle>
+      <Styles.StyledGradientText>JSON</Styles.StyledGradientText> CRACK
+    </Styles.StyledTitle>
+    <Styles.StyledSubTitle>
+      Seamlessly visualize your JSON data{" "}
+      <Styles.StyledHighlightedText>instantly</Styles.StyledHighlightedText> into graphs.
+    </Styles.StyledSubTitle>
 
-  return (
-    <Styles.StyledHeroSection id="main">
-      <Styles.StyledTitle>
-        <Styles.StyledGradientText>JSON</Styles.StyledGradientText> CRACK
-      </Styles.StyledTitle>
-      <Styles.StyledSubTitle>
-        Seamlessly visualize your JSON data{" "}
-        <Styles.StyledHighlightedText>instantly</Styles.StyledHighlightedText> into graphs.
-      </Styles.StyledSubTitle>
+    <Styles.StyledButton href="/editor" link>
+      GO TO EDITOR
+      <AiOutlineRight strokeWidth="80" />
+    </Styles.StyledButton>
 
-      <Styles.StyledButton href="/editor" link>
-        GO TO EDITOR
-        <AiOutlineRight strokeWidth="80" />
-      </Styles.StyledButton>
-
-      <Styles.StyledButtonWrapper>
-        <Styles.StyledSponsorButton
-          href="https://github.com/sponsors/AykutSarac"
-          target="_blank"
-          rel="noreferrer"
-          link
-        >
-          SPONSOR US
-          <IoHeart />
-        </Styles.StyledSponsorButton>
-        <Styles.StyledSponsorButton
-          href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode"
-          link
-          isBlue
-        >
-          GET IT ON VS CODE
-          <SiVisualstudiocode />
-        </Styles.StyledSponsorButton>
-      </Styles.StyledButtonWrapper>
-    </Styles.StyledHeroSection>
-  );
-};
+    <Styles.StyledButtonWrapper>
+      <Styles.StyledSponsorButton
+        href="https://github.com/sponsors/AykutSarac"
+        target="_blank"
+        rel="noreferrer"
+        link
+      >
+        SPONSOR US
+        <IoHeart />
+      </Styles.StyledSponsorButton>
+      <Styles.StyledSponsorButton
+        href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode"
+        link
+        isBlue
+      >
+        GET IT ON VS CODE
+        <SiVisualstudiocode />
+      </Styles.StyledSponsorButton>
+    </Styles.StyledButtonWrapper>
+  </Styles.StyledHeroSection>
+);
 
 const PreviewSection = () => {
   const [currentTab, setCurrentTab] = React.useState(0);
@@ -137,6 +133,7 @@ const PreviewSection = () => {
       <Styles.StyledPreviewFrame
         id="jcPreview"
         src={`${baseURL}/widget?json=63b73305c358219fbc421adf`}
+        loading="lazy"
       />
     </Styles.StyledPreviewSection>
   );
@@ -262,6 +259,7 @@ const EmbedSection = () => (
     <div>
       <Styles.StyledFrame
         src={`${baseURL}/widget?json=63c313d32ffa98f29b462315`}
+        loading="lazy"
       ></Styles.StyledFrame>
     </div>
   </Styles.StyledSection>
