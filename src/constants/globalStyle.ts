@@ -8,6 +8,7 @@ const GlobalStyle = createGlobalStyle`
       url('assets/Mona-Sans.woff2') format('woff2-variations');
     font-weight: 200 900;
     font-stretch: 75% 125%;
+    font-display: swap;
   }
 
   svg {
