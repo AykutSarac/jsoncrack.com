@@ -5,6 +5,7 @@ import { searchQuery, cleanupHighlight, highlightMatchedNodes } from "src/utils/
 export const useFocusNode = () => {
   const zoomPanPinch = useGraph(state => state.zoomPanPinch);
   const [selectedNode, setSelectedNode] = React.useState(0);
+  const [nodeCount, setNodeCount] = React.useState(0);
   const [content, setContent] = React.useState({
     value: "",
     debounced: "",
@@ -13,7 +14,6 @@ export const useFocusNode = () => {
   const skip = () => setSelectedNode(current => current + 1);
 
   React.useEffect(() => {
-
     const debouncer = setTimeout(() => {
       setContent(val => ({ ...val, debounced: content.value }));
     }, 800);
@@ -47,16 +47,21 @@ export const useFocusNode = () => {
         matchedNode.getBoundingClientRect().height / 10;
 
       highlightMatchedNodes(matchedNodes, selectedNode);
+      setNodeCount(matchedNodes.length);
 
       zoomPanPinch?.setTransform(newPositionX, newPositionY, newScale);
     } else {
       setSelectedNode(0);
+      setNodeCount(0);
     }
 
     return () => {
-      if (!content.value) setSelectedNode(0);
+      if (!content.value) {
+        setSelectedNode(0);
+        setNodeCount(0);
+      }
     };
   }, [content.debounced, content, selectedNode, zoomPanPinch]);
 
-  return [content, setContent, skip] as const;
+  return [content, setContent, skip, nodeCount, selectedNode] as const;
 };

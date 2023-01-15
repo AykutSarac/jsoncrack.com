@@ -19,7 +19,7 @@ const StyledForm = styled.form`
   padding: 4px 6px;
 `;
 
-const StyledInput = styled.input`
+const StyledInput = styled.input<{ hasInput: boolean }>`
   background: none;
   color: ${({ theme }) => theme.TEXT_NORMAL};
   outline: none;
@@ -37,7 +37,7 @@ const StyledInput = styled.input`
   }
 
   &:focus {
-    width: 208px;
+    width: ${({ hasInput }) => hasInput && "165px"};
   }
 `;
 
@@ -53,8 +53,13 @@ const StyledSearchButton = styled.button`
   }
 `;
 
+const StyledCountInfo = styled.span`
+  font-size: 12px;
+  padding: 0 6px;
+`;
+
 export const SearchInput: React.FC = () => {
-  const [content, setContent, skip] = useFocusNode();
+  const [content, setContent, skip, nodeCount, currentNode] = useFocusNode();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -74,7 +79,11 @@ export const SearchInput: React.FC = () => {
           value={content.value}
           onChange={e => setContent(val => ({ ...val, value: e.target.value }))}
           placeholder="Search Node"
+          hasInput={!!content.value.length}
         />
+        <StyledCountInfo>
+          {nodeCount}/{nodeCount > 0 ? currentNode + 1 : "0"}
+        </StyledCountInfo>
         <StyledSearchButton type="reset" aria-label="search" onClick={handleClear}>
           {content.value ? <IoCloseSharp size={18} /> : <AiOutlineSearch size={18} />}
         </StyledSearchButton>
