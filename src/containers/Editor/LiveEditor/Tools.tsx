@@ -7,7 +7,7 @@ import useGraph from "src/store/useGraph";
 import useModal from "src/store/useModal";
 import styled from "styled-components";
 
-export const StyledTools = styled.div`
+export const StyledTools = styled.div<{ isWidget: boolean }>`
   position: relative;
   display: flex;
   align-items: center;
@@ -21,12 +21,12 @@ export const StyledTools = styled.div`
   z-index: 1;
 
   @media only screen and (max-width: 768px) {
-    display: none;
+    display: ${({ isWidget }) => !isWidget && "none"};
   }
 `;
 
-const StyledToolElement = styled.button`
-  display: grid;
+const StyledToolElement = styled.button<{ hide?: boolean }>`
+  display: ${({ hide }) => hide ? "none" : "grid"};
   place-content: center;
   font-size: 20px;
   background: none;
@@ -45,7 +45,7 @@ const StyledToolElement = styled.button`
   }
 `;
 
-export const Tools: React.FC = () => {
+export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) => {
   const setVisible = useModal(state => state.setVisible);
 
   const fullscreen = useGraph(state => state.fullscreen);
@@ -58,8 +58,8 @@ export const Tools: React.FC = () => {
 
   return (
     <>
-      <StyledTools>
-        <StyledToolElement aria-label="fullscreen" onClick={toggleEditor}>
+      <StyledTools isWidget={isWidget}>
+        <StyledToolElement aria-label="fullscreen" hide={isWidget} onClick={toggleEditor}>
           <AiOutlineFullscreen />
         </StyledToolElement>
         <SearchInput />

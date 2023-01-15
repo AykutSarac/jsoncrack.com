@@ -7,7 +7,6 @@ import { FiCopy, FiDownload } from "react-icons/fi";
 import { Button } from "src/components/Button";
 import { Input } from "src/components/Input";
 import { Modal, ModalProps } from "src/components/Modal";
-import useGraph from "src/store/useGraph";
 import styled from "styled-components";
 
 const ColorPickerStyles: Partial<TwitterPickerStylesProps> = {
@@ -93,7 +92,6 @@ const StyledColorIndicator = styled.div<{ color: string }>`
 `;
 
 export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
-  const togglePerfMode = useGraph(state => state.togglePerfMode);
   const [fileDetails, setFileDetails] = React.useState({
     filename: "jsoncrack.com",
     backgroundColor: "transparent",
@@ -103,7 +101,6 @@ export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => 
   const clipboardImage = async () => {
     try {
       toast.loading("Copying to clipboard...", { id: "toastClipboard" });
-      togglePerfMode(false);
 
       const imageElement = document.querySelector("svg[id*='ref']") as HTMLElement;
 
@@ -126,14 +123,12 @@ export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => 
     } finally {
       toast.dismiss("toastClipboard");
       setVisible(false);
-      togglePerfMode(true);
     }
   };
 
   const exportAsImage = async () => {
     try {
       toast.loading("Downloading...", { id: "toastDownload" });
-      togglePerfMode(false);
 
       const imageElement = document.querySelector("svg[id*='ref']") as HTMLElement;
 
@@ -148,7 +143,6 @@ export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => 
     } finally {
       toast.dismiss("toastDownload");
       setVisible(false);
-      togglePerfMode(true);
     }
   };
 

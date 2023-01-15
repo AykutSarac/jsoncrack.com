@@ -7,6 +7,7 @@ import { darkTheme, lightTheme } from "src/constants/theme";
 import useGraph from "src/store/useGraph";
 import useJson from "src/store/useJson";
 import styled, { ThemeProvider } from "styled-components";
+import { Tools } from "src/containers/Editor/LiveEditor/Tools";
 
 const GraphCanvas = dynamic(
   () => import("src/containers/Editor/LiveEditor/GraphCanvas").then(c => c.GraphCanvas),
@@ -81,6 +82,7 @@ const WidgetPage = () => {
 
   return (
     <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
+      <Tools isWidget />
       <GraphCanvas isWidget />
       <StyledAttribute href={`${baseURL}/editor`} target="_blank" rel="noreferrer">
         jsoncrack.com
