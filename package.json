@@ -30,7 +30,6 @@
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.0",
     "react-icons": "^4.7.1",
-    "react-in-viewport": "^1.0.0-alpha.28",
     "react-linkify-it": "^1.0.7",
     "react-syntax-highlighter": "^15.5.0",
     "react-zoom-pan-pinch": "^2.1.3",
