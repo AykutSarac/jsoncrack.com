@@ -133,7 +133,7 @@ const PreviewSection = () => {
       <Styles.StyledPreviewFrame
         id="jcPreview"
         src={`${baseURL}/widget?json=63b73305c358219fbc421adf`}
-        loading="lazy"
+        loading="eager"
       />
     </Styles.StyledPreviewSection>
   );

@@ -14,7 +14,6 @@ const initialStates = {
   graphCollapsed: false,
   foldNodes: false,
   fullscreen: false,
-  performanceMode: true,
   nodes: [] as NodeData[],
   edges: [] as EdgeData[],
   collapsedNodes: [] as string[],
@@ -35,7 +34,6 @@ interface GraphActions {
   expandGraph: () => void;
   toggleFold: (value: boolean) => void;
   toggleFullscreen: (value: boolean) => void;
-  togglePerfMode: (value: boolean) => void;
   zoomIn: () => void;
   zoomOut: () => void;
   centerView: () => void;
@@ -170,7 +168,6 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
     set({ foldNodes });
     get().setGraph();
   },
-  togglePerfMode: performanceMode => set({ performanceMode }),
   toggleFullscreen: fullscreen => set({ fullscreen }),
   setZoomPanPinch: zoomPanPinch => set({ zoomPanPinch }),
 }));

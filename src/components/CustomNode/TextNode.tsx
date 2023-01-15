@@ -1,13 +1,10 @@
 import React from "react";
 import { MdLink, MdLinkOff } from "react-icons/md";
-// import { useInViewport } from "react-in-viewport";
 import { CustomNodeProps } from "src/components/CustomNode";
 import useGraph from "src/store/useGraph";
 import useStored from "src/store/useStored";
 import styled from "styled-components";
 import * as Styled from "./styles";
-
-const inViewport = true;
 
 const StyledExpand = styled.button`
   pointer-events: all;
@@ -52,7 +49,6 @@ const TextNode: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }
   const expandNodes = useGraph(state => state.expandNodes);
   const collapseNodes = useGraph(state => state.collapseNodes);
   const isExpanded = useGraph(state => state.collapsedParents.includes(id));
-  const performanceMode = useGraph(state => state.performanceMode);
   const isImage =
     !Array.isArray(text) && /(https?:\/\/.*\.(?:png|jpg|gif))/i.test(text) && imagePreview;
   // const { inViewport } = useInViewport(ref);
@@ -79,23 +75,21 @@ const TextNode: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }
         </StyledImageWrapper>
       ) : (
         <StyledTextNodeWrapper hasCollapse={data.parent && hideCollapse}>
-          {(!performanceMode || inViewport) && (
-            <Styled.StyledKey
-              data-x={x}
-              data-y={y}
-              data-key={JSON.stringify(text)}
-              parent={data.parent}
-            >
-              <Styled.StyledLinkItUrl>
-                {JSON.stringify(text).replaceAll('"', "")}
-              </Styled.StyledLinkItUrl>
-            </Styled.StyledKey>
-          )}
+          <Styled.StyledKey
+            data-x={x}
+            data-y={y}
+            data-key={JSON.stringify(text)}
+            parent={data.parent}
+          >
+            <Styled.StyledLinkItUrl>
+              {JSON.stringify(text).replaceAll('"', "")}
+            </Styled.StyledLinkItUrl>
+          </Styled.StyledKey>
           {data.parent && data.childrenCount > 0 && childrenCount && (
             <Styled.StyledChildrenCount>({data.childrenCount})</Styled.StyledChildrenCount>
           )}
 
-          {inViewport && data.parent && hasCollapse && hideCollapse && (
+          {data.parent && hasCollapse && hideCollapse && (
             <StyledExpand onClick={handleExpand}>
               {isExpanded ? <MdLinkOff size={18} /> : <MdLink size={18} />}
             </StyledExpand>

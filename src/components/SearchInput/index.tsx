@@ -56,6 +56,8 @@ const StyledSearchButton = styled.button`
 export const SearchInput: React.FC = () => {
   const [content, setContent, skip] = useFocusNode();
 
+  console.log(content);
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     skip();

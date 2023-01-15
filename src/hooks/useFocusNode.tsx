@@ -3,7 +3,6 @@ import useGraph from "src/store/useGraph";
 import { searchQuery, cleanupHighlight, highlightMatchedNodes } from "src/utils/search";
 
 export const useFocusNode = () => {
-  const togglePerfMode = useGraph(state => state.togglePerfMode);
   const zoomPanPinch = useGraph(state => state.zoomPanPinch);
   const [selectedNode, setSelectedNode] = React.useState(0);
   const [content, setContent] = React.useState({
@@ -14,14 +13,13 @@ export const useFocusNode = () => {
   const skip = () => setSelectedNode(current => current + 1);
 
   React.useEffect(() => {
-    togglePerfMode(!content.value.length);
 
     const debouncer = setTimeout(() => {
       setContent(val => ({ ...val, debounced: content.value }));
     }, 800);
 
     return () => clearTimeout(debouncer);
-  }, [content.value, togglePerfMode]);
+  }, [content.value]);
 
   React.useEffect(() => {
     if (!zoomPanPinch) return;
@@ -35,7 +33,7 @@ export const useFocusNode = () => {
     cleanupHighlight();
 
     if (ref && matchedNode && matchedNode.parentElement) {
-      const newScale = 0.4;
+      const newScale = 0.8;
       const x = Number(matchedNode.getAttribute("data-x"));
       const y = Number(matchedNode.getAttribute("data-y"));
 
@@ -58,7 +56,7 @@ export const useFocusNode = () => {
     return () => {
       if (!content.value) setSelectedNode(0);
     };
-  }, [content.debounced, content.value, selectedNode, zoomPanPinch]);
+  }, [content.debounced, content, selectedNode, zoomPanPinch]);
 
   return [content, setContent, skip] as const;
 };
