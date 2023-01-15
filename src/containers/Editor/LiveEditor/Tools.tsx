@@ -23,10 +23,14 @@ export const StyledTools = styled.div<{ isWidget: boolean }>`
   @media only screen and (max-width: 768px) {
     display: ${({ isWidget }) => !isWidget && "none"};
   }
+
+  @media only screen and (max-width: 480px) {
+    display: none;
+  }
 `;
 
 const StyledToolElement = styled.button<{ hide?: boolean }>`
-  display: ${({ hide }) => hide ? "none" : "grid"};
+  display: ${({ hide }) => (hide ? "none" : "grid")};
   place-content: center;
   font-size: 20px;
   background: none;
