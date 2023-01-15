@@ -310,10 +310,10 @@ const Home: React.FC = () => {
       <HeroSection />
       <PreviewSection />
       <FeaturesSection />
+      <SupportSection />
       <GitHubSection />
       <EmbedSection />
       <PricingCards />
-      <SupportSection />
       <SponsorSection />
       <SupportButton />
       <Footer />
