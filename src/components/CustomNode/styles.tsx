@@ -36,7 +36,6 @@ export const StyledForeignObject = styled.foreignObject<{
   }
 
   .highlight {
-    border: 2px dashed #ff2970;
     background: rgba(255, 214, 0, 0.3);
   }
 

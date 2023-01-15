@@ -22,7 +22,7 @@ const StyledExpand = styled.button`
   }
 `;
 
-const StyledTextNodeWrapper = styled.div<{ hasCollapse: boolean }>`
+const StyledTextNodeWrapper = styled.span<{ hasCollapse: boolean }>`
   display: flex;
   justify-content: ${({ hasCollapse }) => (hasCollapse ? "space-between" : "center")};
   align-items: center;
@@ -74,13 +74,13 @@ const TextNode: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }
           <StyledImage src={text} width="70" height="70" />
         </StyledImageWrapper>
       ) : (
-        <StyledTextNodeWrapper hasCollapse={data.parent && hideCollapse}>
-          <Styled.StyledKey
-            data-x={x}
-            data-y={y}
-            data-key={JSON.stringify(text)}
-            parent={data.parent}
-          >
+        <StyledTextNodeWrapper
+          hasCollapse={data.parent && hideCollapse}
+          data-x={x}
+          data-y={y}
+          data-key={JSON.stringify(text)}
+        >
+          <Styled.StyledKey parent={data.parent}>
             <Styled.StyledLinkItUrl>
               {JSON.stringify(text).replaceAll('"', "")}
             </Styled.StyledLinkItUrl>
