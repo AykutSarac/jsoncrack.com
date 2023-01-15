@@ -29,7 +29,7 @@ export const calculateNodeSize = (text: string | [string, string][], isParent = 
   const getWidth = () => {
     if (text.length === 0) return 35;
     if (Array.isArray(text) && !text.length) return 40;
-    if (!isFolded) return 35 + longestLine * 7.8 + (isParent ? 60 : 0);
+    if (!isFolded) return 35 + longestLine * 7.8 + (isParent ? 80 : 0);
     if (isParent && isFolded) return 170;
     return 200;
   };

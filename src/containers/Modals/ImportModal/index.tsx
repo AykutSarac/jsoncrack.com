@@ -86,6 +86,7 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
           onChange={e => setURL(e.target.value)}
           type="url"
           placeholder="URL of JSON to fetch"
+          autoFocus
         />
         <StyledUploadWrapper>
           <input
