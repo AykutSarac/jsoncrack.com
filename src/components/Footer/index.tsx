@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
+import { FaDiscord, FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 import styled from "styled-components";
 import pkg from "../../../package.json";
 
@@ -78,6 +78,15 @@ export const Footer = () => (
         aria-label="twitter"
       >
         <FaTwitter size={26} />
+      </StyledNavLink>
+
+      <StyledNavLink
+        href="https://discord.gg/yVyTtCRueq"
+        rel="noreferrer"
+        target="_blank"
+        aria-label="discord"
+      >
+        <FaDiscord size={26} />
       </StyledNavLink>
     </StyledIconLinks>
   </StyledFooter>
