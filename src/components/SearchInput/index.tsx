@@ -54,8 +54,10 @@ const StyledSearchButton = styled.button`
 `;
 
 const StyledCountInfo = styled.span`
-  font-size: 12px;
+  font-size: 14px;
+  letter-spacing: 2px;
   padding: 0 6px;
+  opacity: 0.5;
 `;
 
 export const SearchInput: React.FC = () => {
@@ -82,7 +84,7 @@ export const SearchInput: React.FC = () => {
           hasInput={!!content.value.length}
         />
         <StyledCountInfo>
-          {nodeCount}/{nodeCount > 0 ? currentNode + 1 : "0"}
+          {content.value && `${nodeCount}/${nodeCount > 0 ? currentNode + 1 : "0"}` }
         </StyledCountInfo>
         <StyledSearchButton type="reset" aria-label="search" onClick={handleClear}>
           {content.value ? <IoCloseSharp size={18} /> : <AiOutlineSearch size={18} />}
