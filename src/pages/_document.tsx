@@ -1,4 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
+import Script from "next/script";
 import { SeoTags } from "src/components/SeoTags";
 
 class MyDocument extends Document {
@@ -22,6 +23,7 @@ class MyDocument extends Document {
             crossOrigin="anonymous"
           />
           <link rel="preload" href="assets/Mona-Sans.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+          <Script strategy="afterInteractive" src="//m.servedby-buysellads.com/monetization.js" type="text/javascript" />
         </Head>
         <body>
           <Main />

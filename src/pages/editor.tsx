@@ -1,6 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { AdTest } from "src/components/AdTest";
 import { Loading } from "src/components/Loading";
 import { Sidebar } from "src/components/Sidebar";
 import { BottomBar } from "src/containers/Editor/BottomBar";
@@ -53,6 +54,7 @@ const EditorPage: React.FC = () => {
       </Head>
       <StyledPageWrapper>
         <Sidebar />
+        <AdTest />
         <StyledEditorWrapper>
           <Panes />
         </StyledEditorWrapper>

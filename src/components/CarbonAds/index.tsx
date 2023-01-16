@@ -1,6 +1,4 @@
 import React from "react";
-import Script from "next/script";
-import { IoMdClose } from "react-icons/io";
 import styled from "styled-components";
 
 const StyledCloseBtn = styled.button`
@@ -52,35 +50,16 @@ const StyledWrapper = styled.span<{ editor?: boolean }>`
   }
 `;
 
-export const CarbonAds: React.FC<{ editor?: boolean }> = ({ editor = false }) => {
-  const [isHidden, setIsHidden] = React.useState(false);
+export const CarbonAds = () => {
+  const ref = React.useRef<HTMLDivElement>(null!);
 
-  if (isHidden) return null;
+  React.useEffect(() => {
+    ref.current.innerHTML = "";
+    const s = document.createElement("script");
+    s.id = "_carbonads_js";
+    s.src = `//cdn.carbonads.com/carbon.js?serve=CE7IPKQL&placement=jsoncrackcom`;
+    ref.current.appendChild(s);
+  }, []);
 
-  return (
-    <StyledWrapper editor={editor} id="carbon-wrapper">
-      {editor && (
-        <StyledCloseBtn onClick={() => setIsHidden(true)}>
-          <IoMdClose color="white" size="15" />
-        </StyledCloseBtn>
-      )}
-      <Script
-        type="text/javascript"
-        src="//cdn.carbonads.com/carbon.js?serve=CE7IPKQL&placement=jsoncrackcom"
-        id="_carbonads_js"
-        strategy="lazyOnload"
-        onLoad={() => {
-          const init = () => {
-            const parent = document.getElementById("carbon-wrapper");
-            const ads = document.getElementById("carbonads");
-
-            if (ads === null) return setTimeout(() => init(), 500);
-            parent?.appendChild(ads);
-          };
-
-          init();
-        }}
-      />
-    </StyledWrapper>
-  );
+  return <div ref={ref} className="carbon-outer" />;
 };
