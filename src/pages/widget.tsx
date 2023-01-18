@@ -4,10 +4,11 @@ import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import { baseURL } from "src/constants/data";
 import { darkTheme, lightTheme } from "src/constants/theme";
+import { Tools } from "src/containers/Editor/LiveEditor/Tools";
+import { getPartnerStatus } from "src/services/db/widget";
 import useGraph from "src/store/useGraph";
 import useJson from "src/store/useJson";
 import styled, { ThemeProvider } from "styled-components";
-import { Tools } from "src/containers/Editor/LiveEditor/Tools";
 
 const GraphCanvas = dynamic(
   () => import("src/containers/Editor/LiveEditor/GraphCanvas").then(c => c.GraphCanvas),
@@ -51,11 +52,16 @@ interface EmbedMessage {
 const WidgetPage = () => {
   const { query, push, isReady } = useRouter();
   const [theme, setTheme] = React.useState("dark");
+  const [isPremium, setIsPremium] = React.useState(false);
   const fetchJson = useJson(state => state.fetchJson);
   const setGraph = useGraph(state => state.setGraph);
 
   React.useEffect(() => {
     if (isReady) {
+      if (window.frameElement?.getAttribute("data-partner")) {
+        getPartnerStatus().then(r => r.data?.premium && setIsPremium(!!r.data.premium));
+      }
+
       fetchJson(query.json);
       if (!inIframe()) push("/");
     }
@@ -84,9 +90,11 @@ const WidgetPage = () => {
     <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
       <Tools isWidget />
       <GraphCanvas isWidget />
-      <StyledAttribute href={`${baseURL}/editor`} target="_blank" rel="noreferrer">
-        jsoncrack.com
-      </StyledAttribute>
+      {!isPremium && (
+        <StyledAttribute href={`${baseURL}/editor`} target="_blank" rel="noreferrer">
+          jsoncrack.com
+        </StyledAttribute>
+      )}
     </ThemeProvider>
   );
 };
