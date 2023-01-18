@@ -58,14 +58,14 @@ const WidgetPage = () => {
 
   React.useEffect(() => {
     if (isReady) {      
-      if (window.frameElement?.getAttribute("data-partner")) {
+      if (query.partner === "true") {
         getPartnerStatus(window.location.ancestorOrigins[0]).then(r => r.data?.premium && setIsPremium(!!r.data.premium));
       }
 
       fetchJson(query.json);
       if (!inIframe()) push("/");
     }
-  }, [fetchJson, isReady, push, query.json]);
+  }, [fetchJson, isReady, push, query.json, query.partner]);
 
   React.useEffect(() => {
     const handler = (event: EmbedMessage) => {

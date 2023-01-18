@@ -258,7 +258,7 @@ export const StyledPreviewFrame = styled(StyledFrame)`
   border: none;
   border-left: 2px solid ${({ theme }) => theme.PRIMARY};
   border-radius: 0;
-  height: 480px;
+  height: 476px;
   width: 50%;
 `;
 
