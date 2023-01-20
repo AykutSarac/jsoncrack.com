@@ -39,12 +39,13 @@ export const useFocusNode = () => {
 
       const newPositionX =
         (ref.offsetLeft - x) * newScale +
-        ref.clientWidth / 10 -
-        matchedNode.getBoundingClientRect().width / 10;
+        ref.clientWidth / 4 -
+        matchedNode.getBoundingClientRect().width / 4;
+
       const newPositionY =
         (ref.offsetLeft - y) * newScale +
-        ref.clientHeight / 10 -
-        matchedNode.getBoundingClientRect().height / 10;
+        ref.clientHeight / 4 -
+        matchedNode.getBoundingClientRect().height / 4;
 
       highlightMatchedNodes(matchedNodes, selectedNode);
       setNodeCount(matchedNodes.length);

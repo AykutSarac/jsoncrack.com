@@ -84,8 +84,8 @@ const useJson = create<JsonStates & JsonActions>()((set, get) => ({
     }
   },
   setJson: json => {
-    useGraph.getState().setGraph(json);
-    set({ json, hasChanges: true });
+    useGraph.getState().setGraph(json);    
+    set({ json: JSON.stringify(JSON.parse(json), null, 2), hasChanges: true });
   },
   saveJson: async (isNew = true) => {
     try {
