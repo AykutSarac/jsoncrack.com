@@ -98,10 +98,12 @@ const GraphComponent = ({ isWidget = false, openModal, setSelectedNode }: GraphP
     if (input) input.blur();
   }, []);
 
+
+  if (nodes.length > 8_000) return <ErrorView />;
+
   if (nodes.length > 1_000 && !isWidget) {
     if (!isPremium()) return <PremiumView />;
   }
-  if (nodes.length > 8_000) return <ErrorView />;
 
   return (
     <StyledEditorWrapper isWidget={isWidget} onContextMenu={e => e.preventDefault()}>
