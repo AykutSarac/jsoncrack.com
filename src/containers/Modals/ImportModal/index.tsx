@@ -51,6 +51,18 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
     if (e.target.files) setJsonFile(e.target.files?.item(0));
   };
 
+  const handleFileDrag = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+
+    if (e.type === 'drop' && e.dataTransfer.files.length) {
+      if (e.dataTransfer.files[0].type === 'application/json') {
+        setJsonFile(e.dataTransfer.files[0])
+      } else {
+        toast.error('Please upload JSON file!')
+      }
+    }
+  }
+
   const handleImportFile = () => {
     if (url) {
       setJsonFile(null);
@@ -88,7 +100,10 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
           placeholder="URL of JSON to fetch"
           autoFocus
         />
-        <StyledUploadWrapper>
+        <StyledUploadWrapper
+          onDrop={handleFileDrag}
+          onDragOver={handleFileDrag}
+        >
           <input
             key={jsonFile?.name}
             onChange={handleFileChange}
