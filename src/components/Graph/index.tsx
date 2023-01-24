@@ -11,8 +11,10 @@ import { PremiumView } from "./PremiumView";
 
 interface GraphProps {
   isWidget?: boolean;
-  openModal: () => void;
+  openNodeModal: () => void;
   setSelectedNode: (node: [string, string][]) => void;
+  openEdgeModal: () => void;
+  setSelectedEdge: (edgeInfo: string) => void;
 }
 
 const StyledEditorWrapper = styled.div<{ widget: boolean }>`
@@ -42,7 +44,13 @@ const StyledEditorWrapper = styled.div<{ widget: boolean }>`
   }
 `;
 
-const GraphComponent = ({ isWidget = false, openModal, setSelectedNode }: GraphProps) => {
+const GraphComponent = ({
+  isWidget = false,
+  openNodeModal,
+  setSelectedNode,
+  openEdgeModal,
+  setSelectedEdge,
+}: GraphProps) => {
   const isPremium = useUser(state => state.isPremium);
   const setLoading = useGraph(state => state.setLoading);
   const setZoomPanPinch = useGraph(state => state.setZoomPanPinch);
@@ -60,11 +68,20 @@ const GraphComponent = ({ isWidget = false, openModal, setSelectedNode }: GraphP
 
   const handleNodeClick = React.useCallback(
     (e: React.MouseEvent<SVGElement>, data: NodeData) => {
+      console.log(data);
       if (setSelectedNode) setSelectedNode(data.text);
-      if (openModal) openModal();
+      if (openNodeModal) openNodeModal();
     },
-    [openModal, setSelectedNode]
+    [openNodeModal, setSelectedNode]
   );
+
+  const handleEdgeClick = React.useCallback((e: React.MouseEvent<SVGElement>, data: EdgeData) => {
+    const fromIndex = Number(data.from) - 1;
+    const toIndex = Number(data.to) - 1;
+    console.log(`${fromIndex}-${toIndex}`);
+    if (setSelectedEdge) setSelectedEdge(`${fromIndex}-${toIndex}`);
+    if (openEdgeModal) openEdgeModal();
+  }, []);
 
   const onInit = React.useCallback(
     (ref: ReactZoomPanPinchRef) => {
@@ -147,7 +164,9 @@ const GraphComponent = ({ isWidget = false, openModal, setSelectedNode }: GraphP
             fit={true}
             key={direction}
             node={props => <CustomNode {...props} onClick={handleNodeClick} />}
-            edge={props => <Edge {...props} containerClassName={`edge-${props.id}`} />}
+            edge={props => (
+              <Edge {...props} onClick={handleEdgeClick} containerClassName={`edge-${props.id}`} />
+            )}
           />
         </TransformComponent>
       </TransformWrapper>
