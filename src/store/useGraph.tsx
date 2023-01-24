@@ -4,7 +4,7 @@ import { Graph } from "src/components/Graph";
 import { getChildrenEdges } from "src/utils/getChildrenEdges";
 import { getOutgoers } from "src/utils/getOutgoers";
 import { parser } from "src/utils/core/jsonParser";
-import create from "zustand";
+import { create } from "zustand";
 import useJson from "./useJson";
 
 const initialStates = {

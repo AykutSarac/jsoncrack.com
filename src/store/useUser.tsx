@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import { altogic } from "src/api/altogic";
 import { AltogicAuth, User } from "src/typings/altogic";
-import create from "zustand";
+import { create } from "zustand";
 import useModal from "./useModal";
 
 interface UserActions {

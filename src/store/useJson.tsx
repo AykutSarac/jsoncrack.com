@@ -5,7 +5,7 @@ import { defaultJson } from "src/constants/data";
 import { saveJson as saveJsonDB } from "src/services/db/json";
 import useGraph from "src/store/useGraph";
 import { Json } from "src/typings/altogic";
-import create from "zustand";
+import { create } from "zustand";
 
 interface JsonActions {
   setJson: (json: string) => void;

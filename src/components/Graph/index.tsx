@@ -15,10 +15,10 @@ interface GraphProps {
   setSelectedNode: (node: [string, string][]) => void;
 }
 
-const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
+const StyledEditorWrapper = styled.div`
   position: absolute;
   width: 100%;
-  height: ${({ isWidget }) => (isWidget ? "100vh" : "calc(100vh - 36px)")};
+  height: calc(100vh - 36px);
   background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
   background-image: ${({ theme }) =>
     `radial-gradient(#505050 0.5px, ${theme.BACKGROUND_SECONDARY} 0.5px)`};
@@ -98,7 +98,6 @@ const GraphComponent = ({ isWidget = false, openModal, setSelectedNode }: GraphP
     if (input) input.blur();
   }, []);
 
-
   if (nodes.length > 8_000) return <ErrorView />;
 
   if (nodes.length > 1_000 && !isWidget) {
@@ -106,7 +105,7 @@ const GraphComponent = ({ isWidget = false, openModal, setSelectedNode }: GraphP
   }
 
   return (
-    <StyledEditorWrapper isWidget={isWidget} onContextMenu={e => e.preventDefault()}>
+    <StyledEditorWrapper onContextMenu={e => e.preventDefault()}>
       <Loading message="Painting graph..." loading={loading} />
       <TransformWrapper
         maxScale={2}
