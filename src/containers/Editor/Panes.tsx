@@ -28,7 +28,7 @@ const Panes: React.FC = () => {
   return (
     <StyledEditor proportionalLayout={false} vertical={isMobile}>
       <Allotment.Pane
-        preferredSize={isMobile ? "100%" : 400}
+        preferredSize={isMobile ? "100%" : 410}
         minSize={fullscreen ? 0 : 300}
         maxSize={isMobile ? Infinity : 800}
         visible={!fullscreen}
