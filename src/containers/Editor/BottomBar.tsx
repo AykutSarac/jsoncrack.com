@@ -132,7 +132,7 @@ export const BottomBar = () => {
         toast.success(`Document set to ${isPrivate ? "public" : "private"}.`);
       } else throw res.errors;
     } catch (error) {
-      toast.error("An error occured while updating document!");
+      toast.error("An error occurred while updating document!");
     } finally {
       setIsUpdating(false);
     }
