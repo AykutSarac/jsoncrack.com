@@ -32,7 +32,7 @@ export const NodeModal = ({ selectedNode, visible, closeModal }: NodeModalProps)
   };
 
   return (
-    <Modal visible={visible} setVisible={closeModal}>
+    <Modal visible={visible} setVisible={closeModal} size="lg">
       <Modal.Header>Node Content</Modal.Header>
       <Modal.Content>
         <SyntaxHighlighter
