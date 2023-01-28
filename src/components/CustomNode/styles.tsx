@@ -5,7 +5,8 @@ import styled, { DefaultTheme } from "styled-components";
 const robotoMono = Roboto_Mono({
   weight: "500",
   subsets: ["latin"],
-  display: "auto"
+  display: "swap",
+  fallback: ["Arial, Helvetica, sans-serif", "Tahoma, Verdana, sans-serif"]
 });
 
 function getTypeColor(value: string, theme: DefaultTheme) {
