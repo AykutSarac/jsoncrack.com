@@ -71,7 +71,7 @@ const TextNode: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }
     >
       {isImage ? (
         <StyledImageWrapper>
-          <StyledImage src={text} width="70" height="70" />
+          <StyledImage src={text} width="70" height="70" loading="lazy" />
         </StyledImageWrapper>
       ) : (
         <StyledTextNodeWrapper

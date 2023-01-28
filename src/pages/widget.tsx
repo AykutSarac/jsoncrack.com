@@ -57,9 +57,11 @@ const WidgetPage = () => {
   const setGraph = useGraph(state => state.setGraph);
 
   React.useEffect(() => {
-    if (isReady) {      
+    if (isReady) {
       if (query.partner === "true") {
-        getPartnerStatus(window.location.ancestorOrigins[0]).then(r => r.data?.premium && setIsPremium(!!r.data.premium));
+        getPartnerStatus(window.location.ancestorOrigins[0]).then(
+          r => r.data?.premium && setIsPremium(!!r.data.premium)
+        );
       }
 
       fetchJson(query.json);

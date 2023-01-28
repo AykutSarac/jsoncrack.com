@@ -6,7 +6,7 @@ const robotoMono = Roboto_Mono({
   weight: "500",
   subsets: ["latin"],
   display: "swap",
-  fallback: ["Arial, Helvetica, sans-serif", "Tahoma, Verdana, sans-serif"]
+  fallback: ["Arial, Helvetica, sans-serif", "Tahoma, Verdana, sans-serif"],
 });
 
 function getTypeColor(value: string, theme: DefaultTheme) {

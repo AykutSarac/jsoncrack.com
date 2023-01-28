@@ -1,9 +1,9 @@
 import { ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
 import { CanvasDirection } from "reaflow";
 import { Graph } from "src/components/Graph";
+import { parser } from "src/utils/core/jsonParser";
 import { getChildrenEdges } from "src/utils/getChildrenEdges";
 import { getOutgoers } from "src/utils/getOutgoers";
-import { parser } from "src/utils/core/jsonParser";
 import { create } from "zustand";
 import useJson from "./useJson";
 

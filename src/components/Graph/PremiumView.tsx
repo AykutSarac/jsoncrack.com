@@ -38,7 +38,9 @@ export const PremiumView = () => (
     <StyledInfo>
       Upgrade JSON Crack to premium and explore & unlock full potantial of your data!
     </StyledInfo>
-    <Button status="TERTIARY" href="https://www.patreon.com/jsoncrack" link target="_blank">DO IT!</Button>
+    <Button status="TERTIARY" href="https://www.patreon.com/jsoncrack" link target="_blank">
+      DO IT!
+    </Button>
     <img src="/assets/undraw_to_the_stars_re_wq2x.svg" width="300" height="300" alt="oops" />
   </StyledPremiumView>
 );

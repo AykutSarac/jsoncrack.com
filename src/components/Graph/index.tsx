@@ -18,7 +18,7 @@ interface GraphProps {
 const StyledEditorWrapper = styled.div<{ widget: boolean }>`
   position: absolute;
   width: 100%;
-  height: ${({ widget }) => widget ? "calc(100vh - 36px)" : "calc(100vh - 65px)"};
+  height: ${({ widget }) => (widget ? "calc(100vh - 36px)" : "calc(100vh - 65px)")};
   background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
   background-image: ${({ theme }) =>
     `radial-gradient(#505050 0.5px, ${theme.BACKGROUND_SECONDARY} 0.5px)`};

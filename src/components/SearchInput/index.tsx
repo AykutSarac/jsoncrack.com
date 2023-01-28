@@ -84,7 +84,7 @@ export const SearchInput: React.FC = () => {
           hasInput={!!content.value.length}
         />
         <StyledCountInfo>
-          {content.value && `${nodeCount}/${nodeCount > 0 ? currentNode + 1 : "0"}` }
+          {content.value && `${nodeCount}/${nodeCount > 0 ? currentNode + 1 : "0"}`}
         </StyledCountInfo>
         <StyledSearchButton type="reset" aria-label="search" onClick={handleClear}>
           {content.value ? <IoCloseSharp size={18} /> : <AiOutlineSearch size={18} />}

@@ -15,7 +15,7 @@ const monaSans = localFont({
   src: "./Mona-Sans.woff2",
   variable: "--mona-sans",
   display: "swap",
-  fallback: ["Arial, Helvetica, sans-serif", "Tahoma, Verdana, sans-serif"]
+  fallback: ["Arial, Helvetica, sans-serif", "Tahoma, Verdana, sans-serif"],
 });
 
 if (process.env.NODE_ENV !== "development") {
