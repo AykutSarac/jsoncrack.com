@@ -124,6 +124,7 @@ const PreviewSection = () => {
       </Styles.StyledHighlightWrapper>
 
       <Styles.StyledPreviewFrame
+        title="Preview Embed"
         id="jcPreview"
         src={`${baseURL}/widget?json=63b73305c358219fbc421adf`}
         loading="eager"
@@ -251,6 +252,7 @@ const EmbedSection = () => (
     </Styles.StyledSectionArea>
     <div>
       <Styles.StyledFrame
+        title="Example Embed"
         src={`${baseURL}/widget?json=63c313d32ffa98f29b462315`}
         loading="lazy"
       ></Styles.StyledFrame>
