@@ -36,6 +36,10 @@ const StyledEditorWrapper = styled.div`
   rect {
     fill: ${({ theme }) => theme.BACKGROUND_NODE};
   }
+
+  @media only screen and (max-width: 320px) {
+    height: 100vh;
+  }
 `;
 
 const GraphComponent = ({ isWidget = false, openModal, setSelectedNode }: GraphProps) => {

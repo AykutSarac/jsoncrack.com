@@ -111,7 +111,7 @@ export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => 
 
       if (!blob) return;
 
-      navigator.clipboard.write([
+      navigator.clipboard?.write([
         new ClipboardItem({
           [blob.type]: blob,
         }),

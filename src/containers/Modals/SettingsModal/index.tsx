@@ -3,7 +3,7 @@ import { Modal, ModalProps } from "src/components/Modal";
 import Toggle from "src/components/Toggle";
 import useStored from "src/store/useStored";
 import styled from "styled-components";
-import shallow from "zustand/shallow";
+import { shallow } from "zustand/shallow";
 
 const StyledToggle = styled(Toggle)`
   flex-flow: row-reverse;

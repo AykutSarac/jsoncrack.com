@@ -34,7 +34,7 @@ export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   const shareURL = `https://jsoncrack.com/editor?json=${query.json}`;
 
   const handleShare = (value: string) => {
-    navigator.clipboard.writeText(value);
+    navigator.clipboard?.writeText(value);
     toast.success(`Link copied to clipboard.`);
     setVisible(false);
   };

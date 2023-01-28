@@ -7,7 +7,7 @@ import useGraph from "src/store/useGraph";
 import useModal from "src/store/useModal";
 import styled from "styled-components";
 
-export const StyledTools = styled.div<{ isWidget: boolean }>`
+export const StyledTools = styled.div`
   position: relative;
   display: flex;
   align-items: center;
@@ -20,11 +20,7 @@ export const StyledTools = styled.div<{ isWidget: boolean }>`
   box-shadow: 0 1px 0px ${({ theme }) => theme.BACKGROUND_TERTIARY};
   z-index: 1;
 
-  @media only screen and (max-width: 768px) {
-    display: ${({ isWidget }) => !isWidget && "none"};
-  }
-
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 320px) {
     display: none;
   }
 `;
@@ -61,25 +57,23 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
   const toggleEditor = () => toggleFullscreen(!fullscreen);
 
   return (
-    <>
-      <StyledTools isWidget={isWidget}>
-        <StyledToolElement aria-label="fullscreen" hide={isWidget} onClick={toggleEditor}>
-          <AiOutlineFullscreen />
-        </StyledToolElement>
-        <SearchInput />
-        <StyledToolElement aria-label="save" onClick={() => setVisible("download")(true)}>
-          <FiDownload />
-        </StyledToolElement>
-        <StyledToolElement aria-label="center canvas" onClick={centerView}>
-          <MdCenterFocusWeak />
-        </StyledToolElement>
-        <StyledToolElement aria-label="zoom out" onClick={zoomOut}>
-          <AiOutlineMinus />
-        </StyledToolElement>
-        <StyledToolElement aria-label="zoom in" onClick={zoomIn}>
-          <AiOutlinePlus />
-        </StyledToolElement>
-      </StyledTools>
-    </>
+    <StyledTools>
+      <StyledToolElement aria-label="fullscreen" hide={isWidget} onClick={toggleEditor}>
+        <AiOutlineFullscreen />
+      </StyledToolElement>
+      <SearchInput />
+      <StyledToolElement aria-label="save" onClick={() => setVisible("download")(true)}>
+        <FiDownload />
+      </StyledToolElement>
+      <StyledToolElement aria-label="center canvas" onClick={centerView}>
+        <MdCenterFocusWeak />
+      </StyledToolElement>
+      <StyledToolElement aria-label="zoom out" onClick={zoomOut}>
+        <AiOutlineMinus />
+      </StyledToolElement>
+      <StyledToolElement aria-label="zoom in" onClick={zoomIn}>
+        <AiOutlinePlus />
+      </StyledToolElement>
+    </StyledTools>
   );
 };

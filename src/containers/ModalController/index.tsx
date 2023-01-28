@@ -8,7 +8,7 @@ import { LoginModal } from "src/containers/Modals/LoginModal";
 import { SettingsModal } from "src/containers/Modals/SettingsModal";
 import { ShareModal } from "src/containers/Modals/ShareModal";
 import useModal from "src/store/useModal";
-import shallow from "zustand/shallow";
+import { shallow } from "zustand/shallow";
 
 export const ModalController = () => {
   const setVisible = useModal(state => state.setVisible);

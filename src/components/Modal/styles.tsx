@@ -51,7 +51,6 @@ export const HeaderWrapper = styled.div`
 `;
 
 export const ContentWrapper = styled.div`
-  color: ${({ theme }) => theme.TEXT_NORMAL};
   background: ${({ theme }) => theme.MODAL_BACKGROUND};
   padding: 16px;
   overflow: hidden auto;

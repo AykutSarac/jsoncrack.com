@@ -2,8 +2,6 @@ import React from "react";
 import toast from "react-hot-toast";
 import { AiOutlineDelete, AiOutlineSave, AiOutlineFileAdd, AiOutlineEdit } from "react-icons/ai";
 import { CgArrowsMergeAltH, CgArrowsShrinkH } from "react-icons/cg";
-import { FiDownload } from "react-icons/fi";
-import { MdCenterFocusWeak } from "react-icons/md";
 import { TiFlowMerge } from "react-icons/ti";
 import {
   VscAccount,
@@ -214,13 +212,6 @@ export const Sidebar: React.FC = () => {
         />
 
         <SidebarButton
-          title="Center View"
-          deviceDisplay="mobile"
-          onClick={centerView}
-          component={<MdCenterFocusWeak />}
-        />
-
-        <SidebarButton
           title={foldNodes ? "Unfold Nodes" : "Fold Nodes"}
           deviceDisplay="desktop"
           onClick={toggleFoldNodes}
@@ -229,7 +220,6 @@ export const Sidebar: React.FC = () => {
 
         <SidebarButton
           title={graphCollapsed ? "Expand Graph" : "Collapse Graph"}
-          deviceDisplay="desktop"
           onClick={toggleExpandCollapseGraph}
           component={graphCollapsed ? <VscExpandAll /> : <VscCollapseAll />}
         />
@@ -239,13 +229,6 @@ export const Sidebar: React.FC = () => {
           deviceDisplay="desktop"
           onClick={handleSave}
           component={<AiOutlineSave />}
-        />
-
-        <SidebarButton
-          title="Download Image"
-          deviceDisplay="mobile"
-          onClick={() => setVisible("download")(true)}
-          component={<FiDownload />}
         />
 
         <SidebarButton
@@ -259,6 +242,13 @@ export const Sidebar: React.FC = () => {
           deviceDisplay="desktop"
           onClick={() => setVisible("cloud")(true)}
           component={<VscCloud />}
+        />
+
+        <SidebarButton
+          title="Settings"
+          deviceDisplay="mobile"
+          onClick={() => setVisible("settings")(true)}
+          component={<VscSettingsGear />}
         />
       </StyledTopWrapper>
       <StyledBottomWrapper>
