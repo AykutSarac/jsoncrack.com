@@ -10,7 +10,7 @@ const fixedColors = {
   DARK_SALMON: "#E9967A",
   DANGER: "hsl(359,calc(var(--saturation-factor, 1)*66.7%),54.1%)",
   LIGHTGREEN: "#90EE90",
-  SEAGREEN: "#3BA55D",
+  SEAGREEN: "#11883B",
   ORANGE: "#FAA81A",
   SILVER: "#B9BBBE",
   PRIMARY: "#4D4D4D",
