@@ -24,7 +24,7 @@ body:
     id: media
     attributes:
       label: Media & Screenshots
-      description: Inlude screenshots or video of reproduction as much as possible
+      description: Include screenshots or video of reproduction as much as possible
       render: md
   - type: textarea
     id: os
@@ -34,7 +34,7 @@ body:
       value: |
        - OS: [e.g. iOS]:
        - Browser [e.g. chrome, safari]:
-       
+
        - Any other details...
   - type: dropdown
     id: priority

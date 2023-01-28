@@ -125,7 +125,7 @@ const GraphCard: React.FC<{ data: Json; refetch: () => void; active: boolean }> 
     toast
       .promise(updateJson(data._id, { name }), {
         loading: "Updating document...",
-        error: "Error occured while updating document!",
+        error: "Error occurred while updating document!",
         success: `Renamed document to ${name}`,
       })
       .then(refetch);
@@ -139,7 +139,7 @@ const GraphCard: React.FC<{ data: Json; refetch: () => void; active: boolean }> 
     toast
       .promise(deleteJson(data._id), {
         loading: "Deleting JSON file...",
-        error: "An error occured while deleting the file!",
+        error: "An error occurred while deleting the file!",
         success: `Deleted ${name}!`,
       })
       .then(refetch);
