@@ -201,7 +201,7 @@ const GitHubSection = () => (
           April 27, 2022
         </a>
       </blockquote>{" "}
-      <Script async src="https://platform.twitter.com/widgets.js" charSet="utf-8"></Script>
+      <Script strategy="lazyOnload" src="https://platform.twitter.com/widgets.js"></Script>
     </Styles.StyledTwitterQuote>
     <Styles.StyledSectionArea>
       <Styles.StyledSubTitle>Open Source Community</Styles.StyledSubTitle>
