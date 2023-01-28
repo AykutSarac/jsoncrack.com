@@ -22,8 +22,8 @@ const StyledBottomBar = styled.div`
   justify-content: space-between;
   border-top: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
   background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
-  max-height: 28px;
-  height: 28px;
+  max-height: 27px;
+  height: 27px;
   padding: 0 6px;
 
   @media only screen and (max-width: 768px) {

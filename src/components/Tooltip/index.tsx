@@ -17,7 +17,6 @@ const StyledTooltip = styled.div`
   border-radius: 5px;
   padding: 6px 8px;
   white-space: nowrap;
-  font-family: "Mona Sans";
   font-size: 16px;
   user-select: none;
   font-weight: 500;

@@ -44,9 +44,7 @@ export const Footer = () => (
   <StyledFooter>
     <StyledFooterText>
       <Link href="/">
-        <a>
-          <img width="120" height="20" src="assets/icon.png" alt="icon" loading="lazy" />
-        </a>
+        <img width="120" height="20" src="assets/icon.png" alt="icon" loading="lazy" />
       </Link>
       <span>
         © {new Date().getFullYear()} JSON Crack - {pkg.version}

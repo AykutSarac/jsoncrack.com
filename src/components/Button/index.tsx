@@ -40,7 +40,6 @@ const StyledButton = styled.button<{
   min-width: 70px;
   min-height: 32px;
   border-radius: 3px;
-  font-family: "Mona Sans";
   font-size: 14px;
   font-weight: 500;
   width: ${({ block }) => (block ? "-webkit-fill-available" : "fit-content")};

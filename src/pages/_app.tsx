@@ -1,5 +1,6 @@
 import React from "react";
 import type { AppProps } from "next/app";
+import localFont from "@next/font/local";
 import { init } from "@sentry/nextjs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
@@ -9,6 +10,12 @@ import { darkTheme, lightTheme } from "src/constants/theme";
 import { ModalController } from "src/containers/ModalController";
 import useStored from "src/store/useStored";
 import { ThemeProvider } from "styled-components";
+
+const monaSans = localFont({
+  src: "./Mona-Sans.woff2",
+  variable: "--mona-sans",
+  display: "auto",
+});
 
 if (process.env.NODE_ENV !== "development") {
   init({
@@ -40,22 +47,24 @@ function JsonCrack({ Component, pageProps }: AppProps) {
         <GoogleAnalytics />
         <ThemeProvider theme={lightmode ? lightTheme : darkTheme}>
           <GlobalStyle />
-          <Component {...pageProps} />
-          <Toaster
-            position="top-right"
-            containerStyle={{
-              top: 40,
-              right: 6,
-              fontSize: 14,
-            }}
-            toastOptions={{
-              style: {
-                background: "#4D4D4D",
-                color: "#B9BBBE",
-              },
-            }}
-          />
-          <ModalController />
+          <main className={monaSans.className}>
+            <Component {...pageProps} />
+            <ModalController />
+            <Toaster
+              position="top-right"
+              containerStyle={{
+                top: 40,
+                right: 6,
+                fontSize: 14,
+              }}
+              toastOptions={{
+                style: {
+                  background: "#4D4D4D",
+                  color: "#B9BBBE",
+                },
+              }}
+            />
+          </main>
         </ThemeProvider>
       </QueryClientProvider>
     );

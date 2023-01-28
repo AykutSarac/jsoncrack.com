@@ -1,5 +1,12 @@
+import { Roboto_Mono } from "@next/font/google";
 import { LinkItUrl } from "react-linkify-it";
 import styled, { DefaultTheme } from "styled-components";
+
+const robotoMono = Roboto_Mono({
+  weight: "500",
+  subsets: ["latin"],
+  display: "auto"
+});
 
 function getTypeColor(value: string, theme: DefaultTheme) {
   if (!Number.isNaN(+value)) return theme.NODE_COLORS.INTEGER;
@@ -24,10 +31,7 @@ export const StyledForeignObject = styled.foreignObject<{
   color: ${({ theme }) => theme.NODE_COLORS.TEXT};
   pointer-events: none;
   padding: ${({ isObject }) => isObject && "10px"};
-
-  * {
-    font-family: "Roboto Mono", monospace;
-  }
+  font-family: ${robotoMono.style.fontFamily};
 
   &.searched {
     border: 2px solid ${({ theme }) => theme.TEXT_POSITIVE};

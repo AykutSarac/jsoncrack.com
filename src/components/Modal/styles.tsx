@@ -40,8 +40,8 @@ export const Title = styled.h2`
   align-items: center;
   gap: 5px;
   color: ${({ theme }) => theme.INTERACTIVE_ACTIVE};
-  font-size: 20px !important;
-  margin: 0 !important;
+  font-size: 20px;
+  margin: 0;
 `;
 
 export const HeaderWrapper = styled.div`
@@ -52,6 +52,7 @@ export const HeaderWrapper = styled.div`
 
 export const ContentWrapper = styled.div`
   background: ${({ theme }) => theme.MODAL_BACKGROUND};
+  color: ${({ theme }) => theme.TEXT_NORMAL};
   padding: 16px;
   overflow: hidden auto;
   max-height: 500px;

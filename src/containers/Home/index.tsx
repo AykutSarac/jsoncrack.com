@@ -1,7 +1,6 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import Link from "next/link";
 import Script from "next/script";
 import { AiOutlineRight } from "react-icons/ai";
 import {
@@ -33,12 +32,8 @@ const SyntaxHighlighter = dynamic(
 const Navbar = () => (
   <Styles.StyledNavbar>
     <Styles.StyledNavLink href="/editor">Editor</Styles.StyledNavLink>
-    <Link href="#features" passHref>
-      <Styles.StyledNavLink>Features</Styles.StyledNavLink>
-    </Link>
-    <Link href="#sponsor" passHref>
-      <Styles.StyledNavLink>Sponsor</Styles.StyledNavLink>
-    </Link>
+    <Styles.StyledNavLink href="#features">Features</Styles.StyledNavLink>
+    <Styles.StyledNavLink href="#sponsor">Sponsor</Styles.StyledNavLink>
     <Styles.StyledNavLink
       href="https://github.com/AykutSarac/jsoncrack.com"
       target="_blank"
@@ -46,9 +41,7 @@ const Navbar = () => (
     >
       GitHub
     </Styles.StyledNavLink>
-    <Link href="docs" passHref>
-      <Styles.StyledNavLink>Documentation</Styles.StyledNavLink>
-    </Link>
+    <Styles.StyledNavLink href="docs">Documentation</Styles.StyledNavLink>
   </Styles.StyledNavbar>
 );
 

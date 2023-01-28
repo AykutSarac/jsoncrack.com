@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "src/components/Button";
 import styled from "styled-components";
 
@@ -61,7 +62,6 @@ export const StyledHome = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8em;
-  font-family: "Roboto", sans-serif;
 
   * {
     box-sizing: border-box;
@@ -109,7 +109,7 @@ export const StyledHeroSection = styled.section`
   }
 `;
 
-export const StyledNavLink = styled.a`
+export const StyledNavLink = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -163,7 +163,6 @@ export const StyledButton = styled(Button)`
   height: 46px;
 
   div {
-    font-family: "Mona Sans";
     font-weight: 700;
     font-size: 1rem;
   }
@@ -176,7 +175,6 @@ export const StyledSponsorButton = styled(Button)<{ isBlue?: boolean }>`
   padding: 12px 24px;
 
   div {
-    font-family: "Roboto", sans-serif;
     font-weight: 700;
     font-size: 16px;
   }
