@@ -68,20 +68,70 @@ const GraphComponent = ({
 
   const handleNodeClick = React.useCallback(
     (e: React.MouseEvent<SVGElement>, data: NodeData) => {
-      console.log(data);
       if (setSelectedNode) setSelectedNode(data.text);
       if (openNodeModal) openNodeModal();
     },
     [openNodeModal, setSelectedNode]
   );
 
-  const handleEdgeClick = React.useCallback((e: React.MouseEvent<SVGElement>, data: EdgeData) => {
-    const fromIndex = Number(data.from) - 1;
-    const toIndex = Number(data.to) - 1;
-    console.log(`${fromIndex}-${toIndex}`);
-    if (setSelectedEdge) setSelectedEdge(`${fromIndex}-${toIndex}`);
-    if (openEdgeModal) openEdgeModal();
-  }, []);
+  const handleEdgeClick = React.useCallback(
+    (e: React.MouseEvent<SVGElement>, data: EdgeData) => {
+      let curFromId = data.from;
+      let curToId = data.to;
+      const path = [curFromId, curToId];
+      while (curFromId !== "1") {
+        curToId = curFromId;
+        curFromId = edges.find(({ to }) => to === curFromId)?.from;
+        if (curFromId === undefined) {
+          break;
+        }
+        path.unshift(curFromId);
+      }
+      const rootArrayElementIds = ["1"];
+      const edgeLength = edges.length;
+      for (let i = 1; i < edgeLength; i++) {
+        const curNodeId = edges[i].from!;
+        if (rootArrayElementIds.find(id => id === curNodeId)) continue;
+        let isRootArrayElement = true;
+        for (let j = i - 1; j >= 0; j--) {
+          if (curNodeId === edges[j]?.to) {
+            isRootArrayElement = false;
+          }
+        }
+        if (isRootArrayElement) {
+          rootArrayElementIds.push(curNodeId);
+        }
+      }
+      const pathLength = path.length;
+      let resolvedPath = "";
+      if (rootArrayElementIds.length > 1) {
+        resolvedPath += `Root[${rootArrayElementIds.findIndex(id => id === path[0])}]`;
+      } else {
+        resolvedPath += "{Root}";
+      }
+      for (let i = 1; i < pathLength; i++) {
+        const curId = path[i];
+        if (curId === undefined) break;
+        const curNode = nodes[+curId - 1];
+        if (curNode?.data.parent === "array") {
+          resolvedPath += `.${curNode.text}`;
+          if (i !== pathLength - 1) {
+            const idx = edges
+              .filter(({ from }) => from === curId)
+              .findIndex(({ to }) => to === path[i + 1]);
+            resolvedPath += `[${idx}]`;
+          }
+        }
+        if (curNode?.data.parent === "object") {
+          resolvedPath += `.${curNode.text}`;
+        }
+      }
+
+      if (setSelectedEdge) setSelectedEdge(resolvedPath);
+      if (openEdgeModal) openEdgeModal();
+    },
+    [nodes, edges]
+  );
 
   const onInit = React.useCallback(
     (ref: ReactZoomPanPinchRef) => {
