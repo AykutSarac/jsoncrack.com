@@ -126,7 +126,7 @@ export const StyledNavLink = styled(Link)`
 export const StyledTitle = styled.h1`
   font-weight: 900;
   margin: 0;
-  font-size: min(10vw, 64px);
+  font-size: min(6vw, 86px);
 
   @media only screen and (max-width: 768px) {
     font-size: 2.5rem;
@@ -195,12 +195,16 @@ export const StyledSponsorButton = styled(Button)<{ isBlue?: boolean }>`
 export const StyledFeaturesSection = styled.section`
   display: grid;
   margin: 0 auto;
-  max-width: 60%;
+  max-width: 80%;
   justify-content: center;
   grid-template-columns: repeat(2, 40%);
   grid-template-rows: repeat(2, 1fr);
   grid-column-gap: 60px;
   grid-row-gap: 60px;
+
+  @media only screen and (min-width: 1024px) {
+    max-width: 60%;
+  }
 
   @media only screen and (max-width: 768px) {
     flex-direction: column;
