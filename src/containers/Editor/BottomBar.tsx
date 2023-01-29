@@ -15,6 +15,7 @@ import useModal from "src/store/useModal";
 import useStored from "src/store/useStored";
 import useUser from "src/store/useUser";
 import styled from "styled-components";
+import { useHotkeysforCtrlAndMeta } from "src/hooks/useKeyPress";
 
 const StyledBottomBar = styled.div`
   display: flex;
@@ -114,6 +115,8 @@ export const BottomBar = () => {
       }
     }
   }, [getJson, hasChanges, query.json, replace, setHasChanges, setVisible, user]);
+
+  useHotkeysforCtrlAndMeta(83, handleSaveJson);
 
   const handleLoginClick = () => {
     if (user) return setVisible("account")(true);
