@@ -21,8 +21,8 @@ const StyledEditorWrapper = styled.div<{ widget: boolean }>`
   height: ${({ widget }) => (widget ? "calc(100vh - 36px)" : "calc(100vh - 65px)")};
   background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
   background-image: ${({ theme }) =>
-    `radial-gradient(#505050 0.5px, ${theme.BACKGROUND_SECONDARY} 0.5px)`};
-  background-size: 15px 15px;
+    `radial-gradient(#505050 1px, ${theme.BACKGROUND_SECONDARY} 1px)`};
+  background-size: 25px 25px;
 
   :active {
     cursor: move;
@@ -35,6 +35,12 @@ const StyledEditorWrapper = styled.div<{ widget: boolean }>`
 
   rect {
     fill: ${({ theme }) => theme.BACKGROUND_NODE};
+  }
+
+  @media only screen and (max-width: 1440px) {
+    background-image: ${({ theme }) =>
+      `radial-gradient(#505050 0.5px, ${theme.BACKGROUND_SECONDARY} 0.5px)`};
+    background-size: 15px 15px;
   }
 
   @media only screen and (max-width: 320px) {
