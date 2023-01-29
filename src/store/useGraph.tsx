@@ -1,5 +1,5 @@
 import { ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
-import { CanvasDirection } from "reaflow";
+import { CanvasDirection } from "reaflow/dist/layout/elkLayout";
 import { Graph } from "src/components/Graph";
 import { parser } from "src/utils/core/jsonParser";
 import { getChildrenEdges } from "src/utils/getChildrenEdges";

@@ -11,7 +11,7 @@ import {
 } from "react-icons/hi";
 import { IoHeart } from "react-icons/io5";
 import { SiVisualstudiocode } from "react-icons/si";
-import vscDarkPlus from "react-syntax-highlighter/dist/cjs/styles/prism/vsc-dark-plus";
+import vscDarkPlus from "react-syntax-highlighter/dist/esm/styles/prism/vsc-dark-plus";
 import { CarbonAds } from "src/components/CarbonAds";
 import { Footer } from "src/components/Footer";
 import { Producthunt } from "src/components/Producthunt";

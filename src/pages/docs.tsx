@@ -1,7 +1,7 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import { materialDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import materialDark from "react-syntax-highlighter/dist/esm/styles/prism/material-dark";
 import { Button } from "src/components/Button";
 import { Footer } from "src/components/Footer";
 import styled from "styled-components";
