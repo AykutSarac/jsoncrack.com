@@ -14,6 +14,7 @@ const ObjectNode: React.FC<CustomNodeProps> = ({ node, x, y }) => {
         return (
           <Styled.StyledRow
             data-key={JSON.stringify(val)}
+            data-type={JSON.stringify(val[1])}
             data-x={x}
             data-y={y + idx * 17.8}
             key={idx}

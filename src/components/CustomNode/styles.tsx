@@ -81,13 +81,13 @@ export const StyledKey = styled.span<{
 `;
 
 export const StyledRow = styled.span.attrs<{
-  "data-key": string;
+  "data-type": string;
   theme: DefaultTheme;
 }>(props => ({
   style: {
-    color: getTypeColor(props["data-key"], props.theme),
+    color: getTypeColor(props["data-type"], props.theme),
   },
-}))<{ "data-key": string; theme: DefaultTheme }>`
+}))<{ "data-type": string; theme: DefaultTheme }>`
   display: block;
   height: 18px;
   overflow: hidden;
