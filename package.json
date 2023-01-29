@@ -39,6 +39,7 @@
     "zustand": "^4.3.2"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^13.1.6",
     "@testing-library/react": "^13.3.0",
     "@trivago/prettier-plugin-sort-imports": "^4.0.0",
     "@types/lodash.debounce": "^4.0.7",

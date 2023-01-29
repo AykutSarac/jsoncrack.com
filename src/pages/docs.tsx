@@ -6,12 +6,9 @@ import { Button } from "src/components/Button";
 import { Footer } from "src/components/Footer";
 import styled from "styled-components";
 
-const SyntaxHighlighter = dynamic(
-  () => import("react-syntax-highlighter/dist/esm/prism-async").then(c => c),
-  {
-    ssr: false,
-  }
-);
+const SyntaxHighlighter = dynamic(() => import("react-syntax-highlighter/dist/esm/prism-async"), {
+  ssr: false,
+});
 
 const StyledFrame = styled.iframe`
   border: none;

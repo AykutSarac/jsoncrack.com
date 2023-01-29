@@ -2,18 +2,15 @@ import React from "react";
 import dynamic from "next/dynamic";
 import toast from "react-hot-toast";
 import { FiCopy } from "react-icons/fi";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import { vs } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import vs from "react-syntax-highlighter/dist/cjs/styles/prism/vs";
+import vscDarkPlus from "react-syntax-highlighter/dist/cjs/styles/prism/vsc-dark-plus";
 import { Button } from "src/components/Button";
 import { Modal } from "src/components/Modal";
 import useStored from "src/store/useStored";
 
-const SyntaxHighlighter = dynamic(
-  () => import("react-syntax-highlighter/dist/esm/prism-async").then(c => c),
-  {
-    ssr: false,
-  }
-);
+const SyntaxHighlighter = dynamic(() => import("react-syntax-highlighter/dist/esm/prism-async"), {
+  ssr: false,
+});
 
 interface NodeModalProps {
   selectedNode: object;

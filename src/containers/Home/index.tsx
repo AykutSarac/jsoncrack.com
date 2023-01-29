@@ -11,7 +11,7 @@ import {
 } from "react-icons/hi";
 import { IoHeart } from "react-icons/io5";
 import { SiVisualstudiocode } from "react-icons/si";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import vscDarkPlus from "react-syntax-highlighter/dist/cjs/styles/prism/vsc-dark-plus";
 import { CarbonAds } from "src/components/CarbonAds";
 import { Footer } from "src/components/Footer";
 import { Producthunt } from "src/components/Producthunt";
@@ -22,12 +22,9 @@ import { TABS } from "src/constants/previewSection";
 import { PricingCards } from "../PricingCards";
 import * as Styles from "./styles";
 
-const SyntaxHighlighter = dynamic(
-  () => import("react-syntax-highlighter/dist/esm/prism-async").then(c => c),
-  {
-    ssr: false,
-  }
-);
+const SyntaxHighlighter = dynamic(() => import("react-syntax-highlighter/dist/esm/prism-async"), {
+  ssr: false,
+});
 
 const Navbar = () => (
   <Styles.StyledNavbar>
