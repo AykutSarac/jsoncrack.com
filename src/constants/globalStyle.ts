@@ -22,7 +22,7 @@ const GlobalStyle = createGlobalStyle`
 
   * {
     -webkit-tap-highlight-color: transparent;
-    scroll-behavior: smooth;
+    scroll-behavior: smooth !important;
   }
 
   .hide {
