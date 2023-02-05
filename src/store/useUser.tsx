@@ -38,7 +38,6 @@ const useUser = create<UserStates & UserActions>()((set, get) => ({
     set({ user: response.user as any, isAuthenticated: true });
   },
   checkSession: async () => {
-    if (location.pathname === "/") return;
     const currentSession = altogic.auth.getSession();
 
     if (currentSession) {
@@ -54,8 +53,6 @@ const useUser = create<UserStates & UserActions>()((set, get) => ({
         set({ user: data.user as any, isAuthenticated: true });
       }
     }
-
-    if (get().isPremium()) location.replace(location.href.replace("://", "://pro."));
   },
 }));
 

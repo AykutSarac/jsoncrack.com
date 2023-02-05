@@ -1,7 +1,6 @@
 import React from "react";
 import { Button } from "src/components/Button";
 import { Footer } from "src/components/Footer";
-import { Navbar } from "src/components/Navbar";
 import { PricingCards } from "src/containers/PricingCards";
 import styled from "styled-components";
 
@@ -18,7 +17,6 @@ const StyledHeroSection = styled.section`
 const Pricing = () => {
   return (
     <>
-      <Navbar />
       <StyledPageWrapper>
         <Button href="/" link>
           &lt; Go Back

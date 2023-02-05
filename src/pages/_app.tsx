@@ -1,6 +1,5 @@
 import React from "react";
 import type { AppProps } from "next/app";
-import { useRouter } from "next/router";
 import localFont from "@next/font/local";
 import { init } from "@sentry/nextjs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -10,7 +9,6 @@ import GlobalStyle from "src/constants/globalStyle";
 import { darkTheme, lightTheme } from "src/constants/theme";
 import { ModalController } from "src/containers/ModalController";
 import useStored from "src/store/useStored";
-import useUser from "src/store/useUser";
 import { ThemeProvider } from "styled-components";
 
 const monaSans = localFont({
@@ -37,19 +35,14 @@ const queryClient = new QueryClient({
 });
 
 function JsonCrack({ Component, pageProps }: AppProps) {
-  const [isLoaded, setIsLoaded] = React.useState(false);
-  const { isReady } = useRouter();
+  const [isReady, setReady] = React.useState(false);
   const lightmode = useStored(state => state.lightmode);
-  const checkSession = useUser(state => state.checkSession);
 
   React.useEffect(() => {
-    if (isReady) {
-      checkSession();
-    }
-    setIsLoaded(true);
-  }, [checkSession, isReady]);
+    setReady(true);
+  }, []);
 
-  if (isLoaded)
+  if (isReady)
     return (
       <QueryClientProvider client={queryClient}>
         <GoogleAnalytics />

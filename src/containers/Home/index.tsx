@@ -21,11 +21,26 @@ import { baseURL } from "src/constants/data";
 import { TABS } from "src/constants/previewSection";
 import { PricingCards } from "../PricingCards";
 import * as Styles from "./styles";
-import { Navbar } from "src/components/Navbar";
 
 const SyntaxHighlighter = dynamic(() => import("react-syntax-highlighter/dist/cjs/prism-async"), {
   ssr: false,
 });
+
+const Navbar = () => (
+  <Styles.StyledNavbar>
+    <Styles.StyledNavLink href="/editor">Editor</Styles.StyledNavLink>
+    <Styles.StyledNavLink href="#features">Features</Styles.StyledNavLink>
+    <Styles.StyledNavLink href="#sponsor">Sponsor</Styles.StyledNavLink>
+    <Styles.StyledNavLink
+      href="https://github.com/AykutSarac/jsoncrack.com"
+      target="_blank"
+      rel="external"
+    >
+      GitHub
+    </Styles.StyledNavLink>
+    <Styles.StyledNavLink href="docs">Documentation</Styles.StyledNavLink>
+  </Styles.StyledNavbar>
+);
 
 const HeroSection = () => (
   <Styles.StyledHeroSection id="main">
