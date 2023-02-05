@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { FaDiscord, FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 import styled from "styled-components";
-import pkg from "../../../package.json";
 
 export const StyledFooter = styled.footer`
   display: flex;
@@ -47,7 +46,7 @@ export const Footer = () => (
         <img width="120" height="20" src="assets/icon.png" alt="icon" loading="lazy" />
       </Link>
       <span>
-        © {new Date().getFullYear()} JSON Crack - {pkg.version}
+        © {new Date().getFullYear()} JSON Crack
       </span>
     </StyledFooterText>
     <StyledIconLinks>
