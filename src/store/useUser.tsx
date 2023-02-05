@@ -45,7 +45,7 @@ const useUser = create<UserStates & UserActions>()((set, get) => ({
       if ((data.user as any)?.type > 0) {
         location.replace(location.href.replace("://", "://pro."));
       } else {
-        location.pathname = "/editor";
+        set({ user: data.user as any, isAuthenticated: true });
       }
     }
   },
