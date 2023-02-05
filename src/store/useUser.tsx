@@ -10,6 +10,7 @@ interface UserActions {
   setUser: (key: keyof typeof initialStates, value: any) => void;
   checkSession: () => void;
   isPremium: () => boolean;
+  tokenAuth: () => Promise<void>;
 }
 
 const initialStates = {
@@ -36,6 +37,17 @@ const useUser = create<UserStates & UserActions>()((set, get) => ({
   },
   login: response => {
     set({ user: response.user as any, isAuthenticated: true });
+  },
+  tokenAuth: async () => {
+    if (new URLSearchParams(window.location.search).get("access_token")) {
+      const data = await altogic.auth.getAuthGrant();
+
+      if ((data.user as any)?.type > 0) {
+        location.replace(location.href.replace("://", "://pro."));
+      } else {
+        location.pathname = "/editor";
+      }
+    }
   },
   checkSession: async () => {
     const currentSession = altogic.auth.getSession();

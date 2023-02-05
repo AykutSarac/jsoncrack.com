@@ -14,6 +14,7 @@ import { SiVisualstudiocode } from "react-icons/si";
 import vscDarkPlus from "react-syntax-highlighter/dist/cjs/styles/prism/vsc-dark-plus";
 import { CarbonAds } from "src/components/CarbonAds";
 import { Footer } from "src/components/Footer";
+import { Navbar } from "src/components/Navbar";
 import { Producthunt } from "src/components/Producthunt";
 import { Sponsors } from "src/components/Sponsors";
 import { SupportButton } from "src/components/SupportButton";
@@ -25,22 +26,6 @@ import * as Styles from "./styles";
 const SyntaxHighlighter = dynamic(() => import("react-syntax-highlighter/dist/cjs/prism-async"), {
   ssr: false,
 });
-
-const Navbar = () => (
-  <Styles.StyledNavbar>
-    <Styles.StyledNavLink href="/editor">Editor</Styles.StyledNavLink>
-    <Styles.StyledNavLink href="#features">Features</Styles.StyledNavLink>
-    <Styles.StyledNavLink href="#sponsor">Sponsor</Styles.StyledNavLink>
-    <Styles.StyledNavLink
-      href="https://github.com/AykutSarac/jsoncrack.com"
-      target="_blank"
-      rel="external"
-    >
-      GitHub
-    </Styles.StyledNavLink>
-    <Styles.StyledNavLink href="docs">Documentation</Styles.StyledNavLink>
-  </Styles.StyledNavbar>
-);
 
 const HeroSection = () => (
   <Styles.StyledHeroSection id="main">

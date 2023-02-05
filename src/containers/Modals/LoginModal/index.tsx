@@ -1,12 +1,14 @@
 import React from "react";
-import { AiOutlineGoogle } from "react-icons/ai";
-import { altogic } from "src/api/altogic";
+import { useRouter } from "next/router";
 import { Button } from "src/components/Button";
 import { Modal, ModalProps } from "src/components/Modal";
 
 export const LoginModal: React.FC<ModalProps> = ({ setVisible, visible }) => {
-  const handleLoginClick = () => {
-    altogic.auth.signInWithProvider("google");
+  const { replace } = useRouter();
+
+  const onSignIn = () => {
+    replace("/sign-in");
+    setVisible(false);
   };
 
   return (
@@ -15,9 +17,8 @@ export const LoginModal: React.FC<ModalProps> = ({ setVisible, visible }) => {
       <Modal.Content>
         <h2>Welcome Back!</h2>
         <p>Login to unlock full potential of JSON Crack!</p>
-        <Button onClick={handleLoginClick} status="SECONDARY" block>
-          <AiOutlineGoogle size={24} />
-          Login with Google
+        <Button onClick={onSignIn} status="SECONDARY" block>
+          Sign In
         </Button>
       </Modal.Content>
       <Modal.Controls setVisible={setVisible} />
