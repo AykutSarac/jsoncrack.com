@@ -37,7 +37,7 @@ const SignIn = () => {
   React.useEffect(() => {
     if (isReady) tokenAuth();
     if (isAuthenticated) replace("/editor");
-  }, [tokenAuth, isReady]);
+  }, [tokenAuth, isReady, isAuthenticated, replace]);
 
   const handleLoginClick = (provider: "github" | "google") => {
     altogic.auth.signInWithProvider(provider);
