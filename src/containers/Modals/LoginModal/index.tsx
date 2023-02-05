@@ -1,14 +1,11 @@
 import React from "react";
-import { useRouter } from "next/router";
+import { altogic } from "src/api/altogic";
 import { Button } from "src/components/Button";
 import { Modal, ModalProps } from "src/components/Modal";
 
 export const LoginModal: React.FC<ModalProps> = ({ setVisible, visible }) => {
-  const { replace } = useRouter();
-
   const onSignIn = () => {
-    replace("/sign-in");
-    setVisible(false);
+    altogic.auth.signInWithProvider("google");
   };
 
   return (

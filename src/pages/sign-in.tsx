@@ -35,8 +35,8 @@ const SignIn = () => {
   const isAuthenticated = useUser(state => state.isAuthenticated);
 
   React.useEffect(() => {
-    if (isReady) tokenAuth();
     if (isAuthenticated) replace("/editor");
+    if (isReady) tokenAuth();
   }, [tokenAuth, isReady, isAuthenticated, replace]);
 
   const handleLoginClick = (provider: "github" | "google") => {
