@@ -2,7 +2,7 @@ import { Node, NodeType } from "jsonc-parser";
 import { addEdgeToGraph } from "./addEdgeToGraph";
 import { addNodeToGraph } from "./addNodeToGraph";
 import { calculateNodeSize } from "./calculateNodeSize";
-import { Graph, States } from "./jsonParser";
+import { States } from "./jsonParser";
 
 const isPrimitiveOrNullType = (type?: NodeType) => {
   return type === "boolean" || type === "string" || type === "number" || type === "null";
@@ -19,13 +19,13 @@ const alignChildren = (a: Node, b: Node) => {
 };
 
 export const traverse = (
-  graph: Graph,
   states: States,
   objectToTraverse: Node,
   parentType?: string,
   myParentId?: string,
   nextType?: string
 ) => {
+  const graph = states.graph;
   let { type, children, value } = objectToTraverse;
 
   if (!children) {
@@ -39,8 +39,7 @@ export const traverse = (
           states.brotherKey = value;
         }
       } else if (parentType === "array") {
-        const { width, height } = calculateNodeSize(String(value), false);
-        const nodeFromArrayId = addNodeToGraph(graph, String(value), width, height, false);
+        const nodeFromArrayId = addNodeToGraph({ graph, text: String(value) });
         if (myParentId) {
           addEdgeToGraph(graph, myParentId, nodeFromArrayId);
         }
@@ -77,8 +76,7 @@ export const traverse = (
             states.brothersNode = [];
           }
         } else {
-          const { width, height } = calculateNodeSize(states.brothersNode, false);
-          const brothersNodeId = addNodeToGraph(graph, states.brothersNode, width, height, false);
+          const brothersNodeId = addNodeToGraph({ graph, text: states.brothersNode });
           states.brothersNode = [];
 
           if (states.brothersParentId) {
@@ -99,9 +97,8 @@ export const traverse = (
       }
 
       // add parent node
-      const { width, height } = calculateNodeSize(states.parentName, true);
-      parentId = addNodeToGraph(graph, states.parentName, width, height, type);
-      states.bracketOpen = [...states.bracketOpen, { id: parentId, type: type }];
+      parentId = addNodeToGraph({ graph, type, text: states.parentName });
+      states.bracketOpen = [...states.bracketOpen, { id: parentId, type }];
       states.parentName = "";
 
       // add edges from parent node
@@ -129,7 +126,6 @@ export const traverse = (
       (branch, index, array) => {
         if (array[index + 1]) {
           traverse(
-            graph,
             states,
             branch,
             type,
@@ -140,7 +136,6 @@ export const traverse = (
           );
         } else {
           traverse(
-            graph,
             states,
             branch,
             type,
@@ -154,7 +149,6 @@ export const traverse = (
 
     if (type !== "property") {
       // when children end
-
       // add or concat brothers node when it is the last parent node
       if (states.brothersNode.length > 0) {
         let findBrothersNode = states.brothersNodeProps.find(
@@ -175,8 +169,7 @@ export const traverse = (
             states.brothersNode = [];
           }
         } else {
-          const { width, height } = calculateNodeSize(states.brothersNode, false);
-          const brothersNodeId = addNodeToGraph(graph, states.brothersNode, width, height, false);
+          const brothersNodeId = addNodeToGraph({ graph, text: states.brothersNode });
           states.brothersNode = [];
 
           if (states.brothersParentId) {

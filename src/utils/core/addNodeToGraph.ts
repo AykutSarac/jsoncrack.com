@@ -1,27 +1,32 @@
+import { calculateNodeSize } from "./calculateNodeSize";
 import { Graph } from "./jsonParser";
 
-export const addNodeToGraph = (
-  graph: Graph,
-  text: any,
-  width: number,
-  height: number,
-  parent: "string" | "number" | "boolean" | "object" | "array" | "null" | false,
-  isEmpty?: boolean
-) => {
-  let actualId = String(graph.nodes.length + 1);
+type Props = {
+  graph: Graph;
+  text: any;
+  isEmpty?: boolean;
+  type?: "string" | "number" | "boolean" | "object" | "array" | "null";
+};
 
-  graph.nodes = graph.nodes.concat([
-    {
-      id: actualId,
-      text: text,
-      width: width,
-      height: height,
-      data: {
-        parent: parent === "array" || parent === "object" ? parent : false,
-        childrenCount: parent ? 1 : 0,
-        isEmpty: isEmpty,
-      },
+export const addNodeToGraph = ({ graph, text, type = "null", isEmpty = false }: Props) => {
+  let id = String(graph.nodes.length + 1);
+  const isParent = type === "array" || type === "object";
+  const { width, height } = calculateNodeSize(text, isParent);
+
+  const node = {
+    id,
+    text,
+    width,
+    height,
+    data: {
+      type,
+      isParent,
+      isEmpty,
+      childrenCount: isParent ? 1 : 0,
     },
-  ]);
-  return actualId;
+  };
+
+  graph.nodes = graph.nodes.concat([node]);
+
+  return id;
 };

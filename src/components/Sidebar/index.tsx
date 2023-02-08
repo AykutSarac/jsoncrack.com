@@ -149,7 +149,6 @@ export const Sidebar: React.FC = () => {
 
   const collapseGraph = useGraph(state => state.collapseGraph);
   const expandGraph = useGraph(state => state.expandGraph);
-  const centerView = useGraph(state => state.centerView);
   const toggleFold = useGraph(state => state.toggleFold);
   const toggleFullscreen = useGraph(state => state.toggleFullscreen);
 

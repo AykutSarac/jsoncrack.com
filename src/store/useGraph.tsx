@@ -112,7 +112,7 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       .map(edge => edge.to);
 
     const collapsedParents = get()
-      .nodes.filter(node => !parentNodesIds.includes(node.id) && node.data.parent)
+      .nodes.filter(node => !parentNodesIds.includes(node.id) && node.data.isParent)
       .map(node => node.id);
 
     const collapsedNodes = get()

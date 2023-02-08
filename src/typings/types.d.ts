@@ -6,7 +6,7 @@ interface NodeData<T = any> {
   text?: any;
   height?: number;
   width?: number;
-  parent?: string;
+  isParent?: string;
   ports?: PortData[];
   icon?: IconData;
   nodePadding?: number | [number, number] | [number, number, number, number];

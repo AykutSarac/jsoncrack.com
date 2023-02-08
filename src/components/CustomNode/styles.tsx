@@ -56,9 +56,9 @@ export const StyledForeignObject = styled.foreignObject<{
   }
 `;
 
-function getKeyColor(theme: DefaultTheme, parent: "array" | "object" | false, objectKey: boolean) {
+function getKeyColor(theme: DefaultTheme, parent: boolean, type: string, objectKey: boolean) {
   if (parent) {
-    if (parent === "array") return theme.NODE_COLORS.PARENT_ARR;
+    if (type === "array") return theme.NODE_COLORS.PARENT_ARR;
     return theme.NODE_COLORS.PARENT_OBJ;
   }
   if (objectKey) return theme.NODE_COLORS.NODE_KEY;
@@ -67,13 +67,15 @@ function getKeyColor(theme: DefaultTheme, parent: "array" | "object" | false, ob
 
 export const StyledKey = styled.span<{
   objectKey?: boolean;
-  parent?: "array" | "object" | false;
+  type: string;
+  parent: boolean;
   value?: string;
 }>`
   display: inline;
   flex: 1;
   font-weight: 500;
-  color: ${({ theme, objectKey = false, parent = false }) => getKeyColor(theme, parent, objectKey)};
+  color: ${({ theme, type, objectKey = false, parent }) =>
+    getKeyColor(theme, parent, type, objectKey)};
   font-size: ${({ parent }) => parent && "14px"};
   overflow: hidden;
   text-overflow: ellipsis;

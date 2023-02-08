@@ -1,7 +1,6 @@
 import { parseTree } from "jsonc-parser";
 import { addEdgeToGraph } from "./addEdgeToGraph";
 import { addNodeToGraph } from "./addNodeToGraph";
-import { calculateNodeSize } from "./calculateNodeSize";
 import { traverse } from "./traverse";
 
 export type Graph = {
@@ -23,16 +22,16 @@ export type States = {
     parentId: string | undefined;
     objectsFromArrayId: number | undefined;
   }[];
+  graph: {
+    nodes: NodeData[];
+    edges: EdgeData[];
+  };
 };
 
 export const parser = (jsonStr: string) => {
   try {
     let json = parseTree(jsonStr);
-
-    const graph: Graph = {
-      nodes: [],
-      edges: [],
-    };
+    if (!json) throw "Invalid JSON"!;
 
     const states: States = {
       parentName: "",
@@ -44,36 +43,29 @@ export const parser = (jsonStr: string) => {
       brothersParentId: undefined,
       brotherKey: "",
       brothersNodeProps: [],
+      graph: {
+        nodes: [],
+        edges: [],
+      },
     };
 
-    if (json) {
-      traverse(graph, states, json);
+    traverse(states, json);
 
-      if (states.notHaveParent.length > 1) {
-        if (json.type !== "array") {
-          const text = "";
-          const { width, height } = calculateNodeSize(text, false);
-          const emptyId = addNodeToGraph(graph, text, width, height, false, true);
-          states.notHaveParent.forEach(children => {
-            addEdgeToGraph(graph, emptyId, children);
-          });
-        }
-      }
-
-      if (graph.nodes.length === 0) {
-        if (json.type === "array") {
-          const text = "[]";
-          const { width, height } = calculateNodeSize(text, false);
-          addNodeToGraph(graph, text, width, height, false);
-        } else {
-          const text = "{}";
-          const { width, height } = calculateNodeSize(text, false);
-          addNodeToGraph(graph, text, width, height, false);
-        }
+    if (states.notHaveParent.length > 1) {
+      if (json.type !== "array") {
+        const emptyId = addNodeToGraph({ graph: states.graph, text: "", isEmpty: true });
+        states.notHaveParent.forEach(children => {
+          addEdgeToGraph(states.graph, emptyId, children);
+        });
       }
     }
 
-    return graph;
+    if (states.graph.nodes.length === 0) {
+      if (json.type === "array") addNodeToGraph({ graph: states.graph, text: "[]" });
+      else addNodeToGraph({ graph: states.graph, text: "{}" });
+    }
+
+    return states.graph;
   } catch (error) {
     console.error(error);
     return {

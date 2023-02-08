@@ -41,10 +41,16 @@ const StyledImage = styled.img`
 `;
 
 const TextNode: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) => {
-  const { id, text, width, height, data } = node;
+  const {
+    id,
+    text,
+    width,
+    height,
+    data: { isParent, childrenCount, type },
+  } = node;
   const ref = React.useRef(null);
   const hideCollapse = useStored(state => state.hideCollapse);
-  const childrenCount = useStored(state => state.childrenCount);
+  const showChildrenCount = useStored(state => state.childrenCount);
   const imagePreview = useStored(state => state.imagePreview);
   const expandNodes = useGraph(state => state.expandNodes);
   const collapseNodes = useGraph(state => state.collapseNodes);
@@ -66,7 +72,7 @@ const TextNode: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }
       height={height}
       x={0}
       y={0}
-      hasCollapse={data.parent && hasCollapse}
+      hasCollapse={isParent && hasCollapse}
       ref={ref}
     >
       {isImage ? (
@@ -75,21 +81,21 @@ const TextNode: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }
         </StyledImageWrapper>
       ) : (
         <StyledTextNodeWrapper
-          hasCollapse={data.parent && hideCollapse}
+          hasCollapse={isParent && hideCollapse}
           data-x={x}
           data-y={y}
           data-key={JSON.stringify(text)}
         >
-          <Styled.StyledKey parent={data.parent}>
+          <Styled.StyledKey parent={isParent} type={type}>
             <Styled.StyledLinkItUrl>
               {JSON.stringify(text).replaceAll('"', "")}
             </Styled.StyledLinkItUrl>
           </Styled.StyledKey>
-          {data.parent && data.childrenCount > 0 && childrenCount && (
-            <Styled.StyledChildrenCount>({data.childrenCount})</Styled.StyledChildrenCount>
+          {isParent && childrenCount > 0 && showChildrenCount && (
+            <Styled.StyledChildrenCount>({childrenCount})</Styled.StyledChildrenCount>
           )}
 
-          {data.parent && hasCollapse && hideCollapse && (
+          {isParent && hasCollapse && hideCollapse && (
             <StyledExpand onClick={handleExpand}>
               {isExpanded ? <MdLinkOff size={18} /> : <MdLink size={18} />}
             </StyledExpand>
