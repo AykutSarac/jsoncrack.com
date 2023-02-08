@@ -67,14 +67,14 @@ function getKeyColor(theme: DefaultTheme, parent: boolean, type: string, objectK
 
 export const StyledKey = styled.span<{
   objectKey?: boolean;
-  type: string;
-  parent: boolean;
+  parent?: boolean;
+  type?: string;
   value?: string;
 }>`
   display: inline;
   flex: 1;
   font-weight: 500;
-  color: ${({ theme, type, objectKey = false, parent }) =>
+  color: ${({ theme, type = "null", objectKey = false, parent = false }) =>
     getKeyColor(theme, parent, type, objectKey)};
   font-size: ${({ parent }) => parent && "14px"};
   overflow: hidden;
