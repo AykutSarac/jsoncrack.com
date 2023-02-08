@@ -69,6 +69,15 @@ export const MonacoEditor = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSetJson, hasError, value]);
 
+  const handleChange = React.useCallback((value?: string) => {
+    try {
+      const parsedJson = JSON.stringify(JSON.parse(value!), null, 2);
+      setValue(parsedJson);
+    } catch (error) {
+      setValue(value);
+    }
+  }, []);
+
   React.useEffect(() => {
     const beforeunload = (e: BeforeUnloadEvent) => {
       if (getHasChanges()) {
@@ -93,7 +102,7 @@ export const MonacoEditor = () => {
         value={json}
         theme={lightmode}
         options={editorOptions}
-        onChange={setValue}
+        onChange={handleChange}
         loading={<Loading message="Loading Editor..." />}
         beforeMount={handleEditorWillMount}
         defaultLanguage="json"
