@@ -2,177 +2,114 @@ import React from "react";
 import styled from "styled-components";
 
 const AdWrapper = styled.div`
-  z-index: 1000;
-
-  .sticky-js {
-    display: flex;
-    justify-content: center;
+  & {
+    position: fixed;
     z-index: 1000;
-    position: relative;
-
+    bottom: 40px;
+    right: 10px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu,
-      Cantarell, "Helvetica Neue", sans-serif;
+      Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 
-  #sticky-js._bsa_hide {
+  & .native-button {
+    z-index: 100;
+    display: flex;
+    padding: 8px 20px;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, 0.15);
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    font-size: 12px;
+    cursor: pointer;
+
+    user-select: none;
+    justify-content: center;
+    align-items: center;
+  }
+
+  & .native-img {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
+  }
+
+  & .native-overlay {
+    position: fixed;
+    bottom: 80px;
+    display: none;
+    padding: 20px;
+    max-width: 330px;
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, 0.15);
+    opacity: 0;
+    transition: transform 0.2s ease-in-out, opacity 0.1s ease-in-out;
+    transform: scale(1) translateY(-50px);
+  }
+
+  & #native-button:checked + .native-overlay {
+    opacity: 1;
+    transition: transform 0.2s ease-in-out, opacity 0.4s ease-in-out;
+    transform: scale(1) translateY(0);
+  }
+
+  #native-button {
     display: none;
   }
 
-  #sticky-js .native-hide {
-    position: absolute;
-    top: -6px;
-    right: -6px;
-    padding: 4px 5.42px;
-
-    font-size: 12px;
-    line-height: 1;
-    cursor: pointer;
-    border-radius: 50%;
+  & .native-banner {
+    line-height: 1.35;
   }
 
-  #sticky-js {
-    position: fixed;
-    bottom: 60px;
-    right: 10%;
+  & .native-tagline {
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    font-size: 16px;
   }
 
-  #sticky-js .sticky-bar {
+  & .native-description {
+    margin-bottom: 10px;
+    font-size: 16px;
+  }
+
+  & .native-footer {
     display: flex;
+
     justify-content: space-between;
     align-items: center;
-    padding: 15px 20px;
-
-    max-width: 600px;
-    text-decoration: none;
-    border-radius: 10px;
-    box-shadow: inset 0 0 2px hsla(0, 0%, 0%, 0.15);
-
-    flex-flow: row nowrap;
   }
 
-  #sticky-js .native-img {
-    margin-right: 20px;
-
-    line-height: 0;
-    max-height: 40px;
+  & .native-logo {
+    width: 120px;
+    height: auto;
   }
 
-  #sticky-js .native-main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-
-    flex-grow: 1;
-    flex-flow: row nowrap;
-  }
-
-  #sticky-js .native-details {
-    display: flex;
-    margin-right: 20px;
-
-    flex-flow: column nowrap;
-  }
-
-  #sticky-js .native-tagline {
-    margin-bottom: 3px;
-
-    font-size: 9px;
-    font-weight: 600;
-    line-height: 1;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-  }
-
-  #sticky-js .native-desc {
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 1.4;
-    max-width: 600px;
-    letter-spacing: 1px;
-  }
-
-  #sticky-js .native-cta {
-    padding: 10px 16px;
-
-    font-size: 10px;
-    font-weight: 600;
-    line-height: 1;
-    transition: all 0.3s ease-in-out;
-    transform: translateY(-1px);
-    white-space: nowrap;
-    letter-spacing: 1px;
-    text-transform: uppercase;
+  & .native-cta {
+    padding: 6px 8px;
     border-radius: 3px;
-  }
-
-  #sticky-js .native-via {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    padding: 5px 10px;
-
-    font-size: 8px;
-    font-weight: 600;
-    line-height: 1;
     text-decoration: none;
-    letter-spacing: 0.7px;
     text-transform: uppercase;
-    color: #444;
-    border-top: 0;
-    border-top-left-radius: 3px;
-    background: repeating-linear-gradient(
-        -45deg,
-        transparent,
-        transparent 5px,
-        hsla(0, 0%, 0%, 0.025) 5px,
-        hsla(0, 0%, 0%, 0.025) 10px
-      )
-      hsla(203, 11%, 95%, 0.4);
-  }
-
-  @media only screen and (min-width: 320px) and (max-width: 759px) {
-    #sticky-js,
-    #sticky-js .native-main {
-      flex-flow: column nowrap;
-    }
-
-    #sticky-js .native-img,
-    #sticky-js .native-details {
-      margin: 0;
-    }
-
-    #sticky-js .native-img {
-      display: none;
-    }
-
-    #sticky-js .native-company {
-      letter-spacing: 1px;
-    }
-
-    #sticky-js .native-details {
-      font-size: 14px;
-      text-align: left;
-    }
-
-    #sticky-js .native-cta {
-      display: none;
-    }
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    font-size: 12px;
   }
 `;
 
 const template = `${"`"}
-<a class="sticky-bar" style="background-color: ##backgroundColor##; color: ##textColor##" href="##link##" rel="sponsored noopener" target="_blank" title="##company## — ##tagline##">
-  <div class="native-main">
-    <img class="native-img" src="##logo##">
-    <div class="native-details" style="color: ##textColor##">
-      <span class="native-tagline">Sponsored by ##company##</span>
-      <span class="native-desc">##description##</span>
+<label class="native-button" for="native-button" style="background-color: ##backgroundColor##; color: ##textColor##;"><img src="##image##" class="native-img">Sponsored by ##company##</label>
+<input type="checkbox" id="native-button">
+<div class="native-overlay" style="background-color: ##backgroundColor##; color: ##textColor##">
+  <div class="native-banner">
+    <div class="native-tagline">##tagline##</div>
+    <div class="native-description">##description##</div>
+    <div class="native-footer">
+      <a href="##statlink##" class="native-cta" style="background-color: ##ctaBackgroundColor##; color: ##ctaTextColor##">##callToAction##</a>
+      <img class="native-logo" src="##logo##">
     </div>
-    <span class="native-cta" style="color: ##ctaTextColor##; background-color: ##ctaBackgroundColor##;">##callToAction##</span>
   </div>
-</a>
-<div class="native-hide" style="background-color: ##textColor##; color: ##backgroundColor##; border: solid 1px ##backgroundColor##;" onclick="_bsa.close('sticky-js')">✕</div>
+</div>
 ${"`"}`;
 
 export const AdTest = () => {
@@ -186,8 +123,7 @@ export const AdTest = () => {
     s.innerHTML = `(function() {
         if (typeof _bsa !== 'undefined' && _bsa) {
           _bsa.init('custom', 'CWYD42JI', 'placement:jsoncrackcom', {
-            target: '.sticky-js',
-            id: 'sticky-js',
+            target: '#cutton-js',
             template: ${template}
           });
         }
@@ -195,5 +131,5 @@ export const AdTest = () => {
     ref.current.appendChild(s);
   }, []);
 
-  return <AdWrapper ref={ref} className="sticky-js"></AdWrapper>;
+  return <AdWrapper ref={ref} id="cutton-js"></AdWrapper>;
 };

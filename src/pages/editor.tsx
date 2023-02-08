@@ -54,12 +54,12 @@ const EditorPage: React.FC = () => {
       </Head>
       <StyledPageWrapper>
         <Sidebar />
-        <AdTest />
         <StyledEditorWrapper>
           <Panes />
         </StyledEditorWrapper>
       </StyledPageWrapper>
       <BottomBar />
+      <AdTest />
     </StyledEditorWrapper>
   );
 };
