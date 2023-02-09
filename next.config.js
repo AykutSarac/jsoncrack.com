@@ -7,6 +7,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
  */
 const config = {
   reactStrictMode: false,
+  productionBrowserSourceMaps: true,
   compiler: {
     styledComponents: true,
   },
