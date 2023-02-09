@@ -55,7 +55,8 @@ export const ContentWrapper = styled.div`
   color: ${({ theme }) => theme.TEXT_NORMAL};
   padding: 16px;
   overflow: hidden auto;
-  max-height: 500px;
+  height: fit-content;
+  max-height: calc(100vh - 156px);
 `;
 
 export const ControlsWrapper = styled.div`
