@@ -5,12 +5,22 @@ on:
   pull_request:
     branches:
     - main
+    
+permissions:
+  pull-requests: read
 
 jobs:
   build:
     name: Verify Build
     runs-on: ubuntu-latest
     steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Set Node env
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'npm'
       - name: Check Lint
         run: npm run lint
       - name: Build
