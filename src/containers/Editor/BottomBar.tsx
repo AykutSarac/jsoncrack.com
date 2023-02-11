@@ -1,4 +1,5 @@
 import React from "react";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import toast from "react-hot-toast";
 import {
@@ -140,6 +141,11 @@ export const BottomBar = () => {
 
   return (
     <StyledBottomBar>
+      {data?.name && (
+        <Head>
+          <title>{data.name} | JSON Crack</title>
+        </Head>
+      )}
       <StyledLeft>
         <StyledBottomBarItem onClick={handleLoginClick}>
           <VscAccount />

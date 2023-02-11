@@ -1,4 +1,5 @@
 import React from "react";
+import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { AiOutlineGithub, AiOutlineGoogle } from "react-icons/ai";
@@ -35,8 +36,8 @@ const SignIn = () => {
   const isAuthenticated = useUser(state => state.isAuthenticated);
 
   React.useEffect(() => {
-      if (!isReady) checkSession();
-      if (isAuthenticated) replace("/editor");
+    if (!isReady) checkSession();
+    if (isAuthenticated) replace("/editor");
   }, [isReady, isAuthenticated, replace, checkSession]);
 
   const handleLoginClick = (provider: "github" | "google") => {
@@ -45,6 +46,9 @@ const SignIn = () => {
 
   return (
     <>
+      <Head>
+        <title>Sign In | JSON Crack</title>
+      </Head>
       <Navbar />
       <StyledPageWrapper>
         <StyledHeroSection>
