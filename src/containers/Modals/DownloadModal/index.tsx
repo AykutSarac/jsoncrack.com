@@ -96,7 +96,7 @@ enum Extensions {
   png,
 }
 export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
-  const [extension, setExtension] = React.useState(Extensions.svg);
+  const [extension, setExtension] = React.useState(Extensions.png);
   const [fileDetails, setFileDetails] = React.useState({
     filename: "jsoncrack.com",
     backgroundColor: "transparent",
