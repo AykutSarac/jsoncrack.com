@@ -1,0 +1,17 @@
+name: Verify
+
+# Run action only on pull requests
+on:
+  pull_request:
+    branches:
+    - main
+
+jobs:
+  build:
+    name: Verify Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Lint
+        run: npm run lint
+      - name: Build
+        run: npm run build
