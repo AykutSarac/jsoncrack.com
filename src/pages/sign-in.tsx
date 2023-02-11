@@ -31,13 +31,13 @@ const StyledLoginButtons = styled.div`
 
 const SignIn = () => {
   const { isReady, replace } = useRouter();
-  const tokenAuth = useUser(state => state.tokenAuth);
+  const checkSession = useUser(state => state.checkSession);
   const isAuthenticated = useUser(state => state.isAuthenticated);
 
   React.useEffect(() => {
-    if (isAuthenticated) replace("/editor");
-    if (isReady) tokenAuth();
-  }, [tokenAuth, isReady, isAuthenticated, replace]);
+      if (!isReady) checkSession();
+      if (isAuthenticated) replace("/editor");
+  }, [isReady, isAuthenticated, replace, checkSession]);
 
   const handleLoginClick = (provider: "github" | "google") => {
     altogic.auth.signInWithProvider(provider);
