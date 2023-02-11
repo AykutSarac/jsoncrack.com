@@ -1,27 +1,25 @@
-name: Verify
+name: Verify Pull Request
 
-# Run action only on pull requests
 on:
   pull_request:
-    branches:
-    - main
-    
-permissions:
-  pull-requests: read
+    branches: [ "main" ]
 
 jobs:
   build:
-    name: Verify Build
+
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
     steps:
-      - name: Check out code
-        uses: actions/checkout@v3
-      - name: Set Node env
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          cache: 'npm'
-      - name: Check Lint
-        run: npm run lint
-      - name: Build
-        run: npm run build
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm lint
+    - run: npm run build
