@@ -6,39 +6,39 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     box-sizing: border-box;
     color: ${({ theme }) => theme.FULL_WHITE};
-    font-family: 'Catamaran', sans-serif;
+    font-family: var(--mona-sans);
     font-weight: 400;
     font-size: 16px;
-    scroll-behavior: smooth;
     height: 100%;
-
     background-color: #000000;
-    opacity: 1;
-    background-image: radial-gradient(#414141 0.5px, #000000 0.5px);
-    background-size: 10px 10px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 800 800'%3E%3Cg fill-opacity='0.3'%3E%3Ccircle fill='%23000000' cx='400' cy='400' r='600'/%3E%3Ccircle fill='%23110718' cx='400' cy='400' r='500'/%3E%3Ccircle fill='%23220e30' cx='400' cy='400' r='400'/%3E%3Ccircle fill='%23331447' cx='400' cy='400' r='300'/%3E%3Ccircle fill='%23441b5f' cx='400' cy='400' r='200'/%3E%3Ccircle fill='%23552277' cx='400' cy='400' r='100'/%3E%3C/g%3E%3C/svg%3E");
+    background-attachment: fixed;
+    background-size: cover;
 
-    @media only screen and (min-width: 768px) {
-      background-color: #000000;
-      opacity: 1;
-      background-image: radial-gradient(#414141 0.5px, #000000 0.5px);
-      background-size: 15px 15px;
+    @media only screen and (max-width: 768px) {
+      background-position: right;
     }
   }
 
   * {
     -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth !important;
   }
 
   .hide {
     display: none;
   }
+
+  svg {
+    vertical-align: top;
+  }
+
   
   a {
     text-decoration: none;
     color: unset;
     padding: 0;
     margin: 0;
-    font-family: 'Roboto', sans-serif;
   }
 
   button {
@@ -52,9 +52,9 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #carbonads * {
-  margin: initial;
-  padding: initial;
-  line-height: initial;
+    margin: initial;
+    padding: initial;
+    line-height: initial;
   }
 
   #carbonads {
@@ -74,7 +74,6 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #carbonads > span {
-
     min-width: 18.75em;
     max-width: clamp(18.75em, 22.5em, 24.5em);
     min-height: 100px;

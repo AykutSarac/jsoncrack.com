@@ -1,66 +1,75 @@
 import React from "react";
 import type { AppProps } from "next/app";
-import { useRouter } from "next/router";
+import localFont from "@next/font/local";
 import { init } from "@sentry/nextjs";
-import { decompress } from "compress-json";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
 import { GoogleAnalytics } from "src/components/GoogleAnalytics";
 import GlobalStyle from "src/constants/globalStyle";
 import { darkTheme, lightTheme } from "src/constants/theme";
-import useConfig from "src/hooks/store/useConfig";
-import useStored from "src/hooks/store/useStored";
-import { isValidJson } from "src/utils/isValidJson";
+import { ModalController } from "src/containers/ModalController";
+import useStored from "src/store/useStored";
 import { ThemeProvider } from "styled-components";
+
+const monaSans = localFont({
+  src: "./Mona-Sans.woff2",
+  variable: "--mona-sans",
+  display: "swap",
+  fallback: ["Arial, Helvetica, sans-serif", "Tahoma, Verdana, sans-serif"],
+});
 
 if (process.env.NODE_ENV !== "development") {
   init({
     dsn: "https://d3345591295d4dd1b8c579b62003d939@o1284435.ingest.sentry.io/6495191",
-    tracesSampleRate: 0.5,
+    tracesSampleRate: 0.25,
+    release: 'production'
   });
 }
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: false,
+    },
+  },
+});
+
 function JsonCrack({ Component, pageProps }: AppProps) {
-  const { query } = useRouter();
+  const [isReady, setReady] = React.useState(false);
   const lightmode = useStored(state => state.lightmode);
-  const setJson = useConfig(state => state.setJson);
-  const [isRendered, setRendered] = React.useState(false);
 
   React.useEffect(() => {
-    const isJsonValid =
-      typeof query.json === "string" && isValidJson(decodeURIComponent(query.json));
-
-    if (isJsonValid) {
-      const jsonDecoded = decompress(JSON.parse(isJsonValid));
-      const jsonString = JSON.stringify(jsonDecoded);
-
-      setJson(jsonString);
-    }
-  }, [query.json, setJson]);
-
-  React.useEffect(() => {
-    setRendered(true);
+    setReady(true);
   }, []);
 
-  if (!isRendered) return null;
-
-  return (
-    <>
-      <GoogleAnalytics />
-      <ThemeProvider theme={lightmode ? lightTheme : darkTheme}>
-        <GlobalStyle />
-        <Component {...pageProps} />
-        <Toaster
-          position="bottom-right"
-          toastOptions={{
-            style: {
-              background: "#4D4D4D",
-              color: "#B9BBBE",
-            },
-          }}
-        />
-      </ThemeProvider>
-    </>
-  );
+  if (isReady)
+    return (
+      <QueryClientProvider client={queryClient}>
+        <GoogleAnalytics />
+        <ThemeProvider theme={lightmode ? lightTheme : darkTheme}>
+          <GlobalStyle />
+          <main className={monaSans.className}>
+            <Component {...pageProps} />
+            <ModalController />
+            <Toaster
+              position="top-right"
+              containerStyle={{
+                top: 40,
+                right: 6,
+                fontSize: 14,
+              }}
+              toastOptions={{
+                style: {
+                  background: "#4D4D4D",
+                  color: "#B9BBBE",
+                },
+              }}
+            />
+          </main>
+        </ThemeProvider>
+      </QueryClientProvider>
+    );
 }
 
 export default JsonCrack;

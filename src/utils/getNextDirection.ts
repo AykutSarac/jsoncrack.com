@@ -1,5 +1,5 @@
-export function getNextLayout(layout: "LEFT" | "RIGHT" | "DOWN" | "UP") {
-  switch (layout) {
+export function getNextDirection(direction: "LEFT" | "RIGHT" | "DOWN" | "UP") {
+  switch (direction) {
     case "RIGHT":
       return "DOWN";
 

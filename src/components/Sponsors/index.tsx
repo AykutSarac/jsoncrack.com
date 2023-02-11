@@ -1,5 +1,5 @@
 import React from "react";
-import useStored from "src/hooks/store/useStored";
+import useStored from "src/store/useStored";
 import styled from "styled-components";
 
 async function getSponsors() {
@@ -24,7 +24,7 @@ async function getSponsors() {
 
 const StyledSponsorsWrapper = styled.ul`
   display: flex;
-  width: 100%;
+  width: 70%;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -60,8 +60,7 @@ const StyledSponsor = styled.li<{ handle: string }>`
       transform: translateY(-110%);
       border-width: 5px;
       border-style: solid;
-      border-color: ${({ theme }) => theme.BACKGROUND_PRIMARY} transparent
-        transparent transparent;
+      border-color: ${({ theme }) => theme.BACKGROUND_PRIMARY} transparent transparent transparent;
     }
   }
 
@@ -86,13 +85,7 @@ export const Sponsors = () => {
       {sponsors.users.map(user => (
         <StyledSponsor handle={user.handle} key={user.handle}>
           <a href={user.profile} target="_blank" rel="noreferrer">
-            <img
-              src={user.avatar}
-              alt={user.handle}
-              width="40"
-              height="40"
-              loading="lazy"
-            />
+            <img src={user.avatar} alt={user.handle} width="40" height="40" loading="lazy" />
           </a>
         </StyledSponsor>
       ))}

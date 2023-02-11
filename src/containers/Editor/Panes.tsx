@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
 import { JsonEditor } from "src/containers/Editor/JsonEditor";
-import useConfig from "src/hooks/store/useConfig";
+import useGraph from "src/store/useGraph";
 import styled from "styled-components";
 
 export const StyledEditor = styled(Allotment)`
@@ -17,25 +17,25 @@ const LiveEditor = dynamic(() => import("src/containers/Editor/LiveEditor"), {
 });
 
 const Panes: React.FC = () => {
-  const hideEditor = useConfig(state => state.hideEditor);
-  const setConfig = useConfig(state => state.setConfig);
-  const isMobile = window.innerWidth <= 768;
+  const fullscreen = useGraph(state => state.fullscreen);
+  const toggleFullscreen = useGraph(state => state.toggleFullscreen);
+  const isMobile = React.useMemo(() => window.innerWidth <= 768, []);
 
   React.useEffect(() => {
-    if (isMobile) setConfig("hideEditor", true);
-  }, [isMobile, setConfig]);
+    if (isMobile) toggleFullscreen(true);
+  }, [isMobile, toggleFullscreen]);
 
   return (
     <StyledEditor proportionalLayout={false} vertical={isMobile}>
       <Allotment.Pane
         preferredSize={isMobile ? "100%" : 400}
-        minSize={hideEditor ? 0 : 300}
+        minSize={fullscreen ? 0 : 300}
         maxSize={isMobile ? Infinity : 800}
-        visible={!hideEditor}
+        visible={!fullscreen}
       >
         <JsonEditor />
       </Allotment.Pane>
-      <Allotment.Pane minSize={0} maxSize={isMobile && !hideEditor ? 0 : Infinity}>
+      <Allotment.Pane minSize={0} maxSize={isMobile && !fullscreen ? 0 : Infinity}>
         <LiveEditor />
       </Allotment.Pane>
     </StyledEditor>

@@ -1,9 +1,16 @@
 import React from "react";
+import dynamic from "next/dynamic";
 import toast from "react-hot-toast";
 import { FiCopy } from "react-icons/fi";
+import vs from "react-syntax-highlighter/dist/cjs/styles/prism/vs";
+import vscDarkPlus from "react-syntax-highlighter/dist/cjs/styles/prism/vsc-dark-plus";
 import { Button } from "src/components/Button";
 import { Modal } from "src/components/Modal";
-import styled from "styled-components";
+import useStored from "src/store/useStored";
+
+const SyntaxHighlighter = dynamic(() => import("react-syntax-highlighter/dist/cjs/prism-async"), {
+  ssr: false,
+});
 
 interface NodeModalProps {
   selectedNode: object;
@@ -11,37 +18,31 @@ interface NodeModalProps {
   closeModal: () => void;
 }
 
-const StyledTextarea = styled.textarea`
-  resize: none;
-  width: 100%;
-  min-height: 200px;
-
-  padding: 10px;
-  background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
-  color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
-  outline: none;
-  border-radius: 4px;
-  line-height: 20px;
-  border: none;
-`;
-
 export const NodeModal = ({ selectedNode, visible, closeModal }: NodeModalProps) => {
-  const nodeData = Array.isArray(selectedNode)
-    ? Object.fromEntries(selectedNode)
-    : selectedNode;
+  const lightmode = useStored(state => state.lightmode);
+  const nodeData = Array.isArray(selectedNode) ? Object.fromEntries(selectedNode) : selectedNode;
 
   const handleClipboard = () => {
     toast.success("Content copied to clipboard!");
-    navigator.clipboard.writeText(JSON.stringify(nodeData));
+    navigator.clipboard?.writeText(JSON.stringify(nodeData));
     closeModal();
   };
 
   return (
-    <Modal visible={visible} setVisible={closeModal}>
+    <Modal visible={visible} setVisible={closeModal} size="lg">
       <Modal.Header>Node Content</Modal.Header>
       <Modal.Content>
-        <StyledTextarea
-          defaultValue={JSON.stringify(
+        <SyntaxHighlighter
+          style={lightmode ? vs : vscDarkPlus}
+          customStyle={{
+            borderRadius: "4px",
+            fontSize: "14px",
+            margin: "0",
+          }}
+          language="json"
+          showLineNumbers
+        >
+          {JSON.stringify(
             nodeData,
             (_, v) => {
               if (typeof v === "string") return v.replaceAll('"', "");
@@ -49,8 +50,7 @@ export const NodeModal = ({ selectedNode, visible, closeModal }: NodeModalProps)
             },
             2
           )}
-          readOnly
-        />
+        </SyntaxHighlighter>
       </Modal.Content>
       <Modal.Controls setVisible={closeModal}>
         <Button status="SECONDARY" onClick={handleClipboard}>

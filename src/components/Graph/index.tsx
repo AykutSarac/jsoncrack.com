@@ -1,56 +1,61 @@
 import React from "react";
-import {
-  ReactZoomPanPinchRef,
-  TransformComponent,
-  TransformWrapper,
-} from "react-zoom-pan-pinch";
+import { ReactZoomPanPinchRef, TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import { Canvas, Edge, ElkRoot } from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
-import useConfig from "src/hooks/store/useConfig";
-import useGraph from "src/hooks/store/useGraph";
+import useGraph from "src/store/useGraph";
+import useUser from "src/store/useUser";
 import styled from "styled-components";
 import { Loading } from "../Loading";
 import { ErrorView } from "./ErrorView";
+import { PremiumView } from "./PremiumView";
 
-interface LayoutProps {
+interface GraphProps {
   isWidget?: boolean;
   openModal: () => void;
   setSelectedNode: (node: [string, string][]) => void;
 }
 
-const StyledEditorWrapper = styled.div<{ isWidget: boolean }>`
+const StyledEditorWrapper = styled.div<{ widget: boolean }>`
   position: absolute;
   width: 100%;
-  height: ${({ isWidget }) => (isWidget ? "100vh" : "calc(100vh - 36px)")};
+  height: ${({ widget }) => (widget ? "calc(100vh - 36px)" : "calc(100vh - 65px)")};
   background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
   background-image: ${({ theme }) =>
-    `radial-gradient(#505050 0.5px, ${theme.BACKGROUND_SECONDARY} 0.5px)`};
-  background-size: 15px 15px;
+    `radial-gradient(#505050 1px, ${theme.BACKGROUND_SECONDARY} 1px)`};
+  background-size: 25px 25px;
 
   :active {
     cursor: move;
   }
 
-  .dragging {
+  .dragging,
+  .dragging button {
     pointer-events: none;
   }
 
   rect {
     fill: ${({ theme }) => theme.BACKGROUND_NODE};
   }
+
+  @media only screen and (max-width: 1440px) {
+    background-image: ${({ theme }) =>
+      `radial-gradient(#505050 0.5px, ${theme.BACKGROUND_SECONDARY} 0.5px)`};
+    background-size: 15px 15px;
+  }
+
+  @media only screen and (max-width: 320px) {
+    height: 100vh;
+  }
 `;
 
-const GraphComponent = ({
-  isWidget = false,
-  openModal,
-  setSelectedNode,
-}: LayoutProps) => {
-  const [minScale, setMinScale] = React.useState(0.4);
-  const setGraphValue = useGraph(state => state.setGraphValue);
-  const setConfig = useConfig(state => state.setConfig);
-  const centerView = useConfig(state => state.centerView);
+const GraphComponent = ({ isWidget = false, openModal, setSelectedNode }: GraphProps) => {
+  const isPremium = useUser(state => state.isPremium);
+  const setLoading = useGraph(state => state.setLoading);
+  const setZoomPanPinch = useGraph(state => state.setZoomPanPinch);
+  const centerView = useGraph(state => state.centerView);
+
   const loading = useGraph(state => state.loading);
-  const layout = useConfig(state => state.layout);
+  const direction = useGraph(state => state.direction);
   const nodes = useGraph(state => state.nodes);
   const edges = useGraph(state => state.edges);
 
@@ -69,34 +74,33 @@ const GraphComponent = ({
 
   const onInit = React.useCallback(
     (ref: ReactZoomPanPinchRef) => {
-      setConfig("zoomPanPinch", ref);
+      setZoomPanPinch(ref);
     },
-    [setConfig]
+    [setZoomPanPinch]
   );
 
   const onLayoutChange = React.useCallback(
     (layout: ElkRoot) => {
       if (layout.width && layout.height) {
         const areaSize = layout.width * layout.height;
-        const changeRatio = Math.abs(
-          (areaSize * 100) / (size.width * size.height) - 100
-        );
+        const changeRatio = Math.abs((areaSize * 100) / (size.width * size.height) - 100);
 
-        const MIN_SCALE = Math.round((450_000 / areaSize) * 100) / 100;
-        const scale = MIN_SCALE > 2 ? 1 : MIN_SCALE <= 0 ? 0.1 : MIN_SCALE;
-
-        setMinScale(scale);
-        setSize({ width: layout.width + 400, height: layout.height + 400 });
+        setSize({
+          width: (layout.width as number) + 400,
+          height: (layout.height as number) + 400,
+        });
 
         requestAnimationFrame(() => {
           setTimeout(() => {
-            setGraphValue("loading", false);
-            setTimeout(() => changeRatio > 100 && centerView(), 0);
-          }, 0);
+            setLoading(false);
+            setTimeout(() => {
+              if (changeRatio > 70 || isWidget) centerView();
+            });
+          });
         });
       }
     },
-    [centerView, setGraphValue, size.height, size.width]
+    [centerView, isWidget, setLoading, size.height, size.width]
   );
 
   const onCanvasClick = React.useCallback(() => {
@@ -106,21 +110,23 @@ const GraphComponent = ({
 
   if (nodes.length > 8_000) return <ErrorView />;
 
+  if (nodes.length > 1_000 && !isWidget) {
+    if (!isPremium()) return <PremiumView />;
+  }
+
   return (
-    <StyledEditorWrapper isWidget={isWidget}>
-      {loading && <Loading message="Painting graph..." />}
+    <StyledEditorWrapper onContextMenu={e => e.preventDefault()} widget={isWidget}>
+      <Loading message="Painting graph..." loading={loading} />
       <TransformWrapper
         maxScale={2}
-        minScale={minScale}
+        minScale={0.05}
         initialScale={0.4}
         wheel={{ step: 0.08 }}
         zoomAnimation={{ animationType: "linear" }}
         doubleClick={{ disabled: true }}
         onInit={onInit}
         onPanning={ref => ref.instance.wrapperComponent?.classList.add("dragging")}
-        onPanningStop={ref =>
-          ref.instance.wrapperComponent?.classList.remove("dragging")
-        }
+        onPanningStop={ref => ref.instance.wrapperComponent?.classList.remove("dragging")}
       >
         <TransformComponent
           wrapperStyle={{
@@ -136,20 +142,18 @@ const GraphComponent = ({
             edges={edges}
             maxWidth={size.width}
             maxHeight={size.height}
-            direction={layout}
+            direction={direction}
             onLayoutChange={onLayoutChange}
             onCanvasClick={onCanvasClick}
-            key={layout}
             zoomable={false}
             animated={false}
             readonly={true}
             dragEdge={null}
             dragNode={null}
             fit={true}
+            key={direction}
             node={props => <CustomNode {...props} onClick={handleNodeClick} />}
-            edge={props => (
-              <Edge {...props} containerClassName={`edge-${props.id}`} />
-            )}
+            edge={props => <Edge {...props} containerClassName={`edge-${props.id}`} />}
           />
         </TransformComponent>
       </TransformWrapper>

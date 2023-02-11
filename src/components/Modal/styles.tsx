@@ -22,9 +22,9 @@ export const ModalWrapper = styled.div`
   }
 `;
 
-export const ModalInnerWrapper = styled.div`
+export const ModalInnerWrapper = styled.div<{ size: "sm" | "md" | "lg" }>`
   min-width: 440px;
-  max-width: 490px;
+  max-width: ${({ size }) => (size === "sm" ? "490px" : size === "md" ? "50%" : "80%")};
   width: fit-content;
   animation: ${appearAnimation} 220ms ease-in-out;
   line-height: 20px;
@@ -36,8 +36,11 @@ export const ModalInnerWrapper = styled.div`
 `;
 
 export const Title = styled.h2`
+  display: flex;
+  align-items: center;
+  gap: 5px;
   color: ${({ theme }) => theme.INTERACTIVE_ACTIVE};
-  font-size: 20px !important;
+  font-size: 20px;
   margin: 0;
 `;
 
@@ -48,17 +51,19 @@ export const HeaderWrapper = styled.div`
 `;
 
 export const ContentWrapper = styled.div`
-  color: ${({ theme }) => theme.TEXT_NORMAL};
   background: ${({ theme }) => theme.MODAL_BACKGROUND};
+  color: ${({ theme }) => theme.TEXT_NORMAL};
   padding: 16px;
   overflow: hidden auto;
+  height: fit-content;
+  max-height: calc(100vh - 156px);
 `;
 
 export const ControlsWrapper = styled.div`
   display: flex;
   flex-direction: row-reverse;
   background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
-  padding: 16px;
+  padding: 12px;
   border-radius: 0 0 5px 5px;
   gap: 10px;
 `;

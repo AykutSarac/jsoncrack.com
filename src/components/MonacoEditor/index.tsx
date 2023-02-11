@@ -1,10 +1,9 @@
 import React from "react";
-import Editor, { loader } from "@monaco-editor/react";
+import Editor, { loader, Monaco } from "@monaco-editor/react";
+import debounce from "lodash.debounce";
 import { Loading } from "src/components/Loading";
-import useConfig from "src/hooks/store/useConfig";
-import useGraph from "src/hooks/store/useGraph";
-import useStored from "src/hooks/store/useStored";
-import { parser } from "src/utils/jsonParser";
+import useJson from "src/store/useJson";
+import useStored from "src/store/useStored";
 import styled from "styled-components";
 
 loader.config({
@@ -27,56 +26,87 @@ const StyledWrapper = styled.div`
   grid-template-rows: minmax(0, 1fr);
 `;
 
-export const MonacoEditor = ({
-  setHasError,
-}: {
-  setHasError: (value: boolean) => void;
-}) => {
-  const json = useConfig(state => state.json);
-  const expand = useConfig(state => state.expand);
-  const setJson = useConfig(state => state.setJson);
-  const setGraphValue = useGraph(state => state.setGraphValue);
+export const MonacoEditor = () => {
+  const json = useJson(state => state.json);
+  const setJson = useJson(state => state.setJson);
+  const setError = useJson(state => state.setError);
+  const [loaded, setLoaded] = React.useState(false);
+  const [value, setValue] = React.useState<string | undefined>(json);
+
+  const hasError = useJson(state => state.hasError);
+  const getHasChanges = useJson(state => state.getHasChanges);
   const lightmode = useStored(state => (state.lightmode ? "light" : "vs-dark"));
-  const [value, setValue] = React.useState<string | undefined>("");
+
+  const handleEditorWillMount = React.useCallback(
+    (monaco: Monaco) => {
+      monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
+        allowComments: true,
+        comments: "ignore",
+      });
+
+      monaco.editor.onDidChangeMarkers(([uri]) => {
+        const markers = monaco.editor.getModelMarkers({ resource: uri });
+        setError(!!markers.length);
+      });
+    },
+    [setError]
+  );
+
+  const debouncedSetJson = React.useMemo(
+    () =>
+      debounce(value => {
+        if (hasError) return;
+        setJson(value || "[]");
+      }, 1200),
+    [hasError, setJson]
+  );
 
   React.useEffect(() => {
-    const { nodes, edges } = parser(json, expand);
+    if ((value || !hasError) && loaded) debouncedSetJson(value);
+    setLoaded(true);
 
-    setGraphValue("loading", true);
-    setGraphValue("nodes", nodes);
-    setGraphValue("edges", edges);
-    setValue(json);
-  }, [expand, json, setGraphValue]);
+    return () => debouncedSetJson.cancel();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSetJson, hasError, value]);
+
+  const handleChange = React.useCallback((value?: string) => {
+    try {
+      const parsedJson = JSON.stringify(JSON.parse(value!), null, 2);
+      setValue(parsedJson);
+    } catch (error) {
+      setValue(value);
+    }
+  }, []);
 
   React.useEffect(() => {
-    const formatTimer = setTimeout(() => {
-      try {
-        if (!value) {
-          setHasError(false);
-          return setJson("{}");
-        }
+    const beforeunload = (e: BeforeUnloadEvent) => {
+      if (getHasChanges()) {
+        const confirmationMessage =
+          "Unsaved changes, if you leave before saving  your changes will be lost";
 
-        const parsedJSON = JSON.stringify(JSON.parse(value), null, 2);
-        setJson(parsedJSON);
-        setHasError(false);
-      } catch (jsonError: any) {
-        setHasError(true);
+        (e || window.event).returnValue = confirmationMessage; //Gecko + IE
+        return confirmationMessage;
       }
-    }, 1200);
+    };
 
-    return () => clearTimeout(formatTimer);
-  }, [value, setJson, setHasError]);
+    window.addEventListener("beforeunload", beforeunload);
+
+    return () => {
+      window.removeEventListener("beforeunload", beforeunload);
+    };
+  }, [getHasChanges]);
 
   return (
     <StyledWrapper>
       <Editor
-        height="100%"
-        defaultLanguage="json"
-        value={value}
+        value={json}
         theme={lightmode}
         options={editorOptions}
-        onChange={setValue}
+        onChange={handleChange}
         loading={<Loading message="Loading Editor..." />}
+        beforeMount={handleEditorWillMount}
+        defaultLanguage="json"
+        height="100%"
       />
     </StyledWrapper>
   );

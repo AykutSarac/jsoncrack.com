@@ -1,15 +1,11 @@
 import React from "react";
-import {
-  searchQuery,
-  cleanupHighlight,
-  highlightMatchedNodes,
-} from "src/utils/search";
-import useConfig from "./store/useConfig";
+import useGraph from "src/store/useGraph";
+import { searchQuery, cleanupHighlight, highlightMatchedNodes } from "src/utils/search";
 
 export const useFocusNode = () => {
-  const setConfig = useConfig(state => state.setConfig);
-  const zoomPanPinch = useConfig(state => state.zoomPanPinch);
+  const zoomPanPinch = useGraph(state => state.zoomPanPinch);
   const [selectedNode, setSelectedNode] = React.useState(0);
+  const [nodeCount, setNodeCount] = React.useState(0);
   const [content, setContent] = React.useState({
     value: "",
     debounced: "",
@@ -18,14 +14,12 @@ export const useFocusNode = () => {
   const skip = () => setSelectedNode(current => current + 1);
 
   React.useEffect(() => {
-    setConfig("performanceMode", !content.value.length);
-
     const debouncer = setTimeout(() => {
       setContent(val => ({ ...val, debounced: content.value }));
     }, 800);
 
     return () => clearTimeout(debouncer);
-  }, [content.value, setConfig]);
+  }, [content.value]);
 
   React.useEffect(() => {
     if (!zoomPanPinch) return;
@@ -39,30 +33,36 @@ export const useFocusNode = () => {
     cleanupHighlight();
 
     if (ref && matchedNode && matchedNode.parentElement) {
-      const newScale = 1;
+      const newScale = 0.8;
       const x = Number(matchedNode.getAttribute("data-x"));
       const y = Number(matchedNode.getAttribute("data-y"));
 
       const newPositionX =
         (ref.offsetLeft - x) * newScale +
-        ref.clientWidth / 2 -
-        matchedNode.getBoundingClientRect().width / 2;
+        ref.clientWidth / 5 -
+        matchedNode.getBoundingClientRect().width / 5;
+
       const newPositionY =
         (ref.offsetLeft - y) * newScale +
-        ref.clientHeight / 2 -
-        matchedNode.getBoundingClientRect().height / 2;
+        ref.clientHeight / 8 -
+        matchedNode.getBoundingClientRect().height / 8;
 
       highlightMatchedNodes(matchedNodes, selectedNode);
+      setNodeCount(matchedNodes.length);
 
       zoomPanPinch?.setTransform(newPositionX, newPositionY, newScale);
     } else {
       setSelectedNode(0);
+      setNodeCount(0);
     }
 
     return () => {
-      if (!content.value) setSelectedNode(0);
+      if (!content.value) {
+        setSelectedNode(0);
+        setNodeCount(0);
+      }
     };
-  }, [content.debounced, content.value, selectedNode, zoomPanPinch]);
+  }, [content.debounced, content, selectedNode, zoomPanPinch]);
 
-  return [content, setContent, skip] as const;
+  return [content, setContent, skip, nodeCount, selectedNode] as const;
 };

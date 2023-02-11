@@ -1,79 +1,119 @@
 import React from "react";
+import dynamic from "next/dynamic";
 import Head from "next/head";
-import Link from "next/link";
-import { FaGithub, FaHeart, FaLinkedin, FaTwitter } from "react-icons/fa";
+import Script from "next/script";
+import { AiOutlineRight } from "react-icons/ai";
 import {
   HiCursorClick,
   HiLightningBolt,
   HiOutlineDownload,
   HiOutlineSearchCircle,
 } from "react-icons/hi";
-import { TwitterTweetEmbed } from "react-twitter-embed";
+import { IoHeart } from "react-icons/io5";
+import { SiVisualstudiocode } from "react-icons/si";
+import vscDarkPlus from "react-syntax-highlighter/dist/cjs/styles/prism/vsc-dark-plus";
 import { CarbonAds } from "src/components/CarbonAds";
+import { Footer } from "src/components/Footer";
+import { Navbar } from "src/components/Navbar";
 import { Producthunt } from "src/components/Producthunt";
 import { Sponsors } from "src/components/Sponsors";
-import { GoalsModal } from "src/containers/Modals/GoalsModal";
-import pkg from "../../../package.json";
+import { SupportButton } from "src/components/SupportButton";
+import { baseURL } from "src/constants/data";
+import { TABS } from "src/constants/previewSection";
+import { PricingCards } from "../PricingCards";
 import * as Styles from "./styles";
 
-const Navbar = () => (
-  <Styles.StyledNavbar>
-    <Styles.StyledNavLink href="/editor">Editor</Styles.StyledNavLink>
-    <Link href="#features" passHref>
-      <Styles.StyledNavLink>Features</Styles.StyledNavLink>
-    </Link>
-    <Link href="#sponsor" passHref>
-      <Styles.StyledNavLink>Sponsor</Styles.StyledNavLink>
-    </Link>
-    <Styles.StyledNavLink
-      href="https://github.com/AykutSarac/jsoncrack.com"
-      target="_blank"
-      rel="external"
-    >
-      GitHub
-    </Styles.StyledNavLink>
-  </Styles.StyledNavbar>
+const SyntaxHighlighter = dynamic(() => import("react-syntax-highlighter/dist/cjs/prism-async"), {
+  ssr: false,
+});
+
+const HeroSection = () => (
+  <Styles.StyledHeroSection id="main">
+    <Styles.StyledTitle>
+      <Styles.StyledGradientText>JSON</Styles.StyledGradientText> CRACK
+    </Styles.StyledTitle>
+    <Styles.StyledSubTitle>
+      Seamlessly visualize your JSON data{" "}
+      <Styles.StyledHighlightedText>instantly</Styles.StyledHighlightedText> into graphs.
+    </Styles.StyledSubTitle>
+
+    <Styles.StyledButton href="/editor" link>
+      GO TO EDITOR
+      <AiOutlineRight strokeWidth="80" />
+    </Styles.StyledButton>
+
+    <Styles.StyledButtonWrapper>
+      <Styles.StyledSponsorButton
+        href="https://github.com/sponsors/AykutSarac"
+        target="_blank"
+        rel="noreferrer"
+        link
+      >
+        SPONSOR US
+        <IoHeart />
+      </Styles.StyledSponsorButton>
+      <Styles.StyledSponsorButton
+        href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode"
+        link
+        isBlue
+      >
+        GET IT ON VS CODE
+        <SiVisualstudiocode />
+      </Styles.StyledSponsorButton>
+    </Styles.StyledButtonWrapper>
+  </Styles.StyledHeroSection>
 );
 
-const HeroSection = () => {
-  const [isModalVisible, setModalVisible] = React.useState(false);
+const PreviewSection = () => {
+  const [currentTab, setCurrentTab] = React.useState(0);
+
+  const updateTab = (tabId: number) => {
+    const embed = document.getElementById("jcPreview") as HTMLIFrameElement;
+    embed.contentWindow?.postMessage({
+      json: TABS[tabId].json,
+    });
+    setCurrentTab(tabId);
+  };
 
   return (
-    <Styles.StyledHeroSection id="main">
-      <Styles.StyledTitle>
-        <Styles.StyledGradientText>JSON</Styles.StyledGradientText> Crack
-      </Styles.StyledTitle>
-      <Styles.StyledSubTitle>
-        Seamlessly visualize your JSON data{" "}
-        <Styles.StyledHighlightedText>instantly</Styles.StyledHighlightedText> into
-        graphs.
-      </Styles.StyledSubTitle>
-      <Styles.StyledMinorTitle>Paste - Import - Fetch!</Styles.StyledMinorTitle>
-      <Styles.StyledButton rel="prefetch" href="/editor" target="_blank" link>
-        GO TO EDITOR
-      </Styles.StyledButton>
+    <Styles.StyledPreviewSection>
+      <Styles.StyledHighlightWrapper>
+        <Styles.StyledTabsWrapper>
+          {TABS.map(tab => (
+            <Styles.StyledTab
+              active={tab.id === currentTab}
+              onClick={() => updateTab(tab.id)}
+              key={tab.id}
+            >
+              {tab.name}
+            </Styles.StyledTab>
+          ))}
+        </Styles.StyledTabsWrapper>
+        <SyntaxHighlighter
+          style={vscDarkPlus}
+          customStyle={{
+            fontSize: "16px",
+            width: "100%",
+            height: "440px",
+            margin: "0",
+            borderTop: "2px solid #4D4D4D",
+          }}
+          language="json"
+          showLineNumbers
+        >
+          {TABS[currentTab].json}
+        </SyntaxHighlighter>
+      </Styles.StyledHighlightWrapper>
 
-      <Styles.StyledSponsorButton onClick={() => setModalVisible(true)}>
-        Help JSON Crack&apos;s Goals
-        <FaHeart />
-      </Styles.StyledSponsorButton>
-      <GoalsModal visible={isModalVisible} setVisible={setModalVisible} />
-    </Styles.StyledHeroSection>
+      <Styles.StyledPreviewFrame
+        title="Preview Embed"
+        id="jcPreview"
+        src={`${baseURL}/widget?json=63b73305c358219fbc421adf`}
+        loading="eager"
+      />
+    </Styles.StyledPreviewSection>
   );
 };
-
-const PreviewSection = () => (
-  <Styles.StyledPreviewSection>
-    <Styles.StyledImageWrapper>
-      <Styles.StyledImage
-        width="1200"
-        height="863"
-        src="/assets/jsoncrack-screenshot.webp"
-        alt="preview"
-      />
-    </Styles.StyledImageWrapper>
-  </Styles.StyledPreviewSection>
-);
 
 const FeaturesSection = () => (
   <Styles.StyledFeaturesSection id="features">
@@ -83,9 +123,9 @@ const FeaturesSection = () => (
       </Styles.StyledCardIcon>
       <Styles.StyledCardTitle>EASY-TO-USE</Styles.StyledCardTitle>
       <Styles.StyledCardDescription>
-        Don&apos;t even bother to update your schema to view your JSON into graphs;
-        directly paste, import or fetch! JSON Crack helps you to visualize without
-        any additional values and save your time.
+        We believe that powerful software doesn&apos;t have to be difficult to use. That&apos;s why
+        we&apos;ve designed our app to be as intuitive and easy-to-use as possible. You can quickly
+        and easily load your JSON data and start exploring and analyzing it right away!
       </Styles.StyledCardDescription>
     </Styles.StyledSectionCard>
 
@@ -95,9 +135,9 @@ const FeaturesSection = () => (
       </Styles.StyledCardIcon>
       <Styles.StyledCardTitle>SEARCH</Styles.StyledCardTitle>
       <Styles.StyledCardDescription>
-        Have a huge file of values, keys or arrays? Worry no more, type in the
-        keyword you are looking for into search input and it will take you to each
-        node with matching result highlighting the line to understand better!
+        Have a huge file of values, keys or arrays? Worry no more, type in the keyword you are
+        looking for into search input and it will take you to each node with matching result
+        highlighting the line to understand better!
       </Styles.StyledCardDescription>
     </Styles.StyledSectionCard>
 
@@ -107,9 +147,9 @@ const FeaturesSection = () => (
       </Styles.StyledCardIcon>
       <Styles.StyledCardTitle>DOWNLOAD</Styles.StyledCardTitle>
       <Styles.StyledCardDescription>
-        Download the graph to your local machine and use it wherever you want, to
-        your blogs, website or make it a poster and paste to the wall. Who
-        wouldn&apos;t want to see a JSON Crack graph onto their wall, eh?
+        Download the graph to your local machine and use it wherever you want, to your blogs,
+        website or make it a poster and paste to the wall. Who wouldn&apos;t want to see a JSON
+        Crack graph onto their wall, eh?
       </Styles.StyledCardDescription>
     </Styles.StyledSectionCard>
 
@@ -119,9 +159,9 @@ const FeaturesSection = () => (
       </Styles.StyledCardIcon>
       <Styles.StyledCardTitle>LIVE</Styles.StyledCardTitle>
       <Styles.StyledCardDescription>
-        With Microsoft&apos;s Monaco Editor which is also used by VS Code, easily
-        edit your JSON and directly view through the graphs. Also there&apos;s a JSON
-        validator above of it to make sure there is no type error.
+        With Microsoft&apos;s Monaco Editor which is also used by VS Code, easily edit your JSON and
+        directly view through the graphs. Also there&apos;s a JSON validator above of it to make
+        sure there is no type error.
       </Styles.StyledCardDescription>
     </Styles.StyledSectionCard>
   </Styles.StyledFeaturesSection>
@@ -129,19 +169,38 @@ const FeaturesSection = () => (
 
 const GitHubSection = () => (
   <Styles.StyledSection id="github" reverse>
-    <TwitterTweetEmbed
-      tweetId="1519363257794015233"
-      options={{
-        width: "600",
-        align: "center",
-      }}
-    />
+    <Styles.StyledTwitterQuote>
+      <blockquote className="twitter-tweet" data-lang="en" data-dnt="true" data-theme="light">
+        <p lang="en" dir="ltr">
+          Looking to understand or explore some JSON? Just paste or upload to visualize it as a
+          graph with <a href="https://t.co/HlKSrhKryJ">https://t.co/HlKSrhKryJ</a> 😍 <br />
+          <br />
+          Thanks to <a href="https://twitter.com/aykutsarach?ref_src=twsrc%5Etfw">
+            @aykutsarach
+          </a>! <a href="https://t.co/0LyPUL8Ezz">pic.twitter.com/0LyPUL8Ezz</a>
+        </p>
+        &mdash; GitHub (@github){" "}
+        <a href="https://twitter.com/github/status/1519363257794015233?ref_src=twsrc%5Etfw">
+          April 27, 2022
+        </a>
+      </blockquote>{" "}
+      <Script strategy="lazyOnload" src="https://platform.twitter.com/widgets.js"></Script>
+    </Styles.StyledTwitterQuote>
     <Styles.StyledSectionArea>
       <Styles.StyledSubTitle>Open Source Community</Styles.StyledSubTitle>
       <Styles.StyledMinorTitle>
-        Join the Open Source Community by suggesting new ideas, support by
-        contributing; implementing new features, fixing bugs and doing changes minor
-        to major!
+        At JSON Crack, we believe in the power of open source software and the communities that
+        support it. That&apos;s why we&apos;re proud to be part of the open source community and to
+        contribute to the development and growth of open source tools and technologies.
+        <br />
+        <br /> As part of our commitment to the open source community, we&apos;ve made our app
+        freely available to anyone who wants to use it, and we welcome contributions from anyone
+        who&apos;s interested in helping to improve it. Whether you&apos;re a developer, a data
+        scientist, or just someone who&apos;s passionate about open source, we&apos;d love to have
+        you join our community and help us make JSON Crack the best it can be.
+        <br />
+        <br /> So why not join us and become part of the JSON Crack open source community today? We
+        can&apos;t wait to see what we can accomplish together!
       </Styles.StyledMinorTitle>
       <Styles.StyledButton
         href="https://github.com/AykutSarac/jsoncrack.com"
@@ -159,12 +218,26 @@ const EmbedSection = () => (
     <Styles.StyledSectionArea>
       <Styles.StyledSubTitle>Embed Into Your Website</Styles.StyledSubTitle>
       <Styles.StyledMinorTitle>
-        Easily embed the JSON Crack graph into your website to showcase your
-        visitors, blog readers or anybody else!
+        JSON Crack provides users with the necessary code to embed the app into a website easily
+        using an iframe. This code can be easily copied and pasted into the desired location on the
+        website, allowing users to quickly and easily integrate JSON Crack into existing workflows.
+        <br />
+        <br /> Once the app is embedded, users can use it to view and analyze JSON data directly on
+        the website. This can be useful for a variety of purposes, such as quickly checking the
+        structure of a JSON file or verifying the data contained within it. JSON Crack&apos;s
+        intuitive interface makes it easy to navigate and understand even complex JSON data, making
+        it a valuable tool for anyone working with JSON.
       </Styles.StyledMinorTitle>
+      <Styles.StyledButton href="/docs" status="SECONDARY" link>
+        LEARN TO EMBED
+      </Styles.StyledButton>
     </Styles.StyledSectionArea>
     <div>
-      <Styles.StyledIframge src="https://jsoncrack.com/widget?json=%5B%5B%22squadName%22%2C%22homeTown%22%2C%22formed%22%2C%22secretBase%22%2C%22active%22%2C%22members%22%2C%22a%7C0%7C1%7C2%7C3%7C4%7C5%22%2C%22Super%20hero%20squad%22%2C%22Metro%20City%22%2C%22n%7CWW%22%2C%22Super%20tower%22%2C%22b%7CT%22%2C%22name%22%2C%22age%22%2C%22secretIdentity%22%2C%22powers%22%2C%22a%7CC%7CD%7CE%7CF%22%2C%22Molecule%20Man%22%2C%22n%7CT%22%2C%22Dan%20Jukes%22%2C%22Radiation%20resistance%22%2C%22Turning%20tiny%22%2C%22Radiation%20blast%22%2C%22a%7CK%7CL%7CM%22%2C%22o%7CG%7CH%7CI%7CJ%7CN%22%2C%22Madame%20Uppercut%22%2C%22n%7Cd%22%2C%22Jane%20Wilson%22%2C%22Million%20tonne%20punch%22%2C%22Damage%20resistance%22%2C%22Superhuman%20reflexes%22%2C%22a%7CS%7CT%7CU%22%2C%22o%7CG%7CP%7CQ%7CR%7CV%22%2C%22Eternal%20Flame%22%2C%22n%7C4C92%22%2C%22Unknown%22%2C%22Immortality%22%2C%22Heat%20Immunity%22%2C%22Inferno%22%2C%22Teleportation%22%2C%22Interdimensional%20travel%22%2C%22a%7Ca%7Cb%7Cc%7Cd%7Ce%22%2C%22o%7CG%7CX%7CY%7CZ%7Cf%22%2C%22a%7CO%7CW%7Cg%22%2C%22o%7C6%7C7%7C8%7C9%7CA%7CB%7Ch%22%5D%2C%22i%22%5D"></Styles.StyledIframge>
+      <Styles.StyledFrame
+        title="Example Embed"
+        src={`${baseURL}/widget?json=63c313d32ffa98f29b462315`}
+        loading="lazy"
+      ></Styles.StyledFrame>
     </div>
   </Styles.StyledSection>
 );
@@ -204,42 +277,6 @@ const SponsorSection = () => (
   </Styles.StyledSponsorSection>
 );
 
-const Footer = () => (
-  <Styles.StyledFooter>
-    <Styles.StyledFooterText>
-      © 2022 JSON Crack - {pkg.version}
-    </Styles.StyledFooterText>
-    <Styles.StyledIconLinks>
-      <Styles.StyledNavLink
-        href="https://github.com/AykutSarac/jsoncrack.com"
-        rel="external"
-        target="_blank"
-        aria-label="github"
-      >
-        <FaGithub size={26} />
-      </Styles.StyledNavLink>
-
-      <Styles.StyledNavLink
-        href="https://www.linkedin.com/in/aykutsarac/"
-        rel="me"
-        target="_blank"
-        aria-label="linkedin"
-      >
-        <FaLinkedin size={26} />
-      </Styles.StyledNavLink>
-
-      <Styles.StyledNavLink
-        href="https://twitter.com/aykutsarach"
-        rel="me"
-        target="_blank"
-        aria-label="twitter"
-      >
-        <FaTwitter size={26} />
-      </Styles.StyledNavLink>
-    </Styles.StyledIconLinks>
-  </Styles.StyledFooter>
-);
-
 const Home: React.FC = () => {
   return (
     <Styles.StyledHome>
@@ -250,10 +287,12 @@ const Home: React.FC = () => {
       <HeroSection />
       <PreviewSection />
       <FeaturesSection />
+      <SupportSection />
       <GitHubSection />
       <EmbedSection />
-      <SupportSection />
+      <PricingCards />
       <SponsorSection />
+      <SupportButton />
       <Footer />
     </Styles.StyledHome>
   );

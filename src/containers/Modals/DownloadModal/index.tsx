@@ -7,7 +7,6 @@ import { FiCopy, FiDownload } from "react-icons/fi";
 import { Button } from "src/components/Button";
 import { FileInput } from "src/components/FileInput";
 import { Modal, ModalProps } from "src/components/Modal";
-import useConfig from "src/hooks/store/useConfig";
 import styled from "styled-components";
 
 const ColorPickerStyles: Partial<TwitterPickerStylesProps> = {
@@ -97,8 +96,6 @@ enum Extensions {
   png
 }
 export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
-  const setConfig = useConfig(state => state.setConfig);
-
   const [extension, setExtension] = React.useState(Extensions.svg)
   const [fileDetails, setFileDetails] = React.useState({
     filename: "jsoncrack.com",
@@ -109,7 +106,6 @@ export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => 
   const clipboardImage = async () => {
     try {
       toast.loading("Copying to clipboard...", { id: "toastClipboard" });
-      setConfig("performanceMode", false);
 
       const imageElement = document.querySelector("svg[id*='ref']") as HTMLElement;
 
@@ -120,7 +116,7 @@ export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => 
 
       if (!blob) return;
 
-      navigator.clipboard.write([
+      navigator.clipboard?.write([
         new ClipboardItem({
           [blob.type]: blob,
         }),
@@ -132,14 +128,12 @@ export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => 
     } finally {
       toast.dismiss("toastClipboard");
       setVisible(false);
-      setConfig("performanceMode", true);
     }
   };
 
   const exportAsImage = async () => {
     try {
       toast.loading("Downloading...", { id: "toastDownload" });
-      setConfig("performanceMode", false);
 
       const imageElement = document.querySelector("svg[id*='ref']") as HTMLElement;
 
@@ -156,7 +150,6 @@ export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => 
     } finally {
       toast.dismiss("toastDownload");
       setVisible(false);
-      setConfig("performanceMode", true);
     }
   };
 

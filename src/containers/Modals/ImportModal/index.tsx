@@ -4,7 +4,7 @@ import { AiOutlineUpload } from "react-icons/ai";
 import { Button } from "src/components/Button";
 import { Input } from "src/components/Input";
 import { Modal, ModalProps } from "src/components/Modal";
-import useConfig from "src/hooks/store/useConfig";
+import useJson from "src/store/useJson";
 import styled from "styled-components";
 
 const StyledModalContent = styled(Modal.Content)`
@@ -33,6 +33,7 @@ const StyledUploadWrapper = styled.label`
 `;
 
 const StyledFileName = styled.span`
+  padding-top: 14px;
   color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
 `;
 
@@ -42,12 +43,24 @@ const StyledUploadMessage = styled.h3`
 `;
 
 export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
-  const setJson = useConfig(state => state.setJson);
+  const setJson = useJson(state => state.setJson);
   const [url, setURL] = React.useState("");
   const [jsonFile, setJsonFile] = React.useState<File | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) setJsonFile(e.target.files?.item(0));
+  };
+
+  const handleFileDrag = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+
+    if (e.type === "drop" && e.dataTransfer.files.length) {
+      if (e.dataTransfer.files[0].type === "application/json") {
+        setJsonFile(e.dataTransfer.files[0]);
+      } else {
+        toast.error("Please upload JSON file!");
+      }
+    }
   };
 
   const handleImportFile = () => {
@@ -58,7 +71,7 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
       return fetch(url)
         .then(res => res.json())
         .then(json => {
-          setJson(JSON.stringify(json));
+          setJson(JSON.stringify(json, null, 2));
           setVisible(false);
         })
         .catch(() => toast.error("Failed to fetch JSON!"))
@@ -85,8 +98,9 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
           onChange={e => setURL(e.target.value)}
           type="url"
           placeholder="URL of JSON to fetch"
+          autoFocus
         />
-        <StyledUploadWrapper>
+        <StyledUploadWrapper onDrop={handleFileDrag} onDragOver={handleFileDrag}>
           <input
             key={jsonFile?.name}
             onChange={handleFileChange}
@@ -99,11 +113,7 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
         </StyledUploadWrapper>
       </StyledModalContent>
       <Modal.Controls setVisible={setVisible}>
-        <Button
-          status="SECONDARY"
-          onClick={handleImportFile}
-          disabled={!(jsonFile || url)}
-        >
+        <Button status="SECONDARY" onClick={handleImportFile} disabled={!(jsonFile || url)}>
           Import
         </Button>
       </Modal.Controls>

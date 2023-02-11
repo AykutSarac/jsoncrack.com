@@ -1,14 +1,10 @@
 import React from "react";
 import { MdLink, MdLinkOff } from "react-icons/md";
-// import { useInViewport } from "react-in-viewport";
 import { CustomNodeProps } from "src/components/CustomNode";
-import useConfig from "src/hooks/store/useConfig";
-import useGraph from "src/hooks/store/useGraph";
-import useStored from "src/hooks/store/useStored";
+import useGraph from "src/store/useGraph";
+import useStored from "src/store/useStored";
 import styled from "styled-components";
 import * as Styled from "./styles";
-
-const inViewport = true;
 
 const StyledExpand = styled.button`
   pointer-events: all;
@@ -26,28 +22,41 @@ const StyledExpand = styled.button`
   }
 `;
 
-const StyledTextNodeWrapper = styled.div<{ hasCollapse: boolean }>`
+const StyledTextNodeWrapper = styled.span<{ hasCollapse: boolean }>`
   display: flex;
-  justify-content: ${({ hasCollapse }) =>
-    hasCollapse ? "space-between" : "center"};
+  justify-content: ${({ hasCollapse }) => (hasCollapse ? "space-between" : "center")};
   align-items: center;
   height: 100%;
   width: 100%;
 `;
 
-const TextNode: React.FC<CustomNodeProps> = ({
-  node,
-  x,
-  y,
-  hasCollapse = false,
-}) => {
-  const { id, text, width, height, data } = node;
+const StyledImageWrapper = styled.div`
+  padding: 5px;
+`;
+
+const StyledImage = styled.img`
+  border-radius: 2px;
+  object-fit: contain;
+  background: ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
+`;
+
+const TextNode: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) => {
+  const {
+    id,
+    text,
+    width,
+    height,
+    data: { isParent, childrenCount, type },
+  } = node;
   const ref = React.useRef(null);
   const hideCollapse = useStored(state => state.hideCollapse);
+  const showChildrenCount = useStored(state => state.childrenCount);
+  const imagePreview = useStored(state => state.imagePreview);
   const expandNodes = useGraph(state => state.expandNodes);
   const collapseNodes = useGraph(state => state.collapseNodes);
   const isExpanded = useGraph(state => state.collapsedParents.includes(id));
-  const performanceMode = useConfig(state => state.performanceMode);
+  const isImage =
+    !Array.isArray(text) && /(https?:\/\/.*\.(?:png|jpg|gif))/i.test(text) && imagePreview;
   // const { inViewport } = useInViewport(ref);
 
   const handleExpand = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -63,30 +72,36 @@ const TextNode: React.FC<CustomNodeProps> = ({
       height={height}
       x={0}
       y={0}
-      hideCollapse={hideCollapse}
-      hasCollapse={data.isParent && hasCollapse}
+      hasCollapse={isParent && hasCollapse}
       ref={ref}
     >
-      <StyledTextNodeWrapper hasCollapse={data.isParent && !hideCollapse}>
-        {(!performanceMode || inViewport) && (
-          <Styled.StyledKey
-            data-x={x}
-            data-y={y}
-            data-key={JSON.stringify(text)}
-            parent={data.isParent}
-          >
+      {isImage ? (
+        <StyledImageWrapper>
+          <StyledImage src={text} width="70" height="70" loading="lazy" />
+        </StyledImageWrapper>
+      ) : (
+        <StyledTextNodeWrapper
+          hasCollapse={isParent && hideCollapse}
+          data-x={x}
+          data-y={y}
+          data-key={JSON.stringify(text)}
+        >
+          <Styled.StyledKey parent={isParent} type={type}>
             <Styled.StyledLinkItUrl>
               {JSON.stringify(text).replaceAll('"', "")}
             </Styled.StyledLinkItUrl>
           </Styled.StyledKey>
-        )}
+          {isParent && childrenCount > 0 && showChildrenCount && (
+            <Styled.StyledChildrenCount>({childrenCount})</Styled.StyledChildrenCount>
+          )}
 
-        {inViewport && data.isParent && hasCollapse && !hideCollapse && (
-          <StyledExpand onClick={handleExpand}>
-            {isExpanded ? <MdLinkOff size={18} /> : <MdLink size={18} />}
-          </StyledExpand>
-        )}
-      </StyledTextNodeWrapper>
+          {isParent && hasCollapse && hideCollapse && (
+            <StyledExpand onClick={handleExpand}>
+              {isExpanded ? <MdLinkOff size={18} /> : <MdLink size={18} />}
+            </StyledExpand>
+          )}
+        </StyledTextNodeWrapper>
+      )}
     </Styled.StyledForeignObject>
   );
 };

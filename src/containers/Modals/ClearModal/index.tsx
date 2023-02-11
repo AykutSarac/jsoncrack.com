@@ -1,22 +1,28 @@
 import React from "react";
-import toast from "react-hot-toast";
+import { useRouter } from "next/router";
 import { Button } from "src/components/Button";
 import { Modal, ModalProps } from "src/components/Modal";
-import useConfig from "src/hooks/store/useConfig";
+import { deleteJson } from "src/services/db/json";
+import useJson from "src/store/useJson";
 
 export const ClearModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
-  const setJson = useConfig(state => state.setJson);
+  const setJson = useJson(state => state.setJson);
+  const { query, replace } = useRouter();
 
   const handleClear = () => {
     setJson("{}");
-    toast.success(`Cleared JSON and removed from memory.`);
     setVisible(false);
+
+    if (typeof query.json === "string") {
+      deleteJson(query.json);
+      replace("/editor");
+    }
   };
 
   return (
     <Modal visible={visible} setVisible={setVisible}>
-      <Modal.Header>Clear JSON</Modal.Header>
-      <Modal.Content>Are you sure you want to clear JSON?</Modal.Content>
+      <Modal.Header>Delete JSON</Modal.Header>
+      <Modal.Content>Are you sure you want to delete JSON?</Modal.Content>
       <Modal.Controls setVisible={setVisible}>
         <Button status="DANGER" onClick={handleClear}>
           Confirm

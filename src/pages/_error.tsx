@@ -15,7 +15,7 @@ const StyledNotFound = styled.div`
 const StyledMessage = styled.h4`
   color: ${({ theme }) => theme.FULL_WHITE};
   font-size: 25px;
-  font-weight: 600;
+  font-weight: 800;
   margin: 10px 0;
 `;
 

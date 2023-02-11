@@ -1,16 +1,16 @@
 import React from "react";
 import { Graph } from "src/components/Graph";
 import { NodeModal } from "src/containers/Modals/NodeModal";
-import useGraph from "src/hooks/store/useGraph";
+import useGraph from "src/store/useGraph";
 
 export const GraphCanvas = ({ isWidget = false }: { isWidget?: boolean }) => {
   const [isModalVisible, setModalVisible] = React.useState(false);
   const [selectedNode, setSelectedNode] = React.useState<[string, string][]>([]);
 
-  const openModal = React.useCallback(() => setModalVisible(true), []);
-
   const collapsedNodes = useGraph(state => state.collapsedNodes);
   const collapsedEdges = useGraph(state => state.collapsedEdges);
+
+  const openModal = React.useCallback(() => setModalVisible(true), []);
 
   React.useEffect(() => {
     const nodeList = collapsedNodes.map(id => `[id$="node-${id}"]`);
@@ -21,27 +21,23 @@ export const GraphCanvas = ({ isWidget = false }: { isWidget?: boolean }) => {
 
     if (nodeList.length) {
       const selectedNodes = document.querySelectorAll(nodeList.join(","));
-      const selectedEdges = document.querySelectorAll(edgeList.join(","));
-
       selectedNodes.forEach(node => node.classList.add("hide"));
+    }
+
+    if (edgeList.length) {
+      const selectedEdges = document.querySelectorAll(edgeList.join(","));
       selectedEdges.forEach(edge => edge.classList.add("hide"));
     }
   }, [collapsedNodes, collapsedEdges]);
 
   return (
     <>
-      <Graph
-        openModal={openModal}
-        setSelectedNode={setSelectedNode}
-        isWidget={isWidget}
+      <Graph openModal={openModal} setSelectedNode={setSelectedNode} isWidget={isWidget} />
+      <NodeModal
+        selectedNode={selectedNode}
+        visible={isModalVisible}
+        closeModal={() => setModalVisible(false)}
       />
-      {!isWidget && (
-        <NodeModal
-          selectedNode={selectedNode}
-          visible={isModalVisible}
-          closeModal={() => setModalVisible(false)}
-        />
-      )}
     </>
   );
 };
