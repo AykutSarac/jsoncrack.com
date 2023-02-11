@@ -10,6 +10,8 @@ const StyledNavbar = styled.div`
   padding: 16px 48px;
 
   @media only screen and (max-width: 768px) {
+    justify-content: center;
+
     a:first-of-type {
       display: none;
     }
@@ -35,6 +37,12 @@ const StyledNavLink = styled(Link)`
     font-weight: 500;
     color: ${({ theme }) => theme.ORANGE};
   }
+
+  @media only screen and (max-width: 568px) {
+    &.mobileHide {
+      display: none;
+    }
+  }
 `;
 
 export const Navbar = () => (
@@ -43,10 +51,14 @@ export const Navbar = () => (
       <img src="assets/icon.png" alt="json crack" width="120" />
     </Link>
     <StyledLinkWrapper>
-      <StyledNavLink href="https://pro.jsoncrack.com">Pro</StyledNavLink>
+      <StyledNavLink className="mobileHide" href="https://pro.jsoncrack.com">
+        Pro
+      </StyledNavLink>
       <StyledNavLink href="/editor">Editor</StyledNavLink>
       <StyledNavLink href="#features">Features</StyledNavLink>
-      <StyledNavLink href="#sponsor">Sponsor</StyledNavLink>
+      <StyledNavLink className="mobileHide" href="#sponsor">
+        Sponsor
+      </StyledNavLink>
       <StyledNavLink
         href="https://github.com/AykutSarac/jsoncrack.com"
         target="_blank"
@@ -54,7 +66,9 @@ export const Navbar = () => (
       >
         GitHub
       </StyledNavLink>
-      <StyledNavLink href="docs">Documentation</StyledNavLink>
+      <StyledNavLink className="mobileHide" href="docs">
+        Documentation
+      </StyledNavLink>
     </StyledLinkWrapper>
   </StyledNavbar>
 );
