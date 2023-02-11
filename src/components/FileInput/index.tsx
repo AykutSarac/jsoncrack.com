@@ -9,7 +9,7 @@ const StyledInputWrapper = styled.div`
 
 const StyledForm = styled.div`
   display: flex;
-  
+
   flex: 1;
 `;
 
@@ -33,11 +33,11 @@ const StyledButton = styled.button`
   padding: 0 10px;
   min-height: unset;
   text-transform: uppercase;
-  
+
   &:hover {
     box-shadow: none;
   }
-  
+
   &.active {
     background: ${({ theme }) => theme.PRIMARY};
     color: white;
@@ -46,32 +46,28 @@ const StyledButton = styled.button`
   }
 `;
 
-export interface ModalProps {
-    value:string | number | readonly string[] | undefined,
-    extensions:string[]
-    activeExtension:number
-    setExtension: Function,
-    onChange: React.ChangeEventHandler<HTMLInputElement> | undefined,
+export interface InputProps {
+  value: string | number | string[];
+  extensions: string[];
+  activeExtension: number;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  setExtension: (value: number) => void;
 }
-export const FileInput: React.FC<ModalProps> = (props) => {
-
-  const {setExtension, activeExtension, onChange,extensions,value } = props
-
+export const FileInput: React.FC<InputProps> = ({ setExtension, activeExtension, onChange, extensions, value }) => {
   return (
     <StyledInputWrapper>
       <StyledForm>
-        <StyledInput
-          type="text"
-          onChange={onChange}
-          value={value}
-          placeholder="File Name"
-        />
-          {extensions.map((ext, key) => (
-            <StyledButton className={`${activeExtension === key && "active"}`} key={key} aria-label="search" onClick={() => setExtension(key)}>
-              {ext}
-            </StyledButton>)
-          )}
-
+        <StyledInput type="text" onChange={onChange} value={value} placeholder="File Name" />
+        {extensions.map((ext, key) => (
+          <StyledButton
+            className={`${activeExtension === key && "active"}`}
+            key={key}
+            aria-label="search"
+            onClick={() => setExtension(key)}
+          >
+            {ext}
+          </StyledButton>
+        ))}
       </StyledForm>
     </StyledInputWrapper>
   );
