@@ -19,6 +19,8 @@ const initialStates = {
   collapsedNodes: [] as string[],
   collapsedEdges: [] as string[],
   collapsedParents: [] as string[],
+  selectedNode: [] as string | object,
+  path: "",
 };
 
 export type Graph = typeof initialStates;
@@ -37,10 +39,12 @@ interface GraphActions {
   zoomIn: () => void;
   zoomOut: () => void;
   centerView: () => void;
+  setSelectedNode: ({ node, path }: { node?: string | string[]; path?: string }) => void;
 }
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
   ...initialStates,
+  setSelectedNode: ({ node, path }) => set({ selectedNode: node, path }),
   setGraph: (data, options) => {
     const { nodes, edges } = parser(data ?? useJson.getState().json);
 

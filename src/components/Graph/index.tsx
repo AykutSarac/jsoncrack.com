@@ -1,6 +1,6 @@
 import React from "react";
 import { ReactZoomPanPinchRef, TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
-import { Canvas, Edge, ElkRoot } from "reaflow";
+import { Canvas, Edge, ElkRoot, getParentsForNodeId } from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
 import useGraph from "src/store/useGraph";
 import useUser from "src/store/useUser";
@@ -12,9 +12,6 @@ import { PremiumView } from "./PremiumView";
 interface GraphProps {
   isWidget?: boolean;
   openNodeModal: () => void;
-  setSelectedNode: (node: [string, string][]) => void;
-  openEdgeModal: () => void;
-  setSelectedEdge: (edgeInfo: string) => void;
 }
 
 const StyledEditorWrapper = styled.div<{ widget: boolean }>`
@@ -44,17 +41,12 @@ const StyledEditorWrapper = styled.div<{ widget: boolean }>`
   }
 `;
 
-const GraphComponent = ({
-  isWidget = false,
-  openNodeModal,
-  setSelectedNode,
-  openEdgeModal,
-  setSelectedEdge,
-}: GraphProps) => {
+const GraphComponent = ({ isWidget = false, openNodeModal }: GraphProps) => {
   const isPremium = useUser(state => state.isPremium);
   const setLoading = useGraph(state => state.setLoading);
   const setZoomPanPinch = useGraph(state => state.setZoomPanPinch);
   const centerView = useGraph(state => state.centerView);
+  const setSelectedNode = useGraph(state => state.setSelectedNode);
 
   const loading = useGraph(state => state.loading);
   const direction = useGraph(state => state.direction);
@@ -67,70 +59,57 @@ const GraphComponent = ({
   });
 
   const handleNodeClick = React.useCallback(
-    (e: React.MouseEvent<SVGElement>, data: NodeData) => {
-      if (setSelectedNode) setSelectedNode(data.text);
-      if (openNodeModal) openNodeModal();
-    },
-    [openNodeModal, setSelectedNode]
-  );
-
-  const handleEdgeClick = React.useCallback(
-    (e: React.MouseEvent<SVGElement>, data: EdgeData) => {
-      let curFromId = data.from;
-      let curToId = data.to;
-      const path = [curFromId, curToId];
-      while (curFromId !== "1") {
-        curToId = curFromId;
-        curFromId = edges.find(({ to }) => to === curFromId)?.from;
-        if (curFromId === undefined) {
-          break;
-        }
-        path.unshift(curFromId);
-      }
+    (_: React.MouseEvent<SVGElement>, data: NodeData) => {
+      let resolvedPath = "";
+      const parentIds = getParentsForNodeId(nodes, edges, data.id).map(n => n.id);
+      const path = parentIds.reverse().concat(data.id);
       const rootArrayElementIds = ["1"];
-      const edgeLength = edges.length;
-      for (let i = 1; i < edgeLength; i++) {
-        const curNodeId = edges[i].from!;
-        if (rootArrayElementIds.find(id => id === curNodeId)) continue;
-        let isRootArrayElement = true;
-        for (let j = i - 1; j >= 0; j--) {
-          if (curNodeId === edges[j]?.to) {
-            isRootArrayElement = false;
-          }
+      const edgesMap = new Map();
+
+      for (const edge of edges) {
+        if (!edgesMap.has(edge.from!)) {
+          edgesMap.set(edge.from!, []);
         }
-        if (isRootArrayElement) {
+        edgesMap.get(edge.from!).push(edge.to);
+      }
+
+      for (let i = 1; i < edges.length; i++) {
+        const curNodeId = edges[i].from!;
+        if (rootArrayElementIds.includes(curNodeId)) continue;
+        if (!edgesMap.has(curNodeId)) {
           rootArrayElementIds.push(curNodeId);
         }
       }
-      const pathLength = path.length;
-      let resolvedPath = "";
+
       if (rootArrayElementIds.length > 1) {
         resolvedPath += `Root[${rootArrayElementIds.findIndex(id => id === path[0])}]`;
       } else {
         resolvedPath += "{Root}";
       }
-      for (let i = 1; i < pathLength; i++) {
+
+      for (let i = 1; i < path.length; i++) {
         const curId = path[i];
-        if (curId === undefined) break;
         const curNode = nodes[+curId - 1];
-        if (curNode?.data.parent === "array") {
+
+        if (!curNode) break;
+        if (curNode.data.parent === "array") {
           resolvedPath += `.${curNode.text}`;
-          if (i !== pathLength - 1) {
-            const idx = edges
-              .filter(({ from }) => from === curId)
-              .findIndex(({ to }) => to === path[i + 1]);
+          if (i !== path.length - 1) {
+            const toNodeId = path[i + 1];
+            const idx = edgesMap.get(curId).indexOf(toNodeId);
             resolvedPath += `[${idx}]`;
           }
         }
-        if (curNode?.data.parent === "object") {
+
+        if (curNode.data.parent === "object") {
           resolvedPath += `.${curNode.text}`;
         }
       }
 
-      if (setSelectedEdge) setSelectedEdge(resolvedPath);
-      if (openEdgeModal) openEdgeModal();
+      if (setSelectedNode) setSelectedNode({ node: data.text, path: resolvedPath });
+      if (openNodeModal) openNodeModal();
     },
-    [nodes, edges]
+    [edges, nodes, openNodeModal, setSelectedNode]
   );
 
   const onInit = React.useCallback(
@@ -214,9 +193,7 @@ const GraphComponent = ({
             fit={true}
             key={direction}
             node={props => <CustomNode {...props} onClick={handleNodeClick} />}
-            edge={props => (
-              <Edge {...props} onClick={handleEdgeClick} containerClassName={`edge-${props.id}`} />
-            )}
+            edge={props => <Edge {...props} containerClassName={`edge-${props.id}`} />}
           />
         </TransformComponent>
       </TransformWrapper>
