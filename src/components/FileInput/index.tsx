@@ -53,7 +53,13 @@ export interface InputProps {
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
   setExtension: (value: number) => void;
 }
-export const FileInput: React.FC<InputProps> = ({ setExtension, activeExtension, onChange, extensions, value }) => {
+export const FileInput: React.FC<InputProps> = ({
+  setExtension,
+  activeExtension,
+  onChange,
+  extensions,
+  value,
+}) => {
   return (
     <StyledInputWrapper>
       <StyledForm>

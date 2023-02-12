@@ -1,9 +1,10 @@
 import React from "react";
 import { ReactZoomPanPinchRef, TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
-import { Canvas, Edge, ElkRoot, getParentsForNodeId } from "reaflow";
+import { Canvas, Edge, ElkRoot } from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
 import useGraph from "src/store/useGraph";
 import useUser from "src/store/useUser";
+import { getNodePath } from "src/utils/getNodePath";
 import styled from "styled-components";
 import { Loading } from "../Loading";
 import { ErrorView } from "./ErrorView";
@@ -66,53 +67,8 @@ const GraphComponent = ({ isWidget = false, openNodeModal }: GraphProps) => {
 
   const handleNodeClick = React.useCallback(
     (_: React.MouseEvent<SVGElement>, data: NodeData) => {
-      let resolvedPath = "";
-      const parentIds = getParentsForNodeId(nodes, edges, data.id).map(n => n.id);
-      const path = parentIds.reverse().concat(data.id);
-      const rootArrayElementIds = ["1"];
-      const edgesMap = new Map();
-
-      for (const edge of edges) {
-        if (!edgesMap.has(edge.from!)) {
-          edgesMap.set(edge.from!, []);
-        }
-        edgesMap.get(edge.from!).push(edge.to);
-      }
-
-      for (let i = 1; i < edges.length; i++) {
-        const curNodeId = edges[i].from!;
-        if (rootArrayElementIds.includes(curNodeId)) continue;
-        if (!edgesMap.has(curNodeId)) {
-          rootArrayElementIds.push(curNodeId);
-        }
-      }
-
-      if (rootArrayElementIds.length > 1) {
-        resolvedPath += `Root[${rootArrayElementIds.findIndex(id => id === path[0])}]`;
-      } else {
-        resolvedPath += "{Root}";
-      }
-
-      for (let i = 1; i < path.length; i++) {
-        const curId = path[i];
-        const curNode = nodes[+curId - 1];
-
-        if (!curNode) break;
-        if (curNode.data.parent === "array") {
-          resolvedPath += `.${curNode.text}`;
-          if (i !== path.length - 1) {
-            const toNodeId = path[i + 1];
-            const idx = edgesMap.get(curId).indexOf(toNodeId);
-            resolvedPath += `[${idx}]`;
-          }
-        }
-
-        if (curNode.data.parent === "object") {
-          resolvedPath += `.${curNode.text}`;
-        }
-      }
-
-      if (setSelectedNode) setSelectedNode({ node: data.text, path: resolvedPath });
+      if (setSelectedNode)
+        setSelectedNode({ node: data.text, path: getNodePath(nodes, edges, data.id) });
       if (openNodeModal) openNodeModal();
     },
     [edges, nodes, openNodeModal, setSelectedNode]

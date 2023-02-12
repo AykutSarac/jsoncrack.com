@@ -38,7 +38,7 @@ interface GraphActions {
   zoomIn: () => void;
   zoomOut: () => void;
   centerView: () => void;
-  setSelectedNode: ({ node, path }: { node?: string | string[]; path?: string }) => void;
+  setSelectedNode: ({ node, path }: { node: string | string[]; path: string }) => void;
 }
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
