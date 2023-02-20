@@ -65,7 +65,7 @@ export const useFocusNode = () => {
         setNodeCount(0);
       }
     };
-  },50);
+  },100);
   return () => clearTimeout(changeJson);
   }, [content.debounced, content, selectedNode, zoomPanPinch, json]);
 
