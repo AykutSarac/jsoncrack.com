@@ -1,8 +1,10 @@
 import React from "react";
 import useGraph from "src/store/useGraph";
 import { searchQuery, cleanupHighlight, highlightMatchedNodes } from "src/utils/search";
+import useJson from "src/store/useJson";
 
 export const useFocusNode = () => {
+  const json = useJson(state => state.json);
   const zoomPanPinch = useGraph(state => state.zoomPanPinch);
   const [selectedNode, setSelectedNode] = React.useState(0);
   const [nodeCount, setNodeCount] = React.useState(0);
@@ -22,6 +24,7 @@ export const useFocusNode = () => {
   }, [content.value]);
 
   React.useEffect(() => {
+    const changeJson = setTimeout(() => {
     if (!zoomPanPinch) return;
     const ref = zoomPanPinch.instance.wrapperComponent;
 
@@ -62,7 +65,9 @@ export const useFocusNode = () => {
         setNodeCount(0);
       }
     };
-  }, [content.debounced, content, selectedNode, zoomPanPinch]);
+  },50);
+  return () => clearTimeout(changeJson);
+  }, [content.debounced, content, selectedNode, zoomPanPinch, json]);
 
   return [content, setContent, skip, nodeCount, selectedNode] as const;
 };
