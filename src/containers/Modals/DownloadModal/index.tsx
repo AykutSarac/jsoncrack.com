@@ -1,35 +1,21 @@
 import React from "react";
+import {
+  ColorPicker,
+  TextInput,
+  SegmentedControl,
+  Group,
+  Modal,
+  Button,
+  Divider,
+  Grid,
+} from "@mantine/core";
 import { toBlob, toPng, toSvg } from "html-to-image";
-import { TwitterPicker } from "react-color";
-import { TwitterPickerStylesProps } from "react-color/lib/components/twitter/Twitter";
 import toast from "react-hot-toast";
 import { FiCopy, FiDownload } from "react-icons/fi";
-import { Button } from "src/components/Button";
-import { FileInput } from "src/components/FileInput";
-import { Modal, ModalProps } from "src/components/Modal";
+import { ModalProps } from "src/components/Modal";
 import styled from "styled-components";
 
-const ColorPickerStyles: Partial<TwitterPickerStylesProps> = {
-  card: {
-    background: "transparent",
-    boxShadow: "none",
-  },
-  body: {
-    padding: 0,
-  },
-  input: {
-    background: "rgba(0, 0, 0, 0.2)",
-    boxShadow: "none",
-    textTransform: "none",
-    whiteSpace: "nowrap",
-    textOverflow: "ellipsis",
-  },
-  hash: {
-    background: "rgba(180, 180, 180, 0.3)",
-  },
-};
-
-const defaultColors = [
+const swatches = [
   "#B80000",
   "#DB3E00",
   "#FCCB00",
@@ -76,30 +62,15 @@ const StyledContainer = styled.div`
   }
 `;
 
-const StyledColorWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const StyledColorIndicator = styled.div<{ color: string }>`
-  flex: 1;
-  width: 100%;
-  height: auto;
-  border-radius: 6px;
-  background: ${({ color }) => color};
-  border: 1px solid;
-  border-color: rgba(0, 0, 0, 0.1);
-`;
-
 enum Extensions {
-  svg,
-  png,
+  SVG = "svg",
+  PNG = "png",
 }
 export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
-  const [extension, setExtension] = React.useState(Extensions.png);
+  const [extension, setExtension] = React.useState(Extensions.PNG);
   const [fileDetails, setFileDetails] = React.useState({
     filename: "jsoncrack.com",
-    backgroundColor: "transparent",
+    backgroundColor: "rgba(255, 255, 255, 1)",
     quality: 1,
   });
 
@@ -137,14 +108,14 @@ export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => 
 
       const imageElement = document.querySelector("svg[id*='ref']") as HTMLElement;
 
-      let exportImage = extension === Extensions.svg ? toSvg : toPng;
+      let exportImage = extension === Extensions.SVG ? toSvg : toPng;
 
       const dataURI = await exportImage(imageElement, {
         quality: fileDetails.quality,
         backgroundColor: fileDetails.backgroundColor,
       });
 
-      downloadURI(dataURI, `${fileDetails.filename}.${Extensions[extension]}`);
+      downloadURI(dataURI, `${fileDetails.filename}.${extension}`);
     } catch (error) {
       toast.error("Failed to download image!");
     } finally {
@@ -157,46 +128,51 @@ export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => 
     setFileDetails({ ...fileDetails, [key]: value });
 
   return (
-    <Modal visible={visible} setVisible={setVisible}>
-      <Modal.Header>Download Image</Modal.Header>
-      <Modal.Content>
-        <StyledContainer>
-          File Name
-          <StyledColorWrapper>
-            <FileInput
+    <Modal opened={visible} onClose={() => setVisible(false)} title="Download Image" centered>
+      <Group align="flex-end" py="sm" grow>
+        <Grid align="end" grow>
+          <Grid.Col span={8}>
+            <TextInput
+              label="File Name"
               value={fileDetails.filename}
               onChange={e => updateDetails("filename", e.target.value)}
-              setExtension={setExtension}
-              activeExtension={extension}
-              extensions={Object.keys(Extensions).filter(v => isNaN(Number(v)))}
             />
-          </StyledColorWrapper>
-        </StyledContainer>
+          </Grid.Col>
+          <Grid.Col span={4}>
+            <SegmentedControl
+              value={extension}
+              onChange={e => setExtension(e as Extensions)}
+              data={[
+                { label: "SVG", value: Extensions.SVG },
+                { label: "PNG", value: Extensions.PNG },
+              ]}
+              fullWidth
+            />
+          </Grid.Col>
+        </Grid>
+      </Group>
+      <Group py="sm" grow>
         <StyledContainer>
           Background Color
-          <StyledColorWrapper>
-            <TwitterPicker
-              triangle="hide"
-              colors={defaultColors}
-              color={fileDetails.backgroundColor}
-              onChange={color => updateDetails("backgroundColor", color.hex)}
-              styles={{
-                default: ColorPickerStyles,
-              }}
-            />
-            <StyledColorIndicator color={fileDetails.backgroundColor} />
-          </StyledColorWrapper>
+          <ColorPicker
+            format="rgba"
+            value={fileDetails.backgroundColor}
+            onChange={color => updateDetails("backgroundColor", color)}
+            swatches={swatches}
+            fullWidth
+          />
         </StyledContainer>
-      </Modal.Content>
-      <Modal.Controls setVisible={setVisible}>
-        <Button status="SECONDARY" onClick={clipboardImage}>
-          <FiCopy size={18} /> Clipboard
+      </Group>
+
+      <Divider py="xs" />
+      <Group position="right">
+        <Button leftIcon={<FiCopy />} onClick={clipboardImage}>
+          Clipboard
         </Button>
-        <Button status="SUCCESS" onClick={exportAsImage}>
-          <FiDownload size={18} />
+        <Button color="green" leftIcon={<FiDownload />} onClick={exportAsImage}>
           Download
         </Button>
-      </Modal.Controls>
+      </Group>
     </Modal>
   );
 };

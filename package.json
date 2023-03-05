@@ -13,6 +13,11 @@
     "deploy": "gh-pages -d out -t true"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/server": "^11.10.0",
+    "@mantine/core": "^6.0.0",
+    "@mantine/hooks": "^6.0.0",
+    "@mantine/next": "^6.0.0",
     "@monaco-editor/react": "^4.4.6",
     "@next/font": "^13.1.6",
     "@sentry/nextjs": "^7.36.0",

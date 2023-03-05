@@ -1,8 +1,13 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import Script from "next/script";
 import { SeoTags } from "src/components/SeoTags";
+import { createGetInitialProps } from '@mantine/next';
+
+const getInitialProps = createGetInitialProps();
 
 class MyDocument extends Document {
+  static getInitialProps = getInitialProps;
+
   render() {
     return (
       <Html lang="en">

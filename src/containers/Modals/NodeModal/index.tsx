@@ -1,14 +1,13 @@
 import React from "react";
 import dynamic from "next/dynamic";
+import { Modal, Group, Button, Stack, Divider, Text, Menu } from "@mantine/core";
 import toast from "react-hot-toast";
+import { AiOutlineMenu } from "react-icons/ai";
 import { FiCopy } from "react-icons/fi";
-import vs from "react-syntax-highlighter/dist/cjs/styles/prism/vs";
-import vscDarkPlus from "react-syntax-highlighter/dist/cjs/styles/prism/vsc-dark-plus";
-import { Button } from "src/components/Button";
-import { Modal } from "src/components/Modal";
+import coldarkCold from "react-syntax-highlighter/dist/cjs/styles/prism/coldark-cold";
+import oneDark from "react-syntax-highlighter/dist/cjs/styles/prism/one-dark";
 import useGraph from "src/store/useGraph";
 import useStored from "src/store/useStored";
-import styled from "styled-components";
 
 const SyntaxHighlighter = dynamic(() => import("react-syntax-highlighter/dist/cjs/prism-async"), {
   ssr: false,
@@ -19,19 +18,29 @@ interface NodeModalProps {
   closeModal: () => void;
 }
 
-const StyledTitle = styled.div`
-  line-height: 16px;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 16px 0;
+const CodeBlock: React.FC<{ children: string | string[] }> = ({ children }) => {
+  const lightmode = useStored(state => state.lightmode);
 
-  &:first-of-type {
-    padding-top: 0;
-  }
-`;
+  return (
+    <SyntaxHighlighter
+      language="json"
+      style={lightmode ? coldarkCold : oneDark}
+      customStyle={{
+        borderRadius: "4px",
+        fontSize: "14px",
+        margin: "0",
+        maxHeight: "250px",
+        maxWidth: "600px",
+        minWidth: "350px"
+      }}
+      showLineNumbers
+    >
+      {children}
+    </SyntaxHighlighter>
+  );
+};
 
 export const NodeModal = ({ visible, closeModal }: NodeModalProps) => {
-  const lightmode = useStored(state => state.lightmode);
   const path = useGraph(state => state.path);
   const nodeData = useGraph(state =>
     Array.isArray(state.selectedNode) ? Object.fromEntries(state.selectedNode) : state.selectedNode
@@ -48,50 +57,48 @@ export const NodeModal = ({ visible, closeModal }: NodeModalProps) => {
   };
 
   return (
-    <Modal visible={visible} setVisible={closeModal} size="lg">
-      <Modal.Header>Node Content</Modal.Header>
-      <Modal.Content>
-        <StyledTitle>Content</StyledTitle>
-        <SyntaxHighlighter
-          style={lightmode ? vs : vscDarkPlus}
-          customStyle={{
-            borderRadius: "4px",
-            fontSize: "14px",
-            margin: "0",
-          }}
-          language="json"
-          showLineNumbers
-        >
-          {JSON.stringify(
-            nodeData,
-            (_, v) => {
-              if (typeof v === "string") return v.replaceAll('"', "");
-              return v;
-            },
-            2
-          )}
-        </SyntaxHighlighter>
-        <StyledTitle>Node Path</StyledTitle>
-        <SyntaxHighlighter
-          style={lightmode ? vs : vscDarkPlus}
-          customStyle={{
-            borderRadius: "4px",
-            fontSize: "14px",
-            margin: "0",
-          }}
-          language="javascript"
-        >
-          {path}
-        </SyntaxHighlighter>
-      </Modal.Content>
-      <Modal.Controls setVisible={closeModal}>
-        <Button status="SECONDARY" onClick={() => handleClipboard(JSON.stringify(nodeData))}>
-          <FiCopy size={18} /> Clipboard
-        </Button>
-        <Button status="SECONDARY" onClick={() => handleClipboard(path)}>
-          <FiCopy size={18} /> Copy Path
-        </Button>
-      </Modal.Controls>
+    <Modal title="Node Content" size="auto" opened={visible} onClose={closeModal} centered>
+      <Stack py="sm" spacing="sm">
+        <Stack spacing="xs">
+          <Text fz="sm" fw={700}>
+            Content
+          </Text>
+          <CodeBlock>
+            {JSON.stringify(
+              nodeData,
+              (_, v) => {
+                if (typeof v === "string") return v.replaceAll('"', "");
+                return v;
+              },
+              2
+            )}
+          </CodeBlock>
+        </Stack>
+        <Stack spacing="xs">
+          <Text fz="sm" fw={700}>
+            Node Path
+          </Text>
+          <CodeBlock>{path}</CodeBlock>
+        </Stack>
+      </Stack>
+      <Divider py="xs" />
+      <Group position="right">
+        <Menu trigger="hover" openDelay={100} closeDelay={400}>
+          <Menu.Target>
+            <Button color="gray" leftIcon={<AiOutlineMenu />}>
+              Actions
+            </Button>
+          </Menu.Target>
+          <Menu.Dropdown>
+            <Menu.Item icon={<FiCopy />} onClick={() => handleClipboard(JSON.stringify(nodeData))}>
+              Clipboard JSON
+            </Menu.Item>
+            <Menu.Item icon={<FiCopy />} onClick={() => handleClipboard(path)}>
+              Clipboard Path to Node
+            </Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
+      </Group>
     </Modal>
   );
 };

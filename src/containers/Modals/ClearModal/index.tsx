@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { Button } from "src/components/Button";
-import { Modal, ModalProps } from "src/components/Modal";
+import { Modal, Group, Button, Text, Divider } from "@mantine/core";
+import { ModalProps } from "src/components/Modal";
 import { deleteJson } from "src/services/db/json";
 import useJson from "src/store/useJson";
 
@@ -20,14 +20,16 @@ export const ClearModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   };
 
   return (
-    <Modal visible={visible} setVisible={setVisible}>
-      <Modal.Header>Delete JSON</Modal.Header>
-      <Modal.Content>Are you sure you want to delete JSON?</Modal.Content>
-      <Modal.Controls setVisible={setVisible}>
-        <Button status="DANGER" onClick={handleClear}>
+    <Modal title="Delete JSON" opened={visible} onClose={() => setVisible(false)} centered>
+      <Group py="sm">
+        <Text>Are you sure you want to delete JSON?</Text>
+      </Group>
+      <Divider py="xs" />
+      <Group position="right">
+        <Button color="red" onClick={handleClear}>
           Confirm
         </Button>
-      </Modal.Controls>
+      </Group>
     </Modal>
   );
 };

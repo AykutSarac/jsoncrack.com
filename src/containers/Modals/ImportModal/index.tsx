@@ -1,18 +1,10 @@
 import React from "react";
+import { Modal, Group, Button, TextInput, Stack, Divider } from "@mantine/core";
 import toast from "react-hot-toast";
 import { AiOutlineUpload } from "react-icons/ai";
-import { Button } from "src/components/Button";
-import { Input } from "src/components/Input";
-import { Modal, ModalProps } from "src/components/Modal";
+import { ModalProps } from "src/components/Modal";
 import useJson from "src/store/useJson";
 import styled from "styled-components";
-
-const StyledModalContent = styled(Modal.Content)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;
 
 const StyledUploadWrapper = styled.label`
   display: flex;
@@ -22,7 +14,6 @@ const StyledUploadWrapper = styled.label`
   background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
   border: 2px dashed ${({ theme }) => theme.BACKGROUND_TERTIARY};
   border-radius: 5px;
-  width: 100%;
   min-height: 200px;
   padding: 16px;
   cursor: pointer;
@@ -90,15 +81,13 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   };
 
   return (
-    <Modal visible={visible} setVisible={setVisible}>
-      <Modal.Header>Import JSON</Modal.Header>
-      <StyledModalContent>
-        <Input
+    <Modal title="Import JSON" opened={visible} onClose={() => setVisible(false)} centered>
+      <Stack py="sm">
+        <TextInput
           value={url}
           onChange={e => setURL(e.target.value)}
           type="url"
           placeholder="URL of JSON to fetch"
-          autoFocus
         />
         <StyledUploadWrapper onDrop={handleFileDrag} onDragOver={handleFileDrag}>
           <input
@@ -111,12 +100,13 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
           <StyledUploadMessage>Click Here to Upload JSON</StyledUploadMessage>
           <StyledFileName>{jsonFile?.name ?? "None"}</StyledFileName>
         </StyledUploadWrapper>
-      </StyledModalContent>
-      <Modal.Controls setVisible={setVisible}>
-        <Button status="SECONDARY" onClick={handleImportFile} disabled={!(jsonFile || url)}>
+      </Stack>
+      <Divider py="xs" />
+      <Group position="right">
+        <Button onClick={handleImportFile} disabled={!(jsonFile || url)}>
           Import
         </Button>
-      </Modal.Controls>
+      </Group>
     </Modal>
   );
 };

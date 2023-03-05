@@ -1,7 +1,9 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
+import Link from "next/link";
 import Script from "next/script";
+import { Button } from "@mantine/core";
 import { AiOutlineRight } from "react-icons/ai";
 import {
   HiCursorClick,
@@ -36,30 +38,23 @@ const HeroSection = () => (
       Seamlessly visualize your JSON data{" "}
       <Styles.StyledHighlightedText>instantly</Styles.StyledHighlightedText> into graphs.
     </Styles.StyledSubTitle>
-
-    <Styles.StyledButton href="/editor" link>
-      GO TO EDITOR
-      <AiOutlineRight strokeWidth="80" />
-    </Styles.StyledButton>
-
+    <Link href="/editor">
+      <Button color="grape" size="lg">
+        GO TO EDITOR
+        <AiOutlineRight strokeWidth="80" />
+      </Button>
+    </Link>
     <Styles.StyledButtonWrapper>
-      <Styles.StyledSponsorButton
-        href="https://github.com/sponsors/AykutSarac"
-        target="_blank"
-        rel="noreferrer"
-        link
-      >
-        SPONSOR US
-        <IoHeart />
-      </Styles.StyledSponsorButton>
-      <Styles.StyledSponsorButton
-        href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode"
-        link
-        isBlue
-      >
-        GET IT ON VS CODE
-        <SiVisualstudiocode />
-      </Styles.StyledSponsorButton>
+      <Link href="https://github.com/sponsors/AykutSarac" target="_blank" rel="noreferrer">
+        <Button color="red" size="md" variant="outline" rightIcon={<IoHeart />}>
+          SPONSOR US
+        </Button>
+      </Link>
+      <Link href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode">
+        <Button color="blue" size="md" variant="outline" rightIcon={<SiVisualstudiocode />}>
+          GET IT ON VS CODE
+        </Button>
+      </Link>
     </Styles.StyledButtonWrapper>
   </Styles.StyledHeroSection>
 );

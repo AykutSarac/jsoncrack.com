@@ -1,4 +1,12 @@
+import localFont from "@next/font/local";
 import { createGlobalStyle } from "styled-components";
+
+const monaSans = localFont({
+  src: "../pages/Mona-Sans.woff2",
+  variable: "--mona-sans",
+  display: "swap",
+  fallback: ["Arial, Helvetica, sans-serif", "Tahoma, Verdana, sans-serif"],
+});
 
 const GlobalStyle = createGlobalStyle`
   html, body {
@@ -14,6 +22,7 @@ const GlobalStyle = createGlobalStyle`
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 800 800'%3E%3Cg fill-opacity='0.3'%3E%3Ccircle fill='%23000000' cx='400' cy='400' r='600'/%3E%3Ccircle fill='%23110718' cx='400' cy='400' r='500'/%3E%3Ccircle fill='%23220e30' cx='400' cy='400' r='400'/%3E%3Ccircle fill='%23331447' cx='400' cy='400' r='300'/%3E%3Ccircle fill='%23441b5f' cx='400' cy='400' r='200'/%3E%3Ccircle fill='%23552277' cx='400' cy='400' r='100'/%3E%3C/g%3E%3C/svg%3E");
     background-attachment: fixed;
     background-size: cover;
+    font-family: ${monaSans.style.fontFamily};
 
     @media only screen and (max-width: 768px) {
       background-position: right;
@@ -30,7 +39,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   svg {
-    vertical-align: top;
+    vertical-align: text-top;
   }
 
   
