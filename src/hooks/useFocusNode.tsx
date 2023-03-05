@@ -20,7 +20,13 @@ export const useFocusNode = () => {
       setContent(val => ({ ...val, debounced: content.value }));
     }, 800);
 
-    return () => clearTimeout(debouncer);
+    return () => {
+      clearTimeout(debouncer);
+      if (!content.value) {
+        setSelectedNode(0);
+        setNodeCount(0);
+      }
+    };
   }, [content.value]);
 
   React.useEffect(() => {
@@ -58,16 +64,9 @@ export const useFocusNode = () => {
         setSelectedNode(0);
         setNodeCount(0);
       }
-
-      return () => {
-        if (!content.value) {
-          setSelectedNode(0);
-          setNodeCount(0);
-        }
-      };
     }, 100);
     return () => clearTimeout(changeJson);
-  }, [content.debounced, content, selectedNode, zoomPanPinch, json]);
+  }, [content.debounced, selectedNode, zoomPanPinch, json]);
 
   return [content, setContent, skip, nodeCount, selectedNode] as const;
 };
