@@ -32,7 +32,7 @@ export const GraphCanvas = ({ isWidget = false }: { isWidget?: boolean }) => {
   return (
     <>
       <Graph openNodeModal={openNodeModal} isWidget={isWidget} />
-      <NodeModal visible={isNodeModalVisible} closeModal={() => setNodeModalVisible(false)} />
+      <NodeModal opened={isNodeModalVisible} onClose={() => setNodeModalVisible(false)} />
     </>
   );
 };

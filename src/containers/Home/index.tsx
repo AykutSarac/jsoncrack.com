@@ -4,7 +4,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Script from "next/script";
 import { Button } from "@mantine/core";
-import { AiOutlineRight } from "react-icons/ai";
+import { AiOutlineRight, AiTwotoneStar } from "react-icons/ai";
 import {
   HiCursorClick,
   HiLightningBolt,
@@ -197,13 +197,16 @@ const GitHubSection = () => (
         <br /> So why not join us and become part of the JSON Crack open source community today? We
         can&apos;t wait to see what we can accomplish together!
       </Styles.StyledMinorTitle>
-      <Styles.StyledButton
+      <Button
+        w={200}
+        color="grape"
+        size="md"
+        component="a"
         href="https://github.com/AykutSarac/jsoncrack.com"
-        status="SECONDARY"
-        link
+        leftIcon={<AiTwotoneStar />}
       >
         STAR ON GITHUB
-      </Styles.StyledButton>
+      </Button>
     </Styles.StyledSectionArea>
   </Styles.StyledSection>
 );
@@ -223,9 +226,9 @@ const EmbedSection = () => (
         intuitive interface makes it easy to navigate and understand even complex JSON data, making
         it a valuable tool for anyone working with JSON.
       </Styles.StyledMinorTitle>
-      <Styles.StyledButton href="/docs" status="SECONDARY" link>
+      <Button w={200} size="md" component="a" href="/docs">
         LEARN TO EMBED
-      </Styles.StyledButton>
+      </Button>
     </Styles.StyledSectionArea>
     <div>
       <Styles.StyledFrame
@@ -260,14 +263,15 @@ const SponsorSection = () => (
     <Styles.StyledMinorTitle>
       Your supports make JSON Crack possible to continue and accessible for everyone!
     </Styles.StyledMinorTitle>
-    <Styles.StyledButton
+    <Button
+      size="md"
+      component="a"
+      color="green"
       href="https://github.com/sponsors/AykutSarac"
       rel="external"
-      status="SUCCESS"
-      link
     >
       Become A Sponsor!
-    </Styles.StyledButton>
+    </Button>
     <Sponsors />
   </Styles.StyledSponsorSection>
 );

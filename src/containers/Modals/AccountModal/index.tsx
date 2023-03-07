@@ -1,8 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import { Modal, Group, Button, Badge, Avatar, Grid, Divider } from "@mantine/core";
+import { Modal, Group, Button, Badge, Avatar, Grid, Divider, ModalProps } from "@mantine/core";
 import { IoRocketSharp } from "react-icons/io5";
-import { ModalProps } from "src/components/Modal";
 import useUser from "src/store/useUser";
 import styled from "styled-components";
 
@@ -43,7 +42,7 @@ const StyledContainer = styled.div`
   }
 `;
 
-export const AccountModal: React.FC<ModalProps> = ({ setVisible, visible }) => {
+export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const user = useUser(state => state.user);
   const isPremium = useUser(state => state.isPremium());
   const logout = useUser(state => state.logout);
@@ -53,7 +52,7 @@ export const AccountModal: React.FC<ModalProps> = ({ setVisible, visible }) => {
   };
 
   return (
-    <Modal title="Account" opened={visible} onClose={() => setVisible(false)} centered>
+    <Modal title="Account" opened={opened} onClose={onClose} centered>
       <StyledTitle>Hello, {user?.name}!</StyledTitle>
       <Group py="sm">
         <Grid gutter="xs">
@@ -112,7 +111,7 @@ export const AccountModal: React.FC<ModalProps> = ({ setVisible, visible }) => {
           color="red"
           onClick={() => {
             logout();
-            setVisible(false);
+            onClose();
           }}
         >
           Log Out

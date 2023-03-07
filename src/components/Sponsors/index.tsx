@@ -1,4 +1,5 @@
 import React from "react";
+import { Avatar, Tooltip, UnstyledButton } from "@mantine/core";
 import useStored from "src/store/useStored";
 import styled from "styled-components";
 
@@ -83,11 +84,17 @@ export const Sponsors = () => {
   return (
     <StyledSponsorsWrapper>
       {sponsors.users.map(user => (
-        <StyledSponsor handle={user.handle} key={user.handle}>
-          <a href={user.profile} target="_blank" rel="noreferrer">
-            <img src={user.avatar} alt={user.handle} width="40" height="40" loading="lazy" />
-          </a>
-        </StyledSponsor>
+        <Tooltip label={user.handle} key={user.handle}>
+          <UnstyledButton
+            component="a"
+            href={user.profile}
+            variant="subtle"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Avatar radius="md" src={user.avatar} alt={user.handle} />
+          </UnstyledButton>
+        </Tooltip>
       ))}
     </StyledSponsorsWrapper>
   );

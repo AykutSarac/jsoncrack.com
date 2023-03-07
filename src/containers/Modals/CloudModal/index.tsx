@@ -10,6 +10,7 @@ import {
   Center,
   Divider,
   ScrollArea,
+  ModalProps,
 } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
@@ -18,7 +19,6 @@ import toast from "react-hot-toast";
 import { AiOutlineEdit, AiOutlineLock, AiOutlinePlus, AiOutlineUnlock } from "react-icons/ai";
 import { FaTrash } from "react-icons/fa";
 import { IoRocketSharp } from "react-icons/io5";
-import { ModalProps } from "src/components/Modal";
 import { deleteJson, getAllJson, saveJson, updateJson } from "src/services/db/json";
 import useJson from "src/store/useJson";
 import useUser from "src/store/useUser";
@@ -204,15 +204,15 @@ const CreateCard: React.FC<{ reachedLimit: boolean }> = ({ reachedLimit }) => {
   );
 };
 
-export const CloudModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
+export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const { isReady, query } = useRouter();
 
   const { data, isFetching, refetch } = useQuery(["allJson", query], () => getAllJson(), {
-    enabled: isReady && visible,
+    enabled: isReady && opened,
   });
 
   return (
-    <Modal title="Saved On The Cloud" opened={visible} onClose={() => setVisible(false)} centered>
+    <Modal title="Saved On The Cloud" opened={opened} onClose={onClose} centered>
       <ScrollArea h={360}>
         <Stack py="sm">
           {isFetching ? (

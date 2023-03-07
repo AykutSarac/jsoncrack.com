@@ -68,7 +68,7 @@ const GraphComponent = ({ isWidget = false, openNodeModal }: GraphProps) => {
   const handleNodeClick = React.useCallback(
     (_: React.MouseEvent<SVGElement>, data: NodeData) => {
       if (setSelectedNode)
-        setSelectedNode({ node: data.text, path: getNodePath(nodes, edges, data.id) });
+        setSelectedNode({ nodeData: data, path: getNodePath(nodes, edges, data.id) });
       if (openNodeModal) openNodeModal();
     },
     [edges, nodes, openNodeModal, setSelectedNode]

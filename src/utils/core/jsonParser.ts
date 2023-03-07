@@ -1,4 +1,5 @@
 import { parseTree } from "jsonc-parser";
+import { getNodePath } from "../getNodePath";
 import { addEdgeToGraph } from "./addEdgeToGraph";
 import { addNodeToGraph } from "./addNodeToGraph";
 import { traverse } from "./traverse";
@@ -64,6 +65,11 @@ export const parser = (jsonStr: string) => {
       if (json.type === "array") addNodeToGraph({ graph: states.graph, text: "[]" });
       else addNodeToGraph({ graph: states.graph, text: "{}" });
     }
+
+    states.graph.nodes = states.graph.nodes.map(node => ({
+      ...node,
+      path: getNodePath(states.graph.nodes, states.graph.edges, node.id),
+    }));
 
     return states.graph;
   } catch (error) {

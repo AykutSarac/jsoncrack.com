@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Button } from "src/components/Button";
 import styled from "styled-components";
 
 export const StyledButtonWrapper = styled.div`
@@ -154,41 +153,6 @@ export const StyledMinorTitle = styled.p`
 
   @media only screen and (max-width: 992px) {
     font-size: 1rem;
-  }
-`;
-
-export const StyledButton = styled(Button)`
-  background: ${({ status }) => !status && "#a13cc2"};
-  padding: 12px 24px;
-  height: 46px;
-
-  div {
-    font-weight: 700;
-    font-size: 1rem;
-  }
-`;
-
-export const StyledSponsorButton = styled(Button)<{ isBlue?: boolean }>`
-  background: transparent;
-  border: 1px solid ${({ isBlue }) => (isBlue ? "#1F9CF0" : "#ee3d48")};
-  transition: all 200ms;
-  padding: 12px 24px;
-
-  div {
-    font-weight: 700;
-    font-size: 16px;
-  }
-
-  svg {
-    color: ${({ isBlue }) => (isBlue ? "#1F9CF0" : "#ee3d48")};
-  }
-
-  &:hover {
-    background: ${({ isBlue }) => (isBlue ? "#1F9CF0" : "#ee3d48")};
-
-    svg {
-      color: white;
-    }
   }
 `;
 

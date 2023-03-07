@@ -1,17 +1,16 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { Modal, Group, Button, Text, Divider } from "@mantine/core";
-import { ModalProps } from "src/components/Modal";
+import { Modal, Group, Button, Text, Divider, ModalProps } from "@mantine/core";
 import { deleteJson } from "src/services/db/json";
 import useJson from "src/store/useJson";
 
-export const ClearModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
+export const ClearModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const setJson = useJson(state => state.setJson);
   const { query, replace } = useRouter();
 
   const handleClear = () => {
     setJson("{}");
-    setVisible(false);
+    onClose();
 
     if (typeof query.json === "string") {
       deleteJson(query.json);
@@ -20,7 +19,7 @@ export const ClearModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
   };
 
   return (
-    <Modal title="Delete JSON" opened={visible} onClose={() => setVisible(false)} centered>
+    <Modal title="Delete JSON" opened={opened} onClose={onClose} centered>
       <Group py="sm">
         <Text>Are you sure you want to delete JSON?</Text>
       </Group>

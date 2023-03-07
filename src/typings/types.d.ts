@@ -4,6 +4,7 @@ interface NodeData<T = any> {
   id: string;
   disabled?: boolean;
   text?: any;
+  path?: string;
   height?: number;
   width?: number;
   isParent?: string;

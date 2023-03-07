@@ -1,4 +1,5 @@
 import React from "react";
+import { Center, Image, Stack } from "@mantine/core";
 import styled, { keyframes } from "styled-components";
 
 interface LoadingProps {
@@ -15,27 +16,31 @@ const fadeIn = keyframes`
   }
 `;
 
-const StyledLoading = styled.div`
+const StyledLoading = styled.div<{ visible: boolean }>`
+  display: ${({ visible }) => (visible ? "grid" : "none")};
   position: fixed;
   top: 0;
   left: 0;
-  display: grid;
   place-content: center;
   width: 100%;
   height: 100vh;
   text-align: center;
-  background: ${({ theme }) => theme.BLACK_DARK};
-  z-index: 36;
-  pointer-events: none;
+  background: rgba(30, 30, 30, 0.8);
+  z-index: 100;
+  pointer-events: visiblePainted;
+  cursor: wait;
   animation: 0.2s ${fadeIn};
   animation-fill-mode: forwards;
   visibility: hidden;
+
+  img {
+    transform: rotate(45deg) translate(125px, -50px);
+  }
 `;
 
 const StyledLogo = styled.h2`
   font-weight: 800;
-  font-size: 56px;
-  pointer-events: none;
+  font-size: 70px;
   margin-bottom: 10px;
 `;
 
@@ -45,19 +50,20 @@ const StyledText = styled.span`
 
 const StyledMessage = styled.div`
   color: #b9bbbe;
-  font-size: 24px;
-  font-weight: 500;
+  font-size: 32px;
+  font-weight: 600;
 `;
 
-export const Loading: React.FC<LoadingProps> = ({ loading = true, message }) => {
-  if (!loading) return null;
-
-  return (
-    <StyledLoading>
-      <StyledLogo>
-        <StyledText>JSON</StyledText> Crack
-      </StyledLogo>
-      <StyledMessage>{message ?? "Preparing the environment for you..."}</StyledMessage>
-    </StyledLoading>
-  );
-};
+export const Loading: React.FC<LoadingProps> = ({ loading = true, message }) => (
+  <StyledLoading visible={loading}>
+    <Center>
+      <Stack>
+        <Image mah={225} maw={225} src="./assets/rocket_ship.webp" alt="loading image" />
+        <StyledLogo>
+          <StyledText>JSON</StyledText> Crack
+        </StyledLogo>
+        <StyledMessage>{message ?? "Preparing the environment for you..."}</StyledMessage>
+      </Stack>
+    </Center>
+  </StyledLoading>
+);

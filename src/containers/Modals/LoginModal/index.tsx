@@ -1,10 +1,9 @@
 import React from "react";
-import { Modal, Stack, Button, Text, Title } from "@mantine/core";
-import { ModalProps } from "src/components/Modal";
+import { Modal, Stack, Button, Text, Title, ModalProps } from "@mantine/core";
 
-export const LoginModal: React.FC<ModalProps> = ({ setVisible, visible }) => {
+export const LoginModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   return (
-    <Modal title="Sign In" opened={visible} onClose={() => setVisible(false)} centered>
+    <Modal title="Sign In" opened={opened} onClose={onClose} centered>
       <Stack py="sm">
         <Title order={2}>Welcome Back!</Title>
         <Text>Login to unlock full potential of JSON Crack!</Text>

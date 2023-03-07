@@ -9,7 +9,7 @@ import GlobalStyle from "src/constants/globalStyle";
 import { darkTheme, lightTheme } from "src/constants/theme";
 import { ModalController } from "src/containers/ModalController";
 import useStored from "src/store/useStored";
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider, useTheme } from "styled-components";
 
 if (process.env.NODE_ENV !== "development") {
   init({
@@ -29,6 +29,7 @@ const queryClient = new QueryClient({
 });
 
 function JsonCrack({ Component, pageProps }: AppProps) {
+  const theme = useTheme();
   const [isReady, setReady] = React.useState(false);
   const lightmode = useStored(state => state.lightmode);
 
@@ -40,9 +41,35 @@ function JsonCrack({ Component, pageProps }: AppProps) {
     return (
       <QueryClientProvider client={queryClient}>
         <GoogleAnalytics />
-        <ThemeProvider theme={lightmode ? lightTheme : darkTheme}>
-          <GlobalStyle />
-          <MantineProvider theme={{ colorScheme: lightmode ? "light" : "dark" }}>
+        <MantineProvider
+          theme={{
+            colorScheme: lightmode ? "light" : "dark",
+            components: {
+              Divider: {
+                styles: () => ({
+                  root: {
+                    borderTopColor: "#4D4D4D !important",
+                  },
+                }),
+              },
+              Modal: {
+                styles: theme => ({
+                  title: {
+                    fontWeight: 700,
+                  },
+                  header: {
+                    backgroundColor: theme.colorScheme === "dark" ? "#36393E" : "#FFFFFF",
+                  },
+                  body: {
+                    backgroundColor: theme.colorScheme === "dark" ? "#36393E" : "#FFFFFF",
+                  },
+                }),
+              },
+            },
+          }}
+        >
+          <ThemeProvider theme={lightmode ? lightTheme : darkTheme}>
+            <GlobalStyle />
             <Component {...pageProps} />
             <ModalController />
             <Toaster
@@ -59,8 +86,8 @@ function JsonCrack({ Component, pageProps }: AppProps) {
                 },
               }}
             />
-          </MantineProvider>
-        </ThemeProvider>
+          </ThemeProvider>
+        </MantineProvider>
       </QueryClientProvider>
     );
 }

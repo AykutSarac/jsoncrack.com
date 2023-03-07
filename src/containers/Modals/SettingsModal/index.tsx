@@ -1,23 +1,9 @@
 import React from "react";
-import { Modal, Group, Switch, Stack } from "@mantine/core";
-import { ModalProps } from "src/components/Modal";
-import Toggle from "src/components/Toggle";
+import { Modal, Group, Switch, Stack, ModalProps } from "@mantine/core";
 import useStored from "src/store/useStored";
-import styled from "styled-components";
 import { shallow } from "zustand/shallow";
 
-const StyledToggle = styled(Toggle)`
-  flex-flow: row-reverse;
-  background: black;
-`;
-
-const StyledModalWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`;
-
-export const SettingsModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
+export const SettingsModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const lightmode = useStored(state => state.lightmode);
   const setLightTheme = useStored(state => state.setLightTheme);
 
@@ -41,30 +27,34 @@ export const SettingsModal: React.FC<ModalProps> = ({ visible, setVisible }) => 
   );
 
   return (
-    <Modal title="Settings" opened={visible} onClose={() => setVisible(false)} centered>
+    <Modal title="Settings" opened={opened} onClose={onClose} centered>
       <Group py="sm">
         <Stack>
           <Switch
             label="Live Image Preview"
             size="md"
+            color="teal"
             onChange={e => toggleImagePreview(e.currentTarget.checked)}
             checked={imagePreview}
           />
           <Switch
             label="Display Collapse/Expand Button"
             size="md"
+            color="teal"
             onChange={e => toggleHideCollapse(e.currentTarget.checked)}
             checked={hideCollapse}
           />
           <Switch
             label="Display Children Count"
             size="md"
+            color="teal"
             onChange={e => toggleChildrenCount(e.currentTarget.checked)}
             checked={childrenCount}
           />
           <Switch
             label="Light Theme"
             size="md"
+            color="teal"
             onChange={e => setLightTheme(e.currentTarget.checked)}
             checked={lightmode}
           />

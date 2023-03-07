@@ -8,12 +8,18 @@ import {
   Button,
   Divider,
   Grid,
+  ModalProps,
+  ColorInput,
+  Stack,
 } from "@mantine/core";
 import { toBlob, toPng, toSvg } from "html-to-image";
 import toast from "react-hot-toast";
 import { FiCopy, FiDownload } from "react-icons/fi";
-import { ModalProps } from "src/components/Modal";
-import styled from "styled-components";
+
+enum Extensions {
+  SVG = "svg",
+  PNG = "png",
+}
 
 const swatches = [
   "#B80000",
@@ -44,29 +50,7 @@ function downloadURI(uri: string, name: string) {
   document.body.removeChild(link);
 }
 
-const StyledContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 12px 0;
-  border-top: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
-
-  &:first-of-type {
-    padding-top: 0;
-    border: none;
-  }
-`;
-
-enum Extensions {
-  SVG = "svg",
-  PNG = "png",
-}
-export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
+export const DownloadModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const [extension, setExtension] = React.useState(Extensions.PNG);
   const [fileDetails, setFileDetails] = React.useState({
     filename: "jsoncrack.com",
@@ -98,7 +82,7 @@ export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => 
       toast.error("Failed to copy to clipboard");
     } finally {
       toast.dismiss("toastClipboard");
-      setVisible(false);
+      onClose();
     }
   };
 
@@ -120,7 +104,7 @@ export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => 
       toast.error("Failed to download image!");
     } finally {
       toast.dismiss("toastDownload");
-      setVisible(false);
+      onClose();
     }
   };
 
@@ -128,42 +112,43 @@ export const DownloadModal: React.FC<ModalProps> = ({ visible, setVisible }) => 
     setFileDetails({ ...fileDetails, [key]: value });
 
   return (
-    <Modal opened={visible} onClose={() => setVisible(false)} title="Download Image" centered>
-      <Group align="flex-end" py="sm" grow>
-        <Grid align="end" grow>
-          <Grid.Col span={8}>
-            <TextInput
-              label="File Name"
-              value={fileDetails.filename}
-              onChange={e => updateDetails("filename", e.target.value)}
-            />
-          </Grid.Col>
-          <Grid.Col span={4}>
-            <SegmentedControl
-              value={extension}
-              onChange={e => setExtension(e as Extensions)}
-              data={[
-                { label: "SVG", value: Extensions.SVG },
-                { label: "PNG", value: Extensions.PNG },
-              ]}
-              fullWidth
-            />
-          </Grid.Col>
-        </Grid>
-      </Group>
-      <Group py="sm" grow>
-        <StyledContainer>
-          Background Color
-          <ColorPicker
-            format="rgba"
-            value={fileDetails.backgroundColor}
-            onChange={color => updateDetails("backgroundColor", color)}
-            swatches={swatches}
+    <Modal opened={opened} onClose={onClose} title="Download Image" centered>
+      <Grid py="sm" align="end" grow>
+        <Grid.Col span={8}>
+          <TextInput
+            label="File Name"
+            value={fileDetails.filename}
+            onChange={e => updateDetails("filename", e.target.value)}
+          />
+        </Grid.Col>
+        <Grid.Col span={4}>
+          <SegmentedControl
+            value={extension}
+            onChange={e => setExtension(e as Extensions)}
+            data={[
+              { label: "SVG", value: Extensions.SVG },
+              { label: "PNG", value: Extensions.PNG },
+            ]}
             fullWidth
           />
-        </StyledContainer>
-      </Group>
-
+        </Grid.Col>
+      </Grid>
+      <Stack py="sm">
+        <ColorInput
+          label="Background Color"
+          value={fileDetails.backgroundColor}
+          onChange={color => updateDetails("backgroundColor", color)}
+          withEyeDropper={false}
+        />
+        <ColorPicker
+          format="rgba"
+          value={fileDetails.backgroundColor}
+          onChange={color => updateDetails("backgroundColor", color)}
+          swatches={swatches}
+          withPicker={false}
+          fullWidth
+        />
+      </Stack>
       <Divider py="xs" />
       <Group position="right">
         <Button leftIcon={<FiCopy />} onClick={clipboardImage}>

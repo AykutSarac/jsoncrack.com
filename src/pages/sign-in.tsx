@@ -2,9 +2,9 @@ import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { Button, Center, Container, Stack } from "@mantine/core";
 import { AiOutlineGithub, AiOutlineGoogle } from "react-icons/ai";
 import { altogic } from "src/api/altogic";
-import { Button } from "src/components/Button";
 import { Footer } from "src/components/Footer";
 import { Navbar } from "src/components/Navbar";
 import useUser from "src/store/useUser";
@@ -19,15 +19,6 @@ const StyledHeroSection = styled.section`
   justify-content: center;
   flex-direction: column;
   align-items: center;
-`;
-
-const StyledLoginButtons = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 60px;
-  gap: 24px;
 `;
 
 const SignIn = () => {
@@ -57,16 +48,29 @@ const SignIn = () => {
           </Link>
           <h1>Sign In</h1>
         </StyledHeroSection>
-        <StyledLoginButtons>
-          <Button status="DANGER" onClick={() => handleLoginClick("google")}>
-            <AiOutlineGoogle size={24} />
-            Sign In with Google
-          </Button>
-          <Button status="TERTIARY" onClick={() => handleLoginClick("github")}>
-            <AiOutlineGithub size={24} />
-            Sign In with GitHub
-          </Button>
-        </StyledLoginButtons>
+        <Container>
+          <Center>
+            <Stack my={60} w={250} spacing="xl">
+              <Button
+                size="md"
+                color="red"
+                onClick={() => handleLoginClick("google")}
+                leftIcon={<AiOutlineGoogle size={24} />}
+              >
+                Sign In with Google
+              </Button>
+              <Button
+                size="md"
+                variant="white"
+                color="gray"
+                onClick={() => handleLoginClick("github")}
+                leftIcon={<AiOutlineGithub size={24} />}
+              >
+                Sign In with GitHub
+              </Button>
+            </Stack>
+          </Center>
+        </Container>
       </StyledPageWrapper>
       <Footer />
     </>

@@ -1,8 +1,7 @@
 import React from "react";
-import { Modal, Group, Button, TextInput, Stack, Divider } from "@mantine/core";
+import { Modal, Group, Button, TextInput, Stack, Divider, ModalProps } from "@mantine/core";
 import toast from "react-hot-toast";
 import { AiOutlineUpload } from "react-icons/ai";
-import { ModalProps } from "src/components/Modal";
 import useJson from "src/store/useJson";
 import styled from "styled-components";
 
@@ -33,7 +32,7 @@ const StyledUploadMessage = styled.h3`
   margin-bottom: 0;
 `;
 
-export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
+export const ImportModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const setJson = useJson(state => state.setJson);
   const [url, setURL] = React.useState("");
   const [jsonFile, setJsonFile] = React.useState<File | null>(null);
@@ -63,7 +62,7 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
         .then(res => res.json())
         .then(json => {
           setJson(JSON.stringify(json, null, 2));
-          setVisible(false);
+          onClose();
         })
         .catch(() => toast.error("Failed to fetch JSON!"))
         .finally(() => toast.dismiss("toastFetch"));
@@ -75,19 +74,20 @@ export const ImportModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
       reader.readAsText(jsonFile, "UTF-8");
       reader.onload = function (data) {
         setJson(data.target?.result as string);
-        setVisible(false);
+        onClose();
       };
     }
   };
 
   return (
-    <Modal title="Import JSON" opened={visible} onClose={() => setVisible(false)} centered>
+    <Modal title="Import JSON" opened={opened} onClose={onClose} centered>
       <Stack py="sm">
         <TextInput
           value={url}
           onChange={e => setURL(e.target.value)}
           type="url"
           placeholder="URL of JSON to fetch"
+          data-autofocus
         />
         <StyledUploadWrapper onDrop={handleFileDrag} onDragOver={handleFileDrag}>
           <input

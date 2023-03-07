@@ -9,16 +9,16 @@ import {
   Tooltip,
   ActionIcon,
   Text,
+  ModalProps,
 } from "@mantine/core";
 import { MdCheck, MdCopyAll } from "react-icons/md";
-import { ModalProps } from "src/components/Modal";
 
-export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
+export const ShareModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const { query } = useRouter();
   const shareURL = `https://jsoncrack.com/editor?json=${query.json}`;
 
   return (
-    <Modal title="Create a Share Link" opened={visible} onClose={() => setVisible(false)} centered>
+    <Modal title="Create a Share Link" opened={opened} onClose={onClose} centered>
       <Stack py="sm">
         <Text fz="sm" fw={700}>
           Share Link

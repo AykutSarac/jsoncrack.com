@@ -38,14 +38,14 @@ export const ModalController = () => {
 
   return (
     <>
-      <ImportModal visible={importModal} setVisible={setVisible("import")} />
-      <ClearModal visible={clearModal} setVisible={setVisible("clear")} />
-      <DownloadModal visible={downloadModal} setVisible={setVisible("download")} />
-      <SettingsModal visible={settingsModal} setVisible={setVisible("settings")} />
-      <CloudModal visible={cloudModal} setVisible={setVisible("cloud")} />
-      <AccountModal visible={accountModal} setVisible={setVisible("account")} />
-      <LoginModal visible={loginModal} setVisible={setVisible("login")} />
-      <ShareModal visible={shareModal} setVisible={setVisible("share")} />
+      <ImportModal opened={importModal} onClose={() => setVisible("import")(false)} />
+      <ClearModal opened={clearModal} onClose={() => setVisible("clear")(false)} />
+      <DownloadModal opened={downloadModal} onClose={() => setVisible("download")(false)} />
+      <SettingsModal opened={settingsModal} onClose={() => setVisible("settings")(false)} />
+      <CloudModal opened={cloudModal} onClose={() => setVisible("cloud")(false)} />
+      <AccountModal opened={accountModal} onClose={() => setVisible("account")(false)} />
+      <LoginModal opened={loginModal} onClose={() => setVisible("login")(false)} />
+      <ShareModal opened={shareModal} onClose={() => setVisible("share")(false)} />
     </>
   );
 };
