@@ -35,7 +35,7 @@ jobs:
         run: |
           if [ -f "${{ github.workspace }}/yarn.lock" ]; then
             echo "manager=yarn" >> $GITHUB_OUTPUT
-            echo "command=install --production" >> $GITHUB_OUTPUT
+            echo "command=install --frozen-lockfile" >> $GITHUB_OUTPUT
             echo "runner=yarn" >> $GITHUB_OUTPUT
             exit 0
           elif [ -f "${{ github.workspace }}/package.json" ]; then
