@@ -1,5 +1,5 @@
 import React from "react";
-import { Center, Image, Stack } from "@mantine/core";
+import { Center, Image, Stack, Title } from "@mantine/core";
 import styled, { keyframes } from "styled-components";
 
 interface LoadingProps {
@@ -34,14 +34,8 @@ const StyledLoading = styled.div<{ visible: boolean }>`
   visibility: hidden;
 
   img {
-    transform: rotate(45deg) translate(125px, -50px);
+    transform: rotate(45deg) translate(100px, -70px);
   }
-`;
-
-const StyledLogo = styled.h2`
-  font-weight: 800;
-  font-size: 70px;
-  margin-bottom: 10px;
 `;
 
 const StyledText = styled.span`
@@ -55,15 +49,15 @@ const StyledMessage = styled.div`
 `;
 
 export const Loading: React.FC<LoadingProps> = ({ loading = true, message }) => (
-  <StyledLoading visible={loading}>
-    <Center>
+  <Center mx="auto">
+    <StyledLoading visible={true}>
       <Stack>
-        <Image mah={225} maw={225} src="./assets/rocket_ship.webp" alt="loading image" />
-        <StyledLogo>
+        <Image maw={150} src="./assets/rocket_ship.webp" alt="loading image" />
+        <Title size="4rem">
           <StyledText>JSON</StyledText> Crack
-        </StyledLogo>
+        </Title>
         <StyledMessage>{message ?? "Preparing the environment for you..."}</StyledMessage>
       </Stack>
-    </Center>
-  </StyledLoading>
+    </StyledLoading>
+  </Center>
 );
