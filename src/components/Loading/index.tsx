@@ -50,7 +50,7 @@ const StyledMessage = styled.div`
 
 export const Loading: React.FC<LoadingProps> = ({ loading = true, message }) => (
   <Center mx="auto">
-    <StyledLoading visible={true}>
+    <StyledLoading visible={loading}>
       <Stack>
         <Image maw={150} src="./assets/rocket_ship.webp" alt="loading image" />
         <Title size="4rem">
