@@ -1,7 +1,7 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import Script from "next/script";
+import { createGetInitialProps } from "@mantine/next";
 import { SeoTags } from "src/components/SeoTags";
-import { createGetInitialProps } from '@mantine/next';
 
 const getInitialProps = createGetInitialProps();
 

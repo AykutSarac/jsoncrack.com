@@ -1,4 +1,4 @@
-import localFont from "@next/font/local";
+import localFont from "next/font/local";
 import { createGlobalStyle } from "styled-components";
 
 const monaSans = localFont({

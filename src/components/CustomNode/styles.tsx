@@ -1,4 +1,4 @@
-import { Roboto_Mono } from "@next/font/google";
+import { Roboto_Mono } from "next/font/google";
 import { LinkItUrl } from "react-linkify-it";
 import styled, { DefaultTheme } from "styled-components";
 
