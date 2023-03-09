@@ -1,4 +1,4 @@
-# Welcome to the JSON Crack contributing guide <!-- omit in toc -->
+# Welcome to the JSON Crack Contributing Guide <!-- omit in toc -->
 
 Thank you for investing your time in contributing to our project! Any contribution you make will be reflected at [jsoncrack.com](https://jsoncrack.com).
 
@@ -6,72 +6,55 @@ Read our [Code of Conduct](./CODE_OF_CONDUCT.md) to keep our community approacha
 
 In this guide you will get an overview of the contribution workflow from opening an issue, creating a PR, reviewing, and merging the PR.
 
-Use the table of contents icon on the top left corner of this document to get to a specific section of this guide quickly.
+## Getting Started
+JSON Crack is built with React, Reaflow for visualization, Mantine UI for components, Zustand for state management, and Altogic for backend integration. If you are not familiar with these technologies, we recommend you to read their documentation to get started. You can find the links to the respective documentations below:
 
-## New contributor guide
+* [React](https://reactjs.org/docs/getting-started.html)
+* [Reaflow](https://github.com/reaviz/reaflow)
+* [Mantine UI](https://mantine.dev/)
+* [Zustand](https://github.com/pmndrs/zustand)
+* [Altogic](https://www.altogic.com/)
 
-To get an overview of the project, read the [README](README.md). Here are some resources to help you get started with open source contributions:
+Once you are familiar with these technologies, you can clone the JSON Crack repository by running the following command:
 
-- [Finding ways to contribute to open source on GitHub](https://docs.github.com/en/get-started/exploring-projects-on-github/finding-ways-to-contribute-to-open-source-on-github)
-- [Set up Git](https://docs.github.com/en/get-started/quickstart/set-up-git)
-- [GitHub flow](https://docs.github.com/en/get-started/quickstart/github-flow)
-- [Collaborating with pull requests](https://docs.github.com/en/github/collaborating-with-pull-requests)
+```bash
+git clone https://github.com/AykutSarac/jsoncrack.com.git
+```
 
-## Getting started
+After cloning the repository, you can install the required dependencies by running the following command:
 
-Join the [Discord channel](https://discord.gg/yVyTtCRueq). If you have questions or feedback, this is the best place to reach the team and other contributors directly.
+```bash
+yarn install
+```
 
-### Issues
+To run the development server, you can run the following command:
 
-#### Create a new issue
+```bash
+yarn dev
+```
 
-If you spot a problem, [search if an issue already exists](https://github.com/AykutSarac/jsoncrack.com/issues). If a related issue doesn't exist, you can open a new issue using a relevant [issue form](https://github.com/AykutSarac/jsoncrack.com/issues/new/choose).
+## Contributing Guidelines
+Before submitting a pull request, please make sure to follow these guidelines:
 
-#### Solve an issue
+### 1. Performance
+Performance is an important criteria for JSON Crack. Any new contributions should not affect the re-rendering of the application. Therefore, when making changes to the code, please keep performance in mind.
 
-Scan through our [existing issues](https://github.com/AykutSarac/jsoncrack.com/issues) to find one that interests you. You can narrow down the search using `labels` as filters. See [Labels](/contributing/how-to-use-labels.md) for more information. If you find an issue to work on, you are welcome to open a PR with a fix.
+If you're having trouble with re-rendering issues in React, you can use the React Devtools Profiler to debug it. You can also check out this up-to-date guide on debugging re-renders with React Devtools to learn more.
 
-### Make Changes
+### 2. Code Style
+We follow the [Google TypeScript Style Guide](https://google.github.io/styleguide/tsguide.html) for our code. Please make sure to follow this guide when writing new code or modifying existing code.
 
-#### Make changes locally
+### 3. Testing
+While we do not currently have a comprehensive testing suite in place, we encourage contributors to thoroughly test their changes and ensure that they do not break any existing functionality. Please include a description of how you tested your changes in your pull request, so that we can review them more effectively.
 
-1. [Install Git LFS](https://docs.github.com/en/github/managing-large-files/versioning-large-files/installing-git-large-file-storage).
+### 4. Commit Messages
+Please use descriptive commit messages that explain the changes you have made. This will help us understand your changes and make it easier to review your pull request.
 
-2. Fork the repository.
+### 5. Pull Requests
+Please create a new branch for your changes and submit a pull request to the main branch. Please provide a detailed explanation of the changes you have made and any necessary context in the pull request description.
 
-- Using GitHub Desktop:
-
-  - [Getting started with GitHub Desktop](https://docs.github.com/en/desktop/installing-and-configuring-github-desktop/getting-started-with-github-desktop) will guide you through setting up Desktop.
-  - Once Desktop is set up, you can use it to [fork the repo](https://docs.github.com/en/desktop/contributing-and-collaborating-using-github-desktop/cloning-and-forking-repositories-from-github-desktop)!
-
-- Using the command line:
-
-  - [Fork the repo](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo#fork-an-example-repository) so that you can make your changes without affecting the original project until you're ready to merge them.
-
-- GitHub Codespaces:
-  - [Fork, edit, and preview](https://docs.github.com/en/free-pro-team@latest/github/developing-online-with-codespaces/creating-a-codespace) using [GitHub Codespaces](https://github.com/features/codespaces) without having to install and run the project locally.
-
-3. Install or update to **Node.js v16**.
-
-4. Create a working branch and start with your changes!
-
-5. Follow the [the development guide](guides/development.md).
-
-### Commit your update
-
-Commit the changes once you are happy with them.
-
-### Pull Request
-
-When you're finished with the changes, create a pull request, also known as a PR.
-
-- Fill the "Ready for review" template so that we can review your PR. This template helps reviewers understand your changes as well as the purpose of your pull request.
-- Don't forget to [link PR to issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue) if you are solving one.
-- Enable the checkbox to [allow maintainer edits](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/allowing-changes-to-a-pull-request-branch-created-from-a-fork) so the branch can be updated for a merge.
-  Once you submit your PR, a team member will review your proposal. We may ask questions or request for additional information.
-- We may ask for changes to be made before a PR can be merged, either using [suggested changes](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/incorporating-feedback-in-your-pull-request) or pull request comments. You can apply suggested changes directly through the UI. You can make any other changes in your fork, then commit them to your branch.
-- As you update your PR and apply changes, mark each conversation as [resolved](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/commenting-on-a-pull-request#resolving-conversations).
-- If you run into any merge issues, checkout this [git tutorial](https://lab.github.com/githubtraining/managing-merge-conflicts) to help you resolve merge conflicts and other issues.
+## Conclusion
+We appreciate any contributions to JSON Crack, big or small. If you have any questions or need any help, please do not hesitate to reach out to us. Thank you for contributing!
 
 ### Your PR is merged!
 
