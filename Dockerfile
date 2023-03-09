@@ -2,7 +2,7 @@
 FROM node:14-alpine as builder
 WORKDIR /src
 COPY . /src/
-RUN npm ci && npm run build
+RUN yarn install --frozen-lockfile && yarn build
 
 # App
 FROM nginxinc/nginx-unprivileged
