@@ -2,7 +2,7 @@
 FROM node:14-alpine as builder
 WORKDIR /src
 COPY . /src/
-RUN npm ci && npm run build
+RUN npm install && npm run build
 
 # App
 FROM nginxinc/nginx-unprivileged
