@@ -5,11 +5,11 @@ import useGraph from "src/store/useGraph";
 
 export const GraphCanvas = ({ isWidget = false }: { isWidget?: boolean }) => {
   const [isNodeModalVisible, setNodeModalVisible] = React.useState(false);
+  const openNodeModal = React.useCallback(() => setNodeModalVisible(true), []);
 
   const collapsedNodes = useGraph(state => state.collapsedNodes);
   const collapsedEdges = useGraph(state => state.collapsedEdges);
 
-  const openNodeModal = React.useCallback(() => setNodeModalVisible(true), []);
 
   React.useEffect(() => {
     const nodeList = collapsedNodes.map(id => `[id$="node-${id}"]`);

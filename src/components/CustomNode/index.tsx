@@ -1,7 +1,7 @@
 import React from "react";
 import { Node, NodeProps } from "reaflow";
-import ObjectNode from "./ObjectNode";
-import TextNode from "./TextNode";
+import { ObjectNode } from "./ObjectNode";
+import { TextNode } from "./TextNode";
 
 export interface CustomNodeProps {
   node: NodeData;
@@ -17,7 +17,7 @@ const rootProps = {
   ry: 50,
 };
 
-export const CustomNode = (nodeProps: NodeProps) => {
+const NodeComponent = (nodeProps: NodeProps) => {
   const { text, data } = nodeProps.properties;
 
   return (
@@ -34,3 +34,13 @@ export const CustomNode = (nodeProps: NodeProps) => {
     </Node>
   );
 };
+
+export const CustomNode = React.memo(NodeComponent, (prev, next) => {
+  return (
+    String(prev.properties.text) === String(next.properties.text) &&
+    prev.properties.width === next.properties.width &&
+    prev.properties.height === next.properties.height &&
+    prev.x === next.x &&
+    prev.y === next.y
+  );
+});

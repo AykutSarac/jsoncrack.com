@@ -38,6 +38,10 @@ const GlobalStyle = createGlobalStyle`
     display: none;
   }
 
+  .mantine-Modal-inner {
+    padding: 0;
+  }
+
   svg {
     vertical-align: text-top;
   }
