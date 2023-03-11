@@ -40,7 +40,7 @@ const StyledImage = styled.img`
   background: ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
 `;
 
-export const TextNode: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) => {
+const Node: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) => {
   const {
     id,
     text,
@@ -105,3 +105,9 @@ export const TextNode: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = 
     </Styled.StyledForeignObject>
   );
 };
+
+function propsAreEqual(prev: CustomNodeProps, next: CustomNodeProps) {
+  return prev.node.text === next.node.text && prev.node.width === next.node.width;
+}
+
+export const TextNode = React.memo(Node, propsAreEqual);

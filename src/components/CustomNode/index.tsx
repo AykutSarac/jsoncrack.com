@@ -17,7 +17,7 @@ const rootProps = {
   ry: 50,
 };
 
-const NodeComponent = (nodeProps: NodeProps) => {
+export const CustomNode = (nodeProps: NodeProps) => {
   const { text, data } = nodeProps.properties;
 
   return (
@@ -34,13 +34,3 @@ const NodeComponent = (nodeProps: NodeProps) => {
     </Node>
   );
 };
-
-export const CustomNode = React.memo(NodeComponent, (prev, next) => {
-  return (
-    String(prev.properties.text) === String(next.properties.text) &&
-    prev.properties.width === next.properties.width &&
-    prev.properties.height === next.properties.height &&
-    prev.x === next.x &&
-    prev.y === next.y
-  );
-});
