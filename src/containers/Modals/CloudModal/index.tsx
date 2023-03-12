@@ -1,21 +1,24 @@
 import React from "react";
 import { useRouter } from "next/router";
+import {
+  Modal,
+  Group,
+  Button,
+  Text,
+  Stack,
+  Loader,
+  Center,
+  Divider,
+  ScrollArea,
+  ModalProps,
+} from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import toast from "react-hot-toast";
-import {
-  AiOutlineEdit,
-  AiOutlineInfoCircle,
-  AiOutlineLock,
-  AiOutlinePlus,
-  AiOutlineUnlock,
-} from "react-icons/ai";
+import { AiOutlineEdit, AiOutlineLock, AiOutlinePlus, AiOutlineUnlock } from "react-icons/ai";
 import { FaTrash } from "react-icons/fa";
 import { IoRocketSharp } from "react-icons/io5";
-import { Button } from "src/components/Button";
-import { Modal, ModalProps } from "src/components/Modal";
-import { Spinner } from "src/components/Spinner";
 import { deleteJson, getAllJson, saveJson, updateJson } from "src/services/db/json";
 import useJson from "src/store/useJson";
 import useUser from "src/store/useUser";
@@ -24,18 +27,13 @@ import styled from "styled-components";
 
 dayjs.extend(relativeTime);
 
-const StyledModalContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  overflow: auto;
-`;
-
 const StyledJsonCard = styled.a<{ active?: boolean; create?: boolean }>`
   display: ${({ create }) => (create ? "block" : "flex")};
   align-items: center;
   justify-content: space-between;
   background: ${({ theme }) => theme.BLACK_SECONDARY};
+  line-height: 20px;
+  padding: 6px;
   border: 2px solid ${({ theme, active }) => (active ? theme.SEAGREEN : theme.BLACK_SECONDARY)};
   border-radius: 5px;
   overflow: hidden;
@@ -43,9 +41,7 @@ const StyledJsonCard = styled.a<{ active?: boolean; create?: boolean }>`
   height: 160px;
 `;
 
-const StyledInfo = styled.div`
-  padding: 4px 6px;
-`;
+const StyledInfo = styled.div``;
 
 const StyledTitle = styled.div`
   display: flex;
@@ -69,18 +65,6 @@ const StyledDetils = styled.div`
   gap: 4px;
 `;
 
-const StyledModal = styled(Modal)`
-  #modal-view {
-    display: none;
-  }
-`;
-
-const StyledDeleteButton = styled(Button)`
-  background: transparent;
-  color: ${({ theme }) => theme.CRIMSON};
-  opacity: 0.8;
-`;
-
 const StyledCreateWrapper = styled.div`
   display: flex;
   height: 100%;
@@ -100,16 +84,6 @@ const StyledNameInput = styled.input`
   width: 90%;
   color: ${({ theme }) => theme.SEAGREEN};
   font-weight: 600;
-`;
-
-const StyledInfoText = styled.span`
-  font-size: 10px;
-  color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
-
-  svg {
-    vertical-align: text-top;
-    margin-right: 4px;
-  }
 `;
 
 const GraphCard: React.FC<{ data: Json; refetch: () => void; active: boolean }> = ({
@@ -179,9 +153,9 @@ const GraphCard: React.FC<{ data: Json; refetch: () => void; active: boolean }> 
           Last modified {dayjs(data.updatedAt).fromNow()}
         </StyledDetils>
       </StyledInfo>
-      <StyledDeleteButton onClick={onDeleteClick}>
+      <Button variant="subtle" color="red" onClick={onDeleteClick}>
         <FaTrash />
-      </StyledDeleteButton>
+      </Button>
     </StyledJsonCard>
   );
 };
@@ -230,20 +204,21 @@ const CreateCard: React.FC<{ reachedLimit: boolean }> = ({ reachedLimit }) => {
   );
 };
 
-export const CloudModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
+export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const { isReady, query } = useRouter();
 
   const { data, isFetching, refetch } = useQuery(["allJson", query], () => getAllJson(), {
-    enabled: isReady && visible,
+    enabled: isReady && opened,
   });
 
   return (
-    <StyledModal visible={visible} setVisible={setVisible}>
-      <Modal.Header>Saved On The Cloud</Modal.Header>
-      <Modal.Content>
-        <StyledModalContent>
+    <Modal title="Saved On The Cloud" opened={opened} onClose={onClose} centered>
+      <ScrollArea h={360}>
+        <Stack py="sm">
           {isFetching ? (
-            <Spinner />
+            <Center>
+              <Loader />
+            </Center>
           ) : (
             <>
               <CreateCard reachedLimit={data ? data?.data.result.length > 15 : false} />
@@ -257,16 +232,16 @@ export const CloudModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
               ))}
             </>
           )}
-        </StyledModalContent>
-      </Modal.Content>
+        </Stack>
+      </ScrollArea>
 
-      <Modal.Controls setVisible={setVisible}>
-        <StyledInfoText>
-          <AiOutlineInfoCircle />
+      <Divider py="xs" />
+      <Group position="right">
+        <Text fz="xs">
           Cloud Save feature is for ease-of-access only and not recommended to store sensitive data,
           we don&apos;t guarantee protection of your data.
-        </StyledInfoText>
-      </Modal.Controls>
-    </StyledModal>
+        </Text>
+      </Group>
+    </Modal>
   );
 };

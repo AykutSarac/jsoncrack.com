@@ -1,6 +1,6 @@
 import React from "react";
 import { ReactZoomPanPinchRef, TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
-import { Canvas, Edge, ElkRoot } from "reaflow";
+import { Canvas, Edge, EdgeProps, ElkRoot, NodeProps } from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
 import useGraph from "src/store/useGraph";
 import useUser from "src/store/useUser";
@@ -48,7 +48,7 @@ const StyledEditorWrapper = styled.div<{ widget: boolean }>`
   }
 `;
 
-const GraphComponent = ({ isWidget = false, openNodeModal }: GraphProps) => {
+export const Graph = ({ isWidget = false, openNodeModal }: GraphProps) => {
   const isPremium = useUser(state => state.isPremium);
   const setLoading = useGraph(state => state.setLoading);
   const setZoomPanPinch = useGraph(state => state.setZoomPanPinch);
@@ -60,6 +60,27 @@ const GraphComponent = ({ isWidget = false, openNodeModal }: GraphProps) => {
   const nodes = useGraph(state => state.nodes);
   const edges = useGraph(state => state.edges);
 
+  const collapsedNodes = useGraph(state => state.collapsedNodes);
+  const collapsedEdges = useGraph(state => state.collapsedEdges);
+
+  React.useEffect(() => {
+    const nodeList = collapsedNodes.map(id => `[id$="node-${id}"]`);
+    const edgeList = collapsedEdges.map(id => `[class$="edge-${id}"]`);
+
+    const hiddenItems = document.querySelectorAll(".hide");
+    hiddenItems.forEach(item => item.classList.remove("hide"));
+
+    if (nodeList.length) {
+      const selectedNodes = document.querySelectorAll(nodeList.join(","));
+      selectedNodes.forEach(node => node.classList.add("hide"));
+    }
+
+    if (edgeList.length) {
+      const selectedEdges = document.querySelectorAll(edgeList.join(","));
+      selectedEdges.forEach(edge => edge.classList.add("hide"));
+    }
+  }, [collapsedNodes, collapsedEdges]);
+
   const [size, setSize] = React.useState({
     width: 1,
     height: 1,
@@ -68,7 +89,7 @@ const GraphComponent = ({ isWidget = false, openNodeModal }: GraphProps) => {
   const handleNodeClick = React.useCallback(
     (_: React.MouseEvent<SVGElement>, data: NodeData) => {
       if (setSelectedNode)
-        setSelectedNode({ node: data.text, path: getNodePath(nodes, edges, data.id) });
+        setSelectedNode({ nodeData: data, path: getNodePath(nodes, edges, data.id) });
       if (openNodeModal) openNodeModal();
     },
     [edges, nodes, openNodeModal, setSelectedNode]
@@ -92,12 +113,10 @@ const GraphComponent = ({ isWidget = false, openNodeModal }: GraphProps) => {
           height: (layout.height as number) + 400,
         });
 
-        requestAnimationFrame(() => {
-          setTimeout(() => {
-            setLoading(false);
-            setTimeout(() => {
-              if (changeRatio > 70 || isWidget) centerView();
-            });
+        setTimeout(() => {
+          setLoading(false);
+          window.requestAnimationFrame(() => {
+            if (changeRatio > 70 || isWidget) centerView();
           });
         });
       }
@@ -110,6 +129,20 @@ const GraphComponent = ({ isWidget = false, openNodeModal }: GraphProps) => {
     if (input) input.blur();
   }, []);
 
+  const memoizedNode = React.useCallback(
+    (props: JSX.IntrinsicAttributes & NodeProps<any>) => (
+      <CustomNode {...props} onClick={handleNodeClick} animated={false} />
+    ),
+    [handleNodeClick]
+  );
+
+  const memoizedEdge = React.useCallback(
+    (props: JSX.IntrinsicAttributes & Partial<EdgeProps>) => (
+      <Edge {...props} containerClassName={`edge-${props.id}`} />
+    ),
+    []
+  );
+
   if (nodes.length > 8_000) return <ErrorView />;
 
   if (nodes.length > 1_000 && !isWidget) {
@@ -117,50 +150,50 @@ const GraphComponent = ({ isWidget = false, openNodeModal }: GraphProps) => {
   }
 
   return (
-    <StyledEditorWrapper onContextMenu={e => e.preventDefault()} widget={isWidget}>
+    <>
       <Loading message="Painting graph..." loading={loading} />
-      <TransformWrapper
-        maxScale={2}
-        minScale={0.05}
-        initialScale={0.4}
-        wheel={{ step: 0.08 }}
-        zoomAnimation={{ animationType: "linear" }}
-        doubleClick={{ disabled: true }}
-        onInit={onInit}
-        onPanning={ref => ref.instance.wrapperComponent?.classList.add("dragging")}
-        onPanningStop={ref => ref.instance.wrapperComponent?.classList.remove("dragging")}
-      >
-        <TransformComponent
-          wrapperStyle={{
-            width: "100%",
-            height: "100%",
-            overflow: "hidden",
-            display: loading ? "none" : "block",
-          }}
+      <StyledEditorWrapper onContextMenu={e => e.preventDefault()} widget={isWidget}>
+        <TransformWrapper
+          maxScale={2}
+          minScale={0.05}
+          initialScale={0.4}
+          wheel={{ step: 0.08 }}
+          zoomAnimation={{ animationType: "linear" }}
+          doubleClick={{ disabled: true }}
+          onInit={onInit}
+          onPanning={ref => ref.instance.wrapperComponent?.classList.add("dragging")}
+          onPanningStop={ref => ref.instance.wrapperComponent?.classList.remove("dragging")}
         >
-          <Canvas
-            className="jsoncrack-canvas"
-            nodes={nodes}
-            edges={edges}
-            maxWidth={size.width}
-            maxHeight={size.height}
-            direction={direction}
-            onLayoutChange={onLayoutChange}
-            onCanvasClick={onCanvasClick}
-            zoomable={false}
-            animated={false}
-            readonly={true}
-            dragEdge={null}
-            dragNode={null}
-            fit={true}
-            key={direction}
-            node={props => <CustomNode {...props} onClick={handleNodeClick} />}
-            edge={props => <Edge {...props} containerClassName={`edge-${props.id}`} />}
-          />
-        </TransformComponent>
-      </TransformWrapper>
-    </StyledEditorWrapper>
+          <TransformComponent
+            wrapperStyle={{
+              width: "100%",
+              height: "100%",
+              overflow: "hidden",
+              display: loading ? "none" : "block",
+            }}
+          >
+            <Canvas
+              className="jsoncrack-canvas"
+              nodes={nodes}
+              edges={edges}
+              maxWidth={size.width}
+              maxHeight={size.height}
+              direction={direction}
+              onLayoutChange={onLayoutChange}
+              onCanvasClick={onCanvasClick}
+              node={memoizedNode}
+              edge={memoizedEdge}
+              key={direction}
+              zoomable={false}
+              animated={false}
+              readonly={true}
+              dragEdge={null}
+              dragNode={null}
+              fit={true}
+            />
+          </TransformComponent>
+        </TransformWrapper>
+      </StyledEditorWrapper>
+    </>
   );
 };
-
-export const Graph = React.memo(GraphComponent);

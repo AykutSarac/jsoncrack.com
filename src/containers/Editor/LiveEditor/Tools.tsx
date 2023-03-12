@@ -58,20 +58,20 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
 
   return (
     <StyledTools>
-      <StyledToolElement aria-label="fullscreen" hide={isWidget} onClick={toggleEditor}>
+      <StyledToolElement title="fullscreen" hide={isWidget} onClick={toggleEditor}>
         <AiOutlineFullscreen />
       </StyledToolElement>
       <SearchInput />
-      <StyledToolElement aria-label="save" onClick={() => setVisible("download")(true)}>
+      <StyledToolElement title="save" onClick={() => setVisible("download")(true)}>
         <FiDownload />
       </StyledToolElement>
-      <StyledToolElement aria-label="center canvas" onClick={centerView}>
+      <StyledToolElement title="center canvas" onClick={centerView}>
         <MdCenterFocusWeak />
       </StyledToolElement>
-      <StyledToolElement aria-label="zoom out" onClick={zoomOut}>
+      <StyledToolElement title="zoom out" onClick={zoomOut}>
         <AiOutlineMinus />
       </StyledToolElement>
-      <StyledToolElement aria-label="zoom in" onClick={zoomIn}>
+      <StyledToolElement title="zoom in" onClick={zoomIn}>
         <AiOutlinePlus />
       </StyledToolElement>
     </StyledTools>

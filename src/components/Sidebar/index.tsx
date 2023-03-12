@@ -1,4 +1,5 @@
 import React from "react";
+import { Tooltip } from "@mantine/core";
 import toast from "react-hot-toast";
 import { AiOutlineDelete, AiOutlineSave, AiOutlineFileAdd, AiOutlineEdit } from "react-icons/ai";
 import { CgArrowsMergeAltH, CgArrowsShrinkH } from "react-icons/cg";
@@ -10,7 +11,6 @@ import {
   VscExpandAll,
   VscSettingsGear,
 } from "react-icons/vsc";
-import { Tooltip } from "src/components/Tooltip";
 import useGraph from "src/store/useGraph";
 import useJson from "src/store/useJson";
 import useModal from "src/store/useModal";
@@ -136,7 +136,7 @@ const SidebarButton: React.FC<{
   component: React.ReactNode;
 }> = ({ onClick, deviceDisplay, title, component }) => {
   return (
-    <Tooltip className={deviceDisplay} title={title}>
+    <Tooltip className={deviceDisplay} label={title} color="gray" position="right" withArrow>
       <StyledElement onClick={onClick}>{component}</StyledElement>
     </Tooltip>
   );

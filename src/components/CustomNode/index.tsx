@@ -1,7 +1,7 @@
 import React from "react";
 import { Node, NodeProps } from "reaflow";
-import ObjectNode from "./ObjectNode";
-import TextNode from "./TextNode";
+import { ObjectNode } from "./ObjectNode";
+import { TextNode } from "./TextNode";
 
 export interface CustomNodeProps {
   node: NodeData;

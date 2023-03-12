@@ -1,7 +1,6 @@
 import React from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { AdTest } from "src/components/AdTest";
 import { Loading } from "src/components/Loading";
 import { Sidebar } from "src/components/Sidebar";
 import { BottomBar } from "src/containers/Editor/BottomBar";
@@ -9,6 +8,8 @@ import Panes from "src/containers/Editor/Panes";
 import useJson from "src/store/useJson";
 import useUser from "src/store/useUser";
 import styled from "styled-components";
+
+// import { AdTest } from "src/components/AdTest";
 
 export const StyledPageWrapper = styled.div`
   display: flex;
@@ -59,7 +60,7 @@ const EditorPage: React.FC = () => {
         </StyledEditorWrapper>
       </StyledPageWrapper>
       <BottomBar />
-      <AdTest />
+      {/* <AdTest /> */}
     </StyledEditorWrapper>
   );
 };

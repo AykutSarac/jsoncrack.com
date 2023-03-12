@@ -77,7 +77,7 @@ export const SearchInput: React.FC = () => {
     <StyledInputWrapper>
       <StyledForm onSubmit={onSubmit}>
         <StyledInput
-          type="text"
+          type="search"
           value={content.value}
           onChange={e => setContent(val => ({ ...val, value: e.target.value }))}
           placeholder="Search Node"

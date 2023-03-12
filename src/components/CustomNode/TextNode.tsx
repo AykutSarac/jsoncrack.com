@@ -40,7 +40,7 @@ const StyledImage = styled.img`
   background: ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
 `;
 
-const TextNode: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) => {
+const Node: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) => {
   const {
     id,
     text,
@@ -110,4 +110,4 @@ function propsAreEqual(prev: CustomNodeProps, next: CustomNodeProps) {
   return prev.node.text === next.node.text && prev.node.width === next.node.width;
 }
 
-export default React.memo(TextNode, propsAreEqual);
+export const TextNode = React.memo(Node, propsAreEqual);

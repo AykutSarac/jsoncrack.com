@@ -1,97 +1,50 @@
 import React from "react";
-import dynamic from "next/dynamic";
-import toast from "react-hot-toast";
-import { FiCopy } from "react-icons/fi";
-import vs from "react-syntax-highlighter/dist/cjs/styles/prism/vs";
-import vscDarkPlus from "react-syntax-highlighter/dist/cjs/styles/prism/vsc-dark-plus";
-import { Button } from "src/components/Button";
-import { Modal } from "src/components/Modal";
+import { Modal, Stack, Text, ScrollArea, ModalProps } from "@mantine/core";
+import { Prism } from "@mantine/prism";
 import useGraph from "src/store/useGraph";
-import useStored from "src/store/useStored";
-import styled from "styled-components";
+import { dataToString } from "src/utils/dataToString";
+import { shallow } from "zustand/shallow";
 
-const SyntaxHighlighter = dynamic(() => import("react-syntax-highlighter/dist/cjs/prism-async"), {
-  ssr: false,
-});
+const CodeBlock: React.FC<{ children: any }> = ({ children }) => {
+  return (
+    <ScrollArea>
+      <Prism
+        maw={600}
+        miw={350}
+        mah={250}
+        language="json"
+        copyLabel="Copy to clipboard"
+        copiedLabel="Copied to clipboard"
+        withLineNumbers
+      >
+        {children}
+      </Prism>
+    </ScrollArea>
+  );
+};
 
-interface NodeModalProps {
-  visible: boolean;
-  closeModal: () => void;
-}
-
-const StyledTitle = styled.div`
-  line-height: 16px;
-  font-size: 12px;
-  font-weight: 600;
-  padding: 16px 0;
-
-  &:first-of-type {
-    padding-top: 0;
-  }
-`;
-
-export const NodeModal = ({ visible, closeModal }: NodeModalProps) => {
-  const lightmode = useStored(state => state.lightmode);
-  const path = useGraph(state => state.path);
-  const nodeData = useGraph(state =>
-    Array.isArray(state.selectedNode) ? Object.fromEntries(state.selectedNode) : state.selectedNode
+export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
+  const [nodeData, path] = useGraph(
+    state => [dataToString(state.selectedNode.text), state.selectedNode.path],
+    shallow
   );
 
-  const handleClipboard = (content: string) => {
-    try {
-      navigator.clipboard?.writeText(content);
-      toast.success("Content copied to clipboard!");
-      closeModal();
-    } catch (error) {
-      toast.error("Failed to save to clipboard.");
-    }
-  };
-
   return (
-    <Modal visible={visible} setVisible={closeModal} size="lg">
-      <Modal.Header>Node Content</Modal.Header>
-      <Modal.Content>
-        <StyledTitle>Content</StyledTitle>
-        <SyntaxHighlighter
-          style={lightmode ? vs : vscDarkPlus}
-          customStyle={{
-            borderRadius: "4px",
-            fontSize: "14px",
-            margin: "0",
-          }}
-          language="json"
-          showLineNumbers
-        >
-          {JSON.stringify(
-            nodeData,
-            (_, v) => {
-              if (typeof v === "string") return v.replaceAll('"', "");
-              return v;
-            },
-            2
-          )}
-        </SyntaxHighlighter>
-        <StyledTitle>Node Path</StyledTitle>
-        <SyntaxHighlighter
-          style={lightmode ? vs : vscDarkPlus}
-          customStyle={{
-            borderRadius: "4px",
-            fontSize: "14px",
-            margin: "0",
-          }}
-          language="javascript"
-        >
-          {path}
-        </SyntaxHighlighter>
-      </Modal.Content>
-      <Modal.Controls setVisible={closeModal}>
-        <Button status="SECONDARY" onClick={() => handleClipboard(JSON.stringify(nodeData))}>
-          <FiCopy size={18} /> Clipboard
-        </Button>
-        <Button status="SECONDARY" onClick={() => handleClipboard(path)}>
-          <FiCopy size={18} /> Copy Path
-        </Button>
-      </Modal.Controls>
+    <Modal title="Node Content" size="auto" opened={opened} onClose={onClose} centered>
+      <Stack py="sm" spacing="sm">
+        <Stack spacing="xs">
+          <Text fz="sm" fw={700}>
+            Content
+          </Text>
+          <CodeBlock>{nodeData}</CodeBlock>
+        </Stack>
+        <Stack spacing="xs">
+          <Text fz="sm" fw={700}>
+            Node Path
+          </Text>
+          <CodeBlock>{path}</CodeBlock>
+        </Stack>
+      </Stack>
     </Modal>
   );
 };

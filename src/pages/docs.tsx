@@ -1,8 +1,8 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
+import { Button } from "@mantine/core";
 import materialDark from "react-syntax-highlighter/dist/cjs/styles/prism/material-dark";
-import { Button } from "src/components/Button";
 import { Footer } from "src/components/Footer";
 import styled from "styled-components";
 
@@ -63,7 +63,7 @@ const Docs = () => {
         <meta name="description" content="Embedding JSON Crack tutorial into your websites." />
       </Head>
       <StyledPage>
-        <Button href="/" link status="SECONDARY">
+        <Button component="a" href="/">
           &lt; Go Back
         </Button>
         <h1>Documentation</h1>

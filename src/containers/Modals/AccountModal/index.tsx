@@ -1,18 +1,16 @@
 import React from "react";
+import Link from "next/link";
+import { Modal, Group, Button, Badge, Avatar, Grid, Divider, ModalProps } from "@mantine/core";
 import { IoRocketSharp } from "react-icons/io5";
-import { MdVerified } from "react-icons/md";
-import { Button } from "src/components/Button";
-import { Modal, ModalProps } from "src/components/Modal";
 import useUser from "src/store/useUser";
 import styled from "styled-components";
 
-const StyledTitle = styled.p`
+const StyledTitle = styled.div`
   display: flex;
   align-items: center;
   color: ${({ theme }) => theme.TEXT_POSITIVE};
   flex: 1;
   font-weight: 700;
-  margin-top: 0;
 
   &::after {
     background: ${({ theme }) => theme.TEXT_POSITIVE};
@@ -25,23 +23,6 @@ const StyledTitle = styled.p`
     margin-left: 4px;
     opacity: 0.6;
   }
-`;
-
-const StyledAccountWrapper = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
-  padding: 16px;
-  border-radius: 6px;
-
-  button {
-    flex-basis: 100%;
-  }
-`;
-
-const StyledAvatar = styled.img`
-  border-radius: 100%;
 `;
 
 const StyledContainer = styled.div`
@@ -61,7 +42,7 @@ const StyledContainer = styled.div`
   }
 `;
 
-const AccountView: React.FC<Pick<ModalProps, "setVisible">> = ({ setVisible }) => {
+export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const user = useUser(state => state.user);
   const isPremium = useUser(state => state.isPremium());
   const logout = useUser(state => state.logout);
@@ -71,73 +52,71 @@ const AccountView: React.FC<Pick<ModalProps, "setVisible">> = ({ setVisible }) =
   };
 
   return (
-    <>
-      <Modal.Header>Account</Modal.Header>
-      <Modal.Content>
-        <StyledTitle>Hello, {user?.name}!</StyledTitle>
-        <StyledAccountWrapper>
-          <StyledAvatar
-            width="60"
-            height="60"
-            src={user?.profilePicture}
-            alt={user?.name}
-            onError={onImgFail}
-          />
-          <StyledContainer>
-            USERNAME
-            <div>{user?.name}</div>
-          </StyledContainer>
-          <StyledContainer>
-            ACCOUNT STATUS
-            <div>
-              {isPremium ? "PREMIUM " : "Free"}
-              {isPremium && <MdVerified />}
-            </div>
-          </StyledContainer>
-          <StyledContainer>
-            EMAIL
-            <div>{user?.email}</div>
-          </StyledContainer>
-          <StyledContainer>
-            REGISTRATION
-            <div>{user?.signUpAt && new Date(user.signUpAt).toDateString()}</div>
-          </StyledContainer>
-          {isPremium ? (
+    <Modal title="Account" opened={opened} onClose={onClose} centered>
+      <StyledTitle>Hello, {user?.name}!</StyledTitle>
+      <Group py="sm">
+        <Grid gutter="xs">
+          <Grid.Col span={2}>
+            <Avatar size="lg" radius="lg" src={user?.profilePicture} alt={user?.name} />
+          </Grid.Col>
+          <Grid.Col span={4}>
+            <StyledContainer>
+              USERNAME
+              <div>{user?.name}</div>
+            </StyledContainer>
+          </Grid.Col>
+          <Grid.Col span={6}>
+            <StyledContainer>
+              ACCOUNT STATUS
+              <div>{isPremium ? <Badge>Premium</Badge> : <Badge color="gray">Free</Badge>}</div>
+            </StyledContainer>
+          </Grid.Col>
+          <Grid.Col span={6}>
+            <StyledContainer>
+              EMAIL
+              <div>{user?.email}</div>
+            </StyledContainer>
+          </Grid.Col>
+          <Grid.Col span={4}>
+            <StyledContainer>
+              REGISTRATION
+              <div>{user?.signUpAt && new Date(user.signUpAt).toDateString()}</div>
+            </StyledContainer>
+          </Grid.Col>
+        </Grid>
+      </Group>
+      <Divider py="xs" />
+      <Group position="right">
+        {isPremium ? (
+          <Button
+            variant="light"
+            color="red"
+            onClick={() => window.open("https://patreon.com/jsoncrack", "_blank")}
+            leftIcon={<IoRocketSharp />}
+          >
+            Cancel Subscription
+          </Button>
+        ) : (
+          <Link href="/pricing" target="_blank" rel="noreferrer">
             <Button
-              status="DANGER"
-              block
-              onClick={() => window.open("https://patreon.com/jsoncrack", "_blank")}
+              variant="gradient"
+              gradient={{ from: "teal", to: "lime", deg: 105 }}
+              leftIcon={<IoRocketSharp />}
             >
-              <IoRocketSharp />
-              Cancel Subscription
-            </Button>
-          ) : (
-            <Button href="/pricing" status="TERTIARY" block link>
-              <IoRocketSharp />
               UPGRADE TO PREMIUM!
             </Button>
-          )}
-        </StyledAccountWrapper>
-      </Modal.Content>
-      <Modal.Controls setVisible={setVisible}>
+          </Link>
+        )}
         <Button
-          status="DANGER"
+          color="red"
           onClick={() => {
             logout();
-            setVisible(false);
+            onClose();
           }}
         >
           Log Out
         </Button>
-      </Modal.Controls>
-    </>
-  );
-};
-
-export const AccountModal: React.FC<ModalProps> = ({ setVisible, visible }) => {
-  return (
-    <Modal visible={visible} setVisible={setVisible}>
-      <AccountView setVisible={setVisible} />
+      </Group>
     </Modal>
   );
 };

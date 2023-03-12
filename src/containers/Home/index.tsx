@@ -1,8 +1,10 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
+import Link from "next/link";
 import Script from "next/script";
-import { AiOutlineRight } from "react-icons/ai";
+import { Button } from "@mantine/core";
+import { AiOutlineRight, AiTwotoneStar } from "react-icons/ai";
 import {
   HiCursorClick,
   HiLightningBolt,
@@ -36,30 +38,23 @@ const HeroSection = () => (
       Seamlessly visualize your JSON data{" "}
       <Styles.StyledHighlightedText>instantly</Styles.StyledHighlightedText> into graphs.
     </Styles.StyledSubTitle>
-
-    <Styles.StyledButton href="/editor" link>
-      GO TO EDITOR
-      <AiOutlineRight strokeWidth="80" />
-    </Styles.StyledButton>
-
+    <Link href="/editor">
+      <Button color="grape" size="lg">
+        GO TO EDITOR
+        <AiOutlineRight strokeWidth="80" />
+      </Button>
+    </Link>
     <Styles.StyledButtonWrapper>
-      <Styles.StyledSponsorButton
-        href="https://github.com/sponsors/AykutSarac"
-        target="_blank"
-        rel="noreferrer"
-        link
-      >
-        SPONSOR US
-        <IoHeart />
-      </Styles.StyledSponsorButton>
-      <Styles.StyledSponsorButton
-        href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode"
-        link
-        isBlue
-      >
-        GET IT ON VS CODE
-        <SiVisualstudiocode />
-      </Styles.StyledSponsorButton>
+      <Link href="https://github.com/sponsors/AykutSarac" target="_blank" rel="noreferrer">
+        <Button color="red" size="md" variant="outline" rightIcon={<IoHeart />}>
+          SPONSOR US
+        </Button>
+      </Link>
+      <Link href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode">
+        <Button color="blue" size="md" variant="outline" rightIcon={<SiVisualstudiocode />}>
+          GET IT ON VS CODE
+        </Button>
+      </Link>
     </Styles.StyledButtonWrapper>
   </Styles.StyledHeroSection>
 );
@@ -202,13 +197,16 @@ const GitHubSection = () => (
         <br /> So why not join us and become part of the JSON Crack open source community today? We
         can&apos;t wait to see what we can accomplish together!
       </Styles.StyledMinorTitle>
-      <Styles.StyledButton
+      <Button
+        w={200}
+        color="grape"
+        size="md"
+        component="a"
         href="https://github.com/AykutSarac/jsoncrack.com"
-        status="SECONDARY"
-        link
+        leftIcon={<AiTwotoneStar />}
       >
         STAR ON GITHUB
-      </Styles.StyledButton>
+      </Button>
     </Styles.StyledSectionArea>
   </Styles.StyledSection>
 );
@@ -228,9 +226,9 @@ const EmbedSection = () => (
         intuitive interface makes it easy to navigate and understand even complex JSON data, making
         it a valuable tool for anyone working with JSON.
       </Styles.StyledMinorTitle>
-      <Styles.StyledButton href="/docs" status="SECONDARY" link>
+      <Button w={200} size="md" component="a" href="/docs">
         LEARN TO EMBED
-      </Styles.StyledButton>
+      </Button>
     </Styles.StyledSectionArea>
     <div>
       <Styles.StyledFrame
@@ -265,14 +263,15 @@ const SponsorSection = () => (
     <Styles.StyledMinorTitle>
       Your supports make JSON Crack possible to continue and accessible for everyone!
     </Styles.StyledMinorTitle>
-    <Styles.StyledButton
+    <Button
+      size="md"
+      component="a"
+      color="green"
       href="https://github.com/sponsors/AykutSarac"
       rel="external"
-      status="SUCCESS"
-      link
     >
       Become A Sponsor!
-    </Styles.StyledButton>
+    </Button>
     <Sponsors />
   </Styles.StyledSponsorSection>
 );

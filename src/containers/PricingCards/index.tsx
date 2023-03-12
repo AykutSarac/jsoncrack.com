@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "src/components/Button";
+import { Button } from "@mantine/core";
 import styled from "styled-components";
 
 const StyledSectionBody = styled.div`
@@ -45,9 +45,17 @@ border: 1px solid rgba(255, 5, 214, 0.74);`
 `;
 
 const StyledPricingCardTitle = styled.h2`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   font-weight: 800;
   font-size: 24px;
+  gap: 6px;
+
+  img {
+    transform: rotate(45deg);
+  }
 `;
 
 const StyledPricingCardPrice = styled.h3`
@@ -69,10 +77,6 @@ const StyledPricingCardDetailsItem = styled.li`
   @media only screen and (max-width: 768px) {
     font-size: 14px;
   }
-`;
-
-const StyledButton = styled(Button)`
-  border: 1px solid white;
 `;
 
 const StyledPricingSection = styled.section`
@@ -111,15 +115,20 @@ export const PricingCards = () => {
             </StyledPricingCardDetailsItem>
             <StyledPricingCardDetailsItem>Everything in previous tier</StyledPricingCardDetailsItem>
           </StyledPricingCardDetails>
-          <StyledButton
+          <Button
+            size="md"
+            variant="gradient"
+            gradient={{ from: "pink", to: "red", deg: 105 }}
+            component="a"
             href="https://www.patreon.com/jsoncrack"
             target="_blank"
-            status="SUCCESS"
-            block
-            link
+            fullWidth
+            style={{
+              border: "2px solid black",
+            }}
           >
-            GET IT NOW!
-          </StyledButton>
+            GET PREMIUM
+          </Button>
         </StyledPricingCard>
       </StyledSectionBody>
     </StyledPricingSection>

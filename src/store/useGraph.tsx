@@ -18,7 +18,7 @@ const initialStates = {
   collapsedNodes: [] as string[],
   collapsedEdges: [] as string[],
   collapsedParents: [] as string[],
-  selectedNode: [] as string | object,
+  selectedNode: {} as NodeData,
   path: "",
 };
 
@@ -38,12 +38,12 @@ interface GraphActions {
   zoomIn: () => void;
   zoomOut: () => void;
   centerView: () => void;
-  setSelectedNode: ({ node, path }: { node: string | string[]; path: string }) => void;
+  setSelectedNode: ({ nodeData, path }: { nodeData: NodeData; path: string }) => void;
 }
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
   ...initialStates,
-  setSelectedNode: ({ node, path }) => set({ selectedNode: node, path }),
+  setSelectedNode: ({ nodeData, path }) => set({ selectedNode: nodeData, path }),
   setGraph: (data, options) => {
     const { nodes, edges } = parser(data ?? useJson.getState().json);
 

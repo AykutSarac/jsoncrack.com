@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "src/components/Button";
+import { Button } from "@mantine/core";
 import { Footer } from "src/components/Footer";
 import { PricingCards } from "src/containers/PricingCards";
 import styled from "styled-components";
@@ -18,7 +18,7 @@ const Pricing = () => {
   return (
     <>
       <StyledPageWrapper>
-        <Button href="/" link>
+        <Button component="a" href="/">
           &lt; Go Back
         </Button>
         <StyledHeroSection>

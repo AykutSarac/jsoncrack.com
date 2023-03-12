@@ -1,72 +1,51 @@
 import React from "react";
 import { useRouter } from "next/router";
-import toast from "react-hot-toast";
-import { Button } from "src/components/Button";
-import { Input } from "src/components/Input";
-import { Modal, ModalProps } from "src/components/Modal";
-import styled from "styled-components";
+import {
+  TextInput,
+  Stack,
+  Modal,
+  Button,
+  CopyButton,
+  Tooltip,
+  ActionIcon,
+  Text,
+  ModalProps,
+} from "@mantine/core";
+import { MdCheck, MdCopyAll } from "react-icons/md";
 
-const StyledFlex = styled.div`
-  display: flex;
-  gap: 12px;
-`;
-
-const StyledContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  padding: 12px 0;
-  border-top: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
-
-  &:first-of-type {
-    padding-top: 0;
-    border: none;
-  }
-`;
-
-export const ShareModal: React.FC<ModalProps> = ({ visible, setVisible }) => {
-  const { push, query } = useRouter();
+export const ShareModal: React.FC<ModalProps> = ({ opened, onClose }) => {
+  const { query } = useRouter();
   const shareURL = `https://jsoncrack.com/editor?json=${query.json}`;
 
-  const handleShare = (value: string) => {
-    navigator.clipboard?.writeText(value);
-    toast.success(`Link copied to clipboard.`);
-    setVisible(false);
-  };
-
-  const onEmbedClick = () => {
-    push("/docs");
-    setVisible(false);
-  };
-
   return (
-    <Modal visible={visible} setVisible={setVisible}>
-      <Modal.Header>Create a Share Link</Modal.Header>
-      <Modal.Content>
-        <StyledContainer>
+    <Modal title="Create a Share Link" opened={opened} onClose={onClose} centered>
+      <Stack py="sm">
+        <Text fz="sm" fw={700}>
           Share Link
-          <StyledFlex>
-            <Input value={shareURL} type="url" readOnly />
-            <Button status="SECONDARY" onClick={() => handleShare(shareURL)}>
-              Copy
-            </Button>
-          </StyledFlex>
-        </StyledContainer>
-        <StyledContainer>
+        </Text>
+        <TextInput
+          value={shareURL}
+          type="url"
+          readOnly
+          rightSection={
+            <CopyButton value={shareURL} timeout={2000}>
+              {({ copied, copy }) => (
+                <Tooltip label={copied ? "Copied" : "Copy"} withArrow position="right">
+                  <ActionIcon color={copied ? "teal" : "gray"} onClick={copy}>
+                    {copied ? <MdCheck size="1rem" /> : <MdCopyAll size="1rem" />}
+                  </ActionIcon>
+                </Tooltip>
+              )}
+            </CopyButton>
+          }
+        />
+        <Text fz="sm" fw={700}>
           Embed into your website
-          <StyledFlex>
-            <Button status="SUCCESS" onClick={onEmbedClick} block>
-              Learn How to Embed
-            </Button>
-          </StyledFlex>
-        </StyledContainer>
-      </Modal.Content>
-      <Modal.Controls setVisible={setVisible}></Modal.Controls>
+        </Text>
+        <Button component="a" color="green" target="_blank" href="/docs" fullWidth>
+          Learn How to Embed
+        </Button>
+      </Stack>
     </Modal>
   );
 };
