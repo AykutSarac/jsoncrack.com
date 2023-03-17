@@ -16,6 +16,7 @@ import useJson from "src/store/useJson";
 import useModal from "src/store/useModal";
 import { getNextDirection } from "src/utils/getNextDirection";
 import styled from "styled-components";
+import { useHotkey } from "src/hooks/useHotKey";
 
 const StyledSidebar = styled.div`
   display: flex;
@@ -156,6 +157,11 @@ export const Sidebar: React.FC = () => {
   const foldNodes = useGraph(state => state.foldNodes);
   const fullscreen = useGraph(state => state.fullscreen);
   const graphCollapsed = useGraph(state => state.graphCollapsed);
+
+  useHotkey({
+    key: 'i',
+    callback: () => setVisible("import")(true)
+  })
 
   const handleSave = () => {
     const a = document.createElement("a");
