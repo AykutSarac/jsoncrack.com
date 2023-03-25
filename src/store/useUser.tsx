@@ -11,6 +11,7 @@ interface UserActions {
   checkSession: () => void;
   isPremium: () => boolean;
   tokenAuth: () => Promise<void>;
+  validatePremium: (cb: () => void) => void;
 }
 
 const initialStates = {
@@ -50,10 +51,29 @@ const useUser = create<UserStates & UserActions>()((set, get) => ({
     }
   },
   checkSession: async () => {
+    if (process.env.NODE_ENV === "development") {
+      return set({
+        user: {
+          _id: "0",
+          provider: "altogic",
+          providerUserId: "1",
+          email: "development@jsoncrack.com",
+          name: "JSON Crack",
+          profilePicture: "",
+          signUpAt: "2022-12-04T11:07:32.000Z",
+          lastLoginAt: "2023-03-12T14:17:03.146Z",
+          type: 1,
+          updatedAt: "2022-12-30T10:56:29.772Z",
+        },
+        isAuthenticated: true,
+      });
+    }
+
     const currentSession = altogic.auth.getSession();
 
     if (currentSession) {
       const dbUser = await altogic.auth.getUserFromDB();
+      console.log(dbUser);
 
       altogic.auth.setSession(currentSession);
       set({ user: dbUser.user as any, isAuthenticated: true });
@@ -64,6 +84,14 @@ const useUser = create<UserStates & UserActions>()((set, get) => ({
       if (!data.errors?.items.length) {
         set({ user: data.user as any, isAuthenticated: true });
       }
+    }
+  },
+  validatePremium: callback => {
+    if (get().isAuthenticated) {
+      if (!get().isPremium()) return useModal.getState().setVisible("premium")(true);
+      return callback();
+    } else {
+      return useModal.getState().setVisible("account")(true);
     }
   },
 }));

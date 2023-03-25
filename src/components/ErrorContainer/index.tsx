@@ -12,14 +12,13 @@ const StyledErrorExpand = styled.div<{ error: boolean }>`
   display: flex;
   width: 100%;
   padding: 4px 16px;
-  height: 28px;
+  height: 36px;
   border-radius: 0;
   justify-content: space-between;
   align-items: center;
   color: ${({ theme, error }) => (error ? theme.TEXT_DANGER : theme.TEXT_POSITIVE)};
   pointer-events: ${({ error }) => !error && "none"};
   background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
-  box-shadow: 0 1px 0px ${({ theme }) => theme.BACKGROUND_TERTIARY};
 `;
 
 const StyledTitle = styled.span`

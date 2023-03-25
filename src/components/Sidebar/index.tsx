@@ -26,6 +26,8 @@ const StyledSidebar = styled.div`
   background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
   padding: 4px;
   border-right: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
+  width: 50px;
+  text-align: center;
 
   @media only screen and (max-width: 768px) {
     flex-direction: row;
@@ -34,18 +36,14 @@ const StyledSidebar = styled.div`
 `;
 
 const StyledElement = styled.button`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  text-align: center;
+  height: 45px;
   font-size: 24px;
   font-weight: 600;
-  width: fit-content;
-  color: ${({ theme }) => theme.SIDEBAR_ICONS};
   cursor: pointer;
+  color: ${({ theme }) => theme.SIDEBAR_ICONS};
+  width: 100%;
 
   svg {
-    padding: 12px 8px;
     vertical-align: middle;
   }
 
@@ -114,8 +112,8 @@ const StyledBottomWrapper = styled.nav`
 
 const StyledLogo = styled.a`
   color: ${({ theme }) => theme.FULL_WHITE};
-  padding: 8px 4px;
   border-bottom: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
+  width: 100%;
 
   @media only screen and (max-width: 768px) {
     border-bottom: 0;

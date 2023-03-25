@@ -4,7 +4,6 @@ import { Canvas, Edge, EdgeProps, ElkRoot, NodeProps } from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
 import useGraph from "src/store/useGraph";
 import useUser from "src/store/useUser";
-import { getNodePath } from "src/utils/getNodePath";
 import styled from "styled-components";
 import { Loading } from "../Loading";
 import { ErrorView } from "./ErrorView";
@@ -89,10 +88,10 @@ export const Graph = ({ isWidget = false, openNodeModal }: GraphProps) => {
   const handleNodeClick = React.useCallback(
     (_: React.MouseEvent<SVGElement>, data: NodeData) => {
       if (setSelectedNode)
-        setSelectedNode({ nodeData: data, path: getNodePath(nodes, edges, data.id) });
+        setSelectedNode({ nodeData: data });
       if (openNodeModal) openNodeModal();
     },
-    [edges, nodes, openNodeModal, setSelectedNode]
+    [openNodeModal, setSelectedNode]
   );
 
   const onInit = React.useCallback(

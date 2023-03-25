@@ -47,10 +47,6 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const isPremium = useUser(state => state.isPremium());
   const logout = useUser(state => state.logout);
 
-  const onImgFail = (e: React.SyntheticEvent<HTMLImageElement>) => {
-    e.currentTarget.setAttribute("src", `https://ui-avatars.com/api/?name=${user?.name}`);
-  };
-
   return (
     <Modal title="Account" opened={opened} onClose={onClose} centered>
       <StyledTitle>Hello, {user?.name}!</StyledTitle>
@@ -68,7 +64,15 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           <Grid.Col span={6}>
             <StyledContainer>
               ACCOUNT STATUS
-              <div>{isPremium ? <Badge>Premium</Badge> : <Badge color="gray">Free</Badge>}</div>
+              <div>
+                {isPremium ? (
+                  <Badge>Premium</Badge>
+                ) : (
+                  <Badge variant="outline" color="gray">
+                    Free
+                  </Badge>
+                )}
+              </div>
             </StyledContainer>
           </Grid.Col>
           <Grid.Col span={6}>
