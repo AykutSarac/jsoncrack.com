@@ -13,7 +13,7 @@ export const StyledTools = styled.div`
   align-items: center;
   gap: 4px;
   flex-direction: row-reverse;
-  height: 28px;
+  height: 36px;
   padding: 4px 16px;
   background: ${({ theme }) => theme.BACKGROUND_PRIMARY};
   color: ${({ theme }) => theme.SILVER};

@@ -126,6 +126,8 @@ export const StyledTitle = styled.h1`
   font-weight: 900;
   margin: 0;
   font-size: min(6vw, 86px);
+  color: white;
+  font-family: var(--mona-sans);
 
   @media only screen and (max-width: 768px) {
     font-size: 2.5rem;
@@ -329,6 +331,7 @@ export const StyledTabsWrapper = styled.div`
   gap: 10px;
   padding: 8px 8px;
   padding-bottom: 0;
+  height: 34px;
 
   pre {
     border-top: 2px solid ${({ theme }) => theme.PRIMARY};
@@ -341,13 +344,15 @@ export const StyledTab = styled.button<{ active?: boolean }>`
   border: 2px solid ${({ theme, active }) => (active ? theme.PRIMARY : "transparent")};
   border-bottom: 0;
   margin-bottom: -2px;
-  padding: 8px 16px;
+  padding: 4px 8px;
   min-width: 80px;
   max-width: 150px;
   color: ${({ theme, active }) => (active ? theme.INTERACTIVE_ACTIVE : theme.INTERACTIVE_NORMAL)};
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  font-size: 12px;
+  font-weight: 600;
 
   &:hover {
     color: ${({ theme, active }) => !active && theme.INTERACTIVE_HOVER};

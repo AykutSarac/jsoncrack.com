@@ -9,6 +9,7 @@ import { SettingsModal } from "src/containers/Modals/SettingsModal";
 import { ShareModal } from "src/containers/Modals/ShareModal";
 import useModal from "src/store/useModal";
 import { shallow } from "zustand/shallow";
+import { PremiumModal } from "../Modals/PremiumModal";
 
 export const ModalController = () => {
   const setVisible = useModal(state => state.setVisible);
@@ -22,6 +23,7 @@ export const ModalController = () => {
     accountModal,
     loginModal,
     shareModal,
+    premiumModal,
   ] = useModal(
     state => [
       state.import,
@@ -32,6 +34,7 @@ export const ModalController = () => {
       state.account,
       state.login,
       state.share,
+      state.premium,
     ],
     shallow
   );
@@ -44,6 +47,7 @@ export const ModalController = () => {
       <SettingsModal opened={settingsModal} onClose={() => setVisible("settings")(false)} />
       <CloudModal opened={cloudModal} onClose={() => setVisible("cloud")(false)} />
       <AccountModal opened={accountModal} onClose={() => setVisible("account")(false)} />
+      <PremiumModal opened={premiumModal} onClose={() => setVisible("premium")(false)} />
       <LoginModal opened={loginModal} onClose={() => setVisible("login")(false)} />
       <ShareModal opened={shareModal} onClose={() => setVisible("share")(false)} />
     </>

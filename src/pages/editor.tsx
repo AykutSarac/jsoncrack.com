@@ -9,8 +9,6 @@ import useJson from "src/store/useJson";
 import useUser from "src/store/useUser";
 import styled from "styled-components";
 
-// import { AdTest } from "src/components/AdTest";
-
 export const StyledPageWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -60,7 +58,6 @@ const EditorPage: React.FC = () => {
         </StyledEditorWrapper>
       </StyledPageWrapper>
       <BottomBar />
-      {/* <AdTest /> */}
     </StyledEditorWrapper>
   );
 };

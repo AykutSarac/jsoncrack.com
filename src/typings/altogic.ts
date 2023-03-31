@@ -5,8 +5,9 @@ export interface User {
   email: string;
   name: string;
   profilePicture: string;
-  signUpAt: Date;
-  lastLoginAt: Date;
+  signUpAt: string;
+  lastLoginAt: string;
+  updatedAt: string;
   type: 0 | 1;
 }
 
