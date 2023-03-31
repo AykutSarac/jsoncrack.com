@@ -36,6 +36,9 @@ const StyledSidebar = styled.div`
 `;
 
 const StyledElement = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 45px;
   font-size: 24px;
   font-weight: 600;
@@ -57,11 +60,6 @@ const StyledElement = styled.button`
 
   @media only screen and (max-width: 768px) {
     font-size: 22px;
-
-    svg {
-      padding: 8px 4px;
-      vertical-align: middle;
-    }
   }
 `;
 
