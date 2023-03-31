@@ -5,14 +5,11 @@ import { defaultJson } from "src/constants/data";
 import { saveJson as saveJsonDB } from "src/services/db/json";
 import useGraph from "src/store/useGraph";
 import { Json } from "src/typings/altogic";
-import { fixJSON } from "src/utils/repairJson";
 import { create } from "zustand";
-import useUser from "./useUser";
 
 interface JsonActions {
   setJson: (json: string) => void;
   getJson: () => string;
-  repairJSON: (jsonstring: string) => void;
   getHasChanges: () => boolean;
   fetchJson: (jsonId: string | string[] | undefined) => void;
   setError: (hasError: boolean) => void;
@@ -42,14 +39,6 @@ const useJson = create<JsonStates & JsonActions>()((set, get) => ({
   ...initialStates,
   getJson: () => get().json,
   getHasChanges: () => get().hasChanges,
-  repairJSON: jsonstring => {
-    useUser.getState().validatePremium(() => {
-      const parsed = fixJSON(jsonstring);
-      console.log(parsed);
-
-      get().setJson(parsed);
-    });
-  },
   fetchJson: async jsonId => {
     const isURL = new RegExp(
       /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/
