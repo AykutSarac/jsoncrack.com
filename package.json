@@ -9,7 +9,7 @@
     "build": "next build && next export",
     "start": "next start",
     "lint": "tsc && next lint",
-    "lint:fix": "prettier --write \"./**/*.{ts,tsx,json}\"",
+    "lint:fix": "prettier --write ./src & eslint --fix src",
     "deploy": "gh-pages -d out -t true"
   },
   "dependencies": {

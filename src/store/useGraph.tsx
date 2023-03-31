@@ -38,12 +38,12 @@ interface GraphActions {
   zoomIn: () => void;
   zoomOut: () => void;
   centerView: () => void;
-  setSelectedNode: ({ nodeData}: { nodeData: NodeData }) => void;
+  setSelectedNode: ({ nodeData }: { nodeData: NodeData }) => void;
 }
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
   ...initialStates,
-  setSelectedNode: ({ nodeData}) => set({ selectedNode: nodeData}),
+  setSelectedNode: ({ nodeData }) => set({ selectedNode: nodeData }),
   setGraph: (data, options) => {
     const { nodes, edges } = parser(data ?? useJson.getState().json);
 
