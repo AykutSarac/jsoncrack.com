@@ -1,10 +1,10 @@
 import React from "react";
+import styled from "styled-components";
 import Editor, { loader, Monaco } from "@monaco-editor/react";
 import debounce from "lodash.debounce";
 import { Loading } from "src/components/Loading";
 import useJson from "src/store/useJson";
 import useStored from "src/store/useStored";
-import styled from "styled-components";
 
 loader.config({
   paths: {

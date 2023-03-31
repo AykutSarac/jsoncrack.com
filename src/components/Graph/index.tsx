@@ -1,10 +1,10 @@
 import React from "react";
+import styled from "styled-components";
 import { ReactZoomPanPinchRef, TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import { Canvas, Edge, EdgeProps, ElkRoot, NodeProps } from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
 import useGraph from "src/store/useGraph";
 import useUser from "src/store/useUser";
-import styled from "styled-components";
 import { Loading } from "../Loading";
 import { ErrorView } from "./ErrorView";
 import { PremiumView } from "./PremiumView";

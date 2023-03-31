@@ -1,8 +1,8 @@
 import React from "react";
+import styled from "styled-components";
 import { AiOutlineSearch } from "react-icons/ai";
 import { IoCloseSharp } from "react-icons/io5";
 import { useFocusNode } from "src/hooks/useFocusNode";
-import styled from "styled-components";
 
 const StyledInputWrapper = styled.div`
   display: flex;

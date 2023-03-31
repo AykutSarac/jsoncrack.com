@@ -1,5 +1,5 @@
-import theme from "src/constants/theme";
 import "styled-components";
+import theme from "src/constants/theme";
 
 type CustomTheme = typeof theme;
 

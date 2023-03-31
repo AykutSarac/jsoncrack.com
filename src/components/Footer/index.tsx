@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { FaDiscord, FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 import styled from "styled-components";
+import { FaDiscord, FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 import pkg from "../../../package.json";
 
 export const StyledFooter = styled.footer`

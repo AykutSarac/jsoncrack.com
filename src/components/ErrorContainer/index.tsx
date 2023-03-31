@@ -1,7 +1,7 @@
 import React from "react";
+import styled from "styled-components";
 import { MdReportGmailerrorred, MdOutlineCheckCircleOutline } from "react-icons/md";
 import useJson from "src/store/useJson";
-import styled from "styled-components";
 
 const StyledErrorWrapper = styled.div`
   z-index: 1;

@@ -1,10 +1,10 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
+import styled from "styled-components";
 import { Button } from "@mantine/core";
 import materialDark from "react-syntax-highlighter/dist/cjs/styles/prism/material-dark";
 import { Footer } from "src/components/Footer";
-import styled from "styled-components";
 
 const SyntaxHighlighter = dynamic(() => import("react-syntax-highlighter/dist/cjs/prism-async"), {
   ssr: false,

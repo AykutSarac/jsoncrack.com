@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, Group, Switch, Stack, ModalProps } from "@mantine/core";
-import useStored from "src/store/useStored";
 import { shallow } from "zustand/shallow";
+import useStored from "src/store/useStored";
 
 export const SettingsModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const lightmode = useStored(state => state.lightmode);

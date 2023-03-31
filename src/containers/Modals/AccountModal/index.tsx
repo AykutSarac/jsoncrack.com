@@ -1,9 +1,9 @@
 import React from "react";
 import Link from "next/link";
+import styled from "styled-components";
 import { Modal, Group, Button, Badge, Avatar, Grid, Divider, ModalProps } from "@mantine/core";
 import { IoRocketSharp } from "react-icons/io5";
 import useUser from "src/store/useUser";
-import styled from "styled-components";
 
 const StyledTitle = styled.div`
   display: flex;

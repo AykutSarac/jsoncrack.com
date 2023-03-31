@@ -1,6 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import styled from "styled-components";
 import toast from "react-hot-toast";
 import {
   AiOutlineCloudSync,
@@ -15,7 +16,6 @@ import useJson from "src/store/useJson";
 import useModal from "src/store/useModal";
 import useStored from "src/store/useStored";
 import useUser from "src/store/useUser";
-import styled from "styled-components";
 
 const StyledBottomBar = styled.div`
   display: flex;

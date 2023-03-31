@@ -1,4 +1,5 @@
 import React from "react";
+import styled from "styled-components";
 import { Tooltip } from "@mantine/core";
 import toast from "react-hot-toast";
 import { AiOutlineDelete, AiOutlineSave, AiOutlineFileAdd, AiOutlineEdit } from "react-icons/ai";
@@ -15,7 +16,6 @@ import useGraph from "src/store/useGraph";
 import useJson from "src/store/useJson";
 import useModal from "src/store/useModal";
 import { getNextDirection } from "src/utils/getNextDirection";
-import styled from "styled-components";
 
 const StyledSidebar = styled.div`
   display: flex;

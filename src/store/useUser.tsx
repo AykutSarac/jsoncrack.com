@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
+import { create } from "zustand";
 import { altogic } from "src/api/altogic";
 import { AltogicAuth, User } from "src/typings/altogic";
-import { create } from "zustand";
 import useModal from "./useModal";
 
 interface UserActions {
@@ -51,29 +51,28 @@ const useUser = create<UserStates & UserActions>()((set, get) => ({
     }
   },
   checkSession: async () => {
-    if (process.env.NODE_ENV === "development") {
-      return set({
-        user: {
-          _id: "0",
-          provider: "altogic",
-          providerUserId: "1",
-          email: "development@jsoncrack.com",
-          name: "JSON Crack",
-          profilePicture: "",
-          signUpAt: "2022-12-04T11:07:32.000Z",
-          lastLoginAt: "2023-03-12T14:17:03.146Z",
-          type: 1,
-          updatedAt: "2022-12-30T10:56:29.772Z",
-        },
-        isAuthenticated: true,
-      });
-    }
+    // if (process.env.NODE_ENV === "development") {
+    //   return set({
+    //     user: {
+    //       _id: "0",
+    //       provider: "altogic",
+    //       providerUserId: "1",
+    //       email: "development@jsoncrack.com",
+    //       name: "JSON Crack",
+    //       profilePicture: "",
+    //       signUpAt: "2022-12-04T11:07:32.000Z",
+    //       lastLoginAt: "2023-03-12T14:17:03.146Z",
+    //       type: 1,
+    //       updatedAt: "2022-12-30T10:56:29.772Z",
+    //     },
+    //     isAuthenticated: true,
+    //   });
+    // }
 
     const currentSession = altogic.auth.getSession();
 
     if (currentSession) {
       const dbUser = await altogic.auth.getUserFromDB();
-      console.log(dbUser);
 
       altogic.auth.setSession(currentSession);
       set({ user: dbUser.user as any, isAuthenticated: true });

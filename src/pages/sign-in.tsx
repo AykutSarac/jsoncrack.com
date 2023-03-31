@@ -2,13 +2,13 @@ import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import styled from "styled-components";
 import { Button, Center, Container, Stack } from "@mantine/core";
 import { AiOutlineGithub, AiOutlineGoogle } from "react-icons/ai";
 import { altogic } from "src/api/altogic";
 import { Footer } from "src/components/Footer";
 import { Navbar } from "src/components/Navbar";
 import useUser from "src/store/useUser";
-import styled from "styled-components";
 
 const StyledPageWrapper = styled.div`
   padding: 5%;

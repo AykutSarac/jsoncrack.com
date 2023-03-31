@@ -1,6 +1,6 @@
 import React from "react";
-import { HiHeart } from "react-icons/hi";
 import styled from "styled-components";
+import { HiHeart } from "react-icons/hi";
 
 const StyledText = styled.span`
   white-space: nowrap;

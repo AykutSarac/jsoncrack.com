@@ -1,9 +1,9 @@
 import React from "react";
+import styled from "styled-components";
 import { MdLink, MdLinkOff } from "react-icons/md";
 import { CustomNodeProps } from "src/components/CustomNode";
 import useGraph from "src/store/useGraph";
 import useStored from "src/store/useStored";
-import styled from "styled-components";
 import * as Styled from "./styles";
 
 const StyledExpand = styled.button`

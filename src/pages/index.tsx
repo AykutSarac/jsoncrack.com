@@ -1,7 +1,7 @@
 import React from "react";
+import { ThemeProvider } from "styled-components";
 import { darkTheme } from "src/constants/theme";
 import Home from "src/containers/Home";
-import { ThemeProvider } from "styled-components";
 
 const HomePage = () => {
   return (

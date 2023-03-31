@@ -1,9 +1,9 @@
 import { ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
 import { CanvasDirection } from "reaflow/dist/layout/elkLayout";
+import { create } from "zustand";
 import { parser } from "src/utils/core/jsonParser";
 import { getChildrenEdges } from "src/utils/getChildrenEdges";
 import { getOutgoers } from "src/utils/getOutgoers";
-import { create } from "zustand";
 import useJson from "./useJson";
 
 const initialStates = {

@@ -1,9 +1,9 @@
 import React from "react";
+import styled from "styled-components";
 import { Modal, Group, Button, TextInput, Stack, Divider, ModalProps } from "@mantine/core";
 import toast from "react-hot-toast";
 import { AiOutlineUpload } from "react-icons/ai";
 import useJson from "src/store/useJson";
-import styled from "styled-components";
 
 const StyledUploadWrapper = styled.label`
   display: flex;

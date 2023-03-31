@@ -1,6 +1,6 @@
 import { Roboto_Mono } from "next/font/google";
-import { LinkItUrl } from "react-linkify-it";
 import styled, { DefaultTheme } from "styled-components";
+import { LinkItUrl } from "react-linkify-it";
 
 const robotoMono = Roboto_Mono({
   weight: "500",

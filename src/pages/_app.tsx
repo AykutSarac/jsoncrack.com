@@ -1,6 +1,7 @@
 import React from "react";
 import type { AppProps } from "next/app";
 import localFont from "next/font/local";
+import { ThemeProvider } from "styled-components";
 import { MantineProvider } from "@mantine/core";
 import { init } from "@sentry/nextjs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -10,7 +11,6 @@ import GlobalStyle from "src/constants/globalStyle";
 import { darkTheme, lightTheme } from "src/constants/theme";
 import { ModalController } from "src/containers/ModalController";
 import useStored from "src/store/useStored";
-import { ThemeProvider } from "styled-components";
 
 if (process.env.NODE_ENV !== "development") {
   init({

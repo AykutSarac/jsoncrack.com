@@ -7,8 +7,9 @@
   "importOrder": [
     "^(react/(.*)$)|^(react$)",
     "^(next/(.*)$)|^(next$)",
+    "styled",
     "<THIRD_PARTY_MODULES>",
-    "^components/(.*)$",
+    "^src/(.*)$",
     "^utils/(.*)$",
     "^assets/(.*)$",
     "^[./]"

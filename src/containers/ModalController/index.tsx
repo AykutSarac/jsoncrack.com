@@ -1,4 +1,5 @@
 import React from "react";
+import { shallow } from "zustand/shallow";
 import { AccountModal } from "src/containers/Modals/AccountModal";
 import { ClearModal } from "src/containers/Modals/ClearModal";
 import { CloudModal } from "src/containers/Modals/CloudModal";
@@ -8,7 +9,6 @@ import { LoginModal } from "src/containers/Modals/LoginModal";
 import { SettingsModal } from "src/containers/Modals/SettingsModal";
 import { ShareModal } from "src/containers/Modals/ShareModal";
 import useModal from "src/store/useModal";
-import { shallow } from "zustand/shallow";
 import { PremiumModal } from "../Modals/PremiumModal";
 
 export const ModalController = () => {

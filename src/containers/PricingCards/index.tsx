@@ -1,6 +1,6 @@
 import React from "react";
-import { Button } from "@mantine/core";
 import styled from "styled-components";
+import { Button } from "@mantine/core";
 
 const StyledSectionBody = styled.div`
   display: grid;

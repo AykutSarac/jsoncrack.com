@@ -1,11 +1,11 @@
 import React from "react";
+import styled from "styled-components";
 import { AiOutlineFullscreen, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
 import { MdCenterFocusWeak } from "react-icons/md";
 import { SearchInput } from "src/components/SearchInput";
 import useGraph from "src/store/useGraph";
 import useModal from "src/store/useModal";
-import styled from "styled-components";
 
 export const StyledTools = styled.div`
   position: relative;

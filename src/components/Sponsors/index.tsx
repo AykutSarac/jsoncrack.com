@@ -1,7 +1,7 @@
 import React from "react";
+import styled from "styled-components";
 import { Avatar, Tooltip, UnstyledButton } from "@mantine/core";
 import useStored from "src/store/useStored";
-import styled from "styled-components";
 
 async function getSponsors() {
   try {

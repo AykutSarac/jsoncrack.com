@@ -1,6 +1,7 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
+import styled, { ThemeProvider } from "styled-components";
 import toast from "react-hot-toast";
 import { baseURL } from "src/constants/data";
 import { darkTheme, lightTheme } from "src/constants/theme";
@@ -8,7 +9,6 @@ import { Tools } from "src/containers/Editor/LiveEditor/Tools";
 import { getPartnerStatus } from "src/services/db/widget";
 import useGraph from "src/store/useGraph";
 import useJson from "src/store/useJson";
-import styled, { ThemeProvider } from "styled-components";
 
 const GraphCanvas = dynamic(
   () => import("src/containers/Editor/LiveEditor/GraphCanvas").then(c => c.GraphCanvas),

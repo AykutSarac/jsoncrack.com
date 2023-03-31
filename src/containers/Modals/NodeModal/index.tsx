@@ -1,9 +1,9 @@
 import React from "react";
 import { Modal, Stack, Text, ScrollArea, ModalProps } from "@mantine/core";
 import { Prism } from "@mantine/prism";
+import { shallow } from "zustand/shallow";
 import useGraph from "src/store/useGraph";
 import { dataToString } from "src/utils/dataToString";
-import { shallow } from "zustand/shallow";
 
 const CodeBlock: React.FC<{ children: any }> = ({ children }) => {
   return (
