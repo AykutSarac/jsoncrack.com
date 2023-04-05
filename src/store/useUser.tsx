@@ -10,7 +10,6 @@ interface UserActions {
   setUser: (key: keyof typeof initialStates, value: any) => void;
   checkSession: () => void;
   isPremium: () => boolean;
-  tokenAuth: () => Promise<void>;
   validatePremium: (cb: () => void) => void;
 }
 
@@ -39,36 +38,7 @@ const useUser = create<UserStates & UserActions>()((set, get) => ({
   login: response => {
     set({ user: response.user as any, isAuthenticated: true });
   },
-  tokenAuth: async () => {
-    if (new URLSearchParams(window.location.search).get("access_token")) {
-      const data = await altogic.auth.getAuthGrant();
-
-      if ((data.user as any)?.type > 0) {
-        location.replace(location.href.replace("://", "://pro."));
-      } else {
-        set({ user: data.user as any, isAuthenticated: true });
-      }
-    }
-  },
   checkSession: async () => {
-    // if (process.env.NODE_ENV === "development") {
-    //   return set({
-    //     user: {
-    //       _id: "0",
-    //       provider: "altogic",
-    //       providerUserId: "1",
-    //       email: "development@jsoncrack.com",
-    //       name: "JSON Crack",
-    //       profilePicture: "",
-    //       signUpAt: "2022-12-04T11:07:32.000Z",
-    //       lastLoginAt: "2023-03-12T14:17:03.146Z",
-    //       type: 1,
-    //       updatedAt: "2022-12-30T10:56:29.772Z",
-    //     },
-    //     isAuthenticated: true,
-    //   });
-    // }
-
     const currentSession = altogic.auth.getSession();
 
     if (currentSession) {
