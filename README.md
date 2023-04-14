@@ -5,15 +5,18 @@
   <h3>“Explore, analyze and understand even most complex JSON structures.”</br>Unlock the full potential of your data.</h3>
   <p align="center">
   <a href="https://www.producthunt.com/posts/json-crack?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-json&#0045;crack" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=332281&theme=light" alt="JSON&#0032;Crack - Simple&#0032;visualization&#0032;tool&#0032;for&#0032;your&#0032;JSON&#0032;data&#0046; | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
-    <a href="https://discord.gg/yVyTtCRueq" target="_blank"><img src="https://user-images.githubusercontent.com/47941171/206397224-94da03a4-59d0-48cd-aafc-512624a768d6.png" "style=" height: 54px;" height="54" /></a>
+    <a href="https://discord.gg/yVyTtCRueq" target="_blank"><img src="https://user-images.githubusercontent.com/47941171/206397224-94da03a4-59d0-48cd-aafc-512624a768d6.png" style=" height: 54px;" height="54"  alt="Discord server"/></a>
     </br>
-    <a href="https://github.com/sponsors/AykutSarac" target="_blank"><img src="https://user-images.githubusercontent.com/47941171/206397875-a4e73f02-5d8f-4db0-902b-9a4bc2b22d90.png" "style=" height: 54px;" height="54" /></a>
+    <a href="https://github.com/sponsors/AykutSarac" target="_blank"><img src="https://user-images.githubusercontent.com/47941171/206397875-a4e73f02-5d8f-4db0-902b-9a4bc2b22d90.png" style=" height: 54px;" height="54"  alt="Sponsor us"/></a>
   </p>
 </div>
 
   <p align="center">
       <img width="800" src="./public/assets/jsoncrack-screenshot.webp" alt="preview 1" />
   </p>
+
+# Readme translations:
+<kbd>[<img title="Russian" alt="Russian" src="https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/ru.svg" width="22">](docs/README-ru.md)</kbd>
 
 # JSON Crack (jsoncrack.com)
 
