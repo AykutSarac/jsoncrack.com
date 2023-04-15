@@ -120,7 +120,7 @@ export const PricingCards = () => {
             variant="gradient"
             gradient={{ from: "pink", to: "red", deg: 105 }}
             component="a"
-            href="https://www.patreon.com/jsoncrack"
+            href="https://www.patreon.com/herowand"
             target="_blank"
             fullWidth
             style={{

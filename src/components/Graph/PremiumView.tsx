@@ -43,7 +43,7 @@ export const PremiumView = () => (
       component="a"
       variant="gradient"
       gradient={{ from: "purple", to: "pink" }}
-      href="https://www.patreon.com/jsoncrack"
+      href="https://www.patreon.com/herowand"
       target="_blank"
       style={{ border: "2px solid black" }}
     >

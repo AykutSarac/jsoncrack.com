@@ -95,7 +95,7 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           <Button
             variant="light"
             color="red"
-            onClick={() => window.open("https://patreon.com/jsoncrack", "_blank")}
+            onClick={() => window.open("https://patreon.com/herowand", "_blank")}
             leftIcon={<IoRocketSharp />}
           >
             Cancel Subscription
