@@ -15,7 +15,7 @@
       <img width="800" src="./public/assets/jsoncrack-screenshot.webp" alt="preview 1" />
   </p>
 
-# Readme translations:
+# Translations of this page
 <kbd>[<img title="Russian" alt="Russian" src="https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/ru.svg" width="22">](docs/README-ru.md)</kbd>
 
 # JSON Crack (jsoncrack.com)
