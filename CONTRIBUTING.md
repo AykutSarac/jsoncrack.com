@@ -1,4 +1,4 @@
-# Contributing translations:
+# Translations of this page
 <kbd>[<img title="Russian" alt="Russian" src="https://cdn.staticaly.com/gh/hjnilsson/country-flags/master/svg/ru.svg" width="22">](docs/CONTRIBUTING-ru.md)</kbd>
 
 # Welcome to the JSON Crack Contributing Guide <!-- omit in toc -->
