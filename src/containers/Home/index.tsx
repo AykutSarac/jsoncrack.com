@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import Link from "next/link";
 import Script from "next/script";
-import { Button } from "@mantine/core";
+import { Anchor, Button, Image, Paper } from "@mantine/core";
 import { AiOutlineRight, AiTwotoneStar } from "react-icons/ai";
 import {
   HiCursorClick,
@@ -22,7 +22,6 @@ import { Sponsors } from "src/components/Sponsors";
 import { SupportButton } from "src/components/SupportButton";
 import { baseURL } from "src/constants/data";
 import { TABS } from "src/constants/previewSection";
-import { PricingCards } from "../PricingCards";
 import * as Styles from "./styles";
 
 const SyntaxHighlighter = dynamic(() => import("react-syntax-highlighter/dist/cjs/prism-async"), {
@@ -56,6 +55,11 @@ const HeroSection = () => (
         </Button>
       </Link>
     </Styles.StyledButtonWrapper>
+    <Anchor href="https://editor.herowand.com/?ref=jsoncrack" target="_blank">
+      <Paper shadow="xs" withBorder>
+        <Image src="assets/herowand_banner.webp" width={420} height={100} alt="herowand" />
+      </Paper>
+    </Anchor>
   </Styles.StyledHeroSection>
 );
 
@@ -289,7 +293,6 @@ const Home: React.FC = () => {
       <SupportSection />
       <GitHubSection />
       <EmbedSection />
-      <PricingCards />
       <SponsorSection />
       <SupportButton />
       <Footer />

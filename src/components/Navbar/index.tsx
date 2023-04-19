@@ -51,14 +51,11 @@ export const Navbar = () => (
       <img src="assets/icon.png" alt="json crack" width="120" />
     </Link>
     <StyledLinkWrapper>
-      <StyledNavLink className="mobileHide" href="https://pro.jsoncrack.com">
-        Pro
+      <StyledNavLink className="mobileHide" href="https://editor.herowand.com">
+        More Data Formats
       </StyledNavLink>
       <StyledNavLink href="/editor">Editor</StyledNavLink>
       <StyledNavLink href="#features">Features</StyledNavLink>
-      <StyledNavLink className="mobileHide" href="#sponsor">
-        Sponsor
-      </StyledNavLink>
       <StyledNavLink
         href="https://github.com/AykutSarac/jsoncrack.com"
         target="_blank"
