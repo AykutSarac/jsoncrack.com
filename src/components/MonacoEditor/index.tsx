@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Anchor, Paper, Text } from "@mantine/core";
 import Editor, { loader, Monaco } from "@monaco-editor/react";
 import debounce from "lodash.debounce";
 import { Loading } from "src/components/Loading";
@@ -106,8 +107,14 @@ export const MonacoEditor = () => {
         loading={<Loading message="Loading Editor..." />}
         beforeMount={handleEditorWillMount}
         defaultLanguage="json"
-        height="100%"
+        height="82vh"
       />
+      <Anchor href="https://editor.herowand.com">
+        <Paper p="sm" h="80px" shadow="md" withBorder>
+          <Text align="center">Visualize other data formats now...</Text>
+          <Text align="center">Herowand Editor</Text>
+        </Paper>
+      </Anchor>
     </StyledWrapper>
   );
 };

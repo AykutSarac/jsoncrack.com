@@ -7,7 +7,6 @@ import useGraph from "src/store/useGraph";
 import useUser from "src/store/useUser";
 import { Loading } from "../Loading";
 import { ErrorView } from "./ErrorView";
-import { PremiumView } from "./PremiumView";
 
 interface GraphProps {
   isWidget?: boolean;
@@ -141,11 +140,7 @@ export const Graph = ({ isWidget = false, openNodeModal }: GraphProps) => {
     []
   );
 
-  if (nodes.length > 8_000) return <ErrorView />;
-
-  if (nodes.length > 1_000 && !isWidget) {
-    if (!isPremium()) return <PremiumView />;
-  }
+  if (nodes.length > 6_000) return <ErrorView />;
 
   return (
     <>
