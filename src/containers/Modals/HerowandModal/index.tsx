@@ -3,12 +3,14 @@ import { Modal, Group, Button, MantineProvider, Image, Text, Paper } from "@mant
 import { useDebouncedState, useSessionStorage } from "@mantine/hooks";
 
 export const HerowandModal = () => {
-  const [opened, setOpened] = useDebouncedState(false, 600);
+  const [opened, setOpened] = useDebouncedState(false, 300);
   const [isNewsVisible, setNewsVisible] = useSessionStorage<boolean>({
     key: "news",
     defaultValue: true,
     getInitialValueInEffect: true,
   });
+
+  console.log(isNewsVisible);
 
   React.useEffect(() => {
     if (isNewsVisible) setOpened(true);
