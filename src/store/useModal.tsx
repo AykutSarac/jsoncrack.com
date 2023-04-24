@@ -17,6 +17,7 @@ const initialStates = {
   share: false,
   login: false,
   premium: false,
+  herowand: false,
 };
 
 type ModalType = keyof typeof initialStates;

@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import Link from "next/link";
 import Script from "next/script";
-import { Anchor, Button, Image, Paper } from "@mantine/core";
+import { Button } from "@mantine/core";
 import { AiOutlineRight, AiTwotoneStar } from "react-icons/ai";
 import {
   HiCursorClick,
@@ -55,11 +55,6 @@ const HeroSection = () => (
         </Button>
       </Link>
     </Styles.StyledButtonWrapper>
-    <Anchor href="https://editor.herowand.com/?ref=jsoncrack" target="_blank">
-      <Paper shadow="xs" withBorder>
-        <Image src="assets/herowand_banner.webp" width={420} height={100} alt="herowand" />
-      </Paper>
-    </Anchor>
   </Styles.StyledHeroSection>
 );
 

@@ -10,6 +10,7 @@ import { GoogleAnalytics } from "src/components/GoogleAnalytics";
 import GlobalStyle from "src/constants/globalStyle";
 import { darkTheme, lightTheme } from "src/constants/theme";
 import { ModalController } from "src/containers/ModalController";
+import { HerowandModal } from "src/containers/Modals/HerowandModal";
 import useStored from "src/store/useStored";
 
 if (process.env.NODE_ENV !== "development") {
@@ -50,6 +51,7 @@ function JsonCrack({ Component, pageProps }: AppProps) {
         <GoogleAnalytics />
         <ThemeProvider theme={lightmode ? lightTheme : darkTheme}>
           <GlobalStyle />
+          <HerowandModal />
           <MantineProvider
             withGlobalStyles
             withNormalizeCSS
