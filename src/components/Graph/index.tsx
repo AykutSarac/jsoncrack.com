@@ -134,7 +134,7 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
   return (
     <>
       <Loading message="Painting graph..." loading={loading} />
-      <StyledEditorWrapper widget={isWidget}>
+      <StyledEditorWrapper onContextMenu={e => e.preventDefault()} widget={isWidget}>
         <TransformWrapper
           maxScale={2}
           minScale={0.05}
