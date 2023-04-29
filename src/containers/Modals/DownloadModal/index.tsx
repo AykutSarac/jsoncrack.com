@@ -54,7 +54,7 @@ export const DownloadModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const [extension, setExtension] = React.useState(Extensions.PNG);
   const [fileDetails, setFileDetails] = React.useState({
     filename: "jsoncrack.com",
-    backgroundColor: "rgba(255, 255, 255, 1)",
+    backgroundColor: "#FFFFFF",
     quality: 1,
   });
 

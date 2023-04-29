@@ -92,8 +92,8 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
         const areaSize = layout.width * layout.height;
         const changeRatio = Math.abs((areaSize * 100) / (paneWidth * paneHeight) - 100);
 
-        setPaneWidth((layout.width as number) + 400);
-        setPaneHeight((layout.height as number) + 400);
+        setPaneWidth(layout.width + 50);
+        setPaneHeight(layout.height as number + 50);
 
         setTimeout(() => {
           setLoading(false);
