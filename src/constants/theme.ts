@@ -20,7 +20,7 @@ const fixedColors = {
 const nodeColors = {
   dark: {
     NODE_COLORS: {
-      TEXT: "#35D073",
+      TEXT: "#DCE5E7",
       NODE_KEY: "#59b8ff",
       NODE_VALUE: "#DCE5E7",
       INTEGER: "#e8c479",
@@ -36,10 +36,10 @@ const nodeColors = {
   },
   light: {
     NODE_COLORS: {
-      TEXT: "#748700",
+      TEXT: "#000",
       NODE_KEY: "#761CEA",
       NODE_VALUE: "#535353",
-      INTEGER: "#A771FE",
+      INTEGER: "#FD0079",
       NULL: "#afafaf",
       BOOL: {
         FALSE: "#FF0000",
@@ -72,6 +72,9 @@ export const darkTheme = {
   MODAL_BACKGROUND: "#36393E",
   TEXT_NORMAL: "#dcddde",
   TEXT_POSITIVE: "hsl(139,calc(var(--saturation-factor, 1)*51.6%),52.2%)",
+  GRID_BG_COLOR: "#1C1C1C",
+  GRID_COLOR_PRIMARY: "#2A2A2A",
+  GRID_COLOR_SECONDARY: "#252525",
 };
 
 export const lightTheme = {
@@ -86,7 +89,7 @@ export const lightTheme = {
   INTERACTIVE_NORMAL: "#4f5660",
   INTERACTIVE_HOVER: "#2e3338",
   INTERACTIVE_ACTIVE: "#060607",
-  BACKGROUND_NODE: "#FAFAFA",
+  BACKGROUND_NODE: "#F6F8FA",
   BACKGROUND_TERTIARY: "#e3e5e8",
   BACKGROUND_SECONDARY: "#f2f3f5",
   BACKGROUND_PRIMARY: "#FFFFFF",
@@ -94,6 +97,9 @@ export const lightTheme = {
   MODAL_BACKGROUND: "#FFFFFF",
   TEXT_NORMAL: "#2e3338",
   TEXT_POSITIVE: "#008736",
+  GRID_BG_COLOR: "#FAFAFA",
+  GRID_COLOR_PRIMARY: "#EBEBEB",
+  GRID_COLOR_SECONDARY: "#EEEEEE",
 };
 
 const themeDs = {

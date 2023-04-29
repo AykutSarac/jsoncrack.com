@@ -111,7 +111,7 @@ const useJson = create<JsonStates & JsonActions>()((set, get) => ({
       return undefined;
     }
   },
-  setError: (hasError: boolean) => set({ hasError }),
+  setError: hasError => set({ hasError }),
   setHasChanges: (hasChanges: boolean) => set({ hasChanges }),
 }));
 

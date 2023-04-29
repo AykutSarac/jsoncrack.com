@@ -10,6 +10,7 @@ export const StyledEditor = styled(Allotment)`
   position: relative !important;
   display: flex;
   background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
+  height: calc(100vh - 63px);
 `;
 
 const LiveEditor = dynamic(() => import("src/containers/Editor/LiveEditor"), {
@@ -28,7 +29,7 @@ const Panes: React.FC = () => {
   return (
     <StyledEditor proportionalLayout={false} vertical={isMobile}>
       <Allotment.Pane
-        preferredSize={isMobile ? "100%" : 400}
+        preferredSize={isMobile ? "100%" : 450}
         minSize={fullscreen ? 0 : 300}
         maxSize={isMobile ? Infinity : 800}
         visible={!fullscreen}

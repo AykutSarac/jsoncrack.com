@@ -1,4 +1,5 @@
 import React from "react";
+import { useDebouncedValue } from "@mantine/hooks";
 import useGraph from "src/store/useGraph";
 import { searchQuery, cleanupHighlight, highlightMatchedNodes } from "src/utils/search";
 
@@ -6,28 +7,15 @@ export const useFocusNode = () => {
   const zoomPanPinch = useGraph(state => state.zoomPanPinch);
   const [selectedNode, setSelectedNode] = React.useState(0);
   const [nodeCount, setNodeCount] = React.useState(0);
-  const [content, setContent] = React.useState({
-    value: "",
-    debounced: "",
-  });
+  const [value, setValue] = React.useState("");
+  const [debouncedValue] = useDebouncedValue(value, 600);
 
   const skip = () => setSelectedNode(current => current + 1);
 
   React.useEffect(() => {
-    const debouncer = setTimeout(() => {
-      setContent(val => ({ ...val, debounced: content.value }));
-    }, 800);
-
-    return () => clearTimeout(debouncer);
-  }, [content.value]);
-
-  React.useEffect(() => {
     if (!zoomPanPinch) return;
+    const matchedNodes: NodeListOf<Element> = searchQuery(`span[data-key*='${debouncedValue}' i]`);
     const ref = zoomPanPinch.instance.wrapperComponent;
-
-    const matchedNodes: NodeListOf<Element> = searchQuery(
-      `span[data-key*='${content.debounced}' i]`
-    );
     const matchedNode: Element | null = matchedNodes[selectedNode] || null;
 
     cleanupHighlight();
@@ -46,7 +34,6 @@ export const useFocusNode = () => {
         (ref.offsetLeft - y) * newScale +
         ref.clientHeight / 8 -
         matchedNode.getBoundingClientRect().height / 8;
-
       highlightMatchedNodes(matchedNodes, selectedNode);
       setNodeCount(matchedNodes.length);
 
@@ -57,12 +44,12 @@ export const useFocusNode = () => {
     }
 
     return () => {
-      if (!content.value) {
+      if (!value) {
         setSelectedNode(0);
         setNodeCount(0);
       }
     };
-  }, [content.debounced, content, selectedNode, zoomPanPinch]);
+  }, [selectedNode, debouncedValue, value, zoomPanPinch]);
 
-  return [content, setContent, skip, nodeCount, selectedNode] as const;
+  return [value, setValue, skip, nodeCount, selectedNode] as const;
 };

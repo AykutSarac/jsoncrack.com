@@ -2,6 +2,7 @@ import React from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import styled from "styled-components";
+import { Flex, Text } from "@mantine/core";
 import toast from "react-hot-toast";
 import {
   AiOutlineCloudSync,
@@ -10,6 +11,7 @@ import {
   AiOutlineLock,
   AiOutlineUnlock,
 } from "react-icons/ai";
+import { MdReportGmailerrorred, MdOutlineCheckCircleOutline } from "react-icons/md";
 import { VscAccount } from "react-icons/vsc";
 import { saveJson, updateJson } from "src/services/db/json";
 import useJson from "src/store/useJson";
@@ -46,7 +48,7 @@ const StyledRight = styled.div`
   gap: 4px;
 `;
 
-const StyledBottomBarItem = styled.button`
+const StyledBottomBarItem = styled.button<{ error?: boolean }>`
   display: flex;
   align-items: center;
   gap: 4px;
@@ -56,7 +58,8 @@ const StyledBottomBarItem = styled.button`
   padding: 4px;
   font-size: 12px;
   font-weight: 400;
-  color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
+  color: ${({ theme, error }) => (error ? theme.DANGER : theme.INTERACTIVE_NORMAL)};
+  background: ${({ error }) => error && "rgba(255, 99, 71, 0.4)"};
 
   &:hover:not(&:disabled) {
     background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0 0);
@@ -76,6 +79,7 @@ const StyledImg = styled.img<{ light: boolean }>`
 export const BottomBar = () => {
   const { replace, query } = useRouter();
   const data = useJson(state => state.data);
+  const hasError = useJson(state => state.hasError);
   const user = useUser(state => state.user);
   const lightmode = useStored(state => state.lightmode);
   const hasChanges = useJson(state => state.hasChanges);
@@ -150,6 +154,19 @@ export const BottomBar = () => {
         <StyledBottomBarItem onClick={handleLoginClick}>
           <VscAccount />
           {user ? user.name : "Login"}
+        </StyledBottomBarItem>
+        <StyledBottomBarItem error={!!hasError}>
+          {hasError ? (
+            <Flex align="center" gap={2}>
+              <MdReportGmailerrorred color="red" size={16} />
+              <Text fw="bold">Invalid Format</Text>
+            </Flex>
+          ) : (
+            <Flex align="center" gap={2}>
+              <MdOutlineCheckCircleOutline />
+              <Text>Valid Format</Text>
+            </Flex>
+          )}
         </StyledBottomBarItem>
         <StyledBottomBarItem onClick={handleSaveJson} disabled={isUpdating}>
           {hasChanges ? <AiOutlineCloudUpload /> : <AiOutlineCloudSync />}

@@ -2,17 +2,15 @@ import React from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import { Loading } from "src/components/Loading";
-import { Sidebar } from "src/components/Sidebar";
 import { BottomBar } from "src/containers/Editor/BottomBar";
+import { Tools } from "src/containers/Editor/LiveEditor/Tools";
 import Panes from "src/containers/Editor/Panes";
+import { Loading } from "src/layout/Loading";
 import useJson from "src/store/useJson";
 import useUser from "src/store/useUser";
 
 export const StyledPageWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  height: calc(100vh - 28px);
+  height: calc(100vh - 27px);
   width: 100%;
 
   @media only screen and (max-width: 768px) {
@@ -52,7 +50,7 @@ const EditorPage: React.FC = () => {
         <meta name="description" content="View your JSON data in graphs instantly." />
       </Head>
       <StyledPageWrapper>
-        <Sidebar />
+        <Tools />
         <StyledEditorWrapper>
           <Panes />
         </StyledEditorWrapper>

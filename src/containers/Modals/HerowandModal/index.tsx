@@ -10,8 +10,6 @@ export const HerowandModal = () => {
     getInitialValueInEffect: true,
   });
 
-  console.log(isNewsVisible);
-
   React.useEffect(() => {
     if (isNewsVisible) setOpened(true);
     else setOpened(false);

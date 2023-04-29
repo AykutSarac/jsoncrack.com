@@ -8,7 +8,7 @@
     "dev": "next dev",
     "build": "next build && next export",
     "start": "next start",
-    "lint": "tsc && next lint",
+    "lint": "tsc && next lint && prettier --check ./src",
     "lint:fix": "prettier --write ./src & eslint --fix src",
     "deploy": "gh-pages -d out -t true"
   },

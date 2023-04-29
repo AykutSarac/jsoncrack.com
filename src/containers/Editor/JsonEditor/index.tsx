@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { ErrorContainer } from "src/components/ErrorContainer";
 import { MonacoEditor } from "src/components/MonacoEditor";
 
 const StyledEditorWrapper = styled.div`
@@ -13,7 +12,6 @@ const StyledEditorWrapper = styled.div`
 export const JsonEditor: React.FC = () => {
   return (
     <StyledEditorWrapper>
-      <ErrorContainer />
       <MonacoEditor />
     </StyledEditorWrapper>
   );

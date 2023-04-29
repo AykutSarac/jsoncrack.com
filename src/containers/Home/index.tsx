@@ -15,13 +15,13 @@ import { IoHeart } from "react-icons/io5";
 import { SiVisualstudiocode } from "react-icons/si";
 import vscDarkPlus from "react-syntax-highlighter/dist/cjs/styles/prism/vsc-dark-plus";
 import { CarbonAds } from "src/components/CarbonAds";
-import { Footer } from "src/components/Footer";
-import { Navbar } from "src/components/Navbar";
-import { Producthunt } from "src/components/Producthunt";
 import { Sponsors } from "src/components/Sponsors";
 import { SupportButton } from "src/components/SupportButton";
 import { baseURL } from "src/constants/data";
 import { TABS } from "src/constants/previewSection";
+import { Footer } from "src/layout/Footer";
+import { Navbar } from "src/layout/Navbar";
+import { Producthunt } from "src/layout/Producthunt";
 import * as Styles from "./styles";
 
 const SyntaxHighlighter = dynamic(() => import("react-syntax-highlighter/dist/cjs/prism-async"), {

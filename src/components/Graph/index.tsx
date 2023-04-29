@@ -1,26 +1,39 @@
 import React from "react";
+import dynamic from "next/dynamic";
 import styled from "styled-components";
 import { ReactZoomPanPinchRef, TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
-import { Canvas, Edge, EdgeProps, ElkRoot, NodeProps } from "reaflow";
+import { CanvasRef, Edge, EdgeProps, ElkRoot, NodeProps } from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
+import useToggleHide from "src/hooks/useToggleHide";
 import useGraph from "src/store/useGraph";
+import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
-import { Loading } from "../Loading";
+import { Loading } from "../../layout/Loading";
 import { ErrorView } from "./ErrorView";
+import { PremiumView } from "./PremiumView";
+
+const Canvas = dynamic(() => import("reaflow").then(r => r.Canvas));
 
 interface GraphProps {
   isWidget?: boolean;
-  openNodeModal: () => void;
 }
 
 const StyledEditorWrapper = styled.div<{ widget: boolean }>`
   position: absolute;
   width: 100%;
-  height: ${({ widget }) => (widget ? "calc(100vh - 36px)" : "calc(100vh - 65px)")};
-  background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
-  background-image: ${({ theme }) =>
-    `radial-gradient(#505050 1px, ${theme.BACKGROUND_SECONDARY} 1px)`};
-  background-size: 25px 25px;
+  height: calc(100vh - 63px);
+
+  --bg-color: ${({ theme }) => theme.GRID_BG_COLOR};
+  --line-color-1: ${({ theme }) => theme.GRID_COLOR_PRIMARY};
+  --line-color-2: ${({ theme }) => theme.GRID_COLOR_SECONDARY};
+
+  background-color: var(--bg-color);
+  background-image: linear-gradient(var(--line-color-1) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, var(--line-color-1) 1.5px, transparent 1.5px),
+    linear-gradient(var(--line-color-2) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-color-2) 1px, transparent 1px);
+  background-position: -1.5px -1.5px, -1.5px -1.5px, -1px -1px, -1px -1px;
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
 
   :active {
     cursor: move;
@@ -35,61 +48,35 @@ const StyledEditorWrapper = styled.div<{ widget: boolean }>`
     fill: ${({ theme }) => theme.BACKGROUND_NODE};
   }
 
-  @media only screen and (max-width: 1440px) {
-    background-image: ${({ theme }) =>
-      `radial-gradient(#505050 0.5px, ${theme.BACKGROUND_SECONDARY} 0.5px)`};
-    background-size: 15px 15px;
-  }
-
-  @media only screen and (max-width: 320px) {
-    height: 100vh;
+  @media only screen and (max-width: 768px) {
+    height: calc(100vh - 36px);
   }
 `;
 
-export const Graph = ({ isWidget = false, openNodeModal }: GraphProps) => {
+export const Graph = ({ isWidget = false }: GraphProps) => {
+  const { validateHiddenNodes } = useToggleHide();
   const isPremium = useUser(state => state.isPremium);
   const setLoading = useGraph(state => state.setLoading);
   const setZoomPanPinch = useGraph(state => state.setZoomPanPinch);
   const centerView = useGraph(state => state.centerView);
   const setSelectedNode = useGraph(state => state.setSelectedNode);
+  const setVisible = useModal(state => state.setVisible);
+  const canvasRef = React.useRef<CanvasRef>(null);
 
   const loading = useGraph(state => state.loading);
   const direction = useGraph(state => state.direction);
   const nodes = useGraph(state => state.nodes);
   const edges = useGraph(state => state.edges);
 
-  const collapsedNodes = useGraph(state => state.collapsedNodes);
-  const collapsedEdges = useGraph(state => state.collapsedEdges);
-
-  React.useEffect(() => {
-    const nodeList = collapsedNodes.map(id => `[id$="node-${id}"]`);
-    const edgeList = collapsedEdges.map(id => `[class$="edge-${id}"]`);
-
-    const hiddenItems = document.querySelectorAll(".hide");
-    hiddenItems.forEach(item => item.classList.remove("hide"));
-
-    if (nodeList.length) {
-      const selectedNodes = document.querySelectorAll(nodeList.join(","));
-      selectedNodes.forEach(node => node.classList.add("hide"));
-    }
-
-    if (edgeList.length) {
-      const selectedEdges = document.querySelectorAll(edgeList.join(","));
-      selectedEdges.forEach(edge => edge.classList.add("hide"));
-    }
-  }, [collapsedNodes, collapsedEdges]);
-
-  const [size, setSize] = React.useState({
-    width: 1,
-    height: 1,
-  });
+  const [paneWidth, setPaneWidth] = React.useState(2000);
+  const [paneHeight, setPaneHeight] = React.useState(2000);
 
   const handleNodeClick = React.useCallback(
     (_: React.MouseEvent<SVGElement>, data: NodeData) => {
       if (setSelectedNode) setSelectedNode({ nodeData: data });
-      if (openNodeModal) openNodeModal();
+      setVisible("node")(true);
     },
-    [openNodeModal, setSelectedNode]
+    [setSelectedNode, setVisible]
   );
 
   const onInit = React.useCallback(
@@ -103,27 +90,25 @@ export const Graph = ({ isWidget = false, openNodeModal }: GraphProps) => {
     (layout: ElkRoot) => {
       if (layout.width && layout.height) {
         const areaSize = layout.width * layout.height;
-        const changeRatio = Math.abs((areaSize * 100) / (size.width * size.height) - 100);
+        const changeRatio = Math.abs((areaSize * 100) / (paneWidth * paneHeight) - 100);
 
-        setSize({
-          width: (layout.width as number) + 400,
-          height: (layout.height as number) + 400,
-        });
+        setPaneWidth((layout.width as number) + 400);
+        setPaneHeight((layout.height as number) + 400);
 
         setTimeout(() => {
           setLoading(false);
+          validateHiddenNodes();
           window.requestAnimationFrame(() => {
             if (changeRatio > 70 || isWidget) centerView();
           });
         });
       }
     },
-    [centerView, isWidget, setLoading, size.height, size.width]
+    [centerView, isWidget, paneHeight, paneWidth, setLoading, validateHiddenNodes]
   );
 
   const onCanvasClick = React.useCallback(() => {
-    const input = document.querySelector("input:focus") as HTMLInputElement;
-    if (input) input.blur();
+    (document.activeElement as HTMLElement)?.blur();
   }, []);
 
   const memoizedNode = React.useCallback(
@@ -142,10 +127,14 @@ export const Graph = ({ isWidget = false, openNodeModal }: GraphProps) => {
 
   if (nodes.length > 6_000) return <ErrorView />;
 
+  if (nodes.length > 400 && !isWidget) {
+    if (!isPremium) return <PremiumView />;
+  }
+
   return (
     <>
       <Loading message="Painting graph..." loading={loading} />
-      <StyledEditorWrapper onContextMenu={e => e.preventDefault()} widget={isWidget}>
+      <StyledEditorWrapper widget={isWidget}>
         <TransformWrapper
           maxScale={2}
           minScale={0.05}
@@ -167,16 +156,20 @@ export const Graph = ({ isWidget = false, openNodeModal }: GraphProps) => {
           >
             <Canvas
               className="jsoncrack-canvas"
+              ref={canvasRef}
               nodes={nodes}
               edges={edges}
-              maxWidth={size.width}
-              maxHeight={size.height}
+              maxHeight={paneHeight}
+              maxWidth={paneWidth}
+              height={paneHeight}
+              width={paneWidth}
               direction={direction}
               onLayoutChange={onLayoutChange}
               onCanvasClick={onCanvasClick}
               node={memoizedNode}
               edge={memoizedEdge}
               key={direction}
+              pannable={false}
               zoomable={false}
               animated={false}
               readonly={true}

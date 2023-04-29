@@ -6,8 +6,8 @@ import styled from "styled-components";
 import { Button, Center, Container, Stack } from "@mantine/core";
 import { AiOutlineGithub, AiOutlineGoogle } from "react-icons/ai";
 import { altogic } from "src/api/altogic";
-import { Footer } from "src/components/Footer";
-import { Navbar } from "src/components/Navbar";
+import { Footer } from "src/layout/Footer";
+import { Navbar } from "src/layout/Navbar";
 import useUser from "src/store/useUser";
 
 const StyledPageWrapper = styled.div`

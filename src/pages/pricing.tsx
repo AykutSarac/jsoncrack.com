@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Button } from "@mantine/core";
-import { Footer } from "src/components/Footer";
 import { PricingCards } from "src/containers/PricingCards";
+import { Footer } from "src/layout/Footer";
 
 const StyledPageWrapper = styled.div`
   padding: 5%;

@@ -9,6 +9,7 @@ import { LoginModal } from "src/containers/Modals/LoginModal";
 import { SettingsModal } from "src/containers/Modals/SettingsModal";
 import { ShareModal } from "src/containers/Modals/ShareModal";
 import useModal from "src/store/useModal";
+import { NodeModal } from "../Modals/NodeModal";
 import { PremiumModal } from "../Modals/PremiumModal";
 
 export const ModalController = () => {
@@ -24,6 +25,7 @@ export const ModalController = () => {
     loginModal,
     shareModal,
     premiumModal,
+    nodeModal,
   ] = useModal(
     state => [
       state.import,
@@ -35,6 +37,7 @@ export const ModalController = () => {
       state.login,
       state.share,
       state.premium,
+      state.node,
     ],
     shallow
   );
@@ -50,6 +53,7 @@ export const ModalController = () => {
       <PremiumModal opened={premiumModal} onClose={() => setVisible("premium")(false)} />
       <LoginModal opened={loginModal} onClose={() => setVisible("login")(false)} />
       <ShareModal opened={shareModal} onClose={() => setVisible("share")(false)} />
+      <NodeModal opened={nodeModal} onClose={() => setVisible("node")(false)} />
     </>
   );
 };
