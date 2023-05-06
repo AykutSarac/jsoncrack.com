@@ -1,8 +1,8 @@
 import React from "react";
-import Link from "next/link";
 import styled from "styled-components";
 import { Modal, Group, Button, Badge, Avatar, Grid, Divider, ModalProps } from "@mantine/core";
 import { IoRocketSharp } from "react-icons/io5";
+import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
 
 const StyledTitle = styled.div`
@@ -43,6 +43,7 @@ const StyledContainer = styled.div`
 `;
 
 export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
+  const setVisible = useModal(state => state.setVisible);
   const user = useUser(state => state.user);
   const isPremium = useUser(state => state.isPremium());
   const logout = useUser(state => state.logout);
@@ -101,15 +102,14 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
             Cancel Subscription
           </Button>
         ) : (
-          <Link href="/pricing" target="_blank" rel="noreferrer">
-            <Button
-              variant="gradient"
-              gradient={{ from: "teal", to: "lime", deg: 105 }}
-              leftIcon={<IoRocketSharp />}
-            >
-              UPGRADE TO PREMIUM!
-            </Button>
-          </Link>
+          <Button
+            variant="gradient"
+            gradient={{ from: "teal", to: "lime", deg: 105 }}
+            leftIcon={<IoRocketSharp />}
+            onClick={() => setVisible("premium")(true)}
+          >
+            UPGRADE TO PREMIUM!
+          </Button>
         )}
         <Button
           color="red"

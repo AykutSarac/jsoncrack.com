@@ -12,7 +12,7 @@ import {
   AiOutlineUnlock,
 } from "react-icons/ai";
 import { MdReportGmailerrorred, MdOutlineCheckCircleOutline } from "react-icons/md";
-import { VscAccount } from "react-icons/vsc";
+import { VscAccount, VscWorkspaceTrusted } from "react-icons/vsc";
 import { saveJson, updateJson } from "src/services/db/json";
 import useJson from "src/store/useJson";
 import useModal from "src/store/useModal";
@@ -81,6 +81,7 @@ export const BottomBar = () => {
   const data = useJson(state => state.data);
   const hasError = useJson(state => state.hasError);
   const user = useUser(state => state.user);
+  const premium = useUser(state => state.isPremium());
   const lightmode = useStored(state => state.lightmode);
   const hasChanges = useJson(state => state.hasChanges);
 
@@ -155,6 +156,12 @@ export const BottomBar = () => {
           <VscAccount />
           {user ? user.name : "Login"}
         </StyledBottomBarItem>
+        {!premium && (
+          <StyledBottomBarItem onClick={() => setVisible("premium")(true)}>
+            <VscWorkspaceTrusted />
+            Upgrade to Premium
+          </StyledBottomBarItem>
+        )}
         <StyledBottomBarItem error={!!hasError}>
           {hasError ? (
             <Flex align="center" gap={2}>

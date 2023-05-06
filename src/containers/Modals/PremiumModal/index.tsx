@@ -1,35 +1,85 @@
 import React from "react";
-import Link from "next/link";
-import { Modal, Group, Button, Divider, ModalProps, Title, Image } from "@mantine/core";
-import { IoRocketSharp } from "react-icons/io5";
+import {
+  Modal,
+  ModalProps,
+  Title,
+  Flex,
+  Button,
+  Stack,
+  List,
+  ThemeIcon,
+  Divider,
+  Text,
+  Anchor,
+} from "@mantine/core";
+import { BsCheck } from "react-icons/bs";
 
 export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   return (
-    <Modal title="JSON Crack Premium" opened={opened} onClose={onClose} centered>
-      <Group py="sm">
-        <Title
-          variant="gradient"
-          order={3}
-          gradient={{ from: "yellow", to: "hotpink" }}
-          strikethrough
-          align="center"
-        >
-          Enhance your experience, unlock full benefits of JSON Crack!
-        </Title>
-        <Image mx="auto" src="assets/bunny.png" width={150} alt="bunny" />
-      </Group>
-      <Divider py="xs" />
-      <Group position="center">
-        <Link href="/pricing" target="_blank" rel="noreferrer">
-          <Button
-            variant="gradient"
-            gradient={{ from: "yellow", to: "hotpink" }}
-            leftIcon={<IoRocketSharp />}
-          >
-            UPGRADE TO PREMIUM!
+    <Modal title="Your Plan" size="auto" opened={opened} onClose={onClose} centered>
+      <Flex gap="lg">
+        <Stack spacing="xs">
+          <Title order={3}>
+            Free plan
+            <Text size="sm" color="dimmed">
+              (Free)
+            </Text>
+          </Title>
+          <Button variant="filled" color="dark" size="md">
+            Your current plan
           </Button>
-        </Link>
-      </Group>
+          <List
+            spacing="xs"
+            size="sm"
+            center
+            icon={
+              <ThemeIcon color="dark.6" size={20} radius="xl">
+                <BsCheck size="1rem" />
+              </ThemeIcon>
+            }
+          >
+            <List.Item>Store up to 15 files</List.Item>
+            <List.Item>Visualize standard size data</List.Item>
+          </List>
+        </Stack>
+        <Divider color="gray" orientation="vertical" />
+        <Stack spacing="xs">
+          <Title order={3}>
+            Herowand Premium
+            <Text size="sm" color="dimmed">
+              USD 5$/mo
+            </Text>
+          </Title>
+          <Button
+            component="a"
+            href="https://www.patreon.com/herowand"
+            variant="filled"
+            color="teal"
+            size="md"
+            target="_blank"
+          >
+            Upgrade plan
+          </Button>
+          <List
+            spacing="xs"
+            size="sm"
+            center
+            icon={
+              <ThemeIcon color="teal" size={20} radius="xl">
+                <BsCheck size="1rem" />
+              </ThemeIcon>
+            }
+          >
+            <List.Item>Edit directly on graph</List.Item>
+            <List.Item>JSON Schema support</List.Item>
+            <List.Item>Visualize data at full capability</List.Item>
+            <List.Item>Save up to 200 files</List.Item>
+          </List>
+          <Anchor fz="sm" href="https://editor.herowand.com" target="_blank">
+            Features are available at Herowand Editor
+          </Anchor>
+        </Stack>
+      </Flex>
     </Modal>
   );
 };

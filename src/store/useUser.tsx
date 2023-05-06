@@ -10,7 +10,6 @@ interface UserActions {
   setUser: (key: keyof typeof initialStates, value: any) => void;
   checkSession: () => void;
   isPremium: () => boolean;
-  validatePremium: (cb: () => void) => void;
 }
 
 const initialStates = {
@@ -53,14 +52,6 @@ const useUser = create<UserStates & UserActions>()((set, get) => ({
       if (!data.errors?.items.length) {
         set({ user: data.user as any, isAuthenticated: true });
       }
-    }
-  },
-  validatePremium: callback => {
-    if (get().isAuthenticated) {
-      if (!get().isPremium()) return useModal.getState().setVisible("premium")(true);
-      return callback();
-    } else {
-      return useModal.getState().setVisible("account")(true);
     }
   },
 }));
