@@ -2,9 +2,11 @@ import React from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import styled from "styled-components";
+import Cookie from "universal-cookie";
 import { BottomBar } from "src/containers/Editor/BottomBar";
 import { Tools } from "src/containers/Editor/LiveEditor/Tools";
 import Panes from "src/containers/Editor/Panes";
+import { HerowandModal } from "src/containers/Modals/HerowandModal";
 import { Loading } from "src/layout/Loading";
 import useJson from "src/store/useJson";
 import useUser from "src/store/useUser";
@@ -26,8 +28,12 @@ export const StyledEditorWrapper = styled.div`
   overflow: hidden;
 `;
 
+const cookie = new Cookie();
+const newsCookie = cookie.get("news_seen");
+
 const EditorPage: React.FC = () => {
   const { isReady, query } = useRouter();
+  const [showNews, setShowNews] = React.useState(false);
   const checkSession = useUser(state => state.checkSession);
   const fetchJson = useJson(state => state.fetchJson);
   const loading = useJson(state => state.loading);
@@ -39,7 +45,16 @@ const EditorPage: React.FC = () => {
       checkSession();
       fetchJson(query.json);
     }
+
+    if (typeof newsCookie === "undefined") {
+      setShowNews(true);
+    } else setShowNews(false);
   }, [checkSession, fetchJson, isReady, query.json]);
+
+  const closeNews = React.useCallback(() => {
+    setShowNews(false);
+    cookie.set("news_seen", true, { path: "/", maxAge: 43200 });
+  }, []);
 
   if (loading) return <Loading message="Fetching JSON from cloud..." />;
 
@@ -56,6 +71,7 @@ const EditorPage: React.FC = () => {
         </StyledEditorWrapper>
       </StyledPageWrapper>
       <BottomBar />
+      <HerowandModal opened={showNews} onClose={closeNews} />
     </StyledEditorWrapper>
   );
 };
