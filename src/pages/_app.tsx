@@ -6,6 +6,7 @@ import { MantineProvider } from "@mantine/core";
 import { init } from "@sentry/nextjs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
+import Cookie from "universal-cookie";
 import { GoogleAnalytics } from "src/components/GoogleAnalytics";
 import GlobalStyle from "src/constants/globalStyle";
 import { darkTheme, lightTheme } from "src/constants/theme";
@@ -20,6 +21,9 @@ if (process.env.NODE_ENV !== "development") {
     release: "production",
   });
 }
+
+const cookie = new Cookie();
+const newsCookie = cookie.get("news_seen");
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -39,10 +43,20 @@ const monaSans = localFont({
 
 function JsonCrack({ Component, pageProps }: AppProps) {
   const [isReady, setReady] = React.useState(false);
+  const [showNews, setShowNews] = React.useState(false);
   const lightmode = useStored(state => state.lightmode);
 
   React.useEffect(() => {
     setReady(true);
+
+    if (typeof newsCookie === "undefined") {
+      setShowNews(true);
+    } else setShowNews(false);
+  }, []);
+
+  const closeNews = React.useCallback(() => {
+    setShowNews(false);
+    cookie.set("news_seen", true, { path: "/", maxAge: 43200 });
   }, []);
 
   if (isReady)
@@ -51,7 +65,8 @@ function JsonCrack({ Component, pageProps }: AppProps) {
         <GoogleAnalytics />
         <ThemeProvider theme={lightmode ? lightTheme : darkTheme}>
           <GlobalStyle />
-          <HerowandModal />
+          {}
+          <HerowandModal opened={showNews} onClose={closeNews} />
           <MantineProvider
             withGlobalStyles
             withNormalizeCSS

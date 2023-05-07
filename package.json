@@ -41,6 +41,7 @@
     "react-zoom-pan-pinch": "^3.0.2",
     "reaflow": "^5.1.2",
     "styled-components": "^5.3.8",
+    "universal-cookie": "^4.0.4",
     "zustand": "^4.3.6"
   },
   "devDependencies": {
