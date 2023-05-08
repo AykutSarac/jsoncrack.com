@@ -108,12 +108,12 @@ export const traverse = (
           e.objectsFromArrayId === states.objectsFromArray[states.objectsFromArray.length - 1]
       );
       if (
-        (brothersProps.length > 0 &&
+        ((brothersProps.length > 0 &&
           states.bracketOpen[states.bracketOpen.length - 2] &&
           states.bracketOpen[states.bracketOpen.length - 2].type !== "object") ||
-        (brothersProps.length > 0 && states.bracketOpen.length === 1)
+        (brothersProps.length > 0 && states.bracketOpen.length === 1) && brothersProps[brothersProps.length - 1].parentId)
       ) {
-        addEdgeToGraph(graph, brothersProps[brothersProps.length - 1].id, parentId);
+        addEdgeToGraph(graph, brothersProps[brothersProps.length - 1].parentId!, parentId);
       } else if (myParentId) {
         addEdgeToGraph(graph, myParentId, parentId);
       } else {
