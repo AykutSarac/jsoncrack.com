@@ -7,10 +7,12 @@ import { AiOutlineFullscreen, AiOutlineMinus, AiOutlinePlus } from "react-icons/
 import { CgArrowsMergeAltH, CgArrowsShrinkH, CgChevronDown } from "react-icons/cg";
 import { FiDownload } from "react-icons/fi";
 import { MdCenterFocusWeak } from "react-icons/md";
+import { SiJsonwebtokens } from "react-icons/si";
 import { TiFlowMerge } from "react-icons/ti";
 import {
   VscCollapseAll,
   VscExpandAll,
+  VscJson,
   VscLayoutSidebarLeft,
   VscLayoutSidebarLeftOff,
   VscSettingsGear,
@@ -20,7 +22,15 @@ import useGraph from "src/store/useGraph";
 import useJson from "src/store/useJson";
 import useModal from "src/store/useModal";
 import useStored from "src/store/useStored";
-import { getNextDirection } from "src/utils/getNextDirection";
+import { getNextDirection } from "src/utils/graph/getNextDirection";
+
+function inIframe() {
+  try {
+    return window.self !== window.top;
+  } catch (e) {
+    return true;
+  }
+}
 
 export const StyledTools = styled.div`
   position: relative;
@@ -38,12 +48,6 @@ export const StyledTools = styled.div`
   @media only screen and (max-width: 320px) {
     display: none;
   }
-`;
-
-const Section = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
 `;
 
 const StyledToolElement = styled.button<{ hide?: boolean }>`
@@ -150,10 +154,20 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
     ],
   ]);
 
+  const logoURL = React.useMemo(() => {
+    if (!inIframe()) return "https://jsoncrack.com";
+    return window.location.href.replace("widget", "editor");
+  }, []);
+
   return (
     <StyledTools>
       {isWidget && (
-        <StyledToolElement as="a" title="JSON Crack" href="https://herowand.com">
+        <StyledToolElement
+          as="a"
+          title="JSON Crack"
+          href={logoURL}
+          target={inIframe() ? "_blank" : "_parent"}
+        >
           <Flex gap="xs" align="center" justify="center">
             <StyledLogo
               src="/assets/icon.png"
@@ -237,6 +251,23 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
                 }
               >
                 {graphCollapsed ? "Expand" : "Collapse"} Nodes
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
+          <Menu shadow="md">
+            <Menu.Target>
+              <StyledToolElement>
+                <Flex align="center" gap={3}>
+                  Tools <CgChevronDown />
+                </Flex>
+              </StyledToolElement>
+            </Menu.Target>
+            <Menu.Dropdown>
+              <Menu.Item fz={12} icon={<VscJson />} onClick={() => setVisible("schema")(true)}>
+                JSON Schema
+              </Menu.Item>
+              <Menu.Item fz={12} icon={<SiJsonwebtokens />} onClick={() => setVisible("jwt")(true)}>
+                Decode JWT
               </Menu.Item>
             </Menu.Dropdown>
           </Menu>

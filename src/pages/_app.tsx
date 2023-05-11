@@ -9,7 +9,7 @@ import { Toaster } from "react-hot-toast";
 import { GoogleAnalytics } from "src/components/GoogleAnalytics";
 import GlobalStyle from "src/constants/globalStyle";
 import { darkTheme, lightTheme } from "src/constants/theme";
-import { ModalController } from "src/containers/ModalController";
+import { ModalController } from "src/layout/ModalController";
 import useStored from "src/store/useStored";
 
 if (process.env.NODE_ENV !== "development") {

@@ -4,6 +4,7 @@ import { MdLink, MdLinkOff } from "react-icons/md";
 import { CustomNodeProps } from "src/components/CustomNode";
 import useGraph from "src/store/useGraph";
 import useStored from "src/store/useStored";
+import { isContentImage } from "src/utils/core/calculateNodeSize";
 import * as Styled from "./styles";
 
 const StyledExpand = styled.button`
@@ -48,16 +49,13 @@ const Node: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) =>
     height,
     data: { isParent, childrenCount, type },
   } = node;
-  const ref = React.useRef(null);
   const hideCollapse = useStored(state => state.hideCollapse);
   const showChildrenCount = useStored(state => state.childrenCount);
   const imagePreview = useStored(state => state.imagePreview);
   const expandNodes = useGraph(state => state.expandNodes);
   const collapseNodes = useGraph(state => state.collapseNodes);
   const isExpanded = useGraph(state => state.collapsedParents.includes(id));
-  const isImage =
-    !Array.isArray(text) && /(https?:\/\/.*\.(?:png|jpg|gif))/i.test(text) && imagePreview;
-  // const { inViewport } = useInViewport(ref);
+  const isImage = imagePreview && isContentImage(text);
 
   const handleExpand = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -73,7 +71,6 @@ const Node: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) =>
       x={0}
       y={0}
       hasCollapse={isParent && hasCollapse}
-      ref={ref}
     >
       {isImage ? (
         <StyledImageWrapper>
@@ -96,7 +93,7 @@ const Node: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) =>
           )}
 
           {isParent && hasCollapse && hideCollapse && (
-            <StyledExpand onClick={handleExpand}>
+            <StyledExpand aria-label="Expand" onClick={handleExpand}>
               {isExpanded ? <MdLinkOff size={18} /> : <MdLink size={18} />}
             </StyledExpand>
           )}

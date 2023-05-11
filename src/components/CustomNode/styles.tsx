@@ -1,12 +1,11 @@
-import { Roboto_Mono } from "next/font/google";
+import { Fira_Mono } from "next/font/google";
 import styled, { DefaultTheme } from "styled-components";
 import { LinkItUrl } from "react-linkify-it";
 
-const robotoMono = Roboto_Mono({
-  weight: "500",
+const robotoMono = Fira_Mono({
+  weight: ["500"],
   subsets: ["latin"],
   display: "swap",
-  fallback: ["Arial, Helvetica, sans-serif", "Tahoma, Verdana, sans-serif"],
 });
 
 function getTypeColor(value: string, theme: DefaultTheme) {
@@ -33,8 +32,10 @@ export const StyledForeignObject = styled.foreignObject<{
   pointer-events: none;
   padding: ${({ isObject }) => isObject && "10px"};
   font-family: ${robotoMono.style.fontFamily};
+  font-weight: 500;
 
   &.searched {
+    background: rgba(27, 255, 0, 0.1);
     border: 2px solid ${({ theme }) => theme.TEXT_POSITIVE};
     border-radius: 2px;
     box-sizing: border-box;
@@ -73,13 +74,13 @@ export const StyledKey = styled.span<{
 }>`
   display: inline;
   flex: 1;
-  font-weight: 500;
   color: ${({ theme, type = "null", objectKey = false, parent = false }) =>
     getKeyColor(theme, parent, type, objectKey)};
   font-size: ${({ parent }) => parent && "14px"};
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: ${({ objectKey }) => !objectKey && 10}px;
+  padding: ${({ objectKey }) => !objectKey && "10px"};
+  white-space: nowrap;
 `;
 
 export const StyledRow = styled.span.attrs<{
@@ -91,11 +92,9 @@ export const StyledRow = styled.span.attrs<{
   },
 }))<{ "data-type": string; theme: DefaultTheme }>`
   display: block;
-  height: 18px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding: 0 auto;
 `;
 
 export const StyledChildrenCount = styled.span`

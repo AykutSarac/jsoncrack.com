@@ -1,51 +1,68 @@
+import { Fira_Mono } from "next/font/google";
 import useGraph from "src/store/useGraph";
 import useStored from "src/store/useStored";
 
+const firaMono = Fira_Mono({
+  weight: ["500"],
+  subsets: ["latin"],
+});
+
+export const isContentImage = (value: string | [string, string][]) => {
+  if (typeof value !== "string") return false;
+
+  const isURL = /(https?:\/\/.*\.(?:png|jpg|gif))/i.test(value);
+  const isBase64 = value.startsWith("data:image/") && value.includes("base64");
+  return isURL || isBase64;
+};
+
+const sizeCache = new Map<string | [string, string][], { width: number; height: number }>();
+
+function calculateWidthAndHeight(str: string, single = false) {
+  const dummyElement = document.createElement("div");
+  dummyElement.style.whiteSpace = single ? "nowrap" : "pre-wrap";
+  dummyElement.innerHTML = str;
+  dummyElement.style.fontSize = "12px";
+  dummyElement.style.width = "fit-content";
+  dummyElement.style.height = "fit-content";
+  dummyElement.style.padding = "10px";
+  dummyElement.style.fontWeight = "500";
+  dummyElement.style.overflowWrap = "break-word";
+  dummyElement.style.fontFamily = firaMono.style.fontFamily;
+  document.body.appendChild(dummyElement);
+
+  const width = dummyElement.offsetWidth + 4;
+  const height = dummyElement.offsetHeight;
+  document.body.removeChild(dummyElement);
+
+  return { width, height };
+}
+
 export const calculateNodeSize = (text: string | [string, string][], isParent = false) => {
-  // Get the current state of the application
+  let lines = "";
   const isFolded = useGraph.getState().foldNodes;
   const isImagePreview = useStored.getState().imagePreview;
+  const isImage = isContentImage(text) && isImagePreview;
+  const cacheKey = [text, isParent, isFolded].toString();
 
-  // Initialize variables
-  let lineCounts = 1;
-  let lineLengths: number[] = [];
-
-  // Calculate the number of lines and the length of each line
-  if (typeof text === "string") {
-    lineLengths.push(text.length);
-  } else {
-    lineCounts = text.map(([k, v]) => {
-      const length = `${k}: ${v}`.length;
-      const line = length > 150 ? 150 : length;
-      lineLengths.push(line);
-      return `${k}: ${v}`;
-    }).length;
+  // check cache
+  if (sizeCache.has(cacheKey)) {
+    const size = sizeCache.get(cacheKey);
+    if (size) return size;
   }
 
-  // Get the longest line
-  const longestLine = Math.max(...lineLengths);
+  if (typeof text !== "string") {
+    lines = text.map(([k, v]) => `${k}: ${JSON.stringify(v).slice(0, 80)}`).join("\n");
+  } else {
+    lines = text;
+  }
 
-  // Calculate the width of the node
-  const getWidth = () => {
-    if (text.length === 0) return 35;
-    if (Array.isArray(text) && !text.length) return 40;
-    if (!isFolded) return 35 + longestLine * 7.8 + (isParent ? 80 : 0);
-    if (isParent && isFolded) return 170;
-    return 200;
-  };
+  let sizes = calculateWidthAndHeight(lines, typeof text === "string");
+  if (isImage) sizes = { width: 80, height: 80 };
+  if (isFolded) sizes.width = 300;
+  if (isParent && isFolded) sizes.width = 170;
+  if (isParent) sizes.width += 100;
+  if (sizes.width > 700) sizes.width = 700;
 
-  // Calculate the height of the node
-  const getHeight = () => {
-    if (lineCounts * 17.8 < 30) return 40;
-    return (lineCounts + 1) * 18;
-  };
-
-  // Check if text matches URL pattern
-  const isImage =
-    !Array.isArray(text) && /(https?:\/\/.*\.(?:png|jpg|gif))/i.test(text) && isImagePreview;
-
-  return {
-    width: isImage ? 80 : getWidth(),
-    height: isImage ? 80 : getHeight(),
-  };
+  sizeCache.set(cacheKey, sizes);
+  return sizes;
 };

@@ -21,7 +21,7 @@ interface GraphProps {
 const StyledEditorWrapper = styled.div<{ widget: boolean }>`
   position: absolute;
   width: 100%;
-  height: calc(100vh - 63px);
+  height: ${({ widget }) => widget ? "calc(100vh - 36px)" : "calc(100vh - 63px)"};
 
   --bg-color: ${({ theme }) => theme.GRID_BG_COLOR};
   --line-color-1: ${({ theme }) => theme.GRID_COLOR_PRIMARY};
@@ -55,7 +55,7 @@ const StyledEditorWrapper = styled.div<{ widget: boolean }>`
 
 export const Graph = ({ isWidget = false }: GraphProps) => {
   const { validateHiddenNodes } = useToggleHide();
-  const isPremium = useUser(state => state.isPremium);
+  const isPremium = useUser(state => state.isPremium());
   const setLoading = useGraph(state => state.setLoading);
   const setZoomPanPinch = useGraph(state => state.setZoomPanPinch);
   const centerView = useGraph(state => state.centerView);
@@ -73,7 +73,7 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
 
   const handleNodeClick = React.useCallback(
     (_: React.MouseEvent<SVGElement>, data: NodeData) => {
-      if (setSelectedNode) setSelectedNode({ nodeData: data });
+      if (setSelectedNode) setSelectedNode(data);
       setVisible("node")(true);
     },
     [setSelectedNode, setVisible]

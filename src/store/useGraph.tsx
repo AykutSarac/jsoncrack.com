@@ -1,13 +1,13 @@
 import { ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
 import { CanvasDirection } from "reaflow/dist/layout/elkLayout";
 import { create } from "zustand";
-import { parser } from "src/utils/core/jsonParser";
-import { getChildrenEdges } from "src/utils/getChildrenEdges";
-import { getOutgoers } from "src/utils/getOutgoers";
+import { getChildrenEdges } from "src/utils/graph/getChildrenEdges";
+import { getOutgoers } from "src/utils/graph/getOutgoers";
+import { parser } from "src/utils/json/jsonParser";
 import useJson from "./useJson";
 
 const initialStates = {
-  zoomPanPinch: undefined as ReactZoomPanPinchRef | undefined,
+  zoomPanPinch: null as ReactZoomPanPinchRef | null,
   direction: "RIGHT" as CanvasDirection,
   loading: true,
   graphCollapsed: false,
@@ -29,24 +29,25 @@ interface GraphActions {
   setLoading: (loading: boolean) => void;
   setDirection: (direction: CanvasDirection) => void;
   setZoomPanPinch: (ref: ReactZoomPanPinchRef) => void;
+  setSelectedNode: (nodeData: NodeData) => void;
   expandNodes: (nodeId: string) => void;
+  expandGraph: () => void;
   collapseNodes: (nodeId: string) => void;
   collapseGraph: () => void;
-  expandGraph: () => void;
   toggleFold: (value: boolean) => void;
   toggleFullscreen: (value: boolean) => void;
   zoomIn: () => void;
   zoomOut: () => void;
   centerView: () => void;
-  setSelectedNode: ({ nodeData }: { nodeData: NodeData }) => void;
+  clearGraph: () => void;
 }
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
   ...initialStates,
-  setSelectedNode: ({ nodeData }) => set({ selectedNode: nodeData }),
+  clearGraph: () => set({ nodes: [], edges: [] }),
+  setSelectedNode: nodeData => set({ selectedNode: nodeData }),
   setGraph: (data, options) => {
     const { nodes, edges } = parser(data ?? useJson.getState().json);
-
     set({
       nodes,
       edges,
@@ -58,7 +59,10 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       ...options,
     });
   },
-  setDirection: direction => set({ direction }),
+  setDirection: direction => {
+    set({ direction });
+    setTimeout(() => get().centerView(), 200);
+  },
   setLoading: loading => set({ loading }),
   expandNodes: nodeId => {
     const [childrenNodes, matchingNodes] = getOutgoers(
@@ -124,6 +128,10 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       )
       .map(node => node.id);
 
+    // const closestParentToRoot = Math.min(...collapsedParents.map(n => +n));
+    // const focusNodeId = `g[id*='node-${closestParentToRoot}']`;
+    // const rootNode = document.querySelector(focusNodeId);
+
     set({
       collapsedParents,
       collapsedNodes,
@@ -141,26 +149,21 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       graphCollapsed: false,
     });
   },
-
   zoomIn: () => {
     const zoomPanPinch = get().zoomPanPinch;
-    if (zoomPanPinch) {
-      zoomPanPinch.setTransform(
-        zoomPanPinch?.state.positionX,
-        zoomPanPinch?.state.positionY,
-        zoomPanPinch?.state.scale + 0.4
-      );
-    }
+    zoomPanPinch?.setTransform(
+      zoomPanPinch?.state.positionX,
+      zoomPanPinch?.state.positionY,
+      zoomPanPinch?.state.scale + 0.4
+    );
   },
   zoomOut: () => {
     const zoomPanPinch = get().zoomPanPinch;
-    if (zoomPanPinch) {
-      zoomPanPinch.setTransform(
-        zoomPanPinch?.state.positionX,
-        zoomPanPinch?.state.positionY,
-        zoomPanPinch?.state.scale - 0.4
-      );
-    }
+    zoomPanPinch?.setTransform(
+      zoomPanPinch?.state.positionX,
+      zoomPanPinch?.state.positionY,
+      zoomPanPinch?.state.scale - 0.4
+    );
   },
   centerView: () => {
     const zoomPanPinch = get().zoomPanPinch;

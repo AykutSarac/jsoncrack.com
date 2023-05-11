@@ -4,7 +4,16 @@ import { Prism } from "@mantine/prism";
 import { FiExternalLink } from "react-icons/fi";
 import { shallow } from "zustand/shallow";
 import useGraph from "src/store/useGraph";
-import { dataToString } from "src/utils/dataToString";
+
+const dataToString = (data: any) => {
+  const text = Array.isArray(data) ? Object.fromEntries(data) : data;
+  const replacer = (_: string, v: string) => {
+    if (typeof v === "string") return v.replaceAll('"', "");
+    return v;
+  };
+
+  return JSON.stringify(text, replacer, 2);
+};
 
 const CodeBlock: React.FC<{ children: any }> = ({ children }) => {
   return (

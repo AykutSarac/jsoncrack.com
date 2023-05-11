@@ -1,7 +1,7 @@
 import React from "react";
 import { useDebouncedValue } from "@mantine/hooks";
 import useGraph from "src/store/useGraph";
-import { searchQuery, cleanupHighlight, highlightMatchedNodes } from "src/utils/search";
+import { searchQuery, cleanupHighlight, highlightMatchedNodes } from "src/utils/graph/search";
 
 export const useFocusNode = () => {
   const zoomPanPinch = useGraph(state => state.zoomPanPinch);

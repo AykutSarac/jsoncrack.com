@@ -4,12 +4,10 @@ import * as Styled from "./styles";
 
 const Node: React.FC<CustomNodeProps> = ({ node, x, y }) => {
   const { text, width, height, data } = node;
-  const ref = React.useRef(null);
-
   if (data.isEmpty) return null;
 
   return (
-    <Styled.StyledForeignObject width={width} height={height} x={0} y={0} ref={ref} isObject>
+    <Styled.StyledForeignObject width={width} height={height} x={0} y={0} isObject>
       {text.map((val, idx) => {
         return (
           <Styled.StyledRow

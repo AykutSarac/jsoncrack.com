@@ -13,8 +13,8 @@ import {
 } from "react-icons/ai";
 import { MdReportGmailerrorred, MdOutlineCheckCircleOutline } from "react-icons/md";
 import { VscAccount, VscWorkspaceTrusted } from "react-icons/vsc";
-import { saveJson, updateJson } from "src/services/db/json";
-import useJson from "src/store/useJson";
+import { saveToCloud, updateJson } from "src/services/json";
+import useFile from "src/store/useFile";
 import useModal from "src/store/useModal";
 import useStored from "src/store/useStored";
 import useUser from "src/store/useUser";
@@ -78,16 +78,16 @@ const StyledImg = styled.img<{ light: boolean }>`
 
 export const BottomBar = () => {
   const { replace, query } = useRouter();
-  const data = useJson(state => state.data);
-  const hasError = useJson(state => state.hasError);
+  const data = useFile(state => state.fileData);
+  const error = useFile(state => state.error);
   const user = useUser(state => state.user);
   const premium = useUser(state => state.isPremium());
   const lightmode = useStored(state => state.lightmode);
-  const hasChanges = useJson(state => state.hasChanges);
+  const hasChanges = useFile(state => state.hasChanges);
+  const getContents = useFile(state => state.getContents);
 
-  const getJson = useJson(state => state.getJson);
   const setVisible = useModal(state => state.setVisible);
-  const setHasChanges = useJson(state => state.setHasChanges);
+  const setHasChanges = useFile(state => state.setHasChanges);
   const [isPrivate, setIsPrivate] = React.useState(false);
   const [isUpdating, setIsUpdating] = React.useState(false);
 
@@ -98,28 +98,32 @@ export const BottomBar = () => {
   const handleSaveJson = React.useCallback(async () => {
     if (!user) return setVisible("login")(true);
 
-    if (hasChanges) {
+    if (
+      hasChanges &&
+      !error &&
+      (typeof query.doc === "string" || typeof query.doc === "undefined")
+    ) {
       try {
         setIsUpdating(true);
-        toast.loading("Saving JSON...", { id: "jsonSave" });
-        const res = await saveJson({ id: query.json as string, data: getJson() });
+        toast.loading("Saving document...", { id: "fileSave" });
+        const res = await saveToCloud(query?.doc ?? null, getContents());
 
         if (res.errors && res.errors.items.length > 0) throw res.errors;
-        if (res.data._id) replace({ query: { json: res.data._id } });
+        if (res.data._id) replace({ query: { doc: res.data._id } });
 
-        toast.success("JSON saved to cloud", { id: "jsonSave" });
+        toast.success("Document saved to cloud", { id: "fileSave" });
         setHasChanges(false);
       } catch (error: any) {
         if (error?.items?.length > 0) {
-          return toast.error(error.items[0].message, { id: "jsonSave", duration: 5000 });
+          return toast.error(error.items[0].message, { id: "fileSave", duration: 5000 });
         }
 
-        toast.error("Failed to save JSON!", { id: "jsonSave" });
+        toast.error("Failed to save document!", { id: "fileSave" });
       } finally {
         setIsUpdating(false);
       }
     }
-  }, [getJson, hasChanges, query.json, replace, setHasChanges, setVisible, user]);
+  }, [error, getContents, hasChanges, query.doc, replace, setHasChanges, setVisible, user]);
 
   const handleLoginClick = () => {
     if (user) return setVisible("account")(true);
@@ -162,8 +166,8 @@ export const BottomBar = () => {
             Upgrade to Premium
           </StyledBottomBarItem>
         )}
-        <StyledBottomBarItem error={!!hasError}>
-          {hasError ? (
+        <StyledBottomBarItem error={!!error}>
+          {error ? (
             <Flex align="center" gap={2}>
               <MdReportGmailerrorred color="red" size={16} />
               <Text fw="bold">Invalid Format</Text>

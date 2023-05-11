@@ -1,15 +1,19 @@
 import { create } from "zustand";
+import { Modal } from "src/containers/Modals";
 import useUser from "./useUser";
 
+type ModalState = {
+  [key in Modal]: boolean;
+};
+
 interface ModalActions {
-  setVisible: (modal: keyof typeof initialStates) => (visible: boolean) => void;
+  setVisible: (modal: Modal) => (visible: boolean) => void;
 }
 
-const initialStates = {
+const initialStates: ModalState = {
   clear: false,
   cloud: false,
   download: false,
-  goals: false,
   import: false,
   account: false,
   node: false,
@@ -17,20 +21,22 @@ const initialStates = {
   share: false,
   login: false,
   premium: false,
-  herowand: false,
+  jwt: false,
+  schema: false,
 };
 
-type ModalType = keyof typeof initialStates;
+const authModals: Modal[] = ["cloud", "share", "account", "schema"];
+const premiumModals: Modal[] = ["schema"];
 
-const authModals: ModalType[] = ["cloud", "share", "account"];
-
-export type ModalStates = typeof initialStates;
-
-const useModal = create<ModalStates & ModalActions>()(set => ({
+const useModal = create<ModalState & ModalActions>()(set => ({
   ...initialStates,
   setVisible: modal => visible => {
-    if (authModals.includes(modal) && !useUser.getState().isAuthenticated) {
+    const user = useUser.getState();
+
+    if (authModals.includes(modal) && !user.isAuthenticated) {
       return set({ login: true });
+    } else if (premiumModals.includes(modal) && !user.isPremium()) {
+      return set({ premium: true });
     }
 
     set({ [modal]: visible });

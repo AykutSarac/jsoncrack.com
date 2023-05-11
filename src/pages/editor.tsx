@@ -3,11 +3,13 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import Cookie from "universal-cookie";
+import { defaultJson } from "src/constants/data";
 import { BottomBar } from "src/containers/Editor/BottomBar";
 import { Tools } from "src/containers/Editor/LiveEditor/Tools";
 import Panes from "src/containers/Editor/Panes";
 import { HerowandModal } from "src/containers/Modals/HerowandModal";
 import { Loading } from "src/layout/Loading";
+import useFile from "src/store/useFile";
 import useJson from "src/store/useJson";
 import useUser from "src/store/useUser";
 
@@ -35,21 +37,25 @@ const EditorPage: React.FC = () => {
   const { isReady, query } = useRouter();
   const [showNews, setShowNews] = React.useState(false);
   const checkSession = useUser(state => state.checkSession);
-  const fetchJson = useJson(state => state.fetchJson);
   const loading = useJson(state => state.loading);
+  const setContents = useFile(state => state.setContents);
+  const fetchFile = useFile(state => state.fetchFile);
+  const fetchUrl = useFile(state => state.fetchUrl);
 
   React.useEffect(() => {
-    // Fetch JSON by query
-    // Check Session User
     if (isReady) {
       checkSession();
-      fetchJson(query.json);
+      if (typeof query?.url === "string") fetchUrl(query.url);
+      if (typeof query?.json === "string") fetchFile(query.json);
+      if (!query?.url && !query?.json) {
+        setContents({ contents: defaultJson, hasChanges: false });
+      }
     }
 
     if (typeof newsCookie === "undefined") {
       setShowNews(true);
     } else setShowNews(false);
-  }, [checkSession, fetchJson, isReady, query.json]);
+  }, [checkSession, fetchFile, fetchUrl, isReady, query.json, query.url, setContents]);
 
   const closeNews = React.useCallback(() => {
     setShowNews(false);

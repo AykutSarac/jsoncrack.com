@@ -27,9 +27,7 @@ export const CustomNode = (nodeProps: NodeProps) => {
           return <ObjectNode node={node as NodeData} x={x} y={y} />;
         }
 
-        return (
-          <TextNode node={node as NodeData} hasCollapse={data.childrenCount > 0} x={x} y={y} />
-        );
+        return <TextNode node={node as NodeData} hasCollapse={!!data.childrenCount} x={x} y={y} />;
       }}
     </Node>
   );

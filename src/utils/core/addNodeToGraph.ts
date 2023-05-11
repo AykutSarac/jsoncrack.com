@@ -1,5 +1,5 @@
+import { Graph } from "../json/jsonParser";
 import { calculateNodeSize } from "./calculateNodeSize";
-import { Graph } from "./jsonParser";
 
 type Props = {
   graph: Graph;

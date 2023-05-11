@@ -12,6 +12,7 @@ import {
   Divider,
   ScrollArea,
   ModalProps,
+  Paper,
 } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
@@ -20,10 +21,10 @@ import toast from "react-hot-toast";
 import { AiOutlineEdit, AiOutlineLock, AiOutlinePlus, AiOutlineUnlock } from "react-icons/ai";
 import { FaTrash } from "react-icons/fa";
 import { IoRocketSharp } from "react-icons/io5";
-import { deleteJson, getAllJson, saveJson, updateJson } from "src/services/db/json";
-import useJson from "src/store/useJson";
+import { deleteJson, getAllJson, saveToCloud, updateJson } from "src/services/json";
+import useFile, { File } from "src/store/useFile";
+import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
-import { Json } from "src/typings/altogic";
 
 dayjs.extend(relativeTime);
 
@@ -31,14 +32,13 @@ const StyledJsonCard = styled.a<{ active?: boolean; create?: boolean }>`
   display: ${({ create }) => (create ? "block" : "flex")};
   align-items: center;
   justify-content: space-between;
-  background: ${({ theme }) => theme.BLACK_SECONDARY};
   line-height: 20px;
   padding: 6px;
-  border: 2px solid ${({ theme, active }) => (active ? theme.SEAGREEN : theme.BLACK_SECONDARY)};
-  border-radius: 5px;
+  border-radius: 3px;
   overflow: hidden;
   flex: 1;
-  height: 160px;
+  height: 60px;
+  background: ${({ active }) => active && "rgb(48, 98, 197)"};
 `;
 
 const StyledInfo = styled.div``;
@@ -72,7 +72,8 @@ const StyledCreateWrapper = styled.div`
   align-items: center;
   justify-content: center;
   opacity: 0.6;
-  height: 45px;
+  height: 30px;
+  font-weight: 500;
   font-size: 14px;
   cursor: pointer;
 `;
@@ -86,7 +87,7 @@ const StyledNameInput = styled.input`
   font-weight: 600;
 `;
 
-const GraphCard: React.FC<{ data: Json; refetch: () => void; active: boolean }> = ({
+const GraphCard: React.FC<{ data: File; refetch: () => void; active: boolean }> = ({
   data,
   refetch,
   active,
@@ -112,7 +113,7 @@ const GraphCard: React.FC<{ data: Json; refetch: () => void; active: boolean }> 
 
     toast
       .promise(deleteJson(data._id), {
-        loading: "Deleting JSON file...",
+        loading: "Deleting file...",
         error: "An error occurred while deleting the file!",
         success: `Deleted ${name}!`,
       })
@@ -120,76 +121,79 @@ const GraphCard: React.FC<{ data: Json; refetch: () => void; active: boolean }> 
   };
 
   return (
-    <StyledJsonCard
-      href={`?json=${data._id}`}
-      as={editMode ? "div" : "a"}
-      active={active}
-      {...props}
-    >
-      <StyledInfo>
-        {editMode ? (
-          <form onSubmit={onSubmit}>
-            <StyledNameInput
-              value={name}
-              onChange={e => setName(e.currentTarget.value)}
-              onClick={e => e.preventDefault()}
-              autoFocus
-            />
-            <input type="submit" hidden />
-          </form>
-        ) : (
-          <StyledTitle
-            onClick={e => {
-              e.preventDefault();
-              setEditMode(true);
-            }}
-          >
-            <span>{name}</span>
-            <AiOutlineEdit />
-          </StyledTitle>
-        )}
-        <StyledDetils>
-          {data.private ? <AiOutlineLock /> : <AiOutlineUnlock />}
-          Last modified {dayjs(data.updatedAt).fromNow()}
-        </StyledDetils>
-      </StyledInfo>
-      <Button variant="subtle" color="red" onClick={onDeleteClick}>
-        <FaTrash />
-      </Button>
-    </StyledJsonCard>
+    <Paper withBorder w="100%">
+      <StyledJsonCard
+        href={`?json=${data._id}`}
+        as={editMode ? "div" : "a"}
+        active={active}
+        {...props}
+      >
+        <StyledInfo>
+          {editMode ? (
+            <form onSubmit={onSubmit}>
+              <StyledNameInput
+                value={name}
+                onChange={e => setName(e.currentTarget.value)}
+                onClick={e => e.preventDefault()}
+                autoFocus
+              />
+              <input type="submit" hidden />
+            </form>
+          ) : (
+            <StyledTitle
+              onClick={e => {
+                e.preventDefault();
+                setEditMode(true);
+              }}
+            >
+              <span>{name}</span>
+              <AiOutlineEdit />
+            </StyledTitle>
+          )}
+          <StyledDetils>
+            {data.private ? <AiOutlineLock /> : <AiOutlineUnlock />}
+            Last modified {dayjs(data.updatedAt).fromNow()}
+          </StyledDetils>
+        </StyledInfo>
+        <Button variant="subtle" color="red" onClick={onDeleteClick}>
+          <FaTrash />
+        </Button>
+      </StyledJsonCard>
+    </Paper>
   );
 };
 
 const CreateCard: React.FC<{ reachedLimit: boolean }> = ({ reachedLimit }) => {
   const { replace } = useRouter();
   const isPremium = useUser(state => state.isPremium());
-  const getJson = useJson(state => state.getJson);
-  const setHasChanges = useJson(state => state.setHasChanges);
+  const getContents = useFile(state => state.getContents);
+  const setHasChanges = useFile(state => state.setHasChanges);
+  const setVisible = useModal(state => state.setVisible);
 
   const onCreate = async () => {
     try {
-      toast.loading("Saving JSON...", { id: "jsonSave" });
-      const res = await saveJson({ data: getJson() });
+      toast.loading("Saving document...", { id: "fileSave" });
+      const res = await saveToCloud(null, getContents());
 
       if (res.errors && res.errors.items.length > 0) throw res.errors;
 
-      toast.success("JSON saved to cloud", { id: "jsonSave" });
+      toast.success("Document saved to cloud", { id: "fileSave" });
       setHasChanges(false);
-      replace({ query: { json: res.data._id } });
+      replace({ query: { doc: res.data._id } });
     } catch (error: any) {
       if (error?.items?.length > 0) {
-        return toast.error(error.items[0].message, { id: "jsonSave", duration: 7000 });
+        return toast.error(error.items[0].message, { id: "fileSave", duration: 7000 });
       }
-      toast.error("Failed to save JSON!", { id: "jsonSave" });
+      toast.error("Failed to save document!", { id: "fileSave" });
     }
   };
 
   if (!isPremium && reachedLimit)
     return (
-      <StyledJsonCard href="/pricing" create>
+      <StyledJsonCard onClick={() => setVisible("premium")(true)}>
         <StyledCreateWrapper>
           <IoRocketSharp size="18" />
-          You reached max limit, upgrade to premium for more!
+          <Text fw="bold">You reached max limit, upgrade to premium for more!</Text>
         </StyledCreateWrapper>
       </StyledJsonCard>
     );
@@ -197,8 +201,8 @@ const CreateCard: React.FC<{ reachedLimit: boolean }> = ({ reachedLimit }) => {
   return (
     <StyledJsonCard onClick={onCreate} create>
       <StyledCreateWrapper>
-        <AiOutlinePlus size="24" />
-        Create New JSON
+        <AiOutlinePlus size="20" />
+        <Text fw="bold">Create New File</Text>
       </StyledCreateWrapper>
     </StyledJsonCard>
   );
@@ -227,7 +231,7 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
                   data={json}
                   key={json._id}
                   refetch={refetch}
-                  active={query.json === json._id}
+                  active={query.doc === json._id}
                 />
               ))}
             </>

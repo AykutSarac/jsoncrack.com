@@ -1,46 +1,20 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import styled, { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "styled-components";
 import toast from "react-hot-toast";
-import { baseURL } from "src/constants/data";
 import { darkTheme, lightTheme } from "src/constants/theme";
+import { GraphCanvasType } from "src/containers/Editor/LiveEditor/GraphCanvas";
 import { Tools } from "src/containers/Editor/LiveEditor/Tools";
-import { getPartnerStatus } from "src/services/db/widget";
+import useFile from "src/store/useFile";
 import useGraph from "src/store/useGraph";
-import useJson from "src/store/useJson";
 
 const GraphCanvas = dynamic(
   () => import("src/containers/Editor/LiveEditor/GraphCanvas").then(c => c.GraphCanvas),
   {
     ssr: false,
   }
-);
-
-const StyledAttribute = styled.a`
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
-  background: ${({ theme }) => theme.SILVER_DARK};
-  padding: 4px 8px;
-  font-size: 14px;
-  font-weight: 500;
-  border-radius: 3px 0 0 0;
-  opacity: 0.8;
-
-  @media only screen and (max-width: 768px) {
-    font-size: 12px;
-  }
-`;
-
-function inIframe() {
-  try {
-    return window.self !== window.top;
-  } catch (e) {
-    return true;
-  }
-}
+) as GraphCanvasType;
 
 interface EmbedMessage {
   data: {
@@ -52,22 +26,14 @@ interface EmbedMessage {
 const WidgetPage = () => {
   const { query, push, isReady } = useRouter();
   const [theme, setTheme] = React.useState("dark");
-  const [isPremium, setIsPremium] = React.useState(false);
-  const fetchJson = useJson(state => state.fetchJson);
+  const fetchFile = useFile(state => state.fetchFile);
   const setGraph = useGraph(state => state.setGraph);
 
   React.useEffect(() => {
     if (isReady) {
-      if (query.partner === "true") {
-        getPartnerStatus(window.location.ancestorOrigins[0]).then(
-          r => r.data?.premium && setIsPremium(!!r.data.premium)
-        );
-      }
-
-      fetchJson(query.json);
-      if (!inIframe()) push("/");
+      if (typeof query?.json === "string") fetchFile(query.json);
     }
-  }, [fetchJson, isReady, push, query.json, query.partner]);
+  }, [fetchFile, isReady, push, query.json, query.partner]);
 
   React.useEffect(() => {
     const handler = (event: EmbedMessage) => {
@@ -92,11 +58,6 @@ const WidgetPage = () => {
     <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
       <Tools isWidget />
       <GraphCanvas isWidget />
-      {!isPremium && (
-        <StyledAttribute href={`${baseURL}/editor`} target="_blank" rel="noreferrer">
-          jsoncrack.com
-        </StyledAttribute>
-      )}
     </ThemeProvider>
   );
 };
