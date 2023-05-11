@@ -10,7 +10,6 @@ import {
   ThemeIcon,
   Divider,
   Text,
-  Anchor,
 } from "@mantine/core";
 import { BsCheck } from "react-icons/bs";
 
@@ -45,7 +44,7 @@ export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
         <Divider color="gray" orientation="vertical" />
         <Stack spacing="xs">
           <Title order={3}>
-            Herowand Premium
+            JSON Crack Plus
             <Text size="sm" color="dimmed">
               USD 5$/mo
             </Text>
@@ -70,14 +69,10 @@ export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
               </ThemeIcon>
             }
           >
-            <List.Item>Edit directly on graph</List.Item>
             <List.Item>JSON Schema support</List.Item>
             <List.Item>Visualize data at full capability</List.Item>
             <List.Item>Save up to 200 files</List.Item>
           </List>
-          <Anchor fz="sm" href="https://editor.herowand.com" target="_blank">
-            Features are available at Herowand Editor
-          </Anchor>
         </Stack>
       </Flex>
     </Modal>
