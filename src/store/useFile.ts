@@ -46,6 +46,9 @@ const initialStates = {
 
 export type FileStates = typeof initialStates;
 
+const regex =
+  "((http|https)://)(www.)?[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)";
+
 const debouncedUpdateJson = debounce(
   (value: unknown) => useJson.getState().setJson(JSON.stringify(value, null, 2)),
   800
@@ -116,16 +119,21 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
         return useJson.setState({ json: jsonStr, loading: false });
       } catch (error) {
         get().clear();
+        useJson.setState({ loading: false });
+        useGraph.setState({ loading: false });
         toast.error("Failed to fetch document from URL!");
       }
     }
   },
   fetchFile: async id => {
     try {
+      if (regex.match(id)) return get().fetchUrl(id);
+
       const file = await getFromCloud(id);
       get().setFile(file);
     } catch (error) {
       useJson.setState({ loading: false });
+      useGraph.setState({ loading: false });
       console.error(error);
     }
   },
