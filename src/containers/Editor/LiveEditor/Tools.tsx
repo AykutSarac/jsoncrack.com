@@ -181,7 +181,7 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
       )}
       {!isWidget && (
         <Group spacing="xs" position="left" w="100%" noWrap>
-          <StyledToolElement as="a" title="Herowand" href="https://jsoncrack.com">
+          <StyledToolElement as="a" title="JSON Crack" href="https://jsoncrack.com">
             <Flex gap="xs" align="center" justify="center">
               <StyledLogo
                 src="/assets/icon.png"

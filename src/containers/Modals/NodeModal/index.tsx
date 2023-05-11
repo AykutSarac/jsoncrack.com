@@ -1,7 +1,6 @@
 import React from "react";
-import { Modal, Stack, Text, ScrollArea, ModalProps, Button } from "@mantine/core";
+import { Modal, Stack, Text, ScrollArea, ModalProps } from "@mantine/core";
 import { Prism } from "@mantine/prism";
-import { FiExternalLink } from "react-icons/fi";
 import { shallow } from "zustand/shallow";
 import useGraph from "src/store/useGraph";
 
@@ -34,16 +33,10 @@ const CodeBlock: React.FC<{ children: any }> = ({ children }) => {
 };
 
 export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
-  const [nodeData, path, isParent] = useGraph(
-    state => [
-      dataToString(state.selectedNode.text),
-      state.selectedNode.path,
-      state.selectedNode.data?.isParent,
-    ],
+  const [nodeData, path] = useGraph(
+    state => [dataToString(state.selectedNode.text), state.selectedNode.path],
     shallow
   );
-
-  const isEditVisible = path !== "{Root}" && !isParent;
 
   return (
     <Modal title="Node Content" size="auto" opened={opened} onClose={onClose} centered>
@@ -54,17 +47,6 @@ export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           </Text>
           <CodeBlock>{nodeData}</CodeBlock>
         </Stack>
-        {isEditVisible && (
-          <Button
-            component="a"
-            href="https://editor.herowand.com"
-            leftIcon={<FiExternalLink />}
-            variant="filled"
-          >
-            Edit
-          </Button>
-        )}
-
         <Stack spacing="xs">
           <Text fz="sm" fw={700}>
             Node Path
