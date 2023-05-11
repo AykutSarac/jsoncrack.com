@@ -28,12 +28,14 @@ const WidgetPage = () => {
   const [theme, setTheme] = React.useState("dark");
   const fetchFile = useFile(state => state.fetchFile);
   const setGraph = useGraph(state => state.setGraph);
+  const clearGraph = useGraph(state => state.clearGraph);
 
   React.useEffect(() => {
     if (isReady) {
       if (typeof query?.json === "string") fetchFile(query.json);
+      else clearGraph();
     }
-  }, [fetchFile, isReady, push, query.json, query.partner]);
+  }, [clearGraph, fetchFile, isReady, push, query.json, query.partner]);
 
   React.useEffect(() => {
     const handler = (event: EmbedMessage) => {

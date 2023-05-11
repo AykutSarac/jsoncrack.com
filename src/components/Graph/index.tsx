@@ -139,7 +139,7 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
           maxScale={2}
           minScale={0.05}
           initialScale={0.4}
-          wheel={{ step: 0.08 }}
+          wheel={{ step: 0.04 }}
           zoomAnimation={{ animationType: "linear" }}
           doubleClick={{ disabled: true }}
           onInit={onInit}

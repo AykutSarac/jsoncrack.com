@@ -44,7 +44,7 @@ interface GraphActions {
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
   ...initialStates,
-  clearGraph: () => set({ nodes: [], edges: [] }),
+  clearGraph: () => set({ nodes: [], edges: [], loading: false }),
   setSelectedNode: nodeData => set({ selectedNode: nodeData }),
   setGraph: (data, options) => {
     const { nodes, edges } = parser(data ?? useJson.getState().json);
