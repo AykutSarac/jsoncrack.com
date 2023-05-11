@@ -46,8 +46,9 @@ const initialStates = {
 
 export type FileStates = typeof initialStates;
 
-const regex =
-  "((http|https)://)(www.)?[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)";
+const isURL = new RegExp(
+  /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/
+);
 
 const debouncedUpdateJson = debounce(
   (value: unknown) => useJson.getState().setJson(JSON.stringify(value, null, 2)),
@@ -105,29 +106,23 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
     }
   },
   fetchUrl: async url => {
-    const isURL = new RegExp(
-      /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/
-    );
+    try {
+      const res = await fetch(url);
+      const json = await res.json();
+      const jsonStr = JSON.stringify(json, null, 2);
 
-    if (isURL.test(url)) {
-      try {
-        const res = await fetch(url);
-        const json = await res.json();
-        const jsonStr = JSON.stringify(json, null, 2);
-
-        useGraph.getState().setGraph(jsonStr);
-        return useJson.setState({ json: jsonStr, loading: false });
-      } catch (error) {
-        get().clear();
-        useJson.setState({ loading: false });
-        useGraph.setState({ loading: false });
-        toast.error("Failed to fetch document from URL!");
-      }
+      useGraph.getState().setGraph(jsonStr);
+      return useJson.setState({ json: jsonStr, loading: false });
+    } catch (error) {
+      get().clear();
+      useJson.setState({ loading: false });
+      useGraph.setState({ loading: false });
+      toast.error("Failed to fetch document from URL!");
     }
   },
   fetchFile: async id => {
     try {
-      if (regex.match(id)) return get().fetchUrl(id);
+      if (isURL.test(id)) return get().fetchUrl(id);
 
       const file = await getFromCloud(id);
       get().setFile(file);

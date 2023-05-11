@@ -180,7 +180,7 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
         </StyledToolElement>
       )}
       {!isWidget && (
-        <Group spacing="xs" position="left" w="100%">
+        <Group spacing="xs" position="left" w="100%" noWrap>
           <StyledToolElement as="a" title="Herowand" href="https://jsoncrack.com">
             <Flex gap="xs" align="center" justify="center">
               <StyledLogo
@@ -279,7 +279,7 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
           </StyledToolElement>
         </Group>
       )}
-      <Group spacing="xs" position="right" w="100%">
+      <Group spacing="xs" position="right" w="100%" noWrap>
         <StyledToolElement title="Zoom Out" onClick={zoomOut}>
           <AiOutlineMinus size="18" />
         </StyledToolElement>
