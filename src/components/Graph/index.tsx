@@ -21,7 +21,7 @@ interface GraphProps {
 const StyledEditorWrapper = styled.div<{ widget: boolean }>`
   position: absolute;
   width: 100%;
-  height: ${({ widget }) => widget ? "calc(100vh - 36px)" : "calc(100vh - 63px)"};
+  height: ${({ widget }) => (widget ? "calc(100vh - 36px)" : "calc(100vh - 63px)")};
 
   --bg-color: ${({ theme }) => theme.GRID_BG_COLOR};
   --line-color-1: ${({ theme }) => theme.GRID_COLOR_PRIMARY};
