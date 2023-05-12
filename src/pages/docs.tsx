@@ -2,9 +2,8 @@ import React from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import styled from "styled-components";
-import { Button } from "@mantine/core";
 import materialDark from "react-syntax-highlighter/dist/cjs/styles/prism/material-dark";
-import { Footer } from "src/layout/Footer";
+import Layout from "src/layout/Layout";
 
 const SyntaxHighlighter = dynamic(() => import("react-syntax-highlighter/dist/cjs/prism-async"), {
   ssr: false,
@@ -18,7 +17,7 @@ const StyledFrame = styled.iframe`
 `;
 
 const StyledPage = styled.div`
-  padding: 5%;
+  padding: 0 5%;
 `;
 
 const StyledContent = styled.section`
@@ -57,15 +56,12 @@ const StyledHighlight = styled.span<{ link?: boolean; alert?: boolean }>`
 
 const Docs = () => {
   return (
-    <>
+    <Layout>
       <Head>
         <title>Creating JSON Crack Embed | JSON Crack</title>
         <meta name="description" content="Embedding JSON Crack tutorial into your websites." />
       </Head>
       <StyledPage>
-        <Button component="a" href="/">
-          &lt; Go Back
-        </Button>
         <h1>Documentation</h1>
         <StyledContent>
           <h2># Fetching from URL</h2>
@@ -176,8 +172,7 @@ const Docs = () => {
           </StyledContentBody>
         </StyledContent>
       </StyledPage>
-      <Footer />
-    </>
+    </Layout>
   );
 };
 

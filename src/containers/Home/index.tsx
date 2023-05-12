@@ -46,7 +46,7 @@ const HeroSection = () => (
     <Styles.StyledButtonWrapper>
       <Link href="https://github.com/sponsors/AykutSarac" target="_blank" rel="noreferrer">
         <Button color="red" size="md" variant="outline" rightIcon={<IoHeart />}>
-          SPONSOR US
+          SPONSOR
         </Button>
       </Link>
       <Link href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode">
