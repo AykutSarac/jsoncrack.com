@@ -10,6 +10,7 @@ import {
   ThemeIcon,
   Divider,
   Text,
+  Badge,
 } from "@mantine/core";
 import { BsCheck } from "react-icons/bs";
 
@@ -51,7 +52,7 @@ export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           </Title>
           <Button
             component="a"
-            href="https://www.patreon.com/herowand"
+            href="https://www.patreon.com/join/herowand/checkout?rid=8549056"
             variant="filled"
             color="teal"
             size="md"
@@ -72,6 +73,24 @@ export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
             <List.Item>JSON Schema support</List.Item>
             <List.Item>Visualize data at full capability</List.Item>
             <List.Item>Save up to 200 files</List.Item>
+            <List.Item
+              icon={
+                <ThemeIcon color="dark.5" size={20} radius="xl">
+                  <BsCheck size="1rem" />
+                </ThemeIcon>
+              }
+            >
+              Edit directly on graph <Badge>Soon</Badge>
+            </List.Item>
+            <List.Item
+              icon={
+                <ThemeIcon color="dark.5" size={20} radius="xl">
+                  <BsCheck size="1rem" />
+                </ThemeIcon>
+              }
+            >
+              Gerenate links from API <Badge>Soon</Badge>
+            </List.Item>
           </List>
         </Stack>
       </Flex>
