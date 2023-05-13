@@ -4,6 +4,8 @@ import { altogic } from "src/api/altogic";
 import { AltogicAuth, User } from "src/typings/altogic";
 import useModal from "./useModal";
 
+const isDevelopment = process.env.NODE_ENV === "development";
+
 interface UserActions {
   login: (response: AltogicAuth) => void;
   logout: () => void;
@@ -12,9 +14,26 @@ interface UserActions {
   isPremium: () => boolean;
 }
 
+const initialUser = () => {
+  if (isDevelopment) {
+    return {
+      _id: "0",
+      provider: "google",
+      providerUserId: "115637229829349229857",
+      email: "test@jsoncrack.com",
+      name: "JSON Crack",
+      profilePicture: "",
+      signUpAt: "2022-12-04T11:07:32.000Z",
+      lastLoginAt: "2023-05-13T09:56:02.915Z",
+      updatedAt: "2023-05-06T16:19:47.486Z",
+      type: 1,
+    } as User;
+  } else null;
+};
+
 const initialStates = {
-  isAuthenticated: false,
-  user: null as User | null,
+  isAuthenticated: isDevelopment,
+  user: initialUser() as User | null,
 };
 
 export type UserStates = typeof initialStates;
@@ -25,6 +44,7 @@ const useUser = create<UserStates & UserActions>()((set, get) => ({
   isPremium: () => {
     const user = get().user;
 
+    if (isDevelopment) return true;
     if (user) return user.type > 0;
     return false;
   },
