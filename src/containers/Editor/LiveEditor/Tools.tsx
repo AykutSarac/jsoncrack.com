@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Flex, Group, Menu, Text } from "@mantine/core";
+import { Flex, Group, MediaQuery, Menu, Text } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
@@ -180,104 +180,110 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
         </StyledToolElement>
       )}
       {!isWidget && (
-        <Group spacing="xs" position="left" w="100%" noWrap>
-          <StyledToolElement as="a" title="JSON Crack" href="https://jsoncrack.com">
-            <Flex gap="xs" align="center" justify="center">
-              <StyledLogo
-                src="/assets/icon.png"
-                width="auto"
-                height="16"
-                alt="logo"
-                invert={lightmode}
-              />
-            </Flex>
-          </StyledToolElement>
-          <StyledToolElement title="Import File" onClick={() => setVisible("import")(true)}>
-            Import
-          </StyledToolElement>
-          <Menu shadow="md" closeOnItemClick={false}>
-            <Menu.Target>
-              <StyledToolElement>
-                <Flex align="center" gap={3}>
-                  View <CgChevronDown />
-                </Flex>
-              </StyledToolElement>
-            </Menu.Target>
-            <Menu.Dropdown>
-              <Menu.Item
-                fz={12}
-                onClick={toggleEditor}
-                icon={fullscreen ? <VscLayoutSidebarLeft /> : <VscLayoutSidebarLeftOff />}
-                rightSection={
-                  <Text ml="md" fz={10} color="dimmed">
-                    {CoreKey} Shift E
-                  </Text>
-                }
-              >
-                {fullscreen ? "Show" : "Hide"} Editor
-              </Menu.Item>
-              <Menu.Item
-                fz={12}
-                onClick={toggleDirection}
-                icon={<StyledFlowIcon rotate={rotateLayout(direction)} />}
-                rightSection={
-                  <Text ml="md" fz={10} color="dimmed">
-                    {CoreKey} Shift D
-                  </Text>
-                }
-              >
-                Rotate Layout
-              </Menu.Item>
-              <Menu.Item
-                fz={12}
-                onClick={toggleFoldNodes}
-                icon={foldNodes ? <CgArrowsShrinkH /> : <CgArrowsMergeAltH />}
-                rightSection={
-                  <Text ml="md" fz={10} color="dimmed">
-                    {CoreKey} Shift F
-                  </Text>
-                }
-              >
-                {foldNodes ? "Unfold" : "Fold"} Nodes
-              </Menu.Item>
-              <Menu.Item
-                fz={12}
-                onClick={toggleExpandCollapseGraph}
-                icon={graphCollapsed ? <VscExpandAll /> : <VscCollapseAll />}
-                rightSection={
-                  <Text ml="md" fz={10} color="dimmed">
-                    {CoreKey} Shift C
-                  </Text>
-                }
-              >
-                {graphCollapsed ? "Expand" : "Collapse"} Nodes
-              </Menu.Item>
-            </Menu.Dropdown>
-          </Menu>
-          <Menu shadow="md">
-            <Menu.Target>
-              <StyledToolElement>
-                <Flex align="center" gap={3}>
-                  Tools <CgChevronDown />
-                </Flex>
-              </StyledToolElement>
-            </Menu.Target>
-            <Menu.Dropdown>
-              <Menu.Item fz={12} icon={<VscJson />} onClick={() => setVisible("schema")(true)}>
-                JSON Schema
-              </Menu.Item>
-              <Menu.Item fz={12} icon={<SiJsonwebtokens />} onClick={() => setVisible("jwt")(true)}>
-                Decode JWT
-              </Menu.Item>
-            </Menu.Dropdown>
-          </Menu>
-          <StyledToolElement title="Cloud" onClick={() => setVisible("cloud")(true)}>
-            Cloud
-          </StyledToolElement>
-          <StyledToolElement title="Download as File" onClick={handleSave}>
-            Download
-          </StyledToolElement>
-        </Group>
+        <MediaQuery smallerThan="xs" styles={{ display: "none" }}>
+          <Group spacing="xs" position="left" w="100%" noWrap>
+            <StyledToolElement as="a" title="JSON Crack" href="https://jsoncrack.com">
+              <Flex gap="xs" align="center" justify="center">
+                <StyledLogo
+                  src="/assets/icon.png"
+                  width="auto"
+                  height="16"
+                  alt="logo"
+                  invert={lightmode}
+                />
+              </Flex>
+            </StyledToolElement>
+            <StyledToolElement title="Import File" onClick={() => setVisible("import")(true)}>
+              Import
+            </StyledToolElement>
+            <Menu shadow="md" closeOnItemClick={false}>
+              <Menu.Target>
+                <StyledToolElement>
+                  <Flex align="center" gap={3}>
+                    View <CgChevronDown />
+                  </Flex>
+                </StyledToolElement>
+              </Menu.Target>
+              <Menu.Dropdown>
+                <Menu.Item
+                  fz={12}
+                  onClick={toggleEditor}
+                  icon={fullscreen ? <VscLayoutSidebarLeft /> : <VscLayoutSidebarLeftOff />}
+                  rightSection={
+                    <Text ml="md" fz={10} color="dimmed">
+                      {CoreKey} Shift E
+                    </Text>
+                  }
+                >
+                  {fullscreen ? "Show" : "Hide"} Editor
+                </Menu.Item>
+                <Menu.Item
+                  fz={12}
+                  onClick={toggleDirection}
+                  icon={<StyledFlowIcon rotate={rotateLayout(direction)} />}
+                  rightSection={
+                    <Text ml="md" fz={10} color="dimmed">
+                      {CoreKey} Shift D
+                    </Text>
+                  }
+                >
+                  Rotate Layout
+                </Menu.Item>
+                <Menu.Item
+                  fz={12}
+                  onClick={toggleFoldNodes}
+                  icon={foldNodes ? <CgArrowsShrinkH /> : <CgArrowsMergeAltH />}
+                  rightSection={
+                    <Text ml="md" fz={10} color="dimmed">
+                      {CoreKey} Shift F
+                    </Text>
+                  }
+                >
+                  {foldNodes ? "Unfold" : "Fold"} Nodes
+                </Menu.Item>
+                <Menu.Item
+                  fz={12}
+                  onClick={toggleExpandCollapseGraph}
+                  icon={graphCollapsed ? <VscExpandAll /> : <VscCollapseAll />}
+                  rightSection={
+                    <Text ml="md" fz={10} color="dimmed">
+                      {CoreKey} Shift C
+                    </Text>
+                  }
+                >
+                  {graphCollapsed ? "Expand" : "Collapse"} Nodes
+                </Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+            <Menu shadow="md">
+              <Menu.Target>
+                <StyledToolElement>
+                  <Flex align="center" gap={3}>
+                    Tools <CgChevronDown />
+                  </Flex>
+                </StyledToolElement>
+              </Menu.Target>
+              <Menu.Dropdown>
+                <Menu.Item fz={12} icon={<VscJson />} onClick={() => setVisible("schema")(true)}>
+                  JSON Schema
+                </Menu.Item>
+                <Menu.Item
+                  fz={12}
+                  icon={<SiJsonwebtokens />}
+                  onClick={() => setVisible("jwt")(true)}
+                >
+                  Decode JWT
+                </Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
+            <StyledToolElement title="Cloud" onClick={() => setVisible("cloud")(true)}>
+              Cloud
+            </StyledToolElement>
+            <StyledToolElement title="Download as File" onClick={handleSave}>
+              Download
+            </StyledToolElement>
+          </Group>
+        </MediaQuery>
       )}
       <Group spacing="xs" position="right" w="100%" noWrap>
         <StyledToolElement title="Zoom Out" onClick={zoomOut}>

@@ -6,6 +6,14 @@ import useModal from "./useModal";
 
 const isDevelopment = process.env.NODE_ENV === "development";
 
+interface CustomUser extends User {
+  premium: {
+    status: boolean;
+    end_date: string;
+  };
+  type: 0 | 1;
+}
+
 interface UserActions {
   login: (response: AltogicAuth) => void;
   logout: () => void;
@@ -27,16 +35,20 @@ const initialUser = () => {
       lastLoginAt: "2023-05-13T09:56:02.915Z",
       updatedAt: "2023-05-06T16:19:47.486Z",
       type: 1,
-    } as User;
-  } else null;
+    } as CustomUser;
+  }
+  return null;
 };
 
-const initialStates = {
+interface UserStates {
+  user: CustomUser | null;
+  isAuthenticated: boolean;
+}
+
+const initialStates: UserStates = {
   isAuthenticated: isDevelopment,
-  user: initialUser() as User | null,
+  user: initialUser(),
 };
-
-export type UserStates = typeof initialStates;
 
 const useUser = create<UserStates & UserActions>()((set, get) => ({
   ...initialStates,
@@ -48,30 +60,41 @@ const useUser = create<UserStates & UserActions>()((set, get) => ({
     if (user) return user.type > 0;
     return false;
   },
-  logout: () => {
-    altogic.auth.signOut();
+  logout: async () => {
+    const session = altogic.auth.getSession();
+    if (!session) return;
+
+    const { errors } = await altogic.auth.signOut(session.token);
+    if (errors?.items) return console.error(errors);
+
+    set(initialStates);
+    altogic.auth.clearLocalData();
     toast.success("Logged out.");
     useModal.setState({ account: false });
-    set(initialStates);
   },
-  login: response => {
-    set({ user: response.user as any, isAuthenticated: true });
-  },
+  login: user => set({ user: user as unknown as CustomUser, isAuthenticated: true }),
   checkSession: async () => {
     const currentSession = altogic.auth.getSession();
 
     if (currentSession) {
-      const dbUser = await altogic.auth.getUserFromDB();
-
-      altogic.auth.setSession(currentSession);
-      set({ user: dbUser.user as any, isAuthenticated: true });
-    } else {
-      if (!new URLSearchParams(window.location.search).get("access_token")) return;
-
-      const data = await altogic.auth.getAuthGrant();
-      if (!data.errors?.items.length) {
-        set({ user: data.user as any, isAuthenticated: true });
+      const { user, errors } = await altogic.auth.getUserFromDB();
+      if (errors?.items || !user) {
+        altogic.auth.clearLocalData();
+        return;
       }
+
+      altogic.auth.setUser(user);
+      altogic.auth.setSession(currentSession);
+
+      set({ user: user as CustomUser, isAuthenticated: true });
+    } else if (new URLSearchParams(window.location.search).get("access_token")) {
+      const { errors, user } = await altogic.auth.getAuthGrant();
+      if (errors?.items) {
+        toast.error(errors.items[0].message);
+        return;
+      }
+
+      set({ user: user as CustomUser, isAuthenticated: true });
     }
   },
 }));

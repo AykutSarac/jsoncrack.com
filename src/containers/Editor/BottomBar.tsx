@@ -28,10 +28,6 @@ const StyledBottomBar = styled.div`
   max-height: 27px;
   height: 27px;
   padding: 0 6px;
-
-  @media only screen and (max-width: 768px) {
-    display: none;
-  }
 `;
 
 const StyledLeft = styled.div`
@@ -39,6 +35,10 @@ const StyledLeft = styled.div`
   align-items: center;
   justify-content: left;
   gap: 4px;
+
+  @media screen and (max-width: 480px) {
+    display: none;
+  }
 `;
 
 const StyledRight = styled.div`
@@ -198,6 +198,7 @@ export const BottomBar = () => {
           </>
         )}
       </StyledLeft>
+
       <StyledRight>
         <a
           href="https://www.altogic.com/?utm_source=jsoncrack&utm_medium=referral&utm_campaign=sponsorship"
