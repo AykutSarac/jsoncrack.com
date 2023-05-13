@@ -4,17 +4,9 @@ import { useRouter } from "next/router";
 import { ThemeProvider } from "styled-components";
 import toast from "react-hot-toast";
 import { darkTheme, lightTheme } from "src/constants/theme";
-import { GraphCanvasType } from "src/containers/Editor/LiveEditor/GraphCanvas";
 import { Tools } from "src/containers/Editor/LiveEditor/Tools";
 import useFile from "src/store/useFile";
 import useGraph from "src/store/useGraph";
-
-const GraphCanvas = dynamic(
-  () => import("src/containers/Editor/LiveEditor/GraphCanvas").then(c => c.GraphCanvas),
-  {
-    ssr: false,
-  }
-) as GraphCanvasType;
 
 interface EmbedMessage {
   data: {
@@ -22,6 +14,10 @@ interface EmbedMessage {
     options?: any;
   };
 }
+
+const Graph = dynamic(() => import("src/components/Graph").then(c => c.Graph), {
+  ssr: false,
+});
 
 const WidgetPage = () => {
   const { query, push, isReady } = useRouter();
@@ -60,7 +56,7 @@ const WidgetPage = () => {
   return (
     <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
       <Tools isWidget />
-      <GraphCanvas isWidget />
+      <Graph isWidget />
     </ThemeProvider>
   );
 };
