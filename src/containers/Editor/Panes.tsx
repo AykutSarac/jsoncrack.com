@@ -11,6 +11,10 @@ export const StyledEditor = styled(Allotment)`
   display: flex;
   background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
   height: calc(100vh - 63px);
+
+  @media only screen and (max-width: 480px) {
+    height: 100vh;
+  }
 `;
 
 const LiveEditor = dynamic(() => import("src/containers/Editor/LiveEditor"), {

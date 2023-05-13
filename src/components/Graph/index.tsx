@@ -49,7 +49,7 @@ const StyledEditorWrapper = styled.div<{ widget: boolean }>`
   }
 
   @media only screen and (max-width: 768px) {
-    height: calc(100vh - 36px);
+    height: 100vh;
   }
 `;
 

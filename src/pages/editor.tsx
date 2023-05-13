@@ -16,6 +16,10 @@ import useUser from "src/store/useUser";
 export const StyledPageWrapper = styled.div`
   height: calc(100vh - 27px);
   width: 100%;
+
+  @media only screen and (max-width: 480px) {
+    height: 100vh;
+  }
 `;
 
 export const StyledEditorWrapper = styled.div`

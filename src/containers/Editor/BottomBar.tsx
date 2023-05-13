@@ -28,6 +28,10 @@ const StyledBottomBar = styled.div`
   max-height: 27px;
   height: 27px;
   padding: 0 6px;
+
+  @media screen and (max-width: 480px) {
+    display: none;
+  }
 `;
 
 const StyledLeft = styled.div`
@@ -35,10 +39,6 @@ const StyledLeft = styled.div`
   align-items: center;
   justify-content: left;
   gap: 4px;
-
-  @media screen and (max-width: 480px) {
-    display: none;
-  }
 `;
 
 const StyledRight = styled.div`
