@@ -52,7 +52,21 @@ JSON Crack is a free, open-source JSON visualization app that will revolutionize
 
 If you like the project, you can become a sponsor at [GitHub Sponsors](https://github.com/sponsors/AykutSarac) or use [Herowand Editor](https://editor.herowand.com/).
 
-## Docker
+## Running Locally
+ 
+### Local
+
+After cloning the repository, run the following commands:
+```console
+# Install the packages
+yarn install
+
+# Start development server
+# Then the development server will run at http://localhost:3000
+yarn dev
+```
+
+### Docker
 
 🐳 A [`Dockerfile`](Dockerfile) is provided in the root of the repository.
 If you want to run JSON Crack locally:
