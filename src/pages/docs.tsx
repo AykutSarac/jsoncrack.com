@@ -1,14 +1,9 @@
 import React from "react";
-import dynamic from "next/dynamic";
 import Head from "next/head";
 import styled from "styled-components";
-import { Text } from "@mantine/core";
-import materialDark from "react-syntax-highlighter/dist/cjs/styles/prism/material-dark";
+import { MediaQuery, Text } from "@mantine/core";
+import { Prism } from "@mantine/prism";
 import Layout from "src/layout/Layout";
-
-const SyntaxHighlighter = dynamic(() => import("react-syntax-highlighter/dist/cjs/prism-async"), {
-  ssr: false,
-});
 
 const StyledFrame = styled.iframe`
   border: none;
@@ -23,9 +18,10 @@ const StyledPage = styled.div`
 
 const StyledContent = styled.section`
   margin-top: 20px;
-  background: rgba(181, 116, 214, 0.23);
+  background: rgba(96, 96, 96, 0.23);
   padding: 16px;
   border-radius: 6px;
+  border: 1px solid #383838;
 `;
 
 const StyledDescription = styled.div``;
@@ -43,16 +39,16 @@ const StyledContentBody = styled.div`
 `;
 
 const StyledHighlight = styled.span<{ link?: boolean; alert?: boolean }>`
+  display: inline-block;
   text-align: left;
-  white-space: nowrap;
   color: ${({ theme, link, alert }) =>
     alert ? theme.DANGER : link ? theme.BLURPLE : theme.TEXT_POSITIVE};
   background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
   border-radius: 4px;
   font-weight: 500;
-  padding: 4px;
+  padding: 2px 4px;
   font-size: 14px;
-  margin: ${({ alert }) => alert && "8px 0"};
+  margin: ${({ alert }) => (alert ? "8px 0" : "1px")};
 `;
 
 const Docs = () => {
@@ -128,9 +124,11 @@ const Docs = () => {
               </StyledHighlight>
               , you should pass an object consist of &quot;json&quot; and &quot;options&quot; key
               where json is a string and options is an object that may contain the following:
-              <SyntaxHighlighter language="markdown" style={materialDark} showLineNumbers={true}>
-                {`{\n\ttheme: "light" | "dark",\n\tdirection: "TOP" | "RIGHT" | "DOWN" | "LEFT"\n}`}
-              </SyntaxHighlighter>
+              <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
+                <Prism w={500} language="json">
+                  {`{\n  theme: "light" | "dark",\n  direction: "TOP" | "RIGHT" | "DOWN" | "LEFT"\n}`}
+                </Prism>
+              </MediaQuery>
             </StyledDescription>
 
             <StyledFrame
