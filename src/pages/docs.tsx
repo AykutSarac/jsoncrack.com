@@ -2,6 +2,7 @@ import React from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import styled from "styled-components";
+import { Text } from "@mantine/core";
 import materialDark from "react-syntax-highlighter/dist/cjs/styles/prism/material-dark";
 import Layout from "src/layout/Layout";
 
@@ -148,16 +149,14 @@ const Docs = () => {
           <h3>◼︎ On Page Load</h3>
           <StyledContentBody>
             <StyledDescription>
-              <StyledHighlight as="div" alert>
+              <Text>
                 ⚠️ <b>Important!</b> - iframe should be defined before the script tag
-              </StyledHighlight>
-              <StyledHighlight as="div" alert>
-                ⚠️ <b>Note</b> - postMessage should be delayed using setTimeout
-              </StyledHighlight>
-              To display JSON on load event, you should post json into iframe using it&apos;s onload
-              event like in the example. Make sure to use{" "}
-              <StyledHighlight>setTimeout</StyledHighlight> when loading data and set a time around
-              500ms otherwise it won&apos;t work.
+              </Text>
+              <Text>
+                ⚠️ <b>Note</b> - Widget is not loaded immediately with the parent page. The widget
+                sends its <b>id</b> attribute so you can listen for it as in the example below to
+                ensure its loaded and ready to listen for messages.
+              </Text>
             </StyledDescription>
             <StyledFrame
               scrolling="no"
