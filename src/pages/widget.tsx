@@ -34,6 +34,7 @@ const WidgetPage = () => {
     if (isReady) {
       if (typeof query?.json === "string") fetchFile(query.json);
       else clearGraph();
+      window.parent.postMessage(window.frameElement?.getAttribute("id"), "*");
     }
   }, [clearGraph, fetchFile, isReady, push, query.json, query.partner]);
 

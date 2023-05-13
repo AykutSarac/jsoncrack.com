@@ -60,14 +60,26 @@ const HeroSection = () => (
 
 const PreviewSection = () => {
   const [currentTab, setCurrentTab] = React.useState(0);
+  const [loaded, setLoaded] = React.useState(false);
+  const widgetRef = React.useRef<HTMLIFrameElement>(null);
 
-  const updateTab = (tabId: number) => {
-    const embed = document.getElementById("jcPreview") as HTMLIFrameElement;
-    embed.contentWindow?.postMessage({
-      json: TABS[tabId].json,
-    });
-    setCurrentTab(tabId);
-  };
+  React.useEffect(() => {
+    const eventFn = (event: MessageEvent) => {
+      if (event.source === widgetRef.current?.contentWindow) {
+        setLoaded(true);
+      }
+    };
+
+    window.addEventListener("message", eventFn, false);
+    return () => window.removeEventListener("message", eventFn);
+  }, []);
+
+  React.useEffect(() => {
+    if (loaded && widgetRef.current) {
+      const message = { json: TABS[currentTab].json };
+      widgetRef.current.contentWindow?.postMessage(message, "*");
+    }
+  }, [currentTab, loaded]);
 
   return (
     <Styles.StyledPreviewSection>
@@ -76,7 +88,7 @@ const PreviewSection = () => {
           {TABS.map(tab => (
             <Styles.StyledTab
               active={tab.id === currentTab}
-              onClick={() => updateTab(tab.id)}
+              onClick={() => setCurrentTab(tab.id)}
               key={tab.id}
             >
               {tab.name}
@@ -100,9 +112,10 @@ const PreviewSection = () => {
       </Styles.StyledHighlightWrapper>
 
       <Styles.StyledPreviewFrame
+        ref={widgetRef}
         title="Preview Embed"
         id="jcPreview"
-        src={`${baseURL}/widget?json=644248e080ba36d1e7e833dc`}
+        src={`${baseURL}/widget`}
         loading="eager"
       />
     </Styles.StyledPreviewSection>
