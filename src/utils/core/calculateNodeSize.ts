@@ -10,9 +10,9 @@ const firaMono = Fira_Mono({
 export const isContentImage = (value: string | [string, string][]) => {
   if (typeof value !== "string") return false;
 
-  const isURL = /(https?:\/\/.*\.(?:png|jpg|gif))/i.test(value);
+  const isImageURL = /(https?:\/\/.*\.(?:png|jpg|gif))/i.test(value);
   const isBase64 = value.startsWith("data:image/") && value.includes("base64");
-  return isURL || isBase64;
+  return isImageURL || isBase64;
 };
 
 const sizeCache = new Map<string | [string, string][], { width: number; height: number }>();

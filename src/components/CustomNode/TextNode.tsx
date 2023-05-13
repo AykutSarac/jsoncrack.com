@@ -5,6 +5,7 @@ import { CustomNodeProps } from "src/components/CustomNode";
 import useGraph from "src/store/useGraph";
 import useStored from "src/store/useStored";
 import { isContentImage } from "src/utils/core/calculateNodeSize";
+import { TextRenderer } from "./TextRenderer";
 import * as Styled from "./styles";
 
 const StyledExpand = styled.button`
@@ -84,9 +85,7 @@ const Node: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) =>
           data-key={JSON.stringify(text)}
         >
           <Styled.StyledKey parent={isParent} type={type}>
-            <Styled.StyledLinkItUrl>
-              {JSON.stringify(text).replaceAll('"', "")}
-            </Styled.StyledLinkItUrl>
+            <TextRenderer>{JSON.stringify(text).replaceAll('"', "")}</TextRenderer>
           </Styled.StyledKey>
           {isParent && childrenCount > 0 && showChildrenCount && (
             <Styled.StyledChildrenCount>({childrenCount})</Styled.StyledChildrenCount>

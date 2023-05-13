@@ -1,5 +1,6 @@
 import React from "react";
 import { CustomNodeProps } from "src/components/CustomNode";
+import { TextRenderer } from "./TextRenderer";
 import * as Styled from "./styles";
 
 const Node: React.FC<CustomNodeProps> = ({ node, x, y }) => {
@@ -20,7 +21,7 @@ const Node: React.FC<CustomNodeProps> = ({ node, x, y }) => {
             <Styled.StyledKey objectKey>
               {JSON.stringify(val[0]).replaceAll('"', "")}:{" "}
             </Styled.StyledKey>
-            <Styled.StyledLinkItUrl>{JSON.stringify(val[1])}</Styled.StyledLinkItUrl>
+            <TextRenderer>{JSON.stringify(val[1])}</TextRenderer>
           </Styled.StyledRow>
         );
       })}
