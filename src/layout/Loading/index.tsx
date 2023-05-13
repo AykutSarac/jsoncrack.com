@@ -25,7 +25,7 @@ const StyledLoading = styled.div<{ visible: boolean }>`
   width: 100%;
   height: 100vh;
   text-align: center;
-  background: rgba(30, 30, 30, 0.8);
+  background: rgba(30, 30, 30, 0.6);
   z-index: 100;
   pointer-events: visiblePainted;
   cursor: wait;
@@ -34,7 +34,7 @@ const StyledLoading = styled.div<{ visible: boolean }>`
   visibility: hidden;
 
   img {
-    transform: rotate(45deg) translate(100px, -70px);
+    transform: rotate(45deg);
   }
 `;
 
@@ -44,7 +44,7 @@ const StyledText = styled.span`
 
 const StyledMessage = styled.div`
   color: #b9bbbe;
-  font-size: 32px;
+  font-size: 1.5rem;
   font-weight: 600;
 `;
 
@@ -52,8 +52,8 @@ export const Loading: React.FC<LoadingProps> = ({ loading = true, message }) => 
   <Center mx="auto">
     <StyledLoading visible={loading}>
       <Stack>
-        <Image maw={150} src="./assets/rocket_ship.webp" alt="loading image" />
-        <Title size="4rem">
+        <Image mx="auto" width="6.5em" src="./assets/rocket_ship.webp" alt="loading image" />
+        <Title size="3.2em">
           <StyledText>JSON</StyledText> Crack
         </Title>
         <StyledMessage>{message ?? "Preparing the environment for you..."}</StyledMessage>

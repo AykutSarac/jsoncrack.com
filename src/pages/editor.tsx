@@ -17,7 +17,7 @@ export const StyledPageWrapper = styled.div`
   height: calc(100vh - 27px);
   width: 100%;
 
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 320px) {
     height: 100vh;
   }
 `;

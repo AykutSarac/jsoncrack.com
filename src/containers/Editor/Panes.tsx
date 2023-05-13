@@ -12,7 +12,7 @@ export const StyledEditor = styled(Allotment)`
   background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
   height: calc(100vh - 63px);
 
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 320px) {
     height: 100vh;
   }
 `;

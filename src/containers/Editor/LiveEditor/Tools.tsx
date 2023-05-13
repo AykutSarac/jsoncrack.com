@@ -45,7 +45,7 @@ export const StyledTools = styled.div`
   box-shadow: 0 1px 0px ${({ theme }) => theme.BACKGROUND_TERTIARY};
   z-index: 36;
 
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 320px) {
     display: none;
   }
 `;
