@@ -6,6 +6,7 @@ import { MantineProvider } from "@mantine/core";
 import { init } from "@sentry/nextjs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
+import { ExternalMode } from "src/components/DevMode";
 import { GoogleAnalytics } from "src/components/GoogleAnalytics";
 import GlobalStyle from "src/constants/globalStyle";
 import { darkTheme, lightTheme } from "src/constants/theme";
@@ -50,7 +51,6 @@ function JsonCrack({ Component, pageProps }: AppProps) {
         <GoogleAnalytics />
         <ThemeProvider theme={lightmode ? lightTheme : darkTheme}>
           <GlobalStyle />
-          {}
           <MantineProvider
             withGlobalStyles
             withNormalizeCSS
@@ -105,6 +105,7 @@ function JsonCrack({ Component, pageProps }: AppProps) {
                 },
               }}
             />
+            <ExternalMode />
           </MantineProvider>
         </ThemeProvider>
       </QueryClientProvider>
