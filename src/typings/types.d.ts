@@ -1,5 +1,3 @@
-type CanvasDirection = "LEFT" | "RIGHT" | "DOWN" | "UP";
-
 interface NodeData<T = any> {
   id: string;
   disabled?: boolean;

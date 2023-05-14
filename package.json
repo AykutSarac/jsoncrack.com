@@ -8,8 +8,8 @@
     "dev": "next dev",
     "build": "next build && next export",
     "start": "next start",
-    "lint": "tsc && next lint && prettier --check ./src",
-    "lint:fix": "prettier --write ./src & eslint --fix src",
+    "lint": "tsc && eslint src && prettier --check src",
+    "lint:fix": "prettier --write src & eslint --fix src",
     "deploy": "gh-pages -d out -t true"
   },
   "dependencies": {
@@ -59,6 +59,7 @@
     "@types/styled-components": "^5.1.26",
     "eslint": "8.40.0",
     "eslint-config-next": "13.4.1",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-unused-imports": "^2.0.0",
     "prettier": "^2.8.8",
     "ts-node": "^10.9.1",

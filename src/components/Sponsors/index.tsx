@@ -35,41 +35,6 @@ const StyledSponsorsWrapper = styled.ul`
   justify-content: center;
 `;
 
-const StyledSponsor = styled.li<{ handle: string }>`
-  display: flex;
-  justify-content: center;
-  position: relative;
-
-  &:hover {
-    &::before {
-      content: "${({ handle }) => handle}";
-      position: absolute;
-      top: 0;
-      background: ${({ theme }) => theme.BACKGROUND_PRIMARY};
-      transform: translateY(-130%);
-      padding: 6px 8px;
-      border-radius: 4px;
-      font-weight: 500;
-      font-size: 14px;
-      color: ${({ theme }) => theme.TEXT_NORMAL};
-    }
-
-    &::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      transform: translateY(-110%);
-      border-width: 5px;
-      border-style: solid;
-      border-color: ${({ theme }) => theme.BACKGROUND_PRIMARY} transparent transparent transparent;
-    }
-  }
-
-  img {
-    border-radius: 100%;
-  }
-`;
-
 export const Sponsors = () => {
   const { sponsors, setSponsors } = useStored();
 

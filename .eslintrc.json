@@ -1,8 +1,13 @@
 {
   "rules": {
     "@next/next/no-img-element": "off",
-    "unused-imports/no-unused-imports": "error"
+    "unused-imports/no-unused-imports": "error",
+    "prettier/prettier": "error",
+    "space-in-parens": "error",
+    "no-empty": "error",
+    "no-multiple-empty-lines": "error",
+    "no-irregular-whitespace": "error"
   },
   "extends": ["next/core-web-vitals"],
-  "plugins": ["unused-imports"]
+  "plugins": ["prettier", "unused-imports"]
 }

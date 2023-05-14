@@ -80,7 +80,7 @@ function JsonCrack({ Component, pageProps }: AppProps) {
                   }),
                 },
                 Button: {
-                  styles: theme => ({
+                  styles: () => ({
                     inner: {
                       fontWeight: 700,
                     },
