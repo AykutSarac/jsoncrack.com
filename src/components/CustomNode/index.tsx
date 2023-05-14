@@ -11,8 +11,6 @@ export interface CustomNodeProps {
 }
 
 const rootProps = {
-  width: 40,
-  height: 40,
   rx: 50,
   ry: 50,
 };

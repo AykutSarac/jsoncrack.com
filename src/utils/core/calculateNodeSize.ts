@@ -18,6 +18,8 @@ export const isContentImage = (value: string | [string, string][]) => {
 const sizeCache = new Map<string | [string, string][], { width: number; height: number }>();
 
 function calculateWidthAndHeight(str: string, single = false) {
+  if (!str) return { width: 45, height: 45 };
+
   const dummyElement = document.createElement("div");
   dummyElement.style.whiteSpace = single ? "nowrap" : "pre-wrap";
   dummyElement.innerHTML = str;
