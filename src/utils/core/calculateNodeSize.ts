@@ -17,7 +17,7 @@ export const isContentImage = (value: string | [string, string][]) => {
 
 const sizeCache = new Map<string | [string, string][], { width: number; height: number }>();
 
-function calculateWidthAndHeight(str: string, single = false) {
+const calculateWidthAndHeight = (str: string, single = false) => {
   if (!str) return { width: 45, height: 45 };
 
   const dummyElement = document.createElement("div");
@@ -37,14 +37,14 @@ function calculateWidthAndHeight(str: string, single = false) {
   document.body.removeChild(dummyElement);
 
   return { width, height };
-}
+};
 
 export const calculateNodeSize = (text: string | [string, string][], isParent = false) => {
   let lines = "";
-  const isFolded = useGraph.getState().foldNodes;
-  const isImagePreview = useStored.getState().imagePreview;
-  const isImage = isContentImage(text) && isImagePreview;
-  const cacheKey = [text, isParent, isFolded].toString();
+  const { foldNodes } = useGraph.getState();
+  const { imagePreview } = useStored.getState();
+  const isImage = isContentImage(text) && imagePreview;
+  const cacheKey = [text, isParent, foldNodes].toString();
 
   // check cache
   if (sizeCache.has(cacheKey)) {
@@ -60,8 +60,8 @@ export const calculateNodeSize = (text: string | [string, string][], isParent = 
 
   let sizes = calculateWidthAndHeight(lines, typeof text === "string");
   if (isImage) sizes = { width: 80, height: 80 };
-  if (isFolded) sizes.width = 300;
-  if (isParent && isFolded) sizes.width = 170;
+  if (foldNodes) sizes.width = 300;
+  if (isParent && foldNodes) sizes.width = 170;
   if (isParent) sizes.width += 100;
   if (sizes.width > 700) sizes.width = 700;
 

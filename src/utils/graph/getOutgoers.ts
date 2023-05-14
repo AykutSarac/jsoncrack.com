@@ -12,17 +12,17 @@ export const getOutgoers = (
     if (initialParentNode) outgoerNodes.push(initialParentNode);
   }
 
-  const runner = (nodeId: string) => {
-    const outgoerIds = edges.filter(e => e.from === nodeId).map(e => e.to);
+  const findOutgoers = (currentNodeId: string) => {
+    const outgoerIds = edges.filter(e => e.from === currentNodeId).map(e => e.to);
     const nodeList = nodes.filter(n => {
       if (parent.includes(n.id) && !matchingNodes.includes(n.id)) matchingNodes.push(n.id);
       return outgoerIds.includes(n.id) && !parent.includes(n.id);
     });
 
     outgoerNodes.push(...nodeList);
-    nodeList.forEach(node => runner(node.id));
+    nodeList.forEach(node => findOutgoers(node.id));
   };
 
-  runner(nodeId);
+  findOutgoers(nodeId);
   return [outgoerNodes, matchingNodes];
 };

@@ -9,7 +9,7 @@ type Props = {
 };
 
 export const addNodeToGraph = ({ graph, text, type = "null", isEmpty = false }: Props) => {
-  let id = String(graph.nodes.length + 1);
+  const id = String(graph.nodes.length + 1);
   const isParent = type === "array" || type === "object";
   const { width, height } = calculateNodeSize(text, isParent);
 
@@ -26,7 +26,7 @@ export const addNodeToGraph = ({ graph, text, type = "null", isEmpty = false }: 
     },
   };
 
-  graph.nodes = graph.nodes.concat([node]);
+  graph.nodes.push(node);
 
   return id;
 };
