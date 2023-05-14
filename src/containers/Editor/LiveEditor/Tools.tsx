@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Flex, Group, MediaQuery, Menu, Text } from "@mantine/core";
+import { Badge, Flex, Group, MediaQuery, Menu, Text } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
@@ -22,6 +22,7 @@ import useGraph from "src/store/useGraph";
 import useJson from "src/store/useJson";
 import useModal from "src/store/useModal";
 import useStored from "src/store/useStored";
+import useUser from "src/store/useUser";
 import { getNextDirection } from "src/utils/graph/getNextDirection";
 
 function inIframe() {
@@ -109,6 +110,7 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
   const expandGraph = useGraph(state => state.expandGraph);
   const collapseGraph = useGraph(state => state.collapseGraph);
   const lightmode = useStored(state => state.lightmode);
+  const premium = useUser(state => state.isPremium());
 
   const CoreKey = navigator.userAgent.indexOf("Mac OS X") ? "⌘" : "CTRL";
 
@@ -191,6 +193,11 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
                   alt="logo"
                   invert={lightmode}
                 />
+                {premium && (
+                  <Badge color="orange" radius="sm" fz="xs" fw="bold">
+                    PREMIUM
+                  </Badge>
+                )}
               </Flex>
             </StyledToolElement>
             <StyledToolElement title="Import File" onClick={() => setVisible("import")(true)}>

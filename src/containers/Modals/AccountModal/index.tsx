@@ -67,7 +67,7 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
               ACCOUNT STATUS
               <div>
                 {isPremium ? (
-                  <Badge>Premium</Badge>
+                  <Badge color="orange">Premium</Badge>
                 ) : (
                   <Badge variant="outline" color="gray">
                     Free
