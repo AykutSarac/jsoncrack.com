@@ -414,4 +414,8 @@ export const StyledAffiliate = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 3rem;
+
+  .carbon-outer {
+    max-width: 430px;
+  }
 `;
