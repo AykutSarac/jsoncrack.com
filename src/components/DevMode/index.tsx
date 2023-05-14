@@ -5,8 +5,8 @@ import { VscCode } from "react-icons/vsc";
 
 const StyledAlert = styled.div`
   position: fixed;
-  bottom: 60px;
-  right: 20px;
+  bottom: 36px;
+  right: 10px;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);

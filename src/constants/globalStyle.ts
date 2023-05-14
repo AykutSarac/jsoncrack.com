@@ -62,12 +62,12 @@ const GlobalStyle = createGlobalStyle`
   #carbonads {
     --carbon-font-size: 16px;
     --carbon-padding-size: 12px;
-    border-radius: 4px;
-    overflow: hidden;
   }
 
   #carbonads {
-    display: inline-block;
+    width: 100%;
+    z-index: 100;
+    display: block;
 
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
       Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue',
@@ -77,9 +77,8 @@ const GlobalStyle = createGlobalStyle`
 
   #carbonads > span {
     min-width: 18.75em;
-    max-width: clamp(18.75em, 22.5em, 24.5em);
     min-height: 100px;
-    background-color: ${({ theme }) => theme.BACKGROUND_SECONDARY};
+    background-color: hsl(0, 0%, 10%);
     box-shadow: 0 0 1px hsl(0deg 0% 0% / 0.085),
       0 0 2px hsl(0deg 0% 0% / 0.085),
       0 0 4px hsl(0deg 0% 0% / 0.085),
@@ -88,11 +87,11 @@ const GlobalStyle = createGlobalStyle`
 
   #carbonads a {
     text-decoration: none;
-    color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
+    color: #ddd;
   }
 
   #carbonads a:hover {
-    color: ${({ theme }) => theme.INTERACTIVE_HOVER};
+    color: #ddd;
   }
 
   #carbonads span {
@@ -125,8 +124,8 @@ const GlobalStyle = createGlobalStyle`
   #carbonads .carbon-poweredby {
     display: block;
     padding: 6px 8px;
-    color: ${({ theme }) => theme.TEXT_NORMAL};
-    background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
+    color: #aaa;
+    background: #1e2021;
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 0.1ch;
@@ -138,6 +137,7 @@ const GlobalStyle = createGlobalStyle`
     bottom: 0;
     right: 0;
   }
+
 `;
 
 export default GlobalStyle;

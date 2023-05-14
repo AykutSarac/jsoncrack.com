@@ -16,7 +16,6 @@ import { SiVisualstudiocode } from "react-icons/si";
 import vscDarkPlus from "react-syntax-highlighter/dist/cjs/styles/prism/vsc-dark-plus";
 import { CarbonAds } from "src/components/CarbonAds";
 import { Sponsors } from "src/components/Sponsors";
-import { SupportButton } from "src/components/SupportButton";
 import { baseURL } from "src/constants/data";
 import { TABS } from "src/constants/previewSection";
 import { Footer } from "src/layout/Footer";
@@ -302,7 +301,6 @@ const Home: React.FC = () => {
       <GitHubSection />
       <EmbedSection />
       <SponsorSection />
-      <SupportButton />
       <Footer />
     </Styles.StyledHome>
   );

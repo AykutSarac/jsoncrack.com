@@ -72,7 +72,8 @@ export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           >
             <List.Item>JSON Schema support</List.Item>
             <List.Item>Visualize data at full capability</List.Item>
-            <List.Item>Save up to 200 files</List.Item>
+            <List.Item>Save & share up to 200 files</List.Item>
+            <List.Item>No Ads</List.Item>
             <List.Item
               icon={
                 <ThemeIcon color="dark.5" size={20} radius="xl">

@@ -4,6 +4,7 @@ import Editor, { loader, Monaco, useMonaco } from "@monaco-editor/react";
 import { Loading } from "src/layout/Loading";
 import useFile from "src/store/useFile";
 import useStored from "src/store/useStored";
+import { CarbonAds } from "../CarbonAds";
 
 loader.config({
   paths: {
@@ -21,7 +22,7 @@ const editorOptions = {
 
 const StyledWrapper = styled.div`
   display: grid;
-  height: calc(100vh - 36px);
+  height: calc(100vh - 63px);
   grid-template-columns: 100%;
   grid-template-rows: minmax(0, 1fr);
 `;
@@ -92,6 +93,7 @@ export const MonacoEditor = () => {
         language="json"
         height="100%"
       />
+      <CarbonAds />
     </StyledWrapper>
   );
 };
