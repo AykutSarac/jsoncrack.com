@@ -56,8 +56,7 @@ export const MonacoEditor = () => {
     (monaco: Monaco) => {
       monaco.editor.onDidChangeMarkers(([uri]) => {
         const markers = monaco.editor.getModelMarkers({ resource: uri });
-        if (markers.length) setError(markers[0].message);
-        else setError(null);
+        setError(markers.length);
       });
     },
     [setError]
@@ -87,7 +86,7 @@ export const MonacoEditor = () => {
         value={contents}
         theme={theme}
         options={editorOptions}
-        onChange={e => setContents({ contents: e, skipUpdate: true })}
+        onChange={contents => setContents({ contents, skipUpdate: true })}
         loading={<Loading message="Loading Editor..." />}
         beforeMount={handleEditorWillMount}
         language="json"

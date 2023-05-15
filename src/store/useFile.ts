@@ -16,7 +16,7 @@ type SetContents = {
 interface JsonActions {
   getContents: () => string;
   getHasChanges: () => boolean;
-  setError: (error: object | null) => void;
+  setError: (error: boolean) => void;
   setHasChanges: (hasChanges: boolean) => void;
   setContents: (data: SetContents) => void;
   saveToCloud: (isNew?: boolean) => void;
@@ -39,7 +39,7 @@ export type File = {
 const initialStates = {
   fileData: null as File | null,
   contents: defaultJson,
-  error: null as any,
+  error: false,
   hasChanges: false,
   jsonSchema: null as object | null,
 };
@@ -49,10 +49,9 @@ export type FileStates = typeof initialStates;
 const isURL =
   /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
 
-const debouncedUpdateJson = debounce(
-  (value: unknown) => useJson.getState().setJson(JSON.stringify(value, null, 2)),
-  800
-);
+const debouncedUpdateJson = debounce((value: unknown) => {
+  if (!useFile.getState().error) useJson.getState().setJson(JSON.stringify(value, null, 2));
+}, 800);
 
 const useFile = create<FileStates & JsonActions>()((set, get) => ({
   ...initialStates,
@@ -69,14 +68,9 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
   },
   getContents: () => get().contents,
   getHasChanges: () => get().hasChanges,
-  setContents: async ({ contents, hasChanges = true }) => {
-    try {
-      set({ ...(contents && { contents }), error: null, hasChanges });
-      debouncedUpdateJson(contents);
-    } catch (error: any) {
-      if (error?.mark?.snippet) return set({ error: error.mark.snippet });
-      if (error?.message) set({ error: error.message });
-    }
+  setContents: ({ contents, hasChanges = true }) => {
+    set({ ...(contents && { contents }), hasChanges });
+    debouncedUpdateJson(contents);
   },
   setError: error => set({ error }),
   setHasChanges: hasChanges => set({ hasChanges }),
