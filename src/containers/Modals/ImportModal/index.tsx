@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Modal, Group, Button, TextInput, Stack, Divider, ModalProps } from "@mantine/core";
 import toast from "react-hot-toast";
 import { AiOutlineUpload } from "react-icons/ai";
-import useJson from "src/store/useJson";
+import useFile from "src/store/useFile";
 
 const StyledUploadWrapper = styled.label`
   display: flex;
@@ -33,7 +33,7 @@ const StyledUploadMessage = styled.h3`
 `;
 
 export const ImportModal: React.FC<ModalProps> = ({ opened, onClose }) => {
-  const setJson = useJson(state => state.setJson);
+  const setContents = useFile(state => state.setContents);
   const [url, setURL] = React.useState("");
   const [jsonFile, setJsonFile] = React.useState<File | null>(null);
 
@@ -61,7 +61,7 @@ export const ImportModal: React.FC<ModalProps> = ({ opened, onClose }) => {
       return fetch(url)
         .then(res => res.json())
         .then(json => {
-          setJson(JSON.stringify(json, null, 2));
+          setContents({ contents: JSON.stringify(json, null, 2) });
           onClose();
         })
         .catch(() => toast.error("Failed to fetch JSON!"))
@@ -73,7 +73,7 @@ export const ImportModal: React.FC<ModalProps> = ({ opened, onClose }) => {
 
       reader.readAsText(jsonFile, "UTF-8");
       reader.onload = function (data) {
-        setJson(data.target?.result as string);
+        if (typeof data.target?.result === "string") setContents({ contents: data.target?.result });
         onClose();
       };
     }
