@@ -209,7 +209,7 @@ const GitHubSection = () => (
         can&apos;t wait to see what we can accomplish together!
       </Styles.StyledMinorTitle>
       <Button
-        w={200}
+        w="fit-content"
         color="grape"
         size="md"
         component="a"
@@ -237,7 +237,7 @@ const EmbedSection = () => (
         intuitive interface makes it easy to navigate and understand even complex JSON data, making
         it a valuable tool for anyone working with JSON.
       </Styles.StyledMinorTitle>
-      <Button w={200} size="md" component="a" href="/docs">
+      <Button w="fit-content" size="md" component="a" href="/docs">
         LEARN TO EMBED
       </Button>
     </Styles.StyledSectionArea>
