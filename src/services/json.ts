@@ -3,11 +3,7 @@ import { decompressFromBase64 } from "lz-string";
 import { altogic, AltogicResponse } from "src/api/altogic";
 import { File } from "src/store/useFile";
 
-const saveToCloud = async (
-  id: string | null,
-  contents: string
-): Promise<AltogicResponse<{ _id: string }>> => {
-  if (id) return await altogic.endpoint.put(`json/${id}`, { json: contents });
+const saveToCloud = async (contents: string): Promise<AltogicResponse<{ _id: string }>> => {
   return await altogic.endpoint.post("json", { json: contents });
 };
 

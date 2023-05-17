@@ -173,13 +173,13 @@ const CreateCard: React.FC<{ reachedLimit: boolean }> = ({ reachedLimit }) => {
   const onCreate = async () => {
     try {
       toast.loading("Saving document...", { id: "fileSave" });
-      const res = await saveToCloud(null, getContents());
+      const res = await saveToCloud(getContents());
 
       if (res.errors && res.errors.items.length > 0) throw res.errors;
 
       toast.success("Document saved to cloud", { id: "fileSave" });
       setHasChanges(false);
-      replace({ query: { doc: res.data._id } });
+      replace({ query: { json: res.data._id } });
     } catch (error: any) {
       if (error?.items?.length > 0) {
         return toast.error(error.items[0].message, { id: "fileSave", duration: 7000 });
@@ -231,7 +231,7 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
                   data={json}
                   key={json._id}
                   refetch={refetch}
-                  active={query.doc === json._id}
+                  active={query?.json === json._id}
                 />
               ))}
             </>

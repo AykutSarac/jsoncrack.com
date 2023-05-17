@@ -2,7 +2,7 @@ import debounce from "lodash.debounce";
 import { toast } from "react-hot-toast";
 import { create } from "zustand";
 import { defaultJson } from "src/constants/data";
-import { getFromCloud, saveToCloud } from "src/services/json";
+import { getFromCloud } from "src/services/json";
 import useGraph from "./useGraph";
 import useJson from "./useJson";
 import useUser from "./useUser";
@@ -19,7 +19,6 @@ interface JsonActions {
   setError: (error: boolean) => void;
   setHasChanges: (hasChanges: boolean) => void;
   setContents: (data: SetContents) => void;
-  saveToCloud: (isNew?: boolean) => void;
   fetchFile: (fileId: string) => void;
   fetchUrl: (url: string) => void;
   clear: () => void;
@@ -74,30 +73,6 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
   },
   setError: error => set({ error }),
   setHasChanges: hasChanges => set({ hasChanges }),
-  saveToCloud: async (isNew = true) => {
-    try {
-      const url = new URL(window.location.href);
-      const params = new URLSearchParams(url.search);
-      const jsonQuery = params.get("doc");
-
-      toast.loading("Saving File...", { id: "fileSave" });
-      const res = await saveToCloud(isNew ? null : jsonQuery, get().contents);
-
-      if (res.errors && res.errors.items.length > 0) throw res.errors;
-
-      toast.success("File saved to cloud", { id: "fileSave" });
-      set({ hasChanges: false });
-      return res.data._id;
-    } catch (error: any) {
-      if (error?.items?.length > 0) {
-        toast.error(error.items[0].message, { id: "fileSave", duration: 5000 });
-        return undefined;
-      }
-
-      toast.error("Failed to save File!", { id: "fileSave" });
-      return undefined;
-    }
-  },
   fetchUrl: async url => {
     try {
       const res = await fetch(url);

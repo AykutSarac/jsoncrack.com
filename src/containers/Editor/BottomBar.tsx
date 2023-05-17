@@ -13,7 +13,7 @@ import {
 } from "react-icons/ai";
 import { MdReportGmailerrorred, MdOutlineCheckCircleOutline } from "react-icons/md";
 import { VscAccount, VscWorkspaceTrusted } from "react-icons/vsc";
-import { saveToCloud, updateJson } from "src/services/json";
+import { updateJson } from "src/services/json";
 import useFile from "src/store/useFile";
 import useModal from "src/store/useModal";
 import useStored from "src/store/useStored";
@@ -81,7 +81,7 @@ const StyledImg = styled.img<{ light: boolean }>`
 `;
 
 export const BottomBar = () => {
-  const { replace, query } = useRouter();
+  const { query } = useRouter();
   const data = useFile(state => state.fileData);
   const error = useFile(state => state.error);
   const user = useUser(state => state.user);
@@ -101,33 +101,26 @@ export const BottomBar = () => {
 
   const handleSaveJson = React.useCallback(async () => {
     if (!user) return setVisible("login")(true);
+    if (!query?.json) return setVisible("cloud")(true);
 
-    if (
-      hasChanges &&
-      !error &&
-      (typeof query.json === "string" || typeof query.json === "undefined")
-    ) {
+    if (typeof query?.json === "string" && hasChanges) {
       try {
         setIsUpdating(true);
-        toast.loading("Saving document...", { id: "fileSave" });
-        const res = await saveToCloud(query?.json ?? null, getContents());
+        toast.loading("Saving document...", { id: "fileUpdate" });
+        const res = await updateJson(query?.json, { json: getContents() });
 
         if (res.errors && res.errors.items.length > 0) throw res.errors;
-        if (res.data._id) replace({ query: { json: res.data._id } });
-
-        toast.success("Document saved to cloud", { id: "fileSave" });
+        toast.success("Document saved to cloud", { id: "fileUpdate" });
         setHasChanges(false);
       } catch (error: any) {
         if (error?.items?.length > 0) {
-          return toast.error(error.items[0].message, { id: "fileSave", duration: 5000 });
+          return toast.error(error.items[0].message, { id: "fileUpdate", duration: 5000 });
         }
 
-        toast.error("Failed to save document!", { id: "fileSave" });
-      } finally {
-        setIsUpdating(false);
+        toast.error("Failed to save document!", { id: "fileUpdate" });
       }
     }
-  }, [error, getContents, hasChanges, query, replace, setHasChanges, setVisible, user]);
+  }, [getContents, hasChanges, query, setHasChanges, setVisible, user]);
 
   const handleLoginClick = () => {
     if (user) return setVisible("account")(true);
@@ -185,7 +178,7 @@ export const BottomBar = () => {
         </StyledBottomBarItem>
         <StyledBottomBarItem onClick={handleSaveJson} disabled={isUpdating}>
           {hasChanges ? <AiOutlineCloudUpload /> : <AiOutlineCloudSync />}
-          {hasChanges ? "Unsaved Changes" : "Saved"}
+          {hasChanges ? (query?.json ? "Unsaved Changes" : "Create Document") : "Saved"}
         </StyledBottomBarItem>
         {data && (
           <>
