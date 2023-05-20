@@ -6,10 +6,10 @@ import { MantineProvider } from "@mantine/core";
 import { init } from "@sentry/nextjs";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
-import { ExternalMode } from "src/components/DevMode";
 import { GoogleAnalytics } from "src/components/GoogleAnalytics";
 import GlobalStyle from "src/constants/globalStyle";
 import { darkTheme, lightTheme } from "src/constants/theme";
+import { ExternalMode } from "src/layout/DevMode";
 import { ModalController } from "src/layout/ModalController";
 import useStored from "src/store/useStored";
 
