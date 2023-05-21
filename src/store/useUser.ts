@@ -32,7 +32,7 @@ const devUser = {
   signUpAt: "2022-12-04T11:07:32.000Z",
   lastLoginAt: "2023-05-13T09:56:02.915Z",
   updatedAt: "2023-05-06T16:19:47.486Z",
-  type: 0,
+  type: 1,
 } as CustomUser;
 
 interface UserStates {
