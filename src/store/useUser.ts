@@ -22,23 +22,18 @@ interface UserActions {
   isPremium: () => boolean;
 }
 
-const initialUser = () => {
-  if (isDevelopment) {
-    return {
-      _id: "0",
-      provider: "google",
-      providerUserId: "115637229829349229857",
-      email: "test@jsoncrack.com",
-      name: "JSON Crack",
-      profilePicture: "",
-      signUpAt: "2022-12-04T11:07:32.000Z",
-      lastLoginAt: "2023-05-13T09:56:02.915Z",
-      updatedAt: "2023-05-06T16:19:47.486Z",
-      type: 1,
-    } as CustomUser;
-  }
-  return null;
-};
+const devUser = {
+  _id: "0",
+  provider: "google",
+  providerUserId: "115637229829349229857",
+  email: "test@jsoncrack.com",
+  name: "JSON Crack",
+  profilePicture: "",
+  signUpAt: "2022-12-04T11:07:32.000Z",
+  lastLoginAt: "2023-05-13T09:56:02.915Z",
+  updatedAt: "2023-05-06T16:19:47.486Z",
+  type: 0,
+} as CustomUser;
 
 interface UserStates {
   user: CustomUser | null;
@@ -46,8 +41,8 @@ interface UserStates {
 }
 
 const initialStates: UserStates = {
-  isAuthenticated: isDevelopment,
-  user: initialUser(),
+  isAuthenticated: false,
+  user: null,
 };
 
 const useUser = create<UserStates & UserActions>()((set, get) => ({
@@ -56,7 +51,6 @@ const useUser = create<UserStates & UserActions>()((set, get) => ({
   isPremium: () => {
     const user = get().user;
 
-    if (isDevelopment) return true;
     if (user) return user.type > 0;
     return false;
   },
@@ -77,6 +71,9 @@ const useUser = create<UserStates & UserActions>()((set, get) => ({
     const currentSession = altogic.auth.getSession();
 
     if (currentSession) {
+      if (isDevelopment) {
+        return set({ user: devUser as CustomUser, isAuthenticated: true });
+      }
       const { user, errors } = await altogic.auth.getUserFromDB();
       if (errors?.items || !user) {
         altogic.auth.clearLocalData();

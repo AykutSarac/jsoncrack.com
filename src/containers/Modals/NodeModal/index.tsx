@@ -1,8 +1,16 @@
 import React from "react";
-import { Modal, Stack, Text, ScrollArea, ModalProps } from "@mantine/core";
+import { Modal, Stack, Text, ScrollArea, ModalProps, Button } from "@mantine/core";
 import { Prism } from "@mantine/prism";
+import Editor from "@monaco-editor/react";
+import vsDark from "prism-react-renderer/themes/vsDark";
+import vsLight from "prism-react-renderer/themes/vsLight";
+import { VscLock } from "react-icons/vsc";
 import { shallow } from "zustand/shallow";
+import useFile from "src/store/useFile";
 import useGraph from "src/store/useGraph";
+import useModal from "src/store/useModal";
+import useStored from "src/store/useStored";
+import useUser from "src/store/useUser";
 
 const dataToString = (data: any) => {
   const text = Array.isArray(data) ? Object.fromEntries(data) : data;
@@ -14,17 +22,22 @@ const dataToString = (data: any) => {
   return JSON.stringify(text, replacer, 2);
 };
 
-const CodeBlock: React.FC<{ children: any }> = ({ children }) => {
+const CodeBlock: React.FC<{ children: any; [key: string]: any }> = ({
+  format,
+  children,
+  ...props
+}) => {
   return (
     <ScrollArea>
       <Prism
-        maw={600}
         miw={350}
         mah={250}
         language="json"
         copyLabel="Copy to clipboard"
         copiedLabel="Copied to clipboard"
         withLineNumbers
+        getPrismTheme={(_theme, colorScheme) => (colorScheme === "light" ? vsLight : vsDark)}
+        {...props}
       >
         {children}
       </Prism>
@@ -33,26 +46,95 @@ const CodeBlock: React.FC<{ children: any }> = ({ children }) => {
 };
 
 export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
-  const [nodeData, path] = useGraph(
-    state => [dataToString(state.selectedNode.text), state.selectedNode.path],
+  const isPremium = useUser(state => state.isPremium());
+  const editContents = useFile(state => state.editContents);
+  const setVisible = useModal(state => state.setVisible);
+  const lightmode = useStored(state => (state.lightmode ? "light" : "vs-dark"));
+  const [nodeData, path, isParent] = useGraph(
+    state => [
+      dataToString(state.selectedNode.text),
+      state.selectedNode.path,
+      state.selectedNode.data?.isParent,
+    ],
     shallow
   );
+  const [editMode, setEditMode] = React.useState(false);
+  const [value, setValue] = React.useState(nodeData || "");
+
+  const onUpdate = () => {
+    if (!value) return setEditMode(false);
+    if (!isPremium) return;
+    editContents(path!, value, () => {
+      setEditMode(false);
+      onModalClose();
+    });
+  };
+
+  const onModalClose = () => {
+    setEditMode(false);
+    setValue("");
+    onClose();
+  };
+
+  const onEditClick = () => {
+    if (isPremium) return setEditMode(true);
+    setVisible("premium")(true);
+    onModalClose();
+  };
+
+  const isEditVisible = path !== "{Root}" && !isParent;
 
   return (
-    <Modal title="Node Content" size="auto" opened={opened} onClose={onClose} centered>
+    <Modal title="Node Content" size="auto" opened={opened} onClose={onModalClose} centered>
       <Stack py="sm" spacing="sm">
         <Stack spacing="xs">
           <Text fz="sm" fw={700}>
             Content
           </Text>
-          <CodeBlock>{nodeData}</CodeBlock>
+          {editMode ? (
+            <Editor
+              theme={lightmode}
+              defaultValue={nodeData}
+              onChange={e => setValue(e!)}
+              height={200}
+              language="json"
+              options={{
+                readOnly: !editMode,
+                minimap: {
+                  enabled: false,
+                },
+              }}
+            />
+          ) : (
+            <CodeBlock maw={600}>{nodeData}</CodeBlock>
+          )}
         </Stack>
-        <Stack spacing="xs">
-          <Text fz="sm" fw={700}>
-            Node Path
+        {editMode && (
+          <Text color="dimmed" fz="xs">
+            Keys cannot be renamed and will be added as a new field.
           </Text>
-          <CodeBlock>{path}</CodeBlock>
-        </Stack>
+        )}
+        {isEditVisible && (
+          <Stack spacing="xs">
+            {editMode ? (
+              <Button
+                variant={value ? "filled" : "light"}
+                color={value ? "green" : "blue"}
+                onClick={onUpdate}
+              >
+                {value.length ? "Update Document" : "Cancel"}
+              </Button>
+            ) : (
+              <Button onClick={onEditClick} leftIcon={!isPremium && <VscLock />} variant="filled">
+                Edit
+              </Button>
+            )}
+          </Stack>
+        )}
+        <Text fz="sm" fw={700}>
+          Node Path
+        </Text>
+        <CodeBlock>{path}</CodeBlock>
       </Stack>
     </Modal>
   );

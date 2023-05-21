@@ -167,15 +167,7 @@ export const PremiumView = () => (
         <List.Item>Visualize data at full capability</List.Item>
         <List.Item>Save & share up to 200 files</List.Item>
         <List.Item>No Ads</List.Item>
-        <List.Item
-          icon={
-            <ThemeIcon color="dark.4" size={20} radius="xl">
-              <BsCheck size="1rem" />
-            </ThemeIcon>
-          }
-        >
-          Edit directly on graph <Badge>Soon</Badge>
-        </List.Item>
+        <List.Item>Edit directly on graph</List.Item>
         <List.Item
           icon={
             <ThemeIcon color="dark.4" size={20} radius="xl">

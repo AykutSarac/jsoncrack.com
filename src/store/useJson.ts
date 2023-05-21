@@ -19,7 +19,7 @@ const useJson = create<JsonStates & JsonActions>()((set, get) => ({
   getJson: () => get().json,
   setJson: json => {
     set({ json, loading: false });
-    useGraph.getState().setGraph(JSON.parse(json));
+    useGraph.getState().setGraph(json);
   },
   clear: () => {
     set({ json: "", loading: false });

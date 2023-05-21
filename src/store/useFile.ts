@@ -1,4 +1,6 @@
 import debounce from "lodash.debounce";
+import _get from "lodash.get";
+import _set from "lodash.set";
 import { toast } from "react-hot-toast";
 import { create } from "zustand";
 import { defaultJson } from "src/constants/data";
@@ -24,6 +26,7 @@ interface JsonActions {
   clear: () => void;
   setFile: (fileData: File) => void;
   setJsonSchema: (jsonSchema: object | null) => void;
+  editContents: (path: string, value: string, callback?: () => void) => void;
 }
 
 export type File = {
@@ -48,9 +51,10 @@ export type FileStates = typeof initialStates;
 const isURL =
   /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
 
-const debouncedUpdateJson = debounce((value: unknown) => {
-  if (!useFile.getState().error) useJson.getState().setJson(JSON.stringify(value, null, 2));
-}, 800);
+const debouncedUpdateJson = debounce(
+  (value: unknown) => useJson.getState().setJson(JSON.stringify(value, null, 2)),
+  800
+);
 
 const useFile = create<FileStates & JsonActions>()((set, get) => ({
   ...initialStates,
@@ -69,7 +73,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
   getHasChanges: () => get().hasChanges,
   setContents: ({ contents, hasChanges = true }) => {
     set({ ...(contents && { contents }), hasChanges });
-    debouncedUpdateJson(contents);
+    debouncedUpdateJson(JSON.parse(contents as string));
   },
   setError: error => set({ error }),
   setHasChanges: hasChanges => set({ hasChanges }),
@@ -98,6 +102,36 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       useJson.setState({ loading: false });
       useGraph.setState({ loading: false });
       console.error(error);
+    }
+  },
+  editContents: async (path, value, callback) => {
+    try {
+      if (!value) return;
+
+      let tempValue = value;
+      const pathJson = _get(JSON.parse(useJson.getState().json), path.replace("{Root}.", ""));
+      const changedValue = JSON.parse(value);
+
+      // check if array string value
+      if (typeof changedValue !== "string") {
+        tempValue = {
+          ...pathJson,
+          ...changedValue,
+        };
+      } else {
+        tempValue = tempValue.replaceAll('"', "");
+      }
+
+      const newJson = _set(
+        JSON.parse(useJson.getState().json),
+        path.replace("{Root}.", ""),
+        tempValue
+      );
+
+      get().setContents({ contents: JSON.stringify(newJson, null, 2) });
+      if (callback) callback();
+    } catch (error) {
+      toast.error("Invalid Property!");
     }
   },
 }));
