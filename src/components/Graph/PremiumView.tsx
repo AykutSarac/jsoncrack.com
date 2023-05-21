@@ -175,7 +175,7 @@ export const PremiumView = () => (
             </ThemeIcon>
           }
         >
-          Gerenate links from API <Badge>Soon</Badge>
+          API Access <Badge>Soon</Badge>
         </List.Item>
       </List>
 
