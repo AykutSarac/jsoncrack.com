@@ -113,11 +113,6 @@ export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
             <CodeBlock maw={600}>{nodeData}</CodeBlock>
           )}
         </Stack>
-        {editMode && (
-          <Text color="dimmed" fz="xs">
-            Keys cannot be renamed and will be added as a new field.
-          </Text>
-        )}
         {isEditVisible && (
           <Stack spacing="xs">
             {editMode ? (

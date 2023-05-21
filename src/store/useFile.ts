@@ -48,13 +48,30 @@ const initialStates = {
 
 export type FileStates = typeof initialStates;
 
-const isURL =
-  /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+const isURL = (value: string) => {
+  return /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi.test(
+    value
+  );
+};
 
 const debouncedUpdateJson = debounce(
   (value: unknown) => useJson.getState().setJson(JSON.stringify(value, null, 2)),
   800
 );
+
+const filterArrayAndObjectFields = (obj: object) => {
+  const result = {};
+
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      if (Array.isArray(obj[key]) || typeof obj[key] === "object") {
+        result[key] = obj[key];
+      }
+    }
+  }
+
+  return result;
+};
 
 const useFile = create<FileStates & JsonActions>()((set, get) => ({
   ...initialStates,
@@ -94,7 +111,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
   },
   fetchFile: async id => {
     try {
-      if (isURL.test(id)) return get().fetchUrl(id);
+      if (isURL(id)) return get().fetchUrl(id);
 
       const file = await getFromCloud(id);
       get().setFile(file);
@@ -115,7 +132,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       // check if array string value
       if (typeof changedValue !== "string") {
         tempValue = {
-          ...pathJson,
+          ...filterArrayAndObjectFields(pathJson),
           ...changedValue,
         };
       } else {
