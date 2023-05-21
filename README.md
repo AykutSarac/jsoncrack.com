@@ -6,8 +6,7 @@
 <h4 align="center">
   <a href="https://jsoncrack.com">JSON Crack</a> |
   <a href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode">VS Code Extension</a> |
-  <a href="https://jsoncrack.com/docs">Documentation</a> |
-  <a href="https://editor.herowand.com">Herowand Editor</a>
+  <a href="https://jsoncrack.com/docs">Documentation</a> 
 </h4>
 
 <div align="center">
@@ -50,7 +49,7 @@ JSON Crack is a free, open-source JSON visualization app that will revolutionize
 
 ## Sponsors & support
 
-If you like the project, you can become a sponsor at [GitHub Sponsors](https://github.com/sponsors/AykutSarac) or use [Herowand Editor](https://editor.herowand.com/).
+If you like the project, you can become a sponsor at [GitHub Sponsors](https://github.com/sponsors/AykutSarac) or use [Premium](https://patreon.com/join/herowand).
 
 ## Running Locally
  
