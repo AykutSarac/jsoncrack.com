@@ -11,6 +11,7 @@ import useGraph from "src/store/useGraph";
 import useModal from "src/store/useModal";
 import useStored from "src/store/useStored";
 import useUser from "src/store/useUser";
+import { isIframe } from "src/utils/widget";
 
 const dataToString = (data: any) => {
   const text = Array.isArray(data) ? Object.fromEntries(data) : data;
@@ -82,7 +83,10 @@ export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
     onModalClose();
   };
 
-  const isEditVisible = path !== "{Root}" && !isParent;
+  const isEditVisible = React.useMemo(
+    () => path !== "{Root}" && !isParent && !isIframe(),
+    [isParent, path]
+  );
 
   return (
     <Modal title="Node Content" size="auto" opened={opened} onClose={onModalClose} centered>

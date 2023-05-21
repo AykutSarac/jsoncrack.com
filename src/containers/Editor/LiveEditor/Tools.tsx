@@ -24,14 +24,7 @@ import useModal from "src/store/useModal";
 import useStored from "src/store/useStored";
 import useUser from "src/store/useUser";
 import { getNextDirection } from "src/utils/graph/getNextDirection";
-
-function inIframe() {
-  try {
-    return window.self !== window.top;
-  } catch (e) {
-    return true;
-  }
-}
+import { isIframe } from "src/utils/widget";
 
 export const StyledTools = styled.div`
   position: relative;
@@ -157,7 +150,7 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
   ]);
 
   const logoURL = React.useMemo(() => {
-    if (!inIframe()) return "https://jsoncrack.com";
+    if (!isIframe()) return "https://jsoncrack.com";
     return window.location.href.replace("widget", "editor");
   }, []);
 
@@ -168,7 +161,7 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
           as="a"
           title="JSON Crack"
           href={logoURL}
-          target={inIframe() ? "_blank" : "_parent"}
+          target={isIframe() ? "_blank" : "_parent"}
         >
           <Flex gap="xs" align="center" justify="center">
             <StyledLogo
