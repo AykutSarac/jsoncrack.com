@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Editor, { loader, Monaco, useMonaco } from "@monaco-editor/react";
+import Editor, { loader, useMonaco } from "@monaco-editor/react";
 import { Loading } from "src/layout/Loading";
 import useFile from "src/store/useFile";
 import useStored from "src/store/useStored";
@@ -37,31 +37,19 @@ export const MonacoEditor = () => {
   const theme = useStored(state => (state.lightmode ? "light" : "vs-dark"));
 
   React.useEffect(() => {
-    if (monaco) {
-      monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
-        validate: true,
-        allowComments: true,
-        ...(jsonSchema && {
-          schemas: [
-            {
-              fileMatch: ["*"],
-              schema: jsonSchema,
-            },
-          ],
-        }),
-      });
-    }
-  }, [jsonSchema, monaco]);
-
-  const handleEditorWillMount = React.useCallback(
-    (monaco: Monaco) => {
-      monaco.editor.onDidChangeMarkers(([uri]) => {
-        const markers = monaco.editor.getModelMarkers({ resource: uri });
-        setError(markers.length);
-      });
-    },
-    [setError]
-  );
+    monaco?.languages.json.jsonDefaults.setDiagnosticsOptions({
+      validate: true,
+      allowComments: true,
+      ...(jsonSchema && {
+        schemas: [
+          {
+            fileMatch: ["*"],
+            schema: jsonSchema,
+          },
+        ],
+      }),
+    });
+  }, [jsonSchema, monaco?.languages.json.jsonDefaults]);
 
   React.useEffect(() => {
     const beforeunload = (e: BeforeUnloadEvent) => {
@@ -84,14 +72,14 @@ export const MonacoEditor = () => {
   return (
     <StyledWrapper>
       <Editor
-        value={contents}
-        theme={theme}
-        options={editorOptions}
-        onChange={contents => setContents({ contents, skipUpdate: true })}
-        loading={<Loading message="Loading Editor..." />}
-        beforeMount={handleEditorWillMount}
         language="json"
         height="100%"
+        theme={theme}
+        value={contents}
+        options={editorOptions}
+        onValidate={errors => setError(!!errors.length)}
+        onChange={contents => setContents({ contents, skipUpdate: true })}
+        loading={<Loading message="Loading Editor..." />}
       />
       <CarbonAds />
     </StyledWrapper>

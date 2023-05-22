@@ -83,11 +83,11 @@ const StyledImg = styled.img<{ light: boolean }>`
 export const BottomBar = () => {
   const { query } = useRouter();
   const data = useFile(state => state.fileData);
-  const error = useFile(state => state.error);
   const user = useUser(state => state.user);
   const premium = useUser(state => state.isPremium());
   const lightmode = useStored(state => state.lightmode);
   const hasChanges = useFile(state => state.hasChanges);
+  const hasErrors = useFile(state => state.hasError);
   const getContents = useFile(state => state.getContents);
 
   const setVisible = useModal(state => state.setVisible);
@@ -163,8 +163,8 @@ export const BottomBar = () => {
             Upgrade to Premium
           </StyledBottomBarItem>
         )}
-        <StyledBottomBarItem error={!!error}>
-          {error ? (
+        <StyledBottomBarItem error={hasErrors}>
+          {hasErrors ? (
             <Flex align="center" gap={2}>
               <MdReportGmailerrorred color="red" size={16} />
               <Text fw="bold">Invalid Format</Text>

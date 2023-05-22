@@ -42,7 +42,7 @@ export type File = {
 const initialStates = {
   fileData: null as File | null,
   contents: defaultJson,
-  error: false,
+  hasError: false,
   hasChanges: false,
   jsonSchema: null as object | null,
 };
@@ -56,7 +56,7 @@ const isURL = (value: string) => {
 };
 
 const debouncedUpdateJson = debounce(
-  (value: unknown) => useJson.getState().setJson(JSON.stringify(value, null, 2)),
+  (value: string) => useJson.getState().setJson(JSON.stringify(parse(value as string), null, 2)),
   800
 );
 
@@ -90,10 +90,11 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
   getContents: () => get().contents,
   getHasChanges: () => get().hasChanges,
   setContents: ({ contents, hasChanges = true }) => {
+    if (!contents || get().hasError) return;
     set({ ...(contents && { contents }), hasChanges });
-    debouncedUpdateJson(parse(contents as string));
+    debouncedUpdateJson(contents);
   },
-  setError: error => set({ error }),
+  setError: hasError => set({ hasError }),
   setHasChanges: hasChanges => set({ hasChanges }),
   fetchUrl: async url => {
     try {
