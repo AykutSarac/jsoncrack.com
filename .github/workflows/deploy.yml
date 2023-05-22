@@ -105,4 +105,4 @@ jobs:
           # SENTRY_URL: https://sentry.io/
         with:
           environment: production
-          sourcemaps: ./_next/static/chunks
+          sourcemaps: ./
