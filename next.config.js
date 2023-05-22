@@ -1,9 +1,4 @@
-const withBundleAnalyzer =
-  process.env.ANALYZE === "true"
-    ? require("@next/bundle-analyzer")({
-        enabled: process.env.ANALYZE === "true",
-      })()
-    : x => x;
+const { withSentryConfig } = require("@sentry/nextjs");
 
 /**
  * @type {import('next').NextConfig}
@@ -16,4 +11,16 @@ const config = {
   },
 };
 
-module.exports = withBundleAnalyzer(config);
+module.exports = withSentryConfig(
+  config,
+  {
+    silent: true,
+    org: "aykut-sarac",
+    project: "json-crack",
+  },
+  {
+    widenClientFileUpload: true,
+    hideSourceMaps: true,
+    disableLogger: true,
+  }
+);
