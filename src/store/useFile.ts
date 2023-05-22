@@ -1,3 +1,4 @@
+import { parse } from "jsonc-parser";
 import debounce from "lodash.debounce";
 import _get from "lodash.get";
 import _set from "lodash.set";
@@ -90,7 +91,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
   getHasChanges: () => get().hasChanges,
   setContents: ({ contents, hasChanges = true }) => {
     set({ ...(contents && { contents }), hasChanges });
-    debouncedUpdateJson(JSON.parse(contents as string));
+    debouncedUpdateJson(parse(contents as string));
   },
   setError: error => set({ error }),
   setHasChanges: hasChanges => set({ hasChanges }),

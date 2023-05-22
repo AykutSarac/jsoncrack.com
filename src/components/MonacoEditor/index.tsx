@@ -40,6 +40,7 @@ export const MonacoEditor = () => {
     if (monaco) {
       monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
         validate: true,
+        allowComments: true,
         ...(jsonSchema && {
           schemas: [
             {
