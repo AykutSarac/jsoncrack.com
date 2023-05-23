@@ -13,6 +13,7 @@ import {
   Badge,
 } from "@mantine/core";
 import { BsCheck } from "react-icons/bs";
+import { paymentURL } from "src/constants/data";
 
 export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   return (
@@ -52,7 +53,7 @@ export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           </Title>
           <Button
             component="a"
-            href="https://www.patreon.com/join/herowand/checkout?rid=8549056"
+            href={paymentURL}
             variant="filled"
             color="teal"
             size="md"

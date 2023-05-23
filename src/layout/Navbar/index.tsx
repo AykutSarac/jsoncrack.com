@@ -13,6 +13,7 @@ import {
 } from "@mantine/core";
 import { CgChevronDown } from "react-icons/cg";
 import { VscStarEmpty } from "react-icons/vsc";
+import { paymentURL } from "src/constants/data";
 import { JSONCrackLogo } from "../JsonCrackLogo";
 
 const links: HeaderActionProps[] = [
@@ -36,12 +37,12 @@ const links: HeaderActionProps[] = [
       { link: "/oss", label: "Open Source" },
       { link: "https://github.com/sponsors/AykutSarac", label: "Sponsor" },
       {
-        link: "https://www.patreon.com/herowand",
+        link: paymentURL,
         label: "Become Backer",
       },
     ],
   },
-  { link: "https://www.patreon.com/join/herowand", label: "Plus" },
+  { link: paymentURL, label: "Plus" },
   { link: "/docs", label: "Docs" },
 ];
 

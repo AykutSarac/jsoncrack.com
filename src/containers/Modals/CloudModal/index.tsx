@@ -165,7 +165,7 @@ const GraphCard: React.FC<{ data: File; refetch: () => void; active: boolean }> 
 
 const CreateCard: React.FC<{ reachedLimit: boolean }> = ({ reachedLimit }) => {
   const { replace } = useRouter();
-  const isPremium = useUser(state => state.isPremium());
+  const isPremium = useUser(state => state.premium);
   const getContents = useFile(state => state.getContents);
   const setHasChanges = useFile(state => state.setHasChanges);
   const setVisible = useModal(state => state.setVisible);

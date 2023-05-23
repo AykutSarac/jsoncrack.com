@@ -3,7 +3,7 @@ import useUser from "src/store/useUser";
 
 export const CarbonAds = () => {
   const ref = React.useRef<HTMLDivElement>(null!);
-  const premium = useUser(state => state.isPremium());
+  const premium = useUser(state => state.premium);
 
   React.useEffect(() => {
     if (!premium) {

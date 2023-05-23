@@ -103,7 +103,7 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
   const expandGraph = useGraph(state => state.expandGraph);
   const collapseGraph = useGraph(state => state.collapseGraph);
   const lightmode = useStored(state => state.lightmode);
-  const premium = useUser(state => state.isPremium());
+  const premium = useUser(state => state.premium);
 
   const CoreKey = navigator.userAgent.indexOf("Mac OS X") ? "⌘" : "CTRL";
 

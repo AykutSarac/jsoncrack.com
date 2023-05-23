@@ -59,7 +59,7 @@ const StyledEditorWrapper = styled.div<{ widget: boolean }>`
 
 export const Graph = ({ isWidget = false }: GraphProps) => {
   const { validateHiddenNodes } = useToggleHide();
-  const isPremium = useUser(state => state.isPremium());
+  const isPremium = useUser(state => state.premium);
   const setLoading = useGraph(state => state.setLoading);
   const setZoomPanPinch = useGraph(state => state.setZoomPanPinch);
   const centerView = useGraph(state => state.centerView);

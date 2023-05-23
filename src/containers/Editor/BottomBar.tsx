@@ -84,7 +84,7 @@ export const BottomBar = () => {
   const { query } = useRouter();
   const data = useFile(state => state.fileData);
   const user = useUser(state => state.user);
-  const premium = useUser(state => state.isPremium());
+  const premium = useUser(state => state.premium);
   const lightmode = useStored(state => state.lightmode);
   const hasChanges = useFile(state => state.hasChanges);
   const hasErrors = useFile(state => state.hasError);

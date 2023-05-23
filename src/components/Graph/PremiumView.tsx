@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Badge, Button, Image, List, ThemeIcon, Title } from "@mantine/core";
 import { BsCheck } from "react-icons/bs";
+import { paymentURL } from "src/constants/data";
 
 const StyledPremiumView = styled.div`
   position: relative;
@@ -185,7 +186,7 @@ export const PremiumView = () => (
         component="a"
         variant="gradient"
         gradient={{ from: "blue", to: "teal" }}
-        href="https://www.patreon.com/join/herowand/checkout?rid=8549056"
+        href={paymentURL}
         target="_blank"
       >
         UPGRADE TO PREMIUM $5.00

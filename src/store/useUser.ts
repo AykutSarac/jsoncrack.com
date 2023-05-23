@@ -6,20 +6,11 @@ import useModal from "./useModal";
 
 const isDevelopment = process.env.NODE_ENV === "development";
 
-interface CustomUser extends User {
-  premium: {
-    status: boolean;
-    end_date: string;
-  };
-  type: 0 | 1;
-}
-
 interface UserActions {
   login: (response: AltogicAuth) => void;
   logout: () => void;
   setUser: (key: keyof typeof initialStates, value: any) => void;
   checkSession: () => void;
-  isPremium: () => boolean;
 }
 
 const devUser = {
@@ -32,28 +23,23 @@ const devUser = {
   signUpAt: "2022-12-04T11:07:32.000Z",
   lastLoginAt: "2023-05-13T09:56:02.915Z",
   updatedAt: "2023-05-06T16:19:47.486Z",
-  type: 1,
-} as CustomUser;
+} as User;
 
 interface UserStates {
-  user: CustomUser | null;
+  user: User | null;
   isAuthenticated: boolean;
+  premium: boolean;
 }
 
 const initialStates: UserStates = {
-  isAuthenticated: false,
   user: null,
+  isAuthenticated: false,
+  premium: false,
 };
 
-const useUser = create<UserStates & UserActions>()((set, get) => ({
+const useUser = create<UserStates & UserActions>()(set => ({
   ...initialStates,
   setUser: (key, value) => set({ [key]: value }),
-  isPremium: () => {
-    const user = get().user;
-
-    if (user) return user.type > 0;
-    return false;
-  },
   logout: async () => {
     const session = altogic.auth.getSession();
     if (!session) return;
@@ -66,14 +52,15 @@ const useUser = create<UserStates & UserActions>()((set, get) => ({
     toast.success("Logged out.");
     useModal.setState({ account: false });
   },
-  login: user => set({ user: user as unknown as CustomUser, isAuthenticated: true }),
+  login: user => set({ user: user as unknown as User, isAuthenticated: true }),
   checkSession: async () => {
+    if (isDevelopment) {
+      return set({ user: devUser as User, isAuthenticated: true, premium: true });
+    }
+
     const currentSession = altogic.auth.getSession();
 
     if (currentSession) {
-      if (isDevelopment) {
-        return set({ user: devUser as CustomUser, isAuthenticated: true });
-      }
       const { user, errors } = await altogic.auth.getUserFromDB();
       if (errors?.items || !user) {
         altogic.auth.clearLocalData();
@@ -82,8 +69,9 @@ const useUser = create<UserStates & UserActions>()((set, get) => ({
 
       altogic.auth.setUser(user);
       altogic.auth.setSession(currentSession);
+      const { data: premiumData } = await altogic.endpoint.get("/isPremium");
 
-      set({ user: user as CustomUser, isAuthenticated: true });
+      set({ user: user as User, isAuthenticated: true, premium: premiumData.premium });
     } else if (new URLSearchParams(window.location.search).get("access_token")) {
       const { errors, user } = await altogic.auth.getAuthGrant();
       if (errors?.items) {
@@ -91,7 +79,8 @@ const useUser = create<UserStates & UserActions>()((set, get) => ({
         return;
       }
 
-      set({ user: user as CustomUser, isAuthenticated: true });
+      const { data: premiumData } = await altogic.endpoint.get("/isPremium");
+      set({ user: user as User, isAuthenticated: true, premium: premiumData.data.premium });
     }
   },
 }));

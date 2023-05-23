@@ -47,7 +47,7 @@ const CodeBlock: React.FC<{ children: any; [key: string]: any }> = ({
 };
 
 export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
-  const isPremium = useUser(state => state.isPremium());
+  const isPremium = useUser(state => state.premium);
   const editContents = useFile(state => state.editContents);
   const setVisible = useModal(state => state.setVisible);
   const lightmode = useStored(state => (state.lightmode ? "light" : "vs-dark"));
