@@ -80,7 +80,7 @@ const useUser = create<UserStates & UserActions>()(set => ({
       }
 
       const { data: premiumData } = await altogic.endpoint.get("/isPremium");
-      set({ user: user as User, isAuthenticated: true, premium: premiumData.data.premium });
+      set({ user: user as User, isAuthenticated: true, premium: premiumData.premium });
     }
   },
 }));
