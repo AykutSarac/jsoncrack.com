@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { Modal, Group, Button, Badge, Avatar, Grid, Divider, ModalProps } from "@mantine/core";
 import { IoRocketSharp } from "react-icons/io5";
-import { paymentURL } from "src/constants/data";
 import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
 
@@ -94,7 +93,14 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
       <Divider py="xs" />
       <Group position="right">
         {isPremium ? (
-          <Button variant="light" color="red" onClick={() => window.open(paymentURL, "_blank")}>
+          <Button
+            variant="light"
+            color="red"
+            onClick={() => {
+              setVisible("cancelPremium")(true);
+              onClose();
+            }}
+          >
             Cancel Subscription
           </Button>
         ) : (

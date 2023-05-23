@@ -13,6 +13,7 @@ import {
   SchemaModal,
   SettingsModal,
   ShareModal,
+  CancelPremiumModal,
 } from "src/containers/Modals";
 import { CloudModal } from "src/containers/Modals/CloudModal";
 import useModal from "src/store/useModal";
@@ -32,6 +33,7 @@ const modalComponents: ModalComponent[] = [
   { key: "jwt", component: JWTModal },
   { key: "node", component: NodeModal },
   { key: "schema", component: SchemaModal },
+  { key: "cancelPremium", component: CancelPremiumModal },
 ];
 
 export const ModalController = () => {

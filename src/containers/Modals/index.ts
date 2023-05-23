@@ -10,6 +10,7 @@ export { LoginModal } from "./LoginModal";
 export { PremiumModal } from "./PremiumModal";
 export { JWTModal } from "./JWTModal";
 export { SchemaModal } from "./SchemaModal";
+export { CancelPremiumModal } from "./CancelPremiumModal";
 
 type Modal =
   | "clear"
@@ -23,6 +24,7 @@ type Modal =
   | "login"
   | "premium"
   | "jwt"
-  | "schema";
+  | "schema"
+  | "cancelPremium";
 
 export type { Modal };
