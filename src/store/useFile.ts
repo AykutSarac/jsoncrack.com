@@ -81,7 +81,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
     useJson.getState().clear();
   },
   setJsonSchema: jsonSchema => {
-    if (useUser.getState().isPremium()) set({ jsonSchema });
+    if (useUser.getState().premium) set({ jsonSchema });
   },
   setFile: fileData => {
     set({ fileData });

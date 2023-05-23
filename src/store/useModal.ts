@@ -35,7 +35,7 @@ const useModal = create<ModalState & ModalActions>()(set => ({
 
     if (authModals.includes(modal) && !user.isAuthenticated) {
       return set({ login: true });
-    } else if (premiumModals.includes(modal) && !user.isPremium()) {
+    } else if (premiumModals.includes(modal) && !user.premium) {
       return set({ premium: true });
     }
 
