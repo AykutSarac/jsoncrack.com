@@ -7,7 +7,7 @@ import useModal from "./useModal";
 const isDevelopment = process.env.NODE_ENV === "development";
 
 interface UserActions {
-  login: (response: AltogicAuth) => void;
+  login: (response: User | AltogicAuth) => void;
   logout: () => void;
   setUser: (key: keyof typeof initialStates, value: any) => void;
   checkSession: () => void;
