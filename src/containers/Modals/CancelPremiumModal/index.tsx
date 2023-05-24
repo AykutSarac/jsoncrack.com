@@ -13,7 +13,7 @@ export const CancelPremiumModal: React.FC<ModalProps> = ({ opened, onClose }) =>
 
       if (errors?.items.length) {
         return toast.error(
-          "An error occured while cancelling plan! Please contact support@herowand.com"
+          "An error occured while cancelling plan! Please contact aykutsarac0@gmail.com"
         );
       }
 
@@ -34,6 +34,9 @@ export const CancelPremiumModal: React.FC<ModalProps> = ({ opened, onClose }) =>
         <br />
         You can restart your subscription anytime.
         <br />
+        <Text size="xs" color="dimmed">
+          If you have problems with cancelling plan please contact: aykutsarac0@gmail.com
+        </Text>
         <Anchor target="_blank" href="https://patreon.com/herowand">
           Click here to cancel if you are Patreon member
         </Anchor>
