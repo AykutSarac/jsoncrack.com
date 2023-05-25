@@ -79,6 +79,12 @@ export function AuthenticationForm(props: PaperProps) {
     } else {
       altogic.auth
         .signUpWithEmail(form.values.email, form.values.password, form.values.name)
+        .then(({ errors, user }) => {
+          if (errors?.items.length) {
+            return errors.items.forEach(e => toast.error(e.message));
+          }
+          toast.success("Registration successful!");
+        })
         .finally(() => setLoading(false));
     }
   };
