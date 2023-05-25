@@ -16,6 +16,7 @@ import {
   Anchor,
   Stack,
   Center,
+  Title,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useToggle, upperFirst } from "@mantine/hooks";
@@ -31,6 +32,7 @@ export function AuthenticationForm(props: PaperProps) {
   const login = useUser(state => state.login);
   const [loading, setLoading] = React.useState(false);
   const [type, toggle] = useToggle<"login" | "register">(["login", "register"]);
+  const [done, setDone] = React.useState(false);
 
   const { isReady, replace, query } = useRouter();
   const checkSession = useUser(state => state.checkSession);
@@ -79,11 +81,12 @@ export function AuthenticationForm(props: PaperProps) {
     } else {
       altogic.auth
         .signUpWithEmail(form.values.email, form.values.password, form.values.name)
-        .then(({ errors, user }) => {
+        .then(({ errors }) => {
           if (errors?.items.length) {
             return errors.items.forEach(e => toast.error(e.message));
           }
           toast.success("Registration successful!");
+          setDone(true);
         })
         .finally(() => setLoading(false));
     }
@@ -92,6 +95,18 @@ export function AuthenticationForm(props: PaperProps) {
   const handleLoginClick = (provider: "github" | "google") => {
     altogic.auth.signInWithProvider(provider);
   };
+
+  if (done) {
+    return (
+      <Paper mih={100}>
+        <Title align="center" order={2}>
+          Registration successul!
+          <br />
+          Please check your inbox for email confirmation.
+        </Title>
+      </Paper>
+    );
+  }
 
   return (
     <Paper radius="md" p="xl" withBorder {...props}>
