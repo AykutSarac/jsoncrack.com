@@ -34,19 +34,6 @@ export function AuthenticationForm(props: PaperProps) {
   const [type, toggle] = useToggle<"login" | "register">(["login", "register"]);
   const [done, setDone] = React.useState(false);
 
-  const { isReady, replace, query } = useRouter();
-  const checkSession = useUser(state => state.checkSession);
-  const isAuthenticated = useUser(state => state.isAuthenticated);
-
-  const isAuthenticating = React.useMemo(() => {
-    if (query?.access_token) return true;
-    return false;
-  }, [query]);
-
-  React.useEffect(() => {
-    if (isAuthenticated) replace("/editor");
-  }, [isReady, isAuthenticated, replace]);
-
   const form = useForm({
     initialValues: {
       email: "",
@@ -114,122 +101,104 @@ export function AuthenticationForm(props: PaperProps) {
         Welcome to JSON Crack, {type} with
       </Text>
 
-      {isAuthenticating ? (
-        <Stack my={60} w={250} spacing="xl">
-          <Button size="lg" color="orange" onClick={checkSession}>
-            JSON Crack
-          </Button>
-          <Button
-            component="a"
-            href={window.location.href.replace(window.location.host, "editor.herowand.com")}
-            size="lg"
-            color="teal"
-          >
-            Herowand Editor
-          </Button>
+      <Group grow mb="md" mt="md">
+        <Button
+          radius="xl"
+          leftIcon={<AiOutlineGoogle />}
+          onClick={() => handleLoginClick("google")}
+          color="red"
+        >
+          Google
+        </Button>
+        <Button
+          radius="xl"
+          leftIcon={<AiOutlineGithub />}
+          onClick={() => handleLoginClick("github")}
+          color="dark"
+        >
+          GitHub
+        </Button>
+      </Group>
+
+      <Divider label="Or continue with email" labelPosition="center" my="lg" />
+
+      <form onSubmit={onSubmit}>
+        <Stack>
+          {type === "register" && (
+            <TextInput
+              required
+              label="Name"
+              placeholder="John Doe"
+              value={form.values.name}
+              onChange={event => form.setFieldValue("name", event.currentTarget.value)}
+              error={form.errors.name && "This field cannot be left blank"}
+              radius="md"
+            />
+          )}
+
+          <TextInput
+            required
+            label="Email"
+            placeholder="hello@jsoncrack.com"
+            value={form.values.email}
+            onChange={event => form.setFieldValue("email", event.currentTarget.value)}
+            error={form.errors.email && "Invalid email"}
+            radius="md"
+          />
+
+          <PasswordInput
+            required
+            label="Password"
+            placeholder="Your password"
+            value={form.values.password}
+            onChange={event => form.setFieldValue("password", event.currentTarget.value)}
+            error={form.errors.password && "Password should include at least 6 characters"}
+            radius="md"
+          />
+          {type === "login" && (
+            <Link href="/reset-password">
+              <Text size="xs">Forgot password?</Text>
+            </Link>
+          )}
+
+          {type === "register" && (
+            <PasswordInput
+              required
+              label="Validate Password"
+              placeholder="Your password"
+              value={form.values.passwordAgain}
+              onChange={event => form.setFieldValue("passwordAgain", event.currentTarget.value)}
+              error={form.errors.passwordAgain && "Passwords doesn't match"}
+              radius="md"
+            />
+          )}
+
+          {type === "register" && (
+            <Checkbox
+              label="I accept terms and conditions"
+              checked={form.values.terms}
+              onChange={event => form.setFieldValue("terms", event.currentTarget.checked)}
+            />
+          )}
         </Stack>
-      ) : (
-        <>
-          <Group grow mb="md" mt="md">
-            <Button
-              radius="xl"
-              leftIcon={<AiOutlineGoogle />}
-              onClick={() => handleLoginClick("google")}
-              color="red"
-            >
-              Google
-            </Button>
-            <Button
-              radius="xl"
-              leftIcon={<AiOutlineGithub />}
-              onClick={() => handleLoginClick("github")}
-              color="dark"
-            >
-              GitHub
-            </Button>
-          </Group>
 
-          <Divider label="Or continue with email" labelPosition="center" my="lg" />
-
-          <form onSubmit={onSubmit}>
-            <Stack>
-              {type === "register" && (
-                <TextInput
-                  required
-                  label="Name"
-                  placeholder="John Doe"
-                  value={form.values.name}
-                  onChange={event => form.setFieldValue("name", event.currentTarget.value)}
-                  error={form.errors.name && "This field cannot be left blank"}
-                  radius="md"
-                />
-              )}
-
-              <TextInput
-                required
-                label="Email"
-                placeholder="hello@jsoncrack.com"
-                value={form.values.email}
-                onChange={event => form.setFieldValue("email", event.currentTarget.value)}
-                error={form.errors.email && "Invalid email"}
-                radius="md"
-              />
-
-              <PasswordInput
-                required
-                label="Password"
-                placeholder="Your password"
-                value={form.values.password}
-                onChange={event => form.setFieldValue("password", event.currentTarget.value)}
-                error={form.errors.password && "Password should include at least 6 characters"}
-                radius="md"
-              />
-              {type === "login" && (
-                <Link href="/reset-password">
-                  <Text size="xs">Forgot password?</Text>
-                </Link>
-              )}
-
-              {type === "register" && (
-                <PasswordInput
-                  required
-                  label="Validate Password"
-                  placeholder="Your password"
-                  value={form.values.passwordAgain}
-                  onChange={event => form.setFieldValue("passwordAgain", event.currentTarget.value)}
-                  error={form.errors.passwordAgain && "Passwords doesn't match"}
-                  radius="md"
-                />
-              )}
-
-              {type === "register" && (
-                <Checkbox
-                  label="I accept terms and conditions"
-                  checked={form.values.terms}
-                  onChange={event => form.setFieldValue("terms", event.currentTarget.checked)}
-                />
-              )}
-            </Stack>
-
-            <Group position="apart" mt="xl">
-              <Anchor
-                component="button"
-                type="button"
-                color="dimmed"
-                onClick={() => toggle()}
-                size="xs"
-              >
-                {type === "register"
-                  ? "Already have an account? Login"
-                  : "Don't have an account? Register"}
-              </Anchor>
-              <Button type="submit" radius="xl" loading={loading} disabled={!form.values.terms}>
-                {upperFirst(type)}
-              </Button>
-            </Group>
-          </form>
-        </>
-      )}
+        <Group position="apart" mt="xl">
+          <Anchor
+            component="button"
+            type="button"
+            color="dimmed"
+            onClick={() => toggle()}
+            size="xs"
+          >
+            {type === "register"
+              ? "Already have an account? Login"
+              : "Don't have an account? Register"}
+          </Anchor>
+          <Button type="submit" radius="xl" loading={loading} disabled={!form.values.terms}>
+            {upperFirst(type)}
+          </Button>
+        </Group>
+      </form>
     </Paper>
   );
 }
@@ -304,15 +273,19 @@ function ResetPassword(props: PaperProps) {
 }
 
 const SignIn = () => {
-  const { isReady, replace, query } = useRouter();
+  const { isReady, replace, push, query } = useRouter();
   const checkSession = useUser(state => state.checkSession);
   const isAuthenticated = useUser(state => state.isAuthenticated);
   const isPasswordReset = query?.action === "reset-pwd" && !query?.error;
 
+  const isAuthenticating = React.useMemo(() => {
+    if (query?.action === "oauth-signin" && query?.status === "200") return true;
+    return false;
+  }, [query]);
+
   React.useEffect(() => {
-    if (!isReady) checkSession();
-    if (isAuthenticated) replace("/");
-  }, [isReady, isAuthenticated, replace, checkSession]);
+    if (isAuthenticated) push("/editor");
+  }, [isReady, isAuthenticated, push]);
 
   return (
     <div>
@@ -324,7 +297,25 @@ const SignIn = () => {
         <StyledHeroSection>
           <JSONCrackLogo />
         </StyledHeroSection>
-        <Center pt={60}>{isPasswordReset ? <ResetPassword /> : <AuthenticationForm />}</Center>
+        {isAuthenticating ? (
+          <Center>
+            <Stack my={60} w={250} spacing="xl">
+              <Button size="lg" color="orange" onClick={checkSession}>
+                JSON Crack
+              </Button>
+              <Button
+                component="a"
+                href={window.location.href.replace(window.location.host, "editor.herowand.com")}
+                size="lg"
+                color="teal"
+              >
+                Herowand Editor
+              </Button>
+            </Stack>
+          </Center>
+        ) : (
+          <Center pt={60}>{isPasswordReset ? <ResetPassword /> : <AuthenticationForm />}</Center>
+        )}
       </StyledPageWrapper>
       <Footer />
     </div>
