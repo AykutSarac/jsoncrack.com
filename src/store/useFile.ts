@@ -101,7 +101,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       const res = await fetch(url);
       const json = await res.json();
       const jsonStr = JSON.stringify(json, null, 2);
-
+      get().setContents({ contents: jsonStr });
       useGraph.getState().setGraph(jsonStr);
       return useJson.setState({ json: jsonStr, loading: false });
     } catch (error) {
