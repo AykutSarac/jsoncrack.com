@@ -103,11 +103,9 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       const jsonStr = JSON.stringify(json, null, 2);
 
       useGraph.getState().setGraph(jsonStr);
-      return useJson.setState({ json: jsonStr, loading: false });
+      get().setContents({ contents: jsonStr });
     } catch (error) {
       get().clear();
-      useJson.setState({ loading: false });
-      useGraph.setState({ loading: false });
       toast.error("Failed to fetch document from URL!");
     }
   },
