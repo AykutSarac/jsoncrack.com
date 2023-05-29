@@ -82,22 +82,22 @@ jobs:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-          SENTRY_RELEASE: $(sentry-cli releases propose-version)
           SENTRY_DEPLOY_ENVIRONMENT: "production"
         run: |
           # Install Sentry CLI
           curl -sL https://sentry.io/get-cli/ | bash
   
           # Create new Sentry release
-          VERSION=`sentry-cli releases propose-version`
+          VERSION=$(sentry-cli releases propose-version)
           sentry-cli releases set-commits "$VERSION" --auto
-          sentry-cli releases new -p $SENTRY_PROJECT $SENTRY_RELEASE
-          sentry-cli releases set-commits --auto $SENTRY_RELEASE
+          sentry-cli releases new -p $SENTRY_PROJECT "$VERSION"
+          sentry-cli releases set-commits --auto "$VERSION"
           sentry-cli releases files "$VERSION" upload-sourcemaps /.out/_next/static/chunks
-          sentry-cli releases finalize $SENTRY_RELEASE
+          sentry-cli releases finalize "$VERSION"
           
           # Create new deploy for this Sentry release
-          sentry-cli releases deploys $SENTRY_RELEASE new -e $SENTRY_DEPLOY_ENVIRONMENT
+          sentry-cli releases deploys "$VERSION" new -e $SENTRY_DEPLOY_ENVIRONMENT
+
 
   # Deployment job
   deploy:
