@@ -78,12 +78,17 @@ jobs:
         with:
           path: './out'
       - name: Sentry
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+          SENTRY_RELEASE: $(sentry-cli releases propose-version)
+          SENTRY_DEPLOY_ENVIRONMENT: "production"
         run: |
           # Install Sentry CLI
           curl -sL https://sentry.io/get-cli/ | bash
   
           # Create new Sentry release
-          export SENTRY_RELEASE=$(sentry-cli releases propose-version)
           sentry-cli releases new -p $SENTRY_PROJECT $SENTRY_RELEASE
           sentry-cli releases set-commits --auto $SENTRY_RELEASE
           sentry-cli sourcemaps upload --release=$SENTRY_RELEASE /.out/_next/static/chunks
