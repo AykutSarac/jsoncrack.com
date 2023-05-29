@@ -89,10 +89,9 @@ jobs:
   
           # Create new Sentry release
           VERSION=$(sentry-cli releases propose-version)
-          sentry-cli releases set-commits "$VERSION" --auto
           sentry-cli releases new -p $SENTRY_PROJECT "$VERSION"
           sentry-cli releases set-commits --auto "$VERSION"
-          sentry-cli releases files "$VERSION" upload-sourcemaps /.out/_next/static/chunks
+          sentry-cli releases files "$VERSION" upload-sourcemaps ./_next/static/chunks
           sentry-cli releases finalize "$VERSION"
           
           # Create new deploy for this Sentry release
