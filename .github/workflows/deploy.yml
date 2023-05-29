@@ -89,9 +89,11 @@ jobs:
           curl -sL https://sentry.io/get-cli/ | bash
   
           # Create new Sentry release
+          VERSION=`sentry-cli releases propose-version`
+          sentry-cli releases set-commits "$VERSION" --auto
           sentry-cli releases new -p $SENTRY_PROJECT $SENTRY_RELEASE
           sentry-cli releases set-commits --auto $SENTRY_RELEASE
-          sentry-cli sourcemaps upload --release=$SENTRY_RELEASE /.out/_next/static/chunks
+          sentry-cli releases files "$VERSION" upload-sourcemaps /.out/_next/static/chunks
           sentry-cli releases finalize $SENTRY_RELEASE
           
           # Create new deploy for this Sentry release
