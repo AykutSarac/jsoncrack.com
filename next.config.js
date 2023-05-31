@@ -12,13 +12,7 @@ const config = {
 };
 
 module.exports = withSentryConfig(
-  {
-    ...config,
-    sentry: {
-      widenClientFileUpload: true,
-      disableServerWebpackPlugin: true,
-    },
-  },
+  config,
   {
     silent: true,
     org: "aykut-sarac",
