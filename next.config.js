@@ -12,7 +12,13 @@ const config = {
 };
 
 module.exports = withSentryConfig(
-  config,
+  {
+    ...config,
+    sentry: {
+      widenClientFileUpload: true,
+      disableServerWebpackPlugin: true,
+    },
+  },
   {
     silent: true,
     org: "aykut-sarac",
@@ -22,5 +28,6 @@ module.exports = withSentryConfig(
     widenClientFileUpload: true,
     hideSourceMaps: true,
     disableLogger: true,
+    disableServerWebpackPlugin: true,
   }
 );

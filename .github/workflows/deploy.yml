@@ -98,13 +98,13 @@ jobs:
           VERSION=$(sentry-cli releases propose-version)
           echo "::set-output name=version::${VERSION}"
       - name: Upload sourcemaps to Sentry
-        run: sentry-cli releases files ${{ steps.create-release.outputs.stdout }} upload-sourcemaps --ext map --ext js --url-prefix '~/static' './out/_next/static/'
+        run: sentry-cli releases files "$VERSION" upload-sourcemaps --ext map --ext js --url-prefix '~/static' './out/_next/static/'
       - name: Set commits for Sentry release
-        run: sentry-cli releases set-commits --auto ${{ steps.create-release.outputs.stdout }}
+        run: sentry-cli releases set-commits "$VERSION" --auto
       - name: Deploy to Sentry
-        run: sentry-cli releases deploys ${{ steps.create-release.outputs.stdout }} new -e ${{ secrets.SENTRY_DEPLOY_ENVIRONMENT }}
+        run: sentry-cli releases deploys "$VERSION" new -e ${{ secrets.SENTRY_DEPLOY_ENVIRONMENT }}
       - name: Finalize Sentry release
-        run: sentry-cli releases finalize ${{ steps.create-release.outputs.stdout }}
+        run: sentry-cli releases finalize "$VERSION"
 
 
   # Deployment job
