@@ -94,7 +94,9 @@ jobs:
         run: curl -sL https://sentry.io/get-cli/ | bash
       - name: Create Sentry release
         id: create-release
-        run: sentry-cli releases propose-version
+        run: |
+          VERSION=$(sentry-cli releases propose-version)
+          echo "::set-output name=version::${VERSION}"
       - name: Upload sourcemaps to Sentry
         run: sentry-cli releases files ${{ steps.create-release.outputs.stdout }} upload-sourcemaps --ext map --ext js --url-prefix '~/static' './out/_next/static/'
       - name: Set commits for Sentry release
