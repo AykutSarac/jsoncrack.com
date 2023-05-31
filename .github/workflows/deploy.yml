@@ -77,25 +77,31 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           path: './out'
-      - name: Sentry
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-          SENTRY_DEPLOY_ENVIRONMENT: "production"
-        run: |
-          # Install Sentry CLI
-          curl -sL https://sentry.io/get-cli/ | bash
-  
-          # Create new Sentry release
-          VERSION=$(sentry-cli releases propose-version)
-          sentry-cli releases new -p $SENTRY_PROJECT "$VERSION"
-          sentry-cli releases set-commits --auto "$VERSION"
-          sentry-cli releases files "$VERSION" upload-sourcemaps /_next/static/
-          sentry-cli releases finalize "$VERSION"
-          
-          # Create new deploy for this Sentry release
-          sentry-cli releases deploys "$VERSION" new -e $SENTRY_DEPLOY_ENVIRONMENT
+
+
+  sentry:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Install Sentry CLI
+        run: curl -sL https://sentry.io/get-cli/ | bash
+      - name: Configure Sentry
+        run: sentry-cli --auth-token ${{ secrets.SENTRY_AUTH_TOKEN }} --url https://sentry.io/ login --org ${{ secrets.SENTRY_ORG }} --project ${{ secrets.SENTRY_PROJECT }}
+      - name: Create Sentry release
+        id: create-release
+        run: sentry-cli releases propose-version
+      - name: Upload sourcemaps to Sentry
+        run: sentry-cli releases files ${{ steps.create-release.outputs.stdout }} upload-sourcemaps --ext map --ext js --url-prefix '~/static' './out/_next/static/'
+      - name: Set commits for Sentry release
+        run: sentry-cli releases set-commits --auto ${{ steps.create-release.outputs.stdout }}
+      - name: Deploy to Sentry
+        run: sentry-cli releases deploys ${{ steps.create-release.outputs.stdout }} new -e ${{ secrets.SENTRY_DEPLOY_ENVIRONMENT }}
+      - name: Finalize Sentry release
+        run: sentry-cli releases finalize ${{ steps.create-release.outputs.stdout }}
 
 
   # Deployment job
@@ -109,3 +115,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
+
