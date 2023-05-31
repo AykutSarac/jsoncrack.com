@@ -90,6 +90,8 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
+      - name: List files in workflow
+        run: ls -R ./
       - name: Install Sentry CLI
         run: curl -sL https://sentry.io/get-cli/ | bash
       - name: Create Sentry release
@@ -98,7 +100,7 @@ jobs:
           VERSION=$(sentry-cli releases propose-version)
           echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
       - name: Upload sourcemaps to Sentry
-        run: sentry-cli releases files "$RELEASE_VERSION" upload-sourcemaps --ext map --ext js --url-prefix '~/static' './out/_next/static/'
+        run: sentry-cli releases files "$RELEASE_VERSION" upload-sourcemaps --ext map --ext js --url-prefix '~/static' './_next/static/'
       - name: Set commits for Sentry release
         run: sentry-cli releases set-commits "$RELEASE_VERSION" --auto
       - name: Deploy to Sentry
