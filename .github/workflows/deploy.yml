@@ -91,7 +91,7 @@ jobs:
           VERSION=$(sentry-cli releases propose-version)
           sentry-cli releases new -p $SENTRY_PROJECT "$VERSION"
           sentry-cli releases set-commits --auto "$VERSION"
-          sentry-cli releases files "$VERSION" upload-sourcemaps ./_next/static/chunks
+          sentry-cli releases files "$VERSION" upload-sourcemaps /_next/static/
           sentry-cli releases finalize "$VERSION"
           
           # Create new deploy for this Sentry release
@@ -109,15 +109,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
-
-  sentry:
-    runs-on: ubuntu-18.04
-    env:
-      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-      SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
