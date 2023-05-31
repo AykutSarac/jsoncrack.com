@@ -96,15 +96,16 @@ jobs:
         id: create-release
         run: |
           VERSION=$(sentry-cli releases propose-version)
-          echo "::set-output name=version::${VERSION}"
+          echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
       - name: Upload sourcemaps to Sentry
-        run: sentry-cli releases files "$VERSION" upload-sourcemaps --ext map --ext js --url-prefix '~/static' './out/_next/static/'
+        run: sentry-cli releases files "$RELEASE_VERSION" upload-sourcemaps --ext map --ext js --url-prefix '~/static' './out/_next/static/'
       - name: Set commits for Sentry release
-        run: sentry-cli releases set-commits "$VERSION" --auto
+        run: sentry-cli releases set-commits "$RELEASE_VERSION" --auto
       - name: Deploy to Sentry
-        run: sentry-cli releases deploys "$VERSION" new -e ${{ secrets.SENTRY_DEPLOY_ENVIRONMENT }}
+        run: sentry-cli releases deploys "$RELEASE_VERSION" new -e ${{ secrets.SENTRY_DEPLOY_ENVIRONMENT }}
       - name: Finalize Sentry release
-        run: sentry-cli releases finalize "$VERSION"
+        run: sentry-cli releases finalize "$RELEASE_VERSION"
+
 
 
   # Deployment job
