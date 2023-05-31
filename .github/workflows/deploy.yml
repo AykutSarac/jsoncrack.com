@@ -81,6 +81,10 @@ jobs:
   sentry:
     runs-on: ubuntu-latest
     needs: build
+    env:
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+      SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -88,12 +92,6 @@ jobs:
           fetch-depth: 0
       - name: Install Sentry CLI
         run: curl -sL https://sentry.io/get-cli/ | bash
-      - name: Configure Sentry
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-          SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-        run: sentry-cli login
       - name: Create Sentry release
         id: create-release
         run: sentry-cli releases propose-version
