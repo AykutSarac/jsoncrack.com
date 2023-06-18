@@ -14,7 +14,7 @@ import {
 import { MdReportGmailerrorred, MdOutlineCheckCircleOutline } from "react-icons/md";
 import { TbTransform } from "react-icons/tb";
 import { VscAccount, VscSync, VscSyncIgnored, VscWorkspaceTrusted } from "react-icons/vsc";
-import { updateJson } from "src/services/json";
+import { saveToCloud, updateJson } from "src/services/json";
 import useFile from "src/store/useFile";
 import useModal from "src/store/useModal";
 import useStored from "src/store/useStored";
@@ -82,7 +82,7 @@ const StyledImg = styled.img<{ light: boolean }>`
 `;
 
 export const BottomBar = () => {
-  const { query } = useRouter();
+  const { query, replace } = useRouter();
   const data = useFile(state => state.fileData);
   const user = useUser(state => state.user);
   const premium = useUser(state => state.premium);
@@ -96,6 +96,7 @@ export const BottomBar = () => {
 
   const setVisible = useModal(state => state.setVisible);
   const setHasChanges = useFile(state => state.setHasChanges);
+  const getFormat = useFile(state => state.getFormat);
   const [isPrivate, setIsPrivate] = React.useState(false);
   const [isUpdating, setIsUpdating] = React.useState(false);
 
@@ -105,26 +106,43 @@ export const BottomBar = () => {
 
   const handleSaveJson = React.useCallback(async () => {
     if (!user) return setVisible("login")(true);
-    if (!query?.json) return setVisible("cloud")(true);
 
-    if (typeof query?.json === "string" && hasChanges) {
+    if (
+      hasChanges &&
+      !error &&
+      (typeof query.doc === "string" || typeof query.doc === "undefined")
+    ) {
       try {
         setIsUpdating(true);
-        toast.loading("Saving document...", { id: "fileUpdate" });
-        const res = await updateJson(query?.json, { json: getContents() });
+        toast.loading("Saving document...", { id: "fileSave" });
+        const res = await saveToCloud(query?.doc ?? null, getContents(), getFormat());
 
         if (res.errors && res.errors.items.length > 0) throw res.errors;
-        toast.success("Document saved to cloud", { id: "fileUpdate" });
+        if (res.data._id) replace({ query: { doc: res.data._id } });
+
+        toast.success("Document saved to cloud", { id: "fileSave" });
         setHasChanges(false);
       } catch (error: any) {
         if (error?.items?.length > 0) {
-          return toast.error(error.items[0].message, { id: "fileUpdate", duration: 5000 });
+          return toast.error(error.items[0].message, { id: "fileSave", duration: 5000 });
         }
 
-        toast.error("Failed to save document!", { id: "fileUpdate" });
+        toast.error("Failed to save document!", { id: "fileSave" });
+      } finally {
+        setIsUpdating(false);
       }
     }
-  }, [getContents, hasChanges, query, setHasChanges, setVisible, user]);
+  }, [
+    error,
+    getContents,
+    getFormat,
+    hasChanges,
+    query.doc,
+    replace,
+    setHasChanges,
+    setVisible,
+    user,
+  ]);
 
   const handleLoginClick = () => {
     if (user) return setVisible("account")(true);
