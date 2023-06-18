@@ -40,10 +40,6 @@ const StyledLoading = styled.div<{ visible: boolean }>`
   }
 `;
 
-const StyledText = styled.span`
-  color: #faa81a;
-`;
-
 const StyledMessage = styled.div`
   color: #b9bbbe;
   font-size: 1.5rem;

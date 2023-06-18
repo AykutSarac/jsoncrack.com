@@ -87,7 +87,7 @@ export const Navbar = () => {
             Star us on GitHub
           </Button>
           <Link href="/sign-in">
-            <Button variant="light" radius="md">
+            <Button variant="light" radius="md" className="hide-mobile">
               Sign In
             </Button>
           </Link>

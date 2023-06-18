@@ -1,5 +1,4 @@
 import React from "react";
-import dynamic from "next/dynamic";
 import Head from "next/head";
 import Link from "next/link";
 import styled, { ThemeProvider } from "styled-components";
@@ -9,8 +8,8 @@ import {
   Center,
   Container,
   Flex,
-  Group,
   Image,
+  Group,
   Stack,
   Text,
   Title,
@@ -23,14 +22,9 @@ import { lightTheme } from "src/constants/theme";
 import { Footer } from "src/layout/Footer";
 import { Navbar } from "src/layout/Navbar";
 
-const PreviewDiagram = dynamic(() => import("src/components/PreviewDiagram"), {
-  ssr: false,
-});
-
 const StyledHome = styled.div``;
 
 const StyledHeroSection = styled.div`
-  min-height: 80vh;
   --bg-color: ${({ theme }) => theme.GRID_BG_COLOR};
   --line-color-1: ${({ theme }) => theme.GRID_COLOR_PRIMARY};
   --line-color-2: ${({ theme }) => theme.GRID_COLOR_SECONDARY};
@@ -57,6 +51,7 @@ const StyledHeroSectionBody = styled.div`
   overflow: hidden;
   backdrop-filter: blur(1px);
   -webkit-backdrop-filter: blur(1px);
+  min-height: 60vh;
 
   @media only screen and (max-width: 1200px) {
     flex-direction: column;
@@ -91,9 +86,15 @@ const Left = styled.div`
 
 const Right = styled.div`
   position: absolute;
-  width: 60%;
+  transform: translate(25%, 25%);
+  width: 80%;
   right: 0;
-  filter: blur(1.2px);
+  filter: blur(1px);
+  user-select: none;
+
+  @media only screen and (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const StyledHighlightedText = styled.span`
@@ -122,6 +123,11 @@ const StyledStatsWrapper = styled.div`
 const StyledFeatures = styled(Container)`
   .mantine-Image-root {
     filter: drop-shadow(3px 3px 5px black);
+
+    img {
+      width: 100%;
+      object-fit: contain;
+    }
   }
 
   @media only screen and (max-width: 735px) {
@@ -130,24 +136,6 @@ const StyledFeatures = styled(Container)`
     }
   }
 `;
-
-// const PostCard: React.FC<{ avatar: string; content: string; name: string; handle: string }> = ({
-//   avatar,
-//   content,
-//   name,
-//   handle,
-// }) => (
-//   <Paper p="sm" radius="lg" w={350} h={200} withBorder>
-//     <Flex align="center" gap="sm">
-//       <Avatar radius="lg" src={avatar} />
-//       <Stack spacing="0">
-//         <Text fw="bold">{name}</Text>
-//         <Text color="dimmed">@{handle}</Text>
-//       </Stack>
-//     </Flex>
-//     <Text mt="lg">{content}</Text>
-//   </Paper>
-// );
 
 export const HomePage = () => {
   return (
@@ -203,7 +191,7 @@ export const HomePage = () => {
               </Group>
             </Left>
             <Right>
-              <PreviewDiagram />
+              <Image src="/assets/diagram_bg.webp" width="1200" height="593" alt="diagram" />
             </Right>
           </StyledHeroSectionBody>
         </StyledHeroSection>
@@ -248,7 +236,12 @@ export const HomePage = () => {
 
       <StyledFeatures my={60}>
         <Flex py="lg" align="flex-start" gap="lg">
-          <Image width={500} src="/assets/highlight_graph.svg" alt="search through graph" />
+          <Image
+            width={500}
+            height={287}
+            src="/assets/highlight_graph.svg"
+            alt="search through graph"
+          />
           <Stack pt="lg">
             <Text color="dark" fz="1.5rem" fw="bold">
               ADVANCED GRAPH SEARCH
@@ -260,7 +253,12 @@ export const HomePage = () => {
           </Stack>
         </Flex>
         <Flex py="lg" align="center" gap="lg" direction="row-reverse">
-          <Image width={300} src="/assets/multidata.png" alt="multiple format support" />
+          <Image
+            width={300}
+            height={260}
+            src="/assets/multidata.png"
+            alt="multiple format support"
+          />
           <Stack>
             <Text color="dark" fz="1.5rem" fw="bold">
               DYNAMIC DATA VISUALIZATION
@@ -273,7 +271,12 @@ export const HomePage = () => {
           </Stack>
         </Flex>
         <Flex py="lg" align="center" gap="lg">
-          <Image width={400} src="/assets/download_image.png" alt="download as image" />
+          <Image
+            width={400}
+            height={344}
+            src="/assets/download_image.webp"
+            alt="download as image"
+          />
           <Stack>
             <Text color="dark" fz="1.5rem" fw="bold">
               DOWNLOAD AS IMAGE
@@ -286,7 +289,7 @@ export const HomePage = () => {
           </Stack>
         </Flex>
         <Flex direction="row-reverse" py="lg" align="flex-start" gap="lg">
-          <Image width={500} src="/assets/preview_image.svg" alt="preview images" />
+          <Image width={500} height={285} src="/assets/preview_image.svg" alt="preview images" />
           <Stack pt="lg">
             <Text color="dark" fz="1.5rem" fw="bold">
               IMAGE PREVIEW
@@ -298,38 +301,6 @@ export const HomePage = () => {
           </Stack>
         </Flex>
       </StyledFeatures>
-      {/* <Container mt="lg">
-          <Title color="dark" order={2}>
-            What does the people say about JSON Crack?
-          </Title>
-          <Flex py={40} justify="center" gap="lg" wrap="wrap">
-            <PostCard
-              name="Alex Xu"
-              handle="alexxubyte"
-              avatar="https://media.licdn.com/dms/image/C5603AQEReSODdvboJw/profile-displayphoto-shrink_800_800/0/1633380703911?e=1692230400&v=beta&t=gjXipAUNUFzU47aMNrWiPC1ZP2H4oUaCNpDtJw6Wshs"
-              content="A very handy tool for converting nested JSON files into graph diagrams."
-            />
-            <PostCard
-              name="GitHub"
-              handle="github"
-              avatar="https://pbs.twimg.com/profile_images/1633247750010830848/8zfRrYjA_400x400.png"
-              content="Looking to understand or explore some JSON? Just paste or upload to visualize it as a graph with https://jsonvisio.com 😍 Thanks to @aykutsarach!"
-            />
-            <PostCard
-              name="GitHub"
-              handle="github"
-              avatar="https://pbs.twimg.com/profile_images/1633247750010830848/8zfRrYjA_400x400.png"
-              content="Looking to understand or explore some JSON? Just paste or upload to visualize it as a graph with https://jsonvisio.com 😍 Thanks to @aykutsarach!"
-            />
-            <PostCard
-              name="GitHub"
-              handle="github"
-              avatar="https://pbs.twimg.com/profile_images/1633247750010830848/8zfRrYjA_400x400.png"
-              content="Looking to understand or explore some JSON? Just paste or upload to visualize it as a graph with https://jsonvisio.com 😍 Thanks to @aykutsarach!"
-            />
-          </Flex>
-        </Container> */}
-
       <Container mt={100}>
         <Stack>
           <Title color="dark" order={3} maw={500} mx="auto" align="center">

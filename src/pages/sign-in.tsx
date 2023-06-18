@@ -96,7 +96,7 @@ export function AuthenticationForm(props: PaperProps) {
   }
 
   return (
-    <Paper radius="md" p="xl" bg="gray.1" withBorder {...props}>
+    <Paper radius="md" p="xl" withBorder {...props}>
       <Text size="lg" weight={500}>
         Welcome to JSON Crack, {type} with
       </Text>
