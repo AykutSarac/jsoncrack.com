@@ -7,7 +7,7 @@ import { File } from "src/store/useFile";
 const saveToCloud = async (
   id: string | null,
   contents: string,
-  format: FileFormat
+  format = FileFormat.JSON
 ): Promise<AltogicResponse<{ _id: string }>> => {
   if (id) return await altogic.endpoint.put(`json/${id}`, { json: contents, format });
   return await altogic.endpoint.post("json", { json: contents, format });

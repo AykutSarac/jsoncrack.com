@@ -173,7 +173,7 @@ const CreateCard: React.FC<{ reachedLimit: boolean }> = ({ reachedLimit }) => {
   const onCreate = async () => {
     try {
       toast.loading("Saving document...", { id: "fileSave" });
-      const res = await saveToCloud(getContents());
+      const res = await saveToCloud(null, getContents());
 
       if (res.errors && res.errors.items.length > 0) throw res.errors;
 
