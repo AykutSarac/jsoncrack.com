@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
-import { Center, Image, Stack, Title } from "@mantine/core";
+import { Center, Image, Stack } from "@mantine/core";
+import { JSONCrackLogo } from "../JsonCrackLogo";
 
 interface LoadingProps {
   loading?: boolean;
@@ -25,13 +26,14 @@ const StyledLoading = styled.div<{ visible: boolean }>`
   width: 100%;
   height: 100vh;
   text-align: center;
-  background: rgba(30, 30, 30, 0.6);
   z-index: 100;
   pointer-events: visiblePainted;
   cursor: wait;
   animation: 0.2s ${fadeIn};
   animation-fill-mode: forwards;
   visibility: hidden;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 
   img {
     transform: rotate(45deg);
@@ -53,9 +55,7 @@ export const Loading: React.FC<LoadingProps> = ({ loading = true, message }) => 
     <StyledLoading visible={loading}>
       <Stack>
         <Image mx="auto" width="6.5em" src="./assets/rocket_ship.webp" alt="loading image" />
-        <Title size="3.2em">
-          <StyledText>JSON</StyledText> Crack
-        </Title>
+        <JSONCrackLogo fontSize="2rem" />
         <StyledMessage>{message ?? "Preparing the environment for you..."}</StyledMessage>
       </Stack>
     </StyledLoading>

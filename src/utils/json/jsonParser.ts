@@ -74,6 +74,7 @@ export function parser(jsonStr: string): Graph {
       path: getNodePath(states.graph.nodes, states.graph.edges, node.id),
     }));
 
+    console.log(states.graph);
     return states.graph;
   } catch (error) {
     console.error(error);

@@ -11,31 +11,33 @@ const Oss: React.FC<{ sponsors: any[] }> = ({ sponsors }) => {
       <Head>
         <title>JSON Crack | Open Source Supporters</title>
       </Head>
-      <Container>
+      <Container pt={60}>
         <Image mx="auto" src="assets/oss_banner.webp" radius="md" maw={800} alt="oss banner" />
       </Container>
       <Center pt="lg">
         <Button
           component="a"
           href="https://github.com/sponsors/AykutSarac"
-          variant="light"
           size="lg"
           color="red"
           leftIcon={<VscHeart />}
           target="_blank"
+          fw="bolder"
         >
           BECOME PART OF IT
         </Button>
       </Center>
       <Container py={50}>
-        <Title pb="md">Thank you!</Title>
-        <Text maw={500}>
+        <Title color="dark.4" pb="md">
+          Thank you!
+        </Title>
+        <Text color="dark.5" maw={500}>
           &ldquo;We would like to extend our sincerest gratitude to all of our sponsors for their
           invaluable support and contribution towards JSON Crack.&rdquo;
         </Text>
       </Container>
       <Container>
-        <Title order={3} pb="xl">
+        <Title color="dark.3" order={3} pb="xl">
           Sponsors
         </Title>
         <Grid gutter={30}>
@@ -43,7 +45,7 @@ const Oss: React.FC<{ sponsors: any[] }> = ({ sponsors }) => {
             <Grid.Col span="content" key={sponsor.handle}>
               <Link href={sponsor.profile}>
                 <Image radius="md" width={"4rem"} src={sponsor.avatar} alt={sponsor.handle} />
-                <Text pt="sm" align="center" fz="xs">
+                <Text color="dark.3" pt="sm" align="center" fz="xs">
                   {sponsor.handle}
                 </Text>
               </Link>

@@ -164,7 +164,6 @@ export const PremiumView = () => (
           </ThemeIcon>
         }
       >
-        <List.Item>No Ads</List.Item>
         <List.Item>Edit directly on graph</List.Item>
         <List.Item>JSON Schema support</List.Item>
         <List.Item>Visualize data at full capability</List.Item>

@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import styled from "styled-components";
-import { MediaQuery, Text } from "@mantine/core";
+import { MediaQuery, Text, Title } from "@mantine/core";
 import { Prism } from "@mantine/prism";
 import Layout from "src/layout/Layout";
 
@@ -14,6 +14,7 @@ const StyledFrame = styled.iframe`
 
 const StyledPage = styled.div`
   padding: 0 5%;
+  color: black;
 `;
 
 const StyledContent = styled.section`
@@ -61,7 +62,9 @@ const Docs = () => {
       <StyledPage>
         <h1>Documentation</h1>
         <StyledContent>
-          <h2># Fetching from URL</h2>
+          <Title order={2} color="dark">
+            # Fetching from URL
+          </Title>
           <StyledContentBody>
             <StyledDescription>
               By adding <StyledHighlight>?json=https://catfact.ninja/fact</StyledHighlight> query at
@@ -90,7 +93,9 @@ const Docs = () => {
           </StyledContentBody>
         </StyledContent>
         <StyledContent>
-          <h2># Embed Saved JSON</h2>
+          <Title order={2} color="dark">
+            # Embed Saved JSON
+          </Title>
           <StyledContentBody>
             <StyledDescription>
               Just like fetching from URL above, you can embed saved public json by adding the json
@@ -110,7 +115,9 @@ const Docs = () => {
           </StyledContentBody>
         </StyledContent>
         <StyledContent>
-          <h2># Communicating with API</h2>
+          <Title order={2} color="dark">
+            # Communicating with API
+          </Title>
           <h3>◼︎ Post Message to Embed</h3>
           <StyledContentBody>
             <StyledDescription>

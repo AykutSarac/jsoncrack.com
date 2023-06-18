@@ -14,7 +14,7 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 400;
     font-size: 16px;
     font-family: ${monaSans.style.fontFamily};
-    background: #141517;
+    background: #F1F1F1 !important;
 
     @media only screen and (max-width: 768px) {
       background-position: right;

@@ -5,6 +5,7 @@ import { ThemeProvider } from "styled-components";
 import toast from "react-hot-toast";
 import { darkTheme, lightTheme } from "src/constants/theme";
 import { Tools } from "src/containers/Editor/LiveEditor/Tools";
+import { EditorMantine } from "src/layout/EditorMantine";
 import useFile from "src/store/useFile";
 import useGraph from "src/store/useGraph";
 
@@ -23,7 +24,8 @@ const WidgetPage = () => {
   const { query, push, isReady } = useRouter();
   const [theme, setTheme] = React.useState("dark");
   const fetchFile = useFile(state => state.fetchFile);
-  const setGraph = useGraph(state => state.setGraph);
+  const setContents = useFile(state => state.setContents);
+  const setDirection = useGraph(state => state.setDirection);
   const clearGraph = useGraph(state => state.clearGraph);
 
   React.useEffect(() => {
@@ -42,7 +44,8 @@ const WidgetPage = () => {
           setTheme(event.data.options.theme);
         }
 
-        setGraph(event.data.json, event.data.options);
+        setContents({ contents: event.data.json, hasChanges: false });
+        setDirection(event.data.options?.direction);
       } catch (error) {
         console.error(error);
         toast.error("Invalid JSON!");
@@ -51,13 +54,15 @@ const WidgetPage = () => {
 
     window.addEventListener("message", handler);
     return () => window.removeEventListener("message", handler);
-  }, [setGraph, theme]);
+  }, [setContents, setDirection, theme]);
 
   return (
-    <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
-      <Tools isWidget />
-      <Graph isWidget />
-    </ThemeProvider>
+    <EditorMantine>
+      <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
+        <Tools isWidget />
+        <Graph isWidget />
+      </ThemeProvider>
+    </EditorMantine>
   );
 };
 

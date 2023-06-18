@@ -1,13 +1,15 @@
-import { parse } from "jsonc-parser";
 import debounce from "lodash.debounce";
 import _get from "lodash.get";
 import _set from "lodash.set";
 import { toast } from "react-hot-toast";
 import { create } from "zustand";
 import { defaultJson } from "src/constants/data";
-import { getFromCloud } from "src/services/json";
+import { FileFormat } from "src/constants/file";
+import { getFromCloud, saveToCloud } from "src/services/json";
+import { contentToJson, jsonToContent } from "src/utils/json/jsonAdapter";
 import useGraph from "./useGraph";
 import useJson from "./useJson";
+import useStored from "./useStored";
 import useUser from "./useUser";
 
 type SetContents = {
@@ -18,16 +20,19 @@ type SetContents = {
 
 interface JsonActions {
   getContents: () => string;
+  getFormat: () => FileFormat;
   getHasChanges: () => boolean;
-  setError: (error: boolean) => void;
+  setError: (error: object | null) => void;
   setHasChanges: (hasChanges: boolean) => void;
   setContents: (data: SetContents) => void;
+  saveToCloud: (isNew?: boolean) => void;
   fetchFile: (fileId: string) => void;
   fetchUrl: (url: string) => void;
+  editContents: (path: string, value: string, callback?: () => void) => void;
+  setFormat: (format: FileFormat) => void;
   clear: () => void;
   setFile: (fileData: File) => void;
   setJsonSchema: (jsonSchema: object | null) => void;
-  editContents: (path: string, value: string, callback?: () => void) => void;
 }
 
 export type File = {
@@ -35,14 +40,16 @@ export type File = {
   name: string;
   json: string;
   private: boolean;
+  format?: FileFormat;
   createdAt: string;
   updatedAt: string;
 };
 
 const initialStates = {
   fileData: null as File | null,
+  format: FileFormat.JSON,
   contents: defaultJson,
-  hasError: false,
+  error: null as any,
   hasChanges: false,
   jsonSchema: null as object | null,
 };
@@ -56,7 +63,7 @@ const isURL = (value: string) => {
 };
 
 const debouncedUpdateJson = debounce(
-  (value: string) => useJson.getState().setJson(JSON.stringify(parse(value as string), null, 2)),
+  (value: unknown) => useJson.getState().setJson(JSON.stringify(value, null, 2)),
   800
 );
 
@@ -73,7 +80,6 @@ const filterArrayAndObjectFields = (obj: object) => {
 
   return result;
 };
-
 const useFile = create<FileStates & JsonActions>()((set, get) => ({
   ...initialStates,
   clear: () => {
@@ -84,18 +90,61 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
     if (useUser.getState().premium) set({ jsonSchema });
   },
   setFile: fileData => {
-    set({ fileData });
+    set({ fileData, format: fileData.format });
     get().setContents({ contents: fileData.json, hasChanges: false });
   },
   getContents: () => get().contents,
+  getFormat: () => get().format,
   getHasChanges: () => get().hasChanges,
-  setContents: ({ contents, hasChanges = true }) => {
-    if (!contents || get().hasError) return;
-    set({ ...(contents && { contents }), hasChanges });
-    debouncedUpdateJson(contents);
+  setFormat: async format => {
+    try {
+      const contentJson = await contentToJson(get().contents, get().format);
+      const jsonContent = await jsonToContent(JSON.stringify(contentJson, null, 2), format);
+      set({ format });
+      get().setContents({ contents: jsonContent, hasChanges: false });
+    } catch (error) {
+      get().clear();
+      console.info("The content was unable to be converted, so it was cleared instead.");
+    }
   },
-  setError: hasError => set({ hasError }),
+  setContents: async ({ contents, hasChanges = true, skipUpdate = false }) => {
+    try {
+      set({ ...(contents && { contents }), error: null, hasChanges });
+      const json = await contentToJson(get().contents, get().format);
+      if (!useStored.getState().liveTransform && skipUpdate) return;
+
+      debouncedUpdateJson(json);
+    } catch (error: any) {
+      if (error?.mark?.snippet) return set({ error: error.mark.snippet });
+      if (error?.message) set({ error: error.message });
+    }
+  },
+  setError: error => set({ error }),
   setHasChanges: hasChanges => set({ hasChanges }),
+  saveToCloud: async (isNew = true) => {
+    try {
+      const url = new URL(window.location.href);
+      const params = new URLSearchParams(url.search);
+      const jsonQuery = params.get("doc");
+
+      toast.loading("Saving File...", { id: "fileSave" });
+      const res = await saveToCloud(isNew ? null : jsonQuery, get().contents, get().format);
+
+      if (res.errors && res.errors.items.length > 0) throw res.errors;
+
+      toast.success("File saved to cloud", { id: "fileSave" });
+      set({ hasChanges: false });
+      return res.data._id;
+    } catch (error: any) {
+      if (error?.items?.length > 0) {
+        toast.error(error.items[0].message, { id: "fileSave", duration: 5000 });
+        return undefined;
+      }
+
+      toast.error("Failed to save File!", { id: "fileSave" });
+      return undefined;
+    }
+  },
   fetchUrl: async url => {
     try {
       const res = await fetch(url);
@@ -103,7 +152,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       const jsonStr = JSON.stringify(json, null, 2);
 
       useGraph.getState().setGraph(jsonStr);
-      get().setContents({ contents: jsonStr });
+      return useJson.setState({ json: jsonStr, loading: false });
     } catch (error) {
       get().clear();
       toast.error("Failed to fetch document from URL!");
@@ -129,7 +178,6 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       const pathJson = _get(JSON.parse(useJson.getState().json), path.replace("{Root}.", ""));
       const changedValue = JSON.parse(value);
 
-      // check if array string value
       if (typeof changedValue !== "string") {
         tempValue = {
           ...filterArrayAndObjectFields(pathJson),
@@ -145,7 +193,8 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
         tempValue
       );
 
-      get().setContents({ contents: JSON.stringify(newJson, null, 2) });
+      const contents = await jsonToContent(JSON.stringify(newJson, null, 2), get().format);
+      get().setContents({ contents });
       if (callback) callback();
     } catch (error) {
       toast.error("Invalid Property!");
