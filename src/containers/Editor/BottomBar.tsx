@@ -110,15 +110,15 @@ export const BottomBar = () => {
     if (
       hasChanges &&
       !error &&
-      (typeof query.doc === "string" || typeof query.doc === "undefined")
+      (typeof query.json === "string" || typeof query.json === "undefined")
     ) {
       try {
         setIsUpdating(true);
         toast.loading("Saving document...", { id: "fileSave" });
-        const res = await saveToCloud(query?.doc ?? null, getContents(), getFormat());
+        const res = await saveToCloud(query?.json ?? null, getContents(), getFormat());
 
         if (res.errors && res.errors.items.length > 0) throw res.errors;
-        if (res.data._id) replace({ query: { doc: res.data._id } });
+        if (res.data._id) replace({ query: { json: res.data._id } });
 
         toast.success("Document saved to cloud", { id: "fileSave" });
         setHasChanges(false);
@@ -137,7 +137,7 @@ export const BottomBar = () => {
     getContents,
     getFormat,
     hasChanges,
-    query.doc,
+    query.json,
     replace,
     setHasChanges,
     setVisible,
