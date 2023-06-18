@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import { Flex, Text } from "@mantine/core";
+import { Badge, Flex, Popover, Text } from "@mantine/core";
 import toast from "react-hot-toast";
 import {
   AiOutlineCloudSync,
@@ -12,7 +12,8 @@ import {
   AiOutlineUnlock,
 } from "react-icons/ai";
 import { MdReportGmailerrorred, MdOutlineCheckCircleOutline } from "react-icons/md";
-import { VscAccount, VscWorkspaceTrusted } from "react-icons/vsc";
+import { TbTransform } from "react-icons/tb";
+import { VscAccount, VscSync, VscSyncIgnored, VscWorkspaceTrusted } from "react-icons/vsc";
 import { updateJson } from "src/services/json";
 import useFile from "src/store/useFile";
 import useModal from "src/store/useModal";
@@ -86,9 +87,12 @@ export const BottomBar = () => {
   const user = useUser(state => state.user);
   const premium = useUser(state => state.premium);
   const lightmode = useStored(state => state.lightmode);
+  const toggleLiveTransform = useStored(state => state.toggleLiveTransform);
+  const liveTransform = useStored(state => state.liveTransform);
   const hasChanges = useFile(state => state.hasChanges);
-  const hasErrors = useFile(state => state.hasError);
+  const error = useFile(state => state.error);
   const getContents = useFile(state => state.getContents);
+  const setContents = useFile(state => state.setContents);
 
   const setVisible = useModal(state => state.setVisible);
   const setHasChanges = useFile(state => state.setHasChanges);
@@ -156,6 +160,11 @@ export const BottomBar = () => {
         <StyledBottomBarItem onClick={handleLoginClick}>
           <VscAccount />
           {user ? user.name : "Login"}
+          {premium && (
+            <Badge size="sm" color="orange" radius="sm" fw="bold">
+              PREMIUM
+            </Badge>
+          )}
         </StyledBottomBarItem>
         {!premium && (
           <StyledBottomBarItem onClick={() => setVisible("premium")(true)}>
@@ -163,12 +172,19 @@ export const BottomBar = () => {
             Upgrade to Premium
           </StyledBottomBarItem>
         )}
-        <StyledBottomBarItem error={hasErrors}>
-          {hasErrors ? (
-            <Flex align="center" gap={2}>
-              <MdReportGmailerrorred color="red" size={16} />
-              <Text fw="bold">Invalid Format</Text>
-            </Flex>
+        <StyledBottomBarItem error={!!error}>
+          {error ? (
+            <Popover width="auto" shadow="md" position="top" withArrow>
+              <Popover.Target>
+                <Flex align="center" gap={2}>
+                  <MdReportGmailerrorred color="red" size={16} />
+                  <Text fw="bold">Invalid Format</Text>
+                </Flex>
+              </Popover.Target>
+              <Popover.Dropdown sx={{ pointerEvents: "none" }}>
+                <Text size="xs">{error}</Text>
+              </Popover.Dropdown>
+            </Popover>
           ) : (
             <Flex align="center" gap={2}>
               <MdOutlineCheckCircleOutline />
@@ -193,6 +209,23 @@ export const BottomBar = () => {
               Share
             </StyledBottomBarItem>
           </>
+        )}
+        {liveTransform ? (
+          <StyledBottomBarItem onClick={() => toggleLiveTransform(false)}>
+            <VscSync />
+            <Text>Live Transform</Text>
+          </StyledBottomBarItem>
+        ) : (
+          <StyledBottomBarItem onClick={() => toggleLiveTransform(true)}>
+            <VscSyncIgnored />
+            <Text>Manual Transform</Text>
+          </StyledBottomBarItem>
+        )}
+        {!liveTransform && (
+          <StyledBottomBarItem onClick={() => setContents({})}>
+            <TbTransform />
+            Transform
+          </StyledBottomBarItem>
         )}
       </StyledLeft>
 

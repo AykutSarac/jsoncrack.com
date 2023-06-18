@@ -39,7 +39,7 @@ export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
               </ThemeIcon>
             }
           >
-            <List.Item>Store up to 15 files</List.Item>
+            <List.Item>Store/Share up to 15 files</List.Item>
             <List.Item>Visualize standard size data</List.Item>
           </List>
         </Stack>
@@ -71,7 +71,6 @@ export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
               </ThemeIcon>
             }
           >
-            <List.Item>No Ads</List.Item>
             <List.Item>Edit directly on graph</List.Item>
             <List.Item>JSON Schema support</List.Item>
             <List.Item>Visualize data at full capability</List.Item>

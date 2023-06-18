@@ -96,7 +96,7 @@ export function AuthenticationForm(props: PaperProps) {
   }
 
   return (
-    <Paper radius="md" p="xl" withBorder {...props}>
+    <Paper radius="md" p="xl" bg="gray.1" withBorder {...props}>
       <Text size="lg" weight={500}>
         Welcome to JSON Crack, {type} with
       </Text>
@@ -273,19 +273,15 @@ function ResetPassword(props: PaperProps) {
 }
 
 const SignIn = () => {
-  const { isReady, replace, push, query } = useRouter();
-  const checkSession = useUser(state => state.checkSession);
+  const { isReady, push, query } = useRouter();
   const isAuthenticated = useUser(state => state.isAuthenticated);
+  const checkSession = useUser(state => state.checkSession);
   const isPasswordReset = query?.action === "reset-pwd" && !query?.error;
-
-  const isAuthenticating = React.useMemo(() => {
-    if (query?.action === "oauth-signin" && query?.status === "200") return true;
-    return false;
-  }, [query]);
 
   React.useEffect(() => {
     if (isAuthenticated) push("/editor");
-  }, [isReady, isAuthenticated, push]);
+    else checkSession();
+  }, [isReady, isAuthenticated, push, checkSession]);
 
   return (
     <div>
@@ -297,25 +293,7 @@ const SignIn = () => {
         <StyledHeroSection>
           <JSONCrackLogo />
         </StyledHeroSection>
-        {isAuthenticating ? (
-          <Center>
-            <Stack my={60} w={250} spacing="xl">
-              <Button size="lg" color="orange" onClick={checkSession}>
-                JSON Crack
-              </Button>
-              <Button
-                component="a"
-                href={window.location.href.replace(window.location.host, "editor.herowand.com")}
-                size="lg"
-                color="teal"
-              >
-                Herowand Editor
-              </Button>
-            </Stack>
-          </Center>
-        ) : (
-          <Center pt={60}>{isPasswordReset ? <ResetPassword /> : <AuthenticationForm />}</Center>
-        )}
+        <Center pt={60}>{isPasswordReset ? <ResetPassword /> : <AuthenticationForm />}</Center>
       </StyledPageWrapper>
       <Footer />
     </div>

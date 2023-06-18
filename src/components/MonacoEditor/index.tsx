@@ -4,7 +4,6 @@ import Editor, { loader, useMonaco } from "@monaco-editor/react";
 import { Loading } from "src/layout/Loading";
 import useFile from "src/store/useFile";
 import useStored from "src/store/useStored";
-import { CarbonAds } from "../CarbonAds";
 
 loader.config({
   paths: {
@@ -35,6 +34,7 @@ export const MonacoEditor = () => {
   const jsonSchema = useFile(state => state.jsonSchema);
   const getHasChanges = useFile(state => state.getHasChanges);
   const theme = useStored(state => (state.lightmode ? "light" : "vs-dark"));
+  const fileType = useFile(state => state.format);
 
   React.useEffect(() => {
     monaco?.languages.json.jsonDefaults.setDiagnosticsOptions({
@@ -72,16 +72,15 @@ export const MonacoEditor = () => {
   return (
     <StyledWrapper>
       <Editor
-        language="json"
         height="100%"
+        language={fileType}
         theme={theme}
         value={contents}
         options={editorOptions}
-        onValidate={errors => setError(!!errors.length)}
+        onValidate={errors => setError(errors[0]?.message)}
         onChange={contents => setContents({ contents, skipUpdate: true })}
         loading={<Loading message="Loading Editor..." />}
       />
-      <CarbonAds />
     </StyledWrapper>
   );
 };

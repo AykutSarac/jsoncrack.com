@@ -17,6 +17,7 @@ import {
 } from "src/containers/Modals";
 import { CloudModal } from "src/containers/Modals/CloudModal";
 import useModal from "src/store/useModal";
+import { EditorMantine } from "../EditorMantine";
 
 type ModalComponent = { key: Modal; component: React.FC<ModalProps> };
 
@@ -41,13 +42,13 @@ export const ModalController = () => {
   const modalStates = useModal(state => modalComponents.map(modal => state[modal.key]));
 
   return (
-    <>
+    <EditorMantine>
       {modalComponents.map(({ key, component }, index) => {
         const ModalComponent = component;
         const opened = modalStates[index];
 
         return <ModalComponent key={key} opened={opened} onClose={() => setVisible(key)(false)} />;
       })}
-    </>
+    </EditorMantine>
   );
 };

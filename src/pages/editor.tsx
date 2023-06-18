@@ -6,6 +6,7 @@ import { defaultJson } from "src/constants/data";
 import { BottomBar } from "src/containers/Editor/BottomBar";
 import { Tools } from "src/containers/Editor/LiveEditor/Tools";
 import Panes from "src/containers/Editor/Panes";
+import { EditorMantine } from "src/layout/EditorMantine";
 import { Loading } from "src/layout/Loading";
 import useFile from "src/store/useFile";
 import useJson from "src/store/useJson";
@@ -48,19 +49,21 @@ const EditorPage: React.FC = () => {
   if (loading) return <Loading message="Fetching JSON from cloud..." />;
 
   return (
-    <StyledEditorWrapper>
-      <Head>
-        <title>Editor | JSON Crack</title>
-        <meta name="description" content="View your JSON data in graphs instantly." />
-      </Head>
-      <StyledPageWrapper>
-        <Tools />
-        <StyledEditorWrapper>
-          <Panes />
-        </StyledEditorWrapper>
-      </StyledPageWrapper>
-      <BottomBar />
-    </StyledEditorWrapper>
+    <EditorMantine>
+      <StyledEditorWrapper>
+        <Head>
+          <title>Editor | JSON Crack</title>
+          <meta name="description" content="View your JSON data in graphs instantly." />
+        </Head>
+        <StyledPageWrapper>
+          <Tools />
+          <StyledEditorWrapper>
+            <Panes />
+          </StyledEditorWrapper>
+        </StyledPageWrapper>
+        <BottomBar />
+      </StyledEditorWrapper>
+    </EditorMantine>
   );
 };
 

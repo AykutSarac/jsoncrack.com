@@ -59,7 +59,7 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       ...options,
     });
   },
-  setDirection: direction => {
+  setDirection: (direction = "RIGHT") => {
     set({ direction });
     setTimeout(() => get().centerView(), 200);
   },

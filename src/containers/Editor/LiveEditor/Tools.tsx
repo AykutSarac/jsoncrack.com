@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Badge, Flex, Group, MediaQuery, Menu, Text } from "@mantine/core";
+import { Flex, Group, MediaQuery, Menu, Select, Text } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
@@ -18,6 +18,9 @@ import {
   VscSettingsGear,
 } from "react-icons/vsc";
 import { SearchInput } from "src/components/SearchInput";
+import { FileFormat } from "src/constants/file";
+import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
+import useFile from "src/store/useFile";
 import useGraph from "src/store/useGraph";
 import useJson from "src/store/useJson";
 import useModal from "src/store/useModal";
@@ -104,8 +107,10 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
   const collapseGraph = useGraph(state => state.collapseGraph);
   const lightmode = useStored(state => state.lightmode);
   const premium = useUser(state => state.premium);
+  const setFormat = useFile(state => state.setFormat);
+  const format = useFile(state => state.format);
 
-  const CoreKey = navigator.userAgent.indexOf("Mac OS X") ? "⌘" : "CTRL";
+  const CoreKey = React.useMemo(() => (navigator.userAgent.indexOf("Mac OS X") ? "⌘" : "CTRL"), []);
 
   const toggleEditor = () => toggleFullscreen(!fullscreen);
 
@@ -164,13 +169,7 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
           target={isIframe() ? "_blank" : "_parent"}
         >
           <Flex gap="xs" align="center" justify="center">
-            <StyledLogo
-              src="/assets/icon.png"
-              width="auto"
-              height="16"
-              alt="logo"
-              invert={lightmode}
-            />
+            <JSONCrackLogo fontSize="1.2em" />
           </Flex>
         </StyledToolElement>
       )}
@@ -179,20 +178,22 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
           <Group spacing="xs" position="left" w="100%" noWrap>
             <StyledToolElement as="a" title="JSON Crack" href="https://jsoncrack.com">
               <Flex gap="xs" align="center" justify="center">
-                <StyledLogo
-                  src="/assets/icon.png"
-                  width="auto"
-                  height="16"
-                  alt="logo"
-                  invert={lightmode}
-                />
-                {premium && (
-                  <Badge color="orange" radius="sm" fz="xs" fw="bold">
-                    PREMIUM
-                  </Badge>
-                )}
+                <JSONCrackLogo fontSize="1.2em" />
               </Flex>
             </StyledToolElement>
+            <Select
+              defaultValue="json"
+              size="xs"
+              value={format}
+              onChange={setFormat}
+              data={[
+                { value: FileFormat.JSON, label: "JSON" },
+                { value: FileFormat.YAML, label: "YAML" },
+                { value: FileFormat.XML, label: "XML" },
+                { value: FileFormat.TOML, label: "TOML" },
+                { value: FileFormat.CSV, label: "CSV" },
+              ]}
+            />
             <StyledToolElement title="Import File" onClick={() => setVisible("import")(true)}>
               Import
             </StyledToolElement>

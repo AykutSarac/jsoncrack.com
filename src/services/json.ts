@@ -1,10 +1,16 @@
 import dayjs from "dayjs";
 import { decompressFromBase64 } from "lz-string";
 import { altogic, AltogicResponse } from "src/api/altogic";
+import { FileFormat } from "src/constants/file";
 import { File } from "src/store/useFile";
 
-const saveToCloud = async (contents: string): Promise<AltogicResponse<{ _id: string }>> => {
-  return await altogic.endpoint.post("json", { json: contents });
+const saveToCloud = async (
+  id: string | null,
+  contents: string,
+  format: FileFormat
+): Promise<AltogicResponse<{ _id: string }>> => {
+  if (id) return await altogic.endpoint.put(`json/${id}`, { json: contents, format });
+  return await altogic.endpoint.post("json", { json: contents, format });
 };
 
 const getFromCloud = async (id: string) => {
