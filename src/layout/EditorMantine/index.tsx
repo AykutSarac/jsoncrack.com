@@ -17,6 +17,9 @@ export const EditorMantine: React.FC<{ children: React.ReactNode }> = ({ childre
         theme={{
           colorScheme: lightmode ? "light" : "dark",
           fontFamily: monaSans.style.fontFamily,
+          headings: {
+            fontFamily: monaSans.style.fontFamily,
+          },
           components: {
             Divider: {
               styles: () => ({

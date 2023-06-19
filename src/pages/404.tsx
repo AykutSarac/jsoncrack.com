@@ -1,7 +1,8 @@
 import React from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import { Button } from "@mantine/core";
+import { Button, Text, Title } from "@mantine/core";
+import Layout from "src/layout/Layout";
 
 const StyledNotFound = styled.div`
   display: flex;
@@ -33,18 +34,18 @@ const NotFound: React.FC = () => {
   const router = useRouter();
 
   return (
-    <StyledNotFound>
-      <StyledImageWrapper>
-        <img src="/assets/404.svg" alt="not found" width={300} height={400} />
-      </StyledImageWrapper>
-      <StyledMessage>WIZARDS BEHIND CURTAINS?</StyledMessage>
-      <StyledSubMessage>
-        Looks like you&apos;re lost, let&apos;s head back to the home!
-      </StyledSubMessage>
-      <Button type="button" onClick={() => router.push("/")}>
-        Go Home
-      </Button>
-    </StyledNotFound>
+    <Layout>
+      <StyledNotFound>
+        <StyledImageWrapper>
+          <img src="/assets/404.svg" alt="not found" width={300} height={400} />
+        </StyledImageWrapper>
+        <Title color="dark">WIZARDS BEHIND CURTAINS?</Title>
+        <Text color="dark">Looks like you&apos;re lost, let&apos;s head back to the home!</Text>
+        <Button mt="lg" size="lg" type="button" onClick={() => router.push("/")}>
+          Go Home
+        </Button>
+      </StyledNotFound>
+    </Layout>
   );
 };
 

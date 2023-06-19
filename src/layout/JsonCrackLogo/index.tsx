@@ -21,7 +21,7 @@ const StyledGradientText = styled.span`
 
 export const JSONCrackLogo: React.FC<{ fontSize?: string }> = ({ fontSize = "1.2rem" }) => {
   return (
-    <Link href="/">
+    <Link href="/" prefetch={false}>
       <StyledTitle fontSize={fontSize}>
         <StyledGradientText>JSON</StyledGradientText> CRACK
       </StyledTitle>

@@ -1,6 +1,5 @@
 import React from "react";
 import Head from "next/head";
-import Link from "next/link";
 import { Button, Center, Container, Grid, Image, Text, Title } from "@mantine/core";
 import { VscHeart } from "react-icons/vsc";
 import Layout from "src/layout/Layout";
@@ -43,12 +42,12 @@ const Oss: React.FC<{ sponsors: any[] }> = ({ sponsors }) => {
         <Grid gutter={30}>
           {sponsors?.map(sponsor => (
             <Grid.Col span="content" key={sponsor.handle}>
-              <Link href={sponsor.profile}>
+              <a href={sponsor.profile}>
                 <Image radius="md" width={"4rem"} src={sponsor.avatar} alt={sponsor.handle} />
                 <Text color="dark.3" pt="sm" align="center" fz="xs">
                   {sponsor.handle}
                 </Text>
-              </Link>
+              </a>
             </Grid.Col>
           ))}
         </Grid>

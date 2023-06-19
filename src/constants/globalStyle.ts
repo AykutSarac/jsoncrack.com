@@ -1,19 +1,10 @@
-import localFont from "next/font/local";
 import { createGlobalStyle } from "styled-components";
-
-const monaSans = localFont({
-  src: "../pages/Mona-Sans.woff2",
-  variable: "--mona-sans",
-  display: "swap",
-  fallback: ["Arial, Helvetica, sans-serif", "Tahoma, Verdana, sans-serif"],
-});
 
 const GlobalStyle = createGlobalStyle`
   html, body {
     color: ${({ theme }) => theme.FULL_WHITE} !important;
     font-weight: 400;
     font-size: 16px;
-    font-family: ${monaSans.style.fontFamily};
     background: #F1F1F1 !important;
 
     @media only screen and (max-width: 768px) {
