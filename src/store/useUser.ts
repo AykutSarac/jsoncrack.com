@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/nextjs";
 import toast from "react-hot-toast";
 import { create } from "zustand";
 import { altogic } from "src/api/altogic";
@@ -71,6 +72,7 @@ const useUser = create<UserStates & UserActions>()(set => ({
       altogic.auth.setSession(currentSession);
       const { data: premiumData } = await altogic.endpoint.get("/isPremium");
 
+      Sentry.setUser({ id: user._id, email: user.email, username: user.name });
       set({ user: user as User, isAuthenticated: true, premium: premiumData.premium });
     } else if (new URLSearchParams(window.location.search).get("access_token")) {
       const { errors, user } = await altogic.auth.getAuthGrant();
@@ -79,8 +81,12 @@ const useUser = create<UserStates & UserActions>()(set => ({
         return;
       }
 
-      const { data: premiumData } = await altogic.endpoint.get("/isPremium");
-      set({ user: user as User, isAuthenticated: true, premium: premiumData.premium });
+      if (user) {
+        const { data: premiumData } = await altogic.endpoint.get("/isPremium");
+
+        Sentry.setUser({ id: user._id, email: user.email, username: user.name });
+        set({ user: user as User, isAuthenticated: true, premium: premiumData.premium });
+      }
     }
   },
 }));

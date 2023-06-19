@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 
-export const HoverCard = () => {
+export const HovercardAds = () => {
   const router = useRouter();
 
   React.useEffect(() => {

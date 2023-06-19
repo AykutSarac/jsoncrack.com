@@ -18,7 +18,7 @@ import {
 import { FaChevronRight } from "react-icons/fa";
 import { SiVisualstudiocode } from "react-icons/si";
 import { Typewriter } from "react-simple-typewriter";
-import { HoverCard } from "src/components/FlexBar";
+import { HovercardAds } from "src/components/HovercardAds";
 import { lightTheme } from "src/constants/theme";
 import { Footer } from "src/layout/Footer";
 import { Navbar } from "src/layout/Navbar";
@@ -321,7 +321,7 @@ export const HomePage = () => {
       <StatsBanner />
       <Features />
       <HeroBottom />
-      <HoverCard />
+      <HovercardAds />
       <Footer />
     </ThemeProvider>
   );

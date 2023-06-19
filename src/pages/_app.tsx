@@ -1,5 +1,6 @@
 import React from "react";
 import type { AppProps } from "next/app";
+import { useRouter } from "next/router";
 import { ThemeProvider } from "styled-components";
 import { MantineProvider } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -10,6 +11,7 @@ import GlobalStyle from "src/constants/globalStyle";
 import { lightTheme } from "src/constants/theme";
 import { ExternalMode } from "src/layout/DevMode";
 import { ModalController } from "src/layout/ModalController";
+import * as gtag from "src/utils/gtag";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,11 +23,17 @@ const queryClient = new QueryClient({
 });
 
 function JsonCrack({ Component, pageProps }: AppProps) {
+  const router = useRouter();
   const [isReady, setReady] = React.useState(false);
 
   React.useEffect(() => {
+    const handleRouteChange = (url: string) => gtag.pageview(url);
+    router.events.on("routeChangeComplete", handleRouteChange);
     setReady(true);
-  }, []);
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router.events]);
 
   if (isReady)
     return (
