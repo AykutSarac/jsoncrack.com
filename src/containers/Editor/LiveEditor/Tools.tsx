@@ -162,21 +162,20 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
   return (
     <StyledTools>
       {isWidget && (
-        <StyledToolElement
-          as="a"
-          title="JSON Crack"
-          href={logoURL}
-          target={isIframe() ? "_blank" : "_parent"}
-        >
+        <StyledToolElement title="JSON Crack">
           <Flex gap="xs" align="center" justify="center">
-            <JSONCrackLogo fontSize="1.2em" />
+            <JSONCrackLogo
+              fontSize="1.2em"
+              href={logoURL}
+              target={isIframe() ? "_blank" : "_parent"}
+            />
           </Flex>
         </StyledToolElement>
       )}
       {!isWidget && (
         <MediaQuery smallerThan="xs" styles={{ display: "none" }}>
           <Group spacing="xs" position="left" w="100%" noWrap>
-            <StyledToolElement as="a" title="JSON Crack" href="https://jsoncrack.com">
+            <StyledToolElement title="JSON Crack">
               <Flex gap="xs" align="center" justify="center">
                 <JSONCrackLogo fontSize="1.2em" />
               </Flex>
