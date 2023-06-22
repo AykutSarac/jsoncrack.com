@@ -90,7 +90,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
     if (useUser.getState().premium) set({ jsonSchema });
   },
   setFile: fileData => {
-    set({ fileData, format: fileData.format });
+    set({ fileData, format: fileData.format || FileFormat.JSON });
     get().setContents({ contents: fileData.json, hasChanges: false });
   },
   getContents: () => get().contents,
@@ -152,7 +152,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       const json = await res.json();
       const jsonStr = JSON.stringify(json, null, 2);
 
-      useGraph.getState().setGraph(jsonStr);
+      get().setContents({ contents: jsonStr });
       return useJson.setState({ json: jsonStr, loading: false });
     } catch (error) {
       get().clear();
