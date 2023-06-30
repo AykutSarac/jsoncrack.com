@@ -2,7 +2,7 @@ import React from "react";
 import dynamic from "next/dynamic";
 import styled from "styled-components";
 import { ReactZoomPanPinchRef, TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
-import { CanvasRef, Edge, EdgeProps, ElkRoot, NodeProps } from "reaflow";
+import { Edge, EdgeProps, ElkRoot, NodeProps } from "reaflow";
 import { CustomNode } from "src/components/CustomNode";
 import useToggleHide from "src/hooks/useToggleHide";
 import useGraph from "src/store/useGraph";
@@ -65,7 +65,6 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
   const centerView = useGraph(state => state.centerView);
   const setSelectedNode = useGraph(state => state.setSelectedNode);
   const setVisible = useModal(state => state.setVisible);
-  const canvasRef = React.useRef<CanvasRef>(null);
 
   const loading = useGraph(state => state.loading);
   const direction = useGraph(state => state.direction);
@@ -160,7 +159,6 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
           >
             <Canvas
               className="jsoncrack-canvas"
-              ref={canvasRef}
               nodes={nodes}
               edges={edges}
               maxHeight={paneHeight}
