@@ -35,16 +35,8 @@ const StyledEditorWrapper = styled.div<{ widget: boolean }>`
     linear-gradient(90deg, var(--line-color-1) 1.5px, transparent 1.5px),
     linear-gradient(var(--line-color-2) 1px, transparent 1px),
     linear-gradient(90deg, var(--line-color-2) 1px, transparent 1px);
-  background-position:
-    -1.5px -1.5px,
-    -1.5px -1.5px,
-    -1px -1px,
-    -1px -1px;
-  background-size:
-    100px 100px,
-    100px 100px,
-    20px 20px,
-    20px 20px;
+  background-position: -1.5px -1.5px, -1.5px -1.5px, -1px -1px, -1px -1px;
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
 
   :active {
     cursor: move;

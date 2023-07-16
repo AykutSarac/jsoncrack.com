@@ -64,32 +64,20 @@ const StyledPremiumView = styled.div`
 
   .glowing span:nth-child(3n + 1)::before {
     background: rgba(134, 255, 0, 1);
-    box-shadow:
-      0 0 20px rgba(134, 255, 0, 1),
-      0 0 40px rgba(134, 255, 0, 1),
-      0 0 60px rgba(134, 255, 0, 1),
-      0 0 80px rgba(134, 255, 0, 1),
-      0 0 0 8px rgba(134, 255, 0, 0.1);
+    box-shadow: 0 0 20px rgba(134, 255, 0, 1), 0 0 40px rgba(134, 255, 0, 1),
+      0 0 60px rgba(134, 255, 0, 1), 0 0 80px rgba(134, 255, 0, 1), 0 0 0 8px rgba(134, 255, 0, 0.1);
   }
 
   .glowing span:nth-child(3n + 2)::before {
     background: rgba(255, 214, 0, 1);
-    box-shadow:
-      0 0 20px rgba(255, 214, 0, 1),
-      0 0 40px rgba(255, 214, 0, 1),
-      0 0 60px rgba(255, 214, 0, 1),
-      0 0 80px rgba(255, 214, 0, 1),
-      0 0 0 8px rgba(255, 214, 0, 0.1);
+    box-shadow: 0 0 20px rgba(255, 214, 0, 1), 0 0 40px rgba(255, 214, 0, 1),
+      0 0 60px rgba(255, 214, 0, 1), 0 0 80px rgba(255, 214, 0, 1), 0 0 0 8px rgba(255, 214, 0, 0.1);
   }
 
   .glowing span:nth-child(3n + 3)::before {
     background: rgba(0, 226, 255, 1);
-    box-shadow:
-      0 0 20px rgba(0, 226, 255, 1),
-      0 0 40px rgba(0, 226, 255, 1),
-      0 0 60px rgba(0, 226, 255, 1),
-      0 0 80px rgba(0, 226, 255, 1),
-      0 0 0 8px rgba(0, 226, 255, 0.1);
+    box-shadow: 0 0 20px rgba(0, 226, 255, 1), 0 0 40px rgba(0, 226, 255, 1),
+      0 0 60px rgba(0, 226, 255, 1), 0 0 80px rgba(0, 226, 255, 1), 0 0 0 8px rgba(0, 226, 255, 0.1);
   }
 
   .glowing span:nth-child(3n + 1) {
