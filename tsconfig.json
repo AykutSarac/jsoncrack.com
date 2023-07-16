@@ -15,7 +15,8 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "typeRoots": ["types"]
   },
   "include": ["src", "next-env.d.ts",],
   "exclude": ["node_modules"]

@@ -33,13 +33,14 @@ function handleNoChildren(
 
   if (parentType === "property" && nextType !== "object" && nextType !== "array") {
     states.brothersParentId = myParentId;
-    if (nextType === undefined) {
+    if (nextType === undefined && Array.isArray(states.brothersNode)) {
       states.brothersNode.push([states.brotherKey, value]);
     } else {
       states.brotherKey = value;
     }
   } else if (parentType === "array") {
     const nodeFromArrayId = addNodeToGraph({ graph, text: String(value) });
+
     if (myParentId) {
       addEdgeToGraph(graph, myParentId, nodeFromArrayId);
     }
@@ -77,8 +78,9 @@ function handleHasChildren(
           const modifyNodes = [...graph.nodes];
           const foundNode = modifyNodes[findNodeIndex];
 
-          foundNode.text = foundNode.text.concat(states.brothersNode);
+          foundNode.text = foundNode.text.concat(states.brothersNode as any);
           const { width, height } = calculateNodeSize(foundNode.text, false);
+
           foundNode.width = width;
           foundNode.height = height;
 
@@ -87,6 +89,7 @@ function handleHasChildren(
         }
       } else {
         const brothersNodeId = addNodeToGraph({ graph, text: states.brothersNode });
+
         states.brothersNode = [];
 
         if (states.brothersParentId) {
@@ -142,6 +145,7 @@ function handleHasChildren(
   const traverseArray = () => {
     children.forEach((objectToTraverse, index, array) => {
       const nextType = array[index + 1]?.type;
+
       traverseObject(objectToTraverse, nextType);
     });
   };
@@ -166,10 +170,11 @@ function handleHasChildren(
         const modifyNodes = [...graph.nodes];
         const findNodeIndex = modifyNodes.findIndex(e => e.id === findBrothersNode?.id);
 
-        if (modifyNodes[findNodeIndex]) {
+        if (modifyNodes[findNodeIndex] && typeof states.brothersNode === "string") {
           modifyNodes[findNodeIndex].text += states.brothersNode;
 
           const { width, height } = calculateNodeSize(modifyNodes[findNodeIndex].text, false);
+
           modifyNodes[findNodeIndex].width = width;
           modifyNodes[findNodeIndex].height = height;
 
@@ -178,6 +183,7 @@ function handleHasChildren(
         }
       } else {
         const brothersNodeId = addNodeToGraph({ graph, text: states.brothersNode });
+
         states.brothersNode = [];
 
         if (states.brothersParentId) {
@@ -191,6 +197,7 @@ function handleHasChildren(
           parentId: states.brothersParentId,
           objectsFromArrayId: states.objectsFromArray[states.objectsFromArray.length - 1],
         };
+
         states.brothersNodeProps = [...states.brothersNodeProps, brothersNodeProps];
       }
     }
@@ -213,6 +220,7 @@ function handleHasChildren(
       graph.nodes = graph.nodes.map((node, index) => {
         if (index === parentIndex) {
           const childrenCount = myChildren.length;
+
           return { ...node, data: { ...node.data, childrenCount } };
         }
         return node;

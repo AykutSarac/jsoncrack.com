@@ -6,7 +6,24 @@
     "space-in-parens": "error",
     "no-empty": "error",
     "no-multiple-empty-lines": "error",
-    "no-irregular-whitespace": "error"
+    "no-irregular-whitespace": "error",
+    "strict": ["error", "never"],
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["error", "double", { "avoidEscape": true }],
+    "semi": ["error", "always"],
+    "padding-line-between-statements": [
+      "error",
+      { "blankLine": "always", "prev": ["const", "let", "var"], "next": "*" },
+      { "blankLine": "any", "prev": ["const", "let", "var"], "next": ["const", "let", "var"] }
+    ],
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "always",
+        "named": "never",
+        "asyncArrow": "always"
+      }
+    ]
   },
   "extends": ["next/core-web-vitals"],
   "plugins": ["prettier", "unused-imports"]

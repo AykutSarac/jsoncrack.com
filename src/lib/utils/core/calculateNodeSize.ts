@@ -12,6 +12,7 @@ export const isContentImage = (value: string | [string, string][]) => {
 
   const isImageURL = /(https?:\/\/.*\.(?:png|jpg|gif))/i.test(value);
   const isBase64 = value.startsWith("data:image/") && value.includes("base64");
+
   return isImageURL || isBase64;
 };
 
@@ -21,6 +22,7 @@ const calculateWidthAndHeight = (str: string, single = false) => {
   if (!str) return { width: 45, height: 45 };
 
   const dummyElement = document.createElement("div");
+
   dummyElement.style.whiteSpace = single ? "nowrap" : "pre-wrap";
   dummyElement.innerHTML = str;
   dummyElement.style.fontSize = "12px";
@@ -34,6 +36,7 @@ const calculateWidthAndHeight = (str: string, single = false) => {
 
   const width = dummyElement.offsetWidth + 4;
   const height = dummyElement.offsetHeight;
+
   document.body.removeChild(dummyElement);
 
   return { width, height };
@@ -49,6 +52,7 @@ export const calculateNodeSize = (text: string | [string, string][], isParent = 
   // check cache
   if (sizeCache.has(cacheKey)) {
     const size = sizeCache.get(cacheKey);
+
     if (size) return size;
   }
 
@@ -59,6 +63,7 @@ export const calculateNodeSize = (text: string | [string, string][], isParent = 
   }
 
   let sizes = calculateWidthAndHeight(lines, typeof text === "string");
+
   if (isImage) sizes = { width: 80, height: 80 };
   if (foldNodes) sizes.width = 300;
   if (isParent && foldNodes) sizes.width = 170;

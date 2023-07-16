@@ -1,15 +1,17 @@
 import React from "react";
 import type { AppProps } from "next/app";
+import dynamic from "next/dynamic";
 import { ThemeProvider } from "styled-components";
 import { MantineProvider } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Toaster } from "react-hot-toast";
-import { GoogleAnalytics } from "src/components/GoogleAnalytics";
 import { monaSans } from "src/constants/customFonts";
 import GlobalStyle from "src/constants/globalStyle";
 import { lightTheme } from "src/constants/theme";
-import { ExternalMode } from "src/layout/DevMode";
-import { ModalController } from "src/layout/ModalController";
+
+const Toaster = dynamic(() => import("react-hot-toast").then(c => c.Toaster));
+const ExternalMode = dynamic(() => import("src/layout/ExternalMode"));
+const GoogleAnalytics = dynamic(() => import("src/components/GoogleAnalytics"));
+const ModalController = dynamic(() => import("src/layout/ModalController"));
 
 const queryClient = new QueryClient({
   defaultOptions: {

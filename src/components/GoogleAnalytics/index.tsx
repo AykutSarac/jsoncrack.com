@@ -4,7 +4,7 @@ import Script from "next/script";
 const isDevelopment = process.env.NODE_ENV === "development";
 const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID;
 
-export const GoogleAnalytics: React.FC = () => {
+const GoogleAnalytics: React.FC = () => {
   if (isDevelopment) return null;
 
   return (
@@ -30,3 +30,5 @@ export const GoogleAnalytics: React.FC = () => {
     </>
   );
 };
+
+export default GoogleAnalytics;

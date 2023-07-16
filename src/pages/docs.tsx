@@ -133,7 +133,9 @@ const Docs = () => {
               where json is a string and options is an object that may contain the following:
               <MediaQuery smallerThan="sm" styles={{ display: "none" }}>
                 <Prism w={500} language="json">
-                  {`{\n  theme: "light" | "dark",\n  direction: "TOP" | "RIGHT" | "DOWN" | "LEFT"\n}`}
+                  {
+                    '{\n  theme: "light" | "dark",\n  direction: "TOP" | "RIGHT" | "DOWN" | "LEFT"\n}'
+                  }
                 </Prism>
               </MediaQuery>
             </StyledDescription>

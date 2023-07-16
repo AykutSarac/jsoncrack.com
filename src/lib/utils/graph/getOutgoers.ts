@@ -1,3 +1,5 @@
+import { NodeData, EdgeData } from "src/types/models";
+
 export const getOutgoers = (
   nodeId: string,
   nodes: NodeData[],
@@ -9,6 +11,7 @@ export const getOutgoers = (
 
   if (parent.includes(nodeId)) {
     const initialParentNode = nodes.find(n => n.id === nodeId);
+
     if (initialParentNode) outgoerNodes.push(initialParentNode);
   }
 

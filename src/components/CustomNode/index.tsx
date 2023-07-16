@@ -1,5 +1,6 @@
 import React from "react";
 import { Node, NodeProps } from "reaflow";
+import { NodeData } from "src/types/models";
 import { ObjectNode } from "./ObjectNode";
 import { TextNode } from "./TextNode";
 

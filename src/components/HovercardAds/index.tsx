@@ -6,6 +6,7 @@ export const HovercardAds = () => {
 
   React.useEffect(() => {
     const isAvailable = document.querySelectorAll("#_hellobar_")[0];
+
     if (typeof window._bsa !== "undefined" && window._bsa && !!!isAvailable) {
       window._bsa.init("hellobar", "CE7IPKQL", "placement:jsoncrackcom");
     }

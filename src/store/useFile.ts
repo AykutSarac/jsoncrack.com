@@ -4,9 +4,9 @@ import _set from "lodash.set";
 import { toast } from "react-hot-toast";
 import { create } from "zustand";
 import { defaultJson } from "src/constants/data";
-import { FileFormat } from "src/constants/file";
+import { contentToJson, jsonToContent } from "src/lib/utils/json/jsonAdapter";
 import { getFromCloud, saveToCloud } from "src/services/json";
-import { contentToJson, jsonToContent } from "src/utils/json/jsonAdapter";
+import { FileFormat } from "src/types/models";
 import useGraph from "./useGraph";
 import useJson from "./useJson";
 import useStored from "./useStored";
@@ -99,9 +99,11 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
   setFormat: async format => {
     try {
       const prevFormat = get().format;
+
       set({ format });
       const contentJson = await contentToJson(get().contents, prevFormat);
       const jsonContent = await jsonToContent(JSON.stringify(contentJson, null, 2), format);
+
       get().setContents({ contents: jsonContent, hasChanges: false });
     } catch (error) {
       get().clear();
@@ -112,6 +114,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
     try {
       set({ ...(contents && { contents }), error: null, hasChanges });
       const json = await contentToJson(get().contents, get().format);
+
       if (!useStored.getState().liveTransform && skipUpdate) return;
 
       debouncedUpdateJson(json);
@@ -164,6 +167,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       if (isURL(id)) return get().fetchUrl(id);
 
       const file = await getFromCloud(id);
+
       get().setFile(file);
     } catch (error) {
       useJson.setState({ loading: false });
@@ -195,6 +199,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       );
 
       const contents = await jsonToContent(JSON.stringify(newJson, null, 2), get().format);
+
       get().setContents({ contents });
       if (callback) callback();
     } catch (error) {

@@ -1,28 +1,43 @@
 import { ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
 import { CanvasDirection } from "reaflow/dist/layout/elkLayout";
 import { create } from "zustand";
-import { getChildrenEdges } from "src/utils/graph/getChildrenEdges";
-import { getOutgoers } from "src/utils/graph/getOutgoers";
-import { parser } from "src/utils/json/jsonParser";
+import { getChildrenEdges } from "src/lib/utils/graph/getChildrenEdges";
+import { getOutgoers } from "src/lib/utils/graph/getOutgoers";
+import { parser } from "src/lib/utils/json/jsonParser";
+import { NodeData, EdgeData } from "src/types/models";
 import useJson from "./useJson";
 
-const initialStates = {
-  zoomPanPinch: null as ReactZoomPanPinchRef | null,
-  direction: "RIGHT" as CanvasDirection,
+export interface Graph {
+  zoomPanPinch: ReactZoomPanPinchRef | null;
+  direction: CanvasDirection;
+  loading: boolean;
+  graphCollapsed: boolean;
+  foldNodes: boolean;
+  fullscreen: boolean;
+  nodes: NodeData[];
+  edges: EdgeData[];
+  collapsedNodes: string[];
+  collapsedEdges: string[];
+  collapsedParents: string[];
+  selectedNode: NodeData | null;
+  path: string;
+}
+
+const initialStates: Graph = {
+  zoomPanPinch: null,
+  direction: "RIGHT",
   loading: true,
   graphCollapsed: false,
   foldNodes: false,
   fullscreen: false,
-  nodes: [] as NodeData[],
-  edges: [] as EdgeData[],
-  collapsedNodes: [] as string[],
-  collapsedEdges: [] as string[],
-  collapsedParents: [] as string[],
-  selectedNode: {} as NodeData,
+  nodes: [],
+  edges: [],
+  collapsedNodes: [],
+  collapsedEdges: [],
+  collapsedParents: [],
+  selectedNode: null,
   path: "",
 };
-
-export type Graph = typeof initialStates;
 
 interface GraphActions {
   setGraph: (json?: string, options?: Partial<Graph>[]) => void;
@@ -48,6 +63,7 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
   setSelectedNode: nodeData => set({ selectedNode: nodeData }),
   setGraph: (data, options) => {
     const { nodes, edges } = parser(data ?? useJson.getState().json);
+
     set({
       nodes,
       edges,
@@ -119,7 +135,7 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       .map(edge => edge.to);
 
     const collapsedParents = get()
-      .nodes.filter(node => !parentNodesIds.includes(node.id) && node.data.isParent)
+      .nodes.filter(node => !parentNodesIds.includes(node.id) && node.data?.isParent)
       .map(node => node.id);
 
     const collapsedNodes = get()
@@ -151,6 +167,7 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
   },
   zoomIn: () => {
     const zoomPanPinch = get().zoomPanPinch;
+
     zoomPanPinch?.setTransform(
       zoomPanPinch?.state.positionX,
       zoomPanPinch?.state.positionY,
@@ -159,6 +176,7 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
   },
   zoomOut: () => {
     const zoomPanPinch = get().zoomPanPinch;
+
     zoomPanPinch?.setTransform(
       zoomPanPinch?.state.positionX,
       zoomPanPinch?.state.positionY,
@@ -168,6 +186,7 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
   centerView: () => {
     const zoomPanPinch = get().zoomPanPinch;
     const canvas = document.querySelector(".jsoncrack-canvas") as HTMLElement;
+
     if (zoomPanPinch && canvas) zoomPanPinch.zoomToElement(canvas);
   },
   toggleFold: foldNodes => {

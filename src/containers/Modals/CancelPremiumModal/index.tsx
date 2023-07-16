@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, Group, Button, Divider, ModalProps, Text, Image, Anchor } from "@mantine/core";
 import { toast } from "react-hot-toast";
-import { altogic } from "src/api/altogic";
+import { altogic } from "src/lib/api/altogic";
 
 export const CancelPremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const [cancelling, setCancelling] = React.useState(false);

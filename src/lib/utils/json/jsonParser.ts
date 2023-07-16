@@ -1,4 +1,5 @@
 import { parseTree } from "jsonc-parser";
+import { EdgeData, NodeData } from "src/types/models";
 import { addEdgeToGraph } from "../core/addEdgeToGraph";
 import { addNodeToGraph } from "../core/addNodeToGraph";
 import { traverse } from "../core/traverse";
@@ -15,7 +16,7 @@ export type States = {
   objectsFromArray: number[];
   objectsFromArrayId: number;
   notHaveParent: string[];
-  brothersNode: [string, string][];
+  brothersNode: [string, string][] | string;
   brothersParentId: string | undefined;
   brotherKey: string;
   brothersNodeProps: {
@@ -48,6 +49,7 @@ export function parser(jsonStr: string): Graph {
   try {
     const states = initializeStates();
     const parsedJsonTree = parseTree(jsonStr);
+
     if (!parsedJsonTree) {
       throw new Error("Invalid document");
     }
@@ -55,9 +57,11 @@ export function parser(jsonStr: string): Graph {
     traverse({ states, objectToTraverse: parsedJsonTree });
 
     const { notHaveParent, graph } = states;
+
     if (notHaveParent.length > 1 && parsedJsonTree.type !== "array") {
       const emptyNode = { id: null, text: "", isEmpty: true, data: {} };
       const emptyId = addNodeToGraph({ graph, ...emptyNode });
+
       notHaveParent.forEach(childId => addEdgeToGraph(graph, emptyId, childId));
     }
 
@@ -73,6 +77,8 @@ export function parser(jsonStr: string): Graph {
       ...node,
       path: getNodePath(states.graph.nodes, states.graph.edges, node.id),
     }));
+
+    console.log(states.graph);
 
     return states.graph;
   } catch (error) {

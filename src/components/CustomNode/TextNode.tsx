@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { MdLink, MdLinkOff } from "react-icons/md";
 import { CustomNodeProps } from "src/components/CustomNode";
+import { isContentImage } from "src/lib/utils/core/calculateNodeSize";
 import useGraph from "src/store/useGraph";
 import useStored from "src/store/useStored";
-import { isContentImage } from "src/utils/core/calculateNodeSize";
 import { TextRenderer } from "./TextRenderer";
 import * as Styled from "./styles";
 
@@ -56,7 +56,7 @@ const Node: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) =>
   const expandNodes = useGraph(state => state.expandNodes);
   const collapseNodes = useGraph(state => state.collapseNodes);
   const isExpanded = useGraph(state => state.collapsedParents.includes(id));
-  const isImage = imagePreview && isContentImage(text);
+  const isImage = imagePreview && isContentImage(text as string);
 
   const handleExpand = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -75,7 +75,7 @@ const Node: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) =>
     >
       {isImage ? (
         <StyledImageWrapper>
-          <StyledImage src={text} width="70" height="70" loading="lazy" />
+          <StyledImage src={text as string} width="70" height="70" loading="lazy" />
         </StyledImageWrapper>
       ) : (
         <StyledTextNodeWrapper

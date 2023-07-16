@@ -1,16 +1,18 @@
 import React from "react";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { defaultJson } from "src/constants/data";
 import { BottomBar } from "src/containers/Editor/BottomBar";
 import { Tools } from "src/containers/Editor/LiveEditor/Tools";
-import Panes from "src/containers/Editor/Panes";
 import { EditorMantine } from "src/layout/EditorMantine";
 import { Loading } from "src/layout/Loading";
 import useFile from "src/store/useFile";
 import useJson from "src/store/useJson";
 import useUser from "src/store/useUser";
+
+const Panes = dynamic(() => import("src/containers/Editor/Panes"));
 
 export const StyledPageWrapper = styled.div`
   height: calc(100vh - 27px);

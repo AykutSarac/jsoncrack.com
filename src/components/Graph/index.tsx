@@ -8,11 +8,14 @@ import useToggleHide from "src/hooks/useToggleHide";
 import useGraph from "src/store/useGraph";
 import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
+import { NodeData } from "src/types/models";
 import { Loading } from "../../layout/Loading";
 import { ErrorView } from "./ErrorView";
 import { PremiumView } from "./PremiumView";
 
-const Canvas = dynamic(() => import("reaflow").then(r => r.Canvas));
+const Canvas = dynamic(() => import("reaflow").then(r => r.Canvas), {
+  ssr: false,
+});
 
 interface GraphProps {
   isWidget?: boolean;
@@ -32,8 +35,16 @@ const StyledEditorWrapper = styled.div<{ widget: boolean }>`
     linear-gradient(90deg, var(--line-color-1) 1.5px, transparent 1.5px),
     linear-gradient(var(--line-color-2) 1px, transparent 1px),
     linear-gradient(90deg, var(--line-color-2) 1px, transparent 1px);
-  background-position: -1.5px -1.5px, -1.5px -1.5px, -1px -1px, -1px -1px;
-  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+  background-position:
+    -1.5px -1.5px,
+    -1.5px -1.5px,
+    -1px -1px,
+    -1px -1px;
+  background-size:
+    100px 100px,
+    100px 100px,
+    20px 20px,
+    20px 20px;
 
   :active {
     cursor: move;
@@ -116,6 +127,7 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
 
   const memoizedNode = React.useCallback(
     (props: JSX.IntrinsicAttributes & NodeProps<any>) => (
+      // @ts-ignore
       <CustomNode {...props} onClick={handleNodeClick} animated={false} />
     ),
     [handleNodeClick]

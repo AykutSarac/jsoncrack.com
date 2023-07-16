@@ -2,7 +2,7 @@ import { load, dump } from "js-yaml";
 import { csv2json, json2csv } from "json-2-csv";
 import jxon from "jxon";
 import toml from "toml";
-import { FileFormat } from "src/constants/file";
+import { FileFormat } from "src/types/models";
 
 const keyExists = (obj: object, key: string) => {
   if (!obj || (typeof obj !== "object" && !Array.isArray(obj))) {
@@ -12,6 +12,7 @@ const keyExists = (obj: object, key: string) => {
   } else if (Array.isArray(obj)) {
     for (let i = 0; i < obj.length; i++) {
       const result = keyExists(obj[i], key);
+
       if (result) {
         return result;
       }
@@ -19,6 +20,7 @@ const keyExists = (obj: object, key: string) => {
   } else {
     for (const k in obj) {
       const result = keyExists(obj[k], key);
+
       if (result) {
         return result;
       }
@@ -31,6 +33,7 @@ const keyExists = (obj: object, key: string) => {
 const contentToJson = async (value: string, format = FileFormat.JSON): Promise<object> => {
   try {
     let json: object = {};
+
     if (format === FileFormat.JSON) json = JSON.parse(value);
     if (format === FileFormat.YAML) json = load(value) as object;
     if (format === FileFormat.XML) json = jxon.stringToJs(value);
@@ -47,6 +50,7 @@ const contentToJson = async (value: string, format = FileFormat.JSON): Promise<o
 const jsonToContent = async (json: string, format: FileFormat): Promise<string> => {
   try {
     let contents = json;
+
     if (!json) return json;
     if (format === FileFormat.JSON) contents = json;
     if (format === FileFormat.YAML) contents = dump(JSON.parse(json));

@@ -1,43 +1,29 @@
 import React from "react";
 import { ModalProps } from "@mantine/core";
-import {
-  AccountModal,
-  ClearModal,
-  DownloadModal,
-  ImportModal,
-  JWTModal,
-  LoginModal,
-  Modal,
-  NodeModal,
-  PremiumModal,
-  SchemaModal,
-  SettingsModal,
-  ShareModal,
-  CancelPremiumModal,
-} from "src/containers/Modals";
-import { CloudModal } from "src/containers/Modals/CloudModal";
+import * as Modals from "src/containers/Modals";
+import { Modal } from "src/containers/Modals";
 import useModal from "src/store/useModal";
 import { EditorMantine } from "../EditorMantine";
 
 type ModalComponent = { key: Modal; component: React.FC<ModalProps> };
 
 const modalComponents: ModalComponent[] = [
-  { key: "import", component: ImportModal },
-  { key: "clear", component: ClearModal },
-  { key: "download", component: DownloadModal },
-  { key: "settings", component: SettingsModal },
-  { key: "cloud", component: CloudModal },
-  { key: "account", component: AccountModal },
-  { key: "premium", component: PremiumModal },
-  { key: "login", component: LoginModal },
-  { key: "share", component: ShareModal },
-  { key: "jwt", component: JWTModal },
-  { key: "node", component: NodeModal },
-  { key: "schema", component: SchemaModal },
-  { key: "cancelPremium", component: CancelPremiumModal },
+  { key: "import", component: Modals.ImportModal },
+  { key: "clear", component: Modals.ClearModal },
+  { key: "download", component: Modals.DownloadModal },
+  { key: "settings", component: Modals.SettingsModal },
+  { key: "cloud", component: Modals.CloudModal },
+  { key: "account", component: Modals.AccountModal },
+  { key: "premium", component: Modals.PremiumModal },
+  { key: "login", component: Modals.LoginModal },
+  { key: "share", component: Modals.ShareModal },
+  { key: "jwt", component: Modals.JWTModal },
+  { key: "node", component: Modals.NodeModal },
+  { key: "schema", component: Modals.SchemaModal },
+  { key: "cancelPremium", component: Modals.CancelPremiumModal },
 ];
 
-export const ModalController = () => {
+const ModalController = () => {
   const setVisible = useModal(state => state.setVisible);
   const modalStates = useModal(state => modalComponents.map(modal => state[modal.key]));
 
@@ -52,3 +38,5 @@ export const ModalController = () => {
     </EditorMantine>
   );
 };
+
+export default ModalController;
