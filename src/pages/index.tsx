@@ -35,16 +35,8 @@ const StyledHeroSection = styled.div`
     linear-gradient(90deg, var(--line-color-1) 1.5px, transparent 1.5px),
     linear-gradient(var(--line-color-2) 1px, transparent 1px),
     linear-gradient(90deg, var(--line-color-2) 1px, transparent 1px);
-  background-position:
-    -1.5px -1.5px,
-    -1.5px -1.5px,
-    -1px -1px,
-    -1px -1px;
-  background-size:
-    100px 100px,
-    100px 100px,
-    20px 20px,
-    20px 20px;
+  background-position: -1.5px -1.5px, -1.5px -1.5px, -1px -1px, -1px -1px;
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
 
   @media only screen and (max-width: 1240px) {
     flex-direction: column;
@@ -89,7 +81,7 @@ const StyledGradientText = styled.span`
 `;
 
 const Left = styled.div`
-  min-width: 40%;
+  width: 100%;
   z-index: 1;
 `;
 
@@ -305,7 +297,7 @@ const Features = () => (
 const HeroBottom = () => (
   <Container mt={100}>
     <Stack>
-      <Title color="dark" order={3} maw={500} mx="auto" align="center">
+      <Title color="dark" order={2} fz="xl" maw={500} mx="auto" align="center">
         But that&apos;s not all yet!
         <br />
         Explore the full potential of your data now......

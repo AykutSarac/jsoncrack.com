@@ -56,7 +56,7 @@ const useStyles = createStyles(theme => ({
 
   link: {
     display: "block",
-    color: theme.colorScheme === "dark" ? theme.colors.dark[1] : theme.colors.gray[6],
+    color: theme.colorScheme === "dark" ? theme.colors.dark[1] : theme.colors.gray[7],
     fontSize: theme.fontSizes.sm,
     paddingTop: rem(3),
     paddingBottom: rem(3),
@@ -82,7 +82,7 @@ const useStyles = createStyles(theme => ({
     paddingTop: theme.spacing.xl,
     paddingBottom: theme.spacing.xl,
     borderTop: `${rem(1)} solid ${
-      theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[2]
+      theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[3]
     }`,
 
     [theme.fn.smallerThan("sm")]: {
@@ -127,14 +127,14 @@ export function FooterLinks({ data }: FooterLinksProps) {
       <Container className={classes.inner}>
         <div className={classes.logo}>
           <JSONCrackLogo />
-          <Text size="xs" color="dimmed" className={classes.description}>
+          <Text size="xs" color="gray" className={classes.description}>
             Next-generation tools matching with your needs to understand the data.
           </Text>
         </div>
         <div className={classes.groups}>{groups}</div>
       </Container>
       <Container className={classes.afterFooter}>
-        <Text color="dimmed" size="sm">
+        <Text color="gray" size="sm">
           © jsoncrack.com
         </Text>
       </Container>

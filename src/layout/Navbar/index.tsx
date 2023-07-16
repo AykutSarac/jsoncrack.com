@@ -92,7 +92,7 @@ export const Navbar = () => {
             </Button>
           </Link>
           <Link href="/editor" prefetch={false}>
-            <Button color="teal" radius="md">
+            <Button color="pink" radius="md">
               Editor
             </Button>
           </Link>

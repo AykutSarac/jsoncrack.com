@@ -41,6 +41,7 @@ function JsonCrack({ Component, pageProps }: AppProps) {
               colorScheme: "light",
               fontFamily: monaSans.style.fontFamily,
               headings: { fontFamily: monaSans.style.fontFamily },
+              primaryShade: 8,
             }}
           >
             <Component {...pageProps} />
