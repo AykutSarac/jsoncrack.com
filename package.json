@@ -7,11 +7,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "analyze": "ANALYZE=true npm run build",
     "start": "next start",
     "lint": "tsc && eslint src && prettier --check src",
     "lint:fix": "eslint --fix src & prettier --write src",
-    "deploy": "gh-pages -d out -t true"
+    "analyze": "ANALYZE=true npm run build"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -69,6 +68,7 @@
     "@types/styled-components": "^5.1.26",
     "eslint": "8.45.0",
     "eslint-config-next": "13.4.10",
+    "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-prettier": "^5.0.0",
     "eslint-plugin-unused-imports": "^3.0.0",
     "prettier": "^3.0.0",
