@@ -49,7 +49,7 @@ JSON Crack is a free, open-source JSON visualization app that will revolutionize
 
 ## Sponsors & support
 
-If you like the project, you can become a sponsor at [GitHub Sponsors](https://github.com/sponsors/AykutSarac) or use [Premium](https://patreon.com/join/herowand).
+If you like the project, you can become a sponsor at [GitHub Sponsors](https://github.com/sponsors/AykutSarac) or use [Premium](https://jsoncrack.com/pricing).
 
 ## Running Locally
  
