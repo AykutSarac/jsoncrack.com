@@ -21,6 +21,7 @@ import useStored from "src/store/useStored";
 import useUser from "src/store/useUser";
 
 const StyledBottomBar = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
