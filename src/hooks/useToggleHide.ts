@@ -16,15 +16,18 @@ const useToggleHide = () => {
 
   const validateHiddenNodes = React.useCallback(() => {
     const hiddenItems = document.body.querySelectorAll(".hide");
+
     hiddenItems.forEach(item => item.classList.remove("hide"));
 
     if (nodeList.length) {
       const selectedNodes = document.body.querySelectorAll(nodeList.join(","));
+
       selectedNodes.forEach(node => node.classList.add("hide"));
     }
 
     if (edgeList.length) {
       const selectedEdges = document.body.querySelectorAll(edgeList.join(","));
+
       selectedEdges.forEach(edge => edge.classList.add("hide"));
     }
   }, [nodeList, edgeList]);

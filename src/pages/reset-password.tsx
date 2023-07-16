@@ -4,10 +4,10 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import { PaperProps, Center, Button, Group, Paper, Stack, TextInput, Text } from "@mantine/core";
 import { toast } from "react-hot-toast";
-import { altogic } from "src/api/altogic";
 import { Footer } from "src/layout/Footer";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
 import { Navbar } from "src/layout/Navbar";
+import { altogic } from "src/lib/api/altogic";
 import useUser from "src/store/useUser";
 
 const StyledPageWrapper = styled.div`

@@ -6,12 +6,12 @@ import vsDark from "prism-react-renderer/themes/vsDark";
 import vsLight from "prism-react-renderer/themes/vsLight";
 import { VscLock } from "react-icons/vsc";
 import { shallow } from "zustand/shallow";
+import { isIframe } from "src/lib/utils/widget";
 import useFile from "src/store/useFile";
 import useGraph from "src/store/useGraph";
 import useModal from "src/store/useModal";
 import useStored from "src/store/useStored";
 import useUser from "src/store/useUser";
-import { isIframe } from "src/utils/widget";
 
 const dataToString = (data: any) => {
   const text = Array.isArray(data) ? Object.fromEntries(data) : data;
@@ -53,9 +53,9 @@ export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const lightmode = useStored(state => (state.lightmode ? "light" : "vs-dark"));
   const [nodeData, path, isParent] = useGraph(
     state => [
-      dataToString(state.selectedNode.text),
-      state.selectedNode.path,
-      state.selectedNode.data?.isParent,
+      dataToString(state.selectedNode?.text),
+      state.selectedNode?.path,
+      state.selectedNode?.data?.isParent,
     ],
     shallow
   );

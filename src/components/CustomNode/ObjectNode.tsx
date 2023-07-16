@@ -5,11 +5,12 @@ import * as Styled from "./styles";
 
 const Node: React.FC<CustomNodeProps> = ({ node, x, y }) => {
   const { text, width, height, data } = node;
-  if (data.isEmpty) return null;
+
+  if (data?.isEmpty) return null;
 
   return (
     <Styled.StyledForeignObject width={width} height={height} x={0} y={0} isObject>
-      {text.map((val, idx) => {
+      {(text as [string, unknown][]).map((val, idx) => {
         return (
           <Styled.StyledRow
             data-key={JSON.stringify(val)}

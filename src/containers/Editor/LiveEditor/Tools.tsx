@@ -18,16 +18,16 @@ import {
   VscSettingsGear,
 } from "react-icons/vsc";
 import { SearchInput } from "src/components/SearchInput";
-import { FileFormat } from "src/constants/file";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
+import { getNextDirection } from "src/lib/utils/graph/getNextDirection";
+import { isIframe } from "src/lib/utils/widget";
 import useFile from "src/store/useFile";
 import useGraph from "src/store/useGraph";
 import useJson from "src/store/useJson";
 import useModal from "src/store/useModal";
 import useStored from "src/store/useStored";
 import useUser from "src/store/useUser";
-import { getNextDirection } from "src/utils/graph/getNextDirection";
-import { isIframe } from "src/utils/widget";
+import { FileFormat } from "src/types/models";
 
 export const StyledTools = styled.div`
   position: relative;
@@ -121,6 +121,7 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
 
   const toggleDirection = () => {
     const nextDirection = getNextDirection(direction);
+
     setDirection(nextDirection);
   };
 
@@ -149,6 +150,7 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
       "mod+f",
       () => {
         const input = document.querySelector("#search-node") as HTMLInputElement;
+
         input.focus();
       },
     ],

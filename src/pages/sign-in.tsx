@@ -22,10 +22,10 @@ import { useForm } from "@mantine/form";
 import { useToggle, upperFirst } from "@mantine/hooks";
 import { toast } from "react-hot-toast";
 import { AiOutlineGithub, AiOutlineGoogle } from "react-icons/ai";
-import { altogic } from "src/api/altogic";
 import { Footer } from "src/layout/Footer";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
 import { Navbar } from "src/layout/Navbar";
+import { altogic } from "src/lib/api/altogic";
 import useUser from "src/store/useUser";
 
 export function AuthenticationForm(props: PaperProps) {
@@ -54,6 +54,7 @@ export function AuthenticationForm(props: PaperProps) {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const validate = form.validate();
+
     if (validate.hasErrors) return;
 
     setLoading(true);

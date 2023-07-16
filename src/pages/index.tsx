@@ -1,4 +1,5 @@
 import React from "react";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import Link from "next/link";
 import styled, { ThemeProvider } from "styled-components";
@@ -20,8 +21,9 @@ import { SiVisualstudiocode } from "react-icons/si";
 import { Typewriter } from "react-simple-typewriter";
 import { HovercardAds } from "src/components/HovercardAds";
 import { lightTheme } from "src/constants/theme";
-import { Footer } from "src/layout/Footer";
 import { Navbar } from "src/layout/Navbar";
+
+const Footer = dynamic(() => import("src/layout/Footer").then(c => c.Footer));
 
 const StyledHeroSection = styled.div`
   --bg-color: ${({ theme }) => theme.GRID_BG_COLOR};
@@ -33,8 +35,16 @@ const StyledHeroSection = styled.div`
     linear-gradient(90deg, var(--line-color-1) 1.5px, transparent 1.5px),
     linear-gradient(var(--line-color-2) 1px, transparent 1px),
     linear-gradient(90deg, var(--line-color-2) 1px, transparent 1px);
-  background-position: -1.5px -1.5px, -1.5px -1.5px, -1px -1px, -1px -1px;
-  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+  background-position:
+    -1.5px -1.5px,
+    -1.5px -1.5px,
+    -1px -1px,
+    -1px -1px;
+  background-size:
+    100px 100px,
+    100px 100px,
+    20px 20px,
+    20px 20px;
 
   @media only screen and (max-width: 1240px) {
     flex-direction: column;
@@ -252,7 +262,7 @@ const Features = () => (
       </Stack>
     </Flex>
     <Flex py="lg" align="center" gap="lg" direction="row-reverse">
-      <Image width={300} height={260} src="/assets/multidata.png" alt="multiple format support" />
+      <Image width={300} height={260} src="/assets/multidata.webp" alt="multiple format support" />
       <Stack>
         <Text color="dark" fz="1.5rem" fw="bold">
           DYNAMIC DATA VISUALIZATION

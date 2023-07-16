@@ -10,6 +10,7 @@ export const JWTModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const resolve = () => {
     if (!token) return;
     const json = decode(token);
+
     setContents({ contents: JSON.stringify(json, null, 2) });
     setToken("");
     onClose();

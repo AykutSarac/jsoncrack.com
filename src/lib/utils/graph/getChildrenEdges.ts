@@ -1,3 +1,5 @@
+import { NodeData, EdgeData } from "src/types/models";
+
 export const getChildrenEdges = (nodes: NodeData[], edges: EdgeData[]): EdgeData[] => {
   const nodeIds = nodes.map(node => node.id);
 

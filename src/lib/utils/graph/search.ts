@@ -13,6 +13,7 @@ export const cleanupHighlight = () => {
 export const highlightMatchedNodes = (nodes: NodeListOf<Element>, selectedNode: number) => {
   nodes.forEach(node => {
     const foreignObject = node.parentElement?.closest("foreignObject");
+
     if (foreignObject) {
       foreignObject.classList.add("searched");
     }

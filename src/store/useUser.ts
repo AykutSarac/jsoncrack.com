@@ -1,8 +1,8 @@
-import * as Sentry from "@sentry/nextjs";
+import { setUser } from "@sentry/nextjs";
 import toast from "react-hot-toast";
 import { create } from "zustand";
-import { altogic } from "src/api/altogic";
-import { AltogicAuth, User } from "src/typings/altogic";
+import { altogic } from "src/lib/api/altogic";
+import { AltogicAuth, User } from "src/types/altogic";
 import useModal from "./useModal";
 
 const isDevelopment = process.env.NODE_ENV === "development";
@@ -43,9 +43,11 @@ const useUser = create<UserStates & UserActions>()(set => ({
   setUser: (key, value) => set({ [key]: value }),
   logout: async () => {
     const session = altogic.auth.getSession();
+
     if (!session) return;
 
     const { errors } = await altogic.auth.signOut(session.token);
+
     if (errors?.items) return console.error(errors);
 
     set(initialStates);
@@ -63,6 +65,7 @@ const useUser = create<UserStates & UserActions>()(set => ({
 
     if (currentSession) {
       const { user, errors } = await altogic.auth.getUserFromDB();
+
       if (errors?.items || !user) {
         altogic.auth.clearLocalData();
         return;
@@ -72,10 +75,11 @@ const useUser = create<UserStates & UserActions>()(set => ({
       altogic.auth.setSession(currentSession);
       const { data: premiumData } = await altogic.endpoint.get("/isPremium");
 
-      Sentry.setUser({ id: user._id, email: user.email, username: user.name });
+      setUser({ id: user._id, email: user.email, username: user.name });
       set({ user: user as User, isAuthenticated: true, premium: premiumData.premium });
     } else if (new URLSearchParams(window.location.search).get("access_token")) {
       const { errors, user } = await altogic.auth.getAuthGrant();
+
       if (errors?.items) {
         toast.error(errors.items[0].message);
         return;
@@ -84,7 +88,7 @@ const useUser = create<UserStates & UserActions>()(set => ({
       if (user) {
         const { data: premiumData } = await altogic.endpoint.get("/isPremium");
 
-        Sentry.setUser({ id: user._id, email: user.email, username: user.name });
+        setUser({ id: user._id, email: user.email, username: user.name });
         set({ user: user as User, isAuthenticated: true, premium: premiumData.premium });
       }
     }

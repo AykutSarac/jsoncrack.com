@@ -43,8 +43,9 @@ const isExternal = () => {
   return false;
 };
 
-export const ExternalMode = () => {
+const ExternalMode = () => {
   const [isOpen, setOpen] = React.useState(false);
+
   if (!isExternal()) return null;
 
   const closeModal = () => setOpen(false);
@@ -84,3 +85,5 @@ export const ExternalMode = () => {
     </StyledAlert>
   );
 };
+
+export default ExternalMode;
