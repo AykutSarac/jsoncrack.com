@@ -37,20 +37,21 @@ const StyledTitle = styled.div`
   }
 `;
 
-const isExternal = () => {
-  if (typeof window === "undefined") return true;
-
-  if (window.location.pathname.includes("widget")) return false;
-  if (window.location.host !== "jsoncrack.com") return true;
-  return false;
-};
-
 const ExternalMode = () => {
+  const [isExternal, setExternal] = React.useState(false);
   const [isOpen, setOpen] = React.useState(false);
 
-  if (!isExternal()) return null;
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (window.location.pathname.includes("widget")) return setExternal(false);
+      if (window.location.host !== "jsoncrack.com") return setExternal(true);
+      return setExternal(false);
+    }
+  }, []);
 
   const closeModal = () => setOpen(false);
+
+  if (isExternal) return null;
 
   return (
     <StyledAlert>
