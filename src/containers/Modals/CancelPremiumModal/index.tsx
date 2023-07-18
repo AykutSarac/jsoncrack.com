@@ -18,6 +18,7 @@ export const CancelPremiumModal: React.FC<ModalProps> = ({ opened, onClose }) =>
       }
 
       toast.success("Cancelled premium plan!");
+      setTimeout(() => window.location.reload(), 2500);
     } catch (err) {
       console.error(err);
     } finally {

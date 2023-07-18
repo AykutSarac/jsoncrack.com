@@ -30,12 +30,14 @@ interface UserStates {
   user: User | null;
   isAuthenticated: boolean;
   premium: boolean;
+  premiumCancelled: boolean;
 }
 
 const initialStates: UserStates = {
   user: null,
   isAuthenticated: false,
   premium: false,
+  premiumCancelled: false,
 };
 
 const useUser = create<UserStates & UserActions>()(set => ({
@@ -57,9 +59,9 @@ const useUser = create<UserStates & UserActions>()(set => ({
   },
   login: user => set({ user: user as unknown as User, isAuthenticated: true }),
   checkSession: async () => {
-    if (isDevelopment) {
-      return set({ user: devUser as User, isAuthenticated: true, premium: true });
-    }
+    // if (isDevelopment) {
+    //   return set({ user: devUser as User, isAuthenticated: true, premium: true });
+    // }
 
     const currentSession = altogic.auth.getSession();
 
@@ -76,7 +78,12 @@ const useUser = create<UserStates & UserActions>()(set => ({
       const { data: premiumData } = await altogic.endpoint.get("/isPremium");
 
       setUser({ id: user._id, email: user.email, username: user.name });
-      set({ user: user as User, isAuthenticated: true, premium: premiumData.premium });
+      set({
+        user: user as User,
+        isAuthenticated: true,
+        premium: premiumData.premium,
+        premiumCancelled: premiumData?.status === "cancelled" || false,
+      });
     } else if (new URLSearchParams(window.location.search).get("access_token")) {
       const { errors, user } = await altogic.auth.getAuthGrant();
 

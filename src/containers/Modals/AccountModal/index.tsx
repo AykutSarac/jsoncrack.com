@@ -43,9 +43,10 @@ const StyledContainer = styled.div`
 `;
 
 export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
-  const setVisible = useModal(state => state.setVisible);
   const user = useUser(state => state.user);
   const isPremium = useUser(state => state.premium);
+  const premiumCancelled = useUser(state => state.premiumCancelled);
+  const setVisible = useModal(state => state.setVisible);
   const logout = useUser(state => state.logout);
 
   return (
@@ -67,7 +68,9 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
               ACCOUNT STATUS
               <div>
                 {isPremium ? (
-                  <Badge color="orange">Premium</Badge>
+                  <Badge color={premiumCancelled ? "teal" : "indigo"}>
+                    Premium {premiumCancelled && "(Cancelled)"}
+                  </Badge>
                 ) : (
                   <Badge variant="outline" color="gray">
                     Free
@@ -92,7 +95,7 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
       </Group>
       <Divider py="xs" />
       <Group position="right">
-        {isPremium ? (
+        {isPremium && !premiumCancelled ? (
           <Button
             variant="light"
             color="red"
