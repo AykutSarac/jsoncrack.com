@@ -25,8 +25,6 @@ import useFile from "src/store/useFile";
 import useGraph from "src/store/useGraph";
 import useJson from "src/store/useJson";
 import useModal from "src/store/useModal";
-import useStored from "src/store/useStored";
-import useUser from "src/store/useUser";
 import { FileFormat } from "src/types/models";
 
 export const StyledTools = styled.div`
@@ -67,10 +65,6 @@ const StyledToolElement = styled.button<{ hide?: boolean }>`
   }
 `;
 
-const StyledLogo = styled.img<{ invert: boolean }>`
-  filter: ${({ invert }) => invert && "invert()"};
-`;
-
 const StyledFlowIcon = styled(TiFlowMerge)<{ rotate: number }>`
   transform: rotate(${({ rotate }) => `${rotate}deg`});
 `;
@@ -105,12 +99,21 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
   const graphCollapsed = useGraph(state => state.graphCollapsed);
   const expandGraph = useGraph(state => state.expandGraph);
   const collapseGraph = useGraph(state => state.collapseGraph);
-  const lightmode = useStored(state => state.lightmode);
-  const premium = useUser(state => state.premium);
   const setFormat = useFile(state => state.setFormat);
   const format = useFile(state => state.format);
+  const [coreKey, setCoreKey] = React.useState("CTRL");
+  const [logoURL, setLogoURL] = React.useState("CTRL");
 
-  const CoreKey = React.useMemo(() => (navigator.userAgent.indexOf("Mac OS X") ? "⌘" : "CTRL"), []);
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      const url = !isIframe()
+        ? "https://jsoncrack.com"
+        : window.location.href.replace("widget", "editor");
+
+      setCoreKey(navigator.userAgent.indexOf("Mac OS X") ? "⌘" : "CTRL");
+      setLogoURL(url);
+    }
+  }, []);
 
   const toggleEditor = () => toggleFullscreen(!fullscreen);
 
@@ -155,11 +158,6 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
       },
     ],
   ]);
-
-  const logoURL = React.useMemo(() => {
-    if (!isIframe()) return "https://jsoncrack.com";
-    return window.location.href.replace("widget", "editor");
-  }, []);
 
   return (
     <StyledTools>
@@ -213,7 +211,7 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
                   icon={fullscreen ? <VscLayoutSidebarLeft /> : <VscLayoutSidebarLeftOff />}
                   rightSection={
                     <Text ml="md" fz={10} color="dimmed">
-                      {CoreKey} Shift E
+                      {coreKey} Shift E
                     </Text>
                   }
                 >
@@ -225,7 +223,7 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
                   icon={<StyledFlowIcon rotate={rotateLayout(direction)} />}
                   rightSection={
                     <Text ml="md" fz={10} color="dimmed">
-                      {CoreKey} Shift D
+                      {coreKey} Shift D
                     </Text>
                   }
                 >
@@ -237,7 +235,7 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
                   icon={foldNodes ? <CgArrowsShrinkH /> : <CgArrowsMergeAltH />}
                   rightSection={
                     <Text ml="md" fz={10} color="dimmed">
-                      {CoreKey} Shift F
+                      {coreKey} Shift F
                     </Text>
                   }
                 >
@@ -249,7 +247,7 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
                   icon={graphCollapsed ? <VscExpandAll /> : <VscCollapseAll />}
                   rightSection={
                     <Text ml="md" fz={10} color="dimmed">
-                      {CoreKey} Shift C
+                      {coreKey} Shift C
                     </Text>
                   }
                 >
