@@ -1,12 +1,45 @@
-import Document, { Html, Head, Main, NextScript } from "next/document";
+import Document, {
+  Html,
+  Head,
+  Main,
+  NextScript,
+  DocumentContext,
+  DocumentInitialProps,
+} from "next/document";
 import Script from "next/script";
+import { ServerStyleSheet } from "styled-components";
 import { createGetInitialProps } from "@mantine/next";
 import { SeoTags } from "src/components/SeoTags";
 
 const getInitialProps = createGetInitialProps();
 
 class MyDocument extends Document {
-  static getInitialProps = getInitialProps;
+  static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
+    const sheet = new ServerStyleSheet();
+    const originalRenderPage = ctx.renderPage;
+
+    try {
+      ctx.renderPage = () =>
+        originalRenderPage({
+          enhanceApp: App => props => sheet.collectStyles(<App {...props} />),
+        });
+
+      const initialProps = await Document.getInitialProps(ctx);
+
+      return {
+        ...getInitialProps,
+        ...initialProps,
+        styles: (
+          <>
+            {initialProps.styles}
+            {sheet.getStyleElement()}
+          </>
+        ),
+      };
+    } finally {
+      sheet.seal();
+    }
+  }
 
   render() {
     return (
