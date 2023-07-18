@@ -5,7 +5,7 @@ import { ThemeProvider } from "styled-components";
 import toast from "react-hot-toast";
 import { darkTheme, lightTheme } from "src/constants/theme";
 import { Tools } from "src/containers/Editor/LiveEditor/Tools";
-import { EditorMantine } from "src/layout/EditorMantine";
+import { EditorWrapper } from "src/layout/EditorWrapper";
 import useFile from "src/store/useFile";
 import useGraph from "src/store/useGraph";
 
@@ -57,12 +57,12 @@ const WidgetPage = () => {
   }, [setContents, setDirection, theme]);
 
   return (
-    <EditorMantine>
+    <EditorWrapper>
       <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
         <Tools isWidget />
         <Graph isWidget />
       </ThemeProvider>
-    </EditorMantine>
+    </EditorWrapper>
   );
 };
 

@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { defaultJson } from "src/constants/data";
 import { BottomBar } from "src/containers/Editor/BottomBar";
 import { Tools } from "src/containers/Editor/LiveEditor/Tools";
-import { EditorMantine } from "src/layout/EditorMantine";
+import { EditorWrapper } from "src/layout/EditorWrapper";
 import { Loading } from "src/layout/Loading";
 import useFile from "src/store/useFile";
 import useJson from "src/store/useJson";
@@ -51,7 +51,7 @@ const EditorPage: React.FC = () => {
   if (loading) return <Loading message="Fetching JSON from cloud..." />;
 
   return (
-    <EditorMantine>
+    <EditorWrapper>
       <StyledEditorWrapper>
         <Head>
           <title>Editor | JSON Crack</title>
@@ -65,7 +65,7 @@ const EditorPage: React.FC = () => {
         </StyledPageWrapper>
         <BottomBar />
       </StyledEditorWrapper>
-    </EditorMantine>
+    </EditorWrapper>
   );
 };
 

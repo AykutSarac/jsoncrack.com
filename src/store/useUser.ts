@@ -59,9 +59,9 @@ const useUser = create<UserStates & UserActions>()(set => ({
   },
   login: user => set({ user: user as unknown as User, isAuthenticated: true }),
   checkSession: async () => {
-    // if (isDevelopment) {
-    //   return set({ user: devUser as User, isAuthenticated: true, premium: true });
-    // }
+    if (isDevelopment) {
+      return set({ user: devUser as User, isAuthenticated: true, premium: true });
+    }
 
     const currentSession = altogic.auth.getSession();
 

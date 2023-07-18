@@ -38,6 +38,8 @@ const StyledTitle = styled.div`
 `;
 
 const isExternal = () => {
+  if (typeof window === "undefined") return true;
+
   if (window.location.pathname.includes("widget")) return false;
   if (window.location.host !== "jsoncrack.com") return true;
   return false;

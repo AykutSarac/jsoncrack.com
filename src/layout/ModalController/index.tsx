@@ -3,7 +3,7 @@ import { ModalProps } from "@mantine/core";
 import * as Modals from "src/containers/Modals";
 import { Modal } from "src/containers/Modals";
 import useModal from "src/store/useModal";
-import { EditorMantine } from "../EditorMantine";
+import { EditorWrapper } from "../EditorWrapper";
 
 type ModalComponent = { key: Modal; component: React.FC<ModalProps> };
 
@@ -28,14 +28,14 @@ const ModalController = () => {
   const modalStates = useModal(state => modalComponents.map(modal => state[modal.key]));
 
   return (
-    <EditorMantine>
+    <EditorWrapper>
       {modalComponents.map(({ key, component }, index) => {
         const ModalComponent = component;
         const opened = modalStates[index];
 
         return <ModalComponent key={key} opened={opened} onClose={() => setVisible(key)(false)} />;
       })}
-    </EditorMantine>
+    </EditorWrapper>
   );
 };
 
