@@ -51,7 +51,7 @@ const ExternalMode = () => {
 
   const closeModal = () => setOpen(false);
 
-  if (isExternal) return null;
+  if (!isExternal) return null;
 
   return (
     <StyledAlert>
