@@ -1,12 +1,6 @@
-import { Fira_Mono } from "next/font/google";
 import styled, { DefaultTheme } from "styled-components";
 import { LinkItUrl } from "react-linkify-it";
-
-const robotoMono = Fira_Mono({
-  weight: ["500"],
-  subsets: ["latin"],
-  display: "swap",
-});
+import { firaMono } from "src/constants/fonts";
 
 function getTypeColor(value: string, theme: DefaultTheme) {
   if (!Number.isNaN(+value)) return theme.NODE_COLORS.INTEGER;
@@ -31,7 +25,7 @@ export const StyledForeignObject = styled.foreignObject<{
   color: ${({ theme }) => theme.NODE_COLORS.TEXT};
   pointer-events: none;
   padding: ${({ isObject }) => isObject && "10px"};
-  font-family: ${robotoMono.style.fontFamily};
+  font-family: ${firaMono.style.fontFamily};
   font-weight: 500;
 
   &.searched {

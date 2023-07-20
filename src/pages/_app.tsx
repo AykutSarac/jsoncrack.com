@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { ThemeProvider } from "styled-components";
 import { MantineProvider, MantineThemeOverride } from "@mantine/core";
 import { pageview } from "react-ga";
-import { monaSans } from "src/constants/customFonts";
+import { monaSans } from "src/constants/fonts";
 import GlobalStyle from "src/constants/globalStyle";
 import { lightTheme } from "src/constants/theme";
 

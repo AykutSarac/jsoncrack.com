@@ -1,13 +1,11 @@
-import { Fira_Mono } from "next/font/google";
+import { firaMono } from "src/constants/fonts";
 import useGraph from "src/store/useGraph";
 import useStored from "src/store/useStored";
 
-const firaMono = Fira_Mono({
-  weight: ["500"],
-  subsets: ["latin"],
-});
+type Text = string | [string, string][];
+type Size = { width: number; height: number };
 
-export const isContentImage = (value: string | [string, string][]) => {
+export const isContentImage = (value: Text) => {
   if (typeof value !== "string") return false;
 
   const isImageURL = /(https?:\/\/.*\.(?:png|jpg|gif))/i.test(value);
@@ -16,7 +14,13 @@ export const isContentImage = (value: string | [string, string][]) => {
   return isImageURL || isBase64;
 };
 
-const sizeCache = new Map<string | [string, string][], { width: number; height: number }>();
+const calculateLines = (text: Text): string => {
+  if (typeof text === "string") {
+    return text;
+  } else {
+    return text.map(([k, v]) => `${k}: ${JSON.stringify(v).slice(0, 80)}`).join("\n");
+  }
+};
 
 const calculateWidthAndHeight = (str: string, single = false) => {
   if (!str) return { width: 45, height: 45 };
@@ -34,37 +38,42 @@ const calculateWidthAndHeight = (str: string, single = false) => {
   dummyElement.style.fontFamily = firaMono.style.fontFamily;
   document.body.appendChild(dummyElement);
 
-  const width = dummyElement.offsetWidth + 4;
-  const height = dummyElement.offsetHeight;
+  const clientRect = dummyElement.getBoundingClientRect();
+  const width = clientRect.width + 4;
+  const height = clientRect.height;
 
   document.body.removeChild(dummyElement);
 
   return { width, height };
 };
 
-export const calculateNodeSize = (text: string | [string, string][], isParent = false) => {
-  let lines = "";
+const sizeCache = new Map<Text, Size>();
+
+// clear cache every 2 mins
+setInterval(() => sizeCache.clear(), 120_000);
+
+export const calculateNodeSize = (text: Text, isParent = false) => {
   const { foldNodes } = useGraph.getState();
   const { imagePreview } = useStored.getState();
   const isImage = isContentImage(text) && imagePreview;
+
   const cacheKey = [text, isParent, foldNodes].toString();
 
-  // check cache
+  // check cache if data already exists
   if (sizeCache.has(cacheKey)) {
     const size = sizeCache.get(cacheKey);
 
     if (size) return size;
   }
 
-  if (typeof text !== "string") {
-    lines = text.map(([k, v]) => `${k}: ${JSON.stringify(v).slice(0, 80)}`).join("\n");
-  } else {
-    lines = text;
+  const lines = calculateLines(text);
+  const sizes = calculateWidthAndHeight(lines, typeof text === "string");
+
+  if (isImage) {
+    sizes.width = 80;
+    sizes.height = 80;
   }
 
-  let sizes = calculateWidthAndHeight(lines, typeof text === "string");
-
-  if (isImage) sizes = { width: 80, height: 80 };
   if (foldNodes) sizes.width = 300;
   if (isParent && foldNodes) sizes.width = 170;
   if (isParent) sizes.width += 100;
