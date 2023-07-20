@@ -1,8 +1,11 @@
 import React from "react";
 import Script from "next/script";
+import ReactGA from "react-ga";
 
 const isDevelopment = process.env.NODE_ENV === "development";
 const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID;
+
+ReactGA.initialize(GA_TRACKING_ID, { testMode: isDevelopment });
 
 const GoogleAnalytics: React.FC = () => {
   if (isDevelopment) return null;

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Flex, Group, MediaQuery, Menu, Select, Text } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
+import { event } from "react-ga";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { CgArrowsMergeAltH, CgArrowsShrinkH, CgChevronDown } from "react-icons/cg";
@@ -207,7 +208,10 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
               <Menu.Dropdown>
                 <Menu.Item
                   fz={12}
-                  onClick={toggleEditor}
+                  onClick={() => {
+                    toggleEditor();
+                    event({ action: "toggle_hide_editor", category: "User", label: "Tools" });
+                  }}
                   icon={fullscreen ? <VscLayoutSidebarLeft /> : <VscLayoutSidebarLeftOff />}
                   rightSection={
                     <Text ml="md" fz={10} color="dimmed">
@@ -219,7 +223,10 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
                 </Menu.Item>
                 <Menu.Item
                   fz={12}
-                  onClick={toggleDirection}
+                  onClick={() => {
+                    toggleDirection();
+                    event({ action: "toggle_layout_direction", category: "User", label: "Tools" });
+                  }}
                   icon={<StyledFlowIcon rotate={rotateLayout(direction)} />}
                   rightSection={
                     <Text ml="md" fz={10} color="dimmed">
@@ -231,7 +238,10 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
                 </Menu.Item>
                 <Menu.Item
                   fz={12}
-                  onClick={toggleFoldNodes}
+                  onClick={() => {
+                    toggleFoldNodes();
+                    event({ action: "toggle_fold_nodes", category: "User", label: "Tools" });
+                  }}
                   icon={foldNodes ? <CgArrowsShrinkH /> : <CgArrowsMergeAltH />}
                   rightSection={
                     <Text ml="md" fz={10} color="dimmed">
@@ -243,7 +253,10 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
                 </Menu.Item>
                 <Menu.Item
                   fz={12}
-                  onClick={toggleExpandCollapseGraph}
+                  onClick={() => {
+                    toggleExpandCollapseGraph();
+                    event({ action: "toggle_collapse_nodes", category: "User", label: "Tools" });
+                  }}
                   icon={graphCollapsed ? <VscExpandAll /> : <VscCollapseAll />}
                   rightSection={
                     <Text ml="md" fz={10} color="dimmed">

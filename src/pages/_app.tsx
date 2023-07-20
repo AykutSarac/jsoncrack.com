@@ -1,8 +1,10 @@
 import React from "react";
 import type { AppProps } from "next/app";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 import { ThemeProvider } from "styled-components";
 import { MantineProvider, MantineThemeOverride } from "@mantine/core";
+import { pageview } from "react-ga";
 import { monaSans } from "src/constants/customFonts";
 import GlobalStyle from "src/constants/globalStyle";
 import { lightTheme } from "src/constants/theme";
@@ -20,6 +22,20 @@ const mantineTheme: MantineThemeOverride = {
 };
 
 function JsonCrack({ Component, pageProps }: AppProps) {
+  const router = useRouter();
+
+  React.useEffect(() => {
+    const handleRouteChange = (url: string) => {
+      pageview(url);
+    };
+
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router.events]);
+
   return (
     <>
       <GoogleAnalytics />

@@ -1,6 +1,7 @@
 import debounce from "lodash.debounce";
 import _get from "lodash.get";
 import _set from "lodash.set";
+import { event } from "react-ga";
 import { toast } from "react-hot-toast";
 import { create } from "zustand";
 import { defaultJson } from "src/constants/data";
@@ -105,6 +106,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       const jsonContent = await jsonToContent(JSON.stringify(contentJson, null, 2), format);
 
       get().setContents({ contents: jsonContent, hasChanges: false });
+      event({ action: "change_data_format", category: "User" });
     } catch (error) {
       get().clear();
       console.info("The content was unable to be converted, so it was cleared instead.");

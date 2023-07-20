@@ -1,3 +1,4 @@
+import { modalview } from "react-ga";
 import { create } from "zustand";
 import { Modal } from "src/containers/Modals";
 import useUser from "./useUser";
@@ -40,6 +41,7 @@ const useModal = create<ModalState & ModalActions>()(set => ({
       return set({ premium: true });
     }
 
+    if (visible) modalview(modal);
     set({ [modal]: visible });
   },
 }));

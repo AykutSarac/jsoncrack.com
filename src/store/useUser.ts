@@ -1,4 +1,5 @@
 import { setUser } from "@sentry/nextjs";
+import { set as gaSet } from "react-ga";
 import toast from "react-hot-toast";
 import { create } from "zustand";
 import { altogic } from "src/lib/api/altogic";
@@ -57,7 +58,10 @@ const useUser = create<UserStates & UserActions>()(set => ({
     toast.success("Logged out.");
     useModal.setState({ account: false });
   },
-  login: user => set({ user: user as unknown as User, isAuthenticated: true }),
+  login: user => {
+    set({ user: user as unknown as User, isAuthenticated: true });
+    gaSet({ userId: (user as User)._id });
+  },
   checkSession: async () => {
     if (isDevelopment) {
       return set({ user: devUser as User, isAuthenticated: true, premium: true });
@@ -84,6 +88,7 @@ const useUser = create<UserStates & UserActions>()(set => ({
         premium: premiumData.premium,
         premiumCancelled: premiumData?.status === "cancelled" || false,
       });
+      gaSet({ userId: user._id });
     } else if (new URLSearchParams(window.location.search).get("access_token")) {
       const { errors, user } = await altogic.auth.getAuthGrant();
 
@@ -97,6 +102,7 @@ const useUser = create<UserStates & UserActions>()(set => ({
 
         setUser({ id: user._id, email: user.email, username: user.name });
         set({ user: user as User, isAuthenticated: true, premium: premiumData.premium });
+        gaSet({ userId: user._id });
       }
     }
   },
