@@ -3,7 +3,6 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import { defaultJson } from "src/constants/data";
 import { BottomBar } from "src/containers/Editor/BottomBar";
 import { Tools } from "src/containers/Editor/LiveEditor/Tools";
 import { EditorWrapper } from "src/layout/EditorWrapper";
@@ -30,23 +29,15 @@ export const StyledEditorWrapper = styled.div`
 `;
 
 const EditorPage: React.FC = () => {
-  const { isReady, query } = useRouter();
+  const { query } = useRouter();
   const checkSession = useUser(state => state.checkSession);
+  const checkEditorSession = useFile(state => state.checkEditorSession);
   const loading = useJson(state => state.loading);
-  const setContents = useFile(state => state.setContents);
-  const fetchFile = useFile(state => state.fetchFile);
-  const fetchUrl = useFile(state => state.fetchUrl);
 
   React.useEffect(() => {
-    if (isReady) {
-      checkSession();
-      if (typeof query?.url === "string") fetchUrl(query.url);
-      if (typeof query?.json === "string") fetchFile(query.json);
-      if (!query?.url && !query?.json) {
-        setContents({ contents: defaultJson, hasChanges: false });
-      }
-    }
-  }, [checkSession, fetchFile, fetchUrl, isReady, query, setContents]);
+    checkSession();
+    checkEditorSession({ url: query?.url, json: query?.json });
+  }, [checkEditorSession, checkSession, query]);
 
   if (loading) return <Loading message="Fetching JSON from cloud..." />;
 
@@ -55,7 +46,6 @@ const EditorPage: React.FC = () => {
       <StyledEditorWrapper>
         <Head>
           <title>Editor | JSON Crack</title>
-          <meta name="description" content="View your JSON data in graphs instantly." />
         </Head>
         <StyledPageWrapper>
           <Tools />

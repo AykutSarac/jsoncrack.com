@@ -19,6 +19,8 @@ type SetContents = {
   skipUpdate?: boolean;
 };
 
+type Query = string | string[] | undefined;
+
 interface JsonActions {
   getContents: () => string;
   getFormat: () => FileFormat;
@@ -34,6 +36,7 @@ interface JsonActions {
   clear: () => void;
   setFile: (fileData: File) => void;
   setJsonSchema: (jsonSchema: object | null) => void;
+  checkEditorSession: ({ url, json }: { url: Query; json: Query }) => void;
 }
 
 export type File = {
@@ -106,23 +109,32 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       const jsonContent = await jsonToContent(JSON.stringify(contentJson, null, 2), format);
 
       get().setContents({ contents: jsonContent, hasChanges: false });
+
       event({ action: "change_data_format", category: "User" });
     } catch (error) {
       get().clear();
-      console.info("The content was unable to be converted, so it was cleared instead.");
+      console.warn("The content was unable to be converted, so it was cleared instead.");
     }
   },
   setContents: async ({ contents, hasChanges = true, skipUpdate = false }) => {
     try {
       set({ ...(contents && { contents }), error: null, hasChanges });
+
       const json = await contentToJson(get().contents, get().format);
 
       if (!useStored.getState().liveTransform && skipUpdate) return;
+
+      if (contents && contents.length < 80_000) {
+        sessionStorage.setItem("content", contents);
+        sessionStorage.setItem("format", get().format);
+      }
 
       debouncedUpdateJson(json);
     } catch (error: any) {
       if (error?.mark?.snippet) return set({ error: error.mark.snippet });
       if (error?.message) set({ error: error.message });
+      useJson.setState({ loading: false });
+      useGraph.setState({ loading: false });
     }
   },
   setError: error => set({ error }),
@@ -163,6 +175,17 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       get().clear();
       toast.error("Failed to fetch document from URL!");
     }
+  },
+  checkEditorSession: ({ url, json }) => {
+    if (typeof url === "string") return get().fetchUrl(url);
+    if (typeof json === "string") return get().fetchFile(json);
+
+    const sessionContent = sessionStorage.getItem("content") as string | null;
+    const format = sessionStorage.getItem("format") as FileFormat | null;
+    const contents = sessionContent ?? defaultJson;
+
+    if (format) set({ format });
+    get().setContents({ contents, hasChanges: false });
   },
   fetchFile: async id => {
     try {
