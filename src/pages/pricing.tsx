@@ -1,4 +1,5 @@
 import React from "react";
+import Head from "next/head";
 import {
   Flex,
   Stack,
@@ -21,6 +22,9 @@ import Layout from "src/layout/Layout";
 const Pricing = () => {
   return (
     <Layout>
+      <Head>
+        <title>JSON Crack | Pricing</title>
+      </Head>
       <Container py={100}>
         <Center>
           <Stack>

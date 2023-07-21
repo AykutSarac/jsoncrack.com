@@ -287,7 +287,7 @@ const SignIn = () => {
   return (
     <div>
       <Head>
-        <title>Sign In | Herowand Editor</title>
+        <title>Sign In | JSON Crack</title>
       </Head>
       <Navbar />
       <StyledPageWrapper className="repeating-grid">

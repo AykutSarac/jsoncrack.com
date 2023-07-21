@@ -46,8 +46,8 @@ class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <SeoTags
-            description="Simple visualization tool for your JSON data. No forced structure, paste your JSON and view it instantly."
-            title="JSON Crack - Crack your data into pieces"
+            description="Innovative and open-source visualization application that transforms various data formats, such as JSON, YAML, XML, CSV and more, into interactive graphs."
+            title="JSON Crack - Visualize Data to Graphs"
             image="https://jsoncrack.com/assets/jsoncrack.png"
           />
           <meta name="theme-color" content="#36393E" />

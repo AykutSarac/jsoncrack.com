@@ -91,7 +91,7 @@ const SignIn = () => {
   return (
     <div>
       <Head>
-        <title>Reset Password | Herowand Editor</title>
+        <title>Reset Password | JSON Crack</title>
       </Head>
       <Navbar />
       <StyledPageWrapper className="repeating-grid">

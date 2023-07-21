@@ -325,7 +325,7 @@ export const HomePage = () => {
   return (
     <ThemeProvider theme={lightTheme}>
       <Head>
-        <title>JSON Crack - Crack your data into pieces</title>
+        <title>JSON Crack - Visualize Data to Graphs</title>
       </Head>
       <HeroSection />
       <StatsBanner />
