@@ -6,6 +6,7 @@ import { toast } from "react-hot-toast";
 import { create } from "zustand";
 import { defaultJson } from "src/constants/data";
 import { contentToJson, jsonToContent } from "src/lib/utils/json/jsonAdapter";
+import { isIframe } from "src/lib/utils/widget";
 import { getFromCloud, saveToCloud } from "src/services/json";
 import { FileFormat } from "src/types/models";
 import useGraph from "./useGraph";
@@ -124,7 +125,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
 
       if (!useStored.getState().liveTransform && skipUpdate) return;
 
-      if (contents && contents.length < 80_000) {
+      if (contents && contents.length < 80_000 && !isIframe()) {
         sessionStorage.setItem("content", contents);
         sessionStorage.setItem("format", get().format);
       }
