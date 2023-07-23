@@ -54,7 +54,7 @@ const StyledRight = styled.div`
   gap: 4px;
 `;
 
-const StyledBottomBarItem = styled.button<{ error?: boolean }>`
+const StyledBottomBarItem = styled.button<{ $error?: boolean }>`
   display: flex;
   align-items: center;
   gap: 4px;
@@ -64,8 +64,8 @@ const StyledBottomBarItem = styled.button<{ error?: boolean }>`
   padding: 4px;
   font-size: 12px;
   font-weight: 400;
-  color: ${({ theme, error }) => (error ? theme.DANGER : theme.INTERACTIVE_NORMAL)};
-  background: ${({ error }) => error && "rgba(255, 99, 71, 0.4)"};
+  color: ${({ theme, $error }) => ($error ? theme.DANGER : theme.INTERACTIVE_NORMAL)};
+  background: ${({ $error }) => $error && "rgba(255, 99, 71, 0.4)"};
 
   &:hover:not(&:disabled) {
     background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0 0);
@@ -78,8 +78,8 @@ const StyledBottomBarItem = styled.button<{ error?: boolean }>`
   }
 `;
 
-const StyledImg = styled.img<{ light: boolean }>`
-  filter: ${({ light }) => light && "invert(100%)"};
+const StyledImg = styled.img<{ $light: boolean }>`
+  filter: ${({ $light }) => $light && "invert(100%)"};
 `;
 
 export const BottomBar = () => {
@@ -191,7 +191,7 @@ export const BottomBar = () => {
             Upgrade to Premium
           </StyledBottomBarItem>
         )}
-        <StyledBottomBarItem error={!!error}>
+        <StyledBottomBarItem $error={!!error}>
           {error ? (
             <Popover width="auto" shadow="md" position="top" withArrow>
               <Popover.Target>
@@ -261,7 +261,7 @@ export const BottomBar = () => {
               width="54"
               src="https://www.altogic.com/img/logo_dark.svg"
               alt="powered by altogic"
-              light={lightmode}
+              $light={lightmode}
             />
           </StyledBottomBarItem>
         </a>

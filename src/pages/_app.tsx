@@ -2,7 +2,7 @@ import React from "react";
 import type { AppProps } from "next/app";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
-import { ThemeProvider } from "styled-components";
+import { StyleSheetManager, ThemeProvider } from "styled-components";
 import { MantineProvider, MantineThemeOverride } from "@mantine/core";
 import { pageview } from "react-ga";
 import { monaSans } from "src/constants/fonts";
@@ -39,28 +39,30 @@ function JsonCrack({ Component, pageProps }: AppProps) {
   return (
     <>
       <GoogleAnalytics />
-      <ThemeProvider theme={lightTheme}>
-        <GlobalStyle />
-        <MantineProvider theme={mantineTheme} withGlobalStyles withNormalizeCSS withCSSVariables>
-          <Component {...pageProps} />
-          <ModalController />
-          <Toaster
-            position="top-right"
-            containerStyle={{
-              top: 40,
-              right: 6,
-              fontSize: 14,
-            }}
-            toastOptions={{
-              style: {
-                background: "#4D4D4D",
-                color: "#B9BBBE",
-              },
-            }}
-          />
-          <ExternalMode />
-        </MantineProvider>
-      </ThemeProvider>
+      <StyleSheetManager>
+        <ThemeProvider theme={lightTheme}>
+          <GlobalStyle />
+          <MantineProvider theme={mantineTheme} withGlobalStyles withNormalizeCSS withCSSVariables>
+            <Component {...pageProps} />
+            <ModalController />
+            <Toaster
+              position="top-right"
+              containerStyle={{
+                top: 40,
+                right: 6,
+                fontSize: 14,
+              }}
+              toastOptions={{
+                style: {
+                  background: "#4D4D4D",
+                  color: "#B9BBBE",
+                },
+              }}
+            />
+            <ExternalMode />
+          </MantineProvider>
+        </ThemeProvider>
+      </StyleSheetManager>
     </>
   );
 }

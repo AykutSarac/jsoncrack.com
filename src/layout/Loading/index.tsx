@@ -17,8 +17,8 @@ const fadeIn = keyframes`
   }
 `;
 
-const StyledLoading = styled.div<{ visible: boolean }>`
-  display: ${({ visible }) => (visible ? "grid" : "none")};
+const StyledLoading = styled.div<{ $visible: boolean }>`
+  display: ${({ $visible }) => ($visible ? "grid" : "none")};
   position: fixed;
   top: 0;
   left: 0;
@@ -48,7 +48,7 @@ const StyledMessage = styled.div`
 
 export const Loading: React.FC<LoadingProps> = ({ loading = true, message }) => (
   <Center mx="auto">
-    <StyledLoading visible={loading}>
+    <StyledLoading $visible={loading}>
       <Stack>
         <Image mx="auto" width="6.5em" src="./assets/rocket_ship.webp" alt="loading image" />
         <JSONCrackLogo fontSize="2rem" />

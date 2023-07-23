@@ -21,10 +21,10 @@ interface GraphProps {
   isWidget?: boolean;
 }
 
-const StyledEditorWrapper = styled.div<{ widget: boolean }>`
+const StyledEditorWrapper = styled.div<{ $widget: boolean }>`
   position: absolute;
   width: 100%;
-  height: ${({ widget }) => (widget ? "calc(100vh - 36px)" : "calc(100vh - 63px)")};
+  height: ${({ $widget }) => ($widget ? "calc(100vh - 36px)" : "calc(100vh - 63px)")};
 
   --bg-color: ${({ theme }) => theme.GRID_BG_COLOR};
   --line-color-1: ${({ theme }) => theme.GRID_COLOR_PRIMARY};
@@ -60,7 +60,7 @@ const StyledEditorWrapper = styled.div<{ widget: boolean }>`
   }
 
   @media only screen and (max-width: 768px) {
-    height: ${({ widget }) => (widget ? "calc(100vh - 36px)" : "100vh")};
+    height: ${({ $widget }) => ($widget ? "calc(100vh - 36px)" : "100vh")};
   }
 
   @media only screen and (max-width: 320px) {
@@ -154,7 +154,7 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
           if ("activeElement" in document) (document.activeElement as HTMLElement)?.blur();
         }}
         onContextMenu={e => e.preventDefault()}
-        widget={isWidget}
+        $widget={isWidget}
       >
         <TransformWrapper
           maxScale={2}

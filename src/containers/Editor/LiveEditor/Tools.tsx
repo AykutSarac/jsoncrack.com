@@ -46,8 +46,8 @@ export const StyledTools = styled.div`
   }
 `;
 
-const StyledToolElement = styled.button<{ hide?: boolean }>`
-  display: ${({ hide }) => (hide ? "none" : "grid")};
+const StyledToolElement = styled.button<{ $hide?: boolean }>`
+  display: ${({ $hide }) => ($hide ? "none" : "grid")};
   place-content: center;
   font-size: 12px;
   background: none;
@@ -314,12 +314,12 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
           <MdCenterFocusWeak size="18" />
         </StyledToolElement>
         <SearchInput />
-        <StyledToolElement title="Fullscreen" hide={isWidget} onClick={fullscreenBrowser}>
+        <StyledToolElement title="Fullscreen" $hide={isWidget} onClick={fullscreenBrowser}>
           <AiOutlineFullscreen size="18" />
         </StyledToolElement>
         <StyledToolElement
           title="Settings"
-          hide={isWidget}
+          $hide={isWidget}
           onClick={() => setVisible("settings")(true)}
         >
           <VscSettingsGear size="18" />

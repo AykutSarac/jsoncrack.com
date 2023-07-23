@@ -9,7 +9,7 @@ const Node: React.FC<CustomNodeProps> = ({ node, x, y }) => {
   if (data?.isEmpty) return null;
 
   return (
-    <Styled.StyledForeignObject width={width} height={height} x={0} y={0} isObject>
+    <Styled.StyledForeignObject width={width} height={height} x={0} y={0} $isObject>
       {(text as [string, unknown][]).map((val, idx) => {
         return (
           <Styled.StyledRow
@@ -19,7 +19,7 @@ const Node: React.FC<CustomNodeProps> = ({ node, x, y }) => {
             data-y={y + idx * 17.8}
             key={idx}
           >
-            <Styled.StyledKey objectKey>
+            <Styled.StyledKey $objectKey>
               {JSON.stringify(val[0]).replaceAll('"', "")}:{" "}
             </Styled.StyledKey>
             <TextRenderer>{JSON.stringify(val[1])}</TextRenderer>
