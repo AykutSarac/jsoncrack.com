@@ -63,7 +63,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: build-files
-          path: ./_next/static/chunks/
+          path: ./out/_next/static/chunks
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
