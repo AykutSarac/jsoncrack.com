@@ -74,7 +74,7 @@ jobs:
           curl -sL https://sentry.io/get-cli/ | SENTRY_CLI_VERSION="2.20.0" sh
           sentry-cli releases new $SENTRY_RELEASE
           sentry-cli sourcemaps inject $SENTRY_SOURCEMAP_PATH
-          sentry-cli sourcemaps upload --verify -r=$SENTRY_RELEASE -u='~/_next/static/chunks/' $SENTRY_SOURCEMAP_PATH
+          sentry-cli sourcemaps upload --validate -r=$SENTRY_RELEASE -u='~/_next/static/chunks/' $SENTRY_SOURCEMAP_PATH
           sentry-cli releases set-commits $SENTRY_RELEASE --auto
           sentry-cli releases deploys $SENTRY_RELEASE new -e production
           sentry-cli releases finalize $SENTRY_RELEASE
