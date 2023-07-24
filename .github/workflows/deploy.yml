@@ -23,6 +23,7 @@ jobs:
       SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
       SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
       SENTRY_RELEASE: ${{ github.sha }}
+      SENTRY_SOURCEMAP_PATH: "./out/_next/static/chunks/"
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -68,14 +69,12 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           path: './out'
-      - name: List files in workflow
-        run: ls -R ./
       - name: Sentry
         run: |
           curl -sL https://sentry.io/get-cli/ | SENTRY_CLI_VERSION="2.20.0" sh
           sentry-cli releases new $SENTRY_RELEASE
-          sentry-cli sourcemaps inject './_next/static/'
-          sentry-cli sourcemaps upload --verify -r=$SENTRY_RELEASE -u='~/static' './_next/static/'
+          sentry-cli sourcemaps inject $SENTRY_SOURCEMAP_PATH
+          sentry-cli sourcemaps upload --verify -r=$SENTRY_RELEASE -u='~/_next/static/chunks/' $SENTRY_SOURCEMAP_PATH
           sentry-cli releases set-commits $SENTRY_RELEASE --auto
           sentry-cli releases deploys $SENTRY_RELEASE new -e production
           sentry-cli releases finalize $SENTRY_RELEASE
