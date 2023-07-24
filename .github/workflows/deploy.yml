@@ -18,6 +18,11 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+      SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+      SENTRY_RELEASE: ${{ github.sha }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -26,20 +31,10 @@ jobs:
       - name: Detect package manager
         id: detect-package-manager
         run: |
-          if [ -f "${{ github.workspace }}/yarn.lock" ]; then
-            echo "manager=yarn" >> $GITHUB_OUTPUT
-            echo "command=install --frozen-lockfile" >> $GITHUB_OUTPUT
-            echo "runner=yarn" >> $GITHUB_OUTPUT
-            exit 0
-          elif [ -f "${{ github.workspace }}/package.json" ]; then
-            echo "manager=npm" >> $GITHUB_OUTPUT
-            echo "command=ci" >> $GITHUB_OUTPUT
-            echo "runner=npx --no-install" >> $GITHUB_OUTPUT
-            exit 0
-          else
-            echo "Unable to determine packager manager"
-            exit 1
-          fi
+          echo "manager=yarn" >> $GITHUB_OUTPUT
+          echo "command=install --frozen-lockfile" >> $GITHUB_OUTPUT
+          echo "runner=yarn" >> $GITHUB_OUTPUT
+          exit 0
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
@@ -62,9 +57,7 @@ jobs:
         with:
           path: |
             .next/cache
-          # Generate a new cache whenever packages or source files change.
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
-          # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
@@ -75,33 +68,17 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           path: './out'
-
-  sentry:
-    runs-on: ubuntu-latest
-    needs: build
-    env:
-      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-      SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-      SENTRY_RELEASE: ${{ github.sha }}
-    steps:
       - name: List files in workflow
         run: ls -R ./
-      - name: Install Sentry CLI
-        run: curl -sL https://sentry.io/get-cli/ | SENTRY_CLI_VERSION="2.20.0" sh
-      - name: Create Release
-        run: sentry-cli releases new $SENTRY_RELEASE
-      - name: Inject Debug IDs to sourcemap
-        run: sentry-cli sourcemaps inject './_next/static/'
-      - name: Upload sourcemaps
-        run: sentry-cli sourcemaps upload --verify -r=$SENTRY_RELEASE -u='~/static' './_next/static/'
-      - name: Set commits for Sentry release
-        run: sentry-cli releases set-commits $SENTRY_RELEASE --auto
-      - name: Deploy to Sentry
-        run: sentry-cli releases deploys $SENTRY_RELEASE new -e production
-      - name: Finalize Sentry release
-        run: sentry-cli releases finalize $SENTRY_RELEASE
-
+      - name: Sentry
+        run: |
+          curl -sL https://sentry.io/get-cli/ | SENTRY_CLI_VERSION="2.20.0" sh
+          sentry-cli releases new $SENTRY_RELEASE
+          sentry-cli sourcemaps inject './_next/static/'
+          sentry-cli sourcemaps upload --verify -r=$SENTRY_RELEASE -u='~/static' './_next/static/'
+          sentry-cli releases set-commits $SENTRY_RELEASE --auto
+          sentry-cli releases deploys $SENTRY_RELEASE new -e production
+          sentry-cli releases finalize $SENTRY_RELEASE
 
   # Deployment job
   deploy:
