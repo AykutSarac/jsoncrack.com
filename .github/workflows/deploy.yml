@@ -43,7 +43,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: "18"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
       - name: Cache node_modules
         uses: actions/cache@v3
@@ -71,8 +71,6 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
-      - name: Static HTML export with Next.js
-        run: ${{ steps.detect-package-manager.outputs.runner }} next export
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
@@ -87,11 +85,6 @@ jobs:
       SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
       SENTRY_RELEASE: ${{ github.sha }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          path: './out'
       - name: List files in workflow
         run: ls -R ./
       - name: Install Sentry CLI
