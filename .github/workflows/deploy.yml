@@ -85,6 +85,7 @@ jobs:
       SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
       SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
       SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+      SENTRY_RELEASE: ${{ github.sha }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -93,20 +94,19 @@ jobs:
       - name: List files in workflow
         run: ls -R ./
       - name: Install Sentry CLI
-        run: curl -sL https://sentry.io/get-cli/ | bash
-      - name: Create Sentry release
-        id: create-release
-        run: |
-          VERSION=$(sentry-cli releases propose-version)
-          echo "RELEASE_VERSION=$VERSION" >> $GITHUB_ENV
-      - name: Upload sourcemaps to Sentry
-        run: sentry-cli releases files "$RELEASE_VERSION" upload-sourcemaps --ext map --ext js --url-prefix '~/static' './_next/static/'
+        run: curl -sL https://sentry.io/get-cli/ | SENTRY_CLI_VERSION="2.20.0" sh
+      - name: Create Release
+        run: sentry-cli releases new $SENTRY_RELEASE
+      - name: Inject Debug IDs to sourcemap
+        run: sentry-cli sourcemaps inject './_next/static/'
+      - name: Upload sourcemaps
+        run: sentry-cli sourcemaps upload --verify -r=$SENTRY_RELEASE -u='~/static' './_next/static/'
       - name: Set commits for Sentry release
-        run: sentry-cli releases set-commits "$RELEASE_VERSION" --auto
+        run: sentry-cli releases set-commits $SENTRY_RELEASE --auto
       - name: Deploy to Sentry
-        run: sentry-cli releases deploys "$RELEASE_VERSION" new -e ${{ secrets.SENTRY_DEPLOY_ENVIRONMENT }}
+        run: sentry-cli releases deploys $SENTRY_RELEASE new -e production
       - name: Finalize Sentry release
-        run: sentry-cli releases finalize "$RELEASE_VERSION"
+        run: sentry-cli releases finalize $SENTRY_RELEASE
 
 
 
