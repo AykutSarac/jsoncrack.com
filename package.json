@@ -21,7 +21,7 @@
     "@mantine/next": "^6.0.17",
     "@mantine/prism": "^6.0.17",
     "@monaco-editor/react": "^4.5.1",
-    "@sentry/nextjs": "^7.55.2",
+    "@sentry/nextjs": "^7.60.0",
     "@tanstack/react-query": "^4.32.0",
     "allotment": "^1.19.2",
     "altogic": "^2.3.9",
