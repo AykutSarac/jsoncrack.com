@@ -84,12 +84,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          fetch-depth: 1
+          fetch-depth: 0
       - uses: actions/download-artifact@v2
         with:
           name: build-files
-      - name: List files in workflow
-        run: ls -R ./
       - name: Download sentry-cli
         run: curl -sL https://sentry.io/get-cli/ | SENTRY_CLI_VERSION="2.20.0" sh
       - name: Create Release
