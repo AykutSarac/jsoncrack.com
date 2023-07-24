@@ -59,12 +59,18 @@ jobs:
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-files
+          path: ./out
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
-          name: "build-files"
           path: './out'
 
+
+  # Sentry job
   sentry: 
     needs: build
     runs-on: ubuntu-latest
@@ -75,18 +81,25 @@ jobs:
       SENTRY_RELEASE: ${{ github.sha }}
       SENTRY_SOURCEMAP_PATH: "./out/_next/static/chunks/"
     steps:
+      - uses: actions/checkout@v3
       - uses: actions/download-artifact@v2
         with:
           name: build-files
+      - name: Download sentry-cli
+        run: curl -sL https://sentry.io/get-cli/ | SENTRY_CLI_VERSION="2.20.0" sh
+      - name: Create Release
+        run: sentry-cli releases new $SENTRY_RELEASE
+      - name: Inject Debug IDs to source files
+        run: sentry-cli sourcemaps inject $SENTRY_SOURCEMAP_PATH
+      - name: Upload Source Files
+        run: sentry-cli sourcemaps upload --validate -r=$SENTRY_RELEASE -u='~/_next/static/chunks/' $SENTRY_SOURCEMAP_PATH
+      - name: Set Release Commits
+        run: sentry-cli releases set-commits $SENTRY_RELEASE --auto
       - name: Deploy to Sentry
-        run: |
-          curl -sL https://sentry.io/get-cli/ | SENTRY_CLI_VERSION="2.20.0" sh
-          sentry-cli releases new $SENTRY_RELEASE
-          sentry-cli sourcemaps inject $SENTRY_SOURCEMAP_PATH
-          sentry-cli sourcemaps upload --validate -r=$SENTRY_RELEASE -u='~/_next/static/chunks/' $SENTRY_SOURCEMAP_PATH
-          sentry-cli releases set-commits $SENTRY_RELEASE --auto
-          sentry-cli releases deploys $SENTRY_RELEASE new -e production
-          sentry-cli releases finalize $SENTRY_RELEASE
+        run: sentry-cli releases deploys $SENTRY_RELEASE new -e production
+      - name: Finalize Sentry Release
+        run: sentry-cli releases finalize $SENTRY_RELEASE
+          
 
   # Deployment job
   deploy:
