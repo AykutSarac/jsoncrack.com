@@ -63,7 +63,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: build-files
-          path: ./out
+          path: ./_next/static/chunks/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
@@ -79,12 +79,14 @@ jobs:
       SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
       SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
       SENTRY_RELEASE: ${{ github.sha }}
-      SENTRY_SOURCEMAP_PATH: "./out/_next/static/chunks/"
+      SENTRY_SOURCEMAP_PATH: "./"
     steps:
       - uses: actions/checkout@v3
       - uses: actions/download-artifact@v2
         with:
           name: build-files
+      - name: List files in workflow
+        run: ls -R ./
       - name: Download sentry-cli
         run: curl -sL https://sentry.io/get-cli/ | SENTRY_CLI_VERSION="2.20.0" sh
       - name: Create Release
