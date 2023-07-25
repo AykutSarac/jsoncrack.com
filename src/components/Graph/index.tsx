@@ -184,6 +184,10 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
               height={paneHeight}
               width={paneWidth}
               direction={direction}
+              layoutOptions={{
+                "elk.layered.compaction.postCompaction.strategy": "EDGE_LENGTH",
+                "elk.layered.nodePlacement.strategy": "NETWORK_SIMPLEX",
+              }}
               onLayoutChange={onLayoutChange}
               onCanvasClick={onCanvasClick}
               node={memoizedNode}
