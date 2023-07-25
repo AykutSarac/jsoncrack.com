@@ -95,7 +95,7 @@ jobs:
       - name: Inject Debug IDs to source files
         run: sentry-cli sourcemaps inject $SENTRY_SOURCEMAP_PATH
       - name: Upload Source Files
-        run: sentry-cli sourcemaps upload --validate -r=$SENTRY_RELEASE -u='~/_next/static/chunks/' $SENTRY_SOURCEMAP_PATH
+        run: sentry-cli sourcemaps upload --validate -r=$SENTRY_RELEASE $SENTRY_SOURCEMAP_PATH
       - name: Set Release Commits
         run: sentry-cli releases set-commits $SENTRY_RELEASE --auto
       - name: Deploy to Sentry
