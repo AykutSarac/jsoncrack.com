@@ -137,6 +137,9 @@ export function FooterLinks({ data }: FooterLinksProps) {
         <Text color="gray" size="sm">
           © jsoncrack.com
         </Text>
+        <Text color="gray" size="sm">
+          Contact: aykut@jsoncrack.com
+        </Text>
       </Container>
     </footer>
   );
