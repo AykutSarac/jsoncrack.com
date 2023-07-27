@@ -197,7 +197,7 @@ export const PremiumView = () => (
         component="a"
         variant="gradient"
         gradient={{ from: "blue", to: "teal" }}
-        href={paymentURL}
+        href={paymentURL()}
         target="_blank"
       >
         UPGRADE TO PREMIUM $5.00

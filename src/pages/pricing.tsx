@@ -64,7 +64,7 @@ const Pricing = () => {
                   </Title>
                   <Button
                     component="a"
-                    href={paymentURL}
+                    href={paymentURL()}
                     variant="filled"
                     color="teal"
                     size="md"

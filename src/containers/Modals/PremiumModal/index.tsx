@@ -53,7 +53,7 @@ export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           </Title>
           <Button
             component="a"
-            href={paymentURL}
+            href={paymentURL()}
             variant="filled"
             color="teal"
             size="md"
