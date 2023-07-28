@@ -36,7 +36,7 @@ export const StyledTools = styled.div`
   justify-content: space-between;
   height: 36px;
   padding: 4px 8px;
-  background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
+  background: ${({ theme }) => theme.TOOLBAR_BG};
   color: ${({ theme }) => theme.SILVER};
   box-shadow: 0 1px 0px ${({ theme }) => theme.BACKGROUND_TERTIARY};
   z-index: 36;
