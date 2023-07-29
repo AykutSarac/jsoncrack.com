@@ -86,6 +86,41 @@ const Pricing = () => {
                     <List.Item>JSON Schema support</List.Item>
                     <List.Item>Visualize data at full capability</List.Item>
                     <List.Item>Save & share up to 200 files</List.Item>
+                  </List>
+                </Stack>
+              </Paper>
+
+              <Divider color="gray" orientation="vertical" />
+              <Paper p="lg" withBorder>
+                <Stack spacing="xs">
+                  <Title color="dark" order={3}>
+                    JSON Crack Enterprise
+                    <Text size="sm" color="dimmed">
+                      USD 150$/mo
+                    </Text>
+                  </Title>
+                  <Button
+                    component="a"
+                    href={paymentURL()}
+                    variant="filled"
+                    color="teal"
+                    size="md"
+                    target="_blank"
+                  >
+                    Upgrade plan
+                  </Button>
+                  <List
+                    spacing="xs"
+                    size="sm"
+                    center
+                    icon={
+                      <ThemeIcon color="teal" size={20} radius="xl">
+                        <BsCheck size="1rem" />
+                      </ThemeIcon>
+                    }
+                  >
+                    <List.Item w={200}>Enable premium to all accounts with work email</List.Item>
+                    <List.Item>Everything in previous tiers</List.Item>
                     <List.Item
                       icon={
                         <ThemeIcon color="dark.5" size={20} radius="xl">
