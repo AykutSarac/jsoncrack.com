@@ -11,6 +11,7 @@ import {
   Text,
   ModalProps,
 } from "@mantine/core";
+import { FiExternalLink } from "react-icons/fi";
 import { MdCheck, MdCopyAll } from "react-icons/md";
 
 export const ShareModal: React.FC<ModalProps> = ({ opened, onClose }) => {
@@ -42,7 +43,14 @@ export const ShareModal: React.FC<ModalProps> = ({ opened, onClose }) => {
         <Text fz="sm" fw={700}>
           Embed into your website
         </Text>
-        <Button component="a" color="green" target="_blank" href="/docs" fullWidth>
+        <Button
+          component="a"
+          color="green"
+          target="_blank"
+          href="/docs"
+          leftIcon={<FiExternalLink />}
+          fullWidth
+        >
           Learn How to Embed
         </Button>
       </Stack>

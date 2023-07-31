@@ -30,6 +30,7 @@ const StyledBottomBar = styled.div`
   max-height: 27px;
   height: 27px;
   padding: 0 6px;
+  z-index: 35;
 
   @media screen and (max-width: 320px) {
     display: none;
@@ -73,7 +74,7 @@ const StyledBottomBarItem = styled.button<{ $error?: boolean }>`
   }
 
   &:disabled {
-    opacity: 0.4;
+    opacity: 0.6;
     cursor: default;
   }
 `;
@@ -116,19 +117,20 @@ export const BottomBar = () => {
       try {
         setIsUpdating(true);
         toast.loading("Saving document...", { id: "fileSave" });
-        const res = await saveToCloud(query?.json ?? null, getContents(), getFormat());
 
-        if (res.errors && res.errors.items.length > 0) throw res.errors;
-        if (res.data._id) replace({ query: { json: res.data._id } });
+        const { data, error } = await saveToCloud({
+          id: query?.json,
+          contents: getContents(),
+          format: getFormat(),
+        });
+
+        if (error) throw error;
+        if (data[0].id) replace({ query: { json: data[0].id } });
 
         toast.success("Document saved to cloud", { id: "fileSave" });
         setHasChanges(false);
       } catch (error: any) {
-        if (error?.items?.length > 0) {
-          return toast.error(error.items[0].message, { id: "fileSave", duration: 5000 });
-        }
-
-        toast.error("Failed to save document!", { id: "fileSave" });
+        toast.error(error.message, { id: "fileSave" });
       } finally {
         setIsUpdating(false);
       }
@@ -155,14 +157,18 @@ export const BottomBar = () => {
       if (!query.json) return handleSaveJson();
       setIsUpdating(true);
 
-      const res = await updateJson(query.json as string, { private: !isPrivate });
+      const { data: updatedJsonData, error } = await updateJson(query.json as string, {
+        private: !isPrivate,
+      });
 
-      if (!res.errors?.items.length) {
-        setIsPrivate(res.data.private);
+      if (error) return toast.error(error.message);
+
+      if (updatedJsonData[0]) {
+        setIsPrivate(updatedJsonData[0].private);
         toast.success(`Document set to ${isPrivate ? "public" : "private"}.`);
-      } else throw res.errors;
+      } else throw error;
     } catch (error) {
-      toast.error("An error occurred while updating document!");
+      console.error(error);
     } finally {
       setIsUpdating(false);
     }
@@ -178,7 +184,7 @@ export const BottomBar = () => {
       <StyledLeft>
         <StyledBottomBarItem onClick={handleLoginClick}>
           <VscAccount />
-          {user ? user.name : "Login"}
+          {user?.user_metadata.name ?? "Login"}
           {premium && (
             <Badge size="sm" color="orange" radius="sm" fw="bold">
               PREMIUM
@@ -211,24 +217,25 @@ export const BottomBar = () => {
             </Flex>
           )}
         </StyledBottomBarItem>
-        <StyledBottomBarItem onClick={handleSaveJson} disabled={isUpdating}>
-          {hasChanges ? <AiOutlineCloudUpload /> : <AiOutlineCloudSync />}
-          {hasChanges ? (query?.json ? "Unsaved Changes" : "Create Document") : "Saved"}
-        </StyledBottomBarItem>
-        {data && (
-          <>
-            {typeof data.private !== "undefined" && (
-              <StyledBottomBarItem onClick={setPrivate} disabled={isUpdating}>
-                {isPrivate ? <AiOutlineLock /> : <AiOutlineUnlock />}
-                {isPrivate ? "Private" : "Public"}
-              </StyledBottomBarItem>
-            )}
-            <StyledBottomBarItem onClick={() => setVisible("share")(true)} disabled={isPrivate}>
-              <AiOutlineLink />
-              Share
-            </StyledBottomBarItem>
-          </>
+        {(data?.owner_id === user?.id || (!data && user)) && (
+          <StyledBottomBarItem onClick={handleSaveJson} disabled={isUpdating}>
+            {hasChanges ? <AiOutlineCloudUpload /> : <AiOutlineCloudSync />}
+            {hasChanges ? (query?.json ? "Unsaved Changes" : "Create Document") : "Saved"}
+          </StyledBottomBarItem>
         )}
+        {data?.owner_id === user?.id && (
+          <StyledBottomBarItem onClick={setPrivate} disabled={isUpdating}>
+            {isPrivate ? <AiOutlineLock /> : <AiOutlineUnlock />}
+            {isPrivate ? "Private" : "Public"}
+          </StyledBottomBarItem>
+        )}
+        <StyledBottomBarItem
+          onClick={() => setVisible("share")(true)}
+          disabled={isPrivate || !data}
+        >
+          <AiOutlineLink />
+          Share
+        </StyledBottomBarItem>
         {liveTransform ? (
           <StyledBottomBarItem onClick={() => toggleLiveTransform(false)}>
             <VscSync />

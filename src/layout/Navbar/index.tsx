@@ -3,6 +3,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import { Button } from "@mantine/core";
 import { FaStar } from "react-icons/fa";
+import useUser from "src/store/useUser";
 import { JSONCrackLogo } from "../JsonCrackLogo";
 
 const StyledNavbarWrapper = styled.div`
@@ -43,6 +44,8 @@ const Right = styled.div`
 `;
 
 export const Navbar = () => {
+  const isAuthenticated = useUser(state => state.isAuthenticated);
+
   return (
     <StyledNavbarWrapper>
       <StyledNavbar>
@@ -86,11 +89,13 @@ export const Navbar = () => {
           >
             Star us on GitHub
           </Button>
-          <Link href="/sign-in" prefetch={false}>
-            <Button variant="light" radius="md" className="hide-mobile">
-              Sign In
-            </Button>
-          </Link>
+          {!isAuthenticated && (
+            <Link href="/sign-in" prefetch={false}>
+              <Button variant="light" radius="md" className="hide-mobile">
+                Sign In
+              </Button>
+            </Link>
+          )}
           <Link href="/editor" prefetch={false}>
             <Button color="pink" radius="md">
               Editor

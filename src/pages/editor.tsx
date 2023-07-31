@@ -9,7 +9,6 @@ import { EditorWrapper } from "src/layout/EditorWrapper";
 import { Loading } from "src/layout/Loading";
 import useFile from "src/store/useFile";
 import useJson from "src/store/useJson";
-import useUser from "src/store/useUser";
 
 const Panes = dynamic(() => import("src/containers/Editor/Panes"));
 
@@ -29,15 +28,13 @@ export const StyledEditorWrapper = styled.div`
 `;
 
 const EditorPage: React.FC = () => {
-  const { query } = useRouter();
-  const checkSession = useUser(state => state.checkSession);
+  const { query, isReady } = useRouter();
   const checkEditorSession = useFile(state => state.checkEditorSession);
   const loading = useJson(state => state.loading);
 
   React.useEffect(() => {
-    checkSession();
-    checkEditorSession({ url: query?.url, json: query?.json });
-  }, [checkEditorSession, checkSession, query]);
+    if (isReady) checkEditorSession({ url: query?.url, json: query?.json });
+  }, [checkEditorSession, isReady, query]);
 
   if (loading) return <Loading message="Fetching JSON from cloud..." />;
 

@@ -1,252 +1,242 @@
 import React from "react";
+import Link from "next/link";
 import { useRouter } from "next/router";
-import styled from "styled-components";
 import {
   Modal,
-  Group,
-  Button,
   Text,
-  Stack,
-  Loader,
-  Center,
   Divider,
   ScrollArea,
   ModalProps,
+  Table,
+  ActionIcon,
+  Badge,
   Paper,
+  Flex,
+  DefaultMantineColor,
+  Input,
+  Button,
+  Group,
+  Stack,
+  RingProgress,
+  UnstyledButton,
 } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import toast from "react-hot-toast";
-import { AiOutlineEdit, AiOutlineLock, AiOutlinePlus, AiOutlineUnlock } from "react-icons/ai";
+import { AiOutlineLink } from "react-icons/ai";
 import { FaTrash } from "react-icons/fa";
-import { IoRocketSharp } from "react-icons/io5";
+import { MdFileOpen } from "react-icons/md";
+import { VscAdd, VscEdit } from "react-icons/vsc";
 import { deleteJson, getAllJson, saveToCloud, updateJson } from "src/services/json";
 import useFile, { File } from "src/store/useFile";
-import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
+import { FileFormat } from "src/types/models";
 
 dayjs.extend(relativeTime);
 
-const StyledJsonCard = styled.a<{ active?: boolean; create?: boolean }>`
-  display: ${({ create }) => (create ? "block" : "flex")};
-  align-items: center;
-  justify-content: space-between;
-  line-height: 20px;
-  padding: 6px;
-  border-radius: 3px;
-  overflow: hidden;
-  flex: 1;
-  height: 60px;
-  background: ${({ active }) => active && "rgb(48, 98, 197)"};
-`;
+const colorByFormat: Record<FileFormat, DefaultMantineColor> = {
+  json: "orange",
+  yaml: "blue",
+  xml: "red",
+  toml: "dark",
+  csv: "grape",
+};
 
-const StyledInfo = styled.div``;
-
-const StyledTitle = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 14px;
-  font-weight: 500;
-  width: fit-content;
-  cursor: pointer;
-
-  span {
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-`;
-
-const StyledDetils = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: 12px;
-  gap: 4px;
-`;
-
-const StyledCreateWrapper = styled.div`
-  display: flex;
-  height: 100%;
-  gap: 6px;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.6;
-  height: 30px;
-  font-weight: 500;
-  font-size: 14px;
-  cursor: pointer;
-`;
-
-const StyledNameInput = styled.input`
-  background: transparent;
-  border: none;
-  outline: none;
-  width: 90%;
-  color: ${({ theme }) => theme.SEAGREEN};
-  font-weight: 600;
-`;
-
-const GraphCard: React.FC<{ data: File; refetch: () => void; active: boolean }> = ({
-  data,
-  refetch,
-  active,
-  ...props
-}) => {
-  const [editMode, setEditMode] = React.useState(false);
-  const [name, setName] = React.useState(data.name);
-
+const UpdateNameModal: React.FC<{
+  file: File | null;
+  onClose: () => void;
+  refetch: () => void;
+}> = ({ file, onClose, refetch }) => {
+  const [name, setName] = React.useState("");
   const onSubmit = () => {
+    if (!file) return;
     toast
-      .promise(updateJson(data._id, { name }), {
+      .promise(updateJson(file.id, { name }), {
         loading: "Updating document...",
         error: "Error occurred while updating document!",
         success: `Renamed document to ${name}`,
       })
-      .then(refetch);
+      .then(() => refetch());
 
-    setEditMode(false);
-  };
-
-  const onDeleteClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-
-    toast
-      .promise(deleteJson(data._id), {
-        loading: "Deleting file...",
-        error: "An error occurred while deleting the file!",
-        success: `Deleted ${name}!`,
-      })
-      .then(refetch);
+    onClose();
   };
 
   return (
-    <Paper withBorder w="100%">
-      <StyledJsonCard
-        href={`?json=${data._id}`}
-        as={editMode ? "div" : "a"}
-        active={active}
-        {...props}
-      >
-        <StyledInfo>
-          {editMode ? (
-            <form onSubmit={onSubmit}>
-              <StyledNameInput
-                value={name}
-                onChange={e => setName(e.currentTarget.value)}
-                onClick={e => e.preventDefault()}
-                autoFocus
-              />
-              <input type="submit" hidden />
-            </form>
-          ) : (
-            <StyledTitle
-              onClick={e => {
-                e.preventDefault();
-                setEditMode(true);
-              }}
-            >
-              <span>{name}</span>
-              <AiOutlineEdit />
-            </StyledTitle>
-          )}
-          <StyledDetils>
-            {data.private ? <AiOutlineLock /> : <AiOutlineUnlock />}
-            Last modified {dayjs(data.updatedAt).fromNow()}
-          </StyledDetils>
-        </StyledInfo>
-        <Button variant="subtle" color="red" onClick={onDeleteClick}>
-          <FaTrash />
-        </Button>
-      </StyledJsonCard>
-    </Paper>
-  );
-};
-
-const CreateCard: React.FC<{ reachedLimit: boolean }> = ({ reachedLimit }) => {
-  const { replace } = useRouter();
-  const isPremium = useUser(state => state.premium);
-  const getContents = useFile(state => state.getContents);
-  const setHasChanges = useFile(state => state.setHasChanges);
-  const setVisible = useModal(state => state.setVisible);
-  const getFormat = useFile(state => state.getFormat);
-
-  const onCreate = async () => {
-    try {
-      toast.loading("Saving document...", { id: "fileSave" });
-      const res = await saveToCloud(null, getContents(), getFormat());
-
-      if (res.errors && res.errors.items.length > 0) throw res.errors;
-
-      toast.success("Document saved to cloud", { id: "fileSave" });
-      setHasChanges(false);
-      replace({ query: { json: res.data._id } });
-    } catch (error: any) {
-      if (error?.items?.length > 0) {
-        return toast.error(error.items[0].message, { id: "fileSave", duration: 7000 });
-      }
-      toast.error("Failed to save document!", { id: "fileSave" });
-    }
-  };
-
-  if (!isPremium && reachedLimit)
-    return (
-      <StyledJsonCard onClick={() => setVisible("premium")(true)}>
-        <StyledCreateWrapper>
-          <IoRocketSharp size="18" />
-          <Text fw="bold">You reached max limit, upgrade to premium for more!</Text>
-        </StyledCreateWrapper>
-      </StyledJsonCard>
-    );
-
-  return (
-    <StyledJsonCard onClick={onCreate} create>
-      <StyledCreateWrapper>
-        <AiOutlinePlus size="20" />
-        <Text fw="bold">Create New File</Text>
-      </StyledCreateWrapper>
-    </StyledJsonCard>
+    <Modal title="Update Document name" opened={!!file} onClose={onClose} centered>
+      <Stack>
+        <Input
+          value={name}
+          placeholder={file?.name}
+          onChange={e => setName(e.currentTarget.value)}
+        />
+        <Group position="right">
+          <Button variant="outline" onClick={onClose}>
+            Cancel
+          </Button>
+          <Button onClick={onSubmit}>Update</Button>
+        </Group>
+      </Stack>
+    </Modal>
   );
 };
 
 export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
-  const { isReady, query } = useRouter();
-
-  const { data, isFetching, refetch } = useQuery(["allJson", query], () => getAllJson(), {
+  const totalQuota = useUser(state => (state.premium ? 200 : 25));
+  const getContents = useFile(state => state.getContents);
+  const setHasChanges = useFile(state => state.setHasChanges);
+  const getFormat = useFile(state => state.getFormat);
+  const [currentFile, setCurrentFile] = React.useState<File | null>(null);
+  const { isReady, query, replace } = useRouter();
+  const { data, refetch } = useQuery(["allJson", query], () => getAllJson(), {
     enabled: isReady && opened,
   });
 
-  return (
-    <Modal title="Saved On The Cloud" opened={opened} onClose={onClose} centered>
-      <ScrollArea h={360}>
-        <Stack py="sm">
-          {isFetching ? (
-            <Center>
-              <Loader />
-            </Center>
-          ) : (
-            <>
-              <CreateCard reachedLimit={data ? data?.data.result.length > 15 : false} />
-              {data?.data?.result?.map(json => (
-                <GraphCard
-                  data={json}
-                  key={json._id}
-                  refetch={refetch}
-                  active={query?.json === json._id}
-                />
-              ))}
-            </>
-          )}
-        </Stack>
-      </ScrollArea>
+  const onCreate = async () => {
+    try {
+      toast.loading("Saving document...", { id: "fileSave" });
+      const { data, error } = await saveToCloud({ contents: getContents(), format: getFormat() });
 
+      if (error) throw error;
+
+      toast.success("Document saved to cloud", { id: "fileSave" });
+      setHasChanges(false);
+      replace({ query: { json: data[0].id } });
+      onClose();
+    } catch (error: any) {
+      toast.error("Failed to save document!", { id: "fileSave" });
+      console.error(error);
+    }
+  };
+
+  const onDeleteClick = React.useCallback(
+    (file: File) => {
+      toast
+        .promise(deleteJson(file.id), {
+          loading: "Deleting file...",
+          error: "An error occurred while deleting the file!",
+          success: `Deleted ${file.name}!`,
+        })
+        .then(() => refetch());
+    },
+    [refetch]
+  );
+
+  const copyShareLink = React.useCallback((fileId: string) => {
+    const shareLink = `${window.location.origin}/?json=${fileId}`;
+    navigator.clipboard.writeText(shareLink);
+    toast.success("Copied share link to clipboard!");
+  }, []);
+
+  const rows = React.useMemo(
+    () =>
+      data?.map(element => (
+        <tr key={element.id}>
+          <td>{element.id}</td>
+          <td>
+            <Flex align="center" justify="space-between">
+              {element.name}
+              <ActionIcon color="cyan" onClick={() => setCurrentFile(element)}>
+                <VscEdit />
+              </ActionIcon>
+            </Flex>
+          </td>
+          <td>{dayjs(element.created_at).format("DD.MM.YYYY")}</td>
+          <td>
+            <Badge variant="light" color={colorByFormat[element.format]} size="sm">
+              {element.format.toUpperCase()}
+            </Badge>
+          </td>
+          <td>{element.views.toLocaleString("en-US")}</td>
+          <td>
+            <Flex gap="xs">
+              <Link href={`?json=${element.id}`} prefetch={false}>
+                <ActionIcon color="blue" onClick={onClose}>
+                  <MdFileOpen size="18" />
+                </ActionIcon>
+              </Link>
+              <ActionIcon color="red" onClick={() => onDeleteClick(element)}>
+                <FaTrash size="18" />
+              </ActionIcon>
+              <ActionIcon color="green" onClick={() => copyShareLink(element.id)}>
+                <AiOutlineLink />
+              </ActionIcon>
+            </Flex>
+          </td>
+        </tr>
+      )),
+    [data, copyShareLink, onClose, onDeleteClick]
+  );
+
+  return (
+    <Modal
+      title="Saved On The Cloud"
+      opened={opened}
+      size="xl"
+      onClose={onClose}
+      centered
+      hidden={!!currentFile}
+    >
+      <Paper>
+        <ScrollArea h={360} offsetScrollbars>
+          <Table fontSize="xs" verticalSpacing="xs" striped>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Create Date</th>
+                <th>Format</th>
+                <th>Views</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>{rows}</tbody>
+          </Table>
+        </ScrollArea>
+      </Paper>
+      {data && (
+        <Flex gap="md">
+          <Paper my="lg" withBorder radius="md" p="xs" w="100%">
+            <Group>
+              <RingProgress
+                size={60}
+                roundCaps
+                thickness={8}
+                sections={[
+                  {
+                    value: (data.length * 100) / totalQuota,
+                    color: data.length > totalQuota / 1.5 ? "red" : "blue",
+                  },
+                ]}
+              />
+              <div>
+                <Text color="dimmed" size="xs" transform="uppercase" weight={700}>
+                  Total Quota
+                </Text>
+                <Text weight={700} size="xl">
+                  {data.length} / {totalQuota}
+                </Text>
+              </div>
+            </Group>
+          </Paper>
+          <Paper my="lg" withBorder radius="md" p="xs" w={250}>
+            <UnstyledButton fw="bold" w="100%" h="100%" onClick={onCreate}>
+              <Text fz="md" align="center" color="blue">
+                <Flex align="center" justify="center">
+                  <VscAdd size="24" />
+                  Create New Document
+                </Flex>
+              </Text>
+            </UnstyledButton>
+          </Paper>
+        </Flex>
+      )}
       <Divider py="xs" />
-      <Group position="right">
-        <Text fz="xs">
-          Cloud Save feature is for ease-of-access only and not recommended to store sensitive data,
-          we don&apos;t guarantee protection of your data.
-        </Text>
-      </Group>
+      <Text fz="xs">
+        The Cloud Save feature is primarily designed for convenient access and is not advisable for
+        storing sensitive data.
+      </Text>
+      <UpdateNameModal file={currentFile} onClose={() => setCurrentFile(null)} refetch={refetch} />
     </Modal>
   );
 };

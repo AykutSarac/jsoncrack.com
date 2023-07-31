@@ -39,17 +39,17 @@ const StyledContentBody = styled.div`
   }
 `;
 
-const StyledHighlight = styled.span<{ link?: boolean; alert?: boolean }>`
+const StyledHighlight = styled.span<{ $link?: boolean; $alert?: boolean }>`
   display: inline-block;
   text-align: left;
-  color: ${({ theme, link, alert }) =>
-    alert ? theme.DANGER : link ? theme.BLURPLE : theme.TEXT_POSITIVE};
+  color: ${({ theme, $link, $alert }) =>
+    $alert ? theme.DANGER : $link ? theme.BLURPLE : theme.TEXT_POSITIVE};
   background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
   border-radius: 4px;
   font-weight: 500;
   padding: 2px 4px;
   font-size: 14px;
-  margin: ${({ alert }) => (alert ? "8px 0" : "1px")};
+  margin: ${({ $alert }) => ($alert ? "8px 0" : "1px")};
 `;
 
 const Docs = () => {
@@ -74,7 +74,7 @@ const Docs = () => {
               <StyledHighlight
                 as="a"
                 href="https://jsoncrack.com/editor?json=https://catfact.ninja/fact"
-                link
+                $link
               >
                 https://jsoncrack.com/editor?json=https://catfact.ninja/fact
               </StyledHighlight>
@@ -103,7 +103,6 @@ const Docs = () => {
               <StyledHighlight>?json=639b65c5a82efc29a24b2de2</StyledHighlight>
             </StyledDescription>
             <StyledFrame
-              scrolling="no"
               title="Untitled"
               src="https://codepen.io/AykutSarac/embed/vYaORgM?default-tab=html%2Cresult"
               loading="lazy"
@@ -125,7 +124,7 @@ const Docs = () => {
               <StyledHighlight
                 as="a"
                 href="https://developer.mozilla.org/en-US/docs/Web/API/MessagePort/postMessage"
-                link
+                $link
               >
                 MessagePort
               </StyledHighlight>

@@ -3,12 +3,12 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { PaperProps, Center, Button, Group, Paper, Stack, TextInput, Text } from "@mantine/core";
+import { useSession } from "@supabase/auth-helpers-react";
 import { toast } from "react-hot-toast";
 import { Footer } from "src/layout/Footer";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
 import { Navbar } from "src/layout/Navbar";
-import { altogic } from "src/lib/api/altogic";
-import useUser from "src/store/useUser";
+import { supabase } from "src/lib/api/supabase";
 
 const StyledPageWrapper = styled.div`
   height: calc(100vh - 27px);
@@ -29,12 +29,11 @@ export function AuthenticationForm(props: PaperProps) {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    altogic.auth
-      .sendResetPwdEmail(email)
-      .then(res => {
-        if (res.errors) {
-          toast.error(res.errors.items[0].message);
-        } else setSuccess(true);
+    supabase.auth
+      .resetPasswordForEmail(email, { redirectTo: "/reset-password" })
+      .then(({ error }) => {
+        if (error) return toast.error(error.message);
+        setSuccess(true);
       })
       .finally(() => setLoading(false));
   };
@@ -79,14 +78,12 @@ const StyledHeroSection = styled.section`
 `;
 
 const SignIn = () => {
-  const { isReady, replace } = useRouter();
-  const checkSession = useUser(state => state.checkSession);
-  const isAuthenticated = useUser(state => state.isAuthenticated);
+  const { isReady, push } = useRouter();
+  const session = useSession();
 
   React.useEffect(() => {
-    if (!isReady) checkSession();
-    if (isAuthenticated) replace("/");
-  }, [isReady, isAuthenticated, replace, checkSession]);
+    if (session) push("/editor");
+  }, [isReady, session, push]);
 
   return (
     <div>

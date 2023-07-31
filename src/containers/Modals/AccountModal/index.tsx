@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Modal, Group, Button, Badge, Avatar, Grid, Divider, ModalProps } from "@mantine/core";
+import { useUser as useSupaUser } from "@supabase/auth-helpers-react";
+import dayjs from "dayjs";
 import { IoRocketSharp } from "react-icons/io5";
 import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
@@ -43,7 +45,7 @@ const StyledContainer = styled.div`
 `;
 
 export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
-  const user = useUser(state => state.user);
+  const user = useSupaUser();
   const isPremium = useUser(state => state.premium);
   const premiumCancelled = useUser(state => state.premiumCancelled);
   const setVisible = useModal(state => state.setVisible);
@@ -51,16 +53,21 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
 
   return (
     <Modal title="Account" opened={opened} onClose={onClose} centered>
-      <StyledTitle>Hello, {user?.name}!</StyledTitle>
+      <StyledTitle>Hello, {user?.user_metadata.name}!</StyledTitle>
       <Group py="sm">
         <Grid gutter="xs">
           <Grid.Col span={2}>
-            <Avatar size="lg" radius="lg" src={user?.profilePicture} alt={user?.name} />
+            <Avatar
+              size="lg"
+              radius="lg"
+              src={user?.user_metadata.avatar_url}
+              alt={user?.user_metadata.name}
+            />
           </Grid.Col>
           <Grid.Col span={4}>
             <StyledContainer>
               USERNAME
-              <div>{user?.name}</div>
+              <div>{user?.user_metadata.name}</div>
             </StyledContainer>
           </Grid.Col>
           <Grid.Col span={6}>
@@ -82,15 +89,17 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           <Grid.Col span={6}>
             <StyledContainer>
               EMAIL
-              <div>{user?.email}</div>
+              <div>{user?.user_metadata.email}</div>
             </StyledContainer>
           </Grid.Col>
-          <Grid.Col span={4}>
-            <StyledContainer>
-              REGISTRATION
-              <div>{user?.signUpAt && new Date(user.signUpAt).toDateString()}</div>
-            </StyledContainer>
-          </Grid.Col>
+          {user?.created_at && (
+            <Grid.Col span={4}>
+              <StyledContainer>
+                REGISTRATION
+                <div>{dayjs(user.created_at).format("DD MMMM YYYY")}</div>
+              </StyledContainer>
+            </Grid.Col>
+          )}
         </Grid>
       </Group>
       <Divider py="xs" />

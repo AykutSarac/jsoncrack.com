@@ -7,7 +7,7 @@ import { create } from "zustand";
 import { defaultJson } from "src/constants/data";
 import { contentToJson, jsonToContent } from "src/lib/utils/json/jsonAdapter";
 import { isIframe } from "src/lib/utils/widget";
-import { getFromCloud, saveToCloud } from "src/services/json";
+import { getFromCloud } from "src/services/json";
 import { FileFormat } from "src/types/models";
 import useGraph from "./useGraph";
 import useJson from "./useJson";
@@ -29,7 +29,6 @@ interface JsonActions {
   setError: (error: object | null) => void;
   setHasChanges: (hasChanges: boolean) => void;
   setContents: (data: SetContents) => void;
-  saveToCloud: (isNew?: boolean) => void;
   fetchFile: (fileId: string) => void;
   fetchUrl: (url: string) => void;
   editContents: (path: string, value: string, callback?: () => void) => void;
@@ -41,13 +40,15 @@ interface JsonActions {
 }
 
 export type File = {
-  _id: string;
+  id: string;
+  views: number;
+  owner_id: string;
   name: string;
-  json: string;
+  content: string;
   private: boolean;
-  format?: FileFormat;
-  createdAt: string;
-  updatedAt: string;
+  format: FileFormat;
+  created_at: string;
+  updated_at: string;
 };
 
 const initialStates = {
@@ -96,7 +97,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
   },
   setFile: fileData => {
     set({ fileData, format: fileData.format || FileFormat.JSON });
-    get().setContents({ contents: fileData.json, hasChanges: false });
+    get().setContents({ contents: fileData.content, hasChanges: false });
   },
   getContents: () => get().contents,
   getFormat: () => get().format,
@@ -109,7 +110,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       const contentJson = await contentToJson(get().contents, prevFormat);
       const jsonContent = await jsonToContent(JSON.stringify(contentJson, null, 2), format);
 
-      get().setContents({ contents: jsonContent, hasChanges: false });
+      get().setContents({ contents: jsonContent });
 
       event({ action: "change_data_format", category: "User" });
     } catch (error) {
@@ -121,11 +122,12 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
     try {
       set({ ...(contents && { contents }), error: null, hasChanges });
 
+      const isFetchURL = window.location.href.includes("?");
       const json = await contentToJson(get().contents, get().format);
 
       if (!useStored.getState().liveTransform && skipUpdate) return;
 
-      if (contents && contents.length < 80_000 && !isIframe()) {
+      if (contents && contents.length < 80_000 && !isIframe() && !isFetchURL) {
         sessionStorage.setItem("content", contents);
         sessionStorage.setItem("format", get().format);
       }
@@ -140,30 +142,6 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
   },
   setError: error => set({ error }),
   setHasChanges: hasChanges => set({ hasChanges }),
-  saveToCloud: async (isNew = true) => {
-    try {
-      const url = new URL(window.location.href);
-      const params = new URLSearchParams(url.search);
-      const jsonQuery = params.get("doc");
-
-      toast.loading("Saving File...", { id: "fileSave" });
-      const res = await saveToCloud(isNew ? null : jsonQuery, get().contents, get().format);
-
-      if (res.errors && res.errors.items.length > 0) throw res.errors;
-
-      toast.success("File saved to cloud", { id: "fileSave" });
-      set({ hasChanges: false });
-      return res.data._id;
-    } catch (error: any) {
-      if (error?.items?.length > 0) {
-        toast.error(error.items[0].message, { id: "fileSave", duration: 5000 });
-        return undefined;
-      }
-
-      toast.error("Failed to save File!", { id: "fileSave" });
-      return undefined;
-    }
-  },
   fetchUrl: async url => {
     try {
       const res = await fetch(url);
@@ -178,7 +156,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
     }
   },
   checkEditorSession: ({ url, json }) => {
-    if (typeof url === "string") return get().fetchUrl(url);
+    if (typeof url === "string" && isURL(url)) return get().fetchUrl(url);
     if (typeof json === "string") return get().fetchFile(json);
 
     const sessionContent = sessionStorage.getItem("content") as string | null;
@@ -190,15 +168,14 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
   },
   fetchFile: async id => {
     try {
-      if (isURL(id)) return get().fetchUrl(id);
+      const { data, error } = await getFromCloud(id);
+      if (error) throw error;
 
-      const file = await getFromCloud(id);
-
-      get().setFile(file);
-    } catch (error) {
-      useJson.setState({ loading: false });
-      useGraph.setState({ loading: false });
-      console.error(error);
+      if (data?.length) get().setFile(data[0]);
+      if (data?.length === 0) throw new Error("Document not found");
+    } catch (error: any) {
+      if (error?.message) toast.error(error?.message);
+      get().setContents({ contents: defaultJson, hasChanges: false });
     }
   },
   editContents: async (path, value, callback) => {

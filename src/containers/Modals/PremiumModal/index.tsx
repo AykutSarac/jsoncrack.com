@@ -13,7 +13,6 @@ import {
   Badge,
 } from "@mantine/core";
 import { BsCheck } from "react-icons/bs";
-import { paymentURL } from "src/constants/data";
 
 export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   return (
@@ -53,7 +52,7 @@ export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           </Title>
           <Button
             component="a"
-            href={paymentURL()}
+            href="/pricing"
             variant="filled"
             color="teal"
             size="md"

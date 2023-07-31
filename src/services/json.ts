@@ -1,42 +1,50 @@
-import dayjs from "dayjs";
-import { decompressFromBase64 } from "lz-string";
-import { altogic, AltogicResponse } from "src/lib/api/altogic";
+import { PostgrestSingleResponse } from "@supabase/supabase-js";
+import toast from "react-hot-toast";
+import { supabase } from "src/lib/api/supabase";
 import { File } from "src/store/useFile";
+import useUser from "src/store/useUser";
 import { FileFormat } from "src/types/models";
 
-const saveToCloud = async (
-  id: string | null,
-  contents: string,
-  format = FileFormat.JSON
-): Promise<AltogicResponse<{ _id: string }>> => {
-  if (id) return await altogic.endpoint.put(`json/${id}`, { json: contents, format });
-  return await altogic.endpoint.post("json", { json: contents, format });
+type CloudSave = {
+  id?: string;
+  contents: string;
+  format: FileFormat;
 };
 
-const getFromCloud = async (id: string) => {
-  const { data, errors } = await altogic.endpoint.get(`json/${id}`, undefined, {
-    userid: altogic.auth.getUser()?._id,
-  });
+const saveToCloud = async ({
+  id,
+  contents,
+  format = FileFormat.JSON,
+}: CloudSave): Promise<PostgrestSingleResponse<{ id: string }[]>> => {
+  return await supabase.from("document").upsert({ id, content: contents, format }).select("id");
+};
 
-  if (errors) throw errors;
+const getFromCloud = async (doc_id: string): Promise<PostgrestSingleResponse<File[]>> => {
+  return await supabase.rpc("get_document_by_id", { doc_id });
+};
 
-  const isCompressed = dayjs("2023-04-20T07:04:25.255Z").isAfter(data?.updatedAt);
+const getAllJson = async (): Promise<File[]> => {
+  const userId = useUser.getState().user?.id;
+  if (!userId) return [];
 
-  if (isCompressed) {
-    return { ...data, json: decompressFromBase64(data.json) };
+  const { data, error } = await supabase
+    .from("document")
+    .select()
+    .eq("owner_id", userId)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    toast.error(error.message);
+    return [];
   }
 
   return data;
 };
 
-const getAllJson = async (): Promise<AltogicResponse<{ result: File[] }>> =>
-  await altogic.endpoint.get("json");
+const updateJson = async (id: string, data: object) => {
+  return await supabase.from("document").update(data).eq("id", id).select("private");
+};
 
-const updateJson = async (id: string, data: object) =>
-  await altogic.endpoint.put(`json/${id}`, {
-    ...data,
-  });
-
-const deleteJson = async (id: string) => await altogic.endpoint.delete(`json/${id}`);
+const deleteJson = async (id: string) => await supabase.from("document").delete().eq("id", id);
 
 export { saveToCloud, getFromCloud, getAllJson, updateJson, deleteJson };
