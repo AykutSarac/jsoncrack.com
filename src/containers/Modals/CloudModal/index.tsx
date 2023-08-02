@@ -123,7 +123,7 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   );
 
   const copyShareLink = React.useCallback((fileId: string) => {
-    const shareLink = `${window.location.origin}/?json=${fileId}`;
+    const shareLink = `${window.location.origin}/editor?json=${fileId}`;
     navigator.clipboard.writeText(shareLink);
     toast.success("Copied share link to clipboard!");
   }, []);
