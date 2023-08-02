@@ -287,7 +287,7 @@ function ResetPassword(props: PaperProps) {
 const SignIn = () => {
   const { isReady, push, query } = useRouter();
   const session = useSession();
-  const isPasswordReset = query?.action === "reset-pwd" && !query?.error;
+  const isPasswordReset = query?.type === "recovery" && !query?.error;
 
   React.useEffect(() => {
     if (session) push("/editor");
