@@ -125,7 +125,7 @@ export const BottomBar = () => {
         });
 
         if (error) throw error;
-        if (data[0].id) replace({ query: { json: data[0].id } });
+        if (data) replace({ query: { json: data } });
 
         toast.success("Document saved to cloud", { id: "fileSave" });
         setHasChanges(false);

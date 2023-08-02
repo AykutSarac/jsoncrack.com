@@ -12,11 +12,15 @@ type CloudSave = {
 };
 
 const saveToCloud = async ({
-  id,
-  contents,
-  format = FileFormat.JSON,
-}: CloudSave): Promise<PostgrestSingleResponse<{ id: string }[]>> => {
-  return await supabase.from("document").upsert({ id, content: contents, format }).select("id");
+  id: p_id = "",
+  contents: p_content,
+  format: p_format = FileFormat.JSON,
+}: CloudSave): Promise<PostgrestSingleResponse<string>> => {
+  return await supabase.rpc("upsert_document", {
+    p_content,
+    p_format,
+    p_id,
+  });
 };
 
 const getFromCloud = async (doc_id: string): Promise<PostgrestSingleResponse<File[]>> => {

@@ -101,7 +101,7 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
 
       toast.success("Document saved to cloud", { id: "fileSave" });
       setHasChanges(false);
-      replace({ query: { json: data[0].id } });
+      replace({ query: { json: data } });
       onClose();
     } catch (error: any) {
       toast.error("Failed to save document!", { id: "fileSave" });
