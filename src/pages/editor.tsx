@@ -33,7 +33,7 @@ const EditorPage: React.FC = () => {
   const loading = useJson(state => state.loading);
 
   React.useEffect(() => {
-    if (isReady) checkEditorSession({ url: query?.url, json: query?.json });
+    if (isReady) checkEditorSession(query?.json);
   }, [checkEditorSession, isReady, query]);
 
   if (loading) return <Loading message="Fetching JSON from cloud..." />;

@@ -36,7 +36,7 @@ interface JsonActions {
   clear: () => void;
   setFile: (fileData: File) => void;
   setJsonSchema: (jsonSchema: object | null) => void;
-  checkEditorSession: ({ url, json }: { url: Query; json: Query }) => void;
+  checkEditorSession: (url: Query) => void;
 }
 
 export type File = {
@@ -155,9 +155,11 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       toast.error("Failed to fetch document from URL!");
     }
   },
-  checkEditorSession: ({ url, json }) => {
-    if (typeof url === "string" && isURL(url)) return get().fetchUrl(url);
-    if (typeof json === "string") return get().fetchFile(json);
+  checkEditorSession: url => {
+    if (url && typeof url === "string") {
+      if (isURL(url)) return get().fetchUrl(url);
+      return get().fetchFile(url);
+    }
 
     const sessionContent = sessionStorage.getItem("content") as string | null;
     const format = sessionStorage.getItem("format") as FileFormat | null;
