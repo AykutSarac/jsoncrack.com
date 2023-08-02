@@ -27,7 +27,7 @@ import toast from "react-hot-toast";
 import { AiOutlineLink } from "react-icons/ai";
 import { FaTrash } from "react-icons/fa";
 import { MdFileOpen } from "react-icons/md";
-import { VscAdd, VscEdit } from "react-icons/vsc";
+import { VscAdd, VscEdit, VscLock, VscUnlock } from "react-icons/vsc";
 import { deleteJson, getAllJson, saveToCloud, updateJson } from "src/services/json";
 import useFile, { File } from "src/store/useFile";
 import useUser from "src/store/useUser";
@@ -132,7 +132,12 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
     () =>
       data?.map(element => (
         <tr key={element.id}>
-          <td>{element.id}</td>
+          <td>
+            <Flex align="center" gap="xs">
+              {element.private ? <VscLock /> : <VscUnlock />}
+              {element.id}
+            </Flex>
+          </td>
           <td>
             <Flex align="center" justify="space-between">
               {element.name}
