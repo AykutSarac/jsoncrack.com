@@ -72,22 +72,27 @@ export function AuthenticationForm(props: PaperProps) {
         .finally(() => setLoading(false));
     } else {
       supabase.auth
-        .signInWithPassword({
+        .signUp({
           email: form.values.email,
           password: form.values.password,
+          options: {
+            data: { name: form.values.name },
+          },
         })
-        .then(({ data, error }) => {
+        .then(({ error }) => {
           if (error) return toast.error(error.message);
-          toast.success("Registration successful!");
+          toast.success("Please check your inbox to confirm mail address!", { duration: 7000 });
           setDone(true);
-          setSession(data.session);
         })
         .finally(() => setLoading(false));
     }
   };
 
   const handleLoginClick = (provider: "github" | "google") => {
-    supabase.auth.signInWithOAuth({ provider });
+    supabase.auth.signInWithOAuth({
+      provider,
+      options: { redirectTo: "https://jsoncrack.com/editor" },
+    });
   };
 
   if (done) {
