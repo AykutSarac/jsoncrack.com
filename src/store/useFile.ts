@@ -42,7 +42,7 @@ interface JsonActions {
 export type File = {
   id: string;
   views: number;
-  owner_id: string;
+  owner_email: string;
   name: string;
   content: string;
   private: boolean;

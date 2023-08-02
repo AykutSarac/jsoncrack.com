@@ -24,13 +24,13 @@ const getFromCloud = async (doc_id: string): Promise<PostgrestSingleResponse<Fil
 };
 
 const getAllJson = async (): Promise<File[]> => {
-  const userId = useUser.getState().user?.id;
-  if (!userId) return [];
+  const userEmail = useUser.getState().user?.email;
+  if (!userEmail) return [];
 
   const { data, error } = await supabase
     .from("document")
     .select()
-    .eq("owner_id", userId)
+    .eq("owner_email", userEmail)
     .order("created_at", { ascending: false });
 
   if (error) {

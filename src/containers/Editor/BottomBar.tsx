@@ -217,13 +217,13 @@ export const BottomBar = () => {
             </Flex>
           )}
         </StyledBottomBarItem>
-        {(data?.owner_id === user?.id || (!data && user)) && (
+        {(data?.owner_email === user?.email || (!data && user)) && (
           <StyledBottomBarItem onClick={handleSaveJson} disabled={isUpdating}>
             {hasChanges ? <AiOutlineCloudUpload /> : <AiOutlineCloudSync />}
             {hasChanges ? (query?.json ? "Unsaved Changes" : "Create Document") : "Saved"}
           </StyledBottomBarItem>
         )}
-        {data?.owner_id === user?.id && (
+        {data?.owner_email === user?.email && (
           <StyledBottomBarItem onClick={setPrivate} disabled={isUpdating}>
             {isPrivate ? <AiOutlineLock /> : <AiOutlineUnlock />}
             {isPrivate ? "Private" : "Public"}
