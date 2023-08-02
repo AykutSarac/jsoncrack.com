@@ -8,24 +8,12 @@ interface UserActions {
   setSession: (session: Session) => void;
 }
 
-interface Premium {
-  id: 101;
-  created_at: "2023-07-29T17:33:10.403228+00:00";
-  user: null;
-  status: "active";
-  ends_at: null;
-  subscription_id: null;
-  variant_id: null;
-  renews_at: null;
-  cancelled: null;
-  email: "aykutsarac0@gmail.com";
-}
-
 interface UserStates {
   user: User | null;
   isAuthenticated: boolean;
   premium: boolean;
   premiumCancelled: boolean;
+  organization: boolean;
 }
 
 const initialStates: UserStates = {
@@ -33,21 +21,22 @@ const initialStates: UserStates = {
   isAuthenticated: false,
   premium: false,
   premiumCancelled: false,
+  organization: false,
 };
 
 const useUser = create<UserStates & UserActions>()(set => ({
   ...initialStates,
   setSession: async session => {
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.getUser();
+    supabase.rpc("get_subscription_info").then(({ data }) => {
+      if (data) {
+        set({
+          premium: data.premium,
+          organization: data.organization,
+          premiumCancelled: !!data.cancelled,
+        });
+      }
 
-    if (error) return toast.error(error.message);
-
-    supabase.rpc("get_subscription", { email_arg: session.user.email }).then(({ data }) => {
-      if (data) set({ premium: data[0].status === "active" });
-      set({ user, isAuthenticated: true });
+      set({ user: session.user, isAuthenticated: true });
     });
   },
   logout: async () => {
