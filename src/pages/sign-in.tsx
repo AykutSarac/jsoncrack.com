@@ -26,7 +26,6 @@ import { AiOutlineGithub, AiOutlineGoogle } from "react-icons/ai";
 import { Footer } from "src/layout/Footer";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
 import { Navbar } from "src/layout/Navbar";
-import { altogic } from "src/lib/api/altogic";
 import { supabase } from "src/lib/api/supabase";
 import useUser from "src/store/useUser";
 
@@ -233,18 +232,14 @@ function ResetPassword(props: PaperProps) {
     if (query?.access_token && typeof query?.access_token === "string") {
       setLoading(true);
       // TODO: solve here
-      supabase.auth.updateUser({
-        password,
-      });
-      altogic.auth
-        .resetPwdWithToken(query?.access_token, password)
-        .then(({ errors }) => {
-          if (errors) {
-            toast.error(errors.items[0].message);
-          } else {
-            toast.success("Successfully updated password!");
-            setTimeout(() => window.location.assign("/sign-in"), 2000);
-          }
+      supabase.auth
+        .updateUser({
+          password,
+        })
+        .then(({ error }) => {
+          if (error) return toast.error(error.message);
+          toast.success("Successfully updated password!");
+          setTimeout(() => window.location.assign("/sign-in"), 2000);
         })
         .finally(() => setLoading(false));
     }
