@@ -27,7 +27,6 @@
     "@supabase/supabase-js": "^2.31.0",
     "@tanstack/react-query": "^4.32.0",
     "allotment": "^1.19.2",
-    "altogic": "^2.3.9",
     "axios": "^1.4.0",
     "dayjs": "^1.11.9",
     "html-to-image": "^1.11.11",
