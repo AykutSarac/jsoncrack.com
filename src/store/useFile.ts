@@ -36,7 +36,7 @@ interface JsonActions {
   clear: () => void;
   setFile: (fileData: File) => void;
   setJsonSchema: (jsonSchema: object | null) => void;
-  checkEditorSession: (url: Query) => void;
+  checkEditorSession: (url: Query, widget?: boolean) => void;
 }
 
 export type File = {
@@ -155,15 +155,16 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       toast.error("Failed to fetch document from URL!");
     }
   },
-  checkEditorSession: url => {
+  checkEditorSession: (url, widget) => {
     if (url && typeof url === "string") {
       if (isURL(url)) return get().fetchUrl(url);
       return get().fetchFile(url);
     }
 
+    let contents = defaultJson;
     const sessionContent = sessionStorage.getItem("content") as string | null;
     const format = sessionStorage.getItem("format") as FileFormat | null;
-    const contents = sessionContent ?? defaultJson;
+    if (sessionContent && !widget) contents = sessionContent;
 
     if (format) set({ format });
     get().setContents({ contents, hasChanges: false });

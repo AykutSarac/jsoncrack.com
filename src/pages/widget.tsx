@@ -23,18 +23,18 @@ const Graph = dynamic(() => import("src/components/Graph").then(c => c.Graph), {
 const WidgetPage = () => {
   const { query, push, isReady } = useRouter();
   const [theme, setTheme] = React.useState("dark");
-  const fetchFile = useFile(state => state.fetchFile);
+  const checkEditorSession = useFile(state => state.checkEditorSession);
   const setContents = useFile(state => state.setContents);
   const setDirection = useGraph(state => state.setDirection);
   const clearGraph = useGraph(state => state.clearGraph);
 
   React.useEffect(() => {
     if (isReady) {
-      if (typeof query?.json === "string") fetchFile(query.json);
+      if (typeof query?.json === "string") checkEditorSession(query.json, true);
       else clearGraph();
       window.parent.postMessage(window.frameElement?.getAttribute("id"), "*");
     }
-  }, [clearGraph, fetchFile, isReady, push, query.json, query.partner]);
+  }, [clearGraph, checkEditorSession, isReady, push, query.json, query.partner]);
 
   React.useEffect(() => {
     const handler = (event: EmbedMessage) => {
