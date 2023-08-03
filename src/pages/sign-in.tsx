@@ -17,9 +17,9 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useToggle, upperFirst } from "@mantine/hooks";
+import { useSession } from "@supabase/auth-helpers-react";
 import { toast } from "react-hot-toast";
 import { AiOutlineGithub, AiOutlineGoogle } from "react-icons/ai";
-import { useCheckSession } from "src/hooks/useCheckSession";
 import { Footer } from "src/layout/Footer";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
 import { Navbar } from "src/layout/Navbar";
@@ -267,12 +267,12 @@ function ResetPassword(props: PaperProps) {
 
 const SignIn = () => {
   const { isReady, push, query } = useRouter();
-  const { hasSession } = useCheckSession();
+  const session = useSession();
   const isPasswordReset = query?.type === "recovery" && !query?.error;
 
   React.useEffect(() => {
-    if (hasSession) push("/editor");
-  }, [isReady, hasSession, push]);
+    if (session) push("/editor");
+  }, [isReady, session, push]);
 
   return (
     <div>

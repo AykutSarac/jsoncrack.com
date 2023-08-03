@@ -3,8 +3,8 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { PaperProps, Button, Group, Paper, Stack, TextInput, Text, Anchor } from "@mantine/core";
+import { useSession } from "@supabase/auth-helpers-react";
 import { toast } from "react-hot-toast";
-import { useCheckSession } from "src/hooks/useCheckSession";
 import { Footer } from "src/layout/Footer";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
 import { Navbar } from "src/layout/Navbar";
@@ -65,13 +65,13 @@ export function AuthenticationForm(props: PaperProps) {
   );
 }
 
-const ResetPassword = () => {
+const SignIn = () => {
   const { isReady, push } = useRouter();
-  const { hasSession } = useCheckSession();
+  const session = useSession();
 
   React.useEffect(() => {
-    if (hasSession) push("/editor");
-  }, [isReady, hasSession, push]);
+    if (session) push("/editor");
+  }, [isReady, session, push]);
 
   return (
     <div>
@@ -88,4 +88,4 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default SignIn;
