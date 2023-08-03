@@ -5,7 +5,6 @@ import Editor from "@monaco-editor/react";
 import vsDark from "prism-react-renderer/themes/vsDark";
 import vsLight from "prism-react-renderer/themes/vsLight";
 import { VscLock } from "react-icons/vsc";
-import { shallow } from "zustand/shallow";
 import { isIframe } from "src/lib/utils/widget";
 import useFile from "src/store/useFile";
 import useGraph from "src/store/useGraph";
@@ -51,14 +50,9 @@ export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const editContents = useFile(state => state.editContents);
   const setVisible = useModal(state => state.setVisible);
   const lightmode = useStored(state => (state.lightmode ? "light" : "vs-dark"));
-  const [nodeData, path, isParent] = useGraph(
-    state => [
-      dataToString(state.selectedNode?.text),
-      state.selectedNode?.path,
-      state.selectedNode?.data?.isParent,
-    ],
-    shallow
-  );
+  const nodeData = useGraph(state => dataToString(state.selectedNode?.text));
+  const path = useGraph(state => state.selectedNode?.path);
+  const isParent = useGraph(state => state.selectedNode?.data?.isParent);
   const [editMode, setEditMode] = React.useState(false);
   const [value, setValue] = React.useState(nodeData || "");
 

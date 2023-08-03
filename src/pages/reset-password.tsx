@@ -1,25 +1,14 @@
 import React from "react";
 import Head from "next/head";
+import Link from "next/link";
 import { useRouter } from "next/router";
-import styled from "styled-components";
-import { PaperProps, Center, Button, Group, Paper, Stack, TextInput, Text } from "@mantine/core";
+import { PaperProps, Button, Group, Paper, Stack, TextInput, Text, Anchor } from "@mantine/core";
 import { useSession } from "@supabase/auth-helpers-react";
 import { toast } from "react-hot-toast";
 import { Footer } from "src/layout/Footer";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
 import { Navbar } from "src/layout/Navbar";
 import { supabase } from "src/lib/api/supabase";
-
-const StyledPageWrapper = styled.div`
-  height: calc(100vh - 27px);
-  width: 100%;
-
-  @media only screen and (max-width: 768px) {
-    position: fixed;
-    height: -webkit-fill-available;
-    flex-direction: column;
-  }
-`;
 
 export function AuthenticationForm(props: PaperProps) {
   const [loading, setLoading] = React.useState(false);
@@ -39,7 +28,7 @@ export function AuthenticationForm(props: PaperProps) {
   };
 
   return (
-    <Paper radius="md" p="xl" withBorder w={300} {...props}>
+    <Paper pt="lg" {...props}>
       <Text size="lg" weight={500}>
         Reset Password
       </Text>
@@ -55,27 +44,26 @@ export function AuthenticationForm(props: PaperProps) {
               required
               label="Email"
               placeholder="hello@herowand.com"
-              radius="md"
+              size="md"
+              radius="sm"
             />
           </Stack>
 
           <Group position="apart" mt="xl">
-            <Button type="submit" radius="xl" loading={loading}>
+            <Button type="submit" radius="sm" size="md" loading={loading} fullWidth>
               Reset Password
             </Button>
           </Group>
+          <Stack mt="lg" align="center">
+            <Anchor component={Link} href="/sign-in" color="dark" size="xs">
+              Don&apos;t have an account? Sign Up
+            </Anchor>
+          </Stack>
         </form>
       )}
     </Paper>
   );
 }
-
-const StyledHeroSection = styled.section`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-`;
 
 const SignIn = () => {
   const { isReady, push } = useRouter();
@@ -91,14 +79,10 @@ const SignIn = () => {
         <title>Reset Password | JSON Crack</title>
       </Head>
       <Navbar />
-      <StyledPageWrapper className="repeating-grid">
-        <StyledHeroSection>
-          <JSONCrackLogo />
-        </StyledHeroSection>
-        <Center pt={60}>
-          <AuthenticationForm />
-        </Center>
-      </StyledPageWrapper>
+      <Paper mx="auto" mt={70} maw={400} p="lg" withBorder>
+        <JSONCrackLogo />
+        <AuthenticationForm />
+      </Paper>
       <Footer />
     </div>
   );

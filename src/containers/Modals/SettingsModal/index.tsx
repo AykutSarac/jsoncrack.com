@@ -1,30 +1,16 @@
 import React from "react";
 import { Modal, Group, Switch, Stack, ModalProps } from "@mantine/core";
-import { shallow } from "zustand/shallow";
 import useStored from "src/store/useStored";
 
 export const SettingsModal: React.FC<ModalProps> = ({ opened, onClose }) => {
-  const lightmode = useStored(state => state.lightmode);
   const setLightTheme = useStored(state => state.setLightTheme);
-
-  const [
-    toggleHideCollapse,
-    toggleChildrenCount,
-    toggleImagePreview,
-    hideCollapse,
-    childrenCount,
-    imagePreview,
-  ] = useStored(
-    state => [
-      state.toggleHideCollapse,
-      state.toggleChildrenCount,
-      state.toggleImagePreview,
-      state.hideCollapse,
-      state.childrenCount,
-      state.imagePreview,
-    ],
-    shallow
-  );
+  const toggleHideCollapse = useStored(state => state.toggleHideCollapse);
+  const toggleChildrenCount = useStored(state => state.toggleChildrenCount);
+  const toggleImagePreview = useStored(state => state.toggleImagePreview);
+  const hideCollapse = useStored(state => state.hideCollapse);
+  const childrenCount = useStored(state => state.childrenCount);
+  const imagePreview = useStored(state => state.imagePreview);
+  const lightmode = useStored(state => state.lightmode);
 
   return (
     <Modal title="Settings" opened={opened} onClose={onClose} centered>

@@ -186,6 +186,8 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
               size="xs"
               value={format}
               onChange={setFormat}
+              miw={80}
+              w={120}
               data={[
                 { value: FileFormat.JSON, label: "JSON" },
                 { value: FileFormat.YAML, label: "YAML" },

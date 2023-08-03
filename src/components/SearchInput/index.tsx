@@ -13,6 +13,7 @@ export const SearchInput: React.FC = () => {
       type="search"
       size="xs"
       id="search-node"
+      w={180}
       value={searchValue}
       onChange={e => setValue(e.currentTarget.value)}
       onFocus={() => event({ action: "focus_node_search", category: "User" })}
