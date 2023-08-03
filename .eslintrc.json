@@ -11,6 +11,7 @@
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "double", { "avoidEscape": true }],
     "semi": ["error", "always"],
+    "prefer-const": "error",
     "space-before-function-paren": [
       "error",
       {

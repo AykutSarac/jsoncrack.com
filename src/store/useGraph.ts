@@ -89,7 +89,7 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
     );
     const childrenEdges = getChildrenEdges(childrenNodes, get().edges);
 
-    let nodesConnectedToParent = childrenEdges.reduce((nodes: string[], edge) => {
+    const nodesConnectedToParent = childrenEdges.reduce((nodes: string[], edge) => {
       edge.from && !nodes.includes(edge.from) && nodes.push(edge.from);
       edge.to && !nodes.includes(edge.to) && nodes.push(edge.to);
       return nodes;

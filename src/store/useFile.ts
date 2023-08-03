@@ -76,7 +76,7 @@ const debouncedUpdateJson = debounce(
 const filterArrayAndObjectFields = (obj: object) => {
   const result = {};
 
-  for (let key in obj) {
+  for (const key in obj) {
     if (obj.hasOwnProperty(key)) {
       if (Array.isArray(obj[key]) || typeof obj[key] === "object") {
         result[key] = obj[key];

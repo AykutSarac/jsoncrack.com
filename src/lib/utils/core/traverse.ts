@@ -245,7 +245,7 @@ export const traverse = ({
   parentType,
 }: Traverse) => {
   const graph = states.graph;
-  let { type, children, value } = objectToTraverse;
+  const { type, children, value } = objectToTraverse;
 
   if (!children) {
     handleNoChildren(value, states, graph, myParentId, parentType, nextType);
