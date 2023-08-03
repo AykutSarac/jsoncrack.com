@@ -19,7 +19,12 @@ export const CancelPremiumModal: React.FC<ModalProps> = ({ opened, onClose }) =>
           },
         });
 
-        if (error) return toast.error(error.message);
+        if (error) {
+          return toast.error(
+            "An error occured while cancelling subscription, please contact: contact@jsoncrack.com"
+          );
+        }
+
         toast.success("Cancelled premium plan!");
       } else {
         toast.error("Couldn't fetch user details, please contact: contact@jsoncrack.com");

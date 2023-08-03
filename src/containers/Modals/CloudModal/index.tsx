@@ -83,6 +83,7 @@ const UpdateNameModal: React.FC<{
 
 export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const totalQuota = useUser(state => (state.premium ? 200 : 25));
+  const isPremium = useUser(state => state.premium);
   const getContents = useFile(state => state.getContents);
   const setHasChanges = useFile(state => state.setHasChanges);
   const getFormat = useFile(state => state.getFormat);
@@ -91,6 +92,11 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const { data, refetch } = useQuery(["allJson", query], () => getAllJson(), {
     enabled: isReady && opened,
   });
+
+  const isCreateDisabled = React.useMemo(() => {
+    if (!data?.length) return false;
+    return isPremium ? data.length >= 200 : data.length >= 25;
+  }, [isPremium, data?.length]);
 
   const onCreate = async () => {
     try {
@@ -225,7 +231,13 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
             </Group>
           </Paper>
           <Paper my="lg" withBorder radius="md" p="xs" w={250}>
-            <UnstyledButton fw="bold" w="100%" h="100%" onClick={onCreate}>
+            <UnstyledButton
+              fw="bold"
+              w="100%"
+              h="100%"
+              onClick={onCreate}
+              disabled={isCreateDisabled}
+            >
               <Text fz="md" align="center" color="blue">
                 <Flex align="center" justify="center">
                   <VscAdd size="24" />
