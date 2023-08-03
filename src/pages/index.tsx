@@ -202,7 +202,7 @@ const HeroSection = () => (
 
 const StatsBanner = () => (
   <StyledStatsWrapper>
-    <Group spacing="xl">
+    <Group spacing="xl" style={{ flex: 1 }}>
       <Stack spacing="0">
         <Text fw="bolder" fz="1.6rem">
           24.5K
@@ -228,7 +228,7 @@ const StatsBanner = () => (
         </Text>
       </Stack>
     </Group>
-    <Stack ml={60}>
+    <Stack ml={60} style={{ flex: 1 }}>
       <Text maw={800} fz="0.9rem">
         JSON Crack is an open-source project with a GPL-3 license. By subscribing to our premium
         plan, you can help us continue developing and maintaining it, also enjoy the benefits.

@@ -5,7 +5,7 @@ import ReactGA from "react-ga";
 const isDevelopment = process.env.NODE_ENV === "development";
 const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID;
 
-ReactGA.initialize(GA_TRACKING_ID, { testMode: isDevelopment });
+ReactGA.initialize(GA_TRACKING_ID, { testMode: isDevelopment, useExistingGa: true });
 
 const GoogleAnalytics: React.FC = () => {
   if (isDevelopment) return null;

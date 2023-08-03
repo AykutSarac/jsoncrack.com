@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import styled from "styled-components";
 import { BottomBar } from "src/containers/Editor/BottomBar";
 import { Tools } from "src/containers/Editor/LiveEditor/Tools";
+import { useCheckSession } from "src/hooks/useCheckSession";
 import { EditorWrapper } from "src/layout/EditorWrapper";
 import { Loading } from "src/layout/Loading";
 import useFile from "src/store/useFile";
@@ -29,8 +30,9 @@ export const StyledEditorWrapper = styled.div`
 
 const EditorPage: React.FC = () => {
   const { query, isReady } = useRouter();
-  const checkEditorSession = useFile(state => state.checkEditorSession);
   const loading = useJson(state => state.loading);
+  const checkEditorSession = useFile(state => state.checkEditorSession);
+  useCheckSession();
 
   React.useEffect(() => {
     if (isReady) checkEditorSession(query?.json);
