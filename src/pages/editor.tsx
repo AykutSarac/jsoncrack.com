@@ -31,7 +31,7 @@ const EditorPage: React.FC = () => {
   const { query, isReady } = useRouter();
   const checkEditorSession = useFile(state => state.checkEditorSession);
   const loading = useJson(state => state.loading);
-  const hasQuery = React.useMemo(() => Object.keys(query), [query]);
+  const hasQuery = React.useMemo(() => Object.keys(query).length > 0, [query]);
 
   React.useEffect(() => {
     if (isReady) checkEditorSession(query?.json);
