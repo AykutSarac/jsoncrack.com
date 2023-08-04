@@ -59,7 +59,7 @@ const StyledHeroSectionBody = styled.div`
   overflow: hidden;
   backdrop-filter: blur(1px);
   -webkit-backdrop-filter: blur(1px);
-  min-height: 60vh;
+  height: 70vh;
 
   @media only screen and (max-width: 1200px) {
     flex-direction: column;
