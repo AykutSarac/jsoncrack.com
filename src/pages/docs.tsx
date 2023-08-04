@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import styled from "styled-components";
-import { MediaQuery, Text, Title } from "@mantine/core";
+import { Group, MediaQuery, Paper, Stack, Text, Title } from "@mantine/core";
 import { Prism } from "@mantine/prism";
 import Layout from "src/layout/Layout";
 
@@ -12,21 +12,6 @@ const StyledFrame = styled.iframe`
   margin: 3% auto;
 `;
 
-const StyledPage = styled.div`
-  padding: 0 5%;
-  color: black;
-`;
-
-const StyledContent = styled.section`
-  margin-top: 20px;
-  background: rgba(96, 96, 96, 0.23);
-  padding: 16px;
-  border-radius: 6px;
-  border: 1px solid #383838;
-`;
-
-const StyledDescription = styled.div``;
-
 const StyledContentBody = styled.div`
   display: flex;
   flex-direction: column;
@@ -34,7 +19,7 @@ const StyledContentBody = styled.div`
   gap: 15px;
   line-height: 1.8;
 
-  ${StyledDescription} {
+  ${Text} {
     flex: 1;
   }
 `;
@@ -59,14 +44,18 @@ const Docs = () => {
         <title>Documentation - JSON Crack Docs</title>
         <meta name="description" content="Embedding JSON Crack tutorial into your websites." />
       </Head>
-      <StyledPage>
-        <h1>Documentation</h1>
-        <StyledContent>
-          <Title order={2} color="dark">
+      <Stack mx="auto" maw="75%">
+        <Group mb="lg" mt={40}>
+          <Title order={1} color="dark">
+            Documentation
+          </Title>
+        </Group>
+        <Paper p="md" radius="md" withBorder>
+          <Title order={3} color="dark">
             # Fetching from URL
           </Title>
           <StyledContentBody>
-            <StyledDescription>
+            <Text>
               By adding <StyledHighlight>?json=https://catfact.ninja/fact</StyledHighlight> query at
               the end of iframe src you will be able to fetch from URL at widgets without additional
               scripts. This applies to editor page as well, the following link will fetch the url at
@@ -78,10 +67,9 @@ const Docs = () => {
               >
                 https://jsoncrack.com/editor?json=https://catfact.ninja/fact
               </StyledHighlight>
-            </StyledDescription>
+            </Text>
 
             <StyledFrame
-              scrolling="no"
               title="Untitled"
               src="https://codepen.io/AykutSarac/embed/KKBpWVR?default-tab=html%2Cresult"
               loading="eager"
@@ -91,17 +79,17 @@ const Docs = () => {
               <a href="https://codepen.io">CodePen</a>.
             </StyledFrame>
           </StyledContentBody>
-        </StyledContent>
-        <StyledContent>
+        </Paper>
+        <Paper p="md" radius="md" withBorder>
           <Title order={2} color="dark">
             # Embed Saved JSON
           </Title>
           <StyledContentBody>
-            <StyledDescription>
+            <Text>
               Just like fetching from URL above, you can embed saved public json by adding the json
               id to &quot;json&quot; query{" "}
               <StyledHighlight>?json=639b65c5a82efc29a24b2de2</StyledHighlight>
-            </StyledDescription>
+            </Text>
             <StyledFrame
               title="Untitled"
               src="https://codepen.io/AykutSarac/embed/vYaORgM?default-tab=html%2Cresult"
@@ -112,14 +100,14 @@ const Docs = () => {
               <a href="https://codepen.io">CodePen</a>.
             </StyledFrame>
           </StyledContentBody>
-        </StyledContent>
-        <StyledContent>
+        </Paper>
+        <Paper p="md" radius="md" withBorder>
           <Title order={2} color="dark">
             # Communicating with API
           </Title>
           <h3>◼︎ Post Message to Embed</h3>
           <StyledContentBody>
-            <StyledDescription>
+            <Text>
               Communicating with the embed is possible with{" "}
               <StyledHighlight
                 as="a"
@@ -137,7 +125,7 @@ const Docs = () => {
                   }
                 </Prism>
               </MediaQuery>
-            </StyledDescription>
+            </Text>
 
             <StyledFrame
               scrolling="no"
@@ -150,11 +138,11 @@ const Docs = () => {
               <a href="https://codepen.io">CodePen</a>.
             </StyledFrame>
           </StyledContentBody>
-        </StyledContent>
-        <StyledContent>
+        </Paper>
+        <Paper p="md" radius="md" withBorder>
           <h3>◼︎ On Page Load</h3>
           <StyledContentBody>
-            <StyledDescription>
+            <Text>
               <Text>
                 ⚠️ <b>Important!</b> - iframe should be defined before the script tag
               </Text>
@@ -163,9 +151,8 @@ const Docs = () => {
                 sends its <b>id</b> attribute so you can listen for it as in the example below to
                 ensure its loaded and ready to listen for messages.
               </Text>
-            </StyledDescription>
+            </Text>
             <StyledFrame
-              scrolling="no"
               title="Untitled"
               src="https://codepen.io/AykutSarac/embed/QWBbpqx?default-tab=html%2Cresult"
               loading="lazy"
@@ -175,8 +162,8 @@ const Docs = () => {
               <a href="https://codepen.io">CodePen</a>.
             </StyledFrame>
           </StyledContentBody>
-        </StyledContent>
-      </StyledPage>
+        </Paper>
+      </Stack>
     </Layout>
   );
 };
