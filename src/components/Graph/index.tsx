@@ -142,7 +142,7 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
 
   if (nodes.length > 6_000) return <ErrorView />;
 
-  if (nodes.length > 400 && !isWidget) {
+  if (nodes.length > 250 && !isWidget) {
     if (!isPremium) return <PremiumView />;
   }
 
