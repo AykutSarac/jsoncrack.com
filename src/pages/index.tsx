@@ -20,6 +20,7 @@ import { SiVisualstudiocode } from "react-icons/si";
 import { Typewriter } from "react-simple-typewriter";
 import { HovercardAds } from "src/components/HovercardAds";
 import { lightTheme } from "src/constants/theme";
+import { FeaturesCards } from "src/containers/Features";
 import { Navbar } from "src/layout/Navbar";
 
 const Footer = dynamic(() => import("src/layout/Footer").then(c => c.Footer));
@@ -128,23 +129,6 @@ const StyledStatsWrapper = styled.div`
 
   @media screen and (max-width: 768px) {
     flex-direction: column;
-  }
-`;
-
-const StyledFeatures = styled(Container)`
-  .mantine-Image-root {
-    filter: drop-shadow(3px 3px 5px black);
-
-    img {
-      width: 100%;
-      object-fit: contain;
-    }
-  }
-
-  @media only screen and (max-width: 735px) {
-    .mantine-Image-root {
-      display: none;
-    }
   }
 `;
 
@@ -260,85 +244,6 @@ const StatsBanner = () => (
   </StyledStatsWrapper>
 );
 
-const Features = () => (
-  <StyledFeatures my={60}>
-    <Flex py="lg" align="flex-start" gap="lg">
-      <img
-        width={500}
-        height={287}
-        src="/assets/highlight_graph.svg"
-        alt="search through graph"
-        loading="lazy"
-      />
-      <Stack pt="lg">
-        <Text color="dark" fz="1.5rem" fw="bold">
-          ADVANCED GRAPH SEARCH
-        </Text>
-        <Text color="dark" maw={500}>
-          Quickly navigate through your data visualization using JSON Crack&apos;s intuitive search
-          functionality. Directly locate specific nodes matching with your search!
-        </Text>
-      </Stack>
-    </Flex>
-    <Flex py="lg" align="center" gap="lg" direction="row-reverse">
-      <img
-        width={300}
-        height={260}
-        src="/assets/multidata.webp"
-        alt="multiple format support"
-        loading="lazy"
-      />
-      <Stack>
-        <Text color="dark" fz="1.5rem" fw="bold">
-          DYNAMIC DATA VISUALIZATION
-        </Text>
-        <Text color="dark" maw={500}>
-          JSON Crack revolutionizes data visualization by transforming JSON, YAML, XML, and other
-          data types into captivating, interactive graphs. Gain deep insights into complex data
-          structures at a glance.
-        </Text>
-      </Stack>
-    </Flex>
-    <Flex py="lg" align="center" gap="lg">
-      <img
-        width={400}
-        height={344}
-        src="/assets/download_image.webp"
-        alt="download as image"
-        loading="lazy"
-      />
-      <Stack>
-        <Text color="dark" fz="1.5rem" fw="bold">
-          DOWNLOAD AS IMAGE
-        </Text>
-        <Text color="dark" maw={500}>
-          Capture and share your insights effortlessly by downloading your generated graphs as image
-          files. Easily collaborate and communicate data-driven findings with colleagues and
-          stakeholders.
-        </Text>
-      </Stack>
-    </Flex>
-    <Flex direction="row-reverse" py="lg" align="flex-start" gap="lg">
-      <img
-        width={500}
-        height={285}
-        src="/assets/preview_image.svg"
-        alt="preview images"
-        loading="lazy"
-      />
-      <Stack pt="lg">
-        <Text color="dark" fz="1.5rem" fw="bold">
-          IMAGE PREVIEW
-        </Text>
-        <Text color="dark" maw={500}>
-          Seamlessly preview embedded images within your JSON, YAML, or XML data. Instantly view
-          visuals, photos, and graphics directly within JSON Crack, saving you time and effort.
-        </Text>
-      </Stack>
-    </Flex>
-  </StyledFeatures>
-);
-
 const HeroBottom = () => (
   <Container mt={100}>
     <Stack>
@@ -372,7 +277,7 @@ export const HomePage = () => {
       </Head>
       <HeroSection />
       <StatsBanner />
-      <Features />
+      <FeaturesCards />
       <HeroBottom />
       <HovercardAds />
       <Footer />
