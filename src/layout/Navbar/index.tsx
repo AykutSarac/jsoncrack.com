@@ -15,6 +15,7 @@ const StyledNavbar = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 90vw;
+  height: 56px;
   margin: 0 auto;
   border: 2px solid black;
   background: white;

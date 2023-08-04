@@ -67,6 +67,9 @@ const StyledBottomBarItem = styled.button<{ $error?: boolean }>`
   font-weight: 400;
   color: ${({ theme, $error }) => ($error ? theme.DANGER : theme.INTERACTIVE_NORMAL)};
   background: ${({ $error }) => $error && "rgba(255, 99, 71, 0.4)"};
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 
   &:hover:not(&:disabled) {
     background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0 0);
