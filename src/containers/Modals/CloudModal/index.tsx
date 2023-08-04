@@ -57,7 +57,10 @@ const UpdateNameModal: React.FC<{
         error: "Error occurred while updating document!",
         success: `Renamed document to ${name}`,
       })
-      .then(() => refetch());
+      .then(() => {
+        refetch();
+        setName("");
+      });
 
     onClose();
   };

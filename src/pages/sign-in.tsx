@@ -13,7 +13,6 @@ import {
   Divider,
   Anchor,
   Stack,
-  Title,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useToggle, upperFirst } from "@mantine/hooks";
@@ -94,11 +93,14 @@ export function AuthenticationForm(props: PaperProps) {
   if (done) {
     return (
       <Paper mih={100}>
-        <Title align="center" order={2}>
+        <Text align="center" mt="lg">
           Registration successul!
           <br />
           Please check your inbox for email confirmation.
-        </Title>
+        </Text>
+        <Button radius="sm" size="md" mt="lg" onClick={() => window.location.reload()} fullWidth>
+          Back to login
+        </Button>
       </Paper>
     );
   }
