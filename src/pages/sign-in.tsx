@@ -186,7 +186,13 @@ export function AuthenticationForm(props: PaperProps) {
 
           <Stack spacing="sm" mx="auto" align="center">
             {type === "login" && (
-              <Anchor component={Link} href="/reset-password" color="dark" size="xs">
+              <Anchor
+                component={Link}
+                prefetch={false}
+                href="/reset-password"
+                color="dark"
+                size="xs"
+              >
                 Forgot your password?
               </Anchor>
             )}

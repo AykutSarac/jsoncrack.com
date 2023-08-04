@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Badge, Button, Image, List, ThemeIcon, Title } from "@mantine/core";
+import { Button, Image, List, ThemeIcon, Title } from "@mantine/core";
 import { BsCheck } from "react-icons/bs";
 import { paymentURL } from "src/constants/data";
 
@@ -180,15 +180,6 @@ export const PremiumView = () => (
         <List.Item>JSON Schema support</List.Item>
         <List.Item>Visualize data at full capability</List.Item>
         <List.Item>Save & share up to 200 files</List.Item>
-        <List.Item
-          icon={
-            <ThemeIcon color="dark.4" size={20} radius="xl">
-              <BsCheck size="1rem" />
-            </ThemeIcon>
-          }
-        >
-          API Access <Badge>Soon</Badge>
-        </List.Item>
       </List>
 
       <Button

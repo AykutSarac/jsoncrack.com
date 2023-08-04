@@ -9,7 +9,6 @@ import {
   Center,
   Container,
   Flex,
-  Image,
   Group,
   Stack,
   Text,
@@ -121,12 +120,15 @@ const StyledHeroText = styled.p`
 
 const StyledStatsWrapper = styled.div`
   display: flex;
-  flex-wrap: wrap;
   gap: 24px;
   justify-content: center;
   align-items: center;
   background: #421665;
   padding: 24px;
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const StyledFeatures = styled(Container)`
@@ -168,11 +170,16 @@ const HeroSection = () => (
           instantly into graphs!
         </StyledHeroText>
         <Group spacing="xl">
-          <Link href="/editor" prefetch={false}>
-            <Button fw="bold" rightIcon={<FaChevronRight />} size="lg">
-              GO TO EDITOR
-            </Button>
-          </Link>
+          <Button
+            component={Link}
+            href="/editor"
+            prefetch={false}
+            fw="bold"
+            rightIcon={<FaChevronRight />}
+            size="lg"
+          >
+            GO TO EDITOR
+          </Button>
           <Tooltip
             maw={400}
             label="VS Code extension only contains JSON visualization without additional features."
@@ -194,7 +201,13 @@ const HeroSection = () => (
         </Group>
       </Left>
       <Right>
-        <Image src="/assets/diagram_bg.webp" width="1200" height="593" alt="diagram" />
+        <img
+          src="/assets/diagram_bg.webp"
+          width="1200"
+          height="593"
+          alt="diagram"
+          loading="eager"
+        />
       </Right>
     </StyledHeroSectionBody>
   </StyledHeroSection>
@@ -202,42 +215,47 @@ const HeroSection = () => (
 
 const StatsBanner = () => (
   <StyledStatsWrapper>
-    <Group spacing="xl">
+    <Flex gap="lg">
       <Stack spacing="0">
-        <Text fw="bolder" fz="1.6rem">
-          24.5K
+        <Text fw="bolder" fz="1.8rem" truncate>
+          24.8K
         </Text>
-        <Text color="gray.5" fw="bold" fz="0.8rem">
+        <Text color="gray.5" fw="bold" fz="0.8rem" truncate>
           GITHUB STARS
         </Text>
       </Stack>
       <Stack spacing="0">
-        <Text fw="bolder" fz="1.6rem">
+        <Text fw="bolder" fz="1.8rem" truncate>
           50K+
         </Text>
-        <Text color="gray.5" fw="bold" fz="0.8rem">
+        <Text color="gray.5" fw="bold" fz="12px" truncate>
           MONTHLY USERS
         </Text>
       </Stack>
       <Stack spacing="0">
-        <Text fw="bolder" fz="1.6rem">
+        <Text fw="bolder" fz="1.8rem" truncate>
           GPL-3
         </Text>
-        <Text color="gray.5" fw="bold" fz="0.8rem">
+        <Text color="gray.5" fw="bold" fz="0.8rem" truncate>
           LICENSE
         </Text>
       </Stack>
-    </Group>
+    </Flex>
     <Stack ml={60}>
-      <Text maw={800} fz="0.9rem">
-        JSON Crack is an open-source project with a GPL-3 license. By subscribing to our premium
-        plan, you can help us continue developing and maintaining it, also enjoy the benefits.
+      <Text maw={600} fw="bold" fz="0.9rem">
+        JSON Crack is an open-source project under GPL-3 license. Support us through our premium
+        plan for continued development and exclusive benefits.
       </Text>
-      <Link href="/pricing" prefetch={false}>
-        <Text color="yellow" fw="bold" w="fit-content">
-          View Premium Plan <FaChevronRight />
-        </Text>
-      </Link>
+      <Anchor
+        component={Link}
+        href="/pricing"
+        prefetch={false}
+        color="yellow"
+        fw="bold"
+        w="fit-content"
+      >
+        View Premium Plan <FaChevronRight />
+      </Anchor>
     </Stack>
   </StyledStatsWrapper>
 );
@@ -245,11 +263,12 @@ const StatsBanner = () => (
 const Features = () => (
   <StyledFeatures my={60}>
     <Flex py="lg" align="flex-start" gap="lg">
-      <Image
+      <img
         width={500}
         height={287}
         src="/assets/highlight_graph.svg"
         alt="search through graph"
+        loading="lazy"
       />
       <Stack pt="lg">
         <Text color="dark" fz="1.5rem" fw="bold">
@@ -262,7 +281,13 @@ const Features = () => (
       </Stack>
     </Flex>
     <Flex py="lg" align="center" gap="lg" direction="row-reverse">
-      <Image width={300} height={260} src="/assets/multidata.webp" alt="multiple format support" />
+      <img
+        width={300}
+        height={260}
+        src="/assets/multidata.webp"
+        alt="multiple format support"
+        loading="lazy"
+      />
       <Stack>
         <Text color="dark" fz="1.5rem" fw="bold">
           DYNAMIC DATA VISUALIZATION
@@ -275,7 +300,13 @@ const Features = () => (
       </Stack>
     </Flex>
     <Flex py="lg" align="center" gap="lg">
-      <Image width={400} height={344} src="/assets/download_image.webp" alt="download as image" />
+      <img
+        width={400}
+        height={344}
+        src="/assets/download_image.webp"
+        alt="download as image"
+        loading="lazy"
+      />
       <Stack>
         <Text color="dark" fz="1.5rem" fw="bold">
           DOWNLOAD AS IMAGE
@@ -288,7 +319,13 @@ const Features = () => (
       </Stack>
     </Flex>
     <Flex direction="row-reverse" py="lg" align="flex-start" gap="lg">
-      <Image width={500} height={285} src="/assets/preview_image.svg" alt="preview images" />
+      <img
+        width={500}
+        height={285}
+        src="/assets/preview_image.svg"
+        alt="preview images"
+        loading="lazy"
+      />
       <Stack pt="lg">
         <Text color="dark" fz="1.5rem" fw="bold">
           IMAGE PREVIEW
@@ -311,11 +348,17 @@ const HeroBottom = () => (
         Explore the full potential of your data now......
       </Title>
       <Center>
-        <Link href="/editor" prefetch={false}>
-          <Button color="violet" fw="bold" rightIcon={<FaChevronRight />} size="lg">
-            GO TO EDITOR
-          </Button>
-        </Link>
+        <Button
+          component={Link}
+          href="/editor"
+          prefetch={false}
+          color="violet"
+          fw="bold"
+          rightIcon={<FaChevronRight />}
+          size="lg"
+        >
+          GO TO EDITOR
+        </Button>
       </Center>
     </Stack>
   </Container>

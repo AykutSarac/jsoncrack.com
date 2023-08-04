@@ -161,11 +161,15 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           <td>{element.views.toLocaleString("en-US")}</td>
           <td>
             <Flex gap="xs">
-              <Link href={`?json=${element.id}`} prefetch={false}>
-                <ActionIcon color="blue" onClick={onClose}>
-                  <MdFileOpen size="18" />
-                </ActionIcon>
-              </Link>
+              <ActionIcon
+                component={Link}
+                href={`?json=${element.id}`}
+                prefetch={false}
+                color="blue"
+                onClick={onClose}
+              >
+                <MdFileOpen size="18" />
+              </ActionIcon>
               <ActionIcon color="red" onClick={() => onDeleteClick(element)}>
                 <FaTrash size="18" />
               </ActionIcon>

@@ -62,21 +62,36 @@ export const Navbar = () => {
           >
             GitHub
           </Button>
-          <Link href="/docs" prefetch={false}>
-            <Button variant="subtle" color="dark" radius="md">
-              Docs
-            </Button>
-          </Link>
-          <Link href="/oss" prefetch={false}>
-            <Button variant="subtle" color="dark" radius="md">
-              Supporters
-            </Button>
-          </Link>
-          <Link href="/pricing" prefetch={false}>
-            <Button variant="subtle" color="dark" radius="md">
-              Pricing
-            </Button>
-          </Link>
+          <Button
+            component={Link}
+            href="/docs"
+            prefetch={false}
+            variant="subtle"
+            color="dark"
+            radius="md"
+          >
+            Docs
+          </Button>
+          <Button
+            component={Link}
+            href="/oss"
+            prefetch={false}
+            variant="subtle"
+            color="dark"
+            radius="md"
+          >
+            Supporters
+          </Button>
+          <Button
+            component={Link}
+            href="/pricing"
+            prefetch={false}
+            variant="subtle"
+            color="dark"
+            radius="md"
+          >
+            Pricing
+          </Button>
         </Middle>
         <Right>
           <Button
@@ -90,17 +105,20 @@ export const Navbar = () => {
             Star us on GitHub
           </Button>
           {!isAuthenticated && (
-            <Link href="/sign-in" prefetch={false}>
-              <Button variant="light" radius="md" className="hide-mobile">
-                Sign In
-              </Button>
-            </Link>
-          )}
-          <Link href="/editor" prefetch={false}>
-            <Button color="pink" radius="md">
-              Editor
+            <Button
+              component={Link}
+              href="/sign-in"
+              prefetch={false}
+              variant="light"
+              radius="md"
+              className="hide-mobile"
+            >
+              Sign In
             </Button>
-          </Link>
+          )}
+          <Button component={Link} href="/editor" prefetch={false} color="pink" radius="md">
+            Editor
+          </Button>
         </Right>
       </StyledNavbar>
     </StyledNavbarWrapper>

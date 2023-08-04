@@ -55,7 +55,7 @@ export function AuthenticationForm(props: PaperProps) {
             </Button>
           </Group>
           <Stack mt="lg" align="center">
-            <Anchor component={Link} href="/sign-in" color="dark" size="xs">
+            <Anchor component={Link} prefetch={false} href="/sign-in" color="dark" size="xs">
               Don&apos;t have an account? Sign Up
             </Anchor>
           </Stack>
