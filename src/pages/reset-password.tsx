@@ -77,6 +77,7 @@ const SignIn = () => {
     <div>
       <Head>
         <title>Reset Password | JSON Crack</title>
+        <meta name="robots" content="noindex,nofollow" />
       </Head>
       <Navbar />
       <Paper mx="auto" mt={70} maw={400} p="lg" withBorder>

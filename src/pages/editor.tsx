@@ -31,6 +31,7 @@ const EditorPage: React.FC = () => {
   const { query, isReady } = useRouter();
   const checkEditorSession = useFile(state => state.checkEditorSession);
   const loading = useJson(state => state.loading);
+  const hasQuery = React.useMemo(() => Object.keys(query), [query]);
 
   React.useEffect(() => {
     if (isReady) checkEditorSession(query?.json);
@@ -43,6 +44,7 @@ const EditorPage: React.FC = () => {
       <StyledEditorWrapper>
         <Head>
           <title>Editor | JSON Crack</title>
+          {hasQuery && <meta name="robots" content="noindex,nofollow" />}
         </Head>
         <StyledPageWrapper>
           <Tools />

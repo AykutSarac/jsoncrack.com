@@ -1,5 +1,6 @@
 import React from "react";
 import dynamic from "next/dynamic";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { ThemeProvider } from "styled-components";
 import toast from "react-hot-toast";
@@ -58,6 +59,9 @@ const WidgetPage = () => {
 
   return (
     <EditorWrapper>
+      <Head>
+        <meta name="robots" content="noindex,nofollow" />
+      </Head>
       <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
         <Tools isWidget />
         <Graph isWidget />
