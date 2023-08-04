@@ -111,7 +111,7 @@ export function FeaturesCards() {
         <Text fz="lg" fw={500} className={classes.cardTitle} mt="md">
           {feature.title}
         </Text>
-        <Text fz="sm" c="dimmed" mt="sm">
+        <Text fz="sm" color="dark.3" mt="sm">
           {feature.description}
         </Text>
       </Card>
@@ -131,7 +131,7 @@ export function FeaturesCards() {
         Transform data into stunning graphs.
       </Title>
 
-      <Text color="dimmed" className={classes.description} ta="center" mt="md">
+      <Text color="dark.3" className={classes.description} ta="center" mt="md">
         JSON Crack empowers users to visualize, analyze, and manipulate data with ease, making it a
         versatile and powerful tool for data representation and exploration.
       </Text>
