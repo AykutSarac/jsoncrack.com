@@ -8,20 +8,23 @@ import useToggleHide from "src/hooks/useToggleHide";
 import useGraph from "src/store/useGraph";
 import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
+import { NodeData } from "src/types/models";
 import { Loading } from "../../layout/Loading";
 import { ErrorView } from "./ErrorView";
 import { PremiumView } from "./PremiumView";
 
-const Canvas = dynamic(() => import("reaflow").then(r => r.Canvas));
+const Canvas = dynamic(() => import("reaflow").then(r => r.Canvas), {
+  ssr: false,
+});
 
 interface GraphProps {
   isWidget?: boolean;
 }
 
-const StyledEditorWrapper = styled.div<{ widget: boolean }>`
+const StyledEditorWrapper = styled.div<{ $widget: boolean }>`
   position: absolute;
   width: 100%;
-  height: ${({ widget }) => (widget ? "calc(100vh - 36px)" : "calc(100vh - 63px)")};
+  height: ${({ $widget }) => ($widget ? "calc(100vh - 36px)" : "calc(100vh - 63px)")};
 
   --bg-color: ${({ theme }) => theme.GRID_BG_COLOR};
   --line-color-1: ${({ theme }) => theme.GRID_COLOR_PRIMARY};
@@ -32,8 +35,16 @@ const StyledEditorWrapper = styled.div<{ widget: boolean }>`
     linear-gradient(90deg, var(--line-color-1) 1.5px, transparent 1.5px),
     linear-gradient(var(--line-color-2) 1px, transparent 1px),
     linear-gradient(90deg, var(--line-color-2) 1px, transparent 1px);
-  background-position: -1.5px -1.5px, -1.5px -1.5px, -1px -1px, -1px -1px;
-  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+  background-position:
+    -1.5px -1.5px,
+    -1.5px -1.5px,
+    -1px -1px,
+    -1px -1px;
+  background-size:
+    100px 100px,
+    100px 100px,
+    20px 20px,
+    20px 20px;
 
   :active {
     cursor: move;
@@ -49,7 +60,7 @@ const StyledEditorWrapper = styled.div<{ widget: boolean }>`
   }
 
   @media only screen and (max-width: 768px) {
-    height: ${({ widget }) => (widget ? "calc(100vh - 36px)" : "100vh")};
+    height: ${({ $widget }) => ($widget ? "calc(100vh - 36px)" : "100vh")};
   }
 
   @media only screen and (max-width: 320px) {
@@ -116,6 +127,7 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
 
   const memoizedNode = React.useCallback(
     (props: JSX.IntrinsicAttributes & NodeProps<any>) => (
+      // @ts-ignore
       <CustomNode {...props} onClick={handleNodeClick} animated={false} />
     ),
     [handleNodeClick]
@@ -130,14 +142,20 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
 
   if (nodes.length > 6_000) return <ErrorView />;
 
-  if (nodes.length > 400 && !isWidget) {
+  if (nodes.length > 250 && !isWidget) {
     if (!isPremium) return <PremiumView />;
   }
 
   return (
     <>
       <Loading message="Painting graph..." loading={loading} />
-      <StyledEditorWrapper onContextMenu={e => e.preventDefault()} widget={isWidget}>
+      <StyledEditorWrapper
+        onClick={() => {
+          if ("activeElement" in document) (document.activeElement as HTMLElement)?.blur();
+        }}
+        onContextMenu={e => e.preventDefault()}
+        $widget={isWidget}
+      >
         <TransformWrapper
           maxScale={2}
           minScale={0.05}
@@ -166,6 +184,10 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
               height={paneHeight}
               width={paneWidth}
               direction={direction}
+              layoutOptions={{
+                "elk.layered.compaction.postCompaction.strategy": "EDGE_LENGTH",
+                "elk.layered.nodePlacement.strategy": "NETWORK_SIMPLEX",
+              }}
               onLayoutChange={onLayoutChange}
               onCanvasClick={onCanvasClick}
               node={memoizedNode}

@@ -2,7 +2,6 @@ import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import styled from "styled-components";
 import {
   TextInput,
   PasswordInput,
@@ -12,24 +11,22 @@ import {
   PaperProps,
   Button,
   Divider,
-  Checkbox,
   Anchor,
   Stack,
-  Center,
-  Title,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useToggle, upperFirst } from "@mantine/hooks";
+import { useSession } from "@supabase/auth-helpers-react";
 import { toast } from "react-hot-toast";
 import { AiOutlineGithub, AiOutlineGoogle } from "react-icons/ai";
-import { altogic } from "src/api/altogic";
 import { Footer } from "src/layout/Footer";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
 import { Navbar } from "src/layout/Navbar";
+import { supabase } from "src/lib/api/supabase";
 import useUser from "src/store/useUser";
 
 export function AuthenticationForm(props: PaperProps) {
-  const login = useUser(state => state.login);
+  const setSession = useUser(state => state.setSession);
   const [loading, setLoading] = React.useState(false);
   const [type, toggle] = useToggle<"login" | "register">(["login", "register"]);
   const [done, setDone] = React.useState(false);
@@ -40,7 +37,6 @@ export function AuthenticationForm(props: PaperProps) {
       name: "",
       password: "",
       passwordAgain: "",
-      terms: true,
     },
 
     validate: {
@@ -54,25 +50,33 @@ export function AuthenticationForm(props: PaperProps) {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const validate = form.validate();
+
     if (validate.hasErrors) return;
 
     setLoading(true);
     if (type === "login") {
-      altogic.auth
-        .signInWithEmail(form.values.email, form.values.password)
-        .then(({ user, errors }) => {
-          if (errors?.items.length || !user) return toast.error("Incorrect email or password!");
-          login(user as any);
+      supabase.auth
+        .signInWithPassword({
+          email: form.values.email,
+          password: form.values.password,
+        })
+        .then(({ data, error }) => {
+          if (error) return toast.error(error.message);
+          setSession(data.session);
         })
         .finally(() => setLoading(false));
     } else {
-      altogic.auth
-        .signUpWithEmail(form.values.email, form.values.password, form.values.name)
-        .then(({ errors }) => {
-          if (errors?.items.length) {
-            return errors.items.forEach(e => toast.error(e.message));
-          }
-          toast.success("Registration successful!");
+      supabase.auth
+        .signUp({
+          email: form.values.email,
+          password: form.values.password,
+          options: {
+            data: { name: form.values.name },
+          },
+        })
+        .then(({ error }) => {
+          if (error) return toast.error(error.message);
+          toast.success("Please check your inbox to confirm mail address!", { duration: 7000 });
           setDone(true);
         })
         .finally(() => setLoading(false));
@@ -80,45 +84,51 @@ export function AuthenticationForm(props: PaperProps) {
   };
 
   const handleLoginClick = (provider: "github" | "google") => {
-    altogic.auth.signInWithProvider(provider);
+    supabase.auth.signInWithOAuth({
+      provider,
+      options: { redirectTo: "https://jsoncrack.com/editor" },
+    });
   };
 
   if (done) {
     return (
       <Paper mih={100}>
-        <Title align="center" order={2}>
+        <Text align="center" mt="lg">
           Registration successul!
           <br />
           Please check your inbox for email confirmation.
-        </Title>
+        </Text>
+        <Button radius="sm" size="md" mt="lg" onClick={() => window.location.reload()} fullWidth>
+          Back to login
+        </Button>
       </Paper>
     );
   }
 
   return (
-    <Paper radius="md" p="xl" withBorder {...props}>
-      <Text size="lg" weight={500}>
-        Welcome to JSON Crack, {type} with
-      </Text>
-
-      <Group grow mb="md" mt="md">
+    <Paper {...props}>
+      <Stack mb="md" mt="md">
         <Button
-          radius="xl"
-          leftIcon={<AiOutlineGoogle />}
+          radius="sm"
+          size="md"
+          leftIcon={<AiOutlineGoogle size="20" />}
           onClick={() => handleLoginClick("google")}
           color="red"
+          variant="outline"
         >
-          Google
+          Sign In with Google
         </Button>
         <Button
-          radius="xl"
-          leftIcon={<AiOutlineGithub />}
+          radius="sm"
+          size="md"
+          leftIcon={<AiOutlineGithub size="20" />}
           onClick={() => handleLoginClick("github")}
           color="dark"
+          variant="outline"
         >
-          GitHub
+          Sign In with GitHub
         </Button>
-      </Group>
+      </Stack>
 
       <Divider label="Or continue with email" labelPosition="center" my="lg" />
 
@@ -127,39 +137,37 @@ export function AuthenticationForm(props: PaperProps) {
           {type === "register" && (
             <TextInput
               required
+              size="md"
               label="Name"
               placeholder="John Doe"
               value={form.values.name}
               onChange={event => form.setFieldValue("name", event.currentTarget.value)}
               error={form.errors.name && "This field cannot be left blank"}
-              radius="md"
+              radius="sm"
             />
           )}
 
           <TextInput
             required
-            label="Email"
+            label="Email address"
+            size="md"
             placeholder="hello@jsoncrack.com"
             value={form.values.email}
             onChange={event => form.setFieldValue("email", event.currentTarget.value)}
             error={form.errors.email && "Invalid email"}
-            radius="md"
+            radius="sm"
           />
 
           <PasswordInput
             required
-            label="Password"
-            placeholder="Your password"
+            label="Your Password"
+            size="md"
+            placeholder="*********"
             value={form.values.password}
             onChange={event => form.setFieldValue("password", event.currentTarget.value)}
             error={form.errors.password && "Password should include at least 6 characters"}
-            radius="md"
+            radius="sm"
           />
-          {type === "login" && (
-            <Link href="/reset-password">
-              <Text size="xs">Forgot password?</Text>
-            </Link>
-          )}
 
           {type === "register" && (
             <PasswordInput
@@ -169,50 +177,44 @@ export function AuthenticationForm(props: PaperProps) {
               value={form.values.passwordAgain}
               onChange={event => form.setFieldValue("passwordAgain", event.currentTarget.value)}
               error={form.errors.passwordAgain && "Passwords doesn't match"}
-              radius="md"
+              radius="sm"
+              size="md"
             />
           )}
 
-          {type === "register" && (
-            <Checkbox
-              label="I accept terms and conditions"
-              checked={form.values.terms}
-              onChange={event => form.setFieldValue("terms", event.currentTarget.checked)}
-            />
-          )}
-        </Stack>
-
-        <Group position="apart" mt="xl">
-          <Anchor
-            component="button"
-            type="button"
-            color="dimmed"
-            onClick={() => toggle()}
-            size="xs"
-          >
-            {type === "register"
-              ? "Already have an account? Login"
-              : "Don't have an account? Register"}
-          </Anchor>
-          <Button type="submit" radius="xl" loading={loading} disabled={!form.values.terms}>
+          <Button type="submit" radius="sm" size="md" loading={loading}>
             {upperFirst(type)}
           </Button>
-        </Group>
+
+          <Stack spacing="sm" mx="auto" align="center">
+            {type === "login" && (
+              <Anchor
+                component={Link}
+                prefetch={false}
+                href="/reset-password"
+                color="dark"
+                size="xs"
+              >
+                Forgot your password?
+              </Anchor>
+            )}
+            <Anchor
+              color="dark"
+              component="button"
+              type="button"
+              onClick={() => toggle()}
+              size="xs"
+            >
+              {type === "register"
+                ? "Already have an account? Login"
+                : "Don't have an account? Sign Up"}
+            </Anchor>
+          </Stack>
+        </Stack>
       </form>
     </Paper>
   );
 }
-
-const StyledPageWrapper = styled.div`
-  padding: 5%;
-`;
-
-const StyledHeroSection = styled.section`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-`;
 
 function ResetPassword(props: PaperProps) {
   const { query } = useRouter();
@@ -222,24 +224,23 @@ function ResetPassword(props: PaperProps) {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (query?.access_token && typeof query?.access_token === "string") {
+    if (query?.token && typeof query?.token === "string") {
       setLoading(true);
-      altogic.auth
-        .resetPwdWithToken(query?.access_token, password)
-        .then(({ errors }) => {
-          if (errors) {
-            toast.error(errors.items[0].message);
-          } else {
-            toast.success("Successfully updated password!");
-            setTimeout(() => window.location.assign("/sign-in"), 2000);
-          }
+      supabase.auth
+        .updateUser({
+          password,
+        })
+        .then(({ error }) => {
+          if (error) return toast.error(error.message);
+          toast.success("Successfully updated password!");
+          setTimeout(() => window.location.assign("/sign-in"), 2000);
         })
         .finally(() => setLoading(false));
     }
   };
 
   return (
-    <Paper radius="md" p="xl" withBorder w={300} {...props}>
+    <Paper radius="sm" {...props}>
       <Text size="lg" weight={500}>
         Reset Password
       </Text>
@@ -251,14 +252,14 @@ function ResetPassword(props: PaperProps) {
             onChange={e => setPassword(e.target.value)}
             required
             label="Password"
-            radius="md"
+            radius="sm"
           />
           <PasswordInput
             value={password2}
             onChange={e => setPassword2(e.target.value)}
             required
             label="Validate Password"
-            radius="md"
+            radius="sm"
           />
         </Stack>
 
@@ -274,27 +275,23 @@ function ResetPassword(props: PaperProps) {
 
 const SignIn = () => {
   const { isReady, push, query } = useRouter();
-  const isAuthenticated = useUser(state => state.isAuthenticated);
-  const checkSession = useUser(state => state.checkSession);
-  const isPasswordReset = query?.action === "reset-pwd" && !query?.error;
+  const session = useSession();
+  const isPasswordReset = query?.type === "recovery" && !query?.error;
 
   React.useEffect(() => {
-    if (isAuthenticated) push("/editor");
-    else checkSession();
-  }, [isReady, isAuthenticated, push, checkSession]);
+    if (session) push("/editor");
+  }, [isReady, session, push]);
 
   return (
     <div>
       <Head>
-        <title>Sign In | Herowand Editor</title>
+        <title>Sign In | JSON Crack</title>
       </Head>
       <Navbar />
-      <StyledPageWrapper className="repeating-grid">
-        <StyledHeroSection>
-          <JSONCrackLogo />
-        </StyledHeroSection>
-        <Center pt={60}>{isPasswordReset ? <ResetPassword /> : <AuthenticationForm />}</Center>
-      </StyledPageWrapper>
+      <Paper mx="auto" mt={70} maw={400} p="lg" withBorder>
+        <JSONCrackLogo />
+        {isPasswordReset ? <ResetPassword /> : <AuthenticationForm />}
+      </Paper>
       <Footer />
     </div>
   );

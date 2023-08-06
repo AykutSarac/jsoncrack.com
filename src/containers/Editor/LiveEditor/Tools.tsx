@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Flex, Group, MediaQuery, Menu, Select, Text } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
+import { event } from "react-ga";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { CgArrowsMergeAltH, CgArrowsShrinkH, CgChevronDown } from "react-icons/cg";
@@ -18,16 +19,14 @@ import {
   VscSettingsGear,
 } from "react-icons/vsc";
 import { SearchInput } from "src/components/SearchInput";
-import { FileFormat } from "src/constants/file";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
+import { getNextDirection } from "src/lib/utils/graph/getNextDirection";
+import { isIframe } from "src/lib/utils/widget";
 import useFile from "src/store/useFile";
 import useGraph from "src/store/useGraph";
 import useJson from "src/store/useJson";
 import useModal from "src/store/useModal";
-import useStored from "src/store/useStored";
-import useUser from "src/store/useUser";
-import { getNextDirection } from "src/utils/graph/getNextDirection";
-import { isIframe } from "src/utils/widget";
+import { FileFormat } from "src/types/models";
 
 export const StyledTools = styled.div`
   position: relative;
@@ -37,7 +36,7 @@ export const StyledTools = styled.div`
   justify-content: space-between;
   height: 36px;
   padding: 4px 8px;
-  background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
+  background: ${({ theme }) => theme.TOOLBAR_BG};
   color: ${({ theme }) => theme.SILVER};
   box-shadow: 0 1px 0px ${({ theme }) => theme.BACKGROUND_TERTIARY};
   z-index: 36;
@@ -47,8 +46,8 @@ export const StyledTools = styled.div`
   }
 `;
 
-const StyledToolElement = styled.button<{ hide?: boolean }>`
-  display: ${({ hide }) => (hide ? "none" : "grid")};
+const StyledToolElement = styled.button<{ $hide?: boolean }>`
+  display: ${({ $hide }) => ($hide ? "none" : "grid")};
   place-content: center;
   font-size: 12px;
   background: none;
@@ -65,10 +64,6 @@ const StyledToolElement = styled.button<{ hide?: boolean }>`
     opacity: 1;
     box-shadow: none;
   }
-`;
-
-const StyledLogo = styled.img<{ invert: boolean }>`
-  filter: ${({ invert }) => invert && "invert()"};
 `;
 
 const StyledFlowIcon = styled(TiFlowMerge)<{ rotate: number }>`
@@ -105,12 +100,21 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
   const graphCollapsed = useGraph(state => state.graphCollapsed);
   const expandGraph = useGraph(state => state.expandGraph);
   const collapseGraph = useGraph(state => state.collapseGraph);
-  const lightmode = useStored(state => state.lightmode);
-  const premium = useUser(state => state.premium);
   const setFormat = useFile(state => state.setFormat);
   const format = useFile(state => state.format);
+  const [coreKey, setCoreKey] = React.useState("CTRL");
+  const [logoURL, setLogoURL] = React.useState("CTRL");
 
-  const CoreKey = React.useMemo(() => (navigator.userAgent.indexOf("Mac OS X") ? "⌘" : "CTRL"), []);
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      const url = !isIframe()
+        ? "https://jsoncrack.com"
+        : window.location.href.replace("widget", "editor");
+
+      setCoreKey(navigator.userAgent.indexOf("Mac OS X") ? "⌘" : "CTRL");
+      setLogoURL(url);
+    }
+  }, []);
 
   const toggleEditor = () => toggleFullscreen(!fullscreen);
 
@@ -121,6 +125,7 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
 
   const toggleDirection = () => {
     const nextDirection = getNextDirection(direction);
+
     setDirection(nextDirection);
   };
 
@@ -149,15 +154,11 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
       "mod+f",
       () => {
         const input = document.querySelector("#search-node") as HTMLInputElement;
+
         input.focus();
       },
     ],
   ]);
-
-  const logoURL = React.useMemo(() => {
-    if (!isIframe()) return "https://jsoncrack.com";
-    return window.location.href.replace("widget", "editor");
-  }, []);
 
   return (
     <StyledTools>
@@ -185,6 +186,8 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
               size="xs"
               value={format}
               onChange={setFormat}
+              miw={80}
+              w={120}
               data={[
                 { value: FileFormat.JSON, label: "JSON" },
                 { value: FileFormat.YAML, label: "YAML" },
@@ -207,11 +210,14 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
               <Menu.Dropdown>
                 <Menu.Item
                   fz={12}
-                  onClick={toggleEditor}
+                  onClick={() => {
+                    toggleEditor();
+                    event({ action: "toggle_hide_editor", category: "User", label: "Tools" });
+                  }}
                   icon={fullscreen ? <VscLayoutSidebarLeft /> : <VscLayoutSidebarLeftOff />}
                   rightSection={
                     <Text ml="md" fz={10} color="dimmed">
-                      {CoreKey} Shift E
+                      {coreKey} Shift E
                     </Text>
                   }
                 >
@@ -219,11 +225,14 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
                 </Menu.Item>
                 <Menu.Item
                   fz={12}
-                  onClick={toggleDirection}
+                  onClick={() => {
+                    toggleDirection();
+                    event({ action: "toggle_layout_direction", category: "User", label: "Tools" });
+                  }}
                   icon={<StyledFlowIcon rotate={rotateLayout(direction)} />}
                   rightSection={
                     <Text ml="md" fz={10} color="dimmed">
-                      {CoreKey} Shift D
+                      {coreKey} Shift D
                     </Text>
                   }
                 >
@@ -231,11 +240,14 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
                 </Menu.Item>
                 <Menu.Item
                   fz={12}
-                  onClick={toggleFoldNodes}
+                  onClick={() => {
+                    toggleFoldNodes();
+                    event({ action: "toggle_fold_nodes", category: "User", label: "Tools" });
+                  }}
                   icon={foldNodes ? <CgArrowsShrinkH /> : <CgArrowsMergeAltH />}
                   rightSection={
                     <Text ml="md" fz={10} color="dimmed">
-                      {CoreKey} Shift F
+                      {coreKey} Shift F
                     </Text>
                   }
                 >
@@ -243,11 +255,14 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
                 </Menu.Item>
                 <Menu.Item
                   fz={12}
-                  onClick={toggleExpandCollapseGraph}
+                  onClick={() => {
+                    toggleExpandCollapseGraph();
+                    event({ action: "toggle_collapse_nodes", category: "User", label: "Tools" });
+                  }}
                   icon={graphCollapsed ? <VscExpandAll /> : <VscCollapseAll />}
                   rightSection={
                     <Text ml="md" fz={10} color="dimmed">
-                      {CoreKey} Shift C
+                      {coreKey} Shift C
                     </Text>
                   }
                 >
@@ -301,12 +316,12 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
           <MdCenterFocusWeak size="18" />
         </StyledToolElement>
         <SearchInput />
-        <StyledToolElement title="Fullscreen" hide={isWidget} onClick={fullscreenBrowser}>
+        <StyledToolElement title="Fullscreen" $hide={isWidget} onClick={fullscreenBrowser}>
           <AiOutlineFullscreen size="18" />
         </StyledToolElement>
         <StyledToolElement
           title="Settings"
-          hide={isWidget}
+          $hide={isWidget}
           onClick={() => setVisible("settings")(true)}
         >
           <VscSettingsGear size="18" />

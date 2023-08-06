@@ -3,7 +3,6 @@ import dynamic from "next/dynamic";
 import styled from "styled-components";
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
-import { JsonEditor } from "src/containers/Editor/JsonEditor";
 import useGraph from "src/store/useGraph";
 
 export const StyledEditor = styled(Allotment)`
@@ -16,6 +15,10 @@ export const StyledEditor = styled(Allotment)`
     height: 100vh;
   }
 `;
+
+const JsonEditor = dynamic(() => import("src/containers/Editor/JsonEditor"), {
+  ssr: false,
+});
 
 const LiveEditor = dynamic(() => import("src/containers/Editor/LiveEditor"), {
   ssr: false,

@@ -1,25 +1,14 @@
 import React from "react";
 import Head from "next/head";
+import Link from "next/link";
 import { useRouter } from "next/router";
-import styled from "styled-components";
-import { PaperProps, Center, Button, Group, Paper, Stack, TextInput, Text } from "@mantine/core";
+import { PaperProps, Button, Group, Paper, Stack, TextInput, Text, Anchor } from "@mantine/core";
+import { useSession } from "@supabase/auth-helpers-react";
 import { toast } from "react-hot-toast";
-import { altogic } from "src/api/altogic";
 import { Footer } from "src/layout/Footer";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
 import { Navbar } from "src/layout/Navbar";
-import useUser from "src/store/useUser";
-
-const StyledPageWrapper = styled.div`
-  height: calc(100vh - 27px);
-  width: 100%;
-
-  @media only screen and (max-width: 768px) {
-    position: fixed;
-    height: -webkit-fill-available;
-    flex-direction: column;
-  }
-`;
+import { supabase } from "src/lib/api/supabase";
 
 export function AuthenticationForm(props: PaperProps) {
   const [loading, setLoading] = React.useState(false);
@@ -29,18 +18,17 @@ export function AuthenticationForm(props: PaperProps) {
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    altogic.auth
-      .sendResetPwdEmail(email)
-      .then(res => {
-        if (res.errors) {
-          toast.error(res.errors.items[0].message);
-        } else setSuccess(true);
+    supabase.auth
+      .resetPasswordForEmail(email, { redirectTo: "/reset-password" })
+      .then(({ error }) => {
+        if (error) return toast.error(error.message);
+        setSuccess(true);
       })
       .finally(() => setLoading(false));
   };
 
   return (
-    <Paper radius="md" p="xl" withBorder w={300} {...props}>
+    <Paper pt="lg" {...props}>
       <Text size="lg" weight={500}>
         Reset Password
       </Text>
@@ -56,52 +44,46 @@ export function AuthenticationForm(props: PaperProps) {
               required
               label="Email"
               placeholder="hello@herowand.com"
-              radius="md"
+              size="md"
+              radius="sm"
             />
           </Stack>
 
           <Group position="apart" mt="xl">
-            <Button type="submit" radius="xl" loading={loading}>
+            <Button type="submit" radius="sm" size="md" loading={loading} fullWidth>
               Reset Password
             </Button>
           </Group>
+          <Stack mt="lg" align="center">
+            <Anchor component={Link} prefetch={false} href="/sign-in" color="dark" size="xs">
+              Don&apos;t have an account? Sign Up
+            </Anchor>
+          </Stack>
         </form>
       )}
     </Paper>
   );
 }
 
-const StyledHeroSection = styled.section`
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-`;
-
 const SignIn = () => {
-  const { isReady, replace } = useRouter();
-  const checkSession = useUser(state => state.checkSession);
-  const isAuthenticated = useUser(state => state.isAuthenticated);
+  const { isReady, push } = useRouter();
+  const session = useSession();
 
   React.useEffect(() => {
-    if (!isReady) checkSession();
-    if (isAuthenticated) replace("/");
-  }, [isReady, isAuthenticated, replace, checkSession]);
+    if (session) push("/editor");
+  }, [isReady, session, push]);
 
   return (
     <div>
       <Head>
-        <title>Reset Password | Herowand Editor</title>
+        <title>Reset Password | JSON Crack</title>
+        <meta name="robots" content="noindex,nofollow" />
       </Head>
       <Navbar />
-      <StyledPageWrapper className="repeating-grid">
-        <StyledHeroSection>
-          <JSONCrackLogo />
-        </StyledHeroSection>
-        <Center pt={60}>
-          <AuthenticationForm />
-        </Center>
-      </StyledPageWrapper>
+      <Paper mx="auto" mt={70} maw={400} p="lg" withBorder>
+        <JSONCrackLogo />
+        <AuthenticationForm />
+      </Paper>
       <Footer />
     </div>
   );

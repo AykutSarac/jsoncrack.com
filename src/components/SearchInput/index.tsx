@@ -1,6 +1,7 @@
 import React from "react";
 import { Flex, Input, Text } from "@mantine/core";
 import { getHotkeyHandler } from "@mantine/hooks";
+import { event } from "react-ga";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useFocusNode } from "src/hooks/useFocusNode";
 
@@ -12,8 +13,10 @@ export const SearchInput: React.FC = () => {
       type="search"
       size="xs"
       id="search-node"
+      w={180}
       value={searchValue}
       onChange={e => setValue(e.currentTarget.value)}
+      onFocus={() => event({ action: "focus_node_search", category: "User" })}
       placeholder="Search Node"
       onKeyDown={getHotkeyHandler([["Enter", skip]])}
       icon={<AiOutlineSearch />}

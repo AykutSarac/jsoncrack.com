@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import styled from "styled-components";
-import { monaSans } from "src/constants/customFonts";
+import { monaSans } from "src/constants/fonts";
 
 const StyledTitle = styled.div<{ fontSize: string }>`
   font-weight: 900;

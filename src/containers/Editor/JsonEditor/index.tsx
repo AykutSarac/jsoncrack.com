@@ -16,3 +16,5 @@ export const JsonEditor: React.FC = () => {
     </StyledEditorWrapper>
   );
 };
+
+export default JsonEditor;

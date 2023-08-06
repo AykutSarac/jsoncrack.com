@@ -7,13 +7,12 @@ Read our [Code of Conduct](./CODE_OF_CONDUCT.md) to keep our community approacha
 In this guide you will get an overview of the contribution workflow from opening an issue, creating a PR, reviewing, and merging the PR.
 
 ## Getting Started
-JSON Crack is built with React, Reaflow for visualization, Mantine UI for components, Zustand for state management, and Altogic for backend integration. If you are not familiar with these technologies, we recommend you to read their documentation to get started. You can find the links to the respective documentations below:
+JSON Crack is built with React, Reaflow for visualization, Mantine UI for components, Zustand for state management, and Supabase for backend integration. If you are not familiar with these technologies, we recommend you to read their documentation to get started. You can find the links to the respective documentations below:
 
 * [React](https://reactjs.org/docs/getting-started.html)
 * [Reaflow](https://github.com/reaviz/reaflow)
 * [Mantine UI](https://mantine.dev/)
 * [Zustand](https://github.com/pmndrs/zustand)
-* [Altogic](https://www.altogic.com/)
 
 Once you are familiar with these technologies, you can clone the JSON Crack repository by running the following command:
 

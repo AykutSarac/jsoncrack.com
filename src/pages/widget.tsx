@@ -1,11 +1,12 @@
 import React from "react";
 import dynamic from "next/dynamic";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { ThemeProvider } from "styled-components";
 import toast from "react-hot-toast";
 import { darkTheme, lightTheme } from "src/constants/theme";
 import { Tools } from "src/containers/Editor/LiveEditor/Tools";
-import { EditorMantine } from "src/layout/EditorMantine";
+import { EditorWrapper } from "src/layout/EditorWrapper";
 import useFile from "src/store/useFile";
 import useGraph from "src/store/useGraph";
 
@@ -23,18 +24,18 @@ const Graph = dynamic(() => import("src/components/Graph").then(c => c.Graph), {
 const WidgetPage = () => {
   const { query, push, isReady } = useRouter();
   const [theme, setTheme] = React.useState("dark");
-  const fetchFile = useFile(state => state.fetchFile);
+  const checkEditorSession = useFile(state => state.checkEditorSession);
   const setContents = useFile(state => state.setContents);
   const setDirection = useGraph(state => state.setDirection);
   const clearGraph = useGraph(state => state.clearGraph);
 
   React.useEffect(() => {
     if (isReady) {
-      if (typeof query?.json === "string") fetchFile(query.json);
+      if (typeof query?.json === "string") checkEditorSession(query.json, true);
       else clearGraph();
       window.parent.postMessage(window.frameElement?.getAttribute("id"), "*");
     }
-  }, [clearGraph, fetchFile, isReady, push, query.json, query.partner]);
+  }, [clearGraph, checkEditorSession, isReady, push, query.json, query.partner]);
 
   React.useEffect(() => {
     const handler = (event: EmbedMessage) => {
@@ -57,12 +58,15 @@ const WidgetPage = () => {
   }, [setContents, setDirection, theme]);
 
   return (
-    <EditorMantine>
+    <EditorWrapper>
+      <Head>
+        <meta name="robots" content="noindex,nofollow" />
+      </Head>
       <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
         <Tools isWidget />
         <Graph isWidget />
       </ThemeProvider>
-    </EditorMantine>
+    </EditorWrapper>
   );
 };
 

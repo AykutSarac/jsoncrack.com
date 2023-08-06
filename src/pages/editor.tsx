@@ -1,16 +1,16 @@
 import React from "react";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import { defaultJson } from "src/constants/data";
 import { BottomBar } from "src/containers/Editor/BottomBar";
 import { Tools } from "src/containers/Editor/LiveEditor/Tools";
-import Panes from "src/containers/Editor/Panes";
-import { EditorMantine } from "src/layout/EditorMantine";
+import { EditorWrapper } from "src/layout/EditorWrapper";
 import { Loading } from "src/layout/Loading";
 import useFile from "src/store/useFile";
 import useJson from "src/store/useJson";
-import useUser from "src/store/useUser";
+
+const Panes = dynamic(() => import("src/containers/Editor/Panes"));
 
 export const StyledPageWrapper = styled.div`
   height: calc(100vh - 27px);
@@ -28,32 +28,23 @@ export const StyledEditorWrapper = styled.div`
 `;
 
 const EditorPage: React.FC = () => {
-  const { isReady, query } = useRouter();
-  const checkSession = useUser(state => state.checkSession);
+  const { query, isReady } = useRouter();
+  const checkEditorSession = useFile(state => state.checkEditorSession);
   const loading = useJson(state => state.loading);
-  const setContents = useFile(state => state.setContents);
-  const fetchFile = useFile(state => state.fetchFile);
-  const fetchUrl = useFile(state => state.fetchUrl);
+  const hasQuery = React.useMemo(() => Object.keys(query).length > 0, [query]);
 
   React.useEffect(() => {
-    if (isReady) {
-      checkSession();
-      if (typeof query?.url === "string") fetchUrl(query.url);
-      if (typeof query?.json === "string") fetchFile(query.json);
-      if (!query?.url && !query?.json) {
-        setContents({ contents: defaultJson, hasChanges: false });
-      }
-    }
-  }, [checkSession, fetchFile, fetchUrl, isReady, query, setContents]);
+    if (isReady) checkEditorSession(query?.json);
+  }, [checkEditorSession, isReady, query]);
 
   if (loading) return <Loading message="Fetching JSON from cloud..." />;
 
   return (
-    <EditorMantine>
+    <EditorWrapper>
       <StyledEditorWrapper>
         <Head>
           <title>Editor | JSON Crack</title>
-          <meta name="description" content="View your JSON data in graphs instantly." />
+          {hasQuery && <meta name="robots" content="noindex,nofollow" />}
         </Head>
         <StyledPageWrapper>
           <Tools />
@@ -63,7 +54,7 @@ const EditorPage: React.FC = () => {
         </StyledPageWrapper>
         <BottomBar />
       </StyledEditorWrapper>
-    </EditorMantine>
+    </EditorWrapper>
   );
 };
 

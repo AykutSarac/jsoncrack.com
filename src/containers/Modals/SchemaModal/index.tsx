@@ -13,6 +13,7 @@ export const SchemaModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const onApply = () => {
     try {
       const parsedSchema = JSON.parse(schema);
+
       setJsonSchema(parsedSchema);
       toast.success("Applied schema!");
       onClose();

@@ -45,13 +45,17 @@ const AdWrapper = styled.div`
     background: #fff;
     box-shadow: 0 1px 4px 1px hsla(0, 0%, 0%, 0.15);
     opacity: 0;
-    transition: transform 0.2s ease-in-out, opacity 0.1s ease-in-out;
+    transition:
+      transform 0.2s ease-in-out,
+      opacity 0.1s ease-in-out;
     transform: scale(1) translateY(-50px);
   }
 
   & #native-button:checked + .native-overlay {
     opacity: 1;
-    transition: transform 0.2s ease-in-out, opacity 0.4s ease-in-out;
+    transition:
+      transform 0.2s ease-in-out,
+      opacity 0.4s ease-in-out;
     transform: scale(1) translateY(0);
   }
 
@@ -119,6 +123,7 @@ export const AdTest = () => {
     if (window.innerWidth < 660) return;
     ref.current.innerHTML = "";
     const s = document.createElement("script");
+
     s.id = "_carbonads_js";
     s.innerHTML = `(function() {
         if (typeof _bsa !== 'undefined' && _bsa) {

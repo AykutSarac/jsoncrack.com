@@ -1,11 +1,12 @@
-import { Graph } from "../json/jsonParser";
-import { calculateNodeSize } from "./calculateNodeSize";
+import { NodeType } from "jsonc-parser";
+import { calculateNodeSize } from "src/lib/utils/graph/calculateNodeSize";
+import { Graph } from "src/lib/utils/json/jsonParser";
 
 type Props = {
   graph: Graph;
-  text: any;
+  text: string | [string, string][];
   isEmpty?: boolean;
-  type?: "string" | "number" | "boolean" | "object" | "array" | "null";
+  type?: NodeType;
 };
 
 export const addNodeToGraph = ({ graph, text, type = "null", isEmpty = false }: Props) => {

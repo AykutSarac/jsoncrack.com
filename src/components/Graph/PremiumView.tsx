@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Badge, Button, Image, List, ThemeIcon, Title } from "@mantine/core";
+import { Button, Image, List, ThemeIcon, Title } from "@mantine/core";
 import { BsCheck } from "react-icons/bs";
 import { paymentURL } from "src/constants/data";
 
@@ -64,20 +64,32 @@ const StyledPremiumView = styled.div`
 
   .glowing span:nth-child(3n + 1)::before {
     background: rgba(134, 255, 0, 1);
-    box-shadow: 0 0 20px rgba(134, 255, 0, 1), 0 0 40px rgba(134, 255, 0, 1),
-      0 0 60px rgba(134, 255, 0, 1), 0 0 80px rgba(134, 255, 0, 1), 0 0 0 8px rgba(134, 255, 0, 0.1);
+    box-shadow:
+      0 0 20px rgba(134, 255, 0, 1),
+      0 0 40px rgba(134, 255, 0, 1),
+      0 0 60px rgba(134, 255, 0, 1),
+      0 0 80px rgba(134, 255, 0, 1),
+      0 0 0 8px rgba(134, 255, 0, 0.1);
   }
 
   .glowing span:nth-child(3n + 2)::before {
     background: rgba(255, 214, 0, 1);
-    box-shadow: 0 0 20px rgba(255, 214, 0, 1), 0 0 40px rgba(255, 214, 0, 1),
-      0 0 60px rgba(255, 214, 0, 1), 0 0 80px rgba(255, 214, 0, 1), 0 0 0 8px rgba(255, 214, 0, 0.1);
+    box-shadow:
+      0 0 20px rgba(255, 214, 0, 1),
+      0 0 40px rgba(255, 214, 0, 1),
+      0 0 60px rgba(255, 214, 0, 1),
+      0 0 80px rgba(255, 214, 0, 1),
+      0 0 0 8px rgba(255, 214, 0, 0.1);
   }
 
   .glowing span:nth-child(3n + 3)::before {
     background: rgba(0, 226, 255, 1);
-    box-shadow: 0 0 20px rgba(0, 226, 255, 1), 0 0 40px rgba(0, 226, 255, 1),
-      0 0 60px rgba(0, 226, 255, 1), 0 0 80px rgba(0, 226, 255, 1), 0 0 0 8px rgba(0, 226, 255, 0.1);
+    box-shadow:
+      0 0 20px rgba(0, 226, 255, 1),
+      0 0 40px rgba(0, 226, 255, 1),
+      0 0 60px rgba(0, 226, 255, 1),
+      0 0 80px rgba(0, 226, 255, 1),
+      0 0 0 8px rgba(0, 226, 255, 0.1);
   }
 
   .glowing span:nth-child(3n + 1) {
@@ -168,15 +180,6 @@ export const PremiumView = () => (
         <List.Item>JSON Schema support</List.Item>
         <List.Item>Visualize data at full capability</List.Item>
         <List.Item>Save & share up to 200 files</List.Item>
-        <List.Item
-          icon={
-            <ThemeIcon color="dark.4" size={20} radius="xl">
-              <BsCheck size="1rem" />
-            </ThemeIcon>
-          }
-        >
-          API Access <Badge>Soon</Badge>
-        </List.Item>
       </List>
 
       <Button
@@ -185,7 +188,7 @@ export const PremiumView = () => (
         component="a"
         variant="gradient"
         gradient={{ from: "blue", to: "teal" }}
-        href={paymentURL}
+        href={paymentURL()}
         target="_blank"
       >
         UPGRADE TO PREMIUM $5.00

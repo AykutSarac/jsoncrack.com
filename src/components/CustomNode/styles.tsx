@@ -1,12 +1,6 @@
-import { Fira_Mono } from "next/font/google";
 import styled, { DefaultTheme } from "styled-components";
 import { LinkItUrl } from "react-linkify-it";
-
-const robotoMono = Fira_Mono({
-  weight: ["500"],
-  subsets: ["latin"],
-  display: "swap",
-});
+import { firaMono } from "src/constants/fonts";
 
 function getTypeColor(value: string, theme: DefaultTheme) {
   if (!Number.isNaN(+value)) return theme.NODE_COLORS.INTEGER;
@@ -21,17 +15,14 @@ export const StyledLinkItUrl = styled(LinkItUrl)`
   pointer-events: all;
 `;
 
-export const StyledForeignObject = styled.foreignObject<{
-  hasCollapse?: boolean;
-  isObject?: boolean;
-}>`
-  text-align: ${({ isObject }) => !isObject && "center"};
+export const StyledForeignObject = styled.foreignObject<{ $isObject?: boolean }>`
+  text-align: ${({ $isObject }) => !$isObject && "center"};
   font-size: 12px;
   overflow: hidden;
   color: ${({ theme }) => theme.NODE_COLORS.TEXT};
   pointer-events: none;
-  padding: ${({ isObject }) => isObject && "10px"};
-  font-family: ${robotoMono.style.fontFamily};
+  padding: ${({ $isObject }) => $isObject && "10px"};
+  font-family: ${firaMono.style.fontFamily};
   font-weight: 500;
 
   &.searched {
@@ -67,19 +58,19 @@ function getKeyColor(theme: DefaultTheme, parent: boolean, type: string, objectK
 }
 
 export const StyledKey = styled.span<{
-  objectKey?: boolean;
-  parent?: boolean;
+  $objectKey?: boolean;
+  $parent?: boolean;
   type?: string;
   value?: string;
 }>`
   display: inline;
   flex: 1;
-  color: ${({ theme, type = "null", objectKey = false, parent = false }) =>
-    getKeyColor(theme, parent, type, objectKey)};
-  font-size: ${({ parent }) => parent && "14px"};
+  color: ${({ theme, type = "null", $objectKey = false, $parent = false }) =>
+    getKeyColor(theme, $parent, type, $objectKey)};
+  font-size: ${({ $parent }) => $parent && "14px"};
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: ${({ objectKey }) => !objectKey && "10px"};
+  padding: ${({ $objectKey }) => !$objectKey && "10px"};
   white-space: nowrap;
 `;
 

@@ -1,4 +1,5 @@
 import React from "react";
+import dynamic from "next/dynamic";
 import Head from "next/head";
 import Link from "next/link";
 import styled, { ThemeProvider } from "styled-components";
@@ -8,7 +9,6 @@ import {
   Center,
   Container,
   Flex,
-  Image,
   Group,
   Stack,
   Text,
@@ -20,8 +20,10 @@ import { SiVisualstudiocode } from "react-icons/si";
 import { Typewriter } from "react-simple-typewriter";
 import { HovercardAds } from "src/components/HovercardAds";
 import { lightTheme } from "src/constants/theme";
-import { Footer } from "src/layout/Footer";
+import { FeaturesCards } from "src/containers/Features";
 import { Navbar } from "src/layout/Navbar";
+
+const Footer = dynamic(() => import("src/layout/Footer").then(c => c.Footer));
 
 const StyledHeroSection = styled.div`
   --bg-color: ${({ theme }) => theme.GRID_BG_COLOR};
@@ -33,8 +35,16 @@ const StyledHeroSection = styled.div`
     linear-gradient(90deg, var(--line-color-1) 1.5px, transparent 1.5px),
     linear-gradient(var(--line-color-2) 1px, transparent 1px),
     linear-gradient(90deg, var(--line-color-2) 1px, transparent 1px);
-  background-position: -1.5px -1.5px, -1.5px -1.5px, -1px -1px, -1px -1px;
-  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+  background-position:
+    -1.5px -1.5px,
+    -1.5px -1.5px,
+    -1px -1px,
+    -1px -1px;
+  background-size:
+    100px 100px,
+    100px 100px,
+    20px 20px,
+    20px 20px;
 
   @media only screen and (max-width: 1240px) {
     flex-direction: column;
@@ -50,7 +60,7 @@ const StyledHeroSectionBody = styled.div`
   overflow: hidden;
   backdrop-filter: blur(1px);
   -webkit-backdrop-filter: blur(1px);
-  min-height: 60vh;
+  height: 70vh;
 
   @media only screen and (max-width: 1200px) {
     flex-direction: column;
@@ -79,7 +89,7 @@ const StyledGradientText = styled.span`
 `;
 
 const Left = styled.div`
-  min-width: 40%;
+  width: 100%;
   z-index: 1;
 `;
 
@@ -111,28 +121,14 @@ const StyledHeroText = styled.p`
 
 const StyledStatsWrapper = styled.div`
   display: flex;
-  flex-wrap: wrap;
   gap: 24px;
   justify-content: center;
   align-items: center;
   background: #421665;
   padding: 24px;
-`;
 
-const StyledFeatures = styled(Container)`
-  .mantine-Image-root {
-    filter: drop-shadow(3px 3px 5px black);
-
-    img {
-      width: 100%;
-      object-fit: contain;
-    }
-  }
-
-  @media only screen and (max-width: 735px) {
-    .mantine-Image-root {
-      display: none;
-    }
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
   }
 `;
 
@@ -158,11 +154,16 @@ const HeroSection = () => (
           instantly into graphs!
         </StyledHeroText>
         <Group spacing="xl">
-          <Link href="/editor" prefetch={false}>
-            <Button fw="bold" rightIcon={<FaChevronRight />} size="lg">
-              GO TO EDITOR
-            </Button>
-          </Link>
+          <Button
+            component={Link}
+            href="/editor"
+            prefetch={false}
+            fw="bold"
+            rightIcon={<FaChevronRight />}
+            size="lg"
+          >
+            GO TO EDITOR
+          </Button>
           <Tooltip
             maw={400}
             label="VS Code extension only contains JSON visualization without additional features."
@@ -184,7 +185,13 @@ const HeroSection = () => (
         </Group>
       </Left>
       <Right>
-        <Image src="/assets/diagram_bg.webp" width="1200" height="593" alt="diagram" />
+        <img
+          src="/assets/diagram_bg.webp"
+          width="1200"
+          height="593"
+          alt="diagram"
+          loading="eager"
+        />
       </Right>
     </StyledHeroSectionBody>
   </StyledHeroSection>
@@ -192,120 +199,71 @@ const HeroSection = () => (
 
 const StatsBanner = () => (
   <StyledStatsWrapper>
-    <Group spacing="xl">
+    <Flex gap="lg">
       <Stack spacing="0">
-        <Text fw="bolder" fz="1.6rem">
-          24.5K
+        <Text fw="bolder" fz="1.8rem" truncate>
+          24.8K
         </Text>
-        <Text color="gray.5" fw="bold" fz="0.8rem">
+        <Text color="gray.5" fw="bold" fz="0.8rem" truncate>
           GITHUB STARS
         </Text>
       </Stack>
       <Stack spacing="0">
-        <Text fw="bolder" fz="1.6rem">
+        <Text fw="bolder" fz="1.8rem" truncate>
           50K+
         </Text>
-        <Text color="gray.5" fw="bold" fz="0.8rem">
+        <Text color="gray.5" fw="bold" fz="12px" truncate>
           MONTHLY USERS
         </Text>
       </Stack>
       <Stack spacing="0">
-        <Text fw="bolder" fz="1.6rem">
+        <Text fw="bolder" fz="1.8rem" truncate>
           GPL-3
         </Text>
-        <Text color="gray.5" fw="bold" fz="0.8rem">
+        <Text color="gray.5" fw="bold" fz="0.8rem" truncate>
           LICENSE
         </Text>
       </Stack>
-    </Group>
+    </Flex>
     <Stack ml={60}>
-      <Text maw={800} fz="0.9rem">
-        JSON Crack is an open-source project with a GPL-3 license. By subscribing to our premium
-        plan, you can help us continue developing and maintaining it, also enjoy the benefits.
+      <Text maw={600} fw="bold" fz="0.9rem">
+        JSON Crack is an open-source project under GPL-3 license. Support us through our premium
+        plan for continued development and exclusive benefits.
       </Text>
-      <Link href="/pricing" prefetch={false}>
-        <Text color="yellow" fw="bold" w="fit-content">
-          View Premium Plan <FaChevronRight />
-        </Text>
-      </Link>
+      <Anchor
+        component={Link}
+        href="/pricing"
+        prefetch={false}
+        color="yellow"
+        fw="bold"
+        w="fit-content"
+      >
+        View Premium Plan <FaChevronRight />
+      </Anchor>
     </Stack>
   </StyledStatsWrapper>
-);
-
-const Features = () => (
-  <StyledFeatures my={60}>
-    <Flex py="lg" align="flex-start" gap="lg">
-      <Image
-        width={500}
-        height={287}
-        src="/assets/highlight_graph.svg"
-        alt="search through graph"
-      />
-      <Stack pt="lg">
-        <Text color="dark" fz="1.5rem" fw="bold">
-          ADVANCED GRAPH SEARCH
-        </Text>
-        <Text color="dark" maw={500}>
-          Quickly navigate through your data visualization using JSON Crack&apos;s intuitive search
-          functionality. Directly locate specific nodes matching with your search!
-        </Text>
-      </Stack>
-    </Flex>
-    <Flex py="lg" align="center" gap="lg" direction="row-reverse">
-      <Image width={300} height={260} src="/assets/multidata.png" alt="multiple format support" />
-      <Stack>
-        <Text color="dark" fz="1.5rem" fw="bold">
-          DYNAMIC DATA VISUALIZATION
-        </Text>
-        <Text color="dark" maw={500}>
-          JSON Crack revolutionizes data visualization by transforming JSON, YAML, XML, and other
-          data types into captivating, interactive graphs. Gain deep insights into complex data
-          structures at a glance.
-        </Text>
-      </Stack>
-    </Flex>
-    <Flex py="lg" align="center" gap="lg">
-      <Image width={400} height={344} src="/assets/download_image.webp" alt="download as image" />
-      <Stack>
-        <Text color="dark" fz="1.5rem" fw="bold">
-          DOWNLOAD AS IMAGE
-        </Text>
-        <Text color="dark" maw={500}>
-          Capture and share your insights effortlessly by downloading your generated graphs as image
-          files. Easily collaborate and communicate data-driven findings with colleagues and
-          stakeholders.
-        </Text>
-      </Stack>
-    </Flex>
-    <Flex direction="row-reverse" py="lg" align="flex-start" gap="lg">
-      <Image width={500} height={285} src="/assets/preview_image.svg" alt="preview images" />
-      <Stack pt="lg">
-        <Text color="dark" fz="1.5rem" fw="bold">
-          IMAGE PREVIEW
-        </Text>
-        <Text color="dark" maw={500}>
-          Seamlessly preview embedded images within your JSON, YAML, or XML data. Instantly view
-          visuals, photos, and graphics directly within JSON Crack, saving you time and effort.
-        </Text>
-      </Stack>
-    </Flex>
-  </StyledFeatures>
 );
 
 const HeroBottom = () => (
   <Container mt={100}>
     <Stack>
-      <Title color="dark" order={3} maw={500} mx="auto" align="center">
+      <Title color="dark" order={2} fz="xl" maw={500} mx="auto" align="center">
         But that&apos;s not all yet!
         <br />
         Explore the full potential of your data now......
       </Title>
       <Center>
-        <Link href="/editor" prefetch={false}>
-          <Button color="violet" fw="bold" rightIcon={<FaChevronRight />} size="lg">
-            GO TO EDITOR
-          </Button>
-        </Link>
+        <Button
+          component={Link}
+          href="/editor"
+          prefetch={false}
+          color="violet"
+          fw="bold"
+          rightIcon={<FaChevronRight />}
+          size="lg"
+        >
+          GO TO EDITOR
+        </Button>
       </Center>
     </Stack>
   </Container>
@@ -315,11 +273,11 @@ export const HomePage = () => {
   return (
     <ThemeProvider theme={lightTheme}>
       <Head>
-        <title>JSON Crack - Crack your data into pieces</title>
+        <title>JSON Crack - Visualize Data to Graphs</title>
       </Head>
       <HeroSection />
       <StatsBanner />
-      <Features />
+      <FeaturesCards />
       <HeroBottom />
       <HovercardAds />
       <Footer />

@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { MdLink, MdLinkOff } from "react-icons/md";
 import { CustomNodeProps } from "src/components/CustomNode";
+import { isContentImage } from "src/lib/utils/graph/calculateNodeSize";
 import useGraph from "src/store/useGraph";
 import useStored from "src/store/useStored";
-import { isContentImage } from "src/utils/core/calculateNodeSize";
 import { TextRenderer } from "./TextRenderer";
 import * as Styled from "./styles";
 
@@ -24,9 +24,9 @@ const StyledExpand = styled.button`
   }
 `;
 
-const StyledTextNodeWrapper = styled.span<{ hasCollapse: boolean }>`
+const StyledTextNodeWrapper = styled.span<{ $hasCollapse: boolean }>`
   display: flex;
-  justify-content: ${({ hasCollapse }) => (hasCollapse ? "space-between" : "center")};
+  justify-content: ${({ $hasCollapse }) => ($hasCollapse ? "space-between" : "center")};
   align-items: center;
   height: 100%;
   width: 100%;
@@ -56,7 +56,7 @@ const Node: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) =>
   const expandNodes = useGraph(state => state.expandNodes);
   const collapseNodes = useGraph(state => state.collapseNodes);
   const isExpanded = useGraph(state => state.collapsedParents.includes(id));
-  const isImage = imagePreview && isContentImage(text);
+  const isImage = imagePreview && isContentImage(text as string);
 
   const handleExpand = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -66,25 +66,19 @@ const Node: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) =>
   };
 
   return (
-    <Styled.StyledForeignObject
-      width={width}
-      height={height}
-      x={0}
-      y={0}
-      hasCollapse={isParent && hasCollapse}
-    >
+    <Styled.StyledForeignObject width={width} height={height} x={0} y={0}>
       {isImage ? (
         <StyledImageWrapper>
-          <StyledImage src={text} width="70" height="70" loading="lazy" />
+          <StyledImage src={text as string} width="70" height="70" loading="lazy" />
         </StyledImageWrapper>
       ) : (
         <StyledTextNodeWrapper
-          hasCollapse={isParent && hideCollapse}
           data-x={x}
           data-y={y}
           data-key={JSON.stringify(text)}
+          $hasCollapse={isParent && hideCollapse}
         >
-          <Styled.StyledKey parent={isParent} type={type}>
+          <Styled.StyledKey $parent={isParent} type={type}>
             <TextRenderer>{JSON.stringify(text).replaceAll('"', "")}</TextRenderer>
           </Styled.StyledKey>
           {isParent && childrenCount > 0 && showChildrenCount && (

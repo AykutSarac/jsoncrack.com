@@ -1,4 +1,5 @@
 import React from "react";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { Button, Text, Title } from "@mantine/core";
@@ -35,6 +36,9 @@ const NotFound: React.FC = () => {
 
   return (
     <Layout>
+      <Head>
+        <meta name="robots" content="noindex,nofollow" />
+      </Head>
       <StyledNotFound>
         <StyledImageWrapper>
           <img src="/assets/404.svg" alt="not found" width={300} height={400} />

@@ -1,5 +1,5 @@
 # Builder
-FROM node:16-alpine as builder
+FROM node:18-alpine as builder
 WORKDIR /src
 COPY . /src/
 RUN yarn install --frozen-lockfile && yarn build

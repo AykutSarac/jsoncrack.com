@@ -12,14 +12,27 @@ import {
   ColorInput,
   Stack,
 } from "@mantine/core";
-import { toBlob, toPng, toSvg } from "html-to-image";
+import { toBlob, toJpeg, toPng, toSvg } from "html-to-image";
+import { event } from "react-ga";
 import toast from "react-hot-toast";
 import { FiCopy, FiDownload } from "react-icons/fi";
 
 enum Extensions {
   SVG = "svg",
   PNG = "png",
+  JPEG = "jpeg",
 }
+
+const getDownloadFormat = (format: Extensions) => {
+  switch (format) {
+    case Extensions.SVG:
+      return toSvg;
+    case Extensions.PNG:
+      return toPng;
+    case Extensions.JPEG:
+      return toJpeg;
+  }
+};
 
 const swatches = [
   "#B80000",
@@ -43,6 +56,7 @@ const swatches = [
 
 function downloadURI(uri: string, name: string) {
   var link = document.createElement("a");
+
   link.download = name;
   link.href = uri;
   document.body.appendChild(link);
@@ -82,6 +96,7 @@ export const DownloadModal: React.FC<ModalProps> = ({ opened, onClose }) => {
       toast.error("Failed to copy to clipboard");
     } finally {
       toast.dismiss("toastClipboard");
+      event({ action: "click_clipboard_image", category: "User" });
       onClose();
     }
   };
@@ -92,9 +107,7 @@ export const DownloadModal: React.FC<ModalProps> = ({ opened, onClose }) => {
 
       const imageElement = document.querySelector("svg[id*='ref']") as HTMLElement;
 
-      let exportImage = extension === Extensions.SVG ? toSvg : toPng;
-
-      const dataURI = await exportImage(imageElement, {
+      const dataURI = await getDownloadFormat(extension)(imageElement, {
         quality: fileDetails.quality,
         backgroundColor: fileDetails.backgroundColor,
       });
@@ -104,6 +117,7 @@ export const DownloadModal: React.FC<ModalProps> = ({ opened, onClose }) => {
       toast.error("Failed to download image!");
     } finally {
       toast.dismiss("toastDownload");
+      event({ action: "click_download_image", category: "User" });
       onClose();
     }
   };
@@ -125,11 +139,12 @@ export const DownloadModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           <SegmentedControl
             value={extension}
             onChange={e => setExtension(e as Extensions)}
+            fullWidth
             data={[
               { label: "SVG", value: Extensions.SVG },
               { label: "PNG", value: Extensions.PNG },
+              { label: "JPEG", value: Extensions.JPEG },
             ]}
-            fullWidth
           />
         </Grid.Col>
       </Grid>

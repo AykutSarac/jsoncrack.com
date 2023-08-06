@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, Group, Button, Divider, ModalProps, Text, Image, Anchor } from "@mantine/core";
 import { toast } from "react-hot-toast";
-import { altogic } from "src/api/altogic";
+import { supabase } from "src/lib/api/supabase";
 
 export const CancelPremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const [cancelling, setCancelling] = React.useState(false);
@@ -9,15 +9,29 @@ export const CancelPremiumModal: React.FC<ModalProps> = ({ opened, onClose }) =>
   const cancelSub = async () => {
     try {
       setCancelling(true);
-      const { errors } = await altogic.endpoint.delete("/subscription");
+      const { data: user } = await supabase.auth.getSession();
 
-      if (errors?.items.length) {
-        return toast.error(
-          "An error occured while cancelling plan! Please contact aykut@jsoncrack.com"
-        );
+      if (user) {
+        const { error } = await supabase.functions.invoke("lemonsqueezy", {
+          method: "DELETE",
+          body: {
+            jwt: user.session?.access_token,
+          },
+        });
+
+        if (error) {
+          return toast.error(
+            "An error occured while cancelling subscription, please contact: contact@jsoncrack.com"
+          );
+        }
+
+        toast.success("Cancelled premium plan!");
+      } else {
+        toast.error("Couldn't fetch user details, please contact: contact@jsoncrack.com");
       }
 
       toast.success("Cancelled premium plan!");
+      setTimeout(() => window.location.reload(), 2500);
     } catch (err) {
       console.error(err);
     } finally {
@@ -35,7 +49,7 @@ export const CancelPremiumModal: React.FC<ModalProps> = ({ opened, onClose }) =>
         You can restart your subscription anytime.
         <br />
         <Text size="xs" color="dimmed">
-          If you have problems with cancelling plan please contact: aykut@jsoncrack.com
+          If you have problems with cancelling plan please contact: contact@jsoncrack.com
         </Text>
         <Anchor target="_blank" href="https://patreon.com/herowand">
           Click here to cancel if you are Patreon member

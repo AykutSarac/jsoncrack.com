@@ -3,6 +3,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import { Button } from "@mantine/core";
 import { FaStar } from "react-icons/fa";
+import useUser from "src/store/useUser";
 import { JSONCrackLogo } from "../JsonCrackLogo";
 
 const StyledNavbarWrapper = styled.div`
@@ -14,6 +15,7 @@ const StyledNavbar = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 90vw;
+  height: 56px;
   margin: 0 auto;
   border: 2px solid black;
   background: white;
@@ -43,6 +45,8 @@ const Right = styled.div`
 `;
 
 export const Navbar = () => {
+  const isAuthenticated = useUser(state => state.isAuthenticated);
+
   return (
     <StyledNavbarWrapper>
       <StyledNavbar>
@@ -59,21 +63,36 @@ export const Navbar = () => {
           >
             GitHub
           </Button>
-          <Link href="/docs" prefetch={false}>
-            <Button variant="subtle" color="dark" radius="md">
-              Docs
-            </Button>
-          </Link>
-          <Link href="/oss" prefetch={false}>
-            <Button variant="subtle" color="dark" radius="md">
-              Supporters
-            </Button>
-          </Link>
-          <Link href="/pricing" prefetch={false}>
-            <Button variant="subtle" color="dark" radius="md">
-              Pricing
-            </Button>
-          </Link>
+          <Button
+            component={Link}
+            href="/docs"
+            prefetch={false}
+            variant="subtle"
+            color="dark"
+            radius="md"
+          >
+            Docs
+          </Button>
+          <Button
+            component={Link}
+            href="/oss"
+            prefetch={false}
+            variant="subtle"
+            color="dark"
+            radius="md"
+          >
+            Supporters
+          </Button>
+          <Button
+            component={Link}
+            href="/pricing"
+            prefetch={false}
+            variant="subtle"
+            color="dark"
+            radius="md"
+          >
+            Pricing
+          </Button>
         </Middle>
         <Right>
           <Button
@@ -86,16 +105,21 @@ export const Navbar = () => {
           >
             Star us on GitHub
           </Button>
-          <Link href="/sign-in" prefetch={false}>
-            <Button variant="light" radius="md" className="hide-mobile">
+          {!isAuthenticated && (
+            <Button
+              component={Link}
+              href="/sign-in"
+              prefetch={false}
+              variant="light"
+              radius="md"
+              className="hide-mobile"
+            >
               Sign In
             </Button>
-          </Link>
-          <Link href="/editor" prefetch={false}>
-            <Button color="teal" radius="md">
-              Editor
-            </Button>
-          </Link>
+          )}
+          <Button component={Link} href="/editor" prefetch={false} color="pink" radius="md">
+            Editor
+          </Button>
         </Right>
       </StyledNavbar>
     </StyledNavbarWrapper>
