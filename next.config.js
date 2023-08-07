@@ -13,23 +13,23 @@ const config = {
   compiler: {
     styledComponents: true,
   },
-  assetPrefix: "js",
 };
 
-module.exports =
-  process.env.ANALYZE === "true"
-    ? withBundleAnalyzer(config)
-    : withSentryConfig(
-        config,
-        {
-          silent: true,
-          org: "aykut-sarac",
-          project: "json-crack",
-        },
-        {
-          widenClientFileUpload: true,
-          hideSourceMaps: true,
-          disableLogger: true,
-          disableServerWebpackPlugin: true,
-        }
-      );
+const bundleAnalyzerConfig = withBundleAnalyzer(config);
+
+const sentryConfig = withSentryConfig(
+  config,
+  {
+    silent: true,
+    org: "aykut-sarac",
+    project: "json-crack",
+  },
+  {
+    widenClientFileUpload: true,
+    hideSourceMaps: true,
+    disableLogger: true,
+    disableServerWebpackPlugin: true,
+  }
+);
+
+module.exports = process.env.ANALYZE === "true" ? bundleAnalyzerConfig : sentryConfig;
