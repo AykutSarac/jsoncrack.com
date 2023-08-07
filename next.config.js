@@ -13,6 +13,7 @@ const config = {
   compiler: {
     styledComponents: true,
   },
+  assetPrefix: "js",
 };
 
 module.exports =

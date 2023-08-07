@@ -79,7 +79,7 @@ jobs:
       SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
       SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
       SENTRY_RELEASE: ${{ github.sha }}
-      SENTRY_SOURCEMAP_PATH: "./"
+      SENTRY_SOURCEMAP_PATH: "./js"
     steps:
       - name: Checkout
         uses: actions/checkout@v3
