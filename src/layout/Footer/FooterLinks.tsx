@@ -1,4 +1,4 @@
-import { createStyles, Text, Container, rem } from "@mantine/core";
+import { createStyles, Text, Container, rem, Anchor } from "@mantine/core";
 import { JSONCrackLogo } from "../JsonCrackLogo";
 
 const useStyles = createStyles(theme => ({
@@ -6,7 +6,7 @@ const useStyles = createStyles(theme => ({
     marginTop: rem(120),
     paddingTop: `calc(${theme.spacing.xl} * 2)`,
     paddingBottom: `calc(${theme.spacing.xl} * 2)`,
-    backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[6] : theme.colors.gray[0],
+    backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[6] : "white",
     borderTop: `${rem(1)} solid ${
       theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[2]
     }`,
@@ -137,9 +137,9 @@ export function FooterLinks({ data }: FooterLinksProps) {
         <Text color="gray" size="sm">
           © jsoncrack.com
         </Text>
-        <Text color="gray" size="sm">
-          Contact: contact@jsoncrack.com
-        </Text>
+        <Anchor href="mailto:contact@jsoncrack.com" color="gray" size="sm">
+          contact@jsoncrack.com
+        </Anchor>
       </Container>
     </footer>
   );

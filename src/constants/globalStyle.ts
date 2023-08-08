@@ -5,7 +5,8 @@ const GlobalStyle = createGlobalStyle`
     color: ${({ theme }) => theme.FULL_WHITE} !important;
     font-weight: 400;
     font-size: 16px;
-    background: #F1F1F1 !important;
+    background: rgb(246,249,253) !important;
+    background: radial-gradient(circle, rgba(246,249,253,1) 33%, rgba(230,230,253,1) 100%) !important;
 
     @media only screen and (max-width: 768px) {
       background-position: right;
