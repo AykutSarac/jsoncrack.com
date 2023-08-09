@@ -78,7 +78,7 @@ const Pricing = () => {
             <Paper py={5} px="sm" bg="#442f71">
               <Stack spacing="0" align="center" justify="center">
                 <Text fz="lg" c="white" fw="bolder">
-                  $5.00
+                  $5
                 </Text>
                 <Text fz="xs" color="gray.4" fw="bold">
                   Per month
@@ -141,7 +141,7 @@ const Pricing = () => {
             <Paper py={5} px="sm" bg="gray.0">
               <Stack spacing="0" align="center" justify="center">
                 <Text fz="lg" fw="bolder">
-                  $150
+                  $80
                 </Text>
                 <Text fz="xs" color="gray.6" fw="bold">
                   Per month
