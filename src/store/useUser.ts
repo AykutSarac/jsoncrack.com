@@ -1,4 +1,5 @@
 import { Session, User } from "@supabase/supabase-js";
+import ReactGA from "react-ga4";
 import toast from "react-hot-toast";
 import { create } from "zustand";
 import { supabase } from "src/lib/api/supabase";
@@ -34,9 +35,11 @@ const useUser = create<UserStates & UserActions>()(set => ({
           organization: data.organization,
           premiumCancelled: !!data.cancelled,
         });
+        ReactGA.set({ tier: data.premium ? "premium" : "free" });
       }
 
       set({ user: session.user, isAuthenticated: true });
+      ReactGA.set({ userId: session.user.id });
     });
   },
   logout: async () => {

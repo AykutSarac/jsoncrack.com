@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Flex, Group, MediaQuery, Menu, Select, Text } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
-import { event } from "react-ga";
+import ReactGA from "react-ga4";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import { CgArrowsMergeAltH, CgArrowsShrinkH, CgChevronDown } from "react-icons/cg";
@@ -212,7 +212,11 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
                   fz={12}
                   onClick={() => {
                     toggleEditor();
-                    event({ action: "toggle_hide_editor", category: "User", label: "Tools" });
+                    ReactGA.event({
+                      action: "toggle_hide_editor",
+                      category: "User",
+                      label: "Tools",
+                    });
                   }}
                   icon={fullscreen ? <VscLayoutSidebarLeft /> : <VscLayoutSidebarLeftOff />}
                   rightSection={
@@ -227,7 +231,11 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
                   fz={12}
                   onClick={() => {
                     toggleDirection();
-                    event({ action: "toggle_layout_direction", category: "User", label: "Tools" });
+                    ReactGA.event({
+                      action: "toggle_layout_direction",
+                      category: "User",
+                      label: "Tools",
+                    });
                   }}
                   icon={<StyledFlowIcon rotate={rotateLayout(direction)} />}
                   rightSection={
@@ -242,7 +250,11 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
                   fz={12}
                   onClick={() => {
                     toggleFoldNodes();
-                    event({ action: "toggle_fold_nodes", category: "User", label: "Tools" });
+                    ReactGA.event({
+                      action: "toggle_fold_nodes",
+                      category: "User",
+                      label: "Tools",
+                    });
                   }}
                   icon={foldNodes ? <CgArrowsShrinkH /> : <CgArrowsMergeAltH />}
                   rightSection={
@@ -257,7 +269,11 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
                   fz={12}
                   onClick={() => {
                     toggleExpandCollapseGraph();
-                    event({ action: "toggle_collapse_nodes", category: "User", label: "Tools" });
+                    ReactGA.event({
+                      action: "toggle_collapse_nodes",
+                      category: "User",
+                      label: "Tools",
+                    });
                   }}
                   icon={graphCollapsed ? <VscExpandAll /> : <VscCollapseAll />}
                   rightSection={

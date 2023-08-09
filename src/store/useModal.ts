@@ -1,4 +1,4 @@
-import { modalview } from "react-ga";
+import ReactGA from "react-ga4";
 import { create } from "zustand";
 import { Modal } from "src/containers/Modals";
 import useUser from "./useUser";
@@ -41,7 +41,7 @@ const useModal = create<ModalState & ModalActions>()(set => ({
       return set({ premium: true });
     }
 
-    if (visible) modalview(modal);
+    if (visible) ReactGA.event({ category: "Modal View", action: `modal_view_${modal}` });
     set({ [modal]: visible });
   },
 }));

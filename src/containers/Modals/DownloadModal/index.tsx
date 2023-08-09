@@ -13,7 +13,7 @@ import {
   Stack,
 } from "@mantine/core";
 import { toBlob, toJpeg, toPng, toSvg } from "html-to-image";
-import { event } from "react-ga";
+import ReactGA from "react-ga4";
 import toast from "react-hot-toast";
 import { FiCopy, FiDownload } from "react-icons/fi";
 
@@ -96,7 +96,7 @@ export const DownloadModal: React.FC<ModalProps> = ({ opened, onClose }) => {
       toast.error("Failed to copy to clipboard");
     } finally {
       toast.dismiss("toastClipboard");
-      event({ action: "click_clipboard_image", category: "User" });
+      ReactGA.event({ action: "click_clipboard_image", category: "User" });
       onClose();
     }
   };
@@ -117,7 +117,7 @@ export const DownloadModal: React.FC<ModalProps> = ({ opened, onClose }) => {
       toast.error("Failed to download image!");
     } finally {
       toast.dismiss("toastDownload");
-      event({ action: "click_download_image", category: "User" });
+      ReactGA.event({ action: "click_download_image", category: "User" });
       onClose();
     }
   };
