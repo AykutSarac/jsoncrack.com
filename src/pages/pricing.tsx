@@ -72,7 +72,7 @@ const Pricing = () => {
                 Premium
               </Text>
               <Badge size="xs" mt="auto" color="violet" opacity={0.4}>
-                Annual Save 30%
+                Annual Save 25%
               </Badge>
             </Stack>
             <Paper py={5} px="sm" bg="#442f71">
