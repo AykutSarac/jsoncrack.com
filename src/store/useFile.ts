@@ -130,6 +130,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       if (contents && contents.length < 80_000 && !isIframe() && !isFetchURL) {
         sessionStorage.setItem("content", contents);
         sessionStorage.setItem("format", get().format);
+        set({ hasChanges: true });
       }
 
       debouncedUpdateJson(json);

@@ -3,13 +3,13 @@ import dynamic from "next/dynamic";
 import styled from "styled-components";
 import { ReactZoomPanPinchRef, TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import { Edge, EdgeProps, ElkRoot, NodeProps } from "reaflow";
-import { CustomNode } from "src/components/CustomNode";
+import { CustomNode } from "src/components/Graph/CustomNode";
 import useToggleHide from "src/hooks/useToggleHide";
+import { Loading } from "src/layout/Loading";
 import useGraph from "src/store/useGraph";
 import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
 import { NodeData } from "src/types/models";
-import { Loading } from "../../layout/Loading";
 import { ErrorView } from "./ErrorView";
 import { PremiumView } from "./PremiumView";
 
@@ -68,16 +68,13 @@ const StyledEditorWrapper = styled.div<{ $widget: boolean }>`
   }
 `;
 
-export const Graph = ({ isWidget = false }: GraphProps) => {
+const GraphCanvas = ({ isWidget }: { isWidget: boolean }) => {
   const { validateHiddenNodes } = useToggleHide();
-  const isPremium = useUser(state => state.premium);
   const setLoading = useGraph(state => state.setLoading);
-  const setZoomPanPinch = useGraph(state => state.setZoomPanPinch);
   const centerView = useGraph(state => state.centerView);
   const setSelectedNode = useGraph(state => state.setSelectedNode);
   const setVisible = useModal(state => state.setVisible);
-
-  const loading = useGraph(state => state.loading);
+  const isPremium = useUser(state => state.premium);
   const direction = useGraph(state => state.direction);
   const nodes = useGraph(state => state.nodes);
   const edges = useGraph(state => state.edges);
@@ -91,13 +88,6 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
       setVisible("node")(true);
     },
     [setSelectedNode, setVisible]
-  );
-
-  const onInit = React.useCallback(
-    (ref: ReactZoomPanPinchRef) => {
-      setZoomPanPinch(ref);
-    },
-    [setZoomPanPinch]
   );
 
   const onLayoutChange = React.useCallback(
@@ -128,7 +118,7 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
   const memoizedNode = React.useCallback(
     (props: JSX.IntrinsicAttributes & NodeProps<any>) => (
       // @ts-ignore
-      <CustomNode {...props} onClick={handleNodeClick} animated={false} />
+      <CustomNode {...props} onClick={handleNodeClick} />
     ),
     [handleNodeClick]
   );
@@ -147,8 +137,48 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
   }
 
   return (
+    <Canvas
+      className="jsoncrack-canvas"
+      nodes={nodes}
+      edges={edges}
+      maxHeight={paneHeight}
+      maxWidth={paneWidth}
+      height={paneHeight}
+      width={paneWidth}
+      direction={direction}
+      layoutOptions={{
+        "elk.layered.compaction.postCompaction.strategy": "EDGE_LENGTH",
+        "elk.layered.nodePlacement.strategy": "NETWORK_SIMPLEX",
+      }}
+      onLayoutChange={onLayoutChange}
+      onCanvasClick={onCanvasClick}
+      node={memoizedNode}
+      edge={memoizedEdge}
+      key={direction}
+      pannable={false}
+      zoomable={false}
+      animated={false}
+      readonly={true}
+      dragEdge={null}
+      dragNode={null}
+      fit={true}
+    />
+  );
+};
+
+export const Graph = ({ isWidget = false }: GraphProps) => {
+  const setZoomPanPinch = useGraph(state => state.setZoomPanPinch);
+
+  const onInit = React.useCallback(
+    (ref: ReactZoomPanPinchRef) => {
+      setZoomPanPinch(ref);
+    },
+    [setZoomPanPinch]
+  );
+
+  return (
     <>
-      <Loading message="Painting graph..." loading={loading} />
+      <Loading message="Painting graph..." />
       <StyledEditorWrapper
         onClick={() => {
           if ("activeElement" in document) (document.activeElement as HTMLElement)?.blur();
@@ -161,7 +191,7 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
           minScale={0.05}
           initialScale={0.4}
           wheel={{ step: 0.04 }}
-          zoomAnimation={{ animationType: "linear" }}
+          zoomAnimation={{ disabled: true }}
           doubleClick={{ disabled: true }}
           onInit={onInit}
           onPanning={ref => ref.instance.wrapperComponent?.classList.add("dragging")}
@@ -172,35 +202,9 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
               width: "100%",
               height: "100%",
               overflow: "hidden",
-              display: loading ? "none" : "block",
             }}
           >
-            <Canvas
-              className="jsoncrack-canvas"
-              nodes={nodes}
-              edges={edges}
-              maxHeight={paneHeight}
-              maxWidth={paneWidth}
-              height={paneHeight}
-              width={paneWidth}
-              direction={direction}
-              layoutOptions={{
-                "elk.layered.compaction.postCompaction.strategy": "EDGE_LENGTH",
-                "elk.layered.nodePlacement.strategy": "NETWORK_SIMPLEX",
-              }}
-              onLayoutChange={onLayoutChange}
-              onCanvasClick={onCanvasClick}
-              node={memoizedNode}
-              edge={memoizedEdge}
-              key={direction}
-              pannable={false}
-              zoomable={false}
-              animated={false}
-              readonly={true}
-              dragEdge={null}
-              dragNode={null}
-              fit={true}
-            />
+            <GraphCanvas isWidget={isWidget} />
           </TransformComponent>
         </TransformWrapper>
       </StyledEditorWrapper>

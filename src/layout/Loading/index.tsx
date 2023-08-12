@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import { Center, Image, Stack } from "@mantine/core";
+import useGraph from "src/store/useGraph";
 import { JSONCrackLogo } from "../JsonCrackLogo";
 
 interface LoadingProps {
@@ -46,14 +47,18 @@ const StyledMessage = styled.div`
   font-weight: 600;
 `;
 
-export const Loading: React.FC<LoadingProps> = ({ loading = true, message }) => (
-  <Center mx="auto">
-    <StyledLoading $visible={loading}>
-      <Stack>
-        <Image mx="auto" width="6.5em" src="./assets/rocket_ship.webp" alt="loading image" />
-        <JSONCrackLogo fontSize="2rem" />
-        <StyledMessage>{message ?? "Preparing the environment for you..."}</StyledMessage>
-      </Stack>
-    </StyledLoading>
-  </Center>
-);
+export const Loading: React.FC<LoadingProps> = ({ loading: innerLoading = false, message }) => {
+  const loading = useGraph(state => state.loading || innerLoading);
+
+  return (
+    <Center mx="auto">
+      <StyledLoading $visible={loading}>
+        <Stack>
+          <Image mx="auto" width="6.5em" src="./assets/rocket_ship.webp" alt="loading image" />
+          <JSONCrackLogo fontSize="2rem" />
+          <StyledMessage>{message ?? "Preparing the environment for you..."}</StyledMessage>
+        </Stack>
+      </StyledLoading>
+    </Center>
+  );
+};

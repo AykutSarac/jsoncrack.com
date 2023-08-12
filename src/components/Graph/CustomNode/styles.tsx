@@ -74,14 +74,8 @@ export const StyledKey = styled.span<{
   white-space: nowrap;
 `;
 
-export const StyledRow = styled.span.attrs<{
-  "data-type": string;
-  theme: DefaultTheme;
-}>(props => ({
-  style: {
-    color: getTypeColor(props["data-type"], props.theme),
-  },
-}))<{ "data-type": string; theme: DefaultTheme }>`
+export const StyledRow = styled.span<{ $type: string }>`
+  color: ${({ theme, $type }) => getTypeColor($type, theme)};
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;

@@ -16,17 +16,18 @@ const rootProps = {
   ry: 50,
 };
 
-export const CustomNode = (nodeProps: NodeProps) => {
+export const CustomNode = (nodeProps: NodeProps<NodeData["data"]>) => {
   const { text, data } = nodeProps.properties;
 
   return (
-    <Node {...nodeProps} {...(data.isEmpty && rootProps)} label={<React.Fragment />}>
+    <Node {...nodeProps} {...(data?.isEmpty && rootProps)} animated={false} label={null as any}>
       {({ node, x, y }) => {
         if (Array.isArray(text)) {
+          if (data?.isEmpty) return null;
           return <ObjectNode node={node as NodeData} x={x} y={y} />;
         }
 
-        return <TextNode node={node as NodeData} hasCollapse={!!data.childrenCount} x={x} y={y} />;
+        return <TextNode node={node as NodeData} hasCollapse={!!data?.childrenCount} x={x} y={y} />;
       }}
     </Node>
   );

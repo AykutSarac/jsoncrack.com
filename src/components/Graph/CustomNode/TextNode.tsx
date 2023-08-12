@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { MdLink, MdLinkOff } from "react-icons/md";
-import { CustomNodeProps } from "src/components/CustomNode";
+import { CustomNodeProps } from "src/components/Graph/CustomNode";
 import { isContentImage } from "src/lib/utils/graph/calculateNodeSize";
 import useGraph from "src/store/useGraph";
 import useStored from "src/store/useStored";
