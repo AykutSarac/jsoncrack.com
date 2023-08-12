@@ -1,8 +1,11 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import styled from "styled-components";
-import { ReactZoomPanPinchRef, TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
-import { Edge, EdgeProps, ElkRoot, NodeProps } from "reaflow";
+import { Space } from "react-zoomable-ui";
+import { ElkRoot } from "reaflow/dist/layout/useLayout";
+import { EdgeProps } from "reaflow/dist/symbols/Edge";
+import { NodeProps } from "reaflow/dist/symbols/Node";
+import { useLongPress } from "use-long-press";
 import { CustomNode } from "src/components/Graph/CustomNode";
 import useToggleHide from "src/hooks/useToggleHide";
 import { Loading } from "src/layout/Loading";
@@ -12,6 +15,10 @@ import useUser from "src/store/useUser";
 import { NodeData } from "src/types/models";
 import { ErrorView } from "./ErrorView";
 import { PremiumView } from "./PremiumView";
+
+const Edge = dynamic(() => import("reaflow").then(r => r.Edge), {
+  ssr: false,
+});
 
 const Canvas = dynamic(() => import("reaflow").then(r => r.Canvas), {
   ssr: false,
@@ -67,6 +74,11 @@ const StyledEditorWrapper = styled.div<{ $widget: boolean }>`
     height: 100vh;
   }
 `;
+
+const layoutOptions = {
+  "elk.layered.compaction.postCompaction.strategy": "EDGE_LENGTH",
+  "elk.layered.nodePlacement.strategy": "NETWORK_SIMPLEX",
+};
 
 const GraphCanvas = ({ isWidget }: { isWidget: boolean }) => {
   const { validateHiddenNodes } = useToggleHide();
@@ -146,10 +158,7 @@ const GraphCanvas = ({ isWidget }: { isWidget: boolean }) => {
       height={paneHeight}
       width={paneWidth}
       direction={direction}
-      layoutOptions={{
-        "elk.layered.compaction.postCompaction.strategy": "EDGE_LENGTH",
-        "elk.layered.nodePlacement.strategy": "NETWORK_SIMPLEX",
-      }}
+      layoutOptions={layoutOptions}
       onLayoutChange={onLayoutChange}
       onCanvasClick={onCanvasClick}
       node={memoizedNode}
@@ -167,46 +176,42 @@ const GraphCanvas = ({ isWidget }: { isWidget: boolean }) => {
 };
 
 export const Graph = ({ isWidget = false }: GraphProps) => {
-  const setZoomPanPinch = useGraph(state => state.setZoomPanPinch);
+  const setViewPort = useGraph(state => state.setViewPort);
 
-  const onInit = React.useCallback(
-    (ref: ReactZoomPanPinchRef) => {
-      setZoomPanPinch(ref);
+  const callback = React.useCallback(() => {
+    const canvas = document.querySelector(".jsoncrack-canvas") as HTMLDivElement | null;
+    canvas?.classList.add("dragging");
+  }, []);
+
+  const bindLongPress = useLongPress(callback, {
+    threshold: 150,
+    onFinish: () => {
+      const canvas = document.querySelector(".jsoncrack-canvas") as HTMLDivElement | null;
+      canvas?.classList.remove("dragging");
     },
-    [setZoomPanPinch]
-  );
+  });
+
+  const blurOnClick = React.useCallback(() => {
+    if ("activeElement" in document) (document.activeElement as HTMLElement)?.blur();
+  }, []);
 
   return (
     <>
       <Loading message="Painting graph..." />
       <StyledEditorWrapper
-        onClick={() => {
-          if ("activeElement" in document) (document.activeElement as HTMLElement)?.blur();
-        }}
-        onContextMenu={e => e.preventDefault()}
         $widget={isWidget}
+        onContextMenu={e => e.preventDefault()}
+        onClick={blurOnClick}
+        {...bindLongPress()}
       >
-        <TransformWrapper
-          maxScale={2}
-          minScale={0.05}
-          initialScale={0.4}
-          wheel={{ step: 0.04 }}
-          zoomAnimation={{ disabled: true }}
-          doubleClick={{ disabled: true }}
-          onInit={onInit}
-          onPanning={ref => ref.instance.wrapperComponent?.classList.add("dragging")}
-          onPanningStop={ref => ref.instance.wrapperComponent?.classList.remove("dragging")}
+        <Space
+          onCreate={setViewPort}
+          onContextMenu={e => e.preventDefault()}
+          treatTwoFingerTrackPadGesturesLikeTouch
+          pollForElementResizing
         >
-          <TransformComponent
-            wrapperStyle={{
-              width: "100%",
-              height: "100%",
-              overflow: "hidden",
-            }}
-          >
-            <GraphCanvas isWidget={isWidget} />
-          </TransformComponent>
-        </TransformWrapper>
+          <GraphCanvas isWidget={isWidget} />
+        </Space>
       </StyledEditorWrapper>
     </>
   );

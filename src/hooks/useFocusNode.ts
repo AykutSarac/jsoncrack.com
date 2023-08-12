@@ -4,7 +4,7 @@ import { searchQuery, cleanupHighlight, highlightMatchedNodes } from "src/lib/ut
 import useGraph from "src/store/useGraph";
 
 export const useFocusNode = () => {
-  const zoomPanPinch = useGraph(state => state.zoomPanPinch);
+  const viewPort = useGraph(state => state.viewPort);
   const [selectedNode, setSelectedNode] = React.useState(0);
   const [nodeCount, setNodeCount] = React.useState(0);
   const [value, setValue] = React.useState("");
@@ -13,32 +13,19 @@ export const useFocusNode = () => {
   const skip = () => setSelectedNode(current => current + 1);
 
   React.useEffect(() => {
-    if (!zoomPanPinch) return;
+    if (!viewPort) return;
     const matchedNodes: NodeListOf<Element> = searchQuery(`span[data-key*='${debouncedValue}' i]`);
-    const ref = zoomPanPinch.instance.wrapperComponent;
     const matchedNode: Element | null = matchedNodes[selectedNode] || null;
 
     cleanupHighlight();
 
-    if (ref && matchedNode && matchedNode.parentElement) {
-      const newScale = 0.8;
-      const x = Number(matchedNode.getAttribute("data-x"));
-      const y = Number(matchedNode.getAttribute("data-y"));
-
-      const newPositionX =
-        (ref.offsetLeft - x) * newScale +
-        ref.clientWidth / 5 -
-        matchedNode.getBoundingClientRect().width / 5;
-
-      const newPositionY =
-        (ref.offsetLeft - y) * newScale +
-        ref.clientHeight / 8 -
-        matchedNode.getBoundingClientRect().height / 8;
-
+    if (matchedNode && matchedNode.parentElement) {
       highlightMatchedNodes(matchedNodes, selectedNode);
       setNodeCount(matchedNodes.length);
 
-      zoomPanPinch?.setTransform(newPositionX, newPositionY, newScale);
+      viewPort?.camera.centerFitElementIntoView(matchedNode.parentElement, {
+        elementExtraMarginForZoom: 400,
+      });
     } else {
       setSelectedNode(0);
       setNodeCount(0);
@@ -50,7 +37,7 @@ export const useFocusNode = () => {
         setNodeCount(0);
       }
     };
-  }, [selectedNode, debouncedValue, value, zoomPanPinch]);
+  }, [selectedNode, debouncedValue, value, viewPort]);
 
   return [value, setValue, skip, nodeCount, selectedNode] as const;
 };

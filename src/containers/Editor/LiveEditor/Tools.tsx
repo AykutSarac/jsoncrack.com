@@ -17,6 +17,7 @@ import {
   VscLayoutSidebarLeft,
   VscLayoutSidebarLeftOff,
   VscSettingsGear,
+  VscTarget,
 } from "react-icons/vsc";
 import { SearchInput } from "src/components/SearchInput";
 import useToggleHide from "src/hooks/useToggleHide";
@@ -94,6 +95,7 @@ const ViewMenu = () => {
   const expandGraph = useGraph(state => state.expandGraph);
   const collapseGraph = useGraph(state => state.collapseGraph);
   const toggleFullscreen = useGraph(state => state.toggleFullscreen);
+  const focusFirstNode = useGraph(state => state.focusFirstNode);
   const foldNodes = useGraph(state => state.foldNodes);
   const graphCollapsed = useGraph(state => state.graphCollapsed);
   const direction = useGraph(state => state.direction);
@@ -129,7 +131,6 @@ const ViewMenu = () => {
       "mod+f",
       () => {
         const input = document.querySelector("#search-node") as HTMLInputElement;
-
         input.focus();
       },
     ],
@@ -226,6 +227,9 @@ const ViewMenu = () => {
           }
         >
           {graphCollapsed ? "Expand" : "Collapse"} Nodes
+        </Menu.Item>
+        <Menu.Item fz={12} onClick={focusFirstNode} icon={<VscTarget />}>
+          Focus to First Node
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>

@@ -1,4 +1,4 @@
-import { ReactZoomPanPinchRef } from "react-zoom-pan-pinch";
+import { ViewPort } from "react-zoomable-ui/dist/ViewPort";
 import { CanvasDirection } from "reaflow/dist/layout/elkLayout";
 import { create } from "zustand";
 import { getChildrenEdges } from "src/lib/utils/graph/getChildrenEdges";
@@ -8,7 +8,7 @@ import { NodeData, EdgeData } from "src/types/models";
 import useJson from "./useJson";
 
 export interface Graph {
-  zoomPanPinch: ReactZoomPanPinchRef | null;
+  viewPort: ViewPort | null;
   direction: CanvasDirection;
   loading: boolean;
   graphCollapsed: boolean;
@@ -24,7 +24,7 @@ export interface Graph {
 }
 
 const initialStates: Graph = {
-  zoomPanPinch: null,
+  viewPort: null,
   direction: "RIGHT",
   loading: true,
   graphCollapsed: false,
@@ -43,8 +43,9 @@ interface GraphActions {
   setGraph: (json?: string, options?: Partial<Graph>[]) => void;
   setLoading: (loading: boolean) => void;
   setDirection: (direction: CanvasDirection) => void;
-  setZoomPanPinch: (ref: ReactZoomPanPinchRef) => void;
+  setViewPort: (ref: ViewPort) => void;
   setSelectedNode: (nodeData: NodeData) => void;
+  focusFirstNode: () => void;
   expandNodes: (nodeId: string) => void;
   expandGraph: () => void;
   collapseNodes: (nodeId: string) => void;
@@ -148,9 +149,9 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       )
       .map(node => node.id);
 
-    // const closestParentToRoot = Math.min(...collapsedParents.map(n => +n));
-    // const focusNodeId = `g[id*='node-${closestParentToRoot}']`;
-    // const rootNode = document.querySelector(focusNodeId);
+    const closestParentToRoot = Math.min(...collapsedParents.map(n => +n));
+    const focusNodeId = `g[id*='node-${closestParentToRoot}']`;
+    const rootNode = document.querySelector(focusNodeId);
 
     set({
       collapsedParents,
@@ -160,6 +161,12 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
         .map(edge => edge.id),
       graphCollapsed: true,
     });
+
+    if (rootNode) {
+      get().viewPort?.camera?.centerFitElementIntoView(rootNode as HTMLElement, {
+        elementExtraMarginForZoom: 300,
+      });
+    }
   },
   expandGraph: () => {
     set({
@@ -169,36 +176,31 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       graphCollapsed: false,
     });
   },
+  focusFirstNode: () => {
+    const rootNode = document.querySelector("g[id*='node-1']");
+    get().viewPort?.camera?.centerFitElementIntoView(rootNode as HTMLElement, {
+      elementExtraMarginForZoom: 100,
+    });
+  },
   zoomIn: () => {
-    const zoomPanPinch = get().zoomPanPinch;
-
-    zoomPanPinch?.setTransform(
-      zoomPanPinch?.state.positionX,
-      zoomPanPinch?.state.positionY,
-      zoomPanPinch?.state.scale + 0.4
-    );
+    const viewPort = get().viewPort;
+    viewPort?.camera.recenter(viewPort.centerX, viewPort.centerY, viewPort.zoomFactor + 0.1);
   },
   zoomOut: () => {
-    const zoomPanPinch = get().zoomPanPinch;
-
-    zoomPanPinch?.setTransform(
-      zoomPanPinch?.state.positionX,
-      zoomPanPinch?.state.positionY,
-      zoomPanPinch?.state.scale - 0.4
-    );
+    const viewPort = get().viewPort;
+    viewPort?.camera.recenter(viewPort.centerX, viewPort.centerY, viewPort.zoomFactor - 0.1);
   },
   centerView: () => {
-    const zoomPanPinch = get().zoomPanPinch;
+    const viewPort = get().viewPort;
     const canvas = document.querySelector(".jsoncrack-canvas") as HTMLElement;
-
-    if (zoomPanPinch && canvas) zoomPanPinch.zoomToElement(canvas);
+    viewPort?.camera.centerFitElementIntoView(canvas);
   },
   toggleFold: foldNodes => {
     set({ foldNodes });
     get().setGraph();
   },
   toggleFullscreen: fullscreen => set({ fullscreen }),
-  setZoomPanPinch: zoomPanPinch => set({ zoomPanPinch }),
+  setViewPort: viewPort => set({ viewPort }),
 }));
 
 export default useGraph;
