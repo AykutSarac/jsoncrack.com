@@ -49,6 +49,8 @@ interface GraphActions {
   expandGraph: () => void;
   collapseNodes: (nodeId: string) => void;
   collapseGraph: () => void;
+  getCollapsedNodeIds: () => string[];
+  getCollapsedEdgeIds: () => string[];
   toggleFold: (value: boolean) => void;
   toggleFullscreen: (value: boolean) => void;
   zoomIn: () => void;
@@ -60,6 +62,8 @@ interface GraphActions {
 const useGraph = create<Graph & GraphActions>((set, get) => ({
   ...initialStates,
   clearGraph: () => set({ nodes: [], edges: [], loading: false }),
+  getCollapsedNodeIds: () => get().collapsedNodes,
+  getCollapsedEdgeIds: () => get().collapsedEdges,
   setSelectedNode: nodeData => set({ selectedNode: nodeData }),
   setGraph: (data, options) => {
     const { nodes, edges } = parser(data ?? useJson.getState().json);

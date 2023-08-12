@@ -19,6 +19,7 @@ import {
   VscSettingsGear,
 } from "react-icons/vsc";
 import { SearchInput } from "src/components/SearchInput";
+import useToggleHide from "src/hooks/useToggleHide";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
 import { getNextDirection } from "src/lib/utils/graph/getNextDirection";
 import { isIframe } from "src/lib/utils/widget";
@@ -85,36 +86,18 @@ function fullscreenBrowser() {
   }
 }
 
-export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) => {
-  const getJson = useJson(state => state.getJson);
-  const setVisible = useModal(state => state.setVisible);
-  const direction = useGraph(state => state.direction);
-  const fullscreen = useGraph(state => state.fullscreen);
-  const toggleFullscreen = useGraph(state => state.toggleFullscreen);
-  const zoomIn = useGraph(state => state.zoomIn);
-  const zoomOut = useGraph(state => state.zoomOut);
-  const centerView = useGraph(state => state.centerView);
-  const foldNodes = useGraph(state => state.foldNodes);
+const ViewMenu = () => {
+  const { validateHiddenNodes } = useToggleHide();
+  const [coreKey, setCoreKey] = React.useState("CTRL");
   const toggleFold = useGraph(state => state.toggleFold);
   const setDirection = useGraph(state => state.setDirection);
-  const graphCollapsed = useGraph(state => state.graphCollapsed);
   const expandGraph = useGraph(state => state.expandGraph);
   const collapseGraph = useGraph(state => state.collapseGraph);
-  const setFormat = useFile(state => state.setFormat);
-  const format = useFile(state => state.format);
-  const [coreKey, setCoreKey] = React.useState("CTRL");
-  const [logoURL, setLogoURL] = React.useState("CTRL");
-
-  React.useEffect(() => {
-    if (typeof window !== "undefined") {
-      const url = !isIframe()
-        ? "https://jsoncrack.com"
-        : window.location.href.replace("widget", "editor");
-
-      setCoreKey(navigator.userAgent.indexOf("Mac OS X") ? "⌘" : "CTRL");
-      setLogoURL(url);
-    }
-  }, []);
+  const toggleFullscreen = useGraph(state => state.toggleFullscreen);
+  const foldNodes = useGraph(state => state.foldNodes);
+  const graphCollapsed = useGraph(state => state.graphCollapsed);
+  const direction = useGraph(state => state.direction);
+  const fullscreen = useGraph(state => state.fullscreen);
 
   const toggleEditor = () => toggleFullscreen(!fullscreen);
 
@@ -134,15 +117,7 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
     else collapseGraph();
 
     toast(`${graphCollapsed ? "Expanded" : "Collapsed"} graph.`);
-  };
-
-  const handleSave = () => {
-    const a = document.createElement("a");
-    const file = new Blob([getJson()], { type: "text/plain" });
-
-    a.href = window.URL.createObjectURL(file);
-    a.download = "jsoncrack.json";
-    a.click();
+    validateHiddenNodes();
   };
 
   useHotkeys([
@@ -159,6 +134,133 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
       },
     ],
   ]);
+
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      setCoreKey(navigator.userAgent.indexOf("Mac OS X") ? "⌘" : "CTRL");
+    }
+  }, []);
+
+  return (
+    <Menu shadow="md" closeOnItemClick={false}>
+      <Menu.Target>
+        <StyledToolElement>
+          <Flex align="center" gap={3}>
+            View <CgChevronDown />
+          </Flex>
+        </StyledToolElement>
+      </Menu.Target>
+      <Menu.Dropdown>
+        <Menu.Item
+          fz={12}
+          onClick={() => {
+            toggleEditor();
+            ReactGA.event({
+              action: "toggle_hide_editor",
+              category: "User",
+              label: "Tools",
+            });
+          }}
+          icon={fullscreen ? <VscLayoutSidebarLeft /> : <VscLayoutSidebarLeftOff />}
+          rightSection={
+            <Text ml="md" fz={10} color="dimmed">
+              {coreKey} Shift E
+            </Text>
+          }
+        >
+          {fullscreen ? "Show" : "Hide"} Editor
+        </Menu.Item>
+        <Menu.Item
+          fz={12}
+          onClick={() => {
+            toggleDirection();
+            ReactGA.event({
+              action: "toggle_layout_direction",
+              category: "User",
+              label: "Tools",
+            });
+          }}
+          icon={<StyledFlowIcon rotate={rotateLayout(direction)} />}
+          rightSection={
+            <Text ml="md" fz={10} color="dimmed">
+              {coreKey} Shift D
+            </Text>
+          }
+        >
+          Rotate Layout
+        </Menu.Item>
+        <Menu.Item
+          fz={12}
+          onClick={() => {
+            toggleFoldNodes();
+            ReactGA.event({
+              action: "toggle_fold_nodes",
+              category: "User",
+              label: "Tools",
+            });
+          }}
+          icon={foldNodes ? <CgArrowsShrinkH /> : <CgArrowsMergeAltH />}
+          rightSection={
+            <Text ml="md" fz={10} color="dimmed">
+              {coreKey} Shift F
+            </Text>
+          }
+        >
+          {foldNodes ? "Unfold" : "Fold"} Nodes
+        </Menu.Item>
+        <Menu.Item
+          fz={12}
+          onClick={() => {
+            toggleExpandCollapseGraph();
+            ReactGA.event({
+              action: "toggle_collapse_nodes",
+              category: "User",
+              label: "Tools",
+            });
+          }}
+          icon={graphCollapsed ? <VscExpandAll /> : <VscCollapseAll />}
+          rightSection={
+            <Text ml="md" fz={10} color="dimmed">
+              {coreKey} Shift C
+            </Text>
+          }
+        >
+          {graphCollapsed ? "Expand" : "Collapse"} Nodes
+        </Menu.Item>
+      </Menu.Dropdown>
+    </Menu>
+  );
+};
+
+export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) => {
+  const getJson = useJson(state => state.getJson);
+  const setVisible = useModal(state => state.setVisible);
+  const zoomIn = useGraph(state => state.zoomIn);
+  const zoomOut = useGraph(state => state.zoomOut);
+  const centerView = useGraph(state => state.centerView);
+
+  const setFormat = useFile(state => state.setFormat);
+  const format = useFile(state => state.format);
+  const [logoURL, setLogoURL] = React.useState("CTRL");
+
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      const url = !isIframe()
+        ? "https://jsoncrack.com"
+        : window.location.href.replace("widget", "editor");
+
+      setLogoURL(url);
+    }
+  }, []);
+
+  const handleSave = () => {
+    const a = document.createElement("a");
+    const file = new Blob([getJson()], { type: "text/plain" });
+
+    a.href = window.URL.createObjectURL(file);
+    a.download = "jsoncrack.json";
+    a.click();
+  };
 
   return (
     <StyledTools>
@@ -199,93 +301,7 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
             <StyledToolElement title="Import File" onClick={() => setVisible("import")(true)}>
               Import
             </StyledToolElement>
-            <Menu shadow="md" closeOnItemClick={false}>
-              <Menu.Target>
-                <StyledToolElement>
-                  <Flex align="center" gap={3}>
-                    View <CgChevronDown />
-                  </Flex>
-                </StyledToolElement>
-              </Menu.Target>
-              <Menu.Dropdown>
-                <Menu.Item
-                  fz={12}
-                  onClick={() => {
-                    toggleEditor();
-                    ReactGA.event({
-                      action: "toggle_hide_editor",
-                      category: "User",
-                      label: "Tools",
-                    });
-                  }}
-                  icon={fullscreen ? <VscLayoutSidebarLeft /> : <VscLayoutSidebarLeftOff />}
-                  rightSection={
-                    <Text ml="md" fz={10} color="dimmed">
-                      {coreKey} Shift E
-                    </Text>
-                  }
-                >
-                  {fullscreen ? "Show" : "Hide"} Editor
-                </Menu.Item>
-                <Menu.Item
-                  fz={12}
-                  onClick={() => {
-                    toggleDirection();
-                    ReactGA.event({
-                      action: "toggle_layout_direction",
-                      category: "User",
-                      label: "Tools",
-                    });
-                  }}
-                  icon={<StyledFlowIcon rotate={rotateLayout(direction)} />}
-                  rightSection={
-                    <Text ml="md" fz={10} color="dimmed">
-                      {coreKey} Shift D
-                    </Text>
-                  }
-                >
-                  Rotate Layout
-                </Menu.Item>
-                <Menu.Item
-                  fz={12}
-                  onClick={() => {
-                    toggleFoldNodes();
-                    ReactGA.event({
-                      action: "toggle_fold_nodes",
-                      category: "User",
-                      label: "Tools",
-                    });
-                  }}
-                  icon={foldNodes ? <CgArrowsShrinkH /> : <CgArrowsMergeAltH />}
-                  rightSection={
-                    <Text ml="md" fz={10} color="dimmed">
-                      {coreKey} Shift F
-                    </Text>
-                  }
-                >
-                  {foldNodes ? "Unfold" : "Fold"} Nodes
-                </Menu.Item>
-                <Menu.Item
-                  fz={12}
-                  onClick={() => {
-                    toggleExpandCollapseGraph();
-                    ReactGA.event({
-                      action: "toggle_collapse_nodes",
-                      category: "User",
-                      label: "Tools",
-                    });
-                  }}
-                  icon={graphCollapsed ? <VscExpandAll /> : <VscCollapseAll />}
-                  rightSection={
-                    <Text ml="md" fz={10} color="dimmed">
-                      {coreKey} Shift C
-                    </Text>
-                  }
-                >
-                  {graphCollapsed ? "Expand" : "Collapse"} Nodes
-                </Menu.Item>
-              </Menu.Dropdown>
-            </Menu>
+            <ViewMenu />
             <Menu shadow="md">
               <Menu.Target>
                 <StyledToolElement>

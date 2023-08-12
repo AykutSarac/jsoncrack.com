@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { MdLink, MdLinkOff } from "react-icons/md";
 import { CustomNodeProps } from "src/components/Graph/CustomNode";
+import useToggleHide from "src/hooks/useToggleHide";
 import { isContentImage } from "src/lib/utils/graph/calculateNodeSize";
 import useGraph from "src/store/useGraph";
 import useStored from "src/store/useStored";
@@ -50,6 +51,7 @@ const Node: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) =>
     height,
     data: { isParent, childrenCount, type },
   } = node;
+  const { validateHiddenNodes } = useToggleHide();
   const hideCollapse = useStored(state => state.hideCollapse);
   const showChildrenCount = useStored(state => state.childrenCount);
   const imagePreview = useStored(state => state.imagePreview);
@@ -63,6 +65,7 @@ const Node: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) =>
 
     if (!isExpanded) collapseNodes(id);
     else expandNodes(id);
+    validateHiddenNodes();
   };
 
   return (
