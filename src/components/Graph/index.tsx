@@ -86,7 +86,6 @@ const GraphCanvas = ({ isWidget }: { isWidget: boolean }) => {
   const centerView = useGraph(state => state.centerView);
   const setSelectedNode = useGraph(state => state.setSelectedNode);
   const setVisible = useModal(state => state.setVisible);
-  const isPremium = useUser(state => state.premium);
   const direction = useGraph(state => state.direction);
   const nodes = useGraph(state => state.nodes);
   const edges = useGraph(state => state.edges);
@@ -142,12 +141,6 @@ const GraphCanvas = ({ isWidget }: { isWidget: boolean }) => {
     []
   );
 
-  if (nodes.length > 6_000) return <ErrorView />;
-
-  if (nodes.length > 250 && !isWidget) {
-    if (!isPremium) return <PremiumView />;
-  }
-
   return (
     <Canvas
       className="jsoncrack-canvas"
@@ -177,6 +170,10 @@ const GraphCanvas = ({ isWidget }: { isWidget: boolean }) => {
 
 export const Graph = ({ isWidget = false }: GraphProps) => {
   const setViewPort = useGraph(state => state.setViewPort);
+  const isPremium = useUser(state => state.premium);
+  const viewType = useGraph(state =>
+    state.nodes.length > 6_000 ? "error" : state.nodes.length > 250 ? "premium" : "graph"
+  );
 
   const callback = React.useCallback(() => {
     const canvas = document.querySelector(".jsoncrack-canvas") as HTMLDivElement | null;
@@ -194,6 +191,12 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
   const blurOnClick = React.useCallback(() => {
     if ("activeElement" in document) (document.activeElement as HTMLElement)?.blur();
   }, []);
+
+  if (viewType === "error") return <ErrorView />;
+
+  if (viewType === "premium" && !isWidget) {
+    if (!isPremium) return <PremiumView />;
+  }
 
   return (
     <>
