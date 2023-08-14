@@ -13,6 +13,7 @@ import {
   Divider,
   Anchor,
   Stack,
+  Alert,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useToggle, upperFirst } from "@mantine/hooks";
@@ -277,6 +278,7 @@ const SignIn = () => {
   const { isReady, push, query } = useRouter();
   const session = useSession();
   const isPasswordReset = query?.type === "recovery" && !query?.error;
+  const [alertVisible, setAlertVisible] = React.useState(true);
 
   React.useEffect(() => {
     if (session) push("/editor");
@@ -288,7 +290,24 @@ const SignIn = () => {
         <title>Sign In | JSON Crack</title>
       </Head>
       <Navbar />
-      <Paper mx="auto" mt={70} maw={400} p="lg" withBorder>
+      {alertVisible && (
+        <Alert
+          color="orange"
+          radius="md"
+          mt={30}
+          mx="auto"
+          w={700}
+          variant="outline"
+          withCloseButton
+          onClose={() => setAlertVisible(false)}
+        >
+          We have transitioned to a new database. If you&apos;ve been using JSON Crack for a while
+          and unable to login, kindly <strong>register a new account</strong> once more. (Rest
+          assured, your saved files remain intact.)
+        </Alert>
+      )}
+
+      <Paper mx="auto" maw={400} mt={50} p="lg" withBorder>
         <JSONCrackLogo />
         {isPasswordReset ? <ResetPassword /> : <AuthenticationForm />}
       </Paper>
