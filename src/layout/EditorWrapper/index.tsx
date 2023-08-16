@@ -2,7 +2,6 @@ import React from "react";
 import { ThemeProvider } from "styled-components";
 import { MantineProvider, MantineThemeOverride } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { monaSans } from "src/constants/fonts";
 import { lightTheme, darkTheme } from "src/constants/theme";
 import useStored from "src/store/useStored";
 
@@ -16,9 +15,9 @@ const queryClient = new QueryClient({
 });
 
 const mantineTheme: MantineThemeOverride = {
-  fontFamily: monaSans.style.fontFamily,
+  fontFamily: "'Mona-Sans', sans-serif",
   headings: {
-    fontFamily: monaSans.style.fontFamily,
+    fontFamily: "'Mona-Sans', sans-serif",
   },
   components: {
     Divider: {

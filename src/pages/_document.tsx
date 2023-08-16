@@ -52,6 +52,11 @@ class MyDocument extends Document {
           <meta name="theme-color" content="#36393E" />
           <link rel="manifest" href="/manifest.json" />
           <link rel="icon" href="/favicon.ico" />
+          <link
+            href="https://github.githubassets.com/static/fonts/github/mona-sans.woff2"
+            rel="stylesheet"
+            crossOrigin="anonymous"
+          />
         </Head>
         <body>
           <Main />
