@@ -6,6 +6,7 @@ import { StyleSheetManager, ThemeProvider } from "styled-components";
 import { MantineProvider, MantineThemeOverride } from "@mantine/core";
 import { SessionContextProvider, Session } from "@supabase/auth-helpers-react";
 import ReactGA from "react-ga4";
+import { monaSans } from "src/constants/fonts";
 import GlobalStyle from "src/constants/globalStyle";
 import { lightTheme } from "src/constants/theme";
 import { supabase } from "src/lib/api/supabase";
@@ -22,8 +23,8 @@ const ModalController = dynamic(() => import("src/layout/ModalController"));
 
 const mantineTheme: MantineThemeOverride = {
   colorScheme: "light",
-  fontFamily: "'Mona-Sans', sans-serif",
-  headings: { fontFamily: "'Mona-Sans', sans-serif" },
+  fontFamily: monaSans.style.fontFamily,
+  headings: { fontFamily: monaSans.style.fontFamily },
   primaryShade: 8,
 };
 
