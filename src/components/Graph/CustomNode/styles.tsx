@@ -21,7 +21,6 @@ export const StyledForeignObject = styled.foreignObject<{ $isObject?: boolean }>
   overflow: hidden;
   color: ${({ theme }) => theme.NODE_COLORS.TEXT};
   pointer-events: none;
-  padding: ${({ $isObject }) => $isObject && "10px"};
   font-family: ${firaMono.style.fontFamily};
   font-weight: 500;
 
@@ -75,11 +74,20 @@ export const StyledKey = styled.span<{
 `;
 
 export const StyledRow = styled.span<{ $type: string }>`
+  padding: 0 10px;
   color: ${({ theme, $type }) => getTypeColor($type, theme)};
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  &:first-of-type {
+    padding-top: 10px;
+  }
+
+  &:last-of-type {
+    padding-bottom: 10px;
+  }
 `;
 
 export const StyledChildrenCount = styled.span`

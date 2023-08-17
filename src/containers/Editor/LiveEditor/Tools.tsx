@@ -81,7 +81,9 @@ function rotateLayout(direction: "LEFT" | "RIGHT" | "DOWN" | "UP") {
 
 function fullscreenBrowser() {
   if (!document.fullscreenElement) {
-    document.documentElement.requestFullscreen();
+    document.documentElement.requestFullscreen().catch(() => {
+      toast.error("Unable to enter fullscreen mode.");
+    });
   } else if (document.exitFullscreen) {
     document.exitFullscreen();
   }
