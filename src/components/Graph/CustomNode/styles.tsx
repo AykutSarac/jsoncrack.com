@@ -16,14 +16,13 @@ export const StyledLinkItUrl = styled(LinkItUrl)`
 `;
 
 export const StyledForeignObject = styled.foreignObject<{ $isObject?: boolean }>`
-  content-visibility: auto;
   text-align: ${({ $isObject }) => !$isObject && "center"};
-  font-size: 12px;
-  overflow: hidden;
   color: ${({ theme }) => theme.NODE_COLORS.TEXT};
-  pointer-events: none;
   font-family: ${firaMono.style.fontFamily};
+  font-size: 12px;
   font-weight: 500;
+  overflow: hidden;
+  pointer-events: none;
 
   &.searched {
     background: rgba(27, 255, 0, 0.1);
