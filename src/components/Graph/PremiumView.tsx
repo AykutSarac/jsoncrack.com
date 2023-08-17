@@ -12,10 +12,10 @@ const StyledPremiumView = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
-  background: #020015;
+  background: ${({ theme }) => theme.GRID_COLOR_SECONDARY};
 
   img {
-    filter: drop-shadow(2px 4px 6px black);
+    filter: drop-shadow(2px 2px 1px black);
   }
 
   .glowing {
@@ -160,7 +160,7 @@ export const PremiumView = () => (
   <StyledPremiumView>
     <StyledContent>
       <Title align="center">
-        <Image width="300" src="assets/icon.png" alt="JSON Crack" />
+        <Image width="400" src="assets/icon.png" alt="JSON Crack" />
       </Title>
       <StyledInfo>
         Upgrade JSON Crack to premium and explore full potantial of your data!

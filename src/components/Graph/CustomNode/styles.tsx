@@ -16,6 +16,7 @@ export const StyledLinkItUrl = styled(LinkItUrl)`
 `;
 
 export const StyledForeignObject = styled.foreignObject<{ $isObject?: boolean }>`
+  content-visibility: auto;
   text-align: ${({ $isObject }) => !$isObject && "center"};
   font-size: 12px;
   overflow: hidden;

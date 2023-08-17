@@ -14,6 +14,7 @@ export interface Graph {
   graphCollapsed: boolean;
   foldNodes: boolean;
   fullscreen: boolean;
+  collapseAll: boolean;
   nodes: NodeData[];
   edges: EdgeData[];
   collapsedNodes: string[];
@@ -30,6 +31,7 @@ const initialStates: Graph = {
   graphCollapsed: false,
   foldNodes: false,
   fullscreen: false,
+  collapseAll: false,
   nodes: [],
   edges: [],
   collapsedNodes: [],
@@ -54,6 +56,7 @@ interface GraphActions {
   getCollapsedEdgeIds: () => string[];
   toggleFold: (value: boolean) => void;
   toggleFullscreen: (value: boolean) => void;
+  toggleCollapseAll: (value: boolean) => void;
   zoomIn: () => void;
   zoomOut: () => void;
   centerView: () => void;
@@ -62,6 +65,10 @@ interface GraphActions {
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
   ...initialStates,
+  toggleCollapseAll: collapseAll => {
+    set({ collapseAll });
+    get().collapseGraph();
+  },
   clearGraph: () => set({ nodes: [], edges: [], loading: false }),
   getCollapsedNodeIds: () => get().collapsedNodes,
   getCollapsedEdgeIds: () => get().collapsedEdges,
@@ -69,16 +76,20 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
   setGraph: (data, options) => {
     const { nodes, edges } = parser(data ?? useJson.getState().json);
 
-    set({
-      nodes,
-      edges,
-      collapsedParents: [],
-      collapsedNodes: [],
-      collapsedEdges: [],
-      graphCollapsed: false,
-      loading: true,
-      ...options,
-    });
+    if (get().collapseAll) {
+      set({ nodes, edges, ...options });
+      get().collapseGraph();
+    } else {
+      set({
+        nodes,
+        edges,
+        collapsedParents: [],
+        collapsedNodes: [],
+        collapsedEdges: [],
+        graphCollapsed: false,
+        ...options,
+      });
+    }
   },
   setDirection: (direction = "RIGHT") => {
     set({ direction });
@@ -184,16 +195,18 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
   },
   zoomIn: () => {
     const viewPort = get().viewPort;
-    viewPort?.camera.recenter(viewPort.centerX, viewPort.centerY, viewPort.zoomFactor + 0.1);
+    viewPort?.camera?.recenter(viewPort.centerX, viewPort.centerY, viewPort.zoomFactor + 0.1);
   },
   zoomOut: () => {
     const viewPort = get().viewPort;
-    viewPort?.camera.recenter(viewPort.centerX, viewPort.centerY, viewPort.zoomFactor - 0.1);
+    viewPort?.camera?.recenter(viewPort.centerX, viewPort.centerY, viewPort.zoomFactor - 0.1);
   },
   centerView: () => {
     const viewPort = get().viewPort;
-    const canvas = document.querySelector(".jsoncrack-canvas") as HTMLElement;
-    viewPort?.camera.centerFitElementIntoView(canvas);
+    const canvas = document.querySelector(".jsoncrack-canvas") as HTMLElement | null;
+    if (canvas) {
+      viewPort?.camera?.centerFitElementIntoView(canvas);
+    }
   },
   toggleFold: foldNodes => {
     set({ foldNodes });

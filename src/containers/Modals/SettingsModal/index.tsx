@@ -3,10 +3,16 @@ import { Modal, Group, Switch, Stack, ModalProps } from "@mantine/core";
 import useStored from "src/store/useStored";
 
 export const SettingsModal: React.FC<ModalProps> = ({ opened, onClose }) => {
+  // const { validateHiddenNodes } = useToggleHide();
+  // const isPremium = useUser(state => state.premium);
+  // const setVisible = useModal(state => state.setVisible);
+  // const toggleCollapseAll = useGraph(state => state.toggleCollapseAll);
+  // const collapseAll = useGraph(state => state.collapseAll);
   const setLightTheme = useStored(state => state.setLightTheme);
   const toggleHideCollapse = useStored(state => state.toggleHideCollapse);
   const toggleChildrenCount = useStored(state => state.toggleChildrenCount);
   const toggleImagePreview = useStored(state => state.toggleImagePreview);
+
   const hideCollapse = useStored(state => state.hideCollapse);
   const childrenCount = useStored(state => state.childrenCount);
   const imagePreview = useStored(state => state.imagePreview);
@@ -37,6 +43,28 @@ export const SettingsModal: React.FC<ModalProps> = ({ opened, onClose }) => {
             onChange={e => toggleChildrenCount(e.currentTarget.checked)}
             checked={childrenCount}
           />
+          {/* <Switch
+            label={
+              <Flex align="center" gap="xs">
+                Collapse All by Default
+                <Badge size="xs" color="violet" variant="outline" radius="sm">
+                  For Big Datasets
+                </Badge>
+              </Flex>
+            }
+            size="md"
+            color="violet"
+            onChange={e => {
+              if (isPremium) {
+                toggleCollapseAll(e.currentTarget.checked);
+                return validateHiddenNodes();
+              }
+              setVisible("premium")(true);
+              onClose();
+            }}
+            checked={collapseAll}
+            offLabel={isPremium ? null : <VscLock size="12" />}
+          /> */}
           <Switch
             label="Light Theme"
             size="md"

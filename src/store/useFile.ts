@@ -68,10 +68,10 @@ const isURL = (value: string) => {
   );
 };
 
-const debouncedUpdateJson = debounce(
-  (value: unknown) => useJson.getState().setJson(JSON.stringify(value, null, 2)),
-  800
-);
+const debouncedUpdateJson = debounce((value: unknown) => {
+  useGraph.getState().setLoading(true);
+  useJson.getState().setJson(JSON.stringify(value, null, 2));
+}, 800);
 
 const filterArrayAndObjectFields = (obj: object) => {
   const result = {};

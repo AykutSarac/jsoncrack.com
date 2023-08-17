@@ -111,10 +111,10 @@ const GraphCanvas = ({ isWidget }: { isWidget: boolean }) => {
         setPaneHeight((layout.height as number) + 50);
 
         setTimeout(() => {
-          setLoading(false);
           validateHiddenNodes();
           window.requestAnimationFrame(() => {
             if (changeRatio > 70 || isWidget) centerView();
+            setLoading(false);
           });
         });
       }
@@ -170,6 +170,7 @@ const GraphCanvas = ({ isWidget }: { isWidget: boolean }) => {
 
 export const Graph = ({ isWidget = false }: GraphProps) => {
   const setViewPort = useGraph(state => state.setViewPort);
+  const loading = useGraph(state => state.loading);
   const isPremium = useUser(state => state.premium);
   const viewType = useGraph(state =>
     state.nodes.length > 6_000 ? "error" : state.nodes.length > 250 ? "premium" : "graph"
@@ -200,7 +201,7 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
 
   return (
     <>
-      <Loading message="Painting graph..." />
+      <Loading loading={loading} message="Painting graph..." />
       <StyledEditorWrapper
         $widget={isWidget}
         onContextMenu={e => e.preventDefault()}

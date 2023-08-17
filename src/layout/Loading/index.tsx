@@ -1,7 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import { Center, Image, Stack } from "@mantine/core";
-import useGraph from "src/store/useGraph";
 import { JSONCrackLogo } from "../JsonCrackLogo";
 
 interface LoadingProps {
@@ -30,7 +29,7 @@ const StyledLoading = styled.div<{ $visible: boolean }>`
   z-index: 100;
   pointer-events: visiblePainted;
   cursor: wait;
-  animation: 0.2s ${fadeIn};
+  animation: 200ms ${fadeIn};
   animation-fill-mode: forwards;
   visibility: hidden;
   backdrop-filter: blur(5px);
@@ -47,9 +46,7 @@ const StyledMessage = styled.div`
   font-weight: 600;
 `;
 
-export const Loading: React.FC<LoadingProps> = ({ loading: innerLoading = false, message }) => {
-  const loading = useGraph(state => state.loading || innerLoading);
-
+export const Loading: React.FC<LoadingProps> = ({ loading = false, message }) => {
   return (
     <Center mx="auto">
       <StyledLoading $visible={loading}>
