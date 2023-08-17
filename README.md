@@ -11,7 +11,7 @@
 
 <div align="center">
   <h2>
-    An innovative, open source JSON visualization app.
+    An innovative, open source data visualization app.
     <br />
     Brings data to life through captivating graphs.
   </h2>
@@ -31,13 +31,13 @@
 
 # JSON Crack (jsoncrack.com)
 
-JSON Crack is a free, open-source JSON visualization app that will revolutionize the way you work with data. With its intuitive and user-friendly interface, JSON Crack makes it easy to explore, analyze, and understand even the most complex JSON structures. Whether you're a developer working on a large-scale project or a data enthusiast looking to uncover hidden insights, JSON Crack has the tools and features you need to unlock the full potential of your data.
+JSON Crack is a free, open-source data visualization app capable of visualization data formats such as JSON, YAML, XML, CSV and more, into interactive graphs. With its intuitive and user-friendly interface, JSON Crack makes it easy to explore, analyze, and understand even the most complex data structures. Whether you're a developer working on a large-scale project or a data enthusiast looking to uncover hidden insights, JSON Crack has the tools and features you need to unlock the full potential of your data.
 
 ## Features
 - 💯 Free & open-source.
 - 🌓 Dark mode.
-- 🖼️ Export to PNG, SVG & clipboard.
-- 🔍 Zoom and panning support.
+- 🖼️ Export to PNG, SVG, JPEG & clipboard.
+- 🔍 Zoom and panning support with touch gestures.
 - 🛠 Wide range of tools - search, json path, node contents, expand/toggle, auto format...
 - 🔗 Share/Import/Fetch
 - 🧱 Embeddable iframe widgets.
