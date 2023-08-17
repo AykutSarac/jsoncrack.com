@@ -84,9 +84,6 @@ docker run -p 8888:8080 jsoncrack
 
 Last but not least, we're thankful to these companies for offering their services for free:
 
-<a href="https://altogic.com">
-  <img height="30" src="https://cdn.webrazzi.com/uploads/2022/04/altogic-167.png" alt="Altogic" />
-</a>
 <a href="https://sentry.io">
   <img height="30" src="https://user-images.githubusercontent.com/47941171/236691121-717c7975-809f-4508-b58e-5ada2f7e8c7c.png" alt="Sentry" />
 </a>

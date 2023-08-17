@@ -259,22 +259,9 @@ export const BottomBar = () => {
       </StyledLeft>
 
       <StyledRight>
-        <a
-          href="https://www.altogic.com/?utm_source=jsoncrack&utm_medium=referral&utm_campaign=sponsorship"
-          rel="sponsored noreferrer"
-          target="_blank"
-        >
-          <StyledBottomBarItem>
-            Powered by
-            <StyledImg
-              height="20"
-              width="54"
-              src="https://www.altogic.com/img/logo_dark.svg"
-              alt="powered by altogic"
-              $light={lightmode}
-            />
-          </StyledBottomBarItem>
-        </a>
+        {/**
+         * Sponsor here
+         */}
       </StyledRight>
     </StyledBottomBar>
   );
