@@ -100,7 +100,11 @@ const Node: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) =>
 };
 
 function propsAreEqual(prev: CustomNodeProps, next: CustomNodeProps) {
-  return prev.node.text === next.node.text && prev.node.width === next.node.width;
+  return (
+    prev.node.text === next.node.text &&
+    prev.node.width === next.node.width &&
+    prev.node.data.childrenCount === next.node.data.childrenCount
+  );
 }
 
 export const TextNode = React.memo(Node, propsAreEqual);
