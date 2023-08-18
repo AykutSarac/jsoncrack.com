@@ -2013,6 +2013,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/jxon@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@types/jxon/-/jxon-2.0.2.tgz#fe2be4f736b0fbbf76d458ce6cc42ea1998a1874"
+  integrity sha512-L8GFQ77kdpe4cCwO6zn5aPpKfEAqgLtTxaieYDldR8xKn7d5Yk8F5NKwdYjcXFzMiArV943AXs4LKXlEskaK6g==
+
 "@types/lodash.debounce@^4.0.7":
   version "4.0.7"
   resolved "https://registry.yarnpkg.com/@types/lodash.debounce/-/lodash.debounce-4.0.7.tgz#0285879defb7cdb156ae633cecd62d5680eded9f"

@@ -1,18 +1,26 @@
 import React from "react";
-import { Stack, Modal, Button, ModalProps, Text } from "@mantine/core";
+import { Stack, Modal, Button, ModalProps, Text, Anchor } from "@mantine/core";
 import Editor from "@monaco-editor/react";
+import { parse } from "jsonc-parser";
 import { toast } from "react-hot-toast";
+import { VscLock } from "react-icons/vsc";
 import useFile from "src/store/useFile";
+import useModal from "src/store/useModal";
 import useStored from "src/store/useStored";
+import useUser from "src/store/useUser";
 
 export const SchemaModal: React.FC<ModalProps> = ({ opened, onClose }) => {
+  const isPremium = useUser(state => state.premium);
+  const showPremiumModal = useModal(state => state.setVisible("premium"));
   const setJsonSchema = useFile(state => state.setJsonSchema);
   const [schema, setSchema] = React.useState("");
   const lightmode = useStored(state => (state.lightmode ? "light" : "vs-dark"));
 
   const onApply = () => {
+    if (!isPremium) return showPremiumModal(true);
+
     try {
-      const parsedSchema = JSON.parse(schema);
+      const parsedSchema = parse(schema);
 
       setJsonSchema(parsedSchema);
       toast.success("Applied schema!");
@@ -32,7 +40,12 @@ export const SchemaModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   return (
     <Modal title="JSON Schema" opened={opened} onClose={onClose} centered>
       <Stack py="sm">
-        <Text fz="sm">Any validation failures are shown at the bottom toolbar of pane.</Text>
+        <Text fz="sm">
+          Any validation failures are shown at the bottom toolbar of pane.{" "}
+          <Anchor target="_blank" href="https://json-schema.org/">
+            What is a JSON Schema?
+          </Anchor>
+        </Text>
         <Editor
           value={schema ?? ""}
           theme={lightmode}
@@ -47,7 +60,12 @@ export const SchemaModal: React.FC<ModalProps> = ({ opened, onClose }) => {
             },
           }}
         />
-        <Button onClick={onApply} disabled={!schema} fullWidth>
+        <Button
+          onClick={onApply}
+          disabled={!schema}
+          rightIcon={!isPremium && <VscLock />}
+          fullWidth
+        >
           Apply
         </Button>
         <Button variant="outline" onClick={onClear} disabled={!schema} fullWidth>

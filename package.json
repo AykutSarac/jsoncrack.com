@@ -26,6 +26,7 @@
     "@supabase/auth-helpers-react": "^0.4.2",
     "@supabase/supabase-js": "^2.31.0",
     "@tanstack/react-query": "^4.32.5",
+    "@types/jxon": "^2.0.2",
     "allotment": "^1.19.2",
     "axios": "^1.4.0",
     "dayjs": "^1.11.9",

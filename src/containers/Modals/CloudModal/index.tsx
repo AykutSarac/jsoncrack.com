@@ -66,7 +66,7 @@ const UpdateNameModal: React.FC<{
   };
 
   return (
-    <Modal title="Update Document name" opened={!!file} onClose={onClose} centered>
+    <Modal title="Update Document name" opened={!!file} onClose={onClose} centered zIndex={202}>
       <Stack>
         <Input
           value={name}
@@ -187,14 +187,7 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   );
 
   return (
-    <Modal
-      title="Saved On The Cloud"
-      opened={opened}
-      size="xl"
-      onClose={onClose}
-      centered
-      hidden={!!currentFile}
-    >
+    <Modal title="Saved On The Cloud" opened={opened} size="xl" onClose={onClose} centered>
       <Paper>
         <ScrollArea h={360} offsetScrollbars>
           <Table fontSize="xs" verticalSpacing="xs" striped>

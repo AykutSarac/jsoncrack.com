@@ -74,7 +74,6 @@ export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const onEditClick = () => {
     if (isPremium) return setEditMode(true);
     setVisible("premium")(true);
-    onModalClose();
   };
 
   const isEditVisible = React.useMemo(

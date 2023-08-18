@@ -15,7 +15,7 @@ import { BsCheck } from "react-icons/bs";
 
 export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   return (
-    <Modal title="Your Plan" size="auto" opened={opened} onClose={onClose} centered>
+    <Modal title="Your Plan" size="auto" opened={opened} onClose={onClose} centered zIndex={202}>
       <Flex gap="lg">
         <Stack spacing="xs">
           <Title order={3}>

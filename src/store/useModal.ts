@@ -27,8 +27,8 @@ const initialStates: ModalState = {
   cancelPremium: false,
 };
 
-const authModals: Modal[] = ["cloud", "account", "schema"];
-const premiumModals: Modal[] = ["schema"];
+const authModals: Modal[] = ["cloud", "account"];
+const premiumModals: Modal[] = [];
 
 const useModal = create<ModalState & ModalActions>()(set => ({
   ...initialStates,
