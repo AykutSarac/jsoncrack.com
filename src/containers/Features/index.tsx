@@ -8,16 +8,17 @@ import {
   rem,
   MediaQuery,
 } from "@mantine/core";
-import { FaGithubAlt, FaProjectDiagram, FaRegImages } from "react-icons/fa";
+import { FaProjectDiagram, FaRegImages } from "react-icons/fa";
+import { MdOutlineDesignServices } from "react-icons/md";
 import { TbTransform } from "react-icons/tb";
 import { VscCloud, VscJson } from "react-icons/vsc";
 
 const mockdata = [
   {
-    title: "Free and Open Source",
+    title: "Designed for Everyone",
     description:
-      "JSON Crack is an open-source tool, released under the GPL-3 license. This means users can access the source code, modify it, and contribute to the community, fostering innovation and collaboration.",
-    icon: <FaGithubAlt size="30" />,
+      "We focus on simplicity and ease of use. Whether you're a data scientist or product owner, JSON Crack is the tool for you to understand your data.",
+    icon: <MdOutlineDesignServices size="30" />,
   },
   {
     title: "Interactive Graphs",
