@@ -42,6 +42,8 @@ const contentToJson = async (value: string, format = FileFormat.JSON): Promise<o
     if (format === FileFormat.CSV) json = await csv2json(value);
     if (format === FileFormat.XML && keyExists(json, "parsererror")) throw Error("Unknown error!");
 
+    if (!json) throw Error("Invalid JSON!");
+
     return Promise.resolve(json);
   } catch (error: any) {
     throw error;
