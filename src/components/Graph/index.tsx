@@ -173,7 +173,7 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
   const loading = useGraph(state => state.loading);
   const isPremium = useUser(state => state.premium);
   const viewType = useGraph(state =>
-    state.nodes.length > 6_000 ? "error" : state.nodes.length > 250 ? "premium" : "graph"
+    state.nodes.length > 6_000 ? "error" : state.nodes.length > 400 ? "premium" : "graph"
   );
 
   const callback = React.useCallback(() => {
