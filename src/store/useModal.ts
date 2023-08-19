@@ -25,6 +25,7 @@ const initialStates: ModalState = {
   jwt: false,
   schema: false,
   cancelPremium: false,
+  review: false,
 };
 
 const authModals: Modal[] = ["cloud", "account"];

@@ -2,9 +2,11 @@ import React from "react";
 import { Modal, Group, Button, Divider, ModalProps, Text, Image, Anchor } from "@mantine/core";
 import { toast } from "react-hot-toast";
 import { supabase } from "src/lib/api/supabase";
+import useModal from "src/store/useModal";
 
 export const CancelPremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const [cancelling, setCancelling] = React.useState(false);
+  const showFeedback = useModal(state => state.setVisible("review"));
 
   const cancelSub = async () => {
     try {
@@ -26,6 +28,7 @@ export const CancelPremiumModal: React.FC<ModalProps> = ({ opened, onClose }) =>
         }
 
         toast.success("Cancelled premium plan!");
+        showFeedback(true);
       } else {
         toast.error("Couldn't fetch user details, please contact: contact@jsoncrack.com");
       }

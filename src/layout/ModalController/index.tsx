@@ -21,6 +21,7 @@ const modalComponents: ModalComponent[] = [
   { key: "node", component: Modals.NodeModal },
   { key: "schema", component: Modals.SchemaModal },
   { key: "cancelPremium", component: Modals.CancelPremiumModal },
+  { key: "review", component: Modals.ReviewModal },
 ];
 
 const ModalController = () => {

@@ -13,7 +13,13 @@ import {
 } from "react-icons/ai";
 import { MdReportGmailerrorred, MdOutlineCheckCircleOutline } from "react-icons/md";
 import { TbTransform } from "react-icons/tb";
-import { VscAccount, VscSync, VscSyncIgnored, VscWorkspaceTrusted } from "react-icons/vsc";
+import {
+  VscAccount,
+  VscStarEmpty,
+  VscSync,
+  VscSyncIgnored,
+  VscWorkspaceTrusted,
+} from "react-icons/vsc";
 import { saveToCloud, updateJson } from "src/services/json";
 import useFile from "src/store/useFile";
 import useModal from "src/store/useModal";
@@ -259,9 +265,10 @@ export const BottomBar = () => {
       </StyledLeft>
 
       <StyledRight>
-        {/**
-         * Sponsor here
-         */}
+        <StyledBottomBarItem onClick={() => setVisible("review")(true)}>
+          <VscStarEmpty />
+          Leave Review
+        </StyledBottomBarItem>
       </StyledRight>
     </StyledBottomBar>
   );
