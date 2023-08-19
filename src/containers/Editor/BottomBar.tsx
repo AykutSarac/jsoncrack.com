@@ -97,7 +97,6 @@ export const BottomBar = () => {
   const data = useFile(state => state.fileData);
   const user = useUser(state => state.user);
   const premium = useUser(state => state.premium);
-  const lightmode = useStored(state => state.lightmode);
   const toggleLiveTransform = useStored(state => state.toggleLiveTransform);
   const liveTransform = useStored(state => state.liveTransform);
   const hasChanges = useFile(state => state.hasChanges);
@@ -195,7 +194,7 @@ export const BottomBar = () => {
           <VscAccount />
           {user?.user_metadata.name ?? "Login"}
           {premium && (
-            <Badge size="sm" color="orange" radius="sm" fw="bold">
+            <Badge size="xs" color="orange" radius="sm" fw="bold">
               PREMIUM
             </Badge>
           )}

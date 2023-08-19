@@ -2,7 +2,6 @@ import React from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import { Button } from "@mantine/core";
-import { FaStar } from "react-icons/fa";
 import useUser from "src/store/useUser";
 import { JSONCrackLogo } from "../JsonCrackLogo";
 
@@ -55,13 +54,24 @@ export const Navbar = () => {
         </Left>
         <Middle className="hide-mobile">
           <Button
-            component="a"
-            href="https://github.com/AykutSarac/jsoncrack.com"
+            component={Link}
+            href="/pricing"
+            prefetch={false}
             variant="subtle"
             color="dark"
             radius="md"
           >
-            GitHub
+            Pricing
+          </Button>
+          <Button
+            component={Link}
+            href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode"
+            prefetch={false}
+            variant="subtle"
+            color="dark"
+            radius="md"
+          >
+            VS Code
           </Button>
           <Button
             component={Link}
@@ -73,38 +83,8 @@ export const Navbar = () => {
           >
             Docs
           </Button>
-          <Button
-            component={Link}
-            href="/oss"
-            prefetch={false}
-            variant="subtle"
-            color="dark"
-            radius="md"
-          >
-            Supporters
-          </Button>
-          <Button
-            component={Link}
-            href="/pricing"
-            prefetch={false}
-            variant="subtle"
-            color="dark"
-            radius="md"
-          >
-            Pricing
-          </Button>
         </Middle>
         <Right>
-          <Button
-            component="a"
-            href="https://github.com/AykutSarac/jsoncrack.com"
-            variant="subtle"
-            radius="md"
-            leftIcon={<FaStar />}
-            className="desktop"
-          >
-            Star us on GitHub
-          </Button>
           {!isAuthenticated && (
             <Button
               component={Link}

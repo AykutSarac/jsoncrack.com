@@ -307,7 +307,7 @@ const SignIn = () => {
         </Alert>
       )}
 
-      <Paper mx="auto" maw={400} mt={50} p="lg" withBorder>
+      <Paper shadow="md" mx="auto" maw={400} mt={50} p="lg" withBorder>
         <JSONCrackLogo />
         {isPasswordReset ? <ResetPassword /> : <AuthenticationForm />}
       </Paper>

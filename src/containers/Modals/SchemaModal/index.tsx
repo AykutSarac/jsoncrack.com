@@ -1,7 +1,6 @@
 import React from "react";
 import { Stack, Modal, Button, ModalProps, Text, Anchor, Group } from "@mantine/core";
 import Editor from "@monaco-editor/react";
-import { parse } from "jsonc-parser";
 import { toast } from "react-hot-toast";
 import { VscLock } from "react-icons/vsc";
 import useFile from "src/store/useFile";
@@ -20,7 +19,7 @@ export const SchemaModal: React.FC<ModalProps> = ({ opened, onClose }) => {
     if (!isPremium) return showPremiumModal(true);
 
     try {
-      const parsedSchema = parse(schema);
+      const parsedSchema = JSON.parse(schema);
 
       setJsonSchema(parsedSchema);
       toast.success("Applied schema!");

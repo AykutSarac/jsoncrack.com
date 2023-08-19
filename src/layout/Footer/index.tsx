@@ -9,7 +9,11 @@ export const Footer = () => {
           title: "Developers",
           links: [
             {
-              label: "Open Source",
+              label: "GitHub",
+              link: "https://github.com/AykutSarac/jsoncrack.com",
+            },
+            {
+              label: "Supporters",
               link: "/oss",
             },
             {
