@@ -1,5 +1,5 @@
 import React from "react";
-import { Stack, Modal, Button, ModalProps, Text, Anchor } from "@mantine/core";
+import { Stack, Modal, Button, ModalProps, Text, Anchor, Group } from "@mantine/core";
 import Editor from "@monaco-editor/react";
 import { parse } from "jsonc-parser";
 import { toast } from "react-hot-toast";
@@ -38,7 +38,7 @@ export const SchemaModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   };
 
   return (
-    <Modal title="JSON Schema" opened={opened} onClose={onClose} centered>
+    <Modal title="JSON Schema" size="lg" opened={opened} onClose={onClose} centered>
       <Stack py="sm">
         <Text fz="sm">
           Any validation failures are shown at the bottom toolbar of pane.{" "}
@@ -60,17 +60,14 @@ export const SchemaModal: React.FC<ModalProps> = ({ opened, onClose }) => {
             },
           }}
         />
-        <Button
-          onClick={onApply}
-          disabled={!schema}
-          rightIcon={!isPremium && <VscLock />}
-          fullWidth
-        >
-          Apply
-        </Button>
-        <Button variant="outline" onClick={onClear} disabled={!schema} fullWidth>
-          Clear
-        </Button>
+        <Group position="right">
+          <Button variant="outline" onClick={onClear} disabled={!schema}>
+            Clear
+          </Button>
+          <Button onClick={onApply} disabled={!schema} rightIcon={!isPremium && <VscLock />}>
+            Apply
+          </Button>
+        </Group>
       </Stack>
     </Modal>
   );
