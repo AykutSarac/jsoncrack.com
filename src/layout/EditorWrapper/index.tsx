@@ -34,10 +34,10 @@ const mantineTheme: MantineThemeOverride = {
           fontWeight: 700,
         },
         header: {
-          backgroundColor: theme.colorScheme === "dark" ? "#36393E" : "#F3F3F3",
+          backgroundColor: theme.colorScheme === "dark" ? "#4a4d52" : "#F3F3F3",
         },
         body: {
-          backgroundColor: theme.colorScheme === "dark" ? "#36393E" : "#F3F3F3",
+          backgroundColor: theme.colorScheme === "dark" ? "#4a4d52" : "#F3F3F3",
         },
       }),
     },
