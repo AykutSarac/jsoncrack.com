@@ -6,7 +6,6 @@ import Document, {
   DocumentContext,
   DocumentInitialProps,
 } from "next/document";
-import Script from "next/script";
 import { ServerStyleSheet } from "styled-components";
 import { createGetInitialProps } from "@mantine/next";
 import { SeoTags } from "src/components/SeoTags";
@@ -55,10 +54,6 @@ class MyDocument extends Document {
         </Head>
         <body>
           <Main />
-          <Script
-            src="https://m.servedby-buysellads.com/monetization.js"
-            strategy="beforeInteractive"
-          />
           <NextScript />
         </body>
       </Html>

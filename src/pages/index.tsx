@@ -2,6 +2,7 @@ import React from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import Link from "next/link";
+import Script from "next/script";
 import styled, { ThemeProvider } from "styled-components";
 import {
   Anchor,
@@ -270,6 +271,8 @@ const HeroBottom = () => (
 );
 
 export const HomePage = () => {
+  const [ads, setAds] = React.useState(false);
+
   return (
     <ThemeProvider theme={lightTheme}>
       <Head>
@@ -279,8 +282,9 @@ export const HomePage = () => {
       <StatsBanner />
       <FeaturesCards />
       <HeroBottom />
-      <HovercardAds />
       <Footer />
+      {ads && <HovercardAds />}
+      <Script src="https://m.servedby-buysellads.com/monetization.js" onLoad={() => setAds(true)} />
     </ThemeProvider>
   );
 };
