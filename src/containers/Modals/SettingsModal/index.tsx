@@ -1,13 +1,18 @@
 import React from "react";
 import { Modal, Group, Switch, Stack, ModalProps } from "@mantine/core";
+// import { VscLock } from "react-icons/vsc";
+// import useToggleHide from "src/hooks/useToggleHide";
+// import useGraph from "src/store/useGraph";
+// import useModal from "src/store/useModal";
+// import useUser from "src/store/useUser";
 import useStored from "src/store/useStored";
 
 export const SettingsModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   // const { validateHiddenNodes } = useToggleHide();
-  // const isPremium = useUser(state => state.premium);
   // const setVisible = useModal(state => state.setVisible);
   // const toggleCollapseAll = useGraph(state => state.toggleCollapseAll);
   // const collapseAll = useGraph(state => state.collapseAll);
+  // const isPremium = useUser(state => state.premium);
   const setLightTheme = useStored(state => state.setLightTheme);
   const toggleHideCollapse = useStored(state => state.toggleHideCollapse);
   const toggleChildrenCount = useStored(state => state.toggleChildrenCount);
@@ -48,7 +53,7 @@ export const SettingsModal: React.FC<ModalProps> = ({ opened, onClose }) => {
               <Flex align="center" gap="xs">
                 Collapse All by Default
                 <Badge size="xs" color="violet" variant="outline" radius="sm">
-                  For Big Datasets
+                  35% Faster
                 </Badge>
               </Flex>
             }

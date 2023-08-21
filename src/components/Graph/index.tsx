@@ -3,22 +3,15 @@ import dynamic from "next/dynamic";
 import styled from "styled-components";
 import { Space } from "react-zoomable-ui";
 import { ElkRoot } from "reaflow/dist/layout/useLayout";
-import { EdgeProps } from "reaflow/dist/symbols/Edge";
-import { NodeProps } from "reaflow/dist/symbols/Node";
 import { useLongPress } from "use-long-press";
 import { CustomNode } from "src/components/Graph/CustomNode";
 import useToggleHide from "src/hooks/useToggleHide";
 import { Loading } from "src/layout/Loading";
 import useGraph from "src/store/useGraph";
-import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
-import { NodeData } from "src/types/models";
+import { CustomEdge } from "./CustomEdge";
 import { ErrorView } from "./ErrorView";
 import { PremiumView } from "./PremiumView";
-
-const Edge = dynamic(() => import("reaflow").then(r => r.Edge), {
-  ssr: false,
-});
 
 const Canvas = dynamic(() => import("reaflow").then(r => r.Canvas), {
   ssr: false,
@@ -84,22 +77,12 @@ const GraphCanvas = ({ isWidget }: { isWidget: boolean }) => {
   const { validateHiddenNodes } = useToggleHide();
   const setLoading = useGraph(state => state.setLoading);
   const centerView = useGraph(state => state.centerView);
-  const setSelectedNode = useGraph(state => state.setSelectedNode);
-  const setVisible = useModal(state => state.setVisible);
   const direction = useGraph(state => state.direction);
   const nodes = useGraph(state => state.nodes);
   const edges = useGraph(state => state.edges);
 
   const [paneWidth, setPaneWidth] = React.useState(2000);
   const [paneHeight, setPaneHeight] = React.useState(2000);
-
-  const handleNodeClick = React.useCallback(
-    (_: React.MouseEvent<SVGElement>, data: NodeData) => {
-      if (setSelectedNode) setSelectedNode(data);
-      setVisible("node")(true);
-    },
-    [setSelectedNode, setVisible]
-  );
 
   const onLayoutChange = React.useCallback(
     (layout: ElkRoot) => {
@@ -119,31 +102,15 @@ const GraphCanvas = ({ isWidget }: { isWidget: boolean }) => {
         });
       }
     },
-    [centerView, isWidget, paneHeight, paneWidth, setLoading, validateHiddenNodes]
-  );
-
-  const onCanvasClick = React.useCallback(() => {
-    (document.activeElement as HTMLElement)?.blur();
-  }, []);
-
-  const memoizedNode = React.useCallback(
-    (props: JSX.IntrinsicAttributes & NodeProps<any>) => (
-      // @ts-ignore
-      <CustomNode {...props} onClick={handleNodeClick} />
-    ),
-    [handleNodeClick]
-  );
-
-  const memoizedEdge = React.useCallback(
-    (props: JSX.IntrinsicAttributes & Partial<EdgeProps>) => (
-      <Edge {...props} containerClassName={`edge-${props.id}`} />
-    ),
-    []
+    [isWidget, paneHeight, paneWidth, centerView, setLoading, validateHiddenNodes]
   );
 
   return (
     <Canvas
       className="jsoncrack-canvas"
+      onLayoutChange={onLayoutChange}
+      node={p => <CustomNode {...p} />}
+      edge={p => <CustomEdge {...p} />}
       nodes={nodes}
       edges={edges}
       maxHeight={paneHeight}
@@ -152,10 +119,6 @@ const GraphCanvas = ({ isWidget }: { isWidget: boolean }) => {
       width={paneWidth}
       direction={direction}
       layoutOptions={layoutOptions}
-      onLayoutChange={onLayoutChange}
-      onCanvasClick={onCanvasClick}
-      node={memoizedNode}
-      edge={memoizedEdge}
       key={direction}
       pannable={false}
       zoomable={false}

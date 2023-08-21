@@ -22,6 +22,10 @@ const GlobalStyle = createGlobalStyle`
     display: none;
   }
 
+  /* g {
+    opacity: 1 !important;
+  } */
+
   .mantine-Modal-inner {
     padding: 0;
   }
