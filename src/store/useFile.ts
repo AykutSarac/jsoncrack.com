@@ -127,7 +127,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
 
       if (!useStored.getState().liveTransform && skipUpdate) return;
 
-      if (contents && contents.length < 80_000 && !isIframe() && !isFetchURL) {
+      if (get().hasChanges && contents && contents.length < 80_000 && !isIframe() && !isFetchURL) {
         sessionStorage.setItem("content", contents);
         sessionStorage.setItem("format", get().format);
         set({ hasChanges: true });
