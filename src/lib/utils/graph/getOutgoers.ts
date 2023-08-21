@@ -1,11 +1,13 @@
 import { NodeData, EdgeData } from "src/types/models";
 
+type Outgoers = [NodeData[], string[]];
+
 export const getOutgoers = (
   nodeId: string,
   nodes: NodeData[],
   edges: EdgeData[],
   parent: string[] = []
-): [NodeData[], string[]] => {
+): Outgoers => {
   const outgoerNodes: NodeData[] = [];
   const matchingNodes: string[] = [];
 

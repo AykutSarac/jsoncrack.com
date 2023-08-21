@@ -6,6 +6,14 @@ import { addNodeToGraph } from "./addNodeToGraph";
 
 type PrimitiveOrNullType = "boolean" | "string" | "number" | "null";
 
+type Traverse = {
+  states: States;
+  objectToTraverse: Node;
+  parentType?: string;
+  myParentId?: string;
+  nextType?: string;
+};
+
 const isPrimitiveOrNullType = (type: unknown): type is PrimitiveOrNullType => {
   return ["boolean", "string", "number", "null"].includes(type as string);
 };
@@ -228,14 +236,6 @@ function handleHasChildren(
     }
   }
 }
-
-type Traverse = {
-  states: States;
-  objectToTraverse: Node;
-  parentType?: string;
-  myParentId?: string;
-  nextType?: string;
-};
 
 export const traverse = ({
   objectToTraverse,

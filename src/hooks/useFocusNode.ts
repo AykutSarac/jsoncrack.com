@@ -10,10 +10,17 @@ export const useFocusNode = () => {
   const [value, setValue] = React.useState("");
   const [debouncedValue] = useDebouncedValue(value, 600);
 
-  const skip = () => setSelectedNode(current => current + 1);
+  const skip = () => setSelectedNode(current => (current + 1) % nodeCount);
 
   React.useEffect(() => {
-    if (!viewPort) return;
+    if (!value) {
+      cleanupHighlight();
+      setSelectedNode(0);
+      setNodeCount(0);
+      return;
+    }
+
+    if (!viewPort || !debouncedValue) return;
     const matchedNodes: NodeListOf<Element> = searchQuery(`span[data-key*='${debouncedValue}' i]`);
     const matchedNode: Element | null = matchedNodes[selectedNode] || null;
 
@@ -30,13 +37,6 @@ export const useFocusNode = () => {
       setSelectedNode(0);
       setNodeCount(0);
     }
-
-    return () => {
-      if (!value) {
-        setSelectedNode(0);
-        setNodeCount(0);
-      }
-    };
   }, [selectedNode, debouncedValue, value, viewPort]);
 
   return [value, setValue, skip, nodeCount, selectedNode] as const;
