@@ -11,8 +11,8 @@ const monaSans = localFont({
 const firaMono = Fira_Mono({
   weight: ["500"],
   subsets: ["latin"],
-  display: "block",
-  preload: false,
+  display: "swap",
+  fallback: ["monospace"],
 });
 
 export { monaSans, firaMono };
