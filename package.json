@@ -47,7 +47,7 @@
     "react-linkify-it": "^1.0.7",
     "react-simple-typewriter": "^5.0.1",
     "react-zoomable-ui": "^0.11.0",
-    "reaflow": "5.2.3",
+    "reaflow": "5.1.2",
     "styled-components": "^6.0.7",
     "toml": "^3.0.0",
     "use-long-press": "^3.1.5",

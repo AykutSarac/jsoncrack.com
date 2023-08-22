@@ -1345,7 +1345,7 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@juggle/resize-observer@^3.3.1", "@juggle/resize-observer@^3.4.0":
+"@juggle/resize-observer@^3.3.1":
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/@juggle/resize-observer/-/resize-observer-3.4.0.tgz#08d6c5e20cf7e4cc02fd181c4b0c225cd31dbb60"
   integrity sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==
@@ -2572,7 +2572,7 @@ chokidar@^3.4.0:
   optionalDependencies:
     fsevents "~2.3.2"
 
-classnames@^2.3.0, classnames@^2.3.2:
+classnames@^2.3.0, classnames@^2.3.1, classnames@^2.3.2:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.2.tgz#351d813bf0137fcc6a76a16b88208d2560a0d924"
   integrity sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw==
@@ -4952,7 +4952,7 @@ queue-microtask@^1.2.2:
   resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
 
-rdk@^6.5.0:
+rdk@^6.1.0:
   version "6.5.0"
   resolved "https://registry.yarnpkg.com/rdk/-/rdk-6.5.0.tgz#9e79c562a2c668551c6d80338c1efcca21266450"
   integrity sha512-Jrv4YFVH07JI03wxwsQhosypdyqOHirzNU0pfmteIfylhSpaIi8VnAp3MbznD3/ZKZyt6YRj0kMtQopTwIxMUw==
@@ -4975,7 +4975,7 @@ react-dom@^18.2.0:
     loose-envify "^1.1.0"
     scheduler "^0.23.0"
 
-react-fast-compare@^3.2.2:
+react-fast-compare@^3.2.0:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/react-fast-compare/-/react-fast-compare-3.2.2.tgz#929a97a532304ce9fee4bcae44234f1ce2c21d49"
   integrity sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==
@@ -5109,14 +5109,13 @@ readdirp@~3.6.0:
   dependencies:
     picomatch "^2.2.1"
 
-reaflow@5.2.3:
-  version "5.2.3"
-  resolved "https://registry.yarnpkg.com/reaflow/-/reaflow-5.2.3.tgz#b57531e714672926801a89ebb2a4557e458356fb"
-  integrity sha512-und3DtaerbOZ3N22dl9+NCBzqTrlJhS8wQAiDL3oDKJR6mMABDLgB/TcK2YtcDDoJxj4c7lePrTt7TNGO7kAMQ==
+reaflow@5.1.2:
+  version "5.1.2"
+  resolved "https://registry.yarnpkg.com/reaflow/-/reaflow-5.1.2.tgz#fd5de1f12eea8cc1b014d4f808b5b962b703ac04"
+  integrity sha512-8DctXn+sudiITeOmr5/AbALjVe3IBOzCvKdT9VZydXxMp0xbJiWBKiO8duFktPnYL293zOBTmgLjm7CcJXG32w==
   dependencies:
-    "@juggle/resize-observer" "^3.4.0"
     calculate-size "^1.1.1"
-    classnames "^2.3.2"
+    classnames "^2.3.1"
     d3-shape "^3.0.1"
     elkjs "^0.8.2"
     ellipsize "^0.2.0"
@@ -5124,14 +5123,14 @@ reaflow@5.2.3:
     kld-affine "^2.1.1"
     kld-intersections "^0.7.0"
     p-cancelable "^3.0.0"
-    rdk "^6.5.0"
+    rdk "^6.1.0"
     react-cool-dimensions "^2.0.7"
-    react-fast-compare "^3.2.2"
+    react-fast-compare "^3.2.0"
     react-use-gesture "^8.0.1"
-    reakeys "^1.3.1"
+    reakeys "^1.2.9"
     undoo "^0.5.0"
 
-reakeys@^1.3.1:
+reakeys@^1.2.9:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/reakeys/-/reakeys-1.3.1.tgz#71cf4e3ddd20962cd45b1c8aea7d29744b78a49e"
   integrity sha512-k75rJxIiNtA9B6a9ijgj3n7CJKhdY9hctFzac5IBnMKEzk5RpwHtOZON1xqP9fQQAscpa922lbkUMW8q94M0fg==
