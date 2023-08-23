@@ -12,7 +12,6 @@ const firaMono = Fira_Mono({
   weight: ["500"],
   subsets: ["latin"],
   display: "swap",
-  fallback: ["monospace"],
 });
 
 export { monaSans, firaMono };

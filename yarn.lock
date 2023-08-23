@@ -5109,10 +5109,10 @@ readdirp@~3.6.0:
   dependencies:
     picomatch "^2.2.1"
 
-reaflow@5.2.3:
-  version "5.2.3"
-  resolved "https://registry.yarnpkg.com/reaflow/-/reaflow-5.2.3.tgz#b57531e714672926801a89ebb2a4557e458356fb"
-  integrity sha512-und3DtaerbOZ3N22dl9+NCBzqTrlJhS8wQAiDL3oDKJR6mMABDLgB/TcK2YtcDDoJxj4c7lePrTt7TNGO7kAMQ==
+reaflow@5.2.5:
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/reaflow/-/reaflow-5.2.5.tgz#1888e7355675a082edbcffca06875088d0f771b1"
+  integrity sha512-PAeYjg74EPSNiiB1BpEKPV2/H/ZJyM+fT6Dbp79rCdFQTlZBuBSpLI16Fke+Uw8BF0YntD4CsH0d8qrMunMEQg==
   dependencies:
     "@juggle/resize-observer" "^3.4.0"
     calculate-size "^1.1.1"
