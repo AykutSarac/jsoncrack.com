@@ -1,4 +1,5 @@
 import styled, { DefaultTheme } from "styled-components";
+import { NodeType } from "jsonc-parser";
 import { LinkItUrl } from "react-linkify-it";
 import { firaMono } from "src/constants/fonts";
 
@@ -8,6 +9,15 @@ function getTypeColor(value: string, theme: DefaultTheme) {
   if (value === "false") return theme.NODE_COLORS.BOOL.FALSE;
   if (value === "null") return theme.NODE_COLORS.NULL;
   return theme.NODE_COLORS.NODE_VALUE;
+}
+
+function getKeyColor(theme: DefaultTheme, parent: boolean, type: NodeType) {
+  if (parent) {
+    if (type === "array") return theme.NODE_COLORS.PARENT_ARR;
+    return theme.NODE_COLORS.PARENT_OBJ;
+  }
+  if (type === "object") return theme.NODE_COLORS.NODE_KEY;
+  return theme.NODE_COLORS.TEXT;
 }
 
 export const StyledLinkItUrl = styled(LinkItUrl)`
@@ -47,29 +57,14 @@ export const StyledForeignObject = styled.foreignObject<{ $isObject?: boolean }>
   }
 `;
 
-function getKeyColor(theme: DefaultTheme, parent: boolean, type: string, objectKey: boolean) {
-  if (parent) {
-    if (type === "array") return theme.NODE_COLORS.PARENT_ARR;
-    return theme.NODE_COLORS.PARENT_OBJ;
-  }
-  if (objectKey) return theme.NODE_COLORS.NODE_KEY;
-  return theme.NODE_COLORS.TEXT;
-}
-
-export const StyledKey = styled.span<{
-  $objectKey?: boolean;
-  $parent?: boolean;
-  type?: string;
-  value?: string;
-}>`
+export const StyledKey = styled.span<{ $parent?: boolean; $type?: NodeType }>`
   display: inline;
   flex: 1;
-  color: ${({ theme, type = "null", $objectKey = false, $parent = false }) =>
-    getKeyColor(theme, $parent, type, $objectKey)};
+  color: ${({ theme, $type = "null", $parent = false }) => getKeyColor(theme, $parent, $type)};
   font-size: ${({ $parent }) => $parent && "14px"};
   overflow: hidden;
   text-overflow: ellipsis;
-  padding: ${({ $objectKey }) => !$objectKey && "10px"};
+  padding: ${({ $type }) => $type !== "object" && "10px"};
   white-space: nowrap;
 `;
 

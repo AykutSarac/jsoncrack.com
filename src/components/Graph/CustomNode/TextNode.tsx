@@ -81,7 +81,7 @@ const Node: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) =>
           data-key={JSON.stringify(text)}
           $hasCollapse={isParent && hideCollapse}
         >
-          <Styled.StyledKey $parent={isParent} type={type}>
+          <Styled.StyledKey $parent={isParent} $type={type}>
             <TextRenderer>{JSON.stringify(text).replaceAll('"', "")}</TextRenderer>
           </Styled.StyledKey>
           {isParent && childrenCount > 0 && showChildrenCount && (

@@ -20,7 +20,9 @@ const Row = ({ val, x, y, index }: RowProps) => {
       data-y={y + index * 17.8}
       $type={JSON.stringify(val[1])}
     >
-      <Styled.StyledKey $objectKey>{JSON.stringify(val[0]).replaceAll('"', "")}: </Styled.StyledKey>
+      <Styled.StyledKey $type="object">
+        {JSON.stringify(val[0]).replaceAll('"', "")}:{" "}
+      </Styled.StyledKey>
       <TextRenderer>{JSON.stringify(val[1])}</TextRenderer>
     </Styled.StyledRow>
   );
