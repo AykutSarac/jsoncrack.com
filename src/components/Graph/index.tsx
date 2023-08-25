@@ -9,6 +9,7 @@ import useToggleHide from "src/hooks/useToggleHide";
 import { Loading } from "src/layout/Loading";
 import useGraph from "src/store/useGraph";
 import useUser from "src/store/useUser";
+import { NodeData } from "src/types/models";
 import { CustomEdge } from "./CustomEdge";
 import { ErrorView } from "./ErrorView";
 import { PremiumView } from "./PremiumView";
@@ -73,7 +74,10 @@ const layoutOptions = {
   "elk.layered.nodePlacement.strategy": "NETWORK_SIMPLEX",
 };
 
-const GraphCanvas = ({ isWidget }: { isWidget: boolean }) => {
+const PREMIUM_LIMIT = 200;
+const ERROR_LIMIT = 3_000;
+
+const GraphCanvas = ({ isWidget }: GraphProps) => {
   const { validateHiddenNodes } = useToggleHide();
   const setLoading = useGraph(state => state.setLoading);
   const centerView = useGraph(state => state.centerView);
@@ -131,13 +135,17 @@ const GraphCanvas = ({ isWidget }: { isWidget: boolean }) => {
   );
 };
 
+function getViewType(nodes: NodeData[]) {
+  if (nodes.length > ERROR_LIMIT) return "error";
+  if (nodes.length > PREMIUM_LIMIT) return "premium";
+  return "graph";
+}
+
 export const Graph = ({ isWidget = false }: GraphProps) => {
   const setViewPort = useGraph(state => state.setViewPort);
   const loading = useGraph(state => state.loading);
   const isPremium = useUser(state => state.premium);
-  const viewType = useGraph(state =>
-    state.nodes.length > 6_000 ? "error" : state.nodes.length > 400 ? "premium" : "graph"
-  );
+  const viewType = useGraph(state => getViewType(state.nodes));
 
   const callback = React.useCallback(() => {
     const canvas = document.querySelector(".jsoncrack-canvas") as HTMLDivElement | null;
