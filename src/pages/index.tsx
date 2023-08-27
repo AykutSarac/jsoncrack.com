@@ -192,6 +192,7 @@ const HeroSection = () => (
           height="593"
           alt="diagram"
           loading="eager"
+          fetchPriority="high"
         />
       </Right>
     </StyledHeroSectionBody>
