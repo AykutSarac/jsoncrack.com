@@ -1,9 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { PaperProps, Button, Group, Paper, Stack, TextInput, Text, Anchor } from "@mantine/core";
-import { useSession } from "@supabase/auth-helpers-react";
 import { toast } from "react-hot-toast";
 import { Footer } from "src/layout/Footer";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
@@ -19,7 +17,7 @@ export function AuthenticationForm(props: PaperProps) {
     e.preventDefault();
     setLoading(true);
     supabase.auth
-      .resetPasswordForEmail(email, { redirectTo: "/reset-password" })
+      .resetPasswordForEmail(email)
       .then(({ error }) => {
         if (error) return toast.error(error.message);
         setSuccess(true);
@@ -65,14 +63,7 @@ export function AuthenticationForm(props: PaperProps) {
   );
 }
 
-const SignIn = () => {
-  const { isReady, push } = useRouter();
-  const session = useSession();
-
-  React.useEffect(() => {
-    if (session) push("/editor");
-  }, [isReady, session, push]);
-
+const ResetPassword = () => {
   return (
     <div>
       <Head>
@@ -89,4 +80,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default ResetPassword;
