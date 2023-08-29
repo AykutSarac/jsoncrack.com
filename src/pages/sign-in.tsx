@@ -281,7 +281,9 @@ const SignIn = () => {
   const [alertVisible, setAlertVisible] = React.useState(true);
 
   React.useEffect(() => {
-    if (session && !isPasswordReset) push("/editor");
+    if (isReady && session && !isPasswordReset) {
+      push("/editor");
+    }
   }, [isReady, session, push, isPasswordReset]);
 
   return (
