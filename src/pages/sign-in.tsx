@@ -289,7 +289,7 @@ const SignIn = () => {
   return (
     <div>
       <Head>
-        <title>Sign In | JSON Crack</title>
+        <title>Sign In - JSON Crack</title>
       </Head>
       <Navbar />
       {alertVisible && (

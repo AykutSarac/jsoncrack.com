@@ -67,7 +67,7 @@ const ResetPassword = () => {
   return (
     <div>
       <Head>
-        <title>Reset Password | JSON Crack</title>
+        <title>Reset Password - JSON Crack</title>
         <meta name="robots" content="noindex,nofollow" />
       </Head>
       <Navbar />

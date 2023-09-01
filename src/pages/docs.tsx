@@ -41,7 +41,7 @@ const Docs = () => {
   return (
     <Layout>
       <Head>
-        <title>Documentation - JSON Crack Docs</title>
+        <title>Documentation - JSON Crack</title>
         <meta name="description" content="Embedding JSON Crack tutorial into your websites." />
       </Head>
       <Stack mx="auto" maw="75%">

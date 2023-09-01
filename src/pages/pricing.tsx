@@ -10,7 +10,7 @@ const Pricing = () => {
   return (
     <Layout>
       <Head>
-        <title>JSON Crack | Pricing</title>
+        <title>Pricing - JSON Crack</title>
       </Head>
       <Flex gap="lg" wrap="wrap" justify="center" my={60} w="fit-content" p="lg" mx="auto">
         <Paper p="xl" radius="lg" shadow="lg" withBorder w={325}>

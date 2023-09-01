@@ -8,7 +8,7 @@ const Oss: React.FC<{ sponsors: any[] }> = ({ sponsors }) => {
   return (
     <Layout>
       <Head>
-        <title>JSON Crack | Open Source Supporters</title>
+        <title>Open Source Supporters - JSON Crack</title>
       </Head>
       <Container pt={60}>
         <Image mx="auto" src="assets/oss_banner.webp" radius="md" maw={800} alt="oss banner" />
