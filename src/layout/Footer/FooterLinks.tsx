@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { createStyles, Text, Container, rem, Anchor } from "@mantine/core";
 import { JSONCrackLogo } from "../JsonCrackLogo";
 
@@ -109,7 +110,7 @@ export function FooterLinks({ data }: FooterLinksProps) {
 
   const groups = data.map(group => {
     const links = group.links.map((link, index) => (
-      <Text<"a"> key={index} className={classes.link} component="a" href={link.link}>
+      <Text key={index} className={classes.link} component={Link} href={link.link} prefetch={false}>
         {link.label}
       </Text>
     ));

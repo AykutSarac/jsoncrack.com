@@ -6,7 +6,7 @@ export const Footer = () => {
     <FooterLinks
       data={[
         {
-          title: "Developers",
+          title: "Product",
           links: [
             {
               label: "GitHub",
@@ -19,23 +19,6 @@ export const Footer = () => {
             {
               label: "Contributing",
               link: "https://github.com/AykutSarac/jsoncrack.com/blob/main/CONTRIBUTING.md",
-            },
-          ],
-        },
-        {
-          title: "JSON Crack",
-          links: [
-            {
-              label: "JSON Crack",
-              link: "https://jsoncrack.com",
-            },
-            {
-              label: "Terms of Service",
-              link: "#",
-            },
-            {
-              label: "Privacy Policy",
-              link: "#",
             },
           ],
         },
@@ -57,6 +40,19 @@ export const Footer = () => {
             {
               label: "LinkedIn",
               link: "https://www.linkedin.com/company/herowand",
+            },
+          ],
+        },
+        {
+          title: "Legal",
+          links: [
+            {
+              label: "Terms",
+              link: "/legal/terms",
+            },
+            {
+              label: "Privacy",
+              link: "/legal/privacy",
             },
           ],
         },

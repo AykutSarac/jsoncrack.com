@@ -6,7 +6,7 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 400;
     font-size: 16px;
     background: rgb(246,249,253) !important;
-    background: radial-gradient(circle, rgba(246,249,253,1) 33%, rgba(230,230,253,1) 100%) !important;
+    background: radial-gradient(circle, rgb(245 245 245) 33%, rgb(252 252 255) 100%) !important;
 
     @media only screen and (max-width: 768px) {
       background-position: right;
