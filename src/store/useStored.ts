@@ -8,6 +8,7 @@ const initialStates = {
   childrenCount: true,
   imagePreview: true,
   liveTransform: true,
+  gesturesEnabled: false,
 };
 
 export interface ConfigActions {
@@ -16,12 +17,14 @@ export interface ConfigActions {
   toggleChildrenCount: (value: boolean) => void;
   toggleImagePreview: (value: boolean) => void;
   toggleLiveTransform: (value: boolean) => void;
+  toggleGestures: (value: boolean) => void;
 }
 
 const useStored = create(
   persist<typeof initialStates & ConfigActions>(
     set => ({
       ...initialStates,
+      toggleGestures: gesturesEnabled => set({ gesturesEnabled }),
       toggleLiveTransform: liveTransform => set({ liveTransform }),
       setLightTheme: (value: boolean) =>
         set({

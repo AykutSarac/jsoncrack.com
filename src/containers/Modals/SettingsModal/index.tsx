@@ -17,16 +17,25 @@ export const SettingsModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const toggleHideCollapse = useStored(state => state.toggleHideCollapse);
   const toggleChildrenCount = useStored(state => state.toggleChildrenCount);
   const toggleImagePreview = useStored(state => state.toggleImagePreview);
+  const toggleGestures = useStored(state => state.toggleGestures);
 
   const hideCollapse = useStored(state => state.hideCollapse);
   const childrenCount = useStored(state => state.childrenCount);
   const imagePreview = useStored(state => state.imagePreview);
   const lightmode = useStored(state => state.lightmode);
+  const gesturesEnabled = useStored(state => state.gesturesEnabled);
 
   return (
     <Modal title="Settings" opened={opened} onClose={onClose} centered>
       <Group py="sm">
         <Stack>
+          <Switch
+            label="Enable Trackpad Gestures"
+            size="md"
+            color="teal"
+            onChange={e => toggleGestures(e.currentTarget.checked)}
+            checked={gesturesEnabled}
+          />
           <Switch
             label="Live Image Preview"
             size="md"

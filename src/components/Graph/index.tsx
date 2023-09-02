@@ -8,6 +8,7 @@ import { CustomNode } from "src/components/Graph/CustomNode";
 import useToggleHide from "src/hooks/useToggleHide";
 import { Loading } from "src/layout/Loading";
 import useGraph from "src/store/useGraph";
+import useStored from "src/store/useStored";
 import useUser from "src/store/useUser";
 import { NodeData } from "src/types/models";
 import { CustomEdge } from "./CustomEdge";
@@ -146,6 +147,7 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
   const loading = useGraph(state => state.loading);
   const isPremium = useUser(state => state.premium);
   const viewType = useGraph(state => getViewType(state.nodes));
+  const gesturesEnabled = useStored(state => state.gesturesEnabled);
 
   const callback = React.useCallback(() => {
     const canvas = document.querySelector(".jsoncrack-canvas") as HTMLDivElement | null;
@@ -177,11 +179,13 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
         $widget={isWidget}
         onContextMenu={e => e.preventDefault()}
         onClick={blurOnClick}
+        key={String(gesturesEnabled)}
         {...bindLongPress()}
       >
         <Space
           onCreate={setViewPort}
           onContextMenu={e => e.preventDefault()}
+          treatTwoFingerTrackPadGesturesLikeTouch={gesturesEnabled}
           pollForElementResizing
         >
           <GraphCanvas isWidget={isWidget} />
