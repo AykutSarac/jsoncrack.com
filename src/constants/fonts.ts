@@ -12,6 +12,7 @@ const firaMono = Fira_Mono({
   weight: ["500"],
   subsets: ["latin"],
   display: "swap",
+  fallback: ["Menlo, Monaco, monospace", "Consolas, Courier New, monospace"],
 });
 
 export { monaSans, firaMono };

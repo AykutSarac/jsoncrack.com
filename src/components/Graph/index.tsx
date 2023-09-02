@@ -182,7 +182,6 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
         <Space
           onCreate={setViewPort}
           onContextMenu={e => e.preventDefault()}
-          treatTwoFingerTrackPadGesturesLikeTouch
           pollForElementResizing
         >
           <GraphCanvas isWidget={isWidget} />
