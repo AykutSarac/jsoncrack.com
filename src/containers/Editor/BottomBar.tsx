@@ -266,7 +266,7 @@ export const BottomBar = () => {
       <StyledRight>
         <StyledBottomBarItem onClick={() => setVisible("review")(true)}>
           <VscStarEmpty />
-          Leave Review
+          Feedback & Recommend Feature
         </StyledBottomBarItem>
       </StyledRight>
     </StyledBottomBar>
