@@ -1,23 +1,29 @@
 import styled, { DefaultTheme } from "styled-components";
-import { NodeType } from "jsonc-parser";
 import { LinkItUrl } from "react-linkify-it";
 import { firaMono } from "src/constants/fonts";
 
-function getTypeColor(value: string, theme: DefaultTheme) {
-  if (!Number.isNaN(+value)) return theme.NODE_COLORS.INTEGER;
-  if (value === "true") return theme.NODE_COLORS.BOOL.TRUE;
-  if (value === "false") return theme.NODE_COLORS.BOOL.FALSE;
-  if (value === "null") return theme.NODE_COLORS.NULL;
-  return theme.NODE_COLORS.NODE_VALUE;
-}
+type TextColorFn = {
+  theme: DefaultTheme;
+  $type?: string;
+  $value?: string;
+  $parent?: boolean;
+};
 
-function getKeyColor(theme: DefaultTheme, parent: boolean, type: NodeType) {
-  if (parent) {
-    if (type === "array") return theme.NODE_COLORS.PARENT_ARR;
-    return theme.NODE_COLORS.PARENT_OBJ;
-  }
-  if (type === "object") return theme.NODE_COLORS.NODE_KEY;
-  return theme.NODE_COLORS.TEXT;
+function getTextColor({ $value, $type, $parent, theme }: TextColorFn) {
+  // per type
+  if ($parent && $type === "array") return theme.NODE_COLORS.PARENT_ARR;
+  if ($parent && $type === "object") return theme.NODE_COLORS.PARENT_OBJ;
+  if ($type === "object") return theme.NODE_COLORS.NODE_KEY;
+  if ($type === "array") return theme.NODE_COLORS.NODE_VALUE;
+
+  // per value
+  if ($value && !Number.isNaN(+$value)) return theme.NODE_COLORS.INTEGER;
+  if ($value === "true") return theme.NODE_COLORS.BOOL.TRUE;
+  if ($value === "false") return theme.NODE_COLORS.BOOL.FALSE;
+  if ($value === "null") return theme.NODE_COLORS.NULL;
+
+  // default
+  return theme.NODE_COLORS.NODE_VALUE;
 }
 
 export const StyledLinkItUrl = styled(LinkItUrl)`
@@ -57,10 +63,11 @@ export const StyledForeignObject = styled.foreignObject<{ $isObject?: boolean }>
   }
 `;
 
-export const StyledKey = styled.span<{ $parent?: boolean; $type?: NodeType }>`
+export const StyledKey = styled.span<{ $parent?: boolean; $type: string; $value?: string }>`
   display: inline;
   flex: 1;
-  color: ${({ theme, $type = "null", $parent = false }) => getKeyColor(theme, $parent, $type)};
+  color: ${({ theme, $type, $parent = false, $value = "" }) =>
+    getTextColor({ $parent, $type, $value, theme })};
   font-size: ${({ $parent }) => $parent && "14px"};
   overflow: hidden;
   text-overflow: ellipsis;
@@ -68,9 +75,9 @@ export const StyledKey = styled.span<{ $parent?: boolean; $type?: NodeType }>`
   white-space: nowrap;
 `;
 
-export const StyledRow = styled.span<{ $type: string }>`
+export const StyledRow = styled.span<{ $value: string }>`
   padding: 0 10px;
-  color: ${({ theme, $type }) => getTypeColor($type, theme)};
+  color: ${({ theme, $value }) => getTextColor({ $value, theme })};
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;

@@ -13,17 +13,14 @@ type RowProps = {
 };
 
 const Row = ({ val, x, y, index }: RowProps) => {
+  const key = JSON.stringify(val);
+  const rowKey = JSON.stringify(val[0]).replaceAll('"', "");
+  const rowValue = JSON.stringify(val[1]);
+
   return (
-    <Styled.StyledRow
-      data-key={JSON.stringify(val)}
-      data-x={x}
-      data-y={y + index * 17.8}
-      $type={JSON.stringify(val[1])}
-    >
-      <Styled.StyledKey $type="object">
-        {JSON.stringify(val[0]).replaceAll('"', "")}:{" "}
-      </Styled.StyledKey>
-      <TextRenderer>{JSON.stringify(val[1])}</TextRenderer>
+    <Styled.StyledRow $value={rowValue} data-key={key} data-x={x} data-y={y + index * 17.8}>
+      <Styled.StyledKey $type="object">{rowKey}: </Styled.StyledKey>
+      <TextRenderer>{rowValue}</TextRenderer>
     </Styled.StyledRow>
   );
 };

@@ -59,6 +59,7 @@ const Node: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) =>
   const collapseNodes = useGraph(state => state.collapseNodes);
   const isExpanded = useGraph(state => state.collapsedParents.includes(id));
   const isImage = imagePreview && isContentImage(text as string);
+  const value = JSON.stringify(text).replaceAll('"', "");
 
   const handleExpand = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -81,8 +82,8 @@ const Node: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) =>
           data-key={JSON.stringify(text)}
           $hasCollapse={isParent && hideCollapse}
         >
-          <Styled.StyledKey $parent={isParent} $type={type}>
-            <TextRenderer>{JSON.stringify(text).replaceAll('"', "")}</TextRenderer>
+          <Styled.StyledKey $value={value} $parent={isParent} $type={type}>
+            <TextRenderer>{value}</TextRenderer>
           </Styled.StyledKey>
           {isParent && childrenCount > 0 && showChildrenCount && (
             <Styled.StyledChildrenCount>({childrenCount})</Styled.StyledChildrenCount>
