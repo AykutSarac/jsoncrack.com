@@ -35,12 +35,13 @@ export const ReviewModal: React.FC<ModalProps> = ({ opened, onClose }) => {
         <Text align="center">How was your experience?</Text>
         <Rating value={stars} onChange={setStars} my="lg" size="xl" mx="auto" />
         <Textarea
+          description="You may include your mail in the feedback if you want us to contact you."
+          placeholder="Please provide feedback on how we can enhance the product and let us know which features you require."
           value={review}
           onChange={e => setReview(e.currentTarget.value)}
           minLength={10}
           maxLength={500}
           minRows={5}
-          placeholder="Please provide feedback on how we can enhance the product and let us know which features you require."
         />
         <Text align="right" size={12} color="dimmed">
           500/{review.length}
