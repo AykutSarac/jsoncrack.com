@@ -74,8 +74,11 @@ If you want to run JSON Crack locally:
 # Build a Docker image with:
 docker build -t jsoncrack .
 
-# Run locally with:
+# Run locally with `docker run`
 docker run -p 8888:8080 jsoncrack
+
+# Run locally with `docker-compose`
+docker-compose up -d
 
 # Go to http://localhost:8888
 ```
