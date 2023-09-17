@@ -145,7 +145,7 @@ const HeroSection = () => (
           Seamlessly visualize your{" "}
           <StyledHighlightedText>
             <Typewriter
-              words={["JSON", "YAML", "XML", "TOML", "CSV"]}
+              words={["JSON", "JSON5", "YAML", "XML", "TOML", "CSV"]}
               typeSpeed={100}
               deleteSpeed={60}
               delaySpeed={2000}

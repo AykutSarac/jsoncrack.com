@@ -298,6 +298,7 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
               w={120}
               data={[
                 { value: FileFormat.JSON, label: "JSON" },
+                { value: FileFormat.JSON5, label: "JSON5" },
                 { value: FileFormat.YAML, label: "YAML" },
                 { value: FileFormat.XML, label: "XML" },
                 { value: FileFormat.TOML, label: "TOML" },
