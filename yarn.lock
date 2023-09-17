@@ -1419,7 +1419,7 @@
   dependencies:
     state-local "^1.0.6"
 
-"@monaco-editor/react@^4.5.2":
+"@monaco-editor/react@^4.5.1":
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/@monaco-editor/react/-/react-4.5.2.tgz#e8cc802203f729b423a998ea6fcb466604d61258"
   integrity sha512-emcWu6vg1OpXPiYll4aPOaXe8bwYB4UaaNTwtArFLgMoNGBzRZb2Xn0Bra2HMIFM7QLgs7fCGunHO5LkfT2LBA==
@@ -4538,11 +4538,6 @@ mkdirp@^0.5.5:
   integrity sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw==
   dependencies:
     minimist "^1.2.6"
-
-monaco-editor@^0.43.0:
-  version "0.43.0"
-  resolved "https://registry.npmjs.org/monaco-editor/-/monaco-editor-0.43.0.tgz"
-  integrity sha512-cnoqwQi/9fml2Szamv1XbSJieGJ1Dc8tENVMD26Kcfl7xGQWp7OBKMjlwKVGYFJ3/AXJjSOGvcqK7Ry/j9BM1Q==
 
 mousetrap@^1.6.5:
   version "1.6.5"

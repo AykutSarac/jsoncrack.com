@@ -43,6 +43,8 @@ export const MonacoEditor = () => {
       checkJs: false,
       allowUnusedLabels: true,
     });
+    // JSON syntax is a subset of JS, but given that the file has no "exports"
+    // it triggers some warning in the Monaco UI. The following setting hides the warning
     monaco?.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
       noSemanticValidation: true,
       noSyntaxValidation: true,
@@ -58,7 +60,6 @@ export const MonacoEditor = () => {
           {
             fileMatch: ["*"],
             schema: jsonSchema,
-            uri: "",
           },
         ],
       }),
