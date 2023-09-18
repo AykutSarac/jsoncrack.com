@@ -29,6 +29,7 @@ export const MonacoEditor = () => {
   const fileType = useFile(state => state.format);
   const editorOptions = React.useMemo(() => {
     return {
+      // auto formatting doesn't play well with JSON5 yet
       formatOnPaste: fileType === FileFormat.JSON5 ? false : true,
       formatOnType: fileType === FileFormat.JSON5 ? false : true,
       minimap: {
