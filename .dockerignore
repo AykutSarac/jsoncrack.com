@@ -1,0 +1,14 @@
+# Ignore node modules as they will be installed in the Dockerfile
+node_modules/
+
+# Ignore local configuration and cache files
+.cache/
+.config/
+.DS_Store
+
+# Ignore logs
+*.log
+
+# Ignore test and development files
+*.md
+*.test.js

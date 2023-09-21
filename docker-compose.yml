@@ -1,0 +1,10 @@
+version: '3.9'
+services:
+  jsoncrack:
+    image: jsoncrack
+    container_name: jsoncrack
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8888:8080"

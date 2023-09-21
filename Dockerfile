@@ -1,8 +1,14 @@
 # Builder
 FROM node:18-alpine as builder
 WORKDIR /src
+
+# Cache dependencies first
+COPY package.json yarn.lock ./
+RUN yarn install --frozen-lockfile
+
+# Copy other files and build
 COPY . /src/
-RUN yarn install --frozen-lockfile && yarn build
+RUN yarn build
 
 # App
 FROM nginxinc/nginx-unprivileged
