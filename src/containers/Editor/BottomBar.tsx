@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import { Badge, Flex, Popover, Text } from "@mantine/core";
+import { Flex, Popover, Text } from "@mantine/core";
 import toast from "react-hot-toast";
 import {
   AiOutlineCloudSync,
@@ -11,17 +11,20 @@ import {
   AiOutlineLock,
   AiOutlineUnlock,
 } from "react-icons/ai";
-import { MdReportGmailerrorred, MdOutlineCheckCircleOutline } from "react-icons/md";
+import { MdOutlineCheckCircleOutline } from "react-icons/md";
 import { TbTransform } from "react-icons/tb";
 import {
   VscAccount,
-  VscStarEmpty,
+  VscError,
+  VscFeedback,
+  VscSourceControl,
   VscSync,
   VscSyncIgnored,
   VscWorkspaceTrusted,
 } from "react-icons/vsc";
 import { saveToCloud, updateJson } from "src/services/json";
 import useFile from "src/store/useFile";
+import useGraph from "src/store/useGraph";
 import useModal from "src/store/useModal";
 import useStored from "src/store/useStored";
 import useUser from "src/store/useUser";
@@ -35,8 +38,8 @@ const StyledBottomBar = styled.div`
   background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
   max-height: 27px;
   height: 27px;
-  padding: 0 6px;
   z-index: 35;
+  padding-right: 6px;
 
   @media screen and (max-width: 320px) {
     display: none;
@@ -61,7 +64,7 @@ const StyledRight = styled.div`
   gap: 4px;
 `;
 
-const StyledBottomBarItem = styled.button<{ $error?: boolean }>`
+const StyledBottomBarItem = styled.button<{ bg?: string }>`
   display: flex;
   align-items: center;
   gap: 4px;
@@ -71,8 +74,8 @@ const StyledBottomBarItem = styled.button<{ $error?: boolean }>`
   padding: 4px;
   font-size: 12px;
   font-weight: 400;
-  color: ${({ theme, $error }) => ($error ? theme.DANGER : theme.INTERACTIVE_NORMAL)};
-  background: ${({ $error }) => $error && "rgba(255, 99, 71, 0.4)"};
+  color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
+  background: ${({ bg }) => bg};
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -103,6 +106,8 @@ export const BottomBar = () => {
   const error = useFile(state => state.error);
   const getContents = useFile(state => state.getContents);
   const setContents = useFile(state => state.setContents);
+  const nodeCount = useGraph(state => state.nodes.length);
+  const fileName = useFile(state => state.fileData?.name);
 
   const setVisible = useModal(state => state.setVisible);
   const setHasChanges = useFile(state => state.setHasChanges);
@@ -190,14 +195,13 @@ export const BottomBar = () => {
         </Head>
       )}
       <StyledLeft>
-        <StyledBottomBarItem onClick={handleLoginClick}>
-          <VscAccount />
-          {user?.user_metadata.name ?? "Login"}
-          {premium && (
-            <Badge size="xs" color="orange" radius="sm" fw="bold">
-              PREMIUM
-            </Badge>
-          )}
+        <StyledBottomBarItem bg="#1864AB" onClick={handleLoginClick}>
+          <Flex align="center" gap={5} px={5}>
+            <VscAccount />
+            <Text maw={120} truncate="end">
+              {user?.user_metadata.name ?? "Login"}
+            </Text>
+          </Flex>
         </StyledBottomBarItem>
         {!premium && (
           <StyledBottomBarItem onClick={() => setVisible("premium")(true)}>
@@ -205,13 +209,21 @@ export const BottomBar = () => {
             Upgrade to Premium
           </StyledBottomBarItem>
         )}
-        <StyledBottomBarItem $error={!!error}>
+        {fileName && (
+          <StyledBottomBarItem onClick={() => setVisible("cloud")(true)}>
+            <VscSourceControl />
+            {fileName}
+          </StyledBottomBarItem>
+        )}
+        <StyledBottomBarItem>
           {error ? (
             <Popover width="auto" shadow="md" position="top" withArrow>
               <Popover.Target>
                 <Flex align="center" gap={2}>
-                  <MdReportGmailerrorred color="red" size={16} />
-                  <Text fw="bold">Invalid Format</Text>
+                  <VscError color="red" size={16} />
+                  <Text color="red" fw="bold">
+                    Invalid
+                  </Text>
                 </Flex>
               </Popover.Target>
               <Popover.Dropdown sx={{ pointerEvents: "none" }}>
@@ -221,12 +233,12 @@ export const BottomBar = () => {
           ) : (
             <Flex align="center" gap={2}>
               <MdOutlineCheckCircleOutline />
-              <Text>Valid Format</Text>
+              <Text>Valid</Text>
             </Flex>
           )}
         </StyledBottomBarItem>
         {(data?.owner_email === user?.email || (!data && user)) && (
-          <StyledBottomBarItem onClick={handleSaveJson} disabled={isUpdating}>
+          <StyledBottomBarItem onClick={handleSaveJson} disabled={isUpdating || error}>
             {hasChanges ? <AiOutlineCloudUpload /> : <AiOutlineCloudSync />}
             {hasChanges ? (query?.json ? "Unsaved Changes" : "Create Document") : "Saved"}
           </StyledBottomBarItem>
@@ -264,9 +276,10 @@ export const BottomBar = () => {
       </StyledLeft>
 
       <StyledRight>
+        <StyledBottomBarItem>Nodes: {nodeCount}</StyledBottomBarItem>
         <StyledBottomBarItem onClick={() => setVisible("review")(true)}>
-          <VscStarEmpty />
-          Feedback & Recommend Feature
+          <VscFeedback />
+          Feedback
         </StyledBottomBarItem>
       </StyledRight>
     </StyledBottomBar>
