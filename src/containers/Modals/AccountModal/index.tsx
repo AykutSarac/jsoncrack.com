@@ -19,6 +19,7 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const user = useSupaUser();
   const isPremium = useUser(state => state.premium);
   const isOrg = useUser(state => state.organization);
+  const isOrgAdmin = useUser(state => state.orgAdmin);
   const premiumCancelled = useUser(state => state.premiumCancelled);
   const setVisible = useModal(state => state.setVisible);
   const logout = useUser(state => state.logout);
@@ -68,6 +69,7 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
               setVisible("cancelPremium")(true);
               onClose();
             }}
+            disabled={isOrg && !isOrgAdmin}
           >
             Cancel Subscription
           </Button>

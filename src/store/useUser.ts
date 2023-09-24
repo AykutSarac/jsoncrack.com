@@ -15,6 +15,7 @@ interface UserStates {
   premium: boolean;
   premiumCancelled: boolean;
   organization: boolean;
+  orgAdmin: boolean;
 }
 
 const initialStates: UserStates = {
@@ -23,6 +24,7 @@ const initialStates: UserStates = {
   premium: false,
   premiumCancelled: false,
   organization: false,
+  orgAdmin: false,
 };
 
 const useUser = create<UserStates & UserActions>()(set => ({
@@ -34,6 +36,7 @@ const useUser = create<UserStates & UserActions>()(set => ({
           premium: data.premium,
           organization: data.organization,
           premiumCancelled: !!data.cancelled,
+          orgAdmin: data.org_admin,
         });
         ReactGA.set({ tier: data.premium ? "premium" : "free" });
       }
