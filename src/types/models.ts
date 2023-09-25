@@ -23,6 +23,7 @@ export interface EdgeData {
 
 export enum FileFormat {
   "JSON" = "json",
+  "JSON5" = "javascript",
   "YAML" = "yaml",
   "XML" = "xml",
   "TOML" = "toml",

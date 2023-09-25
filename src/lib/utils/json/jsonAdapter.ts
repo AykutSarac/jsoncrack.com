@@ -1,4 +1,5 @@
 import { load, dump } from "js-yaml";
+import JSON5 from "json5";
 import { csv2json, json2csv } from "json-2-csv";
 import { parse } from "jsonc-parser";
 import jxon from "jxon";
@@ -40,6 +41,7 @@ const contentToJson = async (value: string, format = FileFormat.JSON): Promise<o
     if (format === FileFormat.XML) json = jxon.stringToJs(value);
     if (format === FileFormat.TOML) json = toml.parse(value);
     if (format === FileFormat.CSV) json = await csv2json(value);
+    if (format === FileFormat.JSON5) json = JSON5.parse(value);
     if (format === FileFormat.XML && keyExists(json, "parsererror")) throw Error("Unknown error!");
 
     if (!json) throw Error("Invalid JSON!");
@@ -60,6 +62,9 @@ const jsonToContent = async (json: string, format: FileFormat): Promise<string> 
     if (format === FileFormat.XML) contents = dump(parse(json));
     if (format === FileFormat.TOML) contents = dump(parse(json));
     if (format === FileFormat.CSV) contents = await json2csv(parse(json));
+    if (format === FileFormat.JSON5) {
+      contents = JSON5.stringify(JSON.parse(json), null, 2);
+    }
 
     return Promise.resolve(contents);
   } catch (error: any) {
