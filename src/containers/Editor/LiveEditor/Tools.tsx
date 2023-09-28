@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Flex, Group, MediaQuery, Menu, Select, Text } from "@mantine/core";
+import { Badge, Flex, Group, MediaQuery, Menu, Select, Text } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
 import ReactGA from "react-ga4";
 import toast from "react-hot-toast";
@@ -47,6 +47,16 @@ export const StyledTools = styled.div`
   @media only screen and (max-width: 320px) {
     display: none;
   }
+`;
+
+// red dot with glow around
+const StyledNotification = styled.span`
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: ${({ theme }) => theme.BLURPLE};
+  box-shadow: 0 0 6px ${({ theme }) => theme.BLURPLE};
+  margin-left: 4px;
 `;
 
 const StyledToolElement = styled.button<{ $hide?: boolean }>`
@@ -314,12 +324,16 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
                 <StyledToolElement>
                   <Flex align="center" gap={3}>
                     Tools <CgChevronDown />
+                    <StyledNotification />
                   </Flex>
                 </StyledToolElement>
               </Menu.Target>
               <Menu.Dropdown>
                 <Menu.Item fz={12} icon={<VscSearchFuzzy />} onClick={() => setVisible("jq")(true)}>
                   JSON Query (jq)
+                  <Badge ml="xs" size="xs">
+                    New
+                  </Badge>
                 </Menu.Item>
                 <Menu.Item fz={12} icon={<VscJson />} onClick={() => setVisible("schema")(true)}>
                   JSON Schema

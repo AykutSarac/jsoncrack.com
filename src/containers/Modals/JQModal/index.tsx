@@ -3,6 +3,7 @@ import { Stack, Modal, Button, ModalProps, Text, Anchor, Group } from "@mantine/
 import Editor from "@monaco-editor/react";
 import jq from "jq-in-the-browser";
 import { toast } from "react-hot-toast";
+import { VscLinkExternal } from "react-icons/vsc";
 import useFile from "src/store/useFile";
 import useJson from "src/store/useJson";
 import useStored from "src/store/useStored";
@@ -27,8 +28,11 @@ export const JQModal: React.FC<ModalProps> = ({ opened, onClose }) => {
     <Modal title="JSON Query" size="lg" opened={opened} onClose={onClose} centered>
       <Stack py="sm">
         <Text fz="sm">
+          jq is a lightweight and flexible command-line JSON processor. JSON Crack uses simplified
+          version of jq, not all features are supported.
+          <br />
           <Anchor target="_blank" href="https://jqlang.github.io/jq/manual/">
-            What is JSON Query?
+            Read documentation. <VscLinkExternal />
           </Anchor>
         </Text>
         <Editor
