@@ -197,8 +197,8 @@ export const BottomBar = () => {
       <StyledLeft>
         <StyledBottomBarItem bg="#1864AB" onClick={handleLoginClick}>
           <Flex align="center" gap={5} px={5}>
-            <VscAccount />
-            <Text maw={120} truncate="end">
+            <VscAccount color="white" />
+            <Text maw={120} c="white" truncate="end">
               {user?.user_metadata.name ?? "Login"}
             </Text>
           </Flex>
