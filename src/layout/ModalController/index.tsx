@@ -22,6 +22,7 @@ const modalComponents: ModalComponent[] = [
   { key: "schema", component: Modals.SchemaModal },
   { key: "cancelPremium", component: Modals.CancelPremiumModal },
   { key: "review", component: Modals.ReviewModal },
+  { key: "jq", component: Modals.JQModal },
 ];
 
 const ModalController = () => {

@@ -30,6 +30,7 @@
     "axios": "^1.5.0",
     "dayjs": "^1.11.10",
     "html-to-image": "^1.11.11",
+    "jq-in-the-browser": "^0.7.2",
     "json-2-csv": "^4.1.0",
     "jsonc-parser": "^3.2.0",
     "jsonwebtoken": "^9.0.2",
@@ -53,11 +54,11 @@
     "zustand": "^4.4.0"
   },
   "devDependencies": {
-    "@types/jxon": "^2.0.2",
     "@next/bundle-analyzer": "^13.4.12",
     "@testing-library/react": "^14.0.0",
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
     "@types/jsonwebtoken": "^9.0.3",
+    "@types/jxon": "^2.0.2",
     "@types/lodash.debounce": "^4.0.7",
     "@types/lodash.get": "^4.4.7",
     "@types/lodash.set": "^4.3.7",

@@ -18,6 +18,7 @@ import {
   VscLayoutSidebarLeftOff,
   VscSettingsGear,
   VscTarget,
+  VscSearchFuzzy,
 } from "react-icons/vsc";
 import { SearchInput } from "src/components/SearchInput";
 import useToggleHide from "src/hooks/useToggleHide";
@@ -317,6 +318,9 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
                 </StyledToolElement>
               </Menu.Target>
               <Menu.Dropdown>
+                <Menu.Item fz={12} icon={<VscSearchFuzzy />} onClick={() => setVisible("jq")(true)}>
+                  JSON Query (jq)
+                </Menu.Item>
                 <Menu.Item fz={12} icon={<VscJson />} onClick={() => setVisible("schema")(true)}>
                   JSON Schema
                 </Menu.Item>
