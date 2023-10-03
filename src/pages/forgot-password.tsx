@@ -3,8 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { Button, Group, Paper, Stack, TextInput, Text, Anchor } from "@mantine/core";
 import { toast } from "react-hot-toast";
-import { Footer } from "src/layout/Footer";
-import { Navbar } from "src/layout/Navbar";
+import Layout from "src/layout/Layout";
 import { supabase } from "src/lib/api/supabase";
 
 const ForgotPassword = () => {
@@ -25,12 +24,11 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div>
+    <Layout>
       <Head>
         <title>Reset Password - JSON Crack</title>
         <meta name="robots" content="noindex,nofollow" />
       </Head>
-      <Navbar />
       <Paper mx="auto" mt={70} maw={400} p="lg" withBorder>
         <Text size="lg" weight={500}>
           Reset Password
@@ -65,8 +63,7 @@ const ForgotPassword = () => {
           )}
         </Paper>
       </Paper>
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 

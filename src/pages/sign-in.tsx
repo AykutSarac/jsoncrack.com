@@ -18,8 +18,7 @@ import {
 import { useSession } from "@supabase/auth-helpers-react";
 import { toast } from "react-hot-toast";
 import { AiOutlineGithub, AiOutlineGoogle } from "react-icons/ai";
-import { Footer } from "src/layout/Footer";
-import { Navbar } from "src/layout/Navbar";
+import Layout from "src/layout/Layout";
 import { supabase } from "src/lib/api/supabase";
 import useUser from "src/store/useUser";
 
@@ -60,6 +59,7 @@ export function AuthenticationForm(props: PaperProps) {
       <form onSubmit={onSubmit}>
         <Stack>
           <TextInput
+            name="email"
             required
             label="Email"
             placeholder="hello@jsoncrack.com"
@@ -69,6 +69,7 @@ export function AuthenticationForm(props: PaperProps) {
           />
 
           <PasswordInput
+            name="password"
             required
             label="Password"
             placeholder="∗∗∗∗∗∗∗∗∗∗∗"
@@ -190,11 +191,10 @@ const SignIn = () => {
   }, [isReady, session, push, isPasswordReset]);
 
   return (
-    <div>
+    <Layout>
       <Head>
         <title>Sign In - JSON Crack</title>
       </Head>
-      <Navbar />
       <Paper mt={50} shadow="xs" mx="auto" maw={400} p="lg" withBorder>
         {isPasswordReset ? <ResetPassword /> : <AuthenticationForm />}
       </Paper>
@@ -203,9 +203,7 @@ const SignIn = () => {
           Don&apos;t have an account?
         </Anchor>
       </Center>
-
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 
