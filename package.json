@@ -16,7 +16,6 @@
     "@emotion/react": "^11.11.1",
     "@emotion/server": "^11.11.0",
     "@mantine/core": "^6.0.17",
-    "@mantine/form": "^6.0.17",
     "@mantine/hooks": "^6.0.17",
     "@mantine/next": "^6.0.21",
     "@mantine/prism": "^6.0.21",

@@ -1362,14 +1362,6 @@
     react-remove-scroll "^2.5.5"
     react-textarea-autosize "8.3.4"
 
-"@mantine/form@^6.0.17":
-  version "6.0.19"
-  resolved "https://registry.npmjs.org/@mantine/form/-/form-6.0.19.tgz"
-  integrity sha512-5SFLZEzaBH7yKIDSDt1r9UiN4y7RkFvu+7J7CFPIQM+nTdXeGnugVFM8rASuZI7/FSYty/XoPY+Yymq3xDX+MQ==
-  dependencies:
-    fast-deep-equal "^3.1.3"
-    klona "^2.0.5"
-
 "@mantine/hooks@^6.0.17":
   version "6.0.21"
   resolved "https://registry.npmjs.org/@mantine/hooks/-/hooks-6.0.21.tgz"
@@ -4357,11 +4349,6 @@ kld-polynomial@^0.3.0:
   version "0.3.0"
   resolved "https://registry.npmjs.org/kld-polynomial/-/kld-polynomial-0.3.0.tgz"
   integrity sha512-PEfxjQ6tsxL9DHBIhM2UZsSes0GI+OIMjbE0kj60jr80Biq/xXl1eGfnyzmfoackAMdKZtw2060L09HdjkPP5w==
-
-klona@^2.0.5:
-  version "2.0.6"
-  resolved "https://registry.npmjs.org/klona/-/klona-2.0.6.tgz"
-  integrity sha512-dhG34DXATL5hSxJbIexCft8FChFXtmskoZYnoPWjXQuebWYCNkVeV3KkGegCK9CP1oswI/vQibS2GY7Em/sJJA==
 
 language-subtag-registry@~0.3.2:
   version "0.3.22"

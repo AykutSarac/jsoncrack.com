@@ -6,5 +6,5 @@ Allow: /
 # Block all crawlers for /accounts
 User-agent: *
 Disallow: /*?*
-Disallow: /reset-password
+Disallow: /forgot-password
 Disallow: /widget

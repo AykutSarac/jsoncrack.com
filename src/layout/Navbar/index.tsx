@@ -94,7 +94,7 @@ export const Navbar = () => {
               radius="md"
               className="hide-mobile"
             >
-              Sign In
+              Login
             </Button>
           )}
           <Button component={Link} href="/editor" prefetch={false} color="pink" radius="md">
