@@ -13,19 +13,6 @@ const config = {
   compiler: {
     styledComponents: true,
   },
-  async headers() {
-    return [
-      {
-        source: "/sign-in",
-        headers: [
-          {
-            key: "X-Frame-Options",
-            value: "SAMEORIGIN",
-          },
-        ],
-      },
-    ];
-  },
 };
 
 const bundleAnalyzerConfig = withBundleAnalyzer(config);

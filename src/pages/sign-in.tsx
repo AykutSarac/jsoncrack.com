@@ -20,6 +20,7 @@ import { toast } from "react-hot-toast";
 import { AiOutlineGithub, AiOutlineGoogle } from "react-icons/ai";
 import Layout from "src/layout/Layout";
 import { supabase } from "src/lib/api/supabase";
+import { isIframe } from "src/lib/utils/widget";
 import useUser from "src/store/useUser";
 
 export function AuthenticationForm(props: PaperProps) {
@@ -185,9 +186,8 @@ const SignIn = () => {
   const isPasswordReset = query?.type === "recovery" && !query?.error;
 
   React.useEffect(() => {
-    if (isReady && session && !isPasswordReset) {
-      push("/editor");
-    }
+    if (isIframe()) push("/");
+    if (isReady && session && !isPasswordReset) push("/editor");
   }, [isReady, session, push, isPasswordReset]);
 
   return (
