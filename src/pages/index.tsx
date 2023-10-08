@@ -11,10 +11,12 @@ import {
   Container,
   Flex,
   Group,
+  MediaQuery,
   Stack,
   Text,
   Title,
   Tooltip,
+  rem,
 } from "@mantine/core";
 import { FaChevronRight } from "react-icons/fa";
 import { SiVisualstudiocode } from "react-icons/si";
@@ -57,7 +59,7 @@ const StyledHeroSectionBody = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10rem 10%;
+  padding: 5em 10%;
   overflow: hidden;
   backdrop-filter: blur(1px);
   -webkit-backdrop-filter: blur(1px);
@@ -68,27 +70,6 @@ const StyledHeroSectionBody = styled.div`
   }
 `;
 
-const StyledTitle = styled.h1`
-  font-weight: 900;
-  margin: 0;
-  font-size: 4rem;
-  color: #323232;
-  font-family: var(--mona-sans);
-  filter: drop-shadow(2px 2px 1px black);
-
-  @media only screen and (max-width: 768px) {
-    font-size: 2.5rem;
-  }
-`;
-
-const StyledGradientText = styled.span`
-  background: #ffb76b;
-  background: linear-gradient(to right, #fca74d 0%, #fda436 30%, #ff7c00 60%, #ff7f04 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-`;
-
 const Left = styled.div`
   width: 100%;
   z-index: 1;
@@ -96,9 +77,10 @@ const Left = styled.div`
 
 const Right = styled.div`
   position: absolute;
-  transform: translate(25%, 25%);
-  width: 80%;
+  top: 0;
   right: 0;
+  transform: translate(20em, 10em) rotate(3deg);
+  width: 80%;
   filter: blur(1px);
   user-select: none;
 
@@ -114,10 +96,14 @@ const StyledHighlightedText = styled.span`
 `;
 
 const StyledHeroText = styled.p`
-  font-size: 1.25rem;
+  font-size: 18px;
   color: #5e656b;
   font-weight: 600;
-  max-width: 600px;
+  max-width: 50%;
+
+  @media only screen and (max-width: 600px) {
+    max-width: 100%;
+  }
 `;
 
 const StyledStatsWrapper = styled.div`
@@ -138,52 +124,67 @@ const HeroSection = () => (
     <Navbar />
     <StyledHeroSectionBody>
       <Left>
-        <StyledTitle>
-          <StyledGradientText>JSON</StyledGradientText> CRACK
-        </StyledTitle>
-        <StyledHeroText>
-          Seamlessly visualize your{" "}
-          <StyledHighlightedText>
-            <Typewriter
-              words={["JSON", "YAML", "XML", "TOML", "CSV"]}
-              typeSpeed={100}
-              deleteSpeed={60}
-              delaySpeed={2000}
-              loop
-            />
-          </StyledHighlightedText>{" "}
-          instantly into graphs!
-        </StyledHeroText>
-        <Group spacing="xl">
-          <Button
-            component={Link}
-            href="/editor"
-            prefetch={false}
-            fw="bold"
-            rightIcon={<FaChevronRight />}
-            size="lg"
-          >
-            GO TO EDITOR
-          </Button>
-          <Tooltip
-            maw={400}
-            label="VS Code extension only contains JSON visualization without additional features."
-            withArrow
-            multiline
-            position="bottom"
-          >
-            <Anchor
-              href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode"
-              target="_blank"
+        <Stack w="100%" mx="auto">
+          <MediaQuery query="(max-width: 40em)" styles={{ fontSize: rem(30) }}>
+            <Title order={1} fz={40} c="gray" fw={800}>
+              Visualize{" "}
+              <StyledHighlightedText>
+                <Typewriter
+                  words={["JSON", "YAML", "XML", "TOML", "CSV"]}
+                  typeSpeed={100}
+                  deleteSpeed={60}
+                  delaySpeed={2000}
+                  loop
+                />
+              </StyledHighlightedText>
+              <br />
+              instantly into
+              <Text
+                variant="gradient"
+                gradient={{ from: "purple", to: "orange", deg: 45 }}
+                display="inline"
+              >
+                {" "}
+                graphs
+              </Text>
+            </Title>
+          </MediaQuery>
+
+          <StyledHeroText>
+            Visualize, analyze, and manipulate data with ease, a versatile and powerful tool for
+            data representation and exploration.
+          </StyledHeroText>
+          <Group spacing="xl">
+            <Button
+              component={Link}
+              href="/editor"
+              prefetch={false}
               fw="bold"
+              rightIcon={<FaChevronRight />}
+              size="lg"
             >
-              <Flex gap="xs" align="center">
-                <SiVisualstudiocode />
-                Get it on VS Code
-              </Flex>
-            </Anchor>
-          </Tooltip>
-        </Group>
+              GO TO EDITOR
+            </Button>
+            <Tooltip
+              maw={400}
+              label="VS Code extension only contains JSON visualization without additional features."
+              withArrow
+              multiline
+              position="bottom"
+            >
+              <Anchor
+                href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode"
+                target="_blank"
+                fw="bold"
+              >
+                <Flex gap="xs" align="center">
+                  <SiVisualstudiocode />
+                  Get it on VS Code
+                </Flex>
+              </Anchor>
+            </Tooltip>
+          </Group>
+        </Stack>
       </Left>
       <Right>
         <img
