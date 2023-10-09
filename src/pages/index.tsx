@@ -58,7 +58,7 @@ const StyledHeroSectionBody = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding: 5em 10%;
   overflow: hidden;
   backdrop-filter: blur(1px);
