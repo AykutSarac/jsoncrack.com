@@ -79,7 +79,7 @@ const Right = styled.div`
   position: absolute;
   top: 0;
   right: 0;
-  transform: translate(20em, 10em) rotate(3deg);
+  transform: translate(20em, 15em) rotate(3deg);
   width: 80%;
   filter: blur(1px);
   user-select: none;
@@ -99,7 +99,7 @@ const StyledHeroText = styled.p`
   font-size: 18px;
   color: #5e656b;
   font-weight: 600;
-  max-width: 50%;
+  max-width: 600px;
 
   @media only screen and (max-width: 600px) {
     max-width: 100%;
