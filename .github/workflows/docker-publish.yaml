@@ -3,7 +3,7 @@ name: publish
 on: [push]
 
 env:
-  IMAGE_NAME: jsoncrack
+  IMAGE_NAME: jsoncrack.com
   
 jobs:
   publish-image:

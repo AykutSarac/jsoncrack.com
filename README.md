@@ -83,6 +83,14 @@ docker-compose up -d
 # Go to http://localhost:8888
 ```
 
+### Github container registry
+
+An image is deployed on Github's container registry if you don't want to clone the repo locally.
+
+```console
+docker run -p 8888:8080 ghcr.io/savvasdalkitsis/jsoncrack.com:main
+```
+
 ## Thank you for supporting JSON Crack
 
 Last but not least, we're thankful to these companies for offering their services for free:
