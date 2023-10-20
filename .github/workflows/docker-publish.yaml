@@ -3,7 +3,7 @@ name: publish
 on: [push]
 
 env:
-  IMAGE_NAME: borgbackup
+  IMAGE_NAME: jsoncrack
   
 jobs:
   publish-image:
