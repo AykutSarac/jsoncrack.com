@@ -5,9 +5,7 @@ import { useRouter } from "next/router";
 import {
   TextInput,
   PasswordInput,
-  Text,
   Paper,
-  Group,
   PaperProps,
   Button,
   Divider,
@@ -66,7 +64,7 @@ export function AuthenticationForm(props: PaperProps) {
             placeholder="hello@jsoncrack.com"
             value={userData.email}
             onChange={event => setUserData(d => ({ ...d, email: event.target.value }))}
-            radius="md"
+            radius="sm"
           />
 
           <PasswordInput
@@ -76,10 +74,10 @@ export function AuthenticationForm(props: PaperProps) {
             placeholder="∗∗∗∗∗∗∗∗∗∗∗"
             value={userData.password}
             onChange={event => setUserData(d => ({ ...d, password: event.target.value }))}
-            radius="md"
+            radius="sm"
           />
 
-          <Button color="dark" type="submit" radius="md" loading={loading}>
+          <Button color="dark" type="submit" radius="sm" loading={loading}>
             Sign in
           </Button>
 
@@ -101,7 +99,7 @@ export function AuthenticationForm(props: PaperProps) {
 
       <Stack mb="md" mt="md">
         <Button
-          radius="md"
+          radius="sm"
           leftIcon={<AiOutlineGoogle size="20" />}
           onClick={() => handleLoginClick("google")}
           color="red"
@@ -110,7 +108,7 @@ export function AuthenticationForm(props: PaperProps) {
           Sign in with Google
         </Button>
         <Button
-          radius="md"
+          radius="sm"
           leftIcon={<AiOutlineGithub size="20" />}
           onClick={() => handleLoginClick("github")}
           color="dark"
@@ -119,63 +117,6 @@ export function AuthenticationForm(props: PaperProps) {
           Sign in with GitHub
         </Button>
       </Stack>
-    </Paper>
-  );
-}
-
-function ResetPassword(props: PaperProps) {
-  const { query } = useRouter();
-  const [loading, setLoading] = React.useState(false);
-  const [password, setPassword] = React.useState("");
-  const [password2, setPassword2] = React.useState("");
-
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (query?.token && typeof query?.token === "string") {
-      setLoading(true);
-      supabase.auth
-        .updateUser({
-          password,
-        })
-        .then(({ error }) => {
-          if (error) return toast.error(error.message);
-          toast.success("Successfully updated password!");
-          setTimeout(() => window.location.assign("/sign-in"), 2000);
-        })
-        .finally(() => setLoading(false));
-    }
-  };
-
-  return (
-    <Paper radius="md" {...props}>
-      <Text size="lg" weight={500}>
-        Reset Password
-      </Text>
-
-      <form onSubmit={onSubmit}>
-        <Stack>
-          <PasswordInput
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            required
-            label="Password"
-            radius="md"
-          />
-          <PasswordInput
-            value={password2}
-            onChange={e => setPassword2(e.target.value)}
-            required
-            label="Validate Password"
-            radius="md"
-          />
-        </Stack>
-
-        <Group position="apart" mt="xl">
-          <Button type="submit" radius="xl" loading={loading}>
-            Reset Password
-          </Button>
-        </Group>
-      </form>
     </Paper>
   );
 }
@@ -196,7 +137,7 @@ const SignIn = () => {
         <title>Sign In - JSON Crack</title>
       </Head>
       <Paper mt={50} shadow="xs" mx="auto" maw={400} p="lg" withBorder>
-        {isPasswordReset ? <ResetPassword /> : <AuthenticationForm />}
+        <AuthenticationForm />
       </Paper>
       <Center my="xl">
         <Anchor component={Link} prefetch={false} href="/sign-up" color="dark" fw="bold">

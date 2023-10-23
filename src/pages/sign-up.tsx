@@ -67,7 +67,7 @@ const SignUp = () => {
             Please check your inbox for email confirmation.
           </Text>
           <Anchor component={Link} href="/sign-in" underline={false}>
-            <Button color="dark" radius="md" mt="lg" fullWidth>
+            <Button color="dark" radius="sm" mt="lg" fullWidth>
               Back to login
             </Button>
           </Anchor>
@@ -82,7 +82,7 @@ const SignUp = () => {
                   required
                   label="Name"
                   placeholder="John Doe"
-                  radius="md"
+                  radius="sm"
                 />
 
                 <TextInput
@@ -91,7 +91,7 @@ const SignUp = () => {
                   required
                   label="Email"
                   placeholder="hello@jsoncrack.com"
-                  radius="md"
+                  radius="sm"
                 />
 
                 <PasswordInput
@@ -100,7 +100,7 @@ const SignUp = () => {
                   required
                   label="Password"
                   placeholder="∗∗∗∗∗∗∗∗∗∗"
-                  radius="md"
+                  radius="sm"
                 />
 
                 <Button color="dark" type="submit" loading={loading}>
@@ -111,7 +111,7 @@ const SignUp = () => {
 
                 <Flex gap="sm">
                   <Button
-                    radius="md"
+                    radius="sm"
                     fullWidth
                     leftIcon={<AiOutlineGoogle size="20" />}
                     onClick={() => handleLoginClick("google")}
@@ -121,7 +121,7 @@ const SignUp = () => {
                     Google
                   </Button>
                   <Button
-                    radius="md"
+                    radius="sm"
                     leftIcon={<AiOutlineGithub size="20" />}
                     onClick={() => handleLoginClick("github")}
                     color="dark"
