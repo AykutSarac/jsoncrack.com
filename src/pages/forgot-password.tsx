@@ -1,11 +1,11 @@
 import React from "react";
 import Head from "next/head";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { Button, Group, Paper, Stack, TextInput, Text, Anchor, PasswordInput } from "@mantine/core";
 import { toast } from "react-hot-toast";
 import Layout from "src/layout/Layout";
 import { supabase } from "src/lib/api/supabase";
+import useUser from "src/store/useUser";
 
 function ResetPassword() {
   const [loading, setLoading] = React.useState(false);
@@ -68,11 +68,10 @@ function ResetPassword() {
 }
 
 const ForgotPassword = () => {
-  const { query } = useRouter();
+  const isAuthenticated = useUser(state => state.isAuthenticated);
   const [loading, setLoading] = React.useState(false);
   const [email, setEmail] = React.useState("");
   const [success, setSuccess] = React.useState(false);
-  const isPasswordReset = query?.type === "recovery" && !query?.error;
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
@@ -97,7 +96,7 @@ const ForgotPassword = () => {
         <title>Reset Password - JSON Crack</title>
         <meta name="robots" content="noindex,nofollow" />
       </Head>
-      {isPasswordReset ? (
+      {isAuthenticated ? (
         <ResetPassword />
       ) : (
         <Paper mx="auto" mt={70} maw={400} p="lg" withBorder>
