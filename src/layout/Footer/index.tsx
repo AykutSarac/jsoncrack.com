@@ -35,7 +35,7 @@ export const Footer = () => {
             },
             {
               label: "GitHub",
-              link: "https://github.com/AykutSarach",
+              link: "https://github.com/AykutSarac",
             },
             {
               label: "LinkedIn",
