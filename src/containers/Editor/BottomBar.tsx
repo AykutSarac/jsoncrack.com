@@ -11,6 +11,7 @@ import {
   AiOutlineLock,
   AiOutlineUnlock,
 } from "react-icons/ai";
+import { AiOutlineSafetyCertificate } from "react-icons/ai";
 import { MdOutlineCheckCircleOutline } from "react-icons/md";
 import { TbTransform } from "react-icons/tb";
 import {
@@ -114,10 +115,15 @@ export const BottomBar = () => {
   const getFormat = useFile(state => state.getFormat);
   const [isPrivate, setIsPrivate] = React.useState(false);
   const [isUpdating, setIsUpdating] = React.useState(false);
+  const contents = useFile(state => state.contents);
 
   React.useEffect(() => {
     setIsPrivate(data?.private ?? true);
   }, [data]);
+
+  const isNotExploitableJson = (contentString: string): boolean => {
+    return contentString[0] !== "[" && contentString[contentString.length - 1] !== "]";
+  };
 
   const handleSaveJson = React.useCallback(async () => {
     if (!user) return setVisible("login")(true);
@@ -271,6 +277,13 @@ export const BottomBar = () => {
           <StyledBottomBarItem onClick={() => setContents({})}>
             <TbTransform />
             Transform
+          </StyledBottomBarItem>
+        )}
+
+        {isNotExploitableJson(contents) && (
+          <StyledBottomBarItem>
+            <AiOutlineSafetyCertificate />
+            Json is not exploitable
           </StyledBottomBarItem>
         )}
       </StyledLeft>
