@@ -283,7 +283,7 @@ export const BottomBar = () => {
         {isNotExploitableJson(contents) && (
           <StyledBottomBarItem>
             <AiOutlineSafetyCertificate />
-            Json is not exploitable
+            JSON is not exploitable
           </StyledBottomBarItem>
         )}
       </StyledLeft>
