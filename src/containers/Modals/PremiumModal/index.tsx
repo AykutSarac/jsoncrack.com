@@ -46,7 +46,7 @@ export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           <Title order={3}>
             JSON Crack Plus
             <Text size="sm" color="dimmed">
-              USD 5$/mo
+              USD 7$/mo
             </Text>
           </Title>
           <Button

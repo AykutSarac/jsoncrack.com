@@ -72,13 +72,13 @@ const Pricing = () => {
                 Premium
               </Text>
               <Badge size="xs" mt="auto" color="violet" opacity={0.4}>
-                Annual Save 25%
+                Annual Save 20%
               </Badge>
             </Stack>
             <Paper py={5} px="sm" bg="#442f71">
               <Stack spacing="0" align="center" justify="center">
                 <Text fz="lg" c="white" fw="bolder">
-                  $5
+                  $7
                 </Text>
                 <Text fz="xs" color="gray.4" fw="bold">
                   Per month
@@ -141,7 +141,7 @@ const Pricing = () => {
             <Paper py={5} px="sm" bg="gray.0">
               <Stack spacing="0" align="center" justify="center">
                 <Text fz="lg" fw="bolder">
-                  $80
+                  $120
                 </Text>
                 <Text fz="xs" color="gray.6" fw="bold">
                   Per month

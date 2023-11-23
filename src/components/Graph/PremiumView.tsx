@@ -191,7 +191,7 @@ export const PremiumView = () => (
         href={paymentURL()}
         target="_blank"
       >
-        UPGRADE TO PREMIUM $5.00
+        UPGRADE TO PREMIUM $7.00
       </Button>
     </StyledContent>
 
