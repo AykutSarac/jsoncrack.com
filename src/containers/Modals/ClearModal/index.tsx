@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
 import { Modal, Group, Button, Text, Divider, ModalProps } from "@mantine/core";
-import { deleteJson } from "src/services/json";
+import { documentSvc } from "src/services/document.service";
 import useJson from "src/store/useJson";
 
 export const ClearModal: React.FC<ModalProps> = ({ opened, onClose }) => {
@@ -13,7 +13,7 @@ export const ClearModal: React.FC<ModalProps> = ({ opened, onClose }) => {
     onClose();
 
     if (typeof query.json === "string") {
-      deleteJson(query.json);
+      documentSvc.delete(query.json);
       replace("/editor");
     }
   };

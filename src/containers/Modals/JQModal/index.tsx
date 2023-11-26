@@ -1,27 +1,17 @@
 import React from "react";
 import { Stack, Modal, Button, ModalProps, Text, Anchor, Group } from "@mantine/core";
 import Editor from "@monaco-editor/react";
-import jq from "jq-in-the-browser";
-import { toast } from "react-hot-toast";
 import { VscLinkExternal } from "react-icons/vsc";
-import useFile from "src/store/useFile";
-import useJson from "src/store/useJson";
+import useJsonQuery from "src/hooks/useJsonQuery";
 import useStored from "src/store/useStored";
 
 export const JQModal: React.FC<ModalProps> = ({ opened, onClose }) => {
+  const { updateJson } = useJsonQuery();
   const [query, setQuery] = React.useState("");
   const lightmode = useStored(state => (state.lightmode ? "light" : "vs-dark"));
-  const getJson = useJson(state => state.getJson);
-  const setContents = useFile(state => state.setContents);
 
   const onApply = () => {
-    try {
-      const res = jq(query)(JSON.parse(getJson())) as object;
-      setContents({ contents: JSON.stringify(res, null, 2) });
-      onClose();
-    } catch (error) {
-      toast.error("Invalid JQ");
-    }
+    updateJson(query);
   };
 
   return (

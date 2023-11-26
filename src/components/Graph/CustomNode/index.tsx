@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { NodeProps } from "reaflow";
 import useGraph from "src/store/useGraph";
 import useModal from "src/store/useModal";
-import { NodeData } from "src/types/models";
+import { NodeData } from "src/types/graph";
 import { ObjectNode } from "./ObjectNode";
 import { TextNode } from "./TextNode";
 

@@ -13,6 +13,7 @@ export { SchemaModal } from "./SchemaModal";
 export { CancelPremiumModal } from "./CancelPremiumModal";
 export { ReviewModal } from "./ReviewModal";
 export { JQModal } from "./JQModal";
+export { TypeModal } from "./TypeModal";
 
 type Modal =
   | "clear"
@@ -29,6 +30,7 @@ type Modal =
   | "schema"
   | "cancelPremium"
   | "review"
-  | "jq";
+  | "jq"
+  | "type";
 
 export type { Modal };

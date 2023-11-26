@@ -5,10 +5,10 @@ import ReactGA from "react-ga4";
 import { toast } from "react-hot-toast";
 import { create } from "zustand";
 import { defaultJson } from "src/constants/data";
+import { FileFormat } from "src/enums/file";
 import { contentToJson, jsonToContent } from "src/lib/utils/json/jsonAdapter";
 import { isIframe } from "src/lib/utils/widget";
-import { getFromCloud } from "src/services/json";
-import { FileFormat } from "src/types/models";
+import { documentSvc } from "src/services/document.service";
 import useGraph from "./useGraph";
 import useJson from "./useJson";
 import useStored from "./useStored";
@@ -172,7 +172,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
   },
   fetchFile: async id => {
     try {
-      const { data, error } = await getFromCloud(id);
+      const { data, error } = await documentSvc.getById(id);
       if (error) throw error;
 
       if (data?.length) get().setFile(data[0]);

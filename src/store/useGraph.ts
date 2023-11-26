@@ -4,7 +4,7 @@ import { create } from "zustand";
 import { getChildrenEdges } from "src/lib/utils/graph/getChildrenEdges";
 import { getOutgoers } from "src/lib/utils/graph/getOutgoers";
 import { parser } from "src/lib/utils/json/jsonParser";
-import { NodeData, EdgeData } from "src/types/models";
+import { NodeData, EdgeData } from "src/types/graph";
 import useJson from "./useJson";
 
 export interface Graph {

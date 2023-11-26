@@ -10,7 +10,7 @@ import { Loading } from "src/layout/Loading";
 import useGraph from "src/store/useGraph";
 import useStored from "src/store/useStored";
 import useUser from "src/store/useUser";
-import { NodeData } from "src/types/models";
+import { NodeData } from "src/types/graph";
 import { CustomEdge } from "./CustomEdge";
 import { ErrorView } from "./ErrorView";
 import { PremiumView } from "./PremiumView";
@@ -75,7 +75,7 @@ const layoutOptions = {
   "elk.layered.nodePlacement.strategy": "NETWORK_SIMPLEX",
 };
 
-const PREMIUM_LIMIT = 200;
+const PREMIUM_LIMIT = 20000;
 const ERROR_LIMIT = 3_000;
 
 const GraphCanvas = ({ isWidget }: GraphProps) => {

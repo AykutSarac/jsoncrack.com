@@ -23,6 +23,7 @@ const modalComponents: ModalComponent[] = [
   { key: "cancelPremium", component: Modals.CancelPremiumModal },
   { key: "review", component: Modals.ReviewModal },
   { key: "jq", component: Modals.JQModal },
+  { key: "type", component: Modals.TypeModal },
 ];
 
 const ModalController = () => {

@@ -27,6 +27,7 @@ const initialStates: ModalState = {
   cancelPremium: false,
   review: false,
   jq: false,
+  type: false,
 };
 
 const authModals: Modal[] = ["cloud", "account"];

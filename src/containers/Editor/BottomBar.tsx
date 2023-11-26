@@ -22,7 +22,7 @@ import {
   VscSyncIgnored,
   VscWorkspaceTrusted,
 } from "react-icons/vsc";
-import { saveToCloud, updateJson } from "src/services/json";
+import { documentSvc } from "src/services/document.service";
 import useFile from "src/store/useFile";
 import useGraph from "src/store/useGraph";
 import useModal from "src/store/useModal";
@@ -64,7 +64,7 @@ const StyledRight = styled.div`
   gap: 4px;
 `;
 
-const StyledBottomBarItem = styled.button<{ bg?: string }>`
+const StyledBottomBarItem = styled.button<{ $bg?: string }>`
   display: flex;
   align-items: center;
   gap: 4px;
@@ -75,7 +75,7 @@ const StyledBottomBarItem = styled.button<{ bg?: string }>`
   font-size: 12px;
   font-weight: 400;
   color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
-  background: ${({ bg }) => bg};
+  background: ${({ $bg }) => $bg};
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -89,10 +89,6 @@ const StyledBottomBarItem = styled.button<{ bg?: string }>`
     opacity: 0.6;
     cursor: default;
   }
-`;
-
-const StyledImg = styled.img<{ $light: boolean }>`
-  filter: ${({ $light }) => $light && "invert(100%)"};
 `;
 
 export const BottomBar = () => {
@@ -131,7 +127,7 @@ export const BottomBar = () => {
         setIsUpdating(true);
         toast.loading("Saving document...", { id: "fileSave" });
 
-        const { data, error } = await saveToCloud({
+        const { data, error } = await documentSvc.upsert({
           id: query?.json,
           contents: getContents(),
           format: getFormat(),
@@ -170,7 +166,7 @@ export const BottomBar = () => {
       if (!query.json) return handleSaveJson();
       setIsUpdating(true);
 
-      const { data: updatedJsonData, error } = await updateJson(query.json as string, {
+      const { data: updatedJsonData, error } = await documentSvc.update(query.json as string, {
         private: !isPrivate,
       });
 
@@ -195,7 +191,7 @@ export const BottomBar = () => {
         </Head>
       )}
       <StyledLeft>
-        <StyledBottomBarItem bg="#1864AB" onClick={handleLoginClick}>
+        <StyledBottomBarItem $bg="#1864AB" onClick={handleLoginClick}>
           <Flex align="center" gap={5} px={5}>
             <VscAccount color="white" />
             <Text maw={120} c="white" truncate="end">

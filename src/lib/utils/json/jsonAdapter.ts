@@ -3,7 +3,7 @@ import { csv2json, json2csv } from "json-2-csv";
 import { parse } from "jsonc-parser";
 import jxon from "jxon";
 import toml from "toml";
-import { FileFormat } from "src/types/models";
+import { FileFormat } from "src/enums/file";
 
 const keyExists = (obj: object, key: string) => {
   if (!obj || (typeof obj !== "object" && !Array.isArray(obj))) {

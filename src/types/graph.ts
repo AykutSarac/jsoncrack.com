@@ -1,4 +1,3 @@
-/* eslint unused-imports/no-unused-imports: 0 */
 import { NodeType } from "jsonc-parser";
 
 export interface NodeData {
@@ -19,12 +18,4 @@ export interface EdgeData {
   id: string;
   from: string;
   to: string;
-}
-
-export enum FileFormat {
-  "JSON" = "json",
-  "YAML" = "yaml",
-  "XML" = "xml",
-  "TOML" = "toml",
-  "CSV" = "csv",
 }

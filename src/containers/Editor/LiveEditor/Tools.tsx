@@ -19,17 +19,18 @@ import {
   VscSettingsGear,
   VscTarget,
   VscSearchFuzzy,
+  VscGroupByRefType,
 } from "react-icons/vsc";
 import { SearchInput } from "src/components/SearchInput";
-import useToggleHide from "src/hooks/useToggleHide";
+import { FileFormat } from "src/enums/file";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
 import { getNextDirection } from "src/lib/utils/graph/getNextDirection";
 import { isIframe } from "src/lib/utils/widget";
 import useFile from "src/store/useFile";
 import useGraph from "src/store/useGraph";
+import useJC from "src/store/useJC";
 import useJson from "src/store/useJson";
 import useModal from "src/store/useModal";
-import { FileFormat } from "src/types/models";
 
 export const StyledTools = styled.div`
   position: relative;
@@ -101,17 +102,16 @@ function fullscreenBrowser() {
 }
 
 const ViewMenu = () => {
-  const { validateHiddenNodes } = useToggleHide();
   const [coreKey, setCoreKey] = React.useState("CTRL");
   const toggleFold = useGraph(state => state.toggleFold);
-  const setDirection = useGraph(state => state.setDirection);
-  const expandGraph = useGraph(state => state.expandGraph);
-  const collapseGraph = useGraph(state => state.collapseGraph);
+  const setDirection = useJC(state => state.graphRef?.setDirection);
+  const direction = useJC(state => state.graphRef?.direction);
+  const expandGraph = useJC(state => state.graphRef?.expandGraph);
+  const collapseGraph = useJC(state => state.graphRef?.collapseGraph);
   const toggleFullscreen = useGraph(state => state.toggleFullscreen);
-  const focusFirstNode = useGraph(state => state.focusFirstNode);
+  const focusFirstNode = useJC(state => state.graphRef?.focusFirstNode);
   const foldNodes = useGraph(state => state.foldNodes);
-  const graphCollapsed = useGraph(state => state.graphCollapsed);
-  const direction = useGraph(state => state.direction);
+  const graphCollapsed = useJC(state => state.graphRef?.graphCollapsed);
   const fullscreen = useGraph(state => state.fullscreen);
 
   const toggleEditor = () => toggleFullscreen(!fullscreen);
@@ -122,9 +122,8 @@ const ViewMenu = () => {
   };
 
   const toggleDirection = () => {
-    const nextDirection = getNextDirection(direction);
-
-    setDirection(nextDirection);
+    const nextDirection = getNextDirection(direction || "RIGHT");
+    if (setDirection) setDirection(nextDirection);
   };
 
   const toggleExpandCollapseGraph = () => {
@@ -132,7 +131,6 @@ const ViewMenu = () => {
     else collapseGraph();
 
     toast(`${graphCollapsed ? "Expanded" : "Collapsed"} graph.`);
-    validateHiddenNodes();
   };
 
   useHotkeys([
@@ -194,7 +192,7 @@ const ViewMenu = () => {
               label: "Tools",
             });
           }}
-          icon={<StyledFlowIcon rotate={rotateLayout(direction)} />}
+          icon={<StyledFlowIcon rotate={rotateLayout(direction || "RIGHT")} />}
           rightSection={
             <Text ml="md" fz={10} color="dimmed">
               {coreKey} Shift D
@@ -252,9 +250,9 @@ const ViewMenu = () => {
 export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) => {
   const getJson = useJson(state => state.getJson);
   const setVisible = useModal(state => state.setVisible);
-  const zoomIn = useGraph(state => state.zoomIn);
-  const zoomOut = useGraph(state => state.zoomOut);
-  const centerView = useGraph(state => state.centerView);
+  const centerView = useJC(state => state.graphRef?.centerView);
+  const zoomIn = useJC(state => state.graphRef?.zoomIn);
+  const zoomOut = useJC(state => state.graphRef?.zoomOut);
 
   const setFormat = useFile(state => state.setFormat);
   const format = useFile(state => state.format);
@@ -344,6 +342,13 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
                   onClick={() => setVisible("jwt")(true)}
                 >
                   Decode JWT
+                </Menu.Item>
+                <Menu.Item
+                  fz={12}
+                  icon={<VscGroupByRefType />}
+                  onClick={() => setVisible("type")(true)}
+                >
+                  Generate Type
                 </Menu.Item>
               </Menu.Dropdown>
             </Menu>
