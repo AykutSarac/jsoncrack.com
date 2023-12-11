@@ -12,7 +12,7 @@ const StyledPremiumView = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
-  background: ${({ theme }) => theme.GRID_COLOR_SECONDARY};
+  background: #020015;
 
   img {
     filter: drop-shadow(2px 2px 1px black);
@@ -191,7 +191,7 @@ export const PremiumView = () => (
         href={paymentURL()}
         target="_blank"
       >
-        UPGRADE TO PREMIUM $7.00
+        UPGRADE TO PREMIUM
       </Button>
     </StyledContent>
 
