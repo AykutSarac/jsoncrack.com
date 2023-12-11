@@ -54,6 +54,10 @@ export const Footer = () => {
               label: "Privacy",
               link: "/legal/privacy",
             },
+            {
+              label: "Subscription & Refund",
+              link: "/legal/subscription-refund",
+            },
           ],
         },
       ]}
