@@ -35,7 +35,6 @@ export const ReviewModal: React.FC<ModalProps> = ({ opened, onClose }) => {
         <Text align="center">How was your experience?</Text>
         <Rating value={stars} onChange={setStars} my="lg" size="xl" mx="auto" />
         <Textarea
-          description="You may include your mail in the feedback if you want us to contact you."
           placeholder="Please provide feedback on how we can enhance the product and let us know which features you require."
           value={review}
           onChange={e => setReview(e.currentTarget.value)}
@@ -45,6 +44,10 @@ export const ReviewModal: React.FC<ModalProps> = ({ opened, onClose }) => {
         />
         <Text align="right" size={12} color="dimmed">
           500/{review.length}
+        </Text>
+        <Text size={12}>
+          * Your feedback is kept anonymous. If you wish to be contacted, please provide your email
+          address along with your feedback.
         </Text>
         <Button type="submit" mt="lg" fullWidth>
           Submit
