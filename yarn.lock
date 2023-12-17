@@ -2565,6 +2565,11 @@ globby@^11.1.0:
     merge2 "^1.4.1"
     slash "^3.0.0"
 
+gofmt.js@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/gofmt.js/-/gofmt.js-0.0.2.tgz#94818cea0db4f633589db805d0d7cb1b7ac02df8"
+  integrity sha512-79B7Ja5UBfWfEFutuvrQtJp2nVdiyrskFjH/66rdun2y74DENfxrfdzXTQS2QFgeSHGWOrgR9eJGrsszu8RWXA==
+
 goober@^2.1.10:
   version "2.1.13"
   resolved "https://registry.yarnpkg.com/goober/-/goober-2.1.13.tgz#e3c06d5578486212a76c9eba860cbc3232ff6d7c"
