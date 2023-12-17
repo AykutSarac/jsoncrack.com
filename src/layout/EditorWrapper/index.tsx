@@ -4,7 +4,7 @@ import { MantineProvider, MantineThemeOverride } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { monaSans } from "src/constants/fonts";
 import { lightTheme, darkTheme } from "src/constants/theme";
-import useStored from "src/store/useStored";
+import useConfig from "src/store/useConfig";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -52,13 +52,13 @@ const mantineTheme: MantineThemeOverride = {
 };
 
 export const EditorWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const lightmode = useStored(state => state.lightmode);
+  const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
 
   return (
-    <ThemeProvider theme={lightmode ? lightTheme : darkTheme}>
+    <ThemeProvider theme={darkmodeEnabled ? darkTheme : lightTheme}>
       <MantineProvider
         theme={{
-          colorScheme: lightmode ? "light" : "dark",
+          colorScheme: darkmodeEnabled ? "dark" : "light",
           ...mantineTheme,
         }}
         withCSSVariables

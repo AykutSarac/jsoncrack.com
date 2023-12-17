@@ -6,10 +6,10 @@ import vsDark from "prism-react-renderer/themes/vsDark";
 import vsLight from "prism-react-renderer/themes/vsLight";
 import { VscLock } from "react-icons/vsc";
 import { isIframe } from "src/lib/utils/widget";
+import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
 import useGraph from "src/store/useGraph";
 import useModal from "src/store/useModal";
-import useStored from "src/store/useStored";
 import useUser from "src/store/useUser";
 
 const dataToString = (data: any) => {
@@ -49,7 +49,7 @@ export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const isPremium = useUser(state => state.premium);
   const editContents = useFile(state => state.editContents);
   const setVisible = useModal(state => state.setVisible);
-  const lightmode = useStored(state => (state.lightmode ? "light" : "vs-dark"));
+  const darkmodeEnabled = useConfig(state => (state.darkmodeEnabled ? "vs-dark" : "light"));
   const nodeData = useGraph(state => dataToString(state.selectedNode?.text));
   const path = useGraph(state => state.selectedNode?.path);
   const isParent = useGraph(state => state.selectedNode?.data?.isParent);
@@ -90,7 +90,7 @@ export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           </Text>
           {editMode ? (
             <Editor
-              theme={lightmode}
+              theme={darkmodeEnabled}
               defaultValue={nodeData}
               onChange={e => setValue(e!)}
               height={200}

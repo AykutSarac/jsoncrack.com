@@ -25,15 +25,15 @@ const isURL =
   /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
 
 export const TextRenderer: React.FC<{ children: string }> = ({ children }) => {
-  if (isURL.test(children.replaceAll('"', ""))) {
+  if (isURL.test(children?.replaceAll('"', ""))) {
     return <Styled.StyledLinkItUrl>{children}</Styled.StyledLinkItUrl>;
   }
 
-  if (isColorFormat(children.replaceAll('"', ""))) {
+  if (isColorFormat(children?.replaceAll('"', ""))) {
     return (
       <StyledRow>
-        <ColorSwatch radius={4} h={12} w={12} color={children.replaceAll('"', "")} />
-        {children.replaceAll('"', "")}
+        <ColorSwatch radius={4} h={12} w={12} mr={8} color={children?.replaceAll('"', "")} />
+        {children?.replaceAll('"', "")}
       </StyledRow>
     );
   }

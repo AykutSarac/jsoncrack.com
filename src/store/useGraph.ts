@@ -4,7 +4,7 @@ import { create } from "zustand";
 import { getChildrenEdges } from "src/lib/utils/graph/getChildrenEdges";
 import { getOutgoers } from "src/lib/utils/graph/getOutgoers";
 import { parser } from "src/lib/utils/json/jsonParser";
-import { NodeData, EdgeData } from "src/types/models";
+import { NodeData, EdgeData } from "src/types/graph";
 import useJson from "./useJson";
 
 export interface Graph {
@@ -61,6 +61,7 @@ interface GraphActions {
   zoomOut: () => void;
   centerView: () => void;
   clearGraph: () => void;
+  setZoomFactor: (zoomFactor: number) => void;
 }
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
@@ -192,6 +193,10 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
     get().viewPort?.camera?.centerFitElementIntoView(rootNode as HTMLElement, {
       elementExtraMarginForZoom: 100,
     });
+  },
+  setZoomFactor: zoomFactor => {
+    const viewPort = get().viewPort;
+    viewPort?.camera?.recenter(viewPort.centerX, viewPort.centerY, zoomFactor);
   },
   zoomIn: () => {
     const viewPort = get().viewPort;

@@ -4,8 +4,8 @@ import { MdLink, MdLinkOff } from "react-icons/md";
 import { CustomNodeProps } from "src/components/Graph/CustomNode";
 import useToggleHide from "src/hooks/useToggleHide";
 import { isContentImage } from "src/lib/utils/graph/calculateNodeSize";
+import useConfig from "src/store/useConfig";
 import useGraph from "src/store/useGraph";
-import useStored from "src/store/useStored";
 import { TextRenderer } from "./TextRenderer";
 import * as Styled from "./styles";
 
@@ -52,13 +52,13 @@ const Node: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) =>
     data: { isParent, childrenCount, type },
   } = node;
   const { validateHiddenNodes } = useToggleHide();
-  const hideCollapse = useStored(state => state.hideCollapse);
-  const showChildrenCount = useStored(state => state.childrenCount);
-  const imagePreview = useStored(state => state.imagePreview);
+  const collapseButtonVisible = useConfig(state => state.collapseButtonVisible);
+  const childrenCountVisible = useConfig(state => state.childrenCountVisible);
+  const imagePreviewEnabled = useConfig(state => state.imagePreviewEnabled);
   const expandNodes = useGraph(state => state.expandNodes);
   const collapseNodes = useGraph(state => state.collapseNodes);
   const isExpanded = useGraph(state => state.collapsedParents.includes(id));
-  const isImage = imagePreview && isContentImage(text as string);
+  const isImage = imagePreviewEnabled && isContentImage(text as string);
   const value = JSON.stringify(text).replaceAll('"', "");
 
   const handleExpand = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -80,16 +80,16 @@ const Node: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) =>
           data-x={x}
           data-y={y}
           data-key={JSON.stringify(text)}
-          $hasCollapse={isParent && hideCollapse}
+          $hasCollapse={isParent && collapseButtonVisible}
         >
           <Styled.StyledKey $value={value} $parent={isParent} $type={type}>
             <TextRenderer>{value}</TextRenderer>
           </Styled.StyledKey>
-          {isParent && childrenCount > 0 && showChildrenCount && (
+          {isParent && childrenCount > 0 && childrenCountVisible && (
             <Styled.StyledChildrenCount>({childrenCount})</Styled.StyledChildrenCount>
           )}
 
-          {isParent && hasCollapse && hideCollapse && (
+          {isParent && hasCollapse && collapseButtonVisible && (
             <StyledExpand aria-label="Expand" onClick={handleExpand}>
               {isExpanded ? <MdLinkOff size={18} /> : <MdLink size={18} />}
             </StyledExpand>

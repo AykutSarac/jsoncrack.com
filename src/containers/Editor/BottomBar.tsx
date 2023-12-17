@@ -11,22 +11,15 @@ import {
   AiOutlineLock,
   AiOutlineUnlock,
 } from "react-icons/ai";
+import { BiSolidDockLeft } from "react-icons/bi";
 import { MdOutlineCheckCircleOutline } from "react-icons/md";
 import { TbTransform } from "react-icons/tb";
-import {
-  VscAccount,
-  VscError,
-  VscFeedback,
-  VscSourceControl,
-  VscSync,
-  VscSyncIgnored,
-  VscWorkspaceTrusted,
-} from "react-icons/vsc";
-import { saveToCloud, updateJson } from "src/services/json";
+import { VscError, VscFeedback, VscSourceControl, VscSync, VscSyncIgnored } from "react-icons/vsc";
+import { documentSvc } from "src/services/document.service";
+import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
 import useGraph from "src/store/useGraph";
 import useModal from "src/store/useModal";
-import useStored from "src/store/useStored";
 import useUser from "src/store/useUser";
 
 const StyledBottomBar = styled.div`
@@ -51,6 +44,7 @@ const StyledLeft = styled.div`
   align-items: center;
   justify-content: left;
   gap: 4px;
+  padding-left: 8px;
 
   @media screen and (max-width: 480px) {
     display: none;
@@ -64,7 +58,7 @@ const StyledRight = styled.div`
   gap: 4px;
 `;
 
-const StyledBottomBarItem = styled.button<{ bg?: string }>`
+const StyledBottomBarItem = styled.button<{ $bg?: string }>`
   display: flex;
   align-items: center;
   gap: 4px;
@@ -75,7 +69,7 @@ const StyledBottomBarItem = styled.button<{ bg?: string }>`
   font-size: 12px;
   font-weight: 400;
   color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
-  background: ${({ bg }) => bg};
+  background: ${({ $bg }) => $bg};
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -91,29 +85,28 @@ const StyledBottomBarItem = styled.button<{ bg?: string }>`
   }
 `;
 
-const StyledImg = styled.img<{ $light: boolean }>`
-  filter: ${({ $light }) => $light && "invert(100%)"};
-`;
-
 export const BottomBar = () => {
   const { query, replace } = useRouter();
   const data = useFile(state => state.fileData);
   const user = useUser(state => state.user);
-  const premium = useUser(state => state.premium);
-  const toggleLiveTransform = useStored(state => state.toggleLiveTransform);
-  const liveTransform = useStored(state => state.liveTransform);
+  const toggleLiveTransform = useConfig(state => state.toggleLiveTransform);
+  const liveTransformEnabled = useConfig(state => state.liveTransformEnabled);
   const hasChanges = useFile(state => state.hasChanges);
   const error = useFile(state => state.error);
   const getContents = useFile(state => state.getContents);
   const setContents = useFile(state => state.setContents);
   const nodeCount = useGraph(state => state.nodes.length);
   const fileName = useFile(state => state.fileData?.name);
+  const toggleFullscreen = useGraph(state => state.toggleFullscreen);
+  const fullscreen = useGraph(state => state.fullscreen);
 
   const setVisible = useModal(state => state.setVisible);
   const setHasChanges = useFile(state => state.setHasChanges);
   const getFormat = useFile(state => state.getFormat);
   const [isPrivate, setIsPrivate] = React.useState(false);
   const [isUpdating, setIsUpdating] = React.useState(false);
+
+  const toggleEditor = () => toggleFullscreen(!fullscreen);
 
   React.useEffect(() => {
     setIsPrivate(data?.private ?? true);
@@ -131,7 +124,7 @@ export const BottomBar = () => {
         setIsUpdating(true);
         toast.loading("Saving document...", { id: "fileSave" });
 
-        const { data, error } = await saveToCloud({
+        const { data, error } = await documentSvc.upsert({
           id: query?.json,
           contents: getContents(),
           format: getFormat(),
@@ -170,7 +163,7 @@ export const BottomBar = () => {
       if (!query.json) return handleSaveJson();
       setIsUpdating(true);
 
-      const { data: updatedJsonData, error } = await updateJson(query.json as string, {
+      const { data: updatedJsonData, error } = await documentSvc.update(query.json as string, {
         private: !isPrivate,
       });
 
@@ -195,20 +188,10 @@ export const BottomBar = () => {
         </Head>
       )}
       <StyledLeft>
-        <StyledBottomBarItem bg="#1864AB" onClick={handleLoginClick}>
-          <Flex align="center" gap={5} px={5}>
-            <VscAccount color="white" />
-            <Text maw={120} c="white" truncate="end">
-              {user?.user_metadata.name ?? "Login"}
-            </Text>
-          </Flex>
+        <StyledBottomBarItem onClick={toggleEditor}>
+          <BiSolidDockLeft />
         </StyledBottomBarItem>
-        {!premium && (
-          <StyledBottomBarItem onClick={() => setVisible("premium")(true)}>
-            <VscWorkspaceTrusted />
-            Upgrade to Premium
-          </StyledBottomBarItem>
-        )}
+
         {fileName && (
           <StyledBottomBarItem onClick={() => setVisible("cloud")(true)}>
             <VscSourceControl />
@@ -239,8 +222,8 @@ export const BottomBar = () => {
         </StyledBottomBarItem>
         {(data?.owner_email === user?.email || (!data && user)) && (
           <StyledBottomBarItem onClick={handleSaveJson} disabled={isUpdating || error}>
-            {hasChanges ? <AiOutlineCloudUpload /> : <AiOutlineCloudSync />}
-            {hasChanges ? (query?.json ? "Unsaved Changes" : "Create Document") : "Saved"}
+            {hasChanges || !user ? <AiOutlineCloudUpload /> : <AiOutlineCloudSync />}
+            {hasChanges || !user ? (query?.json ? "Unsaved Changes" : "Save to Cloud") : "Saved"}
           </StyledBottomBarItem>
         )}
         {data?.owner_email === user?.email && (
@@ -256,7 +239,7 @@ export const BottomBar = () => {
           <AiOutlineLink />
           Share
         </StyledBottomBarItem>
-        {liveTransform ? (
+        {liveTransformEnabled ? (
           <StyledBottomBarItem onClick={() => toggleLiveTransform(false)}>
             <VscSync />
             <Text>Live Transform</Text>
@@ -267,7 +250,7 @@ export const BottomBar = () => {
             <Text>Manual Transform</Text>
           </StyledBottomBarItem>
         )}
-        {!liveTransform && (
+        {!liveTransformEnabled && (
           <StyledBottomBarItem onClick={() => setContents({})}>
             <TbTransform />
             Transform

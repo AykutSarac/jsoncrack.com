@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Editor, { loader, useMonaco } from "@monaco-editor/react";
 import { Loading } from "src/layout/Loading";
+import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
-import useStored from "src/store/useStored";
 
 loader.config({
   paths: {
@@ -33,7 +33,7 @@ export const MonacoEditor = () => {
   const setError = useFile(state => state.setError);
   const jsonSchema = useFile(state => state.jsonSchema);
   const getHasChanges = useFile(state => state.getHasChanges);
-  const theme = useStored(state => (state.lightmode ? "light" : "vs-dark"));
+  const theme = useConfig(state => (state.darkmodeEnabled ? "vs-dark" : "light"));
   const fileType = useFile(state => state.format);
 
   React.useEffect(() => {

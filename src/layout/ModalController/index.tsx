@@ -11,7 +11,6 @@ const modalComponents: ModalComponent[] = [
   { key: "import", component: Modals.ImportModal },
   { key: "clear", component: Modals.ClearModal },
   { key: "download", component: Modals.DownloadModal },
-  { key: "settings", component: Modals.SettingsModal },
   { key: "cloud", component: Modals.CloudModal },
   { key: "account", component: Modals.AccountModal },
   { key: "premium", component: Modals.PremiumModal },
@@ -23,6 +22,7 @@ const modalComponents: ModalComponent[] = [
   { key: "cancelPremium", component: Modals.CancelPremiumModal },
   { key: "review", component: Modals.ReviewModal },
   { key: "jq", component: Modals.JQModal },
+  { key: "type", component: Modals.TypeModal },
 ];
 
 const ModalController = () => {

@@ -1,35 +1,52 @@
 import React from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import styled from "styled-components";
-import { Flex, Group, MediaQuery, Menu, Select, Text } from "@mantine/core";
-import { useHotkeys } from "@mantine/hooks";
+import {
+  Avatar,
+  Flex,
+  Group,
+  Input,
+  MediaQuery,
+  Menu,
+  SegmentedControl,
+  Select,
+  Text,
+} from "@mantine/core";
+import { getHotkeyHandler, useHotkeys } from "@mantine/hooks";
 import ReactGA from "react-ga4";
 import toast from "react-hot-toast";
-import { AiOutlineFullscreen, AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineFullscreen } from "react-icons/ai";
+import { BsCheck2 } from "react-icons/bs";
 import { CgArrowsMergeAltH, CgArrowsShrinkH, CgChevronDown } from "react-icons/cg";
 import { FiDownload } from "react-icons/fi";
-import { MdCenterFocusWeak } from "react-icons/md";
+import { MdOutlineWorkspacePremium } from "react-icons/md";
 import { SiJsonwebtokens } from "react-icons/si";
 import { TiFlowMerge } from "react-icons/ti";
 import {
   VscCollapseAll,
   VscExpandAll,
   VscJson,
-  VscLayoutSidebarLeft,
-  VscLayoutSidebarLeftOff,
-  VscSettingsGear,
   VscTarget,
   VscSearchFuzzy,
+  VscGroupByRefType,
+  VscSignOut,
+  VscFeedback,
+  VscSignIn,
 } from "react-icons/vsc";
 import { SearchInput } from "src/components/SearchInput";
+import { FileFormat } from "src/enums/file.enum";
+import { ViewMode } from "src/enums/viewMode.enum";
 import useToggleHide from "src/hooks/useToggleHide";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
 import { getNextDirection } from "src/lib/utils/graph/getNextDirection";
 import { isIframe } from "src/lib/utils/widget";
+import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
 import useGraph from "src/store/useGraph";
 import useJson from "src/store/useJson";
 import useModal from "src/store/useModal";
-import { FileFormat } from "src/types/models";
+import useUser from "src/store/useUser";
 
 export const StyledTools = styled.div`
   position: relative;
@@ -95,16 +112,12 @@ const ViewMenu = () => {
   const [coreKey, setCoreKey] = React.useState("CTRL");
   const toggleFold = useGraph(state => state.toggleFold);
   const setDirection = useGraph(state => state.setDirection);
+  const direction = useGraph(state => state.direction);
   const expandGraph = useGraph(state => state.expandGraph);
   const collapseGraph = useGraph(state => state.collapseGraph);
-  const toggleFullscreen = useGraph(state => state.toggleFullscreen);
   const focusFirstNode = useGraph(state => state.focusFirstNode);
   const foldNodes = useGraph(state => state.foldNodes);
   const graphCollapsed = useGraph(state => state.graphCollapsed);
-  const direction = useGraph(state => state.direction);
-  const fullscreen = useGraph(state => state.fullscreen);
-
-  const toggleEditor = () => toggleFullscreen(!fullscreen);
 
   const toggleFoldNodes = () => {
     toggleFold(!foldNodes);
@@ -112,21 +125,19 @@ const ViewMenu = () => {
   };
 
   const toggleDirection = () => {
-    const nextDirection = getNextDirection(direction);
-
-    setDirection(nextDirection);
+    const nextDirection = getNextDirection(direction || "RIGHT");
+    if (setDirection) setDirection(nextDirection);
   };
 
   const toggleExpandCollapseGraph = () => {
     if (graphCollapsed) expandGraph();
     else collapseGraph();
 
-    toast(`${graphCollapsed ? "Expanded" : "Collapsed"} graph.`);
     validateHiddenNodes();
+    toast(`${graphCollapsed ? "Expanded" : "Collapsed"} graph.`);
   };
 
   useHotkeys([
-    ["mod+shift+e", toggleEditor],
     ["mod+shift+d", toggleDirection],
     ["mod+shift+f", toggleFoldNodes],
     ["mod+shift+c", toggleExpandCollapseGraph],
@@ -146,7 +157,7 @@ const ViewMenu = () => {
   }, []);
 
   return (
-    <Menu shadow="md" closeOnItemClick={false}>
+    <Menu shadow="md" closeOnItemClick={false} withArrow>
       <Menu.Target>
         <StyledToolElement>
           <Flex align="center" gap={3}>
@@ -158,25 +169,6 @@ const ViewMenu = () => {
         <Menu.Item
           fz={12}
           onClick={() => {
-            toggleEditor();
-            ReactGA.event({
-              action: "toggle_hide_editor",
-              category: "User",
-              label: "Tools",
-            });
-          }}
-          icon={fullscreen ? <VscLayoutSidebarLeft /> : <VscLayoutSidebarLeftOff />}
-          rightSection={
-            <Text ml="md" fz={10} color="dimmed">
-              {coreKey} Shift E
-            </Text>
-          }
-        >
-          {fullscreen ? "Show" : "Hide"} Editor
-        </Menu.Item>
-        <Menu.Item
-          fz={12}
-          onClick={() => {
             toggleDirection();
             ReactGA.event({
               action: "toggle_layout_direction",
@@ -184,7 +176,7 @@ const ViewMenu = () => {
               label: "Tools",
             });
           }}
-          icon={<StyledFlowIcon rotate={rotateLayout(direction)} />}
+          icon={<StyledFlowIcon rotate={rotateLayout(direction || "RIGHT")} />}
           rightSection={
             <Text ml="md" fz={10} color="dimmed">
               {coreKey} Shift D
@@ -240,15 +232,49 @@ const ViewMenu = () => {
 };
 
 export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) => {
+  const { push } = useRouter();
+
   const getJson = useJson(state => state.getJson);
   const setVisible = useModal(state => state.setVisible);
+  const centerView = useGraph(state => state.centerView);
   const zoomIn = useGraph(state => state.zoomIn);
   const zoomOut = useGraph(state => state.zoomOut);
-  const centerView = useGraph(state => state.centerView);
+  const toggleGestures = useConfig(state => state.toggleGestures);
+  const toggleChildrenCount = useConfig(state => state.toggleChildrenCount);
+  const toggleDarkMode = useConfig(state => state.toggleDarkMode);
+  const toggleRulers = useConfig(state => state.toggleRulers);
+  const toggleCollapseButton = useConfig(state => state.toggleCollapseButton);
+  const setViewMode = useConfig(state => state.setViewMode);
+  const setZoomFactor = useGraph(state => state.setZoomFactor);
+  const toggleImagePreview = useConfig(state => state.toggleImagePreview);
+  const logout = useUser(state => state.logout);
+
+  const user = useUser(state => state.user);
+  const premium = useUser(state => state.premium);
+
+  const zoomFactor = useGraph(state => state.viewPort?.zoomFactor || 1);
+  const gesturesEnabled = useConfig(state => state.gesturesEnabled);
+  const childrenCountVisible = useConfig(state => state.childrenCountVisible);
+  const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
+  const viewMode = useConfig(state => state.viewMode);
+  const rulersEnabled = useConfig(state => state.rulersEnabled);
+  const collapseButtonVisible = useConfig(state => state.collapseButtonVisible);
+  const imagePreviewEnabled = useConfig(state => state.imagePreviewEnabled);
 
   const setFormat = useFile(state => state.setFormat);
   const format = useFile(state => state.format);
+
+  const [tempZoomValue, setTempZoomValue] = React.useState(zoomFactor);
   const [logoURL, setLogoURL] = React.useState("CTRL");
+
+  React.useEffect(() => {
+    if (!Number.isNaN(zoomFactor)) setTempZoomValue(zoomFactor);
+  }, [zoomFactor]);
+
+  useHotkeys([
+    ["shift+Digit0", () => setZoomFactor(100 / 100)],
+    ["shift+Digit1", centerView],
+  ]);
 
   React.useEffect(() => {
     if (typeof window !== "undefined") {
@@ -305,11 +331,30 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
                 { value: FileFormat.CSV, label: "CSV" },
               ]}
             />
+            <Menu trigger="click" shadow="md" withArrow>
+              <Menu.Target>
+                <StyledToolElement title="View Mode">
+                  <Flex align="center" gap={3}>
+                    View Mode <CgChevronDown />
+                  </Flex>
+                </StyledToolElement>
+              </Menu.Target>
+              <Menu.Dropdown>
+                <SegmentedControl
+                  value={viewMode}
+                  onChange={setViewMode}
+                  data={[
+                    { value: ViewMode.Graph, label: "Graph" },
+                    { value: ViewMode.Tree, label: "Tree" },
+                  ]}
+                />
+              </Menu.Dropdown>
+            </Menu>
             <StyledToolElement title="Import File" onClick={() => setVisible("import")(true)}>
               Import
             </StyledToolElement>
             <ViewMenu />
-            <Menu shadow="md">
+            <Menu shadow="md" withArrow>
               <Menu.Target>
                 <StyledToolElement>
                   <Flex align="center" gap={3}>
@@ -331,6 +376,13 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
                 >
                   Decode JWT
                 </Menu.Item>
+                <Menu.Item
+                  fz={12}
+                  icon={<VscGroupByRefType />}
+                  onClick={() => setVisible("type")(true)}
+                >
+                  Generate Type
+                </Menu.Item>
               </Menu.Dropdown>
             </Menu>
             <StyledToolElement title="Cloud" onClick={() => setVisible("cloud")(true)}>
@@ -343,31 +395,168 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
         </MediaQuery>
       )}
       <Group spacing="xs" position="right" w="100%" noWrap>
-        <StyledToolElement title="Zoom Out" onClick={zoomOut}>
-          <AiOutlineMinus size="18" />
-        </StyledToolElement>
-        <StyledToolElement title="Zoom In" onClick={zoomIn}>
-          <AiOutlinePlus size="18" />
-        </StyledToolElement>
+        <SearchInput />
+
         {!isWidget && (
           <StyledToolElement title="Save as Image" onClick={() => setVisible("download")(true)}>
             <FiDownload size="18" />
           </StyledToolElement>
         )}
-        <StyledToolElement title="Center Canvas" onClick={centerView}>
-          <MdCenterFocusWeak size="18" />
-        </StyledToolElement>
-        <SearchInput />
-        <StyledToolElement title="Fullscreen" $hide={isWidget} onClick={fullscreenBrowser}>
-          <AiOutlineFullscreen size="18" />
-        </StyledToolElement>
-        <StyledToolElement
-          title="Settings"
-          $hide={isWidget}
-          onClick={() => setVisible("settings")(true)}
-        >
-          <VscSettingsGear size="18" />
-        </StyledToolElement>
+
+        {!isWidget && (
+          <Menu shadow="md" trigger="click" closeOnItemClick={false} withArrow>
+            <Menu.Target>
+              <StyledToolElement>
+                <Flex gap={4}>
+                  {Math.round(zoomFactor * 100)}%
+                  <CgChevronDown />
+                </Flex>
+              </StyledToolElement>
+            </Menu.Target>
+            <Menu.Dropdown>
+              <Menu.Item>
+                <Input
+                  type="number"
+                  value={Math.round(tempZoomValue * 100)}
+                  onChange={e => setTempZoomValue(e.currentTarget.valueAsNumber / 100)}
+                  onKeyDown={getHotkeyHandler([["Enter", () => setZoomFactor(tempZoomValue)]])}
+                  size="xs"
+                  rightSection="%"
+                />
+              </Menu.Item>
+              <Menu.Item rightSection="+" onClick={zoomIn}>
+                <Text size="xs">Zoom in</Text>
+              </Menu.Item>
+              <Menu.Item rightSection="-" onClick={zoomOut}>
+                <Text size="xs">Zoom out</Text>
+              </Menu.Item>
+              <Menu.Item rightSection="⇧ 1" onClick={centerView}>
+                <Text size="xs">Zoom to fit</Text>
+              </Menu.Item>
+              <Menu.Item onClick={() => setZoomFactor(50 / 100)}>
+                <Text size="xs">Zoom to %50</Text>
+              </Menu.Item>
+              <Menu.Item rightSection="⇧ 0" onClick={() => setZoomFactor(100 / 100)}>
+                <Text size="xs">Zoom to %100</Text>
+              </Menu.Item>
+              <Menu.Item onClick={() => setZoomFactor(200 / 100)}>
+                <Text size="xs">Zoom to %200</Text>
+              </Menu.Item>
+              <Menu.Divider />
+              <Menu.Item
+                icon={<BsCheck2 opacity={rulersEnabled ? 100 : 0} />}
+                onClick={() => toggleRulers(!rulersEnabled)}
+              >
+                <Text size="xs">Rulers</Text>
+              </Menu.Item>
+              <Menu.Item
+                icon={<BsCheck2 opacity={gesturesEnabled ? 100 : 0} />}
+                onClick={() => toggleGestures(!gesturesEnabled)}
+              >
+                <Text size="xs">Trackpad Gestures</Text>
+              </Menu.Item>
+              <Menu.Item
+                icon={<BsCheck2 opacity={childrenCountVisible ? 100 : 0} />}
+                onClick={() => toggleChildrenCount(!childrenCountVisible)}
+              >
+                <Text size="xs">Item Count</Text>
+              </Menu.Item>
+              <Menu.Item
+                icon={<BsCheck2 opacity={imagePreviewEnabled ? 100 : 0} />}
+                onClick={() => toggleImagePreview(!imagePreviewEnabled)}
+              >
+                <Text size="xs">Image Link Preview</Text>
+              </Menu.Item>
+              <Menu.Item
+                icon={<BsCheck2 opacity={collapseButtonVisible ? 100 : 0} />}
+                onClick={() => toggleCollapseButton(!collapseButtonVisible)}
+              >
+                <Text size="xs">Show Expand/Collapse</Text>
+              </Menu.Item>
+              <Menu.Item
+                icon={<BsCheck2 opacity={darkmodeEnabled ? 100 : 0} />}
+                onClick={() => toggleDarkMode(!darkmodeEnabled)}
+              >
+                <Text size="xs">Dark Mode</Text>
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
+        )}
+
+        {!isWidget && (
+          <Menu shadow="md" trigger="click" closeOnItemClick={false} withArrow>
+            <Menu.Target>
+              <StyledToolElement>
+                <Avatar
+                  color="grape"
+                  variant="filled"
+                  size={20}
+                  radius="xl"
+                  src={user?.user_metadata.avatar_url}
+                  alt={user?.user_metadata.name}
+                >
+                  {user?.user_metadata.name[0]}
+                </Avatar>
+              </StyledToolElement>
+            </Menu.Target>
+            <Menu.Dropdown>
+              {user ? (
+                <Menu.Item
+                  icon={
+                    <Avatar color="grape" alt={user.user_metadata.name} size={20} radius="xl" />
+                  }
+                  onClick={() => setVisible("account")(true)}
+                  closeMenuOnClick
+                >
+                  <Text size="xs">Account</Text>
+                </Menu.Item>
+              ) : (
+                <Link href="/sign-in">
+                  <Menu.Item icon={<VscSignIn />}>
+                    <Text size="xs">Sign in</Text>
+                  </Menu.Item>
+                </Link>
+              )}
+              {!premium && (
+                <Menu.Item
+                  icon={<MdOutlineWorkspacePremium color="red" />}
+                  onClick={() => setVisible("premium")(true)}
+                  closeMenuOnClick
+                >
+                  <Text
+                    variant="gradient"
+                    fw="bold"
+                    gradient={{ from: "orange", to: "red" }}
+                    size="xs"
+                  >
+                    Get Premium
+                  </Text>
+                </Menu.Item>
+              )}
+              {user && (
+                <>
+                  <Menu.Divider />
+                  <Menu.Item
+                    icon={<VscFeedback />}
+                    onClick={() => setVisible("review")(true)}
+                    closeMenuOnClick
+                  >
+                    <Text size="xs">Feedback</Text>
+                  </Menu.Item>
+                  <Menu.Item icon={<VscSignOut />} onClick={() => logout()} closeMenuOnClick>
+                    <Text size="xs">Log out</Text>
+                  </Menu.Item>
+                </>
+              )}
+            </Menu.Dropdown>
+          </Menu>
+        )}
+
+        {!isWidget && (
+          <StyledToolElement title="Fullscreen" $hide={isWidget} onClick={fullscreenBrowser}>
+            <AiOutlineFullscreen size="18" />
+          </StyledToolElement>
+        )}
       </Group>
     </StyledTools>
   );

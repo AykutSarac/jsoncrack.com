@@ -74,6 +74,7 @@ function JsonCrack({
                 style: {
                   background: "#4D4D4D",
                   color: "#B9BBBE",
+                  borderRadius: 4,
                 },
               }}
             />

@@ -1,4 +1,4 @@
-import { NodeData, EdgeData } from "src/types/models";
+import { NodeData, EdgeData } from "src/types/graph";
 
 export function getNodePath(nodes: NodeData[], edges: EdgeData[], nodeId: string) {
   const { getParentsForNodeId } = require("reaflow");

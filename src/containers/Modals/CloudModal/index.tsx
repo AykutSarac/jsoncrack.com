@@ -28,10 +28,10 @@ import { AiOutlineLink } from "react-icons/ai";
 import { FaTrash } from "react-icons/fa";
 import { MdFileOpen } from "react-icons/md";
 import { VscAdd, VscEdit, VscLock, VscUnlock } from "react-icons/vsc";
-import { deleteJson, getAllJson, saveToCloud, updateJson } from "src/services/json";
+import { FileFormat } from "src/enums/file.enum";
+import { documentSvc } from "src/services/document.service";
 import useFile, { File } from "src/store/useFile";
 import useUser from "src/store/useUser";
-import { FileFormat } from "src/types/models";
 
 dayjs.extend(relativeTime);
 
@@ -52,7 +52,7 @@ const UpdateNameModal: React.FC<{
   const onSubmit = () => {
     if (!file) return;
     toast
-      .promise(updateJson(file.id, { name }), {
+      .promise(documentSvc.update(file.id, { name }), {
         loading: "Updating document...",
         error: "Error occurred while updating document!",
         success: `Renamed document to ${name}`,
@@ -92,7 +92,7 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const getFormat = useFile(state => state.getFormat);
   const [currentFile, setCurrentFile] = React.useState<File | null>(null);
   const { isReady, query, replace } = useRouter();
-  const { data, refetch } = useQuery(["allJson", query], () => getAllJson(), {
+  const { data, refetch } = useQuery(["allJson", query], () => documentSvc.getAll(), {
     enabled: isReady && opened,
   });
 
@@ -104,7 +104,10 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const onCreate = async () => {
     try {
       toast.loading("Saving document...", { id: "fileSave" });
-      const { data, error } = await saveToCloud({ contents: getContents(), format: getFormat() });
+      const { data, error } = await documentSvc.upsert({
+        contents: getContents(),
+        format: getFormat(),
+      });
 
       if (error) throw error;
 
@@ -121,7 +124,7 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const onDeleteClick = React.useCallback(
     (file: File) => {
       toast
-        .promise(deleteJson(file.id), {
+        .promise(documentSvc.delete(file.id), {
           loading: "Deleting file...",
           error: "An error occurred while deleting the file!",
           success: `Deleted ${file.name}!`,

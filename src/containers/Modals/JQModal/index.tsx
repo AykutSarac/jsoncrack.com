@@ -1,27 +1,17 @@
 import React from "react";
 import { Stack, Modal, Button, ModalProps, Text, Anchor, Group } from "@mantine/core";
 import Editor from "@monaco-editor/react";
-import jq from "jq-in-the-browser";
-import { toast } from "react-hot-toast";
 import { VscLinkExternal } from "react-icons/vsc";
-import useFile from "src/store/useFile";
-import useJson from "src/store/useJson";
-import useStored from "src/store/useStored";
+import useJsonQuery from "src/hooks/useJsonQuery";
+import useConfig from "src/store/useConfig";
 
 export const JQModal: React.FC<ModalProps> = ({ opened, onClose }) => {
+  const { updateJson } = useJsonQuery();
   const [query, setQuery] = React.useState("");
-  const lightmode = useStored(state => (state.lightmode ? "light" : "vs-dark"));
-  const getJson = useJson(state => state.getJson);
-  const setContents = useFile(state => state.setContents);
+  const darkmodeEnabled = useConfig(state => (state.darkmodeEnabled ? "vs-dark" : "light"));
 
   const onApply = () => {
-    try {
-      const res = jq(query)(JSON.parse(getJson())) as object;
-      setContents({ contents: JSON.stringify(res, null, 2) });
-      onClose();
-    } catch (error) {
-      toast.error("Invalid JQ");
-    }
+    updateJson(query);
   };
 
   return (
@@ -37,7 +27,7 @@ export const JQModal: React.FC<ModalProps> = ({ opened, onClose }) => {
         </Text>
         <Editor
           value={query ?? ""}
-          theme={lightmode}
+          theme={darkmodeEnabled}
           onChange={e => setQuery(e!)}
           height={300}
           language="markdown"

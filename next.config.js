@@ -13,6 +13,11 @@ const config = {
   compiler: {
     styledComponents: true,
   },
+  webpack: config => {
+    config.resolve.fallback = { fs: false };
+
+    return config;
+  },
 };
 
 const bundleAnalyzerConfig = withBundleAnalyzer(config);

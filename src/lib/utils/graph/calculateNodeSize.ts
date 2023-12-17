@@ -1,6 +1,6 @@
 import { firaMono } from "src/constants/fonts";
+import useConfig from "src/store/useConfig";
 import useGraph from "src/store/useGraph";
-import useStored from "src/store/useStored";
 
 type Text = string | [string, string][];
 type Size = { width: number; height: number };
@@ -54,8 +54,8 @@ setInterval(() => sizeCache.clear(), 120_000);
 
 export const calculateNodeSize = (text: Text, isParent = false) => {
   const { foldNodes } = useGraph.getState();
-  const { imagePreview } = useStored.getState();
-  const isImage = isContentImage(text) && imagePreview;
+  const { imagePreviewEnabled } = useConfig.getState();
+  const isImage = isContentImage(text) && imagePreviewEnabled;
 
   const cacheKey = [text, isParent, foldNodes].toString();
 
