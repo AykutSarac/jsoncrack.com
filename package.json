@@ -9,7 +9,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "tsc && eslint src && prettier --check src",
+    "lint": "tsc --project tsconfig.json && eslint src && prettier --check src",
     "lint:fix": "eslint --fix src & prettier --write src",
     "analyze": "ANALYZE=true npm run build"
   },
@@ -20,7 +20,7 @@
     "@mantine/hooks": "^6.0.17",
     "@mantine/next": "^6.0.21",
     "@mantine/prism": "^6.0.21",
-    "@monaco-editor/react": "^4.6.0",
+    "@monaco-editor/react": "^4.5.2",
     "@sentry/nextjs": "^7.72.0",
     "@supabase/auth-helpers-nextjs": "^0.8.1",
     "@supabase/auth-helpers-react": "^0.4.2",

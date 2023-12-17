@@ -473,6 +473,12 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
               >
                 <Text size="xs">Show Expand/Collapse</Text>
               </Menu.Item>
+              <Menu.Item
+                icon={<BsCheck2 opacity={darkmodeEnabled ? 100 : 0} />}
+                onClick={() => toggleDarkMode(!darkmodeEnabled)}
+              >
+                <Text size="xs">Dark Mode</Text>
+              </Menu.Item>
             </Menu.Dropdown>
           </Menu>
         )}
@@ -527,12 +533,6 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
                   </Text>
                 </Menu.Item>
               )}
-              <Menu.Item
-                icon={<BsCheck2 opacity={darkmodeEnabled ? 100 : 0} />}
-                onClick={() => toggleDarkMode(!darkmodeEnabled)}
-              >
-                <Text size="xs">Dark Mode</Text>
-              </Menu.Item>
               {user && (
                 <>
                   <Menu.Divider />

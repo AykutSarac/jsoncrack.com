@@ -1,9 +1,16 @@
 import React from "react";
-import { Stack, Modal, ModalProps, ScrollArea } from "@mantine/core";
+import { Stack, Modal, ModalProps, ScrollArea, Select } from "@mantine/core";
 import { Prism } from "@mantine/prism";
 import vsDark from "prism-react-renderer/themes/vsDark";
 import vsLight from "prism-react-renderer/themes/vsLight";
 import useJsonQuery from "src/hooks/useJsonQuery";
+
+const typeOptions = [
+  {
+    label: "TypeScript",
+    value: "typescript",
+  },
+];
 
 export const TypeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const { getJsonType } = useJsonQuery();
@@ -18,6 +25,7 @@ export const TypeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   return (
     <Modal title="Generate Types" size="auto" opened={opened} onClose={onClose} centered>
       <Stack py="sm">
+        <Select value="typescript" data={typeOptions} />
         <ScrollArea>
           <Prism
             miw={350}
