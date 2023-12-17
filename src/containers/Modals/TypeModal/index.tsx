@@ -56,7 +56,7 @@ export const TypeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           <Prism
             miw={350}
             mah={600}
-            language="typescript"
+            language={selectedType}
             copyLabel="Copy to clipboard"
             copiedLabel="Copied to clipboard"
             withLineNumbers
