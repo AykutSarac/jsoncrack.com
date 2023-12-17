@@ -30,7 +30,7 @@ export const Footer = () => {
               link: "https://discord.gg/yVyTtCRueq",
             },
             {
-              label: "Twitter",
+              label: "𝕏 (Twitter)",
               link: "https://twitter.com/jsoncrack",
             },
             {
