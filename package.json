@@ -29,6 +29,7 @@
     "allotment": "^1.19.3",
     "axios": "^1.5.0",
     "dayjs": "^1.11.10",
+    "gofmt.js": "^0.0.2",
     "html-to-image": "^1.11.11",
     "jq-in-the-browser": "^0.7.2",
     "jq-web": "^0.5.1",
