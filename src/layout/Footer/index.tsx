@@ -34,10 +34,6 @@ export const Footer = () => {
               link: "https://twitter.com/jsoncrack",
             },
             {
-              label: "GitHub",
-              link: "https://github.com/AykutSarach",
-            },
-            {
               label: "LinkedIn",
               link: "https://www.linkedin.com/company/herowand",
             },
