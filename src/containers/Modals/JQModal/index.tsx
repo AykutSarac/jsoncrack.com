@@ -3,12 +3,12 @@ import { Stack, Modal, Button, ModalProps, Text, Anchor, Group } from "@mantine/
 import Editor from "@monaco-editor/react";
 import { VscLinkExternal } from "react-icons/vsc";
 import useJsonQuery from "src/hooks/useJsonQuery";
-import useStored from "src/store/useStored";
+import useConfig from "src/store/useConfig";
 
 export const JQModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const { updateJson } = useJsonQuery();
   const [query, setQuery] = React.useState("");
-  const lightmode = useStored(state => (state.lightmode ? "light" : "vs-dark"));
+  const darkmodeEnabled = useConfig(state => (state.darkmodeEnabled ? "vs-dark" : "light"));
 
   const onApply = () => {
     updateJson(query);
@@ -27,7 +27,7 @@ export const JQModal: React.FC<ModalProps> = ({ opened, onClose }) => {
         </Text>
         <Editor
           value={query ?? ""}
-          theme={lightmode}
+          theme={darkmodeEnabled}
           onChange={e => setQuery(e!)}
           height={300}
           language="markdown"

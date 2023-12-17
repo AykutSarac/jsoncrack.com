@@ -123,7 +123,7 @@ const PromptInput = () => {
 export const JsonEditor: React.FC = () => {
   return (
     <StyledEditorWrapper>
-      <PromptInput />
+      {/* <PromptInput /> */}
       <MonacoEditor />
     </StyledEditorWrapper>
   );

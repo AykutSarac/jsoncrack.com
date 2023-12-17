@@ -18,7 +18,6 @@ const initialStates: ModalState = {
   import: false,
   account: false,
   node: false,
-  settings: false,
   share: false,
   login: false,
   premium: false,

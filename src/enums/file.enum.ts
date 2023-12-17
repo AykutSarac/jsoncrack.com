@@ -1,3 +1,4 @@
+// eslint-disable
 export enum FileFormat {
   "JSON" = "json",
   "YAML" = "yaml",

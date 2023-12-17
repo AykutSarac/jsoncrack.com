@@ -3,9 +3,9 @@ import { Stack, Modal, Button, ModalProps, Text, Anchor, Group } from "@mantine/
 import Editor from "@monaco-editor/react";
 import { toast } from "react-hot-toast";
 import { VscLock } from "react-icons/vsc";
+import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
 import useModal from "src/store/useModal";
-import useStored from "src/store/useStored";
 import useUser from "src/store/useUser";
 
 export const SchemaModal: React.FC<ModalProps> = ({ opened, onClose }) => {
@@ -13,7 +13,7 @@ export const SchemaModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const showPremiumModal = useModal(state => state.setVisible("premium"));
   const setJsonSchema = useFile(state => state.setJsonSchema);
   const [schema, setSchema] = React.useState("");
-  const lightmode = useStored(state => (state.lightmode ? "light" : "vs-dark"));
+  const darkmodeEnabled = useConfig(state => (state.darkmodeEnabled ? "vs-dark" : "light"));
 
   const onApply = () => {
     if (!isPremium) return showPremiumModal(true);
@@ -47,7 +47,7 @@ export const SchemaModal: React.FC<ModalProps> = ({ opened, onClose }) => {
         </Text>
         <Editor
           value={schema ?? ""}
-          theme={lightmode}
+          theme={darkmodeEnabled}
           onChange={e => setSchema(e!)}
           height={300}
           language="json"

@@ -4,7 +4,6 @@ export { DownloadModal } from "./DownloadModal";
 export { ImportModal } from "./ImportModal";
 export { AccountModal } from "./AccountModal";
 export { NodeModal } from "./NodeModal";
-export { SettingsModal } from "./SettingsModal";
 export { ShareModal } from "./ShareModal";
 export { LoginModal } from "./LoginModal";
 export { PremiumModal } from "./PremiumModal";
@@ -22,7 +21,6 @@ type Modal =
   | "import"
   | "account"
   | "node"
-  | "settings"
   | "share"
   | "login"
   | "premium"

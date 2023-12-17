@@ -5,13 +5,13 @@ import ReactGA from "react-ga4";
 import { toast } from "react-hot-toast";
 import { create } from "zustand";
 import { defaultJson } from "src/constants/data";
-import { FileFormat } from "src/enums/file";
+import { FileFormat } from "src/enums/file.enum";
 import { contentToJson, jsonToContent } from "src/lib/utils/json/jsonAdapter";
 import { isIframe } from "src/lib/utils/widget";
 import { documentSvc } from "src/services/document.service";
+import useConfig from "./useConfig";
 import useGraph from "./useGraph";
 import useJson from "./useJson";
-import useStored from "./useStored";
 import useUser from "./useUser";
 
 type SetContents = {
@@ -125,7 +125,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       const isFetchURL = window.location.href.includes("?");
       const json = await contentToJson(get().contents, get().format);
 
-      if (!useStored.getState().liveTransform && skipUpdate) return;
+      if (!useConfig.getState().liveTransformEnabled && skipUpdate) return;
 
       if (get().hasChanges && contents && contents.length < 80_000 && !isIframe() && !isFetchURL) {
         sessionStorage.setItem("content", contents);

@@ -1,10 +1,10 @@
 import React from "react";
 import { useDebouncedValue } from "@mantine/hooks";
 import { searchQuery, cleanupHighlight, highlightMatchedNodes } from "src/lib/utils/graph/search";
-import useJC from "src/store/useJC";
+import useGraph from "src/store/useGraph";
 
 export const useFocusNode = () => {
-  const viewPort = useJC(state => state.graphRef?.viewPort);
+  const viewPort = useGraph(state => state.viewPort);
   const [selectedNode, setSelectedNode] = React.useState(0);
   const [nodeCount, setNodeCount] = React.useState(0);
   const [value, setValue] = React.useState("");

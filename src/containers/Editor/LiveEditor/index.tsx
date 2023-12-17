@@ -1,87 +1,145 @@
 import React from "react";
-import styled from "styled-components";
-import { JSONGraph } from "jsongraph-react";
-import useGraph from "src/store/useGraph";
-import useJC from "src/store/useJC";
+import styled, { DefaultTheme, useTheme } from "styled-components";
+import { Menu, Text } from "@mantine/core";
+import { JSONTree } from "react-json-tree";
+import { Graph } from "src/components/Graph";
+import { TextRenderer } from "src/components/Graph/CustomNode/TextRenderer";
+import { firaMono } from "src/constants/fonts";
+import { ViewMode } from "src/enums/viewMode.enum";
+import useConfig from "src/store/useConfig";
 import useJson from "src/store/useJson";
-import useModal from "src/store/useModal";
-import useStored from "src/store/useStored";
-import { NodeData } from "src/types/graph";
 
 const StyledLiveEditor = styled.div`
   position: relative;
   height: 100%;
+  background: ${({ theme }) => theme.GRID_BG_COLOR};
+  overflow: auto;
+
+  & > ul {
+    margin-top: 0 !important;
+    padding: 12px !important;
+    font-family: ${firaMono.style.fontFamily};
+    font-size: 14px;
+    font-weight: 500;
+  }
 `;
 
-const LiveEditor: React.FC = () => {
-  const lightmode = useStored(state => state.lightmode);
+type TextColorFn = {
+  theme: DefaultTheme;
+  $value?: string | unknown;
+};
+
+function getValueColor({ $value, theme }: TextColorFn) {
+  if ($value && !Number.isNaN(+$value)) return theme.NODE_COLORS.INTEGER;
+  if ($value === "true") return theme.NODE_COLORS.BOOL.TRUE;
+  if ($value === "false") return theme.NODE_COLORS.BOOL.FALSE;
+  if ($value === "null") return theme.NODE_COLORS.NULL;
+
+  // default
+  return theme.NODE_COLORS.NODE_VALUE;
+}
+
+function getLabelColor({ $type, theme }: { $type?: string; theme: DefaultTheme }) {
+  if ($type === "Object") return theme.NODE_COLORS.PARENT_OBJ;
+  if ($type === "Array") return theme.NODE_COLORS.PARENT_ARR;
+  return theme.NODE_COLORS.PARENT_OBJ;
+}
+
+const View = () => {
+  const theme = useTheme();
   const json = useJson(state => state.json);
-  const setJCRef = useJC(state => state.setJCRef);
-  const graphRef = useJC(state => state.graphRef);
-  const setSelectedNode = useGraph(state => state.setSelectedNode);
-  const setVisible = useModal(state => state.setVisible);
+  const viewMode = useConfig(state => state.viewMode);
 
-  console.log(graphRef);
+  if (viewMode === ViewMode.Graph) return <Graph />;
 
-  const handleNodeClick = React.useCallback(
-    (data: NodeData) => {
-      if (setSelectedNode) setSelectedNode(data);
-      setVisible("node")(true);
-    },
-    [setSelectedNode, setVisible]
-  );
+  if (viewMode === ViewMode.Tree)
+    return (
+      <JSONTree
+        data={JSON.parse(json)}
+        labelRenderer={(keyPath, nodeType, expanded, expandable) => {
+          return (
+            <span
+              style={{
+                color: getLabelColor({
+                  theme,
+                  $type: nodeType,
+                }),
+              }}
+            >
+              {keyPath[0]}:
+            </span>
+          );
+        }}
+        valueRenderer={(valueAsString, value) => {
+          return (
+            <span
+              style={{
+                color: getValueColor({
+                  theme,
+                  $value: valueAsString,
+                }),
+              }}
+            >
+              <TextRenderer>{JSON.stringify(value)}</TextRenderer>
+            </span>
+          );
+        }}
+        theme={{
+          extend: {
+            overflow: "scroll",
+            height: "100%",
+            scheme: "monokai",
+            author: "wimer hazenberg (http://www.monokai.nl)",
+            base00: theme.GRID_BG_COLOR,
+          },
+        }}
+      />
+    );
+};
 
-  const style = React.useMemo(
-    () => ({
-      width: "100%",
-      height: "100%",
-    }),
-    []
-  );
-
-  const handleLayoutChange = React.useCallback(() => {
-    // graphRef shouldn't be null here
-    console.log(graphRef);
-    setTimeout(graphRef?.centerView, 100);
-  }, [graphRef]);
-
-  const layout = React.useMemo(
-    () => ({
-      touchGestures: true,
-      theme: lightmode ? "light" : ("dark" as any),
-    }),
-    [lightmode]
-  );
+const LiveEditor: React.FC = () => {
+  const viewMode = useConfig(state => state.viewMode);
+  const [contextOpened, setContextOpened] = React.useState(false);
+  const [contextPosition, setContextPosition] = React.useState({
+    x: 0,
+    y: 0,
+  });
 
   return (
-    <StyledLiveEditor>
-      <JSONGraph
-        ref={setJCRef}
-        json={json}
-        style={style}
-        onNodeClick={handleNodeClick}
-        onLayoutChange={handleLayoutChange}
-        layout={layout}
-      />
+    <StyledLiveEditor
+      onContextMenuCapture={e => {
+        e.preventDefault();
+        setContextOpened(true);
+        setContextPosition({ x: e.pageX, y: e.pageY });
+      }}
+      onClick={() => setContextOpened(false)}
+    >
+      <div
+        style={{
+          position: "fixed",
+          top: contextPosition.y,
+          left: contextPosition.x,
+          zIndex: 100,
+        }}
+      >
+        <Menu opened={false} shadow="sm">
+          <Menu.Dropdown>
+            <Menu.Item>
+              <Text size="xs">Download as Image</Text>
+            </Menu.Item>
+            <Menu.Item>
+              <Text size="xs">Zoom to Fit</Text>
+            </Menu.Item>
+            <Menu.Item>
+              <Text size="xs">Rotate</Text>
+            </Menu.Item>
+          </Menu.Dropdown>
+        </Menu>
+      </div>
+
+      <View />
     </StyledLiveEditor>
   );
 };
+
 export default LiveEditor;
-// import React from "react";
-// import styled from "styled-components";
-// import { Graph } from "src/components/Graph";
-
-// const StyledLiveEditor = styled.div`
-//   position: relative;
-//   height: 100%;
-// `;
-
-// const LiveEditor: React.FC = () => {
-//   return (
-//     <StyledLiveEditor>
-//       <Graph />
-//     </StyledLiveEditor>
-//   );
-// };
-
-// export default LiveEditor;

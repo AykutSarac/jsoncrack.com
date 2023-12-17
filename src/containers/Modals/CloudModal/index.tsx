@@ -28,7 +28,7 @@ import { AiOutlineLink } from "react-icons/ai";
 import { FaTrash } from "react-icons/fa";
 import { MdFileOpen } from "react-icons/md";
 import { VscAdd, VscEdit, VscLock, VscUnlock } from "react-icons/vsc";
-import { FileFormat } from "src/enums/file";
+import { FileFormat } from "src/enums/file.enum";
 import { documentSvc } from "src/services/document.service";
 import useFile, { File } from "src/store/useFile";
 import useUser from "src/store/useUser";
