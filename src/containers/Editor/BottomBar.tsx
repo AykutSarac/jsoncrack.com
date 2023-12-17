@@ -222,7 +222,7 @@ export const BottomBar = () => {
         </StyledBottomBarItem>
         {(data?.owner_email === user?.email || (!data && user)) && (
           <StyledBottomBarItem onClick={handleSaveJson} disabled={isUpdating || error}>
-            {hasChanges ? <AiOutlineCloudUpload /> : <AiOutlineCloudSync />}
+            {hasChanges || !user ? <AiOutlineCloudUpload /> : <AiOutlineCloudSync />}
             {hasChanges || !user ? (query?.json ? "Unsaved Changes" : "Save to Cloud") : "Saved"}
           </StyledBottomBarItem>
         )}

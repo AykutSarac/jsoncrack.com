@@ -37,6 +37,7 @@ import {
 import { SearchInput } from "src/components/SearchInput";
 import { FileFormat } from "src/enums/file.enum";
 import { ViewMode } from "src/enums/viewMode.enum";
+import useToggleHide from "src/hooks/useToggleHide";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
 import { getNextDirection } from "src/lib/utils/graph/getNextDirection";
 import { isIframe } from "src/lib/utils/widget";
@@ -107,6 +108,7 @@ function fullscreenBrowser() {
 }
 
 const ViewMenu = () => {
+  const { validateHiddenNodes } = useToggleHide();
   const [coreKey, setCoreKey] = React.useState("CTRL");
   const toggleFold = useGraph(state => state.toggleFold);
   const setDirection = useGraph(state => state.setDirection);
@@ -131,6 +133,7 @@ const ViewMenu = () => {
     if (graphCollapsed) expandGraph();
     else collapseGraph();
 
+    validateHiddenNodes();
     toast(`${graphCollapsed ? "Expanded" : "Collapsed"} graph.`);
   };
 
@@ -494,9 +497,7 @@ export const Tools: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) =>
               {user ? (
                 <Menu.Item
                   icon={
-                    <Avatar color="grape" alt={user.user_metadata.name} size={20} radius="xl">
-                      {user?.user_metadata.name[0]}
-                    </Avatar>
+                    <Avatar color="grape" alt={user.user_metadata.name} size={20} radius="xl" />
                   }
                   onClick={() => setVisible("account")(true)}
                   closeMenuOnClick
