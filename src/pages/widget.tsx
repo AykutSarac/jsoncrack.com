@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { ThemeProvider } from "styled-components";
 import toast from "react-hot-toast";
 import { darkTheme, lightTheme } from "src/constants/theme";
-import { Tools } from "src/containers/Editor/LiveEditor/Tools";
+import { Toolbar } from "src/containers/Toolbar";
 import { EditorWrapper } from "src/layout/EditorWrapper";
 import useFile from "src/store/useFile";
 import useGraph from "src/store/useGraph";
@@ -17,7 +17,7 @@ interface EmbedMessage {
   };
 }
 
-const Graph = dynamic(() => import("src/components/Graph").then(c => c.Graph), {
+const Graph = dynamic(() => import("src/containers/Views/GraphView").then(c => c.Graph), {
   ssr: false,
 });
 
@@ -63,7 +63,7 @@ const WidgetPage = () => {
         <meta name="robots" content="noindex,nofollow" />
       </Head>
       <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
-        <Tools isWidget />
+        <Toolbar isWidget />
         <Graph isWidget />
       </ThemeProvider>
     </EditorWrapper>

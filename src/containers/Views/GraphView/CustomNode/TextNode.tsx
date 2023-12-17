@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { MdLink, MdLinkOff } from "react-icons/md";
-import { CustomNodeProps } from "src/components/Graph/CustomNode";
+import { CustomNodeProps } from "src/containers/Views/GraphView/CustomNode";
 import useToggleHide from "src/hooks/useToggleHide";
 import { isContentImage } from "src/lib/utils/graph/calculateNodeSize";
 import useConfig from "src/store/useConfig";

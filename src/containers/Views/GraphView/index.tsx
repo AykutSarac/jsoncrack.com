@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast";
 import { Space } from "react-zoomable-ui";
 import { ElkRoot } from "reaflow/dist/layout/useLayout";
 import { useLongPress } from "use-long-press";
-import { CustomNode } from "src/components/Graph/CustomNode";
+import { CustomNode } from "src/containers/Views/GraphView/CustomNode";
 import { ViewMode } from "src/enums/viewMode.enum";
 import useToggleHide from "src/hooks/useToggleHide";
 import { Loading } from "src/layout/Loading";

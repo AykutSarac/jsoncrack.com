@@ -4,7 +4,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import styled from "styled-components";
 import { BottomBar } from "src/containers/Editor/BottomBar";
-import { Tools } from "src/containers/Editor/LiveEditor/Tools";
+import { Toolbar } from "src/containers/Toolbar";
 import { EditorWrapper } from "src/layout/EditorWrapper";
 import { Loading } from "src/layout/Loading";
 import useFile from "src/store/useFile";
@@ -47,7 +47,7 @@ const EditorPage: React.FC = () => {
           {hasQuery && <meta name="robots" content="noindex,nofollow" />}
         </Head>
         <StyledPageWrapper>
-          <Tools />
+          <Toolbar />
           <StyledEditorWrapper>
             <Panes />
           </StyledEditorWrapper>
