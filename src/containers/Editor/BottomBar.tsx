@@ -115,15 +115,15 @@ export const BottomBar = () => {
   const getFormat = useFile(state => state.getFormat);
   const [isPrivate, setIsPrivate] = React.useState(false);
   const [isUpdating, setIsUpdating] = React.useState(false);
-  const contents = useFile(state => state.contents);
+
+  const isExploitableJson = useFile(state => {
+    const contentString = state.contents;
+    return contentString[0] === "[" && contentString[contentString.length - 1] === "]";
+  });
 
   React.useEffect(() => {
     setIsPrivate(data?.private ?? true);
   }, [data]);
-
-  const isNotExploitableJson = (contentString: string): boolean => {
-    return contentString[0] !== "[" && contentString[contentString.length - 1] !== "]";
-  };
 
   const handleSaveJson = React.useCallback(async () => {
     if (!user) return setVisible("login")(true);
@@ -280,10 +280,10 @@ export const BottomBar = () => {
           </StyledBottomBarItem>
         )}
 
-        {isNotExploitableJson(contents) && (
+        {isExploitableJson && (
           <StyledBottomBarItem>
             <AiOutlineSafetyCertificate />
-            JSON is not exploitable
+            Exploitable
           </StyledBottomBarItem>
         )}
       </StyledLeft>
