@@ -11,6 +11,7 @@ import useJson from "src/store/useJson";
 import useModal from "src/store/useModal";
 import { AccountMenu } from "./AccountMenu";
 import { Logo } from "./Logo";
+import { OptionsMenu } from "./OptionsMenu";
 import { ToolsMenu } from "./ToolsMenu";
 import { ViewMenu } from "./ViewMenu";
 import { ViewModeMenu } from "./ViewModeMenu";
@@ -101,6 +102,7 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
             </Styles.StyledToolElement>
             <ZoomMenu />
             <AccountMenu />
+            <OptionsMenu />
             <Styles.StyledToolElement
               title="Fullscreen"
               $hide={isWidget}
