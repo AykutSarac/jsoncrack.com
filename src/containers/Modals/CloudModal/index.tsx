@@ -19,6 +19,7 @@ import {
   Stack,
   RingProgress,
   UnstyledButton,
+  Drawer,
 } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
@@ -190,32 +191,15 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   );
 
   return (
-    <Modal title="Saved On The Cloud" opened={opened} size="xl" onClose={onClose} centered>
-      <Paper>
-        <ScrollArea h={360} offsetScrollbars>
-          <Table fontSize="xs" verticalSpacing="xs" striped>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Create Date</th>
-                <th>Format</th>
-                <th>Views</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>{rows}</tbody>
-          </Table>
-        </ScrollArea>
-      </Paper>
+    <Drawer title="Saved On The Cloud" opened={opened} size="xl" onClose={onClose}>
       {data && (
         <Flex gap="md">
           <Paper my="lg" withBorder radius="md" p="xs" w="100%">
             <Group>
               <RingProgress
-                size={60}
+                size={40}
                 roundCaps
-                thickness={8}
+                thickness={6}
                 sections={[
                   {
                     value: (data.length * 100) / totalQuota,
@@ -227,7 +211,7 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
                 <Text color="dimmed" size="xs" transform="uppercase" weight={700}>
                   Total Quota
                 </Text>
-                <Text weight={700} size="xl">
+                <Text weight={700} size="lg">
                   {data.length} / {totalQuota}
                 </Text>
               </div>
@@ -251,12 +235,29 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           </Paper>
         </Flex>
       )}
-      <Divider py="xs" />
-      <Text fz="xs">
+      <Text fz="xs" pb="lg">
         The Cloud Save feature is primarily designed for convenient access and is not advisable for
         storing sensitive data.
       </Text>
+      <Divider py="xs" />
+      <Paper>
+        <ScrollArea h="100%" offsetScrollbars>
+          <Table fontSize="xs" verticalSpacing="xs" striped withBorder>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Create Date</th>
+                <th>Format</th>
+                <th>Views</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>{rows}</tbody>
+          </Table>
+        </ScrollArea>
+      </Paper>
       <UpdateNameModal file={currentFile} onClose={() => setCurrentFile(null)} refetch={refetch} />
-    </Modal>
+    </Drawer>
   );
 };
