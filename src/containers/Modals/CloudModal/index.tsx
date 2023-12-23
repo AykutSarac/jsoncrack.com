@@ -191,7 +191,13 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   );
 
   return (
-    <Drawer title="Saved On The Cloud" opened={opened} size="xl" onClose={onClose}>
+    <Drawer
+      title="Saved On The Cloud"
+      opened={opened}
+      size="xl"
+      onClose={onClose}
+      transitionProps={{ duration: 300, timingFunction: "ease", transition: "slide-right" }}
+    >
       {data && (
         <Flex gap="md">
           <Paper my="lg" withBorder radius="md" p="xs" w="100%">
