@@ -23,32 +23,36 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v2.4.0
-      - name: Detect package manager
-        id: detect-package-manager
-        run: |
-          echo "manager=pnpm" >> $GITHUB_OUTPUT
-          echo "command=install --frozen-lockfile" >> $GITHUB_OUTPUT
-          echo "runner=pnpm" >> $GITHUB_OUTPUT
-          exit 0
-      - name: Setup Node
+
+      - name: Install Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
-          cache: ${{ steps.detect-package-manager.outputs.manager }}
-      - name: Cache node_modules
-        uses: actions/cache@v3
+          node-version: "20"
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
         with:
-          path: |
-            ~/.npm
-            ~/.cache/pnpm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json', '**/pnpm-lock.yaml') }}
-          restore-keys: ${{ runner.os }}-node-
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
       - name: Setup Pages
         uses: actions/configure-pages@v3
         with:
           static_site_generator: next
+
       - name: Restore cache
         uses: actions/cache@v3
         with:
@@ -57,15 +61,19 @@ jobs:
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/pnpm-lock.yaml') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/pnpm-lock.yaml') }}-
+
       - name: Install dependencies
-        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+        run: pnpm install
+
       - name: Build with Next.js
-        run: ${{ steps.detect-package-manager.outputs.runner }} next build
+        run: pnpm next build
+
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v2
         with:
           name: build-files
           path: ./out/_next/static/chunks
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
