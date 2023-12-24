@@ -39,7 +39,7 @@ export const JQModal: React.FC<ModalProps> = ({ opened, onClose }) => {
             },
           }}
         />
-        <Group position="right">
+        <Group justify="right">
           <Button onClick={onApply}>Display on Graph</Button>
         </Group>
       </Stack>

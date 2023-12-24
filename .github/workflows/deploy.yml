@@ -26,9 +26,9 @@ jobs:
       - name: Detect package manager
         id: detect-package-manager
         run: |
-          echo "manager=yarn" >> $GITHUB_OUTPUT
+          echo "manager=pnpm" >> $GITHUB_OUTPUT
           echo "command=install --frozen-lockfile" >> $GITHUB_OUTPUT
-          echo "runner=yarn" >> $GITHUB_OUTPUT
+          echo "runner=pnpm" >> $GITHUB_OUTPUT
           exit 0
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -40,8 +40,8 @@ jobs:
         with:
           path: |
             ~/.npm
-            ~/.cache/yarn
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}
+            ~/.cache/pnpm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json', '**/pnpm-lock.yaml') }}
           restore-keys: ${{ runner.os }}-node-
       - name: Setup Pages
         uses: actions/configure-pages@v3
@@ -52,9 +52,9 @@ jobs:
         with:
           path: |
             .next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/pnpm-lock.yaml') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/pnpm-lock.yaml') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js

@@ -32,7 +32,7 @@ export const ReviewModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           onClose();
         }}
       >
-        <Text align="center">How was your experience?</Text>
+        <Text style={{ textAlign: "center" }}>How was your experience?</Text>
         <Rating value={stars} onChange={setStars} my="lg" size="xl" mx="auto" />
         <Textarea
           placeholder="Please provide feedback on how we can enhance the product and let us know which features you require."
@@ -42,10 +42,10 @@ export const ReviewModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           maxLength={500}
           minRows={5}
         />
-        <Text align="right" size={12} color="dimmed">
+        <Text fz={12} c="dimmed" style={{ textAlign: "right" }}>
           500/{review.length}
         </Text>
-        <Text size={12}>
+        <Text fz={12}>
           * Your feedback is kept anonymous. If you wish to be contacted, please provide your email
           address along with your feedback.
         </Text>

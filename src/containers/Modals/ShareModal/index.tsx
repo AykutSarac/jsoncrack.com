@@ -48,7 +48,7 @@ export const ShareModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           color="green"
           target="_blank"
           href="/docs"
-          leftIcon={<FiExternalLink />}
+          leftSection={<FiExternalLink />}
           fullWidth
         >
           Learn How to Embed

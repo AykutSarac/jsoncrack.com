@@ -65,6 +65,7 @@ export function AuthenticationForm(props: PaperProps) {
             value={userData.email}
             onChange={event => setUserData(d => ({ ...d, email: event.target.value }))}
             radius="sm"
+            style={{ color: "black" }}
           />
 
           <PasswordInput
@@ -75,20 +76,15 @@ export function AuthenticationForm(props: PaperProps) {
             value={userData.password}
             onChange={event => setUserData(d => ({ ...d, password: event.target.value }))}
             radius="sm"
+            style={{ color: "black" }}
           />
 
           <Button color="dark" type="submit" radius="sm" loading={loading}>
             Sign in
           </Button>
 
-          <Stack spacing="sm" mx="auto" align="center">
-            <Anchor
-              component={Link}
-              prefetch={false}
-              href="/forgot-password"
-              color="dark"
-              size="xs"
-            >
+          <Stack gap="sm" mx="auto" align="center">
+            <Anchor component={Link} prefetch={false} href="/forgot-password" c="dark" size="xs">
               Forgot your password?
             </Anchor>
           </Stack>
@@ -100,7 +96,7 @@ export function AuthenticationForm(props: PaperProps) {
       <Stack mb="md" mt="md">
         <Button
           radius="sm"
-          leftIcon={<AiOutlineGoogle size="20" />}
+          leftSection={<AiOutlineGoogle size="20" />}
           onClick={() => handleLoginClick("google")}
           color="red"
           variant="outline"
@@ -109,7 +105,7 @@ export function AuthenticationForm(props: PaperProps) {
         </Button>
         <Button
           radius="sm"
-          leftIcon={<AiOutlineGithub size="20" />}
+          leftSection={<AiOutlineGithub size="20" />}
           onClick={() => handleLoginClick("github")}
           color="dark"
           variant="outline"
@@ -136,11 +132,11 @@ const SignIn = () => {
       <Head>
         <title>Sign In - JSON Crack</title>
       </Head>
-      <Paper mt={50} shadow="xs" mx="auto" maw={400} p="lg" withBorder>
+      <Paper mt={50} mx="auto" maw={400} p="lg" withBorder>
         <AuthenticationForm />
       </Paper>
       <Center my="xl">
-        <Anchor component={Link} prefetch={false} href="/sign-up" color="dark" fw="bold">
+        <Anchor component={Link} prefetch={false} href="/sign-up" c="dark" fw="bold">
           Don&apos;t have an account?
         </Anchor>
       </Center>

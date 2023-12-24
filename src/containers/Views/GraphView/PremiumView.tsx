@@ -159,7 +159,7 @@ const StyledContent = styled.div`
 export const PremiumView = () => (
   <StyledPremiumView>
     <StyledContent>
-      <Title align="center">
+      <Title>
         <Image width="400" src="assets/icon.png" alt="JSON Crack" />
       </Title>
       <StyledInfo>

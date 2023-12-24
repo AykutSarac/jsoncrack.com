@@ -44,22 +44,22 @@ export const CancelPremiumModal: React.FC<ModalProps> = ({ opened, onClose }) =>
 
   return (
     <Modal title="CANCEL PREMIUM?" opened={opened} onClose={onClose} centered>
-      <Image py="xs" src="assets/taken.svg" mx="auto" width={200} alt="taken" />
+      <Image py="xs" src="assets/taken.svg" mx="auto" w={200} alt="taken" />
       <Text fz="sm" pb="md">
         Cancellation will take effect at the end of your current billing period.
         <br />
         <br />
         You can restart your subscription anytime.
         <br />
-        <Text size="xs" color="dimmed">
-          If you have problems with cancelling plan please contact: contact@jsoncrack.com
-        </Text>
-        <Anchor target="_blank" href="https://patreon.com/herowand">
+        <Anchor fz="xs" target="_blank" href="https://patreon.com/herowand">
           Click here to cancel if you are Patreon member
         </Anchor>
+        <Text size="xs" c="dimmed" mt="lg">
+          If you have problems with cancelling plan please contact: contact@jsoncrack.com
+        </Text>
       </Text>
       <Divider py="xs" />
-      <Group position="right">
+      <Group justify="right">
         <Button color="dark" variant="subtle" onClick={onClose}>
           Cancel
         </Button>

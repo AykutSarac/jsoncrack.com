@@ -27,7 +27,7 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   return (
     <Modal title={`Hello, ${user?.user_metadata.name}!`} opened={opened} onClose={onClose} centered>
       <Paper p="md">
-        <Group noWrap>
+        <Group>
           <Avatar src={user?.user_metadata.avatar_url} size={94}>
             JC
           </Avatar>
@@ -36,13 +36,13 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
               {user?.user_metadata.name}
             </Text>
 
-            <Group noWrap spacing={10} mt={3}>
+            <Group gap={10} mt={3}>
               <Text fz="xs" c="dimmed">
                 {user?.email}
               </Text>
             </Group>
 
-            <Group noWrap spacing={10} mt={5}>
+            <Group gap={10} mt={5}>
               <Text fz="xs" c="dimmed">
                 <Badge
                   size="sm"
@@ -60,7 +60,7 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
       </Paper>
 
       <Divider py="xs" />
-      <Group position="right">
+      <Group justify="right">
         {isPremium && !premiumCancelled ? (
           <Button
             variant="light"
@@ -77,7 +77,7 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           <Button
             variant="gradient"
             gradient={{ from: "teal", to: "lime", deg: 105 }}
-            leftIcon={<IoRocketSharp />}
+            leftSection={<IoRocketSharp />}
             onClick={() => setVisible("premium")(true)}
           >
             UPGRADE TO PREMIUM!

@@ -1,53 +1,71 @@
 import React from "react";
-import dynamic from "next/dynamic";
 import Head from "next/head";
 import Link from "next/link";
 import Script from "next/script";
-import styled, { ThemeProvider } from "styled-components";
-import {
-  Anchor,
-  Button,
-  Center,
-  Container,
-  Flex,
-  Group,
-  MediaQuery,
-  Stack,
-  Text,
-  Title,
-  Tooltip,
-  rem,
-} from "@mantine/core";
+import { Button, Group, Stack, Title, Text } from "@mantine/core";
+import styled from "styled-components";
 import { FaChevronRight } from "react-icons/fa";
-import { SiVisualstudiocode } from "react-icons/si";
 import { Typewriter } from "react-simple-typewriter";
-import { HovercardAds } from "src/components/HovercardAds";
-import { lightTheme } from "src/constants/theme";
-import { FeaturesCards } from "src/containers/Features";
-import { Navbar } from "src/layout/Navbar";
-
-const Footer = dynamic(() => import("src/layout/Footer").then(c => c.Footer));
+import Layout from "src/layout/Layout";
 
 const StyledHeroSection = styled.div`
-  --bg-color: ${({ theme }) => theme.GRID_BG_COLOR};
-  --line-color-1: ${({ theme }) => theme.GRID_COLOR_PRIMARY};
-  --line-color-2: ${({ theme }) => theme.GRID_COLOR_SECONDARY};
-
-  background-color: var(--bg-color);
-  background-image: linear-gradient(var(--line-color-1) 1.5px, transparent 1.5px),
-    linear-gradient(90deg, var(--line-color-1) 1.5px, transparent 1.5px),
-    linear-gradient(var(--line-color-2) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line-color-2) 1px, transparent 1px);
+  position: relative;
+  background-size: 100% 100%;
+  margin-bottom: -48px;
   background-position:
-    -1.5px -1.5px,
-    -1.5px -1.5px,
-    -1px -1px,
-    -1px -1px;
-  background-size:
-    100px 100px,
-    100px 100px,
-    20px 20px,
-    20px 20px;
+    0px 0px,
+    0px 0px,
+    0px 0px,
+    0px 0px,
+    0px 0px;
+  background-image: radial-gradient(49% 81% at 45% 47%, #26001fff 1%, #60006a00 100%),
+    radial-gradient(113% 91% at 17% -2%, #0f000cff 1%, #ff000000 99%),
+    radial-gradient(142% 91% at 83% 7%, #0f000cff 1%, #ff000000 99%),
+    radial-gradient(142% 91% at -6% 74%, #0f000cff 1%, #ff000000 99%),
+    radial-gradient(142% 91% at 111% 84%, #0f000cff 0%, #5b004eff 99%);
+  overflow: hidden;
+
+  @keyframes shine {
+    0% {
+      background-position:
+        0 0,
+        3px 60px,
+        130px 270px,
+        70px 100px;
+    }
+    100% {
+      background-position:
+        1000px 1000px,
+        1000px 1000px,
+        1000px 1000px,
+        1000px 1000px;
+    }
+  }
+
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    content: "";
+    background-color: transparent;
+    background-image: radial-gradient(white, rgba(255, 255, 255, 0.2) 2px, transparent 2px),
+      radial-gradient(white, rgba(255, 255, 255, 0.15) 1px, transparent 1px),
+      radial-gradient(white, rgba(255, 255, 255, 0.1) 2px, transparent 2px),
+      radial-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1) 2px, transparent 1px);
+    background-size:
+      800px 800px,
+      400px 400px,
+      300px 300px,
+      200px 200px;
+    background-position:
+      0 0,
+      3px 60px,
+      130px 270px,
+      70px 100px;
+    animation: shine 100s linear infinite alternate; /* Use alternate to make it smoother */
+  }
 
   @media only screen and (max-width: 1240px) {
     flex-direction: column;
@@ -63,231 +81,94 @@ const StyledHeroSectionBody = styled.div`
   overflow: hidden;
   backdrop-filter: blur(1px);
   -webkit-backdrop-filter: blur(1px);
-  height: 70vh;
+  height: calc(100vh - 56px);
+  text-align: center;
 
   @media only screen and (max-width: 1200px) {
     flex-direction: column;
   }
 `;
 
-const Left = styled.div`
-  width: 100%;
-  z-index: 1;
-`;
+const StyledHighlightedText = styled(Text)`
+  font-size: 40px;
+  font-weight: 800;
+  display: inline;
 
-const Right = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  transform: translate(20em, 15em) rotate(3deg);
-  width: 80%;
-  filter: blur(1px);
-  user-select: none;
-
-  @media only screen and (max-width: 600px) {
-    display: none;
-  }
-`;
-
-const StyledHighlightedText = styled.span`
-  text-decoration: underline;
-  text-decoration-style: wavy;
-  text-decoration-color: #eab308;
+  background-color: gray;
+  background-image: linear-gradient(45deg, gray, slategray);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
 `;
 
 const StyledHeroText = styled.p`
   font-size: 18px;
-  color: #5e656b;
+  color: #a9aaaa;
   font-weight: 600;
   max-width: 600px;
+  text-align: center;
 
   @media only screen and (max-width: 600px) {
     max-width: 100%;
   }
 `;
 
-const StyledStatsWrapper = styled.div`
-  display: flex;
-  gap: 24px;
-  justify-content: center;
-  align-items: center;
-  background: #421665;
-  padding: 24px;
-
-  @media screen and (max-width: 768px) {
-    flex-direction: column;
-  }
-`;
-
 const HeroSection = () => (
   <StyledHeroSection id="hero-section">
-    <Navbar />
     <StyledHeroSectionBody>
-      <Left>
-        <Stack w="100%" mx="auto">
-          <MediaQuery query="(max-width: 40em)" styles={{ fontSize: rem(30) }}>
-            <Title order={1} fz={40} c="gray" fw={800}>
-              Visualize{" "}
-              <StyledHighlightedText>
-                <Typewriter
-                  words={["JSON", "YAML", "XML", "TOML", "CSV"]}
-                  typeSpeed={100}
-                  deleteSpeed={60}
-                  delaySpeed={2000}
-                  loop
-                />
-              </StyledHighlightedText>
-              <br />
-              instantly into
-              <Text
-                variant="gradient"
-                gradient={{ from: "purple", to: "orange", deg: 45 }}
-                display="inline"
-              >
-                {" "}
-                graphs
-              </Text>
-            </Title>
-          </MediaQuery>
+      <Stack w="100%" mx="auto" align="center">
+        <Title c="#d0c9c9" order={1} fz={40} fw={800} style={{ textAlign: "center" }}>
+          Understand your{" "}
+          <StyledHighlightedText>
+            <Typewriter
+              words={["JSON", "YAML", "XML", "TOML", "CSV"]}
+              typeSpeed={100}
+              deleteSpeed={60}
+              delaySpeed={2000}
+              loop
+            />
+          </StyledHighlightedText>
+          <br />
+          better by visualizing
+        </Title>
 
-          <StyledHeroText>
-            Visualize, analyze, and manipulate data with ease, a versatile and powerful tool for
-            data representation and exploration.
-          </StyledHeroText>
-          <Group spacing="xl">
-            <Button
-              component={Link}
-              href="/editor"
-              prefetch={false}
-              fw="bold"
-              rightIcon={<FaChevronRight />}
-              size="lg"
-            >
-              GO TO EDITOR
-            </Button>
-            <Tooltip
-              maw={400}
-              label="VS Code extension only contains JSON visualization without additional features."
-              withArrow
-              multiline
-              position="bottom"
-            >
-              <Anchor
-                href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode"
-                target="_blank"
-                fw="bold"
-              >
-                <Flex gap="xs" align="center">
-                  <SiVisualstudiocode />
-                  Get it on VS Code
-                </Flex>
-              </Anchor>
-            </Tooltip>
-          </Group>
-        </Stack>
-      </Left>
-      <Right>
-        <img
-          src="/assets/diagram_bg.webp"
-          width="1200"
-          height="593"
-          alt="diagram"
-          loading="eager"
-          fetchPriority="high"
-        />
-      </Right>
+        <StyledHeroText>
+          Visualize, analyze, and manipulate data with ease, a versatile and powerful tool for data
+          representation and exploration.
+        </StyledHeroText>
+        <Group gap="xl">
+          <Button
+            color="orange"
+            variant="light"
+            component={Link}
+            href="/editor"
+            fw="bold"
+            rightSection={<FaChevronRight />}
+            size="xl"
+            style={{ border: "2px solid orange" }}
+          >
+            GO TO EDITOR
+          </Button>
+        </Group>
+      </Stack>
     </StyledHeroSectionBody>
   </StyledHeroSection>
-);
-
-const StatsBanner = () => (
-  <StyledStatsWrapper>
-    <Flex gap="lg">
-      <Stack spacing="0">
-        <Text fw="bolder" fz="1.8rem" truncate>
-          24.8K
-        </Text>
-        <Text color="gray.5" fw="bold" fz="0.8rem" truncate>
-          GITHUB STARS
-        </Text>
-      </Stack>
-      <Stack spacing="0">
-        <Text fw="bolder" fz="1.8rem" truncate>
-          50K+
-        </Text>
-        <Text color="gray.5" fw="bold" fz="12px" truncate>
-          MONTHLY USERS
-        </Text>
-      </Stack>
-      <Stack spacing="0">
-        <Text fw="bolder" fz="1.8rem" truncate>
-          GPL-3
-        </Text>
-        <Text color="gray.5" fw="bold" fz="0.8rem" truncate>
-          LICENSE
-        </Text>
-      </Stack>
-    </Flex>
-    <Stack ml={60}>
-      <Text maw={600} fw="bold" fz="0.9rem">
-        JSON Crack is an open-source project under GPL-3 license. Support us through our premium
-        plan for continued development and exclusive benefits.
-      </Text>
-      <Anchor
-        component={Link}
-        href="/pricing"
-        prefetch={false}
-        color="yellow"
-        fw="bold"
-        w="fit-content"
-      >
-        View Premium Plan <FaChevronRight />
-      </Anchor>
-    </Stack>
-  </StyledStatsWrapper>
-);
-
-const HeroBottom = () => (
-  <Container mt={100}>
-    <Stack>
-      <Title color="dark" order={2} fz="xl" maw={500} mx="auto" align="center">
-        But that&apos;s not all yet!
-        <br />
-        Explore the full potential of your data now......
-      </Title>
-      <Center>
-        <Button
-          component={Link}
-          href="/editor"
-          prefetch={false}
-          color="violet"
-          fw="bold"
-          rightIcon={<FaChevronRight />}
-          size="lg"
-        >
-          GO TO EDITOR
-        </Button>
-      </Center>
-    </Stack>
-  </Container>
 );
 
 export const HomePage = () => {
   const [ads, setAds] = React.useState(false);
 
   return (
-    <ThemeProvider theme={lightTheme}>
+    <Layout>
       <Head>
         <title>JSON Crack | Visualize Instantly Into Graphs</title>
       </Head>
       <HeroSection />
-      <StatsBanner />
-      <FeaturesCards />
-      <HeroBottom />
-      <Footer />
-      {ads && <HovercardAds />}
       <Script src="https://m.servedby-buysellads.com/monetization.js" onLoad={() => setAds(true)} />
-    </ThemeProvider>
+    </Layout>
   );
 };
 

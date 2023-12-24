@@ -86,9 +86,9 @@ export const ViewMenu = () => {
               label: "Tools",
             });
           }}
-          icon={<Styles.StyledFlowIcon rotate={rotateLayout(direction || "RIGHT")} />}
+          leftSection={<Styles.StyledFlowIcon rotate={rotateLayout(direction || "RIGHT")} />}
           rightSection={
-            <Text ml="md" fz={10} color="dimmed">
+            <Text ml="md" fz={10} c="dimmed">
               {coreKey} Shift D
             </Text>
           }
@@ -105,9 +105,9 @@ export const ViewMenu = () => {
               label: "Tools",
             });
           }}
-          icon={foldNodes ? <CgArrowsShrinkH /> : <CgArrowsMergeAltH />}
+          leftSection={foldNodes ? <CgArrowsShrinkH /> : <CgArrowsMergeAltH />}
           rightSection={
-            <Text ml="md" fz={10} color="dimmed">
+            <Text ml="md" fz={10} c="dimmed">
               {coreKey} Shift F
             </Text>
           }
@@ -124,16 +124,16 @@ export const ViewMenu = () => {
               label: "Tools",
             });
           }}
-          icon={graphCollapsed ? <VscExpandAll /> : <VscCollapseAll />}
+          leftSection={graphCollapsed ? <VscExpandAll /> : <VscCollapseAll />}
           rightSection={
-            <Text ml="md" fz={10} color="dimmed">
+            <Text ml="md" fz={10} c="dimmed">
               {coreKey} Shift C
             </Text>
           }
         >
           {graphCollapsed ? "Expand" : "Collapse"} Nodes
         </Menu.Item>
-        <Menu.Item fz={12} onClick={focusFirstNode} icon={<VscTarget />}>
+        <Menu.Item fz={12} onClick={focusFirstNode} leftSection={<VscTarget />}>
           Focus to First Node
         </Menu.Item>
       </Menu.Dropdown>

@@ -31,37 +31,37 @@ export const OptionsMenu = () => {
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Item
-          icon={<BsCheck2 opacity={rulersEnabled ? 100 : 0} />}
+          leftSection={<BsCheck2 opacity={rulersEnabled ? 100 : 0} />}
           onClick={() => toggleRulers(!rulersEnabled)}
         >
           <Text size="xs">Rulers</Text>
         </Menu.Item>
         <Menu.Item
-          icon={<BsCheck2 opacity={gesturesEnabled ? 100 : 0} />}
+          leftSection={<BsCheck2 opacity={gesturesEnabled ? 100 : 0} />}
           onClick={() => toggleGestures(!gesturesEnabled)}
         >
           <Text size="xs">Trackpad Gestures</Text>
         </Menu.Item>
         <Menu.Item
-          icon={<BsCheck2 opacity={childrenCountVisible ? 100 : 0} />}
+          leftSection={<BsCheck2 opacity={childrenCountVisible ? 100 : 0} />}
           onClick={() => toggleChildrenCount(!childrenCountVisible)}
         >
           <Text size="xs">Item Count</Text>
         </Menu.Item>
         <Menu.Item
-          icon={<BsCheck2 opacity={imagePreviewEnabled ? 100 : 0} />}
+          leftSection={<BsCheck2 opacity={imagePreviewEnabled ? 100 : 0} />}
           onClick={() => toggleImagePreview(!imagePreviewEnabled)}
         >
           <Text size="xs">Image Link Preview</Text>
         </Menu.Item>
         <Menu.Item
-          icon={<BsCheck2 opacity={collapseButtonVisible ? 100 : 0} />}
+          leftSection={<BsCheck2 opacity={collapseButtonVisible ? 100 : 0} />}
           onClick={() => toggleCollapseButton(!collapseButtonVisible)}
         >
           <Text size="xs">Show Expand/Collapse</Text>
         </Menu.Item>
         <Menu.Item
-          icon={<BsCheck2 opacity={darkmodeEnabled ? 100 : 0} />}
+          leftSection={<BsCheck2 opacity={darkmodeEnabled ? 100 : 0} />}
           onClick={() => toggleDarkMode(!darkmodeEnabled)}
         >
           <Text size="xs">Dark Mode</Text>

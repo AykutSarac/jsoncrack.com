@@ -7,10 +7,7 @@ import Document, {
   DocumentInitialProps,
 } from "next/document";
 import { ServerStyleSheet } from "styled-components";
-import { createGetInitialProps } from "@mantine/next";
 import { SeoTags } from "src/components/SeoTags";
-
-const getInitialProps = createGetInitialProps();
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
@@ -23,7 +20,7 @@ class MyDocument extends Document {
           enhanceApp: App => props => sheet.collectStyles(<App {...props} />),
         });
 
-      const initialProps = await getInitialProps(ctx);
+      const initialProps = await Document.getInitialProps(ctx);
 
       return {
         ...initialProps,

@@ -13,13 +13,13 @@ const Pricing = () => {
         <title>Pricing - JSON Crack</title>
       </Head>
       <Flex gap="lg" wrap="wrap" justify="center" my={60} w="fit-content" p="lg" mx="auto">
-        <Paper p="xl" radius="lg" shadow="lg" withBorder w={325}>
+        <Paper p="xl" radius="lg" withBorder w={325}>
           <Flex justify="space-between">
-            <Stack spacing="0">
-              <Text fz="xl" fw="bold">
+            <Stack gap="0">
+              <Text fz="xl" fw="bold" c="dark">
                 Free
               </Text>
-              <Text fz="xs" fw="bold" color="gray.6">
+              <Text fz="xs" fw="bold" c="gray.6">
                 Free - forever.
               </Text>
             </Stack>
@@ -37,17 +37,20 @@ const Pricing = () => {
                 </ThemeIcon>
               }
             >
-              <List.Item>Limited capability</List.Item>
-              <List.Item>Save & share up to 15 files</List.Item>
-              <List.Item>Visualize all data formats</List.Item>
-              <List.Item
-                icon={
-                  <ThemeIcon color="gray.5" size={20} radius="xl">
-                    <BsX size="1rem" />
-                  </ThemeIcon>
-                }
-              >
-                <Text color="gray.6">JSON Schema</Text>
+              <List.Item>
+                <Text c="dark" fz="sm">
+                  Maximum capability
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="dark" fz="sm">
+                  Save & share up to 15 files
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="dark" fz="sm">
+                  Visualize all data formats
+                </Text>
               </List.Item>
               <List.Item
                 icon={
@@ -56,7 +59,20 @@ const Pricing = () => {
                   </ThemeIcon>
                 }
               >
-                <Text color="gray.6">Edit data through graph</Text>
+                <Text c="gray.6" fz="sm">
+                  JSON Schema
+                </Text>
+              </List.Item>
+              <List.Item
+                icon={
+                  <ThemeIcon color="gray.5" size={20} radius="xl">
+                    <BsX size="1rem" />
+                  </ThemeIcon>
+                }
+              >
+                <Text c="gray.6" fz="sm">
+                  Edit data through graph
+                </Text>
               </List.Item>
             </List>
             <Button size="md" radius="md" color="orange" variant="outline">
@@ -65,9 +81,9 @@ const Pricing = () => {
           </Flex>
         </Paper>
 
-        <Paper p="xl" radius="lg" shadow="lg" bg="#301e55" withBorder w={325}>
+        <Paper p="xl" radius="lg" bg="#301e55" withBorder w={325}>
           <Flex justify="space-between">
-            <Stack spacing="0">
+            <Stack gap="0">
               <Text c="white" fz="xl" fw="bold">
                 Premium
               </Text>
@@ -76,11 +92,11 @@ const Pricing = () => {
               </Badge>
             </Stack>
             <Paper py={5} px="sm" bg="#442f71">
-              <Stack spacing="0" align="center" justify="center">
+              <Stack gap="0" align="center" justify="center">
                 <Text fz="lg" c="white" fw="bolder">
                   $7
                 </Text>
-                <Text fz="xs" color="gray.4" fw="bold">
+                <Text fz="xs" c="gray.4" fw="bold">
                   Per month
                 </Text>
               </Stack>
@@ -100,19 +116,29 @@ const Pricing = () => {
               }
             >
               <List.Item>
-                <Text c="white">Maximum capability</Text>
+                <Text c="white" fz="sm">
+                  Maximum capability
+                </Text>
               </List.Item>
               <List.Item>
-                <Text c="white">Save & share up to 200 files</Text>
+                <Text c="white" fz="sm">
+                  Save & share up to 200 files
+                </Text>
               </List.Item>
               <List.Item>
-                <Text c="white">Visualize all data formats</Text>
+                <Text c="white" fz="sm">
+                  Visualize all data formats
+                </Text>
               </List.Item>
               <List.Item>
-                <Text c="white">JSON Schema</Text>
+                <Text c="white" fz="sm">
+                  JSON Schema
+                </Text>
               </List.Item>
               <List.Item>
-                <Text c="white">Edit data through graph</Text>
+                <Text c="white" fz="sm">
+                  Edit data through graph
+                </Text>
               </List.Item>
             </List>
             <Button
@@ -128,22 +154,22 @@ const Pricing = () => {
           </Flex>
         </Paper>
 
-        <Paper p="xl" radius="lg" shadow="lg" withBorder w={325}>
+        <Paper p="xl" radius="lg" withBorder w={325}>
           <Flex justify="space-between">
-            <Stack spacing="0">
-              <Text fz="xl" fw="bold">
+            <Stack gap="0">
+              <Text fz="xl" fw="bold" c="dark">
                 Enterprise
               </Text>
-              <Text fz="xs" fw="bold" color="gray.6">
+              <Text fz="xs" fw="bold" c="gray.6">
                 For Teams & Organizations
               </Text>
             </Stack>
-            <Paper py={5} px="sm" bg="gray.0">
-              <Stack spacing="0" align="center" justify="center">
-                <Text fz="lg" fw="bolder">
+            <Paper py={5} px="sm" bg="gray.0" radius="xs">
+              <Stack gap="0" align="center" justify="center">
+                <Text fz="lg" fw="bolder" c="dark">
                   $120
                 </Text>
-                <Text fz="xs" color="gray.6" fw="bold">
+                <Text fz="xs" c="gray.6" fw="bold">
                   Per month
                 </Text>
               </Stack>
@@ -161,6 +187,7 @@ const Pricing = () => {
                   <BsCheck size="1rem" />
                 </ThemeIcon>
               }
+              c="dark"
             >
               <List.Item>Everything from previous plans</List.Item>
               <List.Item
@@ -169,6 +196,7 @@ const Pricing = () => {
                     <BsCheck size="1rem" />
                   </ThemeIcon>
                 }
+                c="dark"
               >
                 Unlimited premium accounts for work email
               </List.Item>
@@ -178,6 +206,7 @@ const Pricing = () => {
                     <BsCheck size="1rem" />
                   </ThemeIcon>
                 }
+                c="dark"
               >
                 Shared cloud in app
               </List.Item>
@@ -195,7 +224,7 @@ const Pricing = () => {
           </Flex>
         </Paper>
       </Flex>
-      <Text align="center" size="sm" color="dimmed">
+      <Text size="sm" c="dimmed" style={{ textAlign: "center" }}>
         <AiOutlineInfoCircle style={{ marginRight: "4px" }} />
         Payment email must be matching with the account registered to the JSON Crack.
       </Text>

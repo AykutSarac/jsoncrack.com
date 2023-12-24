@@ -19,16 +19,24 @@ export const ToolsMenu = () => {
         </Styles.StyledToolElement>
       </Menu.Target>
       <Menu.Dropdown>
-        <Menu.Item fz={12} icon={<VscSearchFuzzy />} onClick={() => setVisible("jq")(true)}>
+        <Menu.Item fz={12} leftSection={<VscSearchFuzzy />} onClick={() => setVisible("jq")(true)}>
           JSON Query (jq)
         </Menu.Item>
-        <Menu.Item fz={12} icon={<VscJson />} onClick={() => setVisible("schema")(true)}>
+        <Menu.Item fz={12} leftSection={<VscJson />} onClick={() => setVisible("schema")(true)}>
           JSON Schema
         </Menu.Item>
-        <Menu.Item fz={12} icon={<SiJsonwebtokens />} onClick={() => setVisible("jwt")(true)}>
+        <Menu.Item
+          fz={12}
+          leftSection={<SiJsonwebtokens />}
+          onClick={() => setVisible("jwt")(true)}
+        >
           Decode JWT
         </Menu.Item>
-        <Menu.Item fz={12} icon={<VscGroupByRefType />} onClick={() => setVisible("type")(true)}>
+        <Menu.Item
+          fz={12}
+          leftSection={<VscGroupByRefType />}
+          onClick={() => setVisible("type")(true)}
+        >
           Generate Type
         </Menu.Item>
       </Menu.Dropdown>

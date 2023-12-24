@@ -27,7 +27,7 @@ export const ZoomMenu = () => {
     <Menu shadow="md" trigger="click" closeOnItemClick={false} withArrow>
       <Menu.Target>
         <Styles.StyledToolElement>
-          <Flex gap={4}>
+          <Flex gap={4} align="center">
             {Math.round(zoomFactor * 100)}%
             <CgChevronDown />
           </Flex>

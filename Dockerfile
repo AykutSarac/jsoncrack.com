@@ -3,12 +3,12 @@ FROM node:18-alpine as builder
 WORKDIR /src
 
 # Cache dependencies first
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install
 
 # Copy other files and build
 COPY . /src/
-RUN yarn build
+RUN pnpm build
 
 # App
 FROM nginxinc/nginx-unprivileged

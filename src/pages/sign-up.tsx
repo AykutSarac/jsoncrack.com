@@ -60,13 +60,13 @@ const SignUp = () => {
         <title>JSON Crack | Sign Up</title>
       </Head>
       {done ? (
-        <Paper shadow="xs" mx="auto" maw={400} mt={50} p="lg" withBorder>
-          <Text align="center" mt="lg">
+        <Paper mx="auto" maw={400} mt={50} p="lg" withBorder>
+          <Text mt="lg" style={{ textAlign: "center" }}>
             Registration successul!
             <br />
             Please check your inbox for email confirmation.
           </Text>
-          <Anchor component={Link} href="/sign-in" underline={false}>
+          <Anchor component={Link} href="/sign-in">
             <Button color="dark" radius="sm" mt="lg" fullWidth>
               Back to login
             </Button>
@@ -74,7 +74,7 @@ const SignUp = () => {
         </Paper>
       ) : (
         <>
-          <Paper shadow="xs" mx="auto" maw={400} mt={50} p="lg" withBorder>
+          <Paper mx="auto" maw={400} mt={50} p="lg" withBorder>
             <form onSubmit={onSubmit}>
               <Stack>
                 <TextInput
@@ -83,6 +83,7 @@ const SignUp = () => {
                   label="Name"
                   placeholder="John Doe"
                   radius="sm"
+                  style={{ color: "black" }}
                 />
 
                 <TextInput
@@ -92,6 +93,7 @@ const SignUp = () => {
                   label="Email"
                   placeholder="hello@jsoncrack.com"
                   radius="sm"
+                  style={{ color: "black" }}
                 />
 
                 <PasswordInput
@@ -101,6 +103,7 @@ const SignUp = () => {
                   label="Password"
                   placeholder="∗∗∗∗∗∗∗∗∗∗"
                   radius="sm"
+                  style={{ color: "black" }}
                 />
 
                 <Button color="dark" type="submit" loading={loading}>
@@ -113,7 +116,7 @@ const SignUp = () => {
                   <Button
                     radius="sm"
                     fullWidth
-                    leftIcon={<AiOutlineGoogle size="20" />}
+                    leftSection={<AiOutlineGoogle size="20" />}
                     onClick={() => handleLoginClick("google")}
                     color="red"
                     variant="outline"
@@ -122,7 +125,7 @@ const SignUp = () => {
                   </Button>
                   <Button
                     radius="sm"
-                    leftIcon={<AiOutlineGithub size="20" />}
+                    leftSection={<AiOutlineGithub size="20" />}
                     onClick={() => handleLoginClick("github")}
                     color="dark"
                     variant="outline"
@@ -137,15 +140,21 @@ const SignUp = () => {
 
                 <Text fz="xs" c="gray">
                   By signing up, you agree to our{" "}
-                  <Anchor component={Link} href="/legal/terms" c="gray" fw={500}>
+                  <Anchor fz="xs" component={Link} href="/legal/terms" c="gray" fw={500}>
                     Terms of Service
                   </Anchor>{" "}
                   and{" "}
-                  <Anchor component={Link} href="/legal/privacy" c="gray" fw={500}>
+                  <Anchor fz="xs" component={Link} href="/legal/privacy" c="gray" fw={500}>
                     Privacy Policy
                   </Anchor>
                   . Need help?{" "}
-                  <Anchor component={Link} href="mailto:contact@jsoncrack.com" c="gray" fw={500}>
+                  <Anchor
+                    fz="xs"
+                    component={Link}
+                    href="mailto:contact@jsoncrack.com"
+                    c="gray"
+                    fw={500}
+                  >
                     Get in touch.
                   </Anchor>
                 </Text>
@@ -154,7 +163,7 @@ const SignUp = () => {
           </Paper>
 
           <Center my="xl">
-            <Anchor component={Link} prefetch={false} href="/sign-in" color="dark" fw="bold">
+            <Anchor component={Link} prefetch={false} href="/sign-in" c="dark" fw="bold">
               Already have an account?
             </Anchor>
           </Center>

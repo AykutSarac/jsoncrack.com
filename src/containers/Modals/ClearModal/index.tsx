@@ -24,7 +24,7 @@ export const ClearModal: React.FC<ModalProps> = ({ opened, onClose }) => {
         <Text>Are you sure you want to delete JSON?</Text>
       </Group>
       <Divider py="xs" />
-      <Group position="right">
+      <Group justify="right">
         <Button color="red" onClick={handleClear}>
           Confirm
         </Button>

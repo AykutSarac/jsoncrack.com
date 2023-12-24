@@ -28,7 +28,7 @@ const StyledBottomBar = styled.div`
   align-items: center;
   justify-content: space-between;
   border-top: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
-  background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
+  background: ${({ theme }) => theme.TOOLBAR_BG};
   max-height: 27px;
   height: 27px;
   z-index: 35;
@@ -204,19 +204,23 @@ export const BottomBar = () => {
               <Popover.Target>
                 <Flex align="center" gap={2}>
                   <VscError color="red" size={16} />
-                  <Text color="red" fw="bold">
+                  <Text c="red" fw={500} fz="xs">
                     Invalid
                   </Text>
                 </Flex>
               </Popover.Target>
-              <Popover.Dropdown sx={{ pointerEvents: "none" }}>
+              <Popover.Dropdown
+                style={{
+                  pointerEvents: "none",
+                }}
+              >
                 <Text size="xs">{error}</Text>
               </Popover.Dropdown>
             </Popover>
           ) : (
             <Flex align="center" gap={2}>
               <MdOutlineCheckCircleOutline />
-              <Text>Valid</Text>
+              <Text size="xs">Valid</Text>
             </Flex>
           )}
         </StyledBottomBarItem>
@@ -242,12 +246,12 @@ export const BottomBar = () => {
         {liveTransformEnabled ? (
           <StyledBottomBarItem onClick={() => toggleLiveTransform(false)}>
             <VscSync />
-            <Text>Live Transform</Text>
+            <Text fz="xs">Live Transform</Text>
           </StyledBottomBarItem>
         ) : (
           <StyledBottomBarItem onClick={() => toggleLiveTransform(true)}>
             <VscSyncIgnored />
-            <Text>Manual Transform</Text>
+            <Text fz="xs">Manual Transform</Text>
           </StyledBottomBarItem>
         )}
         {!liveTransformEnabled && (

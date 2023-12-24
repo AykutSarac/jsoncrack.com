@@ -32,7 +32,9 @@ export const AccountMenu = () => {
       <Menu.Dropdown>
         {user ? (
           <Menu.Item
-            icon={<Avatar color="grape" alt={user.user_metadata.name} size={20} radius="xl" />}
+            leftSection={
+              <Avatar color="grape" alt={user.user_metadata.name} size={20} radius="xl" />
+            }
             onClick={() => setVisible("account")(true)}
             closeMenuOnClick
           >
@@ -40,14 +42,14 @@ export const AccountMenu = () => {
           </Menu.Item>
         ) : (
           <Link href="/sign-in">
-            <Menu.Item icon={<VscSignIn />}>
+            <Menu.Item leftSection={<VscSignIn />}>
               <Text size="xs">Sign in</Text>
             </Menu.Item>
           </Link>
         )}
         {!premium && (
           <Menu.Item
-            icon={<MdOutlineWorkspacePremium color="red" />}
+            leftSection={<MdOutlineWorkspacePremium color="red" />}
             onClick={() => setVisible("premium")(true)}
             closeMenuOnClick
           >
@@ -60,13 +62,13 @@ export const AccountMenu = () => {
           <>
             <Menu.Divider />
             <Menu.Item
-              icon={<VscFeedback />}
+              leftSection={<VscFeedback />}
               onClick={() => setVisible("review")(true)}
               closeMenuOnClick
             >
               <Text size="xs">Feedback</Text>
             </Menu.Item>
-            <Menu.Item icon={<VscSignOut />} onClick={() => logout()} closeMenuOnClick>
+            <Menu.Item leftSection={<VscSignOut />} onClick={() => logout()} closeMenuOnClick>
               <Text size="xs">Log out</Text>
             </Menu.Item>
           </>
