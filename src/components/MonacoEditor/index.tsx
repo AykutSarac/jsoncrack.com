@@ -44,6 +44,7 @@ export const MonacoEditor = () => {
       ...(jsonSchema && {
         schemas: [
           {
+            uri: "http://myserver/foo-schema.json",
             fileMatch: ["*"],
             schema: jsonSchema,
           },

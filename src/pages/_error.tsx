@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
-import styled from "styled-components";
 import { Button } from "@mantine/core";
+import styled from "styled-components";
 
 const StyledNotFound = styled.div`
   display: flex;

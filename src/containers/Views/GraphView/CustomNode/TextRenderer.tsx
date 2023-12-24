@@ -1,6 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 import { ColorSwatch } from "@mantine/core";
+import styled from "styled-components";
 import * as Styled from "./styles";
 
 const StyledRow = styled.span`

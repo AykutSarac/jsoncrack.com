@@ -1,6 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 import { Modal, Group, Button, TextInput, Stack, Divider, ModalProps } from "@mantine/core";
+import styled from "styled-components";
 import toast from "react-hot-toast";
 import { AiOutlineUpload } from "react-icons/ai";
 import useFile from "src/store/useFile";

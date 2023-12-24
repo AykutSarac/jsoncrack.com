@@ -1,6 +1,6 @@
 import React from "react";
-import { CodeHighlight } from "@mantine/code-highlight";
 import { Modal, Stack, Text, ScrollArea, ModalProps, Button } from "@mantine/core";
+import { CodeHighlight } from "@mantine/code-highlight";
 import Editor from "@monaco-editor/react";
 import { VscLock } from "react-icons/vsc";
 import { isIframe } from "src/lib/utils/widget";

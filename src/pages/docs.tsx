@@ -1,8 +1,8 @@
 import React from "react";
 import Head from "next/head";
-import styled from "styled-components";
-import { CodeHighlight } from "@mantine/code-highlight";
 import { Group, Paper, Stack, Text, Title } from "@mantine/core";
+import { CodeHighlight } from "@mantine/code-highlight";
+import styled from "styled-components";
 import Layout from "src/layout/Layout";
 
 const StyledFrame = styled.iframe`

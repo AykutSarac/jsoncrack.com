@@ -1,8 +1,8 @@
 import React from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import styled from "styled-components";
 import { Flex, Popover, Text } from "@mantine/core";
+import styled from "styled-components";
 import toast from "react-hot-toast";
 import {
   AiOutlineCloudSync,
@@ -152,11 +152,6 @@ export const BottomBar = () => {
     setVisible,
     user,
   ]);
-
-  const handleLoginClick = () => {
-    if (user) return setVisible("account")(true);
-    else setVisible("login")(true);
-  };
 
   const setPrivate = async () => {
     try {

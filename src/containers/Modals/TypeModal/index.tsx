@@ -1,6 +1,6 @@
 import React from "react";
-import { CodeHighlight } from "@mantine/code-highlight";
 import { Stack, Modal, ModalProps, ScrollArea, Select } from "@mantine/core";
+import { CodeHighlight } from "@mantine/code-highlight";
 import useJson from "src/store/useJson";
 
 enum Language {

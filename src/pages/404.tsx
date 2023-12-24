@@ -1,8 +1,8 @@
 import React from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import styled from "styled-components";
 import { Button, Text, Title } from "@mantine/core";
+import styled from "styled-components";
 import Layout from "src/layout/Layout";
 
 const StyledNotFound = styled.div`

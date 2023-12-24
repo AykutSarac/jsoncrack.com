@@ -1,6 +1,6 @@
 import React from "react";
-import styled, { keyframes } from "styled-components";
 import { Center, Image, Stack } from "@mantine/core";
+import styled, { keyframes } from "styled-components";
 import { JSONCrackLogo } from "../JsonCrackLogo";
 
 interface LoadingProps {

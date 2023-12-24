@@ -2,7 +2,7 @@ import React from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { MantineProvider, useMantineColorScheme } from "@mantine/core";
+import { MantineProvider } from "@mantine/core";
 import { ThemeProvider } from "styled-components";
 import toast from "react-hot-toast";
 import { darkTheme, lightTheme } from "src/constants/theme";
@@ -28,7 +28,6 @@ const WidgetPage = () => {
   const setContents = useFile(state => state.setContents);
   const setDirection = useGraph(state => state.setDirection);
   const clearGraph = useGraph(state => state.clearGraph);
-  const { setColorScheme } = useMantineColorScheme();
 
   React.useEffect(() => {
     if (isReady) {
@@ -44,7 +43,6 @@ const WidgetPage = () => {
         if (!event.data?.json) return;
         if (event.data?.options?.theme === "light" || event.data?.options?.theme === "dark") {
           setTheme(event.data.options.theme);
-          setColorScheme(event.data.options.theme);
         }
 
         setContents({ contents: event.data.json, hasChanges: false });
