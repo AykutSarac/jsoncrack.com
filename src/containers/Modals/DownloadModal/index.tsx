@@ -157,7 +157,7 @@ export const DownloadModal: React.FC<ModalProps> = ({ opened, onClose }) => {
         withPicker={false}
         fullWidth
       />
-      <Divider my="lg" />
+      <Divider my="xs" />
       <Group justify="right">
         <Button leftSection={<FiCopy />} onClick={clipboardImage}>
           Clipboard

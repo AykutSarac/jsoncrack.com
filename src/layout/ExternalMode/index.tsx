@@ -81,7 +81,7 @@ const ExternalMode = () => {
             variant="light"
             color="red"
           >
-            Donate
+            ❤️
           </Button>
         </Group>
       </Modal>

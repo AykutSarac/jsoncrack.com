@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import { Menu, Avatar, Text } from "@mantine/core";
-import { MdOutlineWorkspacePremium } from "react-icons/md";
 import { VscSignIn, VscFeedback, VscSignOut } from "react-icons/vsc";
 import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
@@ -9,7 +8,6 @@ import * as Styles from "./styles";
 
 export const AccountMenu = () => {
   const user = useUser(state => state.user);
-  const premium = useUser(state => state.premium);
   const logout = useUser(state => state.logout);
   const setVisible = useModal(state => state.setVisible);
 
@@ -46,17 +44,6 @@ export const AccountMenu = () => {
               <Text size="xs">Sign in</Text>
             </Menu.Item>
           </Link>
-        )}
-        {!premium && (
-          <Menu.Item
-            leftSection={<MdOutlineWorkspacePremium color="red" />}
-            onClick={() => setVisible("premium")(true)}
-            closeMenuOnClick
-          >
-            <Text variant="gradient" fw="bold" gradient={{ from: "orange", to: "red" }} size="xs">
-              Get Premium
-            </Text>
-          </Menu.Item>
         )}
         {user && (
           <>

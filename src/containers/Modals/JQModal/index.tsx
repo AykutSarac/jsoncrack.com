@@ -1,5 +1,15 @@
 import React from "react";
-import { Stack, Modal, Button, ModalProps, Text, Anchor, Group, TextInput } from "@mantine/core";
+import {
+  Stack,
+  Modal,
+  Button,
+  ModalProps,
+  Text,
+  Anchor,
+  Group,
+  TextInput,
+  Divider,
+} from "@mantine/core";
 import { VscLinkExternal } from "react-icons/vsc";
 import useJsonQuery from "src/hooks/useJsonQuery";
 
@@ -28,6 +38,7 @@ export const JQModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           value={query}
           onChange={e => setQuery(e.currentTarget.value)}
         />
+        <Divider my="xs" />
         <Group justify="right">
           <Button onClick={onApply}>Display on Graph</Button>
         </Group>

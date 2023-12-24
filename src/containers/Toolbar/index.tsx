@@ -1,14 +1,16 @@
 import React from "react";
-import { Flex, Group, Select } from "@mantine/core";
+import { Flex, Group, Select, Text } from "@mantine/core";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
+import { MdWorkspacePremium } from "react-icons/md";
 import { SearchInput } from "src/components/SearchInput";
 import { FileFormat } from "src/enums/file.enum";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
 import useFile from "src/store/useFile";
 import useJson from "src/store/useJson";
 import useModal from "src/store/useModal";
+import useUser from "src/store/useUser";
 import { AccountMenu } from "./AccountMenu";
 import { Logo } from "./Logo";
 import { OptionsMenu } from "./OptionsMenu";
@@ -34,6 +36,7 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
 
   const setFormat = useFile(state => state.setFormat);
   const format = useFile(state => state.format);
+  const premium = useUser(state => state.premium);
 
   const handleSave = () => {
     const a = document.createElement("a");
@@ -86,6 +89,15 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
         </Group>
       )}
       <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
+        {!premium && (
+          <Styles.StyledToolElement onClick={() => setVisible("premium")(true)}>
+            <Text display="flex" c="teal" fz="xs" fw="bold" style={{ textAlign: "center", gap: 4 }}>
+              <MdWorkspacePremium size="18" />
+              Get Premium
+            </Text>
+          </Styles.StyledToolElement>
+        )}
+
         <SearchInput />
         {!isWidget && (
           <>

@@ -101,7 +101,7 @@ export const ImportModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           <StyledFileName>{jsonFile?.name ?? "None"}</StyledFileName>
         </StyledUploadWrapper>
       </Stack>
-      <Divider py="xs" />
+      <Divider my="xs" />
       <Group justify="right">
         <Button onClick={handleImportFile} disabled={!(jsonFile || url)}>
           Import
