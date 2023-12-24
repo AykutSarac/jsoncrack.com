@@ -1,8 +1,9 @@
 import React from "react";
-import { Button, Image, List, ThemeIcon, Title } from "@mantine/core";
+import { Button, List, ThemeIcon, Title } from "@mantine/core";
 import styled from "styled-components";
 import { BsCheck } from "react-icons/bs";
 import { paymentURL } from "src/constants/data";
+import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
 
 const StyledPremiumView = styled.div`
   position: relative;
@@ -149,24 +150,21 @@ const StyledContent = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
+  z-index: 1;
 `;
 
 export const PremiumView = () => (
   <StyledPremiumView>
     <StyledContent>
-      <Title>
-        <Image width="400" src="assets/icon.png" alt="JSON Crack" />
+      <Title mb="lg" style={{ pointerEvents: "none" }}>
+        <JSONCrackLogo fontSize="4rem" />
       </Title>
       <StyledInfo>
         Upgrade JSON Crack to premium and explore full potantial of your data!
       </StyledInfo>
 
       <List
+        mt="lg"
         spacing="xs"
         size="md"
         center
@@ -186,6 +184,7 @@ export const PremiumView = () => (
         mt="lg"
         size="lg"
         component="a"
+        fw="bolder"
         variant="gradient"
         gradient={{ from: "blue", to: "teal" }}
         href={paymentURL()}
