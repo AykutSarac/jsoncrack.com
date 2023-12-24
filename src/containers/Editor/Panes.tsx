@@ -9,7 +9,7 @@ export const StyledEditor = styled(Allotment)`
   position: relative !important;
   display: flex;
   background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
-  height: calc(100vh - 63px);
+  height: calc(100vh - 67px);
 
   @media only screen and (max-width: 320px) {
     height: 100vh;
