@@ -17,7 +17,7 @@ export const SchemaModal: React.FC<ModalProps> = ({ opened, onClose }) => {
       {
         $schema: "http://json-schema.org/draft-04/schema#",
         title: "Product",
-        description: "A product from Acme's catalog",
+        description: "A product from catalog",
         type: "object",
         properties: {
           id: {
