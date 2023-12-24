@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import Script from "next/script";
-import { Button, Group, Stack, Title, Text } from "@mantine/core";
+import { Button, Group, Stack, Text } from "@mantine/core";
 import styled from "styled-components";
 import { FaChevronRight } from "react-icons/fa";
 import { Typewriter } from "react-simple-typewriter";
@@ -102,6 +102,10 @@ const StyledHighlightedText = styled(Text)`
   -moz-background-clip: text;
   -webkit-text-fill-color: transparent;
   -moz-text-fill-color: transparent;
+
+  @media only screen and (max-width: 992px) {
+    font-size: 24px;
+  }
 `;
 
 const StyledHeroText = styled.p`
@@ -111,8 +115,20 @@ const StyledHeroText = styled.p`
   max-width: 600px;
   text-align: center;
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 992px) {
     max-width: 100%;
+    font-size: 14px;
+  }
+`;
+
+const StyledHeroTitle = styled.h1`
+  color: #d0c9c9;
+  font-size: 40px;
+  font-weight: 800;
+  text-align: center;
+
+  @media only screen and (max-width: 992px) {
+    font-size: 26px;
   }
 `;
 
@@ -120,7 +136,7 @@ const HeroSection = () => (
   <StyledHeroSection id="hero-section">
     <StyledHeroSectionBody>
       <Stack w="100%" mx="auto" align="center">
-        <Title c="#d0c9c9" order={1} fz={40} fw={800} style={{ textAlign: "center" }}>
+        <StyledHeroTitle>
           Understand your{" "}
           <StyledHighlightedText>
             <Typewriter
@@ -133,7 +149,7 @@ const HeroSection = () => (
           </StyledHighlightedText>
           <br />
           better by visualizing
-        </Title>
+        </StyledHeroTitle>
 
         <StyledHeroText>
           Visualize, analyze, and manipulate data with ease, a versatile and powerful tool for data
@@ -149,6 +165,20 @@ const HeroSection = () => (
             rightSection={<FaChevronRight />}
             size="xl"
             style={{ border: "2px solid orange" }}
+            visibleFrom="md"
+          >
+            GO TO EDITOR
+          </Button>
+          <Button
+            color="orange"
+            variant="light"
+            component={Link}
+            href="/editor"
+            fw="bold"
+            rightSection={<FaChevronRight />}
+            size="md"
+            style={{ border: "2px solid orange" }}
+            hiddenFrom="md"
           >
             GO TO EDITOR
           </Button>
