@@ -1,8 +1,8 @@
 import React from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import styled from "styled-components";
 import { Button, Text, Title } from "@mantine/core";
+import styled from "styled-components";
 import Layout from "src/layout/Layout";
 
 const StyledNotFound = styled.div`
@@ -43,8 +43,8 @@ const NotFound: React.FC = () => {
         <StyledImageWrapper>
           <img src="/assets/404.svg" alt="not found" width={300} height={400} />
         </StyledImageWrapper>
-        <Title color="dark">WIZARDS BEHIND CURTAINS?</Title>
-        <Text color="dark">Looks like you&apos;re lost, let&apos;s head back to the home!</Text>
+        <Title c="dark">WIZARDS BEHIND CURTAINS?</Title>
+        <Text c="dark">Looks like you&apos;re lost, let&apos;s head back to the home!</Text>
         <Button mt="lg" size="lg" type="button" onClick={() => router.push("/")}>
           Go Home
         </Button>

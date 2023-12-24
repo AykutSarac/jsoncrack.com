@@ -74,7 +74,7 @@ const UpdateNameModal: React.FC<{
           placeholder={file?.name}
           onChange={e => setName(e.currentTarget.value)}
         />
-        <Group position="right">
+        <Group justify="right">
           <Button variant="outline" onClick={onClose}>
             Cancel
           </Button>
@@ -144,48 +144,63 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const rows = React.useMemo(
     () =>
       data?.map(element => (
-        <tr key={element.id}>
-          <td>
+        <Table.Tr key={element.id}>
+          <Table.Td>
             <Flex align="center" gap="xs">
               {element.private ? <VscLock /> : <VscUnlock />}
               {element.id}
             </Flex>
-          </td>
-          <td>
+          </Table.Td>
+          <Table.Td>
             <Flex align="center" justify="space-between">
               {element.name}
-              <ActionIcon color="cyan" onClick={() => setCurrentFile(element)}>
+              <ActionIcon
+                variant="transparent"
+                color="cyan"
+                onClick={() => setCurrentFile(element)}
+              >
                 <VscEdit />
               </ActionIcon>
             </Flex>
-          </td>
-          <td>{dayjs(element.created_at).format("DD.MM.YYYY")}</td>
-          <td>
+          </Table.Td>
+          <Table.Td>{dayjs(element.created_at).format("DD.MM.YYYY")}</Table.Td>
+          <Table.Td>
             <Badge variant="light" color={colorByFormat[element.format]} size="sm">
               {element.format.toUpperCase()}
             </Badge>
-          </td>
-          <td>{element.views.toLocaleString("en-US")}</td>
-          <td>
+          </Table.Td>
+          <Table.Td>{element.views.toLocaleString("en-US")}</Table.Td>
+          <Table.Td>
             <Flex gap="xs">
-              <ActionIcon
-                component={Link}
-                href={`?json=${element.id}`}
-                prefetch={false}
-                color="blue"
-                onClick={onClose}
-              >
-                <MdFileOpen size="18" />
-              </ActionIcon>
-              <ActionIcon color="red" onClick={() => onDeleteClick(element)}>
-                <FaTrash size="18" />
-              </ActionIcon>
-              <ActionIcon color="green" onClick={() => copyShareLink(element.id)}>
-                <AiOutlineLink />
-              </ActionIcon>
+              <ActionIcon.Group>
+                <ActionIcon
+                  variant="transparent"
+                  component={Link}
+                  href={`?json=${element.id}`}
+                  prefetch={false}
+                  color="blue"
+                  onClick={onClose}
+                >
+                  <MdFileOpen size="18" />
+                </ActionIcon>
+                <ActionIcon
+                  variant="transparent"
+                  color="red"
+                  onClick={() => onDeleteClick(element)}
+                >
+                  <FaTrash size="18" />
+                </ActionIcon>
+                <ActionIcon
+                  variant="transparent"
+                  color="green"
+                  onClick={() => copyShareLink(element.id)}
+                >
+                  <AiOutlineLink />
+                </ActionIcon>
+              </ActionIcon.Group>
             </Flex>
-          </td>
-        </tr>
+          </Table.Td>
+        </Table.Tr>
       )),
     [data, copyShareLink, onClose, onDeleteClick]
   );
@@ -214,10 +229,10 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
                 ]}
               />
               <div>
-                <Text color="dimmed" size="xs" transform="uppercase" weight={700}>
+                <Text c="dimmed" fz="xs" fw={700} style={{ textTransform: "uppercase" }}>
                   Total Quota
                 </Text>
-                <Text weight={700} size="lg">
+                <Text fw={700} size="lg">
                   {data.length} / {totalQuota}
                 </Text>
               </div>
@@ -231,11 +246,19 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
               onClick={onCreate}
               disabled={isCreateDisabled}
             >
-              <Text fz="md" align="center" color="blue">
-                <Flex align="center" justify="center">
-                  <VscAdd size="24" />
-                  Create New Document
-                </Flex>
+              <Text
+                fz="sm"
+                fw="bold"
+                c="blue"
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  textAlign: "center",
+                }}
+              >
+                <VscAdd size="18" strokeWidth={1} />
+                Create New Document
               </Text>
             </UnstyledButton>
           </Paper>
@@ -248,18 +271,18 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
       <Divider py="xs" />
       <Paper>
         <ScrollArea h="100%" offsetScrollbars>
-          <Table fontSize="xs" verticalSpacing="xs" striped withBorder>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Create Date</th>
-                <th>Format</th>
-                <th>Views</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>{rows}</tbody>
+          <Table fz="xs" verticalSpacing="xs" striped withTableBorder>
+            <Table.Thead>
+              <Table.Tr>
+                <Table.Th>ID</Table.Th>
+                <Table.Th>Name</Table.Th>
+                <Table.Th>Create Date</Table.Th>
+                <Table.Th>Format</Table.Th>
+                <Table.Th>Views</Table.Th>
+                <Table.Th>Actions</Table.Th>
+              </Table.Tr>
+            </Table.Thead>
+            <Table.Tbody>{rows}</Table.Tbody>
           </Table>
         </ScrollArea>
       </Paper>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, Group, MediaQuery, Select } from "@mantine/core";
+import { Flex, Group, Select } from "@mantine/core";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
@@ -48,49 +48,44 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
     <Styles.StyledTools>
       {isWidget && <Logo />}
       {!isWidget && (
-        <MediaQuery smallerThan="xs" styles={{ display: "none" }}>
-          <Group spacing="xs" position="left" w="100%" noWrap>
-            <Styles.StyledToolElement title="JSON Crack">
-              <Flex gap="xs" align="center" justify="center">
-                <JSONCrackLogo fontSize="1.2em" />
-              </Flex>
-            </Styles.StyledToolElement>
+        <Group gap="xs" justify="left" w="100%" style={{ flexWrap: "nowrap" }}>
+          <Styles.StyledToolElement title="JSON Crack">
+            <Flex gap="xs" align="center" justify="center">
+              <JSONCrackLogo fontSize="1.2em" />
+            </Flex>
+          </Styles.StyledToolElement>
 
-            <Select
-              defaultValue="json"
-              size="xs"
-              value={format}
-              onChange={setFormat}
-              miw={80}
-              w={120}
-              data={[
-                { value: FileFormat.JSON, label: "JSON" },
-                { value: FileFormat.YAML, label: "YAML" },
-                { value: FileFormat.XML, label: "XML" },
-                { value: FileFormat.TOML, label: "TOML" },
-                { value: FileFormat.CSV, label: "CSV" },
-              ]}
-            />
+          <Select
+            defaultValue="json"
+            size="xs"
+            value={format}
+            onChange={e => setFormat(e as FileFormat)}
+            miw={80}
+            w={120}
+            data={[
+              { value: FileFormat.JSON, label: "JSON" },
+              { value: FileFormat.YAML, label: "YAML" },
+              { value: FileFormat.XML, label: "XML" },
+              { value: FileFormat.TOML, label: "TOML" },
+              { value: FileFormat.CSV, label: "CSV" },
+            ]}
+          />
 
-            <ViewModeMenu />
-            <Styles.StyledToolElement
-              title="Import File"
-              onClick={() => setVisible("import")(true)}
-            >
-              Import
-            </Styles.StyledToolElement>
-            <ViewMenu />
-            <ToolsMenu />
-            <Styles.StyledToolElement title="Cloud" onClick={() => setVisible("cloud")(true)}>
-              Cloud
-            </Styles.StyledToolElement>
-            <Styles.StyledToolElement title="Download as File" onClick={handleSave}>
-              Download
-            </Styles.StyledToolElement>
-          </Group>
-        </MediaQuery>
+          <ViewModeMenu />
+          <Styles.StyledToolElement title="Import File" onClick={() => setVisible("import")(true)}>
+            Import
+          </Styles.StyledToolElement>
+          <ViewMenu />
+          <ToolsMenu />
+          <Styles.StyledToolElement title="Cloud" onClick={() => setVisible("cloud")(true)}>
+            Cloud
+          </Styles.StyledToolElement>
+          <Styles.StyledToolElement title="Download as File" onClick={handleSave}>
+            Download
+          </Styles.StyledToolElement>
+        </Group>
       )}
-      <Group spacing="xs" position="right" w="100%" noWrap>
+      <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
         <SearchInput />
         {!isWidget && (
           <>

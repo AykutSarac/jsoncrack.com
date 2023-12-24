@@ -1,6 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 import { Anchor, Button, Group, Modal, Text } from "@mantine/core";
+import styled from "styled-components";
 import { VscCode } from "react-icons/vsc";
 
 const StyledAlert = styled.div`
@@ -59,7 +59,7 @@ const ExternalMode = () => {
         onClick={() => setOpen(true)}
         color="red"
         variant="subtle"
-        leftIcon={<VscCode size="1.2rem" />}
+        leftSection={<VscCode size="1.2rem" />}
       >
         External Host
       </Button>
@@ -68,15 +68,15 @@ const ExternalMode = () => {
           <StyledTitle>Hi! Did you like the editor?</StyledTitle>
           <Text>
             You are currently using the external release of the{" "}
-            <Anchor href="https://jsoncrack.com">JSON Crack</Anchor>. Please consider supporting by
-            one time or monthly sponsorship ✨
+            <Anchor href="https://jsoncrack.com/pricing">JSON Crack</Anchor>. Please consider
+            supporting by buying premium ✨
           </Text>
         </Group>
-        <Group pt="lg" position="right">
+        <Group pt="lg" justify="right">
           <Button
             onClick={closeModal}
             component="a"
-            href="https://github.com/sponsors/AykutSarac"
+            href="https://jsoncrack.com/pricing"
             target="_blank"
             variant="light"
             color="red"

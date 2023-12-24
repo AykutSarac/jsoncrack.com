@@ -7,6 +7,8 @@
   "importOrder": [
     "^(react/(.*)$)|^(react$)",
     "^(next/(.*)$)|^(next$)",
+    "^@mantine/core",
+    "^@mantine",
     "styled",
     "<THIRD_PARTY_MODULES>",
     "^src/(.*)$",

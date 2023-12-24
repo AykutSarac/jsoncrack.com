@@ -4,15 +4,16 @@ import { TiFlowMerge } from "react-icons/ti";
 export const StyledTools = styled.div`
   position: relative;
   display: flex;
+  width: 100%;
   align-items: center;
   gap: 4px;
   justify-content: space-between;
-  height: 36px;
+  height: 40px;
   padding: 4px 8px;
   background: ${({ theme }) => theme.TOOLBAR_BG};
   color: ${({ theme }) => theme.SILVER};
-  box-shadow: 0 1px 0px ${({ theme }) => theme.BACKGROUND_TERTIARY};
   z-index: 36;
+  border-bottom: 1px solid ${({ theme }) => theme.SILVER_DARK};
 
   @media only screen and (max-width: 320px) {
     display: none;

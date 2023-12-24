@@ -1,6 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 import { Modal, Group, Button, TextInput, Stack, Divider, ModalProps } from "@mantine/core";
+import styled from "styled-components";
 import toast from "react-hot-toast";
 import { AiOutlineUpload } from "react-icons/ai";
 import useFile from "src/store/useFile";
@@ -10,7 +10,7 @@ const StyledUploadWrapper = styled.label`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
+  background: ${({ theme }) => theme.GRID_BG_COLOR};
   border: 2px dashed ${({ theme }) => theme.BACKGROUND_TERTIARY};
   border-radius: 5px;
   min-height: 200px;
@@ -102,7 +102,7 @@ export const ImportModal: React.FC<ModalProps> = ({ opened, onClose }) => {
         </StyledUploadWrapper>
       </Stack>
       <Divider py="xs" />
-      <Group position="right">
+      <Group justify="right">
         <Button onClick={handleImportFile} disabled={!(jsonFile || url)}>
           Import
         </Button>

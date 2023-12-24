@@ -59,11 +59,11 @@ export const SchemaModal: React.FC<ModalProps> = ({ opened, onClose }) => {
             },
           }}
         />
-        <Group position="right">
+        <Group justify="right">
           <Button variant="outline" onClick={onClear} disabled={!schema}>
             Clear
           </Button>
-          <Button onClick={onApply} disabled={!schema} rightIcon={!isPremium && <VscLock />}>
+          <Button onClick={onApply} disabled={!schema} rightSection={!isPremium && <VscLock />}>
             Apply
           </Button>
         </Group>

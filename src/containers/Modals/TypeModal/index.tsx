@@ -1,8 +1,6 @@
 import React from "react";
 import { Stack, Modal, ModalProps, ScrollArea, Select } from "@mantine/core";
-import { Prism } from "@mantine/prism";
-import vsDark from "prism-react-renderer/themes/vsDark";
-import vsLight from "prism-react-renderer/themes/vsLight";
+import { CodeHighlight } from "@mantine/code-highlight";
 import useJson from "src/store/useJson";
 
 enum Language {
@@ -53,17 +51,14 @@ export const TypeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           onChange={e => setSelectedType(e as Language)}
         />
         <ScrollArea>
-          <Prism
+          <CodeHighlight
             miw={350}
             mah={600}
             language={selectedType}
             copyLabel="Copy to clipboard"
             copiedLabel="Copied to clipboard"
-            withLineNumbers
-            getPrismTheme={(_theme, colorScheme) => (colorScheme === "light" ? vsLight : vsDark)}
-          >
-            {type}
-          </Prism>
+            code={type}
+          />
         </ScrollArea>
       </Stack>
     </Modal>

@@ -5,7 +5,7 @@ import { isIframe } from "src/lib/utils/widget";
 import * as Styles from "./styles";
 
 export const Logo = () => {
-  const [logoURL, setLogoURL] = React.useState("CTRL");
+  const [logoURL, setLogoURL] = React.useState("");
 
   React.useEffect(() => {
     if (typeof window !== "undefined") {
@@ -16,6 +16,8 @@ export const Logo = () => {
       setLogoURL(url);
     }
   }, []);
+
+  if (!logoURL) return null;
 
   return (
     <Styles.StyledToolElement title="JSON Crack">

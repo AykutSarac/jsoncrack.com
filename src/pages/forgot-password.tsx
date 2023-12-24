@@ -33,7 +33,7 @@ function ResetPassword() {
 
   return (
     <Paper mx="auto" mt={70} maw={400} p="lg" withBorder>
-      <Text size="lg" weight={500} mb="lg">
+      <Text size="lg" w={500} mb="lg">
         Create New Password
       </Text>
 
@@ -46,6 +46,7 @@ function ResetPassword() {
             label="New Password"
             radius="sm"
             placeholder="∗∗∗∗∗∗∗∗∗∗∗"
+            style={{ color: "black" }}
           />
           <PasswordInput
             value={password2}
@@ -54,10 +55,11 @@ function ResetPassword() {
             label="Validate Password"
             radius="sm"
             placeholder="∗∗∗∗∗∗∗∗∗∗∗"
+            style={{ color: "black" }}
           />
         </Stack>
 
-        <Group position="apart" mt="xl">
+        <Group justify="apart" mt="xl">
           <Button color="dark" type="submit" radius="sm" loading={loading} fullWidth>
             Reset Password
           </Button>
@@ -101,7 +103,7 @@ const ForgotPassword = () => {
         <ResetPassword />
       ) : (
         <Paper mx="auto" mt={70} maw={400} p="lg" withBorder>
-          <Text size="lg" weight={500}>
+          <Text size="lg" w={500} c="dark">
             Reset Password
           </Text>
           <Paper pt="lg">
@@ -118,16 +120,17 @@ const ForgotPassword = () => {
                     label="Email"
                     placeholder="hello@herowand.com"
                     radius="sm"
+                    style={{ color: "black" }}
                   />
                 </Stack>
 
-                <Group position="apart" mt="xl">
+                <Group justify="apart" mt="xl">
                   <Button color="dark" type="submit" radius="sm" loading={loading} fullWidth>
                     Reset Password
                   </Button>
                 </Group>
                 <Stack mt="lg" align="center">
-                  <Anchor component={Link} prefetch={false} href="/sign-in" color="dark" size="xs">
+                  <Anchor component={Link} prefetch={false} href="/sign-in" c="dark" size="xs">
                     Don&apos;t have an account? Sign Up
                   </Anchor>
                 </Stack>

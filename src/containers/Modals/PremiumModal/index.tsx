@@ -17,10 +17,10 @@ export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   return (
     <Modal title="Your Plan" size="auto" opened={opened} onClose={onClose} centered zIndex={202}>
       <Flex gap="lg">
-        <Stack spacing="xs">
+        <Stack gap="xs">
           <Title order={3}>
             Free plan
-            <Text size="sm" color="dimmed">
+            <Text size="sm" c="dimmed">
               (Free)
             </Text>
           </Title>
@@ -42,10 +42,10 @@ export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           </List>
         </Stack>
         <Divider color="gray" orientation="vertical" />
-        <Stack spacing="xs">
+        <Stack gap="xs">
           <Title order={3}>
             JSON Crack Plus
-            <Text size="sm" color="dimmed">
+            <Text size="sm" c="dimmed">
               USD 7$/mo
             </Text>
           </Title>

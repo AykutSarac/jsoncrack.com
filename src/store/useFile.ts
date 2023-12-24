@@ -26,7 +26,7 @@ interface JsonActions {
   getContents: () => string;
   getFormat: () => FileFormat;
   getHasChanges: () => boolean;
-  setError: (error: object | null) => void;
+  setError: (error: string | null) => void;
   setHasChanges: (hasChanges: boolean) => void;
   setContents: (data: SetContents) => void;
   fetchFile: (fileId: string) => void;

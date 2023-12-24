@@ -58,11 +58,11 @@ If you like the project, you can become a sponsor at [GitHub Sponsors](https://g
 After cloning the repository, run the following commands:
 ```console
 # Install the packages
-yarn install
+pnpm install
 
 # Start development server
 # Then the development server will run at http://localhost:3000
-yarn dev
+pnpm dev
 ```
 
 ### Docker

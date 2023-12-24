@@ -1,6 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 import { Menu, Text } from "@mantine/core";
+import styled from "styled-components";
 import { firaMono } from "src/constants/fonts";
 import { Graph } from "src/containers/Views/GraphView";
 import { TreeView } from "src/containers/Views/TreeView";

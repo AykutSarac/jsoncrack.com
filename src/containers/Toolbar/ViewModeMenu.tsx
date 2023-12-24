@@ -21,7 +21,7 @@ export const ViewModeMenu = () => {
       <Menu.Dropdown>
         <SegmentedControl
           value={viewMode}
-          onChange={setViewMode}
+          onChange={e => setViewMode(e as ViewMode)}
           data={[
             { value: ViewMode.Graph, label: "Graph" },
             { value: ViewMode.Tree, label: "Tree" },

@@ -1,6 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 import { Button, Image, List, ThemeIcon, Title } from "@mantine/core";
+import styled from "styled-components";
 import { BsCheck } from "react-icons/bs";
 import { paymentURL } from "src/constants/data";
 
@@ -159,7 +159,7 @@ const StyledContent = styled.div`
 export const PremiumView = () => (
   <StyledPremiumView>
     <StyledContent>
-      <Title align="center">
+      <Title>
         <Image width="400" src="assets/icon.png" alt="JSON Crack" />
       </Title>
       <StyledInfo>

@@ -19,10 +19,10 @@ export const SearchInput: React.FC = () => {
       onFocus={() => ReactGA.event({ action: "focus_node_search", category: "User" })}
       placeholder="Search Node"
       onKeyDown={getHotkeyHandler([["Enter", skip]])}
-      icon={<AiOutlineSearch />}
+      leftSection={<AiOutlineSearch />}
       rightSection={
         <Flex h={30} align="center" gap="sm">
-          <Text size="xs" color="dimmed">
+          <Text size="xs" c="dimmed">
             {searchValue && `${nodeCount}/${nodeCount > 0 ? currentNode + 1 : "0"}`}
           </Text>
         </Flex>

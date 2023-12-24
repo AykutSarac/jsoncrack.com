@@ -1,25 +1,26 @@
 import React from "react";
 import Link from "next/link";
+import { Button, Menu } from "@mantine/core";
 import styled from "styled-components";
-import { Button } from "@mantine/core";
+import { BiChevronDown } from "react-icons/bi";
 import useUser from "src/store/useUser";
 import { JSONCrackLogo } from "../JsonCrackLogo";
 
-const StyledNavbarWrapper = styled.div`
-  padding: 10px 0;
-`;
+const StyledNavbarWrapper = styled.div``;
 
 const StyledNavbar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 90vw;
+  width: 100%;
   height: 56px;
   margin: 0 auto;
-  border: 2px solid black;
-  background: white;
+  border-bottom: 1px solid gray;
+  background: rgba(255, 255, 255, 0.75);
   padding: 8px 16px;
-  border-radius: 30px;
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.35),
+    0 2px 5px 0 rgba(0, 0, 0, 0.35);
 
   @media only screen and (max-width: 1024px) {
     .desktop {
@@ -53,14 +54,7 @@ export const Navbar = () => {
           <JSONCrackLogo />
         </Left>
         <Middle className="hide-mobile">
-          <Button
-            component={Link}
-            href="/pricing"
-            prefetch={false}
-            variant="subtle"
-            color="dark"
-            radius="md"
-          >
+          <Button component={Link} href="/pricing" variant="subtle" color="dark" radius="md">
             Pricing
           </Button>
           <Button
@@ -83,6 +77,59 @@ export const Navbar = () => {
           >
             Docs
           </Button>
+          <Menu trigger="hover" offset={15} withArrow>
+            <Menu.Target>
+              <Button
+                variant="subtle"
+                color="dark"
+                radius="md"
+                rightSection={<BiChevronDown size="18" />}
+              >
+                Legal
+              </Button>
+            </Menu.Target>
+            <Menu.Dropdown>
+              <Menu.Item component={Link} href="/legal/privacy" prefetch={false}>
+                Privacy Policy
+              </Menu.Item>
+              <Menu.Item component={Link} href="/legal/terms" prefetch={false}>
+                Terms and Conditions
+              </Menu.Item>
+              <Menu.Item component={Link} href="/legal/subscription-refund" prefetch={false}>
+                Subscription
+              </Menu.Item>
+              <Menu.Divider />
+              <Menu.Item component="a" href="mailto:contact@jsoncrack.com">
+                contact@jsoncrack.com
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
+          <Menu trigger="hover" offset={15} withArrow>
+            <Menu.Target>
+              <Button
+                variant="subtle"
+                color="dark"
+                radius="md"
+                rightSection={<BiChevronDown size="18" />}
+              >
+                Social
+              </Button>
+            </Menu.Target>
+            <Menu.Dropdown>
+              <Menu.Item component="a" href="https://twitter.com/jsoncrack">
+                𝕏 (Twitter)
+              </Menu.Item>
+              <Menu.Item component="a" href="https://discord.gg/yVyTtCRueq">
+                Discord
+              </Menu.Item>
+              <Menu.Item component="a" href="https://www.linkedin.com/company/herowand">
+                LinkedIn
+              </Menu.Item>
+              <Menu.Item component="a" href="https://github.com/AykutSarac/jsoncrack.com">
+                GitHub
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
         </Middle>
         <Right>
           {!isAuthenticated && (
@@ -90,14 +137,14 @@ export const Navbar = () => {
               component={Link}
               href="/sign-in"
               prefetch={false}
-              variant="light"
-              radius="md"
+              variant="outline"
+              color="grape.9"
               className="hide-mobile"
             >
               Login
             </Button>
           )}
-          <Button component={Link} href="/editor" prefetch={false} color="pink" radius="md">
+          <Button color="grape.9" component={Link} href="/editor" prefetch={false}>
             Editor
           </Button>
         </Right>

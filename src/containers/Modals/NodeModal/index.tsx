@@ -1,9 +1,7 @@
 import React from "react";
 import { Modal, Stack, Text, ScrollArea, ModalProps, Button } from "@mantine/core";
-import { Prism } from "@mantine/prism";
+import { CodeHighlight } from "@mantine/code-highlight";
 import Editor from "@monaco-editor/react";
-import vsDark from "prism-react-renderer/themes/vsDark";
-import vsLight from "prism-react-renderer/themes/vsLight";
 import { VscLock } from "react-icons/vsc";
 import { isIframe } from "src/lib/utils/widget";
 import useConfig from "src/store/useConfig";
@@ -22,36 +20,13 @@ const dataToString = (data: any) => {
   return JSON.stringify(text, replacer, 2);
 };
 
-const CodeBlock: React.FC<{ children: any; [key: string]: any }> = ({
-  format,
-  children,
-  ...props
-}) => {
-  return (
-    <ScrollArea>
-      <Prism
-        miw={350}
-        mah={250}
-        language="json"
-        copyLabel="Copy to clipboard"
-        copiedLabel="Copied to clipboard"
-        withLineNumbers
-        getPrismTheme={(_theme, colorScheme) => (colorScheme === "light" ? vsLight : vsDark)}
-        {...props}
-      >
-        {children}
-      </Prism>
-    </ScrollArea>
-  );
-};
-
 export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const isPremium = useUser(state => state.premium);
   const editContents = useFile(state => state.editContents);
   const setVisible = useModal(state => state.setVisible);
   const darkmodeEnabled = useConfig(state => (state.darkmodeEnabled ? "vs-dark" : "light"));
   const nodeData = useGraph(state => dataToString(state.selectedNode?.text));
-  const path = useGraph(state => state.selectedNode?.path);
+  const path = useGraph(state => state.selectedNode?.path || "");
   const isParent = useGraph(state => state.selectedNode?.data?.isParent);
   const [editMode, setEditMode] = React.useState(false);
   const [value, setValue] = React.useState(nodeData || "");
@@ -83,8 +58,8 @@ export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
 
   return (
     <Modal title="Node Content" size="auto" opened={opened} onClose={onModalClose} centered>
-      <Stack py="sm" spacing="sm">
-        <Stack spacing="xs">
+      <Stack py="sm" gap="sm">
+        <Stack gap="xs">
           <Text fz="sm" fw={700}>
             Content
           </Text>
@@ -103,11 +78,20 @@ export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
               }}
             />
           ) : (
-            <CodeBlock maw={600}>{nodeData}</CodeBlock>
+            <ScrollArea>
+              <CodeHighlight
+                code={nodeData}
+                miw={350}
+                mah={250}
+                maw={600}
+                language="json"
+                withCopyButton
+              />
+            </ScrollArea>
           )}
         </Stack>
         {isEditVisible && (
-          <Stack spacing="xs">
+          <Stack gap="xs">
             {editMode ? (
               <Button
                 variant={value ? "filled" : "light"}
@@ -117,7 +101,11 @@ export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
                 {value.length ? "Update Document" : "Cancel"}
               </Button>
             ) : (
-              <Button onClick={onEditClick} leftIcon={!isPremium && <VscLock />} variant="filled">
+              <Button
+                onClick={onEditClick}
+                leftSection={!isPremium && <VscLock />}
+                variant="filled"
+              >
                 Edit
               </Button>
             )}
@@ -126,7 +114,17 @@ export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
         <Text fz="sm" fw={700}>
           Node Path
         </Text>
-        <CodeBlock>{path}</CodeBlock>
+        <ScrollArea>
+          <CodeHighlight
+            code={path}
+            miw={350}
+            mah={250}
+            language="json"
+            copyLabel="Copy to clipboard"
+            copiedLabel="Copied to clipboard"
+            withCopyButton
+          />
+        </ScrollArea>
       </Stack>
     </Modal>
   );

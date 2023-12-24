@@ -1,7 +1,7 @@
 import React from "react";
-import styled from "styled-components";
-import { ActionIcon, Input, Loader, Tooltip } from "@mantine/core";
+import { ActionIcon, TextInput, Loader, Tooltip } from "@mantine/core";
 import { getHotkeyHandler, useSessionStorage } from "@mantine/hooks";
+import styled from "styled-components";
 import { toast } from "react-hot-toast";
 import { GoDependabot } from "react-icons/go";
 import { VscClose, VscQuestion } from "react-icons/vsc";
@@ -23,7 +23,7 @@ function removeWhitespaces(inputString: string) {
   return compactString;
 }
 
-const StyledPromptInput = styled(Input)`
+const StyledPromptInput = styled(TextInput)`
   .mantine-Input-input {
     font-weight: 500;
     background: ${({ theme }) => theme.PROMPT_BG};
@@ -112,7 +112,7 @@ const PromptInput = () => {
               </ActionIcon>
             </>
           }
-          icon={completing ? <Loader size="xs" /> : <GoDependabot strokeWidth={1} />}
+          leftSection={completing ? <Loader size="xs" /> : <GoDependabot strokeWidth={1} />}
           radius={0}
         />
       </div>
