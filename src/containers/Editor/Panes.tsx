@@ -26,24 +26,18 @@ const LiveEditor = dynamic(() => import("src/containers/Editor/LiveEditor"), {
 
 const Panes: React.FC = () => {
   const fullscreen = useGraph(state => state.fullscreen);
-  const toggleFullscreen = useGraph(state => state.toggleFullscreen);
-  const isMobile = React.useMemo(() => window.innerWidth <= 768, []);
-
-  React.useEffect(() => {
-    if (isMobile) toggleFullscreen(true);
-  }, [isMobile, toggleFullscreen]);
 
   return (
-    <StyledEditor proportionalLayout={false} vertical={isMobile}>
+    <StyledEditor proportionalLayout={false}>
       <Allotment.Pane
-        preferredSize={isMobile ? "100%" : 450}
+        preferredSize={450}
         minSize={fullscreen ? 0 : 300}
-        maxSize={isMobile ? Infinity : 800}
+        maxSize={800}
         visible={!fullscreen}
       >
         <JsonEditor />
       </Allotment.Pane>
-      <Allotment.Pane minSize={0} maxSize={isMobile && !fullscreen ? 0 : Infinity}>
+      <Allotment.Pane minSize={0}>
         <LiveEditor />
       </Allotment.Pane>
     </StyledEditor>

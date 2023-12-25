@@ -160,6 +160,9 @@ devDependencies:
   '@types/react':
     specifier: 18.2.45
     version: 18.2.45
+  '@types/react-dom':
+    specifier: ^18.2.18
+    version: 18.2.18
   eslint:
     specifier: 8.56.0
     version: 8.56.0
@@ -1119,6 +1122,12 @@ packages:
 
   /@types/prop-types@15.7.11:
     resolution: {integrity: sha512-ga8y9v9uyeiLdpKddhxYQkxNDrfvuPrlFb0N1qnZZByvcElJaXthF1UhvCh9TLWJBEHeNtdnbysW7Y6Uq8CVng==}
+
+  /@types/react-dom@18.2.18:
+    resolution: {integrity: sha512-TJxDm6OfAX2KJWJdMEVTwWke5Sc/E/RlnPGvGfS0W7+6ocy2xhDVQVh/KvC2Uf7kACs+gDytdusDSdWfWkaNzw==}
+    dependencies:
+      '@types/react': 18.2.45
+    dev: true
 
   /@types/react@18.2.45:
     resolution: {integrity: sha512-TtAxCNrlrBp8GoeEp1npd5g+d/OejJHFxS3OWmrPBMFaVQMSN0OFySozJio5BHxTuTeug00AVXVAjfDSfk+lUg==}

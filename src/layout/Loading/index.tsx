@@ -1,5 +1,5 @@
 import React from "react";
-import { Center, Image, Stack } from "@mantine/core";
+import { Center, Stack, Text } from "@mantine/core";
 import styled, { keyframes } from "styled-components";
 import { JSONCrackLogo } from "../JsonCrackLogo";
 
@@ -28,32 +28,28 @@ const StyledLoading = styled.div<{ $visible: boolean }>`
   text-align: center;
   z-index: 100;
   pointer-events: visiblePainted;
-  cursor: wait;
   animation: 200ms ${fadeIn};
   animation-fill-mode: forwards;
   visibility: hidden;
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+  background: ${({ theme }) => theme.BACKGROUND_NODE};
+  opacity: 0.8;
+  color: ${({ theme }) => theme.INTERACTIVE_HOVER};
+  cursor: wait;
 
   img {
     transform: rotate(45deg);
   }
 `;
 
-const StyledMessage = styled.div`
-  color: #b9bbbe;
-  font-size: 1.5rem;
-  font-weight: 600;
-`;
-
-export const Loading: React.FC<LoadingProps> = ({ loading = false, message }) => {
+export const Loading = ({ loading = false, message }: LoadingProps) => {
   return (
     <Center mx="auto">
       <StyledLoading $visible={loading}>
         <Stack>
-          <Image mx="auto" width="6.5em" src="./assets/rocket_ship.webp" alt="loading image" />
-          <JSONCrackLogo fontSize="2rem" />
-          <StyledMessage>{message ?? "Preparing the environment for you..."}</StyledMessage>
+          <JSONCrackLogo fontSize="3rem" />
+          <Text fz="lg" fw="bold">
+            {message ?? "Preparing the environment for you..."}
+          </Text>
         </Stack>
       </StyledLoading>
     </Center>

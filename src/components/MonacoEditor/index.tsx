@@ -81,7 +81,7 @@ export const MonacoEditor = () => {
         options={editorOptions}
         onValidate={errors => setError(errors[0]?.message)}
         onChange={contents => setContents({ contents, skipUpdate: true })}
-        loading={<Loading message="Loading Editor..." />}
+        loading={<Loading message="Loading Monaco Editor..." loading />}
       />
     </StyledWrapper>
   );

@@ -10,7 +10,7 @@ const StyledTitle = styled.div<{ fontSize: string }>`
   font-size: ${({ fontSize }) => fontSize};
   white-space: nowrap;
   z-index: 10;
-  color: ${({ theme }) => theme.TEXT_NORMAL};
+  color: ${({ theme }) => theme.INTERACTIVE_HOVER};
 `;
 
 interface LogoProps extends React.ComponentPropsWithoutRef<"a"> {

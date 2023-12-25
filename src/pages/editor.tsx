@@ -29,15 +29,25 @@ export const StyledEditorWrapper = styled.div`
 
 const EditorPage: React.FC = () => {
   const { query, isReady } = useRouter();
-  const checkEditorSession = useFile(state => state.checkEditorSession);
   const loading = useJson(state => state.loading);
   const hasQuery = React.useMemo(() => Object.keys(query).length > 0, [query]);
+  const checkEditorSession = useFile(state => state.checkEditorSession);
 
   React.useEffect(() => {
     if (isReady) checkEditorSession(query?.json);
   }, [checkEditorSession, isReady, query]);
 
-  if (loading) return <Loading message="Fetching JSON from cloud..." />;
+  if (loading) {
+    return (
+      <StyledEditorWrapper>
+        <Head>
+          <title>Editor | JSON Crack</title>
+          {hasQuery && <meta name="robots" content="noindex,nofollow" />}
+        </Head>
+        <Loading message="Preparing the editor for you..." loading />
+      </StyledEditorWrapper>
+    );
+  }
 
   return (
     <EditorWrapper>
