@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { monaSans } from "src/constants/fonts";
 
 const StyledTitle = styled.div<{ fontSize: string }>`
-  font-weight: 900;
+  font-weight: 800;
   margin: 0;
   font-family: ${monaSans.style.fontFamily};
   font-size: ${({ fontSize }) => fontSize};
