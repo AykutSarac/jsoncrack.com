@@ -2,6 +2,7 @@ import React from "react";
 import { Anchor, Button, Group, Modal, Text } from "@mantine/core";
 import styled from "styled-components";
 import { VscCode } from "react-icons/vsc";
+import { VscArrowRight } from "react-icons/vsc";
 
 const StyledAlert = styled.div`
   position: fixed;
@@ -65,11 +66,15 @@ const ExternalMode = () => {
       </Button>
       <Modal title="External Host of JSON Crack" opened={isOpen} onClose={closeModal} centered>
         <Group>
-          <StyledTitle>Hi! Did you like the editor?</StyledTitle>
+          <StyledTitle>Dear valued user,</StyledTitle>
           <Text>
-            You are currently using the external release of the{" "}
-            <Anchor href="https://jsoncrack.com/pricing">JSON Crack</Anchor>. Please consider
-            supporting by buying premium ✨
+            We would like to inform you that you are presently utilizing the external release of the{" "}
+            <Anchor href="https://jsoncrack.com">JSON Crack</Anchor>. Your continued support is
+            crucial in sustaining and improving our services.
+            <br />
+            <br />
+            We kindly encourage you to consider upgrading to the premium version, which not only
+            enhances your experience but also contributes to the ongoing development of JSON Crack.
           </Text>
         </Group>
         <Group pt="lg" justify="right">
@@ -78,10 +83,11 @@ const ExternalMode = () => {
             component="a"
             href="https://jsoncrack.com/pricing"
             target="_blank"
-            variant="light"
+            variant="outline"
             color="red"
+            rightSection={<VscArrowRight />}
           >
-            ❤️
+            JSON Crack
           </Button>
         </Group>
       </Modal>

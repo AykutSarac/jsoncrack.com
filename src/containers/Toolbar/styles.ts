@@ -28,6 +28,7 @@ export const StyledToolElement = styled.button<{ $hide?: boolean }>`
   color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
   padding: 6px;
   border-radius: 3px;
+  white-space: nowrap;
 
   &:hover {
     background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0 0);

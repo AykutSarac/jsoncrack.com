@@ -26,7 +26,7 @@
   </p>
 
 <p align="center">
-  <img src="./public/assets/jsoncrack-screenshot.webp" alt="Product Preview" />
+  <img src="./public/assets/jsoncrack-screenshot.jpeg" alt="Product Preview" />
 </p>
 
 # JSON Crack (jsoncrack.com)

@@ -2,7 +2,6 @@ import React from "react";
 import { Button, List, ThemeIcon, Title } from "@mantine/core";
 import styled from "styled-components";
 import { BsCheck } from "react-icons/bs";
-import { paymentURL } from "src/constants/data";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
 
 const StyledPremiumView = styled.div`
@@ -187,7 +186,7 @@ export const PremiumView = () => (
         fw="bolder"
         variant="gradient"
         gradient={{ from: "blue", to: "teal" }}
-        href={paymentURL()}
+        href="/pricing"
         target="_blank"
       >
         UPGRADE TO PREMIUM

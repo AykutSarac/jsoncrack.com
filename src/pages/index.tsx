@@ -12,60 +12,11 @@ const StyledHeroSection = styled.div`
   position: relative;
   background-size: 100% 100%;
   margin-bottom: -48px;
-  background-position:
-    0px 0px,
-    0px 0px,
-    0px 0px,
-    0px 0px,
-    0px 0px;
-  background-image: radial-gradient(49% 81% at 45% 47%, #26001fff 1%, #60006a00 100%),
-    radial-gradient(113% 91% at 17% -2%, #0f000cff 1%, #ff000000 99%),
-    radial-gradient(142% 91% at 83% 7%, #0f000cff 1%, #ff000000 99%),
-    radial-gradient(142% 91% at -6% 74%, #0f000cff 1%, #ff000000 99%),
-    radial-gradient(142% 91% at 111% 84%, #0f000cff 0%, #5b004eff 99%);
-  overflow: hidden;
-
-  @keyframes shine {
-    0% {
-      background-position:
-        0 0,
-        3px 60px,
-        130px 270px,
-        70px 100px;
-    }
-    100% {
-      background-position:
-        1000px 1000px,
-        1000px 1000px,
-        1000px 1000px,
-        1000px 1000px;
-    }
-  }
-
-  &::before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    content: "";
-    background-color: transparent;
-    background-image: radial-gradient(white, rgba(255, 255, 255, 0.2) 2px, transparent 2px),
-      radial-gradient(white, rgba(255, 255, 255, 0.15) 1px, transparent 1px),
-      radial-gradient(white, rgba(255, 255, 255, 0.1) 2px, transparent 2px),
-      radial-gradient(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1) 2px, transparent 1px);
-    background-size:
-      800px 800px,
-      400px 400px,
-      300px 300px,
-      200px 200px;
-    background-position:
-      0 0,
-      3px 60px,
-      130px 270px,
-      70px 100px;
-    animation: shine 100s linear infinite alternate; /* Use alternate to make it smoother */
-  }
+  background-image: radial-gradient(49% 81% at 45% 47%, #21415f 1%, #60006a00 100%),
+    radial-gradient(113% 91% at 17% -2%, #1b1b1b 1%, #ff000000 99%),
+    radial-gradient(142% 91% at 83% 7%, #1b1b1b 1%, #ff000000 99%),
+    radial-gradient(142% 91% at -6% 74%, #1b1b1b 1%, #ff000000 99%),
+    radial-gradient(142% 91% at 111% 84%, #1b1b1b 0%, #5b004eff 99%);
 
   @media only screen and (max-width: 1240px) {
     flex-direction: column;
@@ -81,7 +32,7 @@ const StyledHeroSectionBody = styled.div`
   overflow: hidden;
   backdrop-filter: blur(1px);
   -webkit-backdrop-filter: blur(1px);
-  height: calc(100vh - 56px);
+  height: calc(100vh - 111px);
   text-align: center;
 
   @media only screen and (max-width: 1200px) {
@@ -122,7 +73,7 @@ const StyledHeroText = styled.p`
 `;
 
 const StyledHeroTitle = styled.h1`
-  color: #d0c9c9;
+  color: #dacfcf;
   font-size: 40px;
   font-weight: 800;
   text-align: center;
@@ -157,21 +108,20 @@ const HeroSection = () => (
         </StyledHeroText>
         <Group gap="xl">
           <Button
-            color="orange"
-            variant="light"
+            color="gray.2"
+            c="indigo"
             component={Link}
             href="/editor"
             fw="bold"
             rightSection={<FaChevronRight />}
             size="xl"
-            style={{ border: "2px solid orange" }}
             visibleFrom="md"
           >
             GO TO EDITOR
           </Button>
           <Button
-            color="orange"
-            variant="light"
+            color="gray.2"
+            c="indigo"
             component={Link}
             href="/editor"
             fw="bold"

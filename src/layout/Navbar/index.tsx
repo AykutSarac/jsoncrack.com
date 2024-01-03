@@ -1,12 +1,17 @@
 import React from "react";
 import Link from "next/link";
-import { Button, Menu } from "@mantine/core";
+import { Alert, Button, Menu } from "@mantine/core";
 import styled from "styled-components";
 import { BiChevronDown } from "react-icons/bi";
 import useUser from "src/store/useUser";
 import { JSONCrackLogo } from "../JsonCrackLogo";
 
-const StyledNavbarWrapper = styled.div``;
+const StyledNavbarWrapper = styled.div`
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 3;
+`;
 
 const StyledNavbar = styled.div`
   display: flex;
@@ -16,7 +21,7 @@ const StyledNavbar = styled.div`
   height: 56px;
   margin: 0 auto;
   border-bottom: 1px solid gray;
-  background: rgba(255, 255, 255, 0.75);
+  background: #ffffff;
   padding: 8px 16px;
   box-shadow:
     0 0 0 1px rgba(0, 0, 0, 0.35),
@@ -37,8 +42,6 @@ const StyledNavbar = styled.div`
 
 const Left = styled.div``;
 
-const Middle = styled.div``;
-
 const Right = styled.div`
   display: flex;
   gap: 16px;
@@ -52,17 +55,22 @@ export const Navbar = () => {
       <StyledNavbar>
         <Left>
           <JSONCrackLogo />
-        </Left>
-        <Middle className="hide-mobile">
-          <Button component={Link} href="/pricing" variant="subtle" color="dark" radius="md">
+          <Button
+            ml="lg"
+            component={Link}
+            href="/pricing"
+            variant="subtle"
+            color="black"
+            radius="md"
+          >
             Pricing
           </Button>
           <Button
-            component={Link}
+            component="a"
             href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode"
-            prefetch={false}
+            target="_blank"
             variant="subtle"
-            color="dark"
+            color="black"
             radius="md"
           >
             VS Code
@@ -72,7 +80,7 @@ export const Navbar = () => {
             href="/docs"
             prefetch={false}
             variant="subtle"
-            color="dark"
+            color="black"
             radius="md"
           >
             Docs
@@ -81,7 +89,7 @@ export const Navbar = () => {
             <Menu.Target>
               <Button
                 variant="subtle"
-                color="dark"
+                color="black"
                 radius="md"
                 rightSection={<BiChevronDown size="18" />}
               >
@@ -108,7 +116,7 @@ export const Navbar = () => {
             <Menu.Target>
               <Button
                 variant="subtle"
-                color="dark"
+                color="black"
                 radius="md"
                 rightSection={<BiChevronDown size="18" />}
               >
@@ -130,25 +138,29 @@ export const Navbar = () => {
               </Menu.Item>
             </Menu.Dropdown>
           </Menu>
-        </Middle>
+        </Left>
         <Right>
           {!isAuthenticated && (
             <Button
               component={Link}
               href="/sign-in"
-              prefetch={false}
               variant="outline"
-              color="grape.9"
+              color="dark"
               className="hide-mobile"
             >
               Login
             </Button>
           )}
-          <Button color="grape.9" component={Link} href="/editor" prefetch={false}>
+          <Button color="dark" component={Link} href="/editor" prefetch={false}>
             Editor
           </Button>
         </Right>
       </StyledNavbar>
+      <Link href="/pricing">
+        <Alert color="red" variant="filled" radius={0} fw="bold">
+          Unlock premium features now with 30% discount on the Premium plan!
+        </Alert>
+      </Link>
     </StyledNavbarWrapper>
   );
 };

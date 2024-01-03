@@ -1,14 +1,4 @@
-import useUser from "src/store/useUser";
-
 export const baseURL = process.env.NEXT_PUBLIC_BASE_URL as string;
-
-export const paymentURL = () => {
-  const email = useUser.getState().user?.email;
-  let url = process.env.NEXT_PUBLIC_PAYMENT_URL as string;
-
-  if (email) url += `?checkout[email]=${email}`;
-  return url;
-};
 
 // Example taken from https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json
 const sampleJson = Object.freeze({

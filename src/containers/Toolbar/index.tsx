@@ -89,7 +89,7 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
         </Group>
       )}
       <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
-        {!premium && (
+        {!premium && !isWidget && (
           <Styles.StyledToolElement onClick={() => setVisible("premium")(true)}>
             <Text display="flex" c="teal" fz="xs" fw="bold" style={{ textAlign: "center", gap: 4 }}>
               <MdWorkspacePremium size="18" />
