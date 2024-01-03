@@ -1,7 +1,6 @@
 import React from "react";
 import Head from "next/head";
 import Link from "next/link";
-import Script from "next/script";
 import { Button, Group, Stack, Text } from "@mantine/core";
 import styled from "styled-components";
 import { FaChevronRight } from "react-icons/fa";
@@ -127,7 +126,6 @@ const HeroSection = () => (
             fw="bold"
             rightSection={<FaChevronRight />}
             size="md"
-            style={{ border: "2px solid orange" }}
             hiddenFrom="md"
           >
             GO TO EDITOR
@@ -139,15 +137,12 @@ const HeroSection = () => (
 );
 
 export const HomePage = () => {
-  const [ads, setAds] = React.useState(false);
-
   return (
     <Layout>
       <Head>
         <title>JSON Crack | Visualize Instantly Into Graphs</title>
       </Head>
       <HeroSection />
-      <Script src="https://m.servedby-buysellads.com/monetization.js" onLoad={() => setAds(true)} />
     </Layout>
   );
 };

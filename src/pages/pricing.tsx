@@ -126,15 +126,24 @@ const Pricing = () => {
           </Flex>
         </Paper>
 
-        <Paper p="xl" radius="lg" bg="white" withBorder w={325}>
+        <Paper
+          p="xl"
+          radius="lg"
+          bg="white"
+          withBorder
+          w={325}
+          style={{ borderColor: "black", borderWidth: "2px" }}
+        >
           <Flex justify="space-between">
             <Stack gap="0">
-              <Text fz="xl" fw="bold" c="black">
-                Premium{" "}
-                <Badge color="red" ml="sm" leftSection={<FaBolt />}>
+              <Flex align="center" gap="xs">
+                <Text fz="xl" fw="bold" c="black">
+                  Premium
+                </Text>
+                <Badge size="sm" color="red" leftSection={<FaBolt />}>
                   Most Popular
                 </Badge>
-              </Text>
+              </Flex>
               <Flex gap="xs" align="center">
                 <Text fz={32} fw="bold" c="black">
                   ${isMonthly ? "5" : "60"}
