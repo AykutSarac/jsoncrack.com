@@ -105,8 +105,8 @@ dependencies:
     specifier: ^0.18.0
     version: 0.18.0(@types/react@18.2.45)(react@18.2.0)
   react-linkify-it:
-    specifier: ^1.0.7
-    version: 1.0.7(react@18.2.0)
+    specifier: ^1.0.8
+    version: 1.0.8(react@18.2.0)
   react-simple-typewriter:
     specifier: ^5.0.1
     version: 5.0.1(react-dom@18.2.0)(react@18.2.0)
@@ -3874,8 +3874,8 @@ packages:
       react-base16-styling: 0.9.1
     dev: false
 
-  /react-linkify-it@1.0.7(react@18.2.0):
-    resolution: {integrity: sha512-B0Vy0KCAdpkT7Ql/bOpPuAP4l20f78Eaq1yD/q9J2RltPSwD900I0GzQPXaH6gnoWX/qmkBXL42Q3jTnWw8KCw==}
+  /react-linkify-it@1.0.8(react@18.2.0):
+    resolution: {integrity: sha512-QjwhIaCXmJ2CiFIl4mIOYN+Z+OhwRLHNMKmWG9SSAzKgpltOnOQjzvj8ruhnvOhgKRc6yqjW0vH0J6LEbTm50Q==}
     peerDependencies:
       react: '*'
     dependencies:
