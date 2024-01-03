@@ -64,7 +64,7 @@ export const Navbar = () => {
             variant="subtle"
             color="black"
             radius="md"
-            visibleFrom="md"
+            visibleFrom="sm"
           >
             Pricing
           </Button>
@@ -75,7 +75,7 @@ export const Navbar = () => {
             variant="subtle"
             color="black"
             radius="md"
-            visibleFrom="md"
+            visibleFrom="sm"
           >
             VS Code
           </Button>
@@ -86,7 +86,7 @@ export const Navbar = () => {
             variant="subtle"
             color="black"
             radius="md"
-            visibleFrom="md"
+            visibleFrom="sm"
           >
             Docs
           </Button>
@@ -97,7 +97,7 @@ export const Navbar = () => {
                 color="black"
                 radius="md"
                 rightSection={<BiChevronDown size="18" />}
-                visibleFrom="md"
+                visibleFrom="sm"
               >
                 Legal
               </Button>
@@ -125,7 +125,7 @@ export const Navbar = () => {
                 color="black"
                 radius="md"
                 rightSection={<BiChevronDown size="18" />}
-                visibleFrom="md"
+                visibleFrom="sm"
               >
                 Social
               </Button>
@@ -154,15 +154,15 @@ export const Navbar = () => {
               variant="outline"
               color="dark"
               className="hide-mobile"
-              visibleFrom="md"
+              visibleFrom="sm"
             >
               Login
             </Button>
           )}
-          <Button color="dark" component={Link} href="/editor" prefetch={false} visibleFrom="md">
+          <Button color="dark" component={Link} href="/editor" prefetch={false} visibleFrom="sm">
             Editor
           </Button>
-          <Burger opened={opened} onClick={toggle} aria-label="Toggle navigation" hiddenFrom="md" />
+          <Burger opened={opened} onClick={toggle} aria-label="Toggle navigation" hiddenFrom="sm" />
           {opened && (
             <Overlay top={56} h="100dvh">
               <Box
