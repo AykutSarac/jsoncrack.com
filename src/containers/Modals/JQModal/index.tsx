@@ -17,10 +17,6 @@ export const JQModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const { updateJson } = useJsonQuery();
   const [query, setQuery] = React.useState("");
 
-  const onApply = () => {
-    updateJson(query);
-  };
-
   return (
     <Modal title="JSON Query" size="lg" opened={opened} onClose={onClose} centered>
       <Stack py="sm">
@@ -40,7 +36,7 @@ export const JQModal: React.FC<ModalProps> = ({ opened, onClose }) => {
         />
         <Divider my="xs" />
         <Group justify="right">
-          <Button onClick={onApply}>Display on Graph</Button>
+          <Button onClick={() => updateJson(query, onClose)}>Display on Graph</Button>
         </Group>
       </Stack>
     </Modal>

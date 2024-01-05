@@ -15,6 +15,8 @@ const config = {
   },
   webpack: config => {
     config.resolve.fallback = { fs: false };
+    config.output.webassemblyModuleFilename = "static/wasm/[modulehash].wasm";
+    config.experiments = { asyncWebAssembly: true };
 
     return config;
   },

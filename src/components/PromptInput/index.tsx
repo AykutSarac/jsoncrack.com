@@ -9,12 +9,6 @@ import useJsonQuery from "src/hooks/useJsonQuery";
 import { supabase } from "src/lib/api/supabase";
 import useUser from "src/store/useUser";
 
-function removeWhitespaces(inputString: string) {
-  // Remove extra whitespaces and newlines
-  const compactString = inputString.replace(/\s+/g, "").replaceAll("interface", "interface ");
-  return compactString;
-}
-
 const StyledPromptInput = styled(TextInput)`
   .mantine-Input-input {
     font-weight: 500;
@@ -47,12 +41,10 @@ export const PromptInput = () => {
   const onSubmit = async () => {
     try {
       setCompleting(true);
+      const jsonModel = await getJsonType();
 
       const resp = await supabase.functions.invoke("jq", {
-        body: {
-          query: prompt,
-          jsonModel: removeWhitespaces(getJsonType()),
-        },
+        body: { query: prompt, jsonModel },
       });
 
       // extract jq command
