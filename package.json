@@ -40,6 +40,7 @@
     "lodash.get": "^4.4.2",
     "lodash.set": "^4.3.2",
     "maketypes": "^1.1.2",
+    "million": "^2.6.4",
     "next": "13.5.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

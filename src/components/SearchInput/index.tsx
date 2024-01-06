@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, Input, Text } from "@mantine/core";
+import { Flex, Text, TextInput } from "@mantine/core";
 import { getHotkeyHandler } from "@mantine/hooks";
 import ReactGA from "react-ga4";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -9,7 +9,7 @@ export const SearchInput: React.FC = () => {
   const [searchValue, setValue, skip, nodeCount, currentNode] = useFocusNode();
 
   return (
-    <Input
+    <TextInput
       type="search"
       size="xs"
       id="search-node"
@@ -21,11 +21,13 @@ export const SearchInput: React.FC = () => {
       onKeyDown={getHotkeyHandler([["Enter", skip]])}
       leftSection={<AiOutlineSearch />}
       rightSection={
-        <Flex h={30} align="center" gap="sm">
-          <Text size="xs" c="dimmed">
-            {searchValue && `${nodeCount}/${nodeCount > 0 ? currentNode + 1 : "0"}`}
-          </Text>
-        </Flex>
+        searchValue && (
+          <Flex h={30} align="center">
+            <Text size="xs" c="dimmed" pr="md">
+              {searchValue && `${nodeCount}/${nodeCount > 0 ? currentNode + 1 : "0"}`}
+            </Text>
+          </Flex>
+        )
       }
     />
   );
