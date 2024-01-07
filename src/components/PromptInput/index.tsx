@@ -2,6 +2,7 @@ import React from "react";
 import { ActionIcon, TextInput, Loader, Tooltip } from "@mantine/core";
 import { getHotkeyHandler } from "@mantine/hooks";
 import styled from "styled-components";
+import { FunctionsHttpError } from "@supabase/supabase-js";
 import { toast } from "react-hot-toast";
 import { GoDependabot } from "react-icons/go";
 import { VscClose, VscQuestion } from "react-icons/vsc";
@@ -43,12 +44,17 @@ export const PromptInput = () => {
       setCompleting(true);
       const jsonModel = await getJsonType();
 
-      const resp = await supabase.functions.invoke("jq", {
+      const { data, error } = await supabase.functions.invoke("jq", {
         body: { query: prompt, jsonModel },
       });
 
+      if (error instanceof FunctionsHttpError) {
+        const errorMessage = await error.context.json();
+        throw Error(errorMessage.error);
+      }
+
       // extract jq command
-      const jqOutput = resp.data.choices[0].message?.content || "";
+      const jqOutput = data.command;
       const regex = /'([^']*)'/;
       const match = jqOutput.match(regex);
 
@@ -58,8 +64,9 @@ export const PromptInput = () => {
       } else {
         throw Error("An error occured while parsing result.");
       }
-    } catch (error) {
-      toast.error("An error occured while parsing result.");
+    } catch (error: any) {
+      console.error(error);
+      if (error instanceof Error) toast.error(error.message);
     } finally {
       setCompleting(false);
     }
@@ -87,7 +94,7 @@ export const PromptInput = () => {
           rightSection={
             <>
               <Tooltip
-                label="This feature is in the experimental phase, and its outcomes may not consistently reflect accuracy. It solely utilizes the schema without incorporating values, hence your actions should align with your particular schema. Please note that we do not store your data."
+                label="This feature is in the alpha phase, and its results may not always be accurate. Be cautious, as invalid actions still consume a token. We only process the schema of your JSON and do not process your data values."
                 maw={300}
                 multiline
                 withinPortal
