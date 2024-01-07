@@ -85,16 +85,14 @@ export const TypeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
 
   return (
     <Modal title="Generate Types" size="auto" opened={opened} onClose={onClose} centered>
-      <Stack py="sm">
+      <Stack>
         <Select
           value={selectedType}
           data={typeOptions}
           onChange={e => setSelectedType(e as Language)}
         />
-        <ScrollArea>
+        <ScrollArea h={400} offsetScrollbars>
           <CodeHighlight
-            miw={350}
-            mah={600}
             language={editorLanguage}
             copyLabel="Copy to clipboard"
             copiedLabel="Copied to clipboard"
