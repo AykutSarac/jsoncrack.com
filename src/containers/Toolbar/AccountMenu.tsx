@@ -12,8 +12,6 @@ export const AccountMenu = () => {
   const logout = useUser(state => state.logout);
   const setVisible = useModal(state => state.setVisible);
 
-  console.log(user);
-
   return (
     <Menu shadow="md" trigger="click" closeOnItemClick={false} withArrow>
       <Menu.Target>
