@@ -1,13 +1,14 @@
 import React from "react";
 import Link from "next/link";
 import { Menu, Avatar, Text } from "@mantine/core";
+import { useUser as useSupabaseUser } from "@supabase/auth-helpers-react";
 import { VscSignIn, VscFeedback, VscSignOut } from "react-icons/vsc";
 import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
 import * as Styles from "./styles";
 
 export const AccountMenu = () => {
-  const user = useUser(state => state.user);
+  const user = useSupabaseUser();
   const logout = useUser(state => state.logout);
   const setVisible = useModal(state => state.setVisible);
 
@@ -15,15 +16,8 @@ export const AccountMenu = () => {
     <Menu shadow="md" trigger="click" closeOnItemClick={false} withArrow>
       <Menu.Target>
         <Styles.StyledToolElement>
-          <Avatar
-            color="grape"
-            variant="filled"
-            size={20}
-            radius="xl"
-            src={user?.user_metadata.avatar_url}
-            alt={user?.user_metadata.name}
-          >
-            {user?.user_metadata.name[0]}
+          <Avatar color={user ? "teal" : "indigo"} variant="filled" size={20} radius="xl">
+            {user && "JC"}
           </Avatar>
         </Styles.StyledToolElement>
       </Menu.Target>
@@ -31,7 +25,7 @@ export const AccountMenu = () => {
         {user ? (
           <Menu.Item
             leftSection={
-              <Avatar color="grape" alt={user.user_metadata.name} size={20} radius="xl" />
+              <Avatar color="indigo" alt={user.user_metadata?.name} size={20} radius="xl" />
             }
             onClick={() => setVisible("account")(true)}
             closeMenuOnClick
