@@ -1,20 +1,21 @@
 import React from "react";
-import { useRouter } from "next/router";
+import { useSearchParams, redirect } from "next/navigation";
 import { Modal, Group, Button, Text, Divider, ModalProps } from "@mantine/core";
 import { documentSvc } from "src/services/document.service";
 import useJson from "src/store/useJson";
 
 export const ClearModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const setJson = useJson(state => state.setJson);
-  const { query, replace } = useRouter();
+  const searchParams = useSearchParams();
+  const queryJson = searchParams?.get("json");
 
   const handleClear = () => {
     setJson("{}");
     onClose();
 
-    if (typeof query.json === "string") {
-      documentSvc.delete(query.json);
-      replace("/editor");
+    if (typeof queryJson === "string") {
+      documentSvc.delete(queryJson);
+      redirect("/editor");
     }
   };
 
