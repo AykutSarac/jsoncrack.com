@@ -53,10 +53,10 @@ export default function CustomAppInit({ children }: { children: React.ReactNode 
           {children}
           <ModalController />
           <Toaster
-            position="top-right"
+            position="bottom-right"
             containerStyle={{
-              top: 40,
-              right: 6,
+              bottom: 34,
+              right: 8,
               fontSize: 14,
             }}
             toastOptions={{
