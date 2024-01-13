@@ -9,14 +9,6 @@ const StyledLayoutWrapper = styled.div`
 `;
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [rendered, setRendered] = React.useState(false);
-
-  React.useEffect(() => {
-    setRendered(true);
-  }, []);
-
-  if (!rendered) return null;
-
   return (
     <React.Suspense>
       <MantineProvider forceColorScheme="light">
