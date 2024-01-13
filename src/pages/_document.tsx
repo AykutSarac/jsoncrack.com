@@ -41,7 +41,7 @@ class MyDocument extends Document {
       <Html lang="en">
         <Head>
           <SeoTags
-            description="Innovative and open-source visualization application that transforms various data formats, such as JSON, YAML, XML, CSV and more, into interactive graphs."
+            description="Beyond just an JSON editor, JSON Crack is an innovative and open-source visualization application that transforms various data formats, such as JSON, YAML, XML, CSV and more, into interactive graphs."
             title="JSON Crack - Visualize Data to Graphs"
             image="https://jsoncrack.com/assets/jsoncrack.png"
           />
