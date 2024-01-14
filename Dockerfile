@@ -2,6 +2,9 @@
 FROM node:18-alpine as builder
 WORKDIR /src
 
+# instalar pnpm
+RUN npm install -g pnpm
+
 # Cache dependencies first
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install
