@@ -1,7 +1,7 @@
 {
   "name": "JSON Crack",
   "short_name": "JSON Crack",
-  "description": "Beyond just an JSON editor, JSON Crack is an innovative and open-source visualization application that transforms various data formats, such as JSON, YAML, XML, CSV and more, into interactive graphs.",
+  "description": "JSON Crack Editor is a tool for visualizing into graphs, analyzing, editing, formatting, querying, transforming and validating JSON, CSV, YAML, XML, and more.",
   "theme_color": "#36393e",
   "background_color": "#36393e",
   "display": "standalone",
