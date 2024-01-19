@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  ActionIcon,
-  TextInput,
-  Text,
-  Loader,
-  Tooltip,
-  HoverCard,
-  Flex,
-  Badge,
-} from "@mantine/core";
+import { ActionIcon, TextInput, Loader, Tooltip, HoverCard, Flex, Badge } from "@mantine/core";
 import { getHotkeyHandler } from "@mantine/hooks";
 import styled from "styled-components";
 import { FunctionsHttpError } from "@supabase/supabase-js";
@@ -95,7 +86,7 @@ export const PromptInput = () => {
     }
   };
 
-  if (!promptVisible) return null;
+  if (!promptVisible || !premium) return null;
 
   return (
     <Tooltip
