@@ -61,7 +61,7 @@ export const Label = ({
           }}
           leftSection={<VscEdit size="12" />}
         >
-          Click to edit
+          Edit
         </Button>
       </HoverCard.Dropdown>
     </HoverCard>

@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { MonacoEditor } from "src/components/MonacoEditor";
-
-// import { PromptInput } from "src/components/PromptInput";
+import { PromptInput } from "src/components/PromptInput";
 
 const StyledEditorWrapper = styled.div`
   display: flex;
@@ -14,7 +13,7 @@ const StyledEditorWrapper = styled.div`
 export const JsonEditor: React.FC = () => {
   return (
     <StyledEditorWrapper>
-      {/* <PromptInput /> */}
+      <PromptInput />
       <MonacoEditor />
     </StyledEditorWrapper>
   );

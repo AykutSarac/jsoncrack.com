@@ -1,17 +1,20 @@
 import React from "react";
-import { Menu, Text, Flex } from "@mantine/core";
+import { Menu, Text, Flex, Badge } from "@mantine/core";
 import { BsCheck2 } from "react-icons/bs";
 import { MdSettings } from "react-icons/md";
 import useConfig from "src/store/useConfig";
+import useUser from "src/store/useUser";
 import * as Styles from "./styles";
 
 export const OptionsMenu = () => {
+  const premium = useUser(state => state.premium);
   const toggleGestures = useConfig(state => state.toggleGestures);
   const toggleChildrenCount = useConfig(state => state.toggleChildrenCount);
   const toggleDarkMode = useConfig(state => state.toggleDarkMode);
   const toggleRulers = useConfig(state => state.toggleRulers);
   const toggleCollapseButton = useConfig(state => state.toggleCollapseButton);
   const toggleImagePreview = useConfig(state => state.toggleImagePreview);
+  const toggleAI = useConfig(state => state.toggleAI);
 
   const gesturesEnabled = useConfig(state => state.gesturesEnabled);
   const childrenCountVisible = useConfig(state => state.childrenCountVisible);
@@ -19,6 +22,7 @@ export const OptionsMenu = () => {
   const rulersEnabled = useConfig(state => state.rulersEnabled);
   const collapseButtonVisible = useConfig(state => state.collapseButtonVisible);
   const imagePreviewEnabled = useConfig(state => state.imagePreviewEnabled);
+  const aiEnabled = useConfig(state => state.aiEnabled);
 
   return (
     <Menu shadow="md" trigger="click" closeOnItemClick={false} withArrow>
@@ -66,6 +70,19 @@ export const OptionsMenu = () => {
         >
           <Text size="xs">Dark Mode</Text>
         </Menu.Item>
+        {premium && (
+          <Menu.Item
+            leftSection={<BsCheck2 opacity={aiEnabled ? 100 : 0} />}
+            onClick={() => toggleAI(!aiEnabled)}
+          >
+            <Text size="xs">
+              JSON Crack AI{" "}
+              <Badge ml={2} size="xs" variant="light" radius={2}>
+                Alpha
+              </Badge>
+            </Text>
+          </Menu.Item>
+        )}
       </Menu.Dropdown>
     </Menu>
   );

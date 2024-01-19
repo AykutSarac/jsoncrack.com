@@ -1,5 +1,5 @@
 import React from "react";
-import { Stack, Modal, ModalProps, ScrollArea, Select } from "@mantine/core";
+import { Stack, Modal, ModalProps, Select, LoadingOverlay } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
 import useJson from "src/store/useJson";
 
@@ -49,6 +49,7 @@ export const TypeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const getJson = useJson(state => state.getJson);
   const [type, setType] = React.useState("");
   const [selectedType, setSelectedType] = React.useState<Language>(Language.TypeScript);
+  const [loading, setLoading] = React.useState(false);
 
   const editorLanguage = React.useMemo(() => {
     return typeOptions[typeOptions.findIndex(o => o.value === selectedType)]?.lang;
@@ -70,35 +71,41 @@ export const TypeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
 
   React.useEffect(() => {
     if (opened) {
-      if (selectedType === Language.Go) {
-        import("src/lib/utils/json2go").then(jtg => {
-          import("gofmt.js").then(gofmt => {
-            const types = jtg.default(getJson());
-            setType(gofmt.default(types.go));
+      try {
+        setLoading(true);
+        if (selectedType === Language.Go) {
+          import("src/lib/utils/json2go").then(jtg => {
+            import("gofmt.js").then(gofmt => {
+              const types = jtg.default(getJson());
+              setType(gofmt.default(types.go));
+            });
           });
-        });
-      } else {
-        transformer({ value: getJson() }).then(setType);
+        } else {
+          transformer({ value: getJson() }).then(setType);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
       }
     }
   }, [getJson, opened, selectedType, transformer]);
 
   return (
-    <Modal title="Generate Types" size="auto" opened={opened} onClose={onClose} centered>
-      <Stack>
+    <Modal title="Generate Types" size="md" opened={opened} onClose={onClose} centered>
+      <Stack pos="relative">
         <Select
           value={selectedType}
           data={typeOptions}
           onChange={e => setSelectedType(e as Language)}
         />
-        <ScrollArea h={400} offsetScrollbars>
-          <CodeHighlight
-            language={editorLanguage}
-            copyLabel="Copy to clipboard"
-            copiedLabel="Copied to clipboard"
-            code={type}
-          />
-        </ScrollArea>
+        <LoadingOverlay visible={loading} />
+        <CodeHighlight
+          language={editorLanguage}
+          copyLabel="Copy to clipboard"
+          copiedLabel="Copied to clipboard"
+          code={type}
+        />
       </Stack>
     </Modal>
   );

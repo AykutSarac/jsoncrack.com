@@ -20,6 +20,7 @@ import {
   RingProgress,
   UnstyledButton,
   Drawer,
+  LoadingOverlay,
 } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
@@ -93,7 +94,8 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const getFormat = useFile(state => state.getFormat);
   const [currentFile, setCurrentFile] = React.useState<File | null>(null);
   const { isReady, query, replace } = useRouter();
-  const { data, refetch } = useQuery(["allJson", query], () => documentSvc.getAll(), {
+
+  const { data, isLoading, refetch } = useQuery(["allJson", query], () => documentSvc.getAll(), {
     enabled: isReady && opened,
   });
 
@@ -212,7 +214,9 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
       size="xl"
       onClose={onClose}
       transitionProps={{ duration: 300, timingFunction: "ease", transition: "slide-right" }}
+      pos="relative"
     >
+      <LoadingOverlay visible={isLoading} />
       {data && (
         <Flex gap="md">
           <Paper my="lg" withBorder radius="md" p="xs" w="100%">

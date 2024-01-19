@@ -2,8 +2,8 @@ import React from "react";
 import { Flex, Group, Select, Text } from "@mantine/core";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
+import { AiFillGift } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
-import { MdWorkspacePremium } from "react-icons/md";
 import { SearchInput } from "src/components/SearchInput";
 import { FileFormat } from "src/enums/file.enum";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
@@ -92,7 +92,7 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
         {!premium && !isWidget && (
           <Styles.StyledToolElement onClick={() => setVisible("premium")(true)}>
             <Text display="flex" c="teal" fz="xs" fw="bold" style={{ textAlign: "center", gap: 4 }}>
-              <MdWorkspacePremium size="18" />
+              <AiFillGift size="18" />
               Get Premium
             </Text>
           </Styles.StyledToolElement>

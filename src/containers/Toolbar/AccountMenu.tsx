@@ -30,7 +30,7 @@ export const AccountMenu = () => {
             onClick={() => setVisible("account")(true)}
             closeMenuOnClick
           >
-            <Text size="xs">Account</Text>
+            <Text size="xs">{user.user_metadata?.name ?? "Account"}</Text>
           </Menu.Item>
         ) : (
           <Link href="/sign-in">
