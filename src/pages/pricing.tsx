@@ -11,11 +11,12 @@ import {
   Badge,
   SegmentedControl,
   Center,
+  Tooltip,
 } from "@mantine/core";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { BsCheck, BsX } from "react-icons/bs";
 import { FaBolt } from "react-icons/fa6";
-import { VscArrowRight } from "react-icons/vsc";
+import { VscArrowRight, VscInfo } from "react-icons/vsc";
 import Layout from "src/layout/Layout";
 import useUser from "src/store/useUser";
 
@@ -205,6 +206,16 @@ const Pricing = () => {
               <List.Item>
                 <Text c="black" fz="sm">
                   Edit data through graph
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="blue" fz="sm">
+                  Join alpha test of JC AI{" "}
+                  <Tooltip label="You will receive 10 credits per day.">
+                    <ThemeIcon size="xs" variant="transparent" style={{ verticalAlign: "middle" }}>
+                      <VscInfo />
+                    </ThemeIcon>
+                  </Tooltip>
                 </Text>
               </List.Item>
             </List>
