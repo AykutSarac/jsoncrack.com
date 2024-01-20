@@ -1,5 +1,14 @@
 import React from "react";
-import { ActionIcon, TextInput, Loader, Tooltip, HoverCard, Flex, Badge } from "@mantine/core";
+import {
+  ActionIcon,
+  TextInput,
+  Text,
+  Loader,
+  Tooltip,
+  HoverCard,
+  Flex,
+  Badge,
+} from "@mantine/core";
 import { getHotkeyHandler } from "@mantine/hooks";
 import styled from "styled-components";
 import { FunctionsHttpError } from "@supabase/supabase-js";
@@ -86,14 +95,26 @@ export const PromptInput = () => {
     }
   };
 
-  if (!promptVisible || !premium) return null;
+  if (!promptVisible) return null;
 
   return (
-    <Tooltip.Floating
+    <Tooltip
       disabled={premium}
-      label="JSON Crack AI is currently only available to premium users"
+      w={400}
+      multiline
+      position="right"
+      label={
+        <Text fz="xs">
+          <Badge size="xs" radius={2}>
+            Alpha
+          </Badge>{" "}
+          JSON Crack AI is currently only available to premium users to test out. You may close this
+          from the settings.
+        </Text>
+      }
       fz="xs"
       withinPortal
+      withArrow
     >
       <div>
         <StyledPromptInput
@@ -156,6 +177,6 @@ export const PromptInput = () => {
           radius={0}
         />
       </div>
-    </Tooltip.Floating>
+    </Tooltip>
   );
 };

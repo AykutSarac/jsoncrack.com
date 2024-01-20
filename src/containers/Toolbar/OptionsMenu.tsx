@@ -3,11 +3,9 @@ import { Menu, Text, Flex, Badge } from "@mantine/core";
 import { BsCheck2 } from "react-icons/bs";
 import { MdSettings } from "react-icons/md";
 import useConfig from "src/store/useConfig";
-import useUser from "src/store/useUser";
 import * as Styles from "./styles";
 
 export const OptionsMenu = () => {
-  const premium = useUser(state => state.premium);
   const toggleGestures = useConfig(state => state.toggleGestures);
   const toggleChildrenCount = useConfig(state => state.toggleChildrenCount);
   const toggleDarkMode = useConfig(state => state.toggleDarkMode);
@@ -70,19 +68,17 @@ export const OptionsMenu = () => {
         >
           <Text size="xs">Dark Mode</Text>
         </Menu.Item>
-        {premium && (
-          <Menu.Item
-            leftSection={<BsCheck2 opacity={aiEnabled ? 100 : 0} />}
-            onClick={() => toggleAI(!aiEnabled)}
-          >
-            <Text size="xs">
-              JSON Crack AI{" "}
-              <Badge ml={2} size="xs" variant="light" radius={2}>
-                Alpha
-              </Badge>
-            </Text>
-          </Menu.Item>
-        )}
+        <Menu.Item
+          leftSection={<BsCheck2 opacity={aiEnabled ? 100 : 0} />}
+          onClick={() => toggleAI(!aiEnabled)}
+        >
+          <Text size="xs">
+            JSON Crack AI{" "}
+            <Badge ml={2} size="xs" variant="light" radius={2}>
+              Alpha
+            </Badge>
+          </Text>
+        </Menu.Item>
       </Menu.Dropdown>
     </Menu>
   );
