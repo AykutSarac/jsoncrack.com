@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import { useRouter } from "next/router";
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { Flex, Popover, Text } from "@mantine/core";
 import styled from "styled-components";
 import toast from "react-hot-toast";
@@ -86,7 +86,10 @@ const StyledBottomBarItem = styled.button<{ $bg?: string }>`
 `;
 
 export const BottomBar = () => {
-  const { query, replace } = useRouter();
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const queryJSON = searchParams?.get("json");
   const data = useFile(state => state.fileData);
   const user = useUser(state => state.user);
   const toggleLiveTransform = useConfig(state => state.toggleLiveTransform);
@@ -118,20 +121,20 @@ export const BottomBar = () => {
     if (
       hasChanges &&
       !error &&
-      (typeof query.json === "string" || typeof query.json === "undefined")
+      (typeof queryJSON === "string" || typeof queryJSON === "undefined")
     ) {
       try {
         setIsUpdating(true);
         toast.loading("Saving document...", { id: "fileSave" });
 
         const { data, error } = await documentSvc.upsert({
-          id: query?.json,
+          id: queryJSON,
           contents: getContents(),
           format: getFormat(),
         });
 
         if (error) throw error;
-        if (data) replace({ query: { json: data } });
+        if (data) router.push(`${pathname}?json=${data}`);
 
         toast.success("Document saved to cloud", { id: "fileSave" });
         setHasChanges(false);
@@ -146,8 +149,8 @@ export const BottomBar = () => {
     getContents,
     getFormat,
     hasChanges,
-    query.json,
-    replace,
+    queryJSON,
+    router,
     setHasChanges,
     setVisible,
     user,
@@ -155,10 +158,10 @@ export const BottomBar = () => {
 
   const setPrivate = async () => {
     try {
-      if (!query.json) return handleSaveJson();
+      if (!queryJSON) return handleSaveJson();
       setIsUpdating(true);
 
-      const { data: updatedJsonData, error } = await documentSvc.update(query.json as string, {
+      const { data: updatedJsonData, error } = await documentSvc.update(queryJSON as string, {
         private: !isPrivate,
       });
 
@@ -222,7 +225,7 @@ export const BottomBar = () => {
         {(data?.owner_email === user?.email || (!data && user)) && (
           <StyledBottomBarItem onClick={handleSaveJson} disabled={isUpdating || error}>
             {hasChanges || !user ? <AiOutlineCloudUpload /> : <AiOutlineCloudSync />}
-            {hasChanges || !user ? (query?.json ? "Unsaved Changes" : "Save to Cloud") : "Saved"}
+            {hasChanges || !user ? (queryJSON ? "Unsaved Changes" : "Save to Cloud") : "Saved"}
           </StyledBottomBarItem>
         )}
         {data?.owner_email === user?.email && (
