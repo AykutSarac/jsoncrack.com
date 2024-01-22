@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import { Anchor, Container, List, Paper, Stack, Text, Title } from "@mantine/core";
+import { Anchor, Container, List, Paper, Stack, Text, Title, ListItem } from "@mantine/core";
 import Layout from "src/layout/Layout";
 
 const SubscriptionRefund = () => {
@@ -34,11 +34,11 @@ const SubscriptionRefund = () => {
             <Text c="dark">
               To cancel your subscription, follow these steps:
               <List type="ordered" my="lg">
-                <List.Item>Log in to your account.</List.Item>
-                <List.Item>
+                <ListItem>Log in to your account.</ListItem>
+                <ListItem>
                   Click on your account name located at the bottom left of the editor.
-                </List.Item>
-                <List.Item>Select the &quot;Unsubscribe&quot; option.</List.Item>
+                </ListItem>
+                <ListItem>Select the &quot;Unsubscribe&quot; option.</ListItem>
               </List>
               Please note that subscription cancellations made after the initial 3-day period are
               not eligible for a refund. However, you will still have access to the service until

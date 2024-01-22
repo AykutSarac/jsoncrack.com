@@ -1,7 +1,9 @@
+"use client";
+
 import React from "react";
 import Head from "next/head";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import { Button, Group, Paper, Stack, TextInput, Text, Anchor, PasswordInput } from "@mantine/core";
 import { toast } from "react-hot-toast";
 import Layout from "src/layout/Layout";
@@ -70,11 +72,13 @@ function ResetPassword() {
 }
 
 const ForgotPassword = () => {
-  const { query } = useRouter();
+  const query = useSearchParams();
+  const typeParam = query?.get("type");
+  const errorParam = query?.get("error");
   const [loading, setLoading] = React.useState(false);
   const [email, setEmail] = React.useState("");
   const [success, setSuccess] = React.useState(false);
-  const isPasswordReset = query?.type === "recovery" && !query?.error;
+  const isPasswordReset = typeParam === "recovery" && !errorParam;
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {

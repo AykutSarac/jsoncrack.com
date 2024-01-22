@@ -1,6 +1,8 @@
+"use client";
+
 import React from "react";
 import Head from "next/head";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { Button, Text, Title } from "@mantine/core";
 import styled from "styled-components";
 import Layout from "src/layout/Layout";
@@ -32,7 +34,7 @@ const StyledImageWrapper = styled.div`
 `;
 
 const NotFound: React.FC = () => {
-  const router = useRouter();
+  const { push } = useRouter();
 
   return (
     <Layout>
@@ -45,7 +47,7 @@ const NotFound: React.FC = () => {
         </StyledImageWrapper>
         <Title c="dark">WIZARDS BEHIND CURTAINS?</Title>
         <Text c="dark">Looks like you&apos;re lost, let&apos;s head back to the home!</Text>
-        <Button mt="lg" size="lg" type="button" onClick={() => router.push("/")}>
+        <Button mt="lg" size="lg" type="button" onClick={() => push("/")}>
           Go Home
         </Button>
       </StyledNotFound>

@@ -28,16 +28,18 @@ export const metadata: Metadata = {
 };
 
 export default function NotFound() {
-  <Layout>
-    <StyledNotFound>
-      <StyledImageWrapper>
-        <img src="/assets/404.svg" alt="not found" width={300} height={400} />
-      </StyledImageWrapper>
-      <Title c="dark">WIZARDS BEHIND CURTAINS Hululul?</Title>
-      <Text c="dark">Looks like you&apos;re lost, let&apos;s head back to the home!</Text>
-      <Button mt="lg" size="lg" type="button" onClick={() => redirect("/")}>
-        Go Home
-      </Button>
-    </StyledNotFound>
-  </Layout>;
+  return (
+    <Layout>
+      <StyledNotFound>
+        <StyledImageWrapper>
+          <img src="/assets/404.svg" alt="not found" width={300} height={400} />
+        </StyledImageWrapper>
+        <Title c="dark">WIZARDS BEHIND CURTAINS?</Title>
+        <Text c="dark">Looks like you&apos;re lost, let&apos;s head back to the home!</Text>
+        <Button mt="lg" size="lg" type="button" onClick={() => redirect("/")}>
+          Go Home
+        </Button>
+      </StyledNotFound>
+    </Layout>
+  );
 }

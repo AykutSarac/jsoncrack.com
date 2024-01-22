@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Head from "next/head";
 import { Group, Paper, Stack, Text, Title } from "@mantine/core";

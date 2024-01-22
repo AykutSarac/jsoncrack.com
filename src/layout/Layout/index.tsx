@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { MantineProvider } from "@mantine/core";
 import styled, { ThemeProvider } from "styled-components";

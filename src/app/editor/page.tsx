@@ -1,7 +1,9 @@
+"use client";
+
 import React from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import styled from "styled-components";
 import { BottomBar } from "src/containers/Editor/BottomBar";
 import { Toolbar } from "src/containers/Toolbar";
@@ -28,14 +30,14 @@ export const StyledEditorWrapper = styled.div`
 `;
 
 const EditorPage: React.FC = () => {
-  const { query, isReady } = useRouter();
+  const query = useSearchParams();
   const loading = useJson(state => state.loading);
-  const hasQuery = React.useMemo(() => Object.keys(query).length > 0, [query]);
+  const hasQuery = React.useMemo(() => query !== null && Object.keys(query).length > 0, [query]);
   const checkEditorSession = useFile(state => state.checkEditorSession);
 
   React.useEffect(() => {
-    if (isReady) checkEditorSession(query?.json);
-  }, [checkEditorSession, isReady, query]);
+    if (query) checkEditorSession(query.toString());
+  }, [checkEditorSession, query]);
 
   if (loading) {
     return (

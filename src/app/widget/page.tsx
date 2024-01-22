@@ -1,7 +1,9 @@
+"use client";
+
 import React from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams } from "next/navigation";
 import { MantineProvider } from "@mantine/core";
 import { ThemeProvider } from "styled-components";
 import toast from "react-hot-toast";
@@ -22,7 +24,10 @@ const Graph = dynamic(() => import("src/containers/Views/GraphView").then(c => c
 });
 
 const WidgetPage = () => {
-  const { query, push, isReady } = useRouter();
+  const { push } = useRouter();
+  const queryParams = useSearchParams();
+  const jsonParam = queryParams?.get("json");
+  const partnerParam = queryParams?.get("partner");
   const [theme, setTheme] = React.useState<"dark" | "light">("dark");
   const checkEditorSession = useFile(state => state.checkEditorSession);
   const setContents = useFile(state => state.setContents);
@@ -30,12 +35,10 @@ const WidgetPage = () => {
   const clearGraph = useGraph(state => state.clearGraph);
 
   React.useEffect(() => {
-    if (isReady) {
-      if (typeof query?.json === "string") checkEditorSession(query.json, true);
-      else clearGraph();
-      window.parent.postMessage(window.frameElement?.getAttribute("id"), "*");
-    }
-  }, [clearGraph, checkEditorSession, isReady, push, query.json, query.partner]);
+    if (typeof jsonParam === "string") checkEditorSession(jsonParam, true);
+    else clearGraph();
+    window.parent.postMessage(window.frameElement?.getAttribute("id"), "*");
+  }, [clearGraph, checkEditorSession, push, jsonParam, partnerParam]);
 
   React.useEffect(() => {
     const handler = (event: EmbedMessage) => {
