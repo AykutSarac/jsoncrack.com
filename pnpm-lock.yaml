@@ -47,6 +47,9 @@ dependencies:
   html-to-image:
     specifier: ^1.11.11
     version: 1.11.11
+  impl:
+    specifier: ^1.3.0
+    version: 1.3.0
   jq-in-the-browser:
     specifier: ^0.7.2
     version: 0.7.2
@@ -2995,6 +2998,10 @@ packages:
 
   /immediate@3.0.6:
     resolution: {integrity: sha512-XXOFtyqDjNDAQxVfYxuF7g9Il/IbWmmlQg2MYKOH8ExIT1qg6xc4zyS3HaEEATgs1btfzxq15ciUiY7gjSXRGQ==}
+    dev: false
+
+  /impl@1.3.0:
+    resolution: {integrity: sha512-kVha3pLxcXXNg60DBwNt63sj5CmkYHMyIj7RypOQDYQvMX90lBFKTAGtFCjJy4jBcm79LNyUVIRPl4UHXJL+OA==}
     dev: false
 
   /import-fresh@3.3.0:
