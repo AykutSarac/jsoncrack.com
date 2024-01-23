@@ -89,7 +89,7 @@ export const BottomBar = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const queryJSON = searchParams?.get("json");
+  const queryJSON = searchParams?.get("json") || undefined;
   const data = useFile(state => state.fileData);
   const user = useUser(state => state.user);
   const toggleLiveTransform = useConfig(state => state.toggleLiveTransform);
