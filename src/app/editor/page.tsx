@@ -36,7 +36,7 @@ const EditorPage: React.FC = () => {
   const checkEditorSession = useFile(state => state.checkEditorSession);
 
   React.useEffect(() => {
-    if (query) checkEditorSession(query.toString());
+    if (query) checkEditorSession(query.get("json") || "");
   }, [checkEditorSession, query]);
 
   if (loading) {
