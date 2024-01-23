@@ -5,6 +5,7 @@ import CustomAppInit from "./CustomAppInit";
 
 export const metadata: Metadata = {
   manifest: "/manifest.json",
+  metadataBase: new URL("https://jsoncrack.com/"),
   icons: {
     icon: "/favicon.ico",
   },
