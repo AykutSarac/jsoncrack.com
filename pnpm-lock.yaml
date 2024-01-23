@@ -74,6 +74,9 @@ dependencies:
   jxon:
     specifier: ^2.0.0-beta.5
     version: 2.0.0-beta.5
+  lodash:
+    specifier: ^4.17.21
+    version: 4.17.21
   lodash.debounce:
     specifier: ^4.0.8
     version: 4.0.8
@@ -3571,7 +3574,6 @@ packages:
 
   /lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-    dev: true
 
   /loose-envify@1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
