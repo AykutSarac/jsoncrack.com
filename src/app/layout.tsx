@@ -10,9 +10,9 @@ export const metadata: Metadata = {
     icon: "/favicon.ico",
   },
   description:
-    "Innovative and open-source visualization application that transforms various data formats, such as JSON, YAML, XML, CSV and more, into interactive graphs.",
+    "Innovative and open-source visualization application that produces interactive graphs from various data formats, such as JSON, YAML, XML, CSV and more.",
   openGraph: {
-    title: "JSON Crack - Visualize Data to Graphs",
+    title: "JSON Crack - Visualize Data as Graphs",
     images: [
       {
         url: "https://jsoncrack.com/assets/jsoncrack.png",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "JSON Crack - Visualize Data to Graphs",
     description:
-      "Innovative and open-source visualization application that transforms various data formats, such as JSON, YAML, XML, CSV and more, into interactive graphs.",
+      "Innovative and open-source visualization application that produces interactive graphs from various data formats, such as JSON, YAML, XML, CSV and more.",
     images: [{ url: "https://jsoncrack.com/assets/jsoncrack.png" }],
   },
 };
