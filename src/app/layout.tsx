@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "JSON Crack - Visualize Data to Graphs",
+    title: "JSON Crack - Visualize Data as Graphs",
     description:
       "Innovative and open-source visualization application that produces interactive graphs from various data formats, such as JSON, YAML, XML, CSV and more.",
     images: [{ url: "https://jsoncrack.com/assets/jsoncrack.png" }],
