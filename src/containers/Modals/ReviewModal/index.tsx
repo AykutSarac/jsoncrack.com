@@ -41,6 +41,8 @@ export const ReviewModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           minLength={10}
           maxLength={500}
           minRows={5}
+          maxRows={10}
+          autosize
         />
         <Text fz={12} c="dimmed" style={{ textAlign: "right" }}>
           500/{review.length}

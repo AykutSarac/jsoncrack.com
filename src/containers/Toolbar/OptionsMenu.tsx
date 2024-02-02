@@ -72,12 +72,12 @@ export const OptionsMenu = () => {
           leftSection={<BsCheck2 opacity={aiEnabled ? 100 : 0} />}
           onClick={() => toggleAI(!aiEnabled)}
         >
-          <Text size="xs">
-            JSON Crack AI{" "}
+          <Flex align="center" gap={2}>
+            <Text size="xs">JSON Crack AI</Text>
             <Badge ml={2} size="xs" variant="light" radius={2}>
               Alpha
             </Badge>
-          </Text>
+          </Flex>
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>

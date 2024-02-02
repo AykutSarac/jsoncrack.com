@@ -1,12 +1,14 @@
 import React from "react";
-import { Menu, Flex, Text } from "@mantine/core";
+import { Menu, Flex, Text, SegmentedControl } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
 import ReactGA from "react-ga4";
 import toast from "react-hot-toast";
-import { CgChevronDown, CgArrowsShrinkH, CgArrowsMergeAltH } from "react-icons/cg";
+import { CgChevronDown } from "react-icons/cg";
 import { VscExpandAll, VscCollapseAll, VscTarget } from "react-icons/vsc";
+import { ViewMode } from "src/enums/viewMode.enum";
 import useToggleHide from "src/hooks/useToggleHide";
 import { getNextDirection } from "src/lib/utils/graph/getNextDirection";
+import useConfig from "src/store/useConfig";
 import useGraph from "src/store/useGraph";
 import * as Styles from "./styles";
 
@@ -20,19 +22,14 @@ function rotateLayout(direction: "LEFT" | "RIGHT" | "DOWN" | "UP") {
 export const ViewMenu = () => {
   const { validateHiddenNodes } = useToggleHide();
   const [coreKey, setCoreKey] = React.useState("CTRL");
-  const toggleFold = useGraph(state => state.toggleFold);
   const setDirection = useGraph(state => state.setDirection);
   const direction = useGraph(state => state.direction);
   const expandGraph = useGraph(state => state.expandGraph);
   const collapseGraph = useGraph(state => state.collapseGraph);
   const focusFirstNode = useGraph(state => state.focusFirstNode);
-  const foldNodes = useGraph(state => state.foldNodes);
   const graphCollapsed = useGraph(state => state.graphCollapsed);
-
-  const toggleFoldNodes = () => {
-    toggleFold(!foldNodes);
-    toast(`${foldNodes ? "Unfolded" : "Folded"} nodes`);
-  };
+  const viewMode = useConfig(state => state.viewMode);
+  const setViewMode = useConfig(state => state.setViewMode);
 
   const toggleDirection = () => {
     const nextDirection = getNextDirection(direction || "RIGHT");
@@ -49,7 +46,6 @@ export const ViewMenu = () => {
 
   useHotkeys([
     ["mod+shift+d", toggleDirection],
-    ["mod+shift+f", toggleFoldNodes],
     ["mod+shift+c", toggleExpandCollapseGraph],
     [
       "mod+f",
@@ -76,66 +72,63 @@ export const ViewMenu = () => {
         </Styles.StyledToolElement>
       </Menu.Target>
       <Menu.Dropdown>
-        <Menu.Item
-          fz={12}
-          onClick={() => {
-            toggleDirection();
-            ReactGA.event({
-              action: "toggle_layout_direction",
-              category: "User",
-              label: "Tools",
-            });
-          }}
-          leftSection={<Styles.StyledFlowIcon rotate={rotateLayout(direction || "RIGHT")} />}
-          rightSection={
-            <Text ml="md" fz={10} c="dimmed">
-              {coreKey} Shift D
-            </Text>
-          }
-        >
-          Rotate Layout
-        </Menu.Item>
-        <Menu.Item
-          fz={12}
-          onClick={() => {
-            toggleFoldNodes();
-            ReactGA.event({
-              action: "toggle_fold_nodes",
-              category: "User",
-              label: "Tools",
-            });
-          }}
-          leftSection={foldNodes ? <CgArrowsShrinkH /> : <CgArrowsMergeAltH />}
-          rightSection={
-            <Text ml="md" fz={10} c="dimmed">
-              {coreKey} Shift F
-            </Text>
-          }
-        >
-          {foldNodes ? "Unfold" : "Fold"} Nodes
-        </Menu.Item>
-        <Menu.Item
-          fz={12}
-          onClick={() => {
-            toggleExpandCollapseGraph();
-            ReactGA.event({
-              action: "toggle_collapse_nodes",
-              category: "User",
-              label: "Tools",
-            });
-          }}
-          leftSection={graphCollapsed ? <VscExpandAll /> : <VscCollapseAll />}
-          rightSection={
-            <Text ml="md" fz={10} c="dimmed">
-              {coreKey} Shift C
-            </Text>
-          }
-        >
-          {graphCollapsed ? "Expand" : "Collapse"} Nodes
-        </Menu.Item>
-        <Menu.Item fz={12} onClick={focusFirstNode} leftSection={<VscTarget />}>
-          Focus to First Node
-        </Menu.Item>
+        <SegmentedControl
+          miw={205}
+          size="xs"
+          value={viewMode}
+          onChange={e => setViewMode(e as ViewMode)}
+          data={[
+            { value: ViewMode.Graph, label: "Graph" },
+            { value: ViewMode.Tree, label: "Tree" },
+          ]}
+          fullWidth
+        />
+        {viewMode === ViewMode.Graph && (
+          <>
+            <Menu.Item
+              mt="xs"
+              fz={12}
+              onClick={() => {
+                toggleDirection();
+                ReactGA.event({
+                  action: "toggle_layout_direction",
+                  category: "User",
+                  label: "Tools",
+                });
+              }}
+              leftSection={<Styles.StyledFlowIcon rotate={rotateLayout(direction || "RIGHT")} />}
+              rightSection={
+                <Text ml="md" fz={10} c="dimmed">
+                  {coreKey} Shift D
+                </Text>
+              }
+            >
+              Rotate Layout
+            </Menu.Item>
+            <Menu.Item
+              fz={12}
+              onClick={() => {
+                toggleExpandCollapseGraph();
+                ReactGA.event({
+                  action: "toggle_collapse_nodes",
+                  category: "User",
+                  label: "Tools",
+                });
+              }}
+              leftSection={graphCollapsed ? <VscExpandAll /> : <VscCollapseAll />}
+              rightSection={
+                <Text ml="md" fz={10} c="dimmed">
+                  {coreKey} Shift C
+                </Text>
+              }
+            >
+              {graphCollapsed ? "Expand" : "Collapse"} Nodes
+            </Menu.Item>
+            <Menu.Item fz={12} onClick={focusFirstNode} leftSection={<VscTarget />}>
+              Focus to First Node
+            </Menu.Item>
+          </>
+        )}
       </Menu.Dropdown>
     </Menu>
   );

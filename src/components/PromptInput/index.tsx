@@ -48,7 +48,7 @@ const StyledPromptInput = styled(TextInput)`
   }
 
   ::placeholder {
-    color: ${({ theme }) => theme.PROMPT_PLACEHOLDER_COLOR};
+    color: ${({ theme }) => theme.PROMPT_PLACEHOLDER_COLOR} !important;
   }
 `;
 

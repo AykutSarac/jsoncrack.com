@@ -12,7 +12,6 @@ export interface Graph {
   direction: CanvasDirection;
   loading: boolean;
   graphCollapsed: boolean;
-  foldNodes: boolean;
   fullscreen: boolean;
   collapseAll: boolean;
   nodes: NodeData[];
@@ -29,7 +28,6 @@ const initialStates: Graph = {
   direction: "RIGHT",
   loading: true,
   graphCollapsed: false,
-  foldNodes: false,
   fullscreen: false,
   collapseAll: false,
   nodes: [],
@@ -54,7 +52,6 @@ interface GraphActions {
   collapseGraph: () => void;
   getCollapsedNodeIds: () => string[];
   getCollapsedEdgeIds: () => string[];
-  toggleFold: (value: boolean) => void;
   toggleFullscreen: (value: boolean) => void;
   toggleCollapseAll: (value: boolean) => void;
   zoomIn: () => void;
@@ -214,10 +211,6 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
     if (canvas) {
       viewPort?.camera?.centerFitElementIntoView(canvas);
     }
-  },
-  toggleFold: foldNodes => {
-    set({ foldNodes });
-    get().setGraph();
   },
   toggleFullscreen: fullscreen => set({ fullscreen }),
   setViewPort: viewPort => set({ viewPort }),

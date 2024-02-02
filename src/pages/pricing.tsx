@@ -209,11 +209,11 @@ const Pricing = () => {
                 </Text>
               </List.Item>
               <List.Item>
-                <Text c="blue" fz="sm">
-                  Join alpha test of JC AI{" "}
+                <Text fw="bold" c="indigo" fz="sm">
+                  Join alpha test of AI{" "}
                   <Tooltip label="You will receive 10 credits per day.">
                     <ThemeIcon size="xs" variant="transparent" style={{ verticalAlign: "middle" }}>
-                      <VscInfo />
+                      <VscInfo strokeWidth={0.7} />
                     </ThemeIcon>
                   </Tooltip>
                 </Text>

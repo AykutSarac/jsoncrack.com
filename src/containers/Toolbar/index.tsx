@@ -8,15 +8,14 @@ import { SearchInput } from "src/components/SearchInput";
 import { FileFormat } from "src/enums/file.enum";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
 import useFile from "src/store/useFile";
-import useJson from "src/store/useJson";
 import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
 import { AccountMenu } from "./AccountMenu";
+import { FileMenu } from "./FileMenu";
 import { Logo } from "./Logo";
 import { OptionsMenu } from "./OptionsMenu";
 import { ToolsMenu } from "./ToolsMenu";
 import { ViewMenu } from "./ViewMenu";
-import { ViewModeMenu } from "./ViewModeMenu";
 import { ZoomMenu } from "./ZoomMenu";
 import * as Styles from "./styles";
 
@@ -31,21 +30,10 @@ function fullscreenBrowser() {
 }
 
 export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) => {
-  const getJson = useJson(state => state.getJson);
   const setVisible = useModal(state => state.setVisible);
-
   const setFormat = useFile(state => state.setFormat);
   const format = useFile(state => state.format);
   const premium = useUser(state => state.premium);
-
-  const handleSave = () => {
-    const a = document.createElement("a");
-    const file = new Blob([getJson()], { type: "text/plain" });
-
-    a.href = window.URL.createObjectURL(file);
-    a.download = "jsoncrack.json";
-    a.click();
-  };
 
   return (
     <Styles.StyledTools>
@@ -74,17 +62,11 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
             ]}
           />
 
-          <ViewModeMenu />
-          <Styles.StyledToolElement title="Import File" onClick={() => setVisible("import")(true)}>
-            Import
-          </Styles.StyledToolElement>
+          <FileMenu />
           <ViewMenu />
           <ToolsMenu />
           <Styles.StyledToolElement title="Cloud" onClick={() => setVisible("cloud")(true)}>
             Cloud
-          </Styles.StyledToolElement>
-          <Styles.StyledToolElement title="Download as File" onClick={handleSave}>
-            Download
           </Styles.StyledToolElement>
         </Group>
       )}
