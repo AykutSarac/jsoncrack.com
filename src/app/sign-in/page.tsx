@@ -23,7 +23,7 @@ import { supabase } from "src/lib/api/supabase";
 import { isIframe } from "src/lib/utils/widget";
 import useUser from "src/store/useUser";
 
-export function AuthenticationForm(props: PaperProps) {
+function AuthenticationForm(props: PaperProps) {
   const setSession = useUser(state => state.setSession);
   const [loading, setLoading] = React.useState(false);
   const [userData, setUserData] = React.useState({
