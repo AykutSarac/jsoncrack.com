@@ -8,6 +8,7 @@ const NotFound: React.FC = () => {
   return (
     <Layout>
       <Head>
+        <title>404 | JSON Crack</title>
         <meta name="robots" content="noindex,nofollow" />
       </Head>
       <Stack mt={100} justify="center" align="center">

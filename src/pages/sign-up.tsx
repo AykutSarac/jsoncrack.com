@@ -57,7 +57,7 @@ const SignUp = () => {
   return (
     <Layout>
       <Head>
-        <title>JSON Crack | Sign Up</title>
+        <title>Sign Up - JSON Crack</title>
       </Head>
       {done ? (
         <Paper mx="auto" maw={400} mt={50} p="lg" withBorder>

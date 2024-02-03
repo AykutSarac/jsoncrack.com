@@ -10,6 +10,7 @@ const Custom500 = () => {
   return (
     <Layout>
       <Head>
+        <title>Unexpected Error Occured | JSON Crack</title>
         <meta name="robots" content="noindex,nofollow" />
       </Head>
       <Stack mt={100} justify="center" align="center">

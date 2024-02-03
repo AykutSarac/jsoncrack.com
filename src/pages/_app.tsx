@@ -1,6 +1,7 @@
 import React from "react";
 import type { AppProps } from "next/app";
 import dynamic from "next/dynamic";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { MantineProvider, createTheme } from "@mantine/core";
 import "@mantine/core/styles.css";
@@ -54,31 +55,36 @@ function JsonCrack({
   }, [router.events]);
 
   return (
-    <SessionContextProvider supabaseClient={supabase}>
-      <MantineProvider theme={mantineTheme}>
-        <ThemeProvider theme={lightTheme}>
-          <GlobalStyle />
-          <Component {...pageProps} />
-          <ModalController />
-          <Toaster
-            position="bottom-right"
-            containerStyle={{
-              bottom: 34,
-              right: 8,
-              fontSize: 14,
-            }}
-            toastOptions={{
-              style: {
-                background: "#4D4D4D",
-                color: "#B9BBBE",
-                borderRadius: 4,
-              },
-            }}
-          />
-          <ExternalMode />
-        </ThemeProvider>
-      </MantineProvider>
-    </SessionContextProvider>
+    <>
+      <Head>
+        <title>JSON Crack | Visualize Instantly Into Graphs</title>
+      </Head>
+      <SessionContextProvider supabaseClient={supabase}>
+        <MantineProvider theme={mantineTheme}>
+          <ThemeProvider theme={lightTheme}>
+            <GlobalStyle />
+            <Component {...pageProps} />
+            <ModalController />
+            <Toaster
+              position="bottom-right"
+              containerStyle={{
+                bottom: 34,
+                right: 8,
+                fontSize: 14,
+              }}
+              toastOptions={{
+                style: {
+                  background: "#4D4D4D",
+                  color: "#B9BBBE",
+                  borderRadius: 4,
+                },
+              }}
+            />
+            <ExternalMode />
+          </ThemeProvider>
+        </MantineProvider>
+      </SessionContextProvider>
+    </>
   );
 }
 

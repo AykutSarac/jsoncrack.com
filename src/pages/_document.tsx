@@ -7,7 +7,13 @@ import Document, {
   DocumentInitialProps,
 } from "next/document";
 import { ServerStyleSheet } from "styled-components";
-import { SeoTags } from "src/components/SeoTags";
+
+const metatags = Object.freeze({
+  description:
+    "JSON Crack Editor is a tool for visualizing into graphs, analyzing, editing, formatting, querying, transforming and validating JSON, CSV, YAML, XML, and more.",
+  title: "JSON Crack - Visualize Data to Graphs",
+  image: "https://jsoncrack.com/assets/jsoncrack.png",
+});
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: DocumentContext): Promise<DocumentInitialProps> {
@@ -40,14 +46,22 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <SeoTags
-            description="JSON Crack Editor is a tool for visualizing into graphs, analyzing, editing, formatting, querying, transforming and validating JSON, CSV, YAML, XML, and more."
-            title="JSON Crack - Visualize Data to Graphs"
-            image="https://jsoncrack.com/assets/jsoncrack.png"
-          />
           <meta name="theme-color" content="#36393E" />
           <link rel="manifest" href="/manifest.json" />
           <link rel="icon" href="/favicon.ico" />
+
+          <meta name="description" content={metatags.description} key="description" />
+          <meta property="og:url" content="https://jsoncrack.com" key="ogurl" />
+          <meta property="og:type" content="website" key="ogtype" />
+          <meta property="og:title" content={metatags.title} key="ogtitle" />
+          <meta property="og:description" content={metatags.description} key="ogdescription" />
+          <meta property="og:image" content={metatags.image} key="ogimage" />
+          <meta name="twitter:card" content="summary_large_image" key="twcard" />
+          <meta property="twitter:domain" content="https://jsoncrack.com" key="twdomain" />
+          <meta property="twitter:url" content="https://jsoncrack.com" key="twurl" />
+          <meta name="twitter:title" content={metatags.title} key="twtitle" />
+          <meta name="twitter:description" content={metatags.description} key="twdescription" />
+          <meta name="twitter:image" content={metatags.image} key="twimage" />
         </Head>
         <body>
           <Main />
