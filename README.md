@@ -37,6 +37,7 @@ JSON Crack is a free, open-source data visualization app capable of visualizing 
 - Transform & filter data with AI.
 - Export to PNG, SVG, JPEG & clipboard.
 - Zoom and panning support with touch gestures.
+- Supports data formats like JSON, YAML, CSV, XML, TOML...
 - JQ, JSON Schema, Decode JWT, Generate Types and interfaces.
 - Wide range of tools - search graph, json path, validate, save to cloud...
 - Embeddable iframe widgets.
