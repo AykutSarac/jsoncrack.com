@@ -1,4 +1,3 @@
-import jq from "jq-web";
 import toast from "react-hot-toast";
 import useFile from "src/store/useFile";
 import useJson from "src/store/useJson";
@@ -12,9 +11,11 @@ const useJsonQuery = () => {
     return run("Root", value, JSON.stringify({ output_mode: "typescript/typealias" }));
   };
 
-  const updateJson = (query: string, cb?: () => void) => {
+  const updateJson = async (query: string, cb?: () => void) => {
     try {
+      const jq = await import("jq-web");
       const res = jq.json(JSON.parse(getJson()), query);
+
       setContents({ contents: JSON.stringify(res, null, 2) });
       cb?.();
     } catch (error) {

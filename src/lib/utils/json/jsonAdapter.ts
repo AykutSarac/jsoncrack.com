@@ -1,8 +1,3 @@
-import { load, dump } from "js-yaml";
-import { csv2json, json2csv } from "json-2-csv";
-import { parse } from "jsonc-parser";
-import jxon from "jxon";
-import toml from "toml";
 import { FileFormat } from "src/enums/file.enum";
 
 const keyExists = (obj: object, key: string) => {
@@ -33,6 +28,12 @@ const keyExists = (obj: object, key: string) => {
 
 const contentToJson = async (value: string, format = FileFormat.JSON): Promise<object> => {
   try {
+    const { load } = await import("js-yaml");
+    const { csv2json } = await import("json-2-csv");
+    const { parse } = await import("jsonc-parser");
+    const jxon = await import("jxon");
+    const toml = await import("toml");
+
     let json: object = {};
 
     if (format === FileFormat.JSON) json = parse(value);
@@ -52,6 +53,10 @@ const contentToJson = async (value: string, format = FileFormat.JSON): Promise<o
 
 const jsonToContent = async (json: string, format: FileFormat): Promise<string> => {
   try {
+    const { dump } = await import("js-yaml");
+    const { json2csv } = await import("json-2-csv");
+    const { parse } = await import("jsonc-parser");
+
     let contents = json;
 
     if (!json) return json;
