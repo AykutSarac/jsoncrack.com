@@ -1,69 +1,115 @@
-<a href="https://jsoncrack.com/" target="_blank" rel="noopener">
-    <img alt="JSON Crack" w src="https://user-images.githubusercontent.com/47941171/236689277-0fa9e50a-3106-4854-a2d4-bb5722f16d48.png" />
-</a>
+<!-- PROJECT LOGO -->
+<p align="center">
+  <a href="https://github.com/AykutSarac/jsoncrack.com">
+   <img src="./public/assets/jsoncrack.png" alt="Logo">
+  </a>
 
+  <h3 align="center">JSON Crack (formerly JSON Visio)</h3>
 
-<h4 align="center">
-  <a href="https://jsoncrack.com">JSON Crack</a> |
-  <a href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode">VS Code Extension</a> |
-  <a href="https://jsoncrack.com/docs">Documentation</a> 
-</h4>
-
-<div align="center">
-  <h2>
-    An innovative, open source data visualization app.
+  <p align="center">
+    The open-source JSON Editor.
     <br />
-    Brings data to life through captivating graphs.
-  </h2>
-</div>
-
-<br />
-<p align="center">
-  <a href="https://www.producthunt.com/posts/json-crack?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-json&#0045;crack" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=332281&theme=light" alt="JSON&#0032;Crack - Simple&#0032;visualization&#0032;tool&#0032;for&#0032;your&#0032;JSON&#0032;data&#0046; | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
-    <a href="https://discord.gg/yVyTtCRueq" target="_blank"><img src="https://user-images.githubusercontent.com/47941171/206397224-94da03a4-59d0-48cd-aafc-512624a768d6.png" "style=" height: 54px;" height="54" /></a>
-    </br>
-    <a href="https://github.com/sponsors/AykutSarac" target="_blank"><img src="https://user-images.githubusercontent.com/47941171/206397875-a4e73f02-5d8f-4db0-902b-9a4bc2b22d90.png" "style=" height: 54px;" height="54" /></a>
+    <a href="https://jsoncrack.com"><strong>Learn more »</strong></a>
+    <br />
+    <br />
+    <a href="https://discord.gg/yVyTtCRueq">Discord</a>
+    ·
+    <a href="https://jsoncrack.com">Website</a>
+    ·
+    <a href="https://github.com/AykutSarac/jsoncrack.com/issues">Issues</a>
+    ·
+    <a href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode">VS Code</a>
   </p>
-
-<p align="center">
-  <img src="./public/assets/jsoncrack-screenshot.jpeg" alt="Product Preview" />
 </p>
 
-# JSON Crack (jsoncrack.com)
+<!-- ABOUT THE PROJECT -->
+
+## About the Project
+
+<img width="100%" alt="booking-screen" src="./public/assets/jsoncrack-screenshot.jpeg">
+
+# Visualize Instantly Into Graphs
 
 JSON Crack is a free, open-source data visualization app capable of visualizing data formats such as JSON, YAML, XML, CSV and more, into interactive graphs. With its intuitive and user-friendly interface, JSON Crack makes it easy to explore, analyze, and understand even the most complex data structures. Whether you're a developer working on a large-scale project or a data enthusiast looking to uncover hidden insights, JSON Crack has the tools and features you need to unlock the full potential of your data.
 
-## Features
-- 💯 Free & open-source.
-- 🌓 Dark mode.
-- 🖼️ Export to PNG, SVG, JPEG & clipboard.
-- 🔍 Zoom and panning support with touch gestures.
-- 🛠 Wide range of tools - search, json path, node contents, expand/toggle, auto format...
-- 🔗 Share/Import/Fetch
-- 🧱 Embeddable iframe widgets.
+- Dark mode.
+- Graph & Tree view modes.
+- Transform & filter data with AI.
+- Export to PNG, SVG, JPEG & clipboard.
+- Zoom and panning support with touch gestures.
+- JQ, JSON Schema, Decode JWT, Generate Types and interfaces.
+- Wide range of tools - search graph, json path, validate, save to cloud...
+- Embeddable iframe widgets.
 
-## Contributing
+## Recognition
 
-- Missing something or found a bug? [Report here](https://github.com/AykutSarac/jsoncrack.com/issues).
-- Want to contribute? Check out our [contribution guide](https://github.com/AykutSarac/jsoncrack.com/blob/main/CONTRIBUTING.md) or let us know on [Discord](https://discord.gg/yVyTtCRueq).
+<a href="https://news.ycombinator.com/item?id=32626873">
+  <img
+    style="width: 250px; height: 54px;" width="250" height="54"
+    alt="Featured on Hacker News"
+    src="https://hackernews-badge.vercel.app/api?id=32626873"
+  />
+</a>
 
-## Sponsors & support
+<a href="https://producthunt.com/posts/JSON-Crack?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-jsoncrack" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=332281&theme=light" alt="JSON Crack | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
 
-If you like the project, you can become a sponsor at [GitHub Sponsors](https://github.com/sponsors/AykutSarac) or use [Premium](https://jsoncrack.com/pricing).
+### Built With
 
-## Running Locally
- 
-### Local
+- [Next.js](https://nextjs.org/?ref=jsoncrack.com)
+- [Reaflow](https://reaflow.dev/?ref=jsoncrack.com)
+- [React.js](https://reactjs.org/?ref=jsoncrack.com)
+- [Tailwind CSS](https://mantine.dev/?ref=jsoncrack.com)
+- [Supabase](https://supabase.com/?ref=jsoncrack.com)
 
-After cloning the repository, run the following commands:
-```console
-# Install the packages
-pnpm install
+## Stay Up-to-Date
 
-# Start development server
-# Then the development server will run at http://localhost:3000
-pnpm dev
-```
+JSON Crack officially launched as v1.0 on the 17th of February 2022 and we've come a long way so far. Watch **releases** of this repository to be notified of future updates:
+
+<a href="https://github.com/AykutSarac/jsoncrack.com"><img src="https://img.shields.io/github/stars/AykutSarac/jsoncrack.com" alt="Star at GitHub" /></a>
+
+<!-- GETTING STARTED -->
+
+## Getting Started
+
+To get a local copy up and running, please follow these simple steps.
+
+### Prerequisites
+
+Here is what you need to be able to run JSON Crack.
+
+- Node.js (Version: >=18.x)
+- Pnpm _(recommended)_
+
+
+## Development
+
+### Setup
+
+1. Clone the repo into a public GitHub repository (or fork https://github.com/AykutSarac/jsoncrack.com/fork). If you plan to distribute the code, keep the source code public to comply with [GPLv3](https://github.com/AykutSarac/jsoncrack.com/blob/main/LICENSE). To clone in a private repository, [acquire a commercial license](mailto:contact@jsoncrack.com)
+
+   ```sh
+   git clone https://github.com/AykutSarac/jsoncrack.com.git
+   ```
+
+2. Go to the project folder
+
+   ```sh
+   cd jsoncrack.com
+   ```
+
+3. Install packages with yarn
+
+   ```sh
+   pnpm
+   ```
+
+4. Run the project
+
+   ```sh
+   pnpm dev
+
+   # Running on http://localhost:3000/
+   ```
 
 ### Docker
 
@@ -83,10 +129,26 @@ docker-compose up -d
 # Go to http://localhost:8888
 ```
 
-## Thank you for supporting JSON Crack
+<!-- CONTRIBUTING -->
 
-Last but not least, we're thankful to these companies for offering their services for free:
+## Contributing
 
-<a href="https://sentry.io">
-  <img height="30" src="https://user-images.githubusercontent.com/47941171/236691121-717c7975-809f-4508-b58e-5ada2f7e8c7c.png" alt="Sentry" />
+Please see our [contributing guide](/CONTRIBUTING.md).
+
+### Good First Issues
+
+We have a list of [help wanted](https://github.com/AykutSarac/jsoncrack.com/issues?q=is:issue+is:open+label:%22%F0%9F%99%8B%F0%9F%8F%BB%E2%80%8D%E2%99%82%EF%B8%8Fhelp+wanted%22) that contain small features and bugs which have a relatively limited scope. This is a great place to get started, gain experience, and get familiar with our contribution process.
+
+<!-- CONTRIBUTORS -->
+
+### Contributors
+
+<a href="https://github.com/AykutSarac/jsoncrack.com/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=AykutSarac/jsoncrack.com" />
 </a>
+
+<!-- LICENSE -->
+
+## License
+
+Distributed under the [GPLv3 License](https://github.com/AykutSarac/jsoncrack.com/blob/main/LICENSE). See `LICENSE` for more information.
