@@ -119,7 +119,7 @@ export function AuthenticationForm(props: PaperProps) {
   );
 }
 
-const SignIn = () => {
+export default function Page() {
   const { push } = useRouter();
   const queryParams = useSearchParams();
   const typeParam = queryParams?.get("type");
@@ -147,6 +147,4 @@ const SignIn = () => {
       </Center>
     </Layout>
   );
-};
-
-export default SignIn;
+}

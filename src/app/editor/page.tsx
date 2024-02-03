@@ -29,7 +29,7 @@ const StyledEditorWrapper = styled.div`
   overflow: hidden;
 `;
 
-const EditorPage: React.FC = () => {
+export default function Page() {
   const query = useSearchParams();
   const loading = useJson(state => state.loading);
   const hasQuery = React.useMemo(() => query !== null && Object.keys(query).length > 0, [query]);
@@ -68,6 +68,4 @@ const EditorPage: React.FC = () => {
       </StyledEditorWrapper>
     </EditorWrapper>
   );
-};
-
-export default EditorPage;
+}

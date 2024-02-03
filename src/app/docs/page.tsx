@@ -36,7 +36,7 @@ const StyledHighlight = styled.span<{ $link?: boolean; $alert?: boolean }>`
   margin: ${({ $alert }) => ($alert ? "8px 0" : "1px")};
 `;
 
-const Docs = () => {
+export default function Page() {
   return (
     <Layout>
       <Head>
@@ -166,6 +166,4 @@ const Docs = () => {
       </Stack>
     </Layout>
   );
-};
-
-export default Docs;
+}

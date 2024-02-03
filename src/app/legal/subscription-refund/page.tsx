@@ -3,7 +3,7 @@ import Head from "next/head";
 import { Anchor, Container, List, Paper, Stack, Text, Title, ListItem } from "@mantine/core";
 import Layout from "src/layout/Layout";
 
-const SubscriptionRefund = () => {
+export default function Page() {
   return (
     <Layout>
       <Head>
@@ -70,6 +70,4 @@ const SubscriptionRefund = () => {
       </Container>
     </Layout>
   );
-};
-
-export default SubscriptionRefund;
+}

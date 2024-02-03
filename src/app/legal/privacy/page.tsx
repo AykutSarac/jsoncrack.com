@@ -3,7 +3,7 @@ import Head from "next/head";
 import { Anchor, Container, Paper, Stack, Text, Title } from "@mantine/core";
 import Layout from "src/layout/Layout";
 
-const Privacy = () => {
+export default function Page() {
   return (
     <Layout>
       <Head>
@@ -60,6 +60,4 @@ const Privacy = () => {
       </Container>
     </Layout>
   );
-};
-
-export default Privacy;
+}

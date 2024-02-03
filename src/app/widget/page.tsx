@@ -23,7 +23,7 @@ const Graph = dynamic(() => import("src/containers/Views/GraphView").then(c => c
   ssr: false,
 });
 
-const WidgetPage = () => {
+export default function Page() {
   const { push } = useRouter();
   const queryParams = useSearchParams();
   const jsonParam = queryParams?.get("json");
@@ -71,6 +71,4 @@ const WidgetPage = () => {
       </ThemeProvider>
     </MantineProvider>
   );
-};
-
-export default WidgetPage;
+}

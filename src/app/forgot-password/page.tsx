@@ -71,7 +71,7 @@ function ResetPassword() {
   );
 }
 
-const ForgotPassword = () => {
+export default function Page() {
   const query = useSearchParams();
   const typeParam = query?.get("type");
   const errorParam = query?.get("error");
@@ -145,6 +145,4 @@ const ForgotPassword = () => {
       )}
     </Layout>
   );
-};
-
-export default ForgotPassword;
+}
