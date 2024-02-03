@@ -36,6 +36,7 @@ const StyledHeroSectionBody = styled.div`
 
   @media only screen and (max-width: 1200px) {
     flex-direction: column;
+    height: calc(100vh - 56px);
   }
 `;
 
@@ -43,7 +44,6 @@ const StyledHighlightedText = styled.span`
   font-size: 40px;
   font-weight: 800;
   display: inline;
-
   background-color: #252525;
   background-image: linear-gradient(5deg, #545050, #fff7f8);
   background-size: 100%;
@@ -54,7 +54,12 @@ const StyledHighlightedText = styled.span`
   -moz-text-fill-color: transparent;
 
   @media only screen and (max-width: 992px) {
-    font-size: 24px;
+    font-size: 28px;
+
+    span {
+      display: inline-block;
+      width: 80px;
+    }
   }
 `;
 
@@ -78,7 +83,7 @@ const StyledHeroTitle = styled.h1`
   text-align: center;
 
   @media only screen and (max-width: 992px) {
-    font-size: 26px;
+    font-size: 28px;
   }
 `;
 
@@ -126,7 +131,7 @@ const HeroSection = () => (
             href="/editor"
             fw="bold"
             rightSection={<FaChevronRight />}
-            size="md"
+            size="lg"
             hiddenFrom="md"
             prefetch={false}
           >
