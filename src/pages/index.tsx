@@ -115,6 +115,7 @@ const HeroSection = () => (
             rightSection={<FaChevronRight />}
             size="xl"
             visibleFrom="md"
+            prefetch={false}
           >
             GO TO EDITOR
           </Button>
@@ -127,6 +128,7 @@ const HeroSection = () => (
             rightSection={<FaChevronRight />}
             size="md"
             hiddenFrom="md"
+            prefetch={false}
           >
             GO TO EDITOR
           </Button>
