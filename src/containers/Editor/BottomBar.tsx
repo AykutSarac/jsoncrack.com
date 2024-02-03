@@ -154,6 +154,7 @@ export const BottomBar = () => {
     setHasChanges,
     setVisible,
     user,
+    pathname,
   ]);
 
   const setPrivate = async () => {

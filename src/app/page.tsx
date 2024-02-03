@@ -3,7 +3,7 @@
 import React from "react";
 import Head from "next/head";
 import Link from "next/link";
-import { Button, Group, Stack, Text } from "@mantine/core";
+import { Button, Group, Stack } from "@mantine/core";
 import styled from "styled-components";
 import { FaChevronRight } from "react-icons/fa";
 import { Typewriter } from "react-simple-typewriter";
@@ -33,7 +33,7 @@ const StyledHeroSectionBody = styled.div`
   overflow: hidden;
   backdrop-filter: blur(1px);
   -webkit-backdrop-filter: blur(1px);
-  height: calc(100vh - 111px);
+  height: calc(100vh - 112px);
   text-align: center;
 
   @media only screen and (max-width: 1200px) {
@@ -41,13 +41,13 @@ const StyledHeroSectionBody = styled.div`
   }
 `;
 
-const StyledHighlightedText = styled(Text)`
+const StyledHighlightedText = styled.span`
   font-size: 40px;
   font-weight: 800;
   display: inline;
 
-  background-color: gray;
-  background-image: linear-gradient(45deg, gray, slategray);
+  background-color: #252525;
+  background-image: linear-gradient(5deg, #545050, #fff7f8);
   background-size: 100%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -138,7 +138,7 @@ const HeroSection = () => (
   </StyledHeroSection>
 );
 
-export const HomePage = () => {
+export default function Page() {
   return (
     <Layout>
       <Head>
@@ -147,6 +147,4 @@ export const HomePage = () => {
       <HeroSection />
     </Layout>
   );
-};
-
-export default HomePage;
+}

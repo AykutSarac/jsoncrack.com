@@ -14,7 +14,7 @@ import useJson from "src/store/useJson";
 
 const Panes = dynamic(() => import("src/containers/Editor/Panes"));
 
-export const StyledPageWrapper = styled.div`
+const StyledPageWrapper = styled.div`
   height: calc(100vh - 27px);
   width: 100%;
 
@@ -23,7 +23,7 @@ export const StyledPageWrapper = styled.div`
   }
 `;
 
-export const StyledEditorWrapper = styled.div`
+const StyledEditorWrapper = styled.div`
   width: 100%;
   height: 100%;
   overflow: hidden;

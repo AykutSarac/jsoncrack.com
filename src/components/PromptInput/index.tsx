@@ -1,5 +1,14 @@
 import React from "react";
-import { ActionIcon, TextInput, Loader, Tooltip, HoverCard, Flex, Badge } from "@mantine/core";
+import {
+  ActionIcon,
+  TextInput,
+  Loader,
+  Tooltip,
+  HoverCard,
+  Flex,
+  Badge,
+  Text,
+} from "@mantine/core";
 import { getHotkeyHandler } from "@mantine/hooks";
 import styled from "styled-components";
 import { FunctionsHttpError } from "@supabase/supabase-js";
@@ -39,7 +48,7 @@ const StyledPromptInput = styled(TextInput)`
   }
 
   ::placeholder {
-    color: ${({ theme }) => theme.PROMPT_PLACEHOLDER_COLOR};
+    color: ${({ theme }) => theme.PROMPT_PLACEHOLDER_COLOR} !important;
   }
 `;
 

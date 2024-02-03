@@ -70,19 +70,17 @@ export const OptionsMenu = () => {
         >
           <Text size="xs">Dark Mode</Text>
         </Menu.Item>
-        {premium && (
-          <Menu.Item
-            leftSection={<BsCheck2 opacity={aiEnabled ? 100 : 0} />}
-            onClick={() => toggleAI(!aiEnabled)}
-          >
-            <Text size="xs">
-              JSON Crack AI{" "}
-              <Badge ml={2} size="xs" variant="light" radius={2}>
-                Alpha
-              </Badge>
-            </Text>
-          </Menu.Item>
-        )}
+        <Menu.Item
+          leftSection={<BsCheck2 opacity={aiEnabled ? 100 : 0} />}
+          onClick={() => toggleAI(!aiEnabled)}
+        >
+          <Flex align="center" gap={2}>
+            <Text size="xs">JSON Crack AI</Text>
+            <Badge ml={2} size="xs" variant="light" radius={2}>
+              Alpha
+            </Badge>
+          </Flex>
+        </Menu.Item>
       </Menu.Dropdown>
     </Menu>
   );

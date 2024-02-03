@@ -14,6 +14,9 @@ const config = {
   compiler: {
     styledComponents: true,
   },
+  experimental: {
+    optimizePackageImports: ["@mantine/core", "@mantine/hooks"],
+  },
   webpack: config => {
     config.resolve.fallback = { fs: false };
     config.output.webassemblyModuleFilename = "static/wasm/[modulehash].wasm";

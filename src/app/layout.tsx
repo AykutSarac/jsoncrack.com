@@ -1,5 +1,7 @@
 import React from "react";
 import { Metadata } from "next";
+import { ColorSchemeScript } from "@mantine/core";
+import "@mantine/core/styles.css";
 import StyledComponentsRegistry from "src/lib/registry";
 import CustomAppInit from "./CustomAppInit";
 
@@ -37,6 +39,9 @@ export const viewport = {
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head>
+        <ColorSchemeScript />
+      </head>
       <body>
         <StyledComponentsRegistry>
           <CustomAppInit>{children}</CustomAppInit>

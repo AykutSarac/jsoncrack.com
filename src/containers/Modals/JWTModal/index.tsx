@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal, Button, ModalProps, Textarea, Divider } from "@mantine/core";
+import { Modal, Button, ModalProps, Textarea, Divider, Group } from "@mantine/core";
 import { decode } from "jsonwebtoken";
 import useFile from "src/store/useFile";
 
@@ -23,13 +23,13 @@ export const JWTModal: React.FC<ModalProps> = ({ opened, onClose }) => {
         value={token}
         onChange={e => setToken(e.target.value)}
         autosize
-        minRows={4}
+        minRows={5}
         data-autofocus
       />
-      <Divider my="xs" />
-      <Button onClick={resolve} fullWidth>
-        Resolve
-      </Button>
+      <Divider my="md" />
+      <Group justify="right">
+        <Button onClick={resolve}>Resolve</Button>
+      </Group>
     </Modal>
   );
 };
