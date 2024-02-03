@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <p align="center">
   <a href="https://github.com/AykutSarac/jsoncrack.com">
-   <img src="./public/assets/jsoncrack.png" alt="Logo">
+   <img src="./public/assets/jsoncrack.png" height="200" alt="Logo">
   </a>
 
   <h3 align="center">JSON Crack (formerly JSON Visio)</h3>
