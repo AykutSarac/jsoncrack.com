@@ -95,7 +95,7 @@ export const PromptInput = () => {
     }
   };
 
-  if (!promptVisible || !premium) return null;
+  if (!promptVisible) return null;
 
   return (
     <Tooltip
