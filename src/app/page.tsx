@@ -84,67 +84,63 @@ const StyledHeroTitle = styled.h1`
   }
 `;
 
-const HeroSection = () => (
-  <StyledHeroSection id="hero-section">
-    <StyledHeroSectionBody>
-      <Stack w="100%" mx="auto" align="center">
-        <StyledHeroTitle>
-          Understand your{" "}
-          <StyledHighlightedText>
-            <Typewriter
-              words={["JSON", "YAML", "XML", "TOML", "CSV"]}
-              typeSpeed={100}
-              deleteSpeed={60}
-              delaySpeed={2000}
-              loop
-            />
-          </StyledHighlightedText>
-          <br />
-          better by visualizing
-        </StyledHeroTitle>
-
-        <StyledHeroText>
-          Visualize, analyze, and manipulate data with ease, a versatile and powerful tool for data
-          representation and exploration.
-        </StyledHeroText>
-        <Group gap="xl">
-          <Button
-            color="gray.2"
-            c="indigo"
-            component={Link}
-            href="/editor"
-            fw="bold"
-            rightSection={<FaChevronRight />}
-            size="xl"
-            visibleFrom="md"
-          >
-            GO TO EDITOR
-          </Button>
-          <Button
-            color="gray.2"
-            c="indigo"
-            component={Link}
-            href="/editor"
-            fw="bold"
-            rightSection={<FaChevronRight />}
-            size="md"
-            hiddenFrom="md"
-          >
-            GO TO EDITOR
-          </Button>
-        </Group>
-      </Stack>
-    </StyledHeroSectionBody>
-  </StyledHeroSection>
-);
-
 export default function Page() {
   return (
     <Layout>
       <Head>
         <title>JSON Crack | Visualize Instantly Into Graphs</title>
       </Head>
-      <HeroSection />
+      <StyledHeroSection id="hero-section">
+        <StyledHeroSectionBody>
+          <Stack w="100%" mx="auto" align="center">
+            <StyledHeroTitle>
+              Understand your{" "}
+              <StyledHighlightedText>
+                <Typewriter
+                  words={["JSON", "YAML", "XML", "TOML", "CSV"]}
+                  typeSpeed={100}
+                  deleteSpeed={60}
+                  delaySpeed={2000}
+                  loop
+                />
+              </StyledHighlightedText>
+              <br />
+              better by visualizing
+            </StyledHeroTitle>
+
+            <StyledHeroText>
+              Visualize, analyze, and manipulate data with ease, a versatile and powerful tool for
+              data representation and exploration.
+            </StyledHeroText>
+            <Group gap="xl">
+              <Button
+                color="gray.2"
+                c="indigo"
+                component={Link}
+                href="/editor"
+                fw="bold"
+                rightSection={<FaChevronRight />}
+                size="xl"
+                visibleFrom="md"
+              >
+                GO TO EDITOR
+              </Button>
+              <Button
+                color="gray.2"
+                c="indigo"
+                component={Link}
+                href="/editor"
+                fw="bold"
+                rightSection={<FaChevronRight />}
+                size="md"
+                hiddenFrom="md"
+              >
+                GO TO EDITOR
+              </Button>
+            </Group>
+          </Stack>
+        </StyledHeroSectionBody>
+      </StyledHeroSection>
     </Layout>
   );
 }
