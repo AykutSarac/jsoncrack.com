@@ -3,9 +3,11 @@ import { Menu, Text, Flex, Badge } from "@mantine/core";
 import { BsCheck2 } from "react-icons/bs";
 import { MdSettings } from "react-icons/md";
 import useConfig from "src/store/useConfig";
+import useUser from "src/store/useUser";
 import * as Styles from "./styles";
 
 export const OptionsMenu = () => {
+  const premium = useUser(state => state.premium);
   const toggleGestures = useConfig(state => state.toggleGestures);
   const toggleChildrenCount = useConfig(state => state.toggleChildrenCount);
   const toggleDarkMode = useConfig(state => state.toggleDarkMode);

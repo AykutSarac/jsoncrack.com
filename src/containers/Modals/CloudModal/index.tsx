@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   Modal,
   Text,
@@ -93,11 +93,12 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const setHasChanges = useFile(state => state.setHasChanges);
   const getFormat = useFile(state => state.getFormat);
   const [currentFile, setCurrentFile] = React.useState<File | null>(null);
-  const { isReady, query, replace } = useRouter();
-
-  const { data, isLoading, refetch } = useQuery(["allJson", query], () => documentSvc.getAll(), {
-    enabled: isReady && opened,
-  });
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const { data, isLoading, refetch } = useQuery(["allJson", searchParams], () =>
+    documentSvc.getAll()
+  );
 
   const isCreateDisabled = React.useMemo(() => {
     if (!data?.length) return false;
@@ -116,7 +117,7 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
 
       toast.success("Document saved to cloud", { id: "fileSave" });
       setHasChanges(false);
-      replace({ query: { json: data } });
+      router.push(`${pathname}?json=${data}`);
       onClose();
     } catch (error: any) {
       toast.error("Failed to save document!", { id: "fileSave" });

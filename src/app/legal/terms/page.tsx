@@ -3,7 +3,7 @@ import Head from "next/head";
 import { Anchor, Container, Paper, Stack, Text, Title } from "@mantine/core";
 import Layout from "src/layout/Layout";
 
-const Terms = () => {
+export default function Page() {
   return (
     <Layout>
       <Head>
@@ -118,6 +118,4 @@ const Terms = () => {
       </Container>
     </Layout>
   );
-};
-
-export default Terms;
+}

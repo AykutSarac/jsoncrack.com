@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Head from "next/head";
 import Link from "next/link";
@@ -18,7 +20,7 @@ import { AiOutlineGithub, AiOutlineGoogle } from "react-icons/ai";
 import Layout from "src/layout/Layout";
 import { supabase } from "src/lib/api/supabase";
 
-const SignUp = () => {
+export default function Page() {
   const [loading, setLoading] = React.useState(false);
   const [done, setDone] = React.useState(false);
   const [userData, setUserData] = React.useState({
@@ -171,6 +173,4 @@ const SignUp = () => {
       )}
     </Layout>
   );
-};
-
-export default SignUp;
+}

@@ -1,10 +1,12 @@
+"use client";
+
 import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { Button, Stack, Text, Title } from "@mantine/core";
 import Layout from "src/layout/Layout";
 
-const NotFound: React.FC = () => {
+export default function NotFound() {
   return (
     <Layout>
       <Head>
@@ -27,6 +29,4 @@ const NotFound: React.FC = () => {
       </Stack>
     </Layout>
   );
-};
-
-export default NotFound;
+}

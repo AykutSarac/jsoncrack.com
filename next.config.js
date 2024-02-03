@@ -14,11 +14,13 @@ const config = {
   compiler: {
     styledComponents: true,
   },
+  experimental: {
+    optimizePackageImports: ["@mantine/core", "@mantine/hooks"],
+  },
   webpack: config => {
     config.resolve.fallback = { fs: false };
     config.output.webassemblyModuleFilename = "static/wasm/[modulehash].wasm";
-    config.experiments = { asyncWebAssembly: true };
-
+    config.experiments = { asyncWebAssembly: true, layers: true };
     return config;
   },
 };

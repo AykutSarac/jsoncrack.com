@@ -9,7 +9,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "tsc --project tsconfig.json && eslint src && prettier --check src",
+    "lint": "tsc --project tsconfig.json && eslint src && prettier --check src && next lint",
     "lint:fix": "eslint --fix src & prettier --write src",
     "analyze": "ANALYZE=true npm run build"
   },
@@ -29,14 +29,16 @@
     "dayjs": "^1.11.10",
     "gofmt.js": "^0.0.2",
     "html-to-image": "^1.11.11",
+    "impl": "^1.3.0",
     "jq-in-the-browser": "^0.7.2",
     "jq-web": "^0.5.1",
     "js-yaml": "^4.1.0",
     "json-2-csv": "^5.0.1",
     "json_typegen_wasm": "^0.7.0",
-    "jsonc-parser": "^3.2.0",
+    "jsonc-parser": "^3.2.1",
     "jsonwebtoken": "^9.0.2",
     "jxon": "^2.0.0-beta.5",
+    "lodash": "^4.17.21",
     "lodash.debounce": "^4.0.8",
     "lodash.get": "^4.4.2",
     "lodash.set": "^4.3.2",
@@ -59,7 +61,7 @@
     "styled-components": "^6.1.8",
     "toml": "^3.0.0",
     "use-long-press": "^3.2.0",
-    "zustand": "^4.5.0"
+    "zustand": "^4.4.7"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^14.1.0",
@@ -74,14 +76,14 @@
     "@types/lodash.update": "^4.10.9",
     "@types/node": "^20.11.16",
     "@types/pako": "^2.0.3",
-    "@types/react": "18.2.51",
+    "@types/react": "18.2.52",
     "@types/react-dom": "^18.2.18",
     "eslint": "8.56.0",
     "eslint-config-next": "14.1.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-unused-imports": "^3.0.0",
-    "prettier": "^3.2.4",
+    "prettier": "^3.2.2",
     "ts-node": "^10.9.2",
     "typescript": "5.3.3"
   }

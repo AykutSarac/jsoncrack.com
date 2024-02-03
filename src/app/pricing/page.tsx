@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Head from "next/head";
 import {
@@ -27,7 +29,7 @@ const purchaseLinks = {
     "https://herowand.lemonsqueezy.com/checkout/buy/577928ea-fb09-4076-9307-3e5931b35ad0?media=0&enabled=67805%2C82417",
 };
 
-const Pricing = () => {
+export default function Page() {
   const email = useUser(state => state.user?.email);
   const [isMonthly, setIsMonthly] = React.useState(true);
 
@@ -294,6 +296,4 @@ const Pricing = () => {
       </Text>
     </Layout>
   );
-};
-
-export default Pricing;
+}

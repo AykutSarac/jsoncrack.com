@@ -1,24 +1,18 @@
 import React from "react";
-import Head from "next/head";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import {
-  TextInput,
-  PasswordInput,
-  Paper,
-  PaperProps,
+  Anchor,
   Button,
   Divider,
-  Anchor,
+  Paper,
+  PaperProps,
+  PasswordInput,
   Stack,
-  Center,
+  TextInput,
 } from "@mantine/core";
-import { useSession } from "@supabase/auth-helpers-react";
 import { toast } from "react-hot-toast";
 import { AiOutlineGithub, AiOutlineGoogle } from "react-icons/ai";
-import Layout from "src/layout/Layout";
 import { supabase } from "src/lib/api/supabase";
-import { isIframe } from "src/lib/utils/widget";
 import useUser from "src/store/useUser";
 
 export function AuthenticationForm(props: PaperProps) {
@@ -116,32 +110,3 @@ export function AuthenticationForm(props: PaperProps) {
     </Paper>
   );
 }
-
-const SignIn = () => {
-  const { isReady, push, query } = useRouter();
-  const session = useSession();
-  const isPasswordReset = query?.type === "recovery" && !query?.error;
-
-  React.useEffect(() => {
-    if (isIframe()) push("/");
-    if (isReady && session && !isPasswordReset) push("/editor");
-  }, [isReady, session, push, isPasswordReset]);
-
-  return (
-    <Layout>
-      <Head>
-        <title>Sign In - JSON Crack</title>
-      </Head>
-      <Paper mt={50} mx="auto" maw={400} p="lg" withBorder>
-        <AuthenticationForm />
-      </Paper>
-      <Center my="xl">
-        <Anchor component={Link} prefetch={false} href="/sign-up" c="dark" fw="bold">
-          Don&apos;t have an account?
-        </Anchor>
-      </Center>
-    </Layout>
-  );
-};
-
-export default SignIn;

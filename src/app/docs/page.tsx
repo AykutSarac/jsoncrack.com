@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Head from "next/head";
 import { Group, Paper, Stack, Text, Title } from "@mantine/core";
@@ -34,14 +36,14 @@ const StyledHighlight = styled.span<{ $link?: boolean; $alert?: boolean }>`
   margin: ${({ $alert }) => ($alert ? "8px 0" : "1px")};
 `;
 
-const Docs = () => {
+export default function Page() {
   return (
     <Layout>
       <Head>
         <title>Documentation - JSON Crack</title>
         <meta name="description" content="Embedding JSON Crack tutorial into your websites." />
       </Head>
-      <Stack mx="auto" maw="75%">
+      <Stack mx="auto" maw="85%">
         <Group mb="lg" mt={40}>
           <Title order={1} c="dark">
             Documentation
@@ -164,6 +166,4 @@ const Docs = () => {
       </Stack>
     </Layout>
   );
-};
-
-export default Docs;
+}

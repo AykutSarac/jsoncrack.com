@@ -2,12 +2,12 @@ import React from "react";
 import {
   ActionIcon,
   TextInput,
-  Text,
   Loader,
   Tooltip,
   HoverCard,
   Flex,
   Badge,
+  Text,
 } from "@mantine/core";
 import { getHotkeyHandler } from "@mantine/hooks";
 import styled from "styled-components";

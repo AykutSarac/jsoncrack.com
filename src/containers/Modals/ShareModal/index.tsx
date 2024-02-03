@@ -1,5 +1,5 @@
 import React from "react";
-import { useRouter } from "next/router";
+import { useSearchParams } from "next/navigation";
 import {
   TextInput,
   Stack,
@@ -15,8 +15,10 @@ import { FiExternalLink } from "react-icons/fi";
 import { MdCheck, MdCopyAll } from "react-icons/md";
 
 export const ShareModal: React.FC<ModalProps> = ({ opened, onClose }) => {
-  const { query } = useRouter();
-  const shareURL = `https://jsoncrack.com/editor?json=${query.json}`;
+  // const { query } = useRouter();
+  const searchParams = useSearchParams();
+  const queryJSON = searchParams?.get("json");
+  const shareURL = `https://jsoncrack.com/editor?json=${queryJSON}`;
 
   return (
     <Modal title="Create a Share Link" opened={opened} onClose={onClose} centered>
