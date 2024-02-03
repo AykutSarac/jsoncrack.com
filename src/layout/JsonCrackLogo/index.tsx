@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import { monaSans } from "src/constants/fonts";
+import { isIframe } from "src/lib/utils/widget";
 
 const StyledTitle = styled.div<{ fontSize: string }>`
   font-weight: 800;
@@ -21,7 +22,7 @@ interface LogoProps extends React.ComponentPropsWithoutRef<"a"> {
 export const JSONCrackLogo: React.FC<LogoProps> = ({ fontSize = "1.2rem", ...props }) => {
   return (
     <StyledTitle as={Link} fontSize={fontSize} href="/" prefetch={false} {...props}>
-      JSON CRACK
+      {isIframe() ? "JC" : "JSON CRACK"}
     </StyledTitle>
   );
 };
