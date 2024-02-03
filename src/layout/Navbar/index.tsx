@@ -271,7 +271,7 @@ export const Navbar = () => {
         </Right>
       </StyledNavbar>
       <Link href="/pricing">
-        <Alert color="red" variant="filled" radius={0} fw="bold">
+        <Alert color="red" variant="filled" radius={0} fw="bold" h={56}>
           Unlock premium features now with ~30% discount on the Premium plan!
         </Alert>
       </Link>
