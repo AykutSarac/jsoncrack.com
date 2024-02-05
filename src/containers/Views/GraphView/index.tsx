@@ -96,14 +96,16 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
   const direction = useGraph(state => state.direction);
   const nodes = useGraph(state => state.nodes);
   const edges = useGraph(state => state.edges);
+  const viewPort = useGraph(state => state.viewPort);
+  const setViewPort = useGraph(state => state.setViewPort);
 
   const [paneWidth, setPaneWidth] = React.useState(2000);
   const [paneHeight, setPaneHeight] = React.useState(2000);
 
   const onLayoutChange = React.useCallback(
     (layout: ElkRoot) => {
-      if (layout.width && layout.height) {
-        const areaSize = layout.width * layout.height;
+            if (layout.width && layout.height) {
+                const areaSize = layout.width * layout.height;
         const changeRatio = Math.abs((areaSize * 100) / (paneWidth * paneHeight) - 100);
 
         setPaneWidth(layout.width + 50);
@@ -137,12 +139,15 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
       layoutOptions={layoutOptions}
       key={direction}
       pannable={false}
-      zoomable={false}
+      zoomable={true}
       animated={false}
       readonly={true}
       dragEdge={null}
       dragNode={null}
       fit={true}
+      onZoomChange={() => {
+        setViewPort(viewPort!);
+      }}
     />
   );
 };
@@ -210,7 +215,7 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
           treatTwoFingerTrackPadGesturesLikeTouch={gesturesEnabled}
           pollForElementResizing
           className="jsoncrack-space"
-        >
+                  >
           <GraphCanvas isWidget={isWidget} />
         </Space>
       </StyledEditorWrapper>
