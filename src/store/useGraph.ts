@@ -194,14 +194,17 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
   setZoomFactor: zoomFactor => {
     const viewPort = get().viewPort;
     viewPort?.camera?.recenter(viewPort.centerX, viewPort.centerY, zoomFactor);
+    set({ viewPort });
   },
   zoomIn: () => {
     const viewPort = get().viewPort;
     viewPort?.camera?.recenter(viewPort.centerX, viewPort.centerY, viewPort.zoomFactor + 0.1);
+    set({viewPort})
   },
   zoomOut: () => {
     const viewPort = get().viewPort;
     viewPort?.camera?.recenter(viewPort.centerX, viewPort.centerY, viewPort.zoomFactor - 0.1);
+    set({ viewPort });
   },
   centerView: () => {
     const viewPort = get().viewPort;
@@ -211,6 +214,7 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
     if (canvas) {
       viewPort?.camera?.centerFitElementIntoView(canvas);
     }
+    set({ viewPort });
   },
   toggleFullscreen: fullscreen => set({ fullscreen }),
   setViewPort: viewPort => set({ viewPort }),
