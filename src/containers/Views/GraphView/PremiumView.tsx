@@ -12,7 +12,7 @@ const StyledPremiumView = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
-  background: #020015;
+  background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
 
   img {
     filter: drop-shadow(2px 2px 1px black);
@@ -163,6 +163,7 @@ export const PremiumView = () => (
       </StyledInfo>
 
       <List
+        c="dimmed"
         mt="lg"
         spacing="xs"
         size="md"
