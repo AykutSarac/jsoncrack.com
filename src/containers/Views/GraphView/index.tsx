@@ -1,6 +1,7 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import styled from "styled-components";
+import debounce from "lodash.debounce";
 import { toast } from "react-hot-toast";
 import { Space } from "react-zoomable-ui";
 import { ElkRoot } from "reaflow/dist/layout/useLayout";
@@ -104,8 +105,8 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
 
   const onLayoutChange = React.useCallback(
     (layout: ElkRoot) => {
-            if (layout.width && layout.height) {
-                const areaSize = layout.width * layout.height;
+      if (layout.width && layout.height) {
+        const areaSize = layout.width * layout.height;
         const changeRatio = Math.abs((areaSize * 100) / (paneWidth * paneHeight) - 100);
 
         setPaneWidth(layout.width + 50);
@@ -139,15 +140,12 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
       layoutOptions={layoutOptions}
       key={direction}
       pannable={false}
-      zoomable={true}
+      zoomable={false}
       animated={false}
       readonly={true}
       dragEdge={null}
       dragNode={null}
       fit={true}
-      onZoomChange={() => {
-        setViewPort(viewPort!);
-      }}
     />
   );
 };
@@ -161,6 +159,7 @@ function getViewType(nodes: NodeData[]) {
 
 export const Graph = ({ isWidget = false }: GraphProps) => {
   const setViewPort = useGraph(state => state.setViewPort);
+  const viewPort = useGraph(state => state.viewPort);
   const loading = useGraph(state => state.loading);
   const isPremium = useUser(state => state.premium);
   const viewType = useGraph(state => getViewType(state.nodes));
@@ -197,6 +196,9 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
   if (viewType === "premium" && !isWidget) {
     if (!isPremium) return <PremiumView />;
   }
+  const debouncedOnZoomChangeHandler = debounce(() => {
+    setViewPort(viewPort!);
+  }, 300);
 
   return (
     <>
@@ -210,12 +212,13 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
         {...bindLongPress()}
       >
         <Space
+          onUpdated={() => debouncedOnZoomChangeHandler()}
           onCreate={setViewPort}
           onContextMenu={e => e.preventDefault()}
           treatTwoFingerTrackPadGesturesLikeTouch={gesturesEnabled}
           pollForElementResizing
           className="jsoncrack-space"
-                  >
+        >
           <GraphCanvas isWidget={isWidget} />
         </Space>
       </StyledEditorWrapper>
