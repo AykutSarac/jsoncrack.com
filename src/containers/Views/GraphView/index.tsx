@@ -97,9 +97,6 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
   const direction = useGraph(state => state.direction);
   const nodes = useGraph(state => state.nodes);
   const edges = useGraph(state => state.edges);
-  const viewPort = useGraph(state => state.viewPort);
-  const setViewPort = useGraph(state => state.setViewPort);
-
   const [paneWidth, setPaneWidth] = React.useState(2000);
   const [paneHeight, setPaneHeight] = React.useState(2000);
 
