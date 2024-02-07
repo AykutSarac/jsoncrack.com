@@ -1,6 +1,7 @@
 import React from "react";
 import dynamic from "next/dynamic";
 import styled from "styled-components";
+import debounce from "lodash.debounce";
 import { toast } from "react-hot-toast";
 import { Space } from "react-zoomable-ui";
 import { ElkRoot } from "reaflow/dist/layout/useLayout";
@@ -96,7 +97,6 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
   const direction = useGraph(state => state.direction);
   const nodes = useGraph(state => state.nodes);
   const edges = useGraph(state => state.edges);
-
   const [paneWidth, setPaneWidth] = React.useState(2000);
   const [paneHeight, setPaneHeight] = React.useState(2000);
 
@@ -156,6 +156,7 @@ function getViewType(nodes: NodeData[]) {
 
 export const Graph = ({ isWidget = false }: GraphProps) => {
   const setViewPort = useGraph(state => state.setViewPort);
+  const viewPort = useGraph(state => state.viewPort);
   const loading = useGraph(state => state.loading);
   const isPremium = useUser(state => state.premium);
   const viewType = useGraph(state => getViewType(state.nodes));
@@ -192,6 +193,9 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
   if (viewType === "premium" && !isWidget) {
     if (!isPremium) return <PremiumView />;
   }
+  const debouncedOnZoomChangeHandler = debounce(() => {
+    setViewPort(viewPort!);
+  }, 300);
 
   return (
     <>
@@ -205,6 +209,7 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
         {...bindLongPress()}
       >
         <Space
+          onUpdated={() => debouncedOnZoomChangeHandler()}
           onCreate={setViewPort}
           onContextMenu={e => e.preventDefault()}
           treatTwoFingerTrackPadGesturesLikeTouch={gesturesEnabled}
