@@ -159,7 +159,7 @@ export const PremiumView = () => (
         <JSONCrackLogo fontSize="4rem" />
       </Title>
       <StyledInfo>
-        Upgrade JSON Crack to premium and explore full potantial of your data!
+        Upgrade JSON Crack to premium and explore the full potential of your data!
       </StyledInfo>
 
       <List
