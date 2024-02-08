@@ -21,6 +21,7 @@ export interface Graph {
   collapsedParents: string[];
   selectedNode: NodeData | null;
   path: string;
+  searchInputValue: string;
 }
 
 const initialStates: Graph = {
@@ -37,6 +38,7 @@ const initialStates: Graph = {
   collapsedParents: [],
   selectedNode: null,
   path: "",
+  searchInputValue:"",
 };
 
 interface GraphActions {
@@ -59,6 +61,7 @@ interface GraphActions {
   centerView: () => void;
   clearGraph: () => void;
   setZoomFactor: (zoomFactor: number) => void;
+  setSearchInputValue: (searchInputValue: string) => void;
 }
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
@@ -214,6 +217,7 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
   },
   toggleFullscreen: fullscreen => set({ fullscreen }),
   setViewPort: viewPort => set({ viewPort }),
+  setSearchInputValue: searchInputValue => set({ searchInputValue }),
 }));
 
 export default useGraph;

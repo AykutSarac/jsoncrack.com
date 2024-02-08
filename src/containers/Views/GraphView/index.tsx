@@ -8,6 +8,7 @@ import { ElkRoot } from "reaflow/dist/layout/useLayout";
 import { useLongPress } from "use-long-press";
 import { CustomNode } from "src/containers/Views/GraphView/CustomNode";
 import { ViewMode } from "src/enums/viewMode.enum";
+import { useFocusNode } from "src/hooks/useFocusNode";
 import useToggleHide from "src/hooks/useToggleHide";
 import { Loading } from "src/layout/Loading";
 import useConfig from "src/store/useConfig";
@@ -163,7 +164,8 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
   const gesturesEnabled = useConfig(state => state.gesturesEnabled);
   const rulersEnabled = useConfig(state => state.rulersEnabled);
   const setViewMode = useConfig(state => state.setViewMode);
-
+  const searchInputValue = useGraph(state => state.searchInputValue);
+  const [, setValue] = useFocusNode();
   const callback = React.useCallback(() => {
     const canvas = document.querySelector(".jsoncrack-canvas") as HTMLDivElement | null;
     canvas?.classList.add("dragging");
@@ -209,7 +211,10 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
         {...bindLongPress()}
       >
         <Space
-          onUpdated={() => debouncedOnZoomChangeHandler()}
+          onUpdated={() => {
+            setValue(searchInputValue);
+            debouncedOnZoomChangeHandler();
+          }}
           onCreate={setViewPort}
           onContextMenu={e => e.preventDefault()}
           treatTwoFingerTrackPadGesturesLikeTouch={gesturesEnabled}
