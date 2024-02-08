@@ -38,7 +38,7 @@ const initialStates: Graph = {
   collapsedParents: [],
   selectedNode: null,
   path: "",
-  searchInputValue:"",
+  searchInputValue: "",
 };
 
 interface GraphActions {

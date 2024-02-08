@@ -36,7 +36,7 @@ export const useFocusNode = () => {
       setSelectedNode(0);
       setNodeCount(0);
     }
-  }, [selectedNode, debouncedValue, value, viewPort, matchedNodes]);
+  }, [selectedNode, debouncedValue, value, viewPort, matchedNodes, matchedNode]);
 
   return [value, setValue, skip, nodeCount, selectedNode] as const;
 };
