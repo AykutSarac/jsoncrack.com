@@ -101,7 +101,7 @@ Here is what you need to be able to run JSON Crack.
 3. Install packages with yarn
 
    ```sh
-   pnpm
+   pnpm install
    ```
 
 4. Run the project
