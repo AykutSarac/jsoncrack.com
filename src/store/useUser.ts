@@ -30,14 +30,15 @@ const initialStates: UserStates = {
 const useUser = create<UserStates & UserActions>()(set => ({
   ...initialStates,
   setSession: async session => {
-    supabase.rpc("get_subscription_info").then(({ data }) => {
+    supabase.rpc("get_subscription_details").then(({ data }) => {
       if (data) {
         set({
           premium: data.premium,
-          organization: data.organization,
+          organization: data.orgPremium,
           premiumCancelled: !!data.cancelled,
-          orgAdmin: data.org_admin,
+          orgAdmin: data.orgAdmin,
         });
+
         ReactGA.set({ tier: data.premium ? "premium" : "free" });
       }
 
