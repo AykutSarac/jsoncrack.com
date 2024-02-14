@@ -57,7 +57,7 @@ function JsonCrack({
   return (
     <>
       <Head>
-        <title>JSON Crack | Visualize Instantly Into Graphs</title>
+        <title>JSON Crack | More Than a JSON Editor</title>
       </Head>
       <SessionContextProvider supabaseClient={supabase}>
         <MantineProvider theme={mantineTheme}>

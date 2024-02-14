@@ -11,7 +11,7 @@ import { ServerStyleSheet } from "styled-components";
 const metatags = Object.freeze({
   description:
     "JSON Crack Editor is a tool for visualizing into graphs, analyzing, editing, formatting, querying, transforming and validating JSON, CSV, YAML, XML, and more.",
-  title: "JSON Crack - Visualize Data to Graphs",
+  title: "JSON Crack | More Than A JSON Editor",
   image: "https://jsoncrack.com/assets/jsoncrack.png",
 });
 
