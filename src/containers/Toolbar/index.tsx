@@ -1,8 +1,10 @@
 import React from "react";
-import { Flex, Group, Select, Text } from "@mantine/core";
+import Link from "next/link";
+import { Badge, Flex, Group, Select, Text } from "@mantine/core";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import { AiFillGift } from "react-icons/ai";
+import { BsBoxArrowUpLeft } from "react-icons/bs";
 import { FiDownload } from "react-icons/fi";
 import { SearchInput } from "src/components/SearchInput";
 import { FileFormat } from "src/enums/file.enum";
@@ -73,11 +75,31 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
       <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
         {!premium && !isWidget && (
           <Styles.StyledToolElement onClick={() => setVisible("premium")(true)}>
-            <Text display="flex" c="teal" fz="xs" fw="bold" style={{ textAlign: "center", gap: 4 }}>
+            <Text display="flex" c="teal" fz="xs" fw={600} style={{ textAlign: "center", gap: 4 }}>
               <AiFillGift size="18" />
               Get Premium
             </Text>
           </Styles.StyledToolElement>
+        )}
+
+        {premium && !isWidget && (
+          <Link href="https://pro.jsoncrack.com" target="_blank" passHref>
+            <Styles.StyledToolElement>
+              <Text
+                display="flex"
+                c="teal"
+                fz="xs"
+                fw={600}
+                style={{ textAlign: "center", gap: 8, alignItems: "center" }}
+              >
+                <BsBoxArrowUpLeft />
+                You&apos;re invited to try the new editor!
+                <Badge size="xs" variant="light" color="teal">
+                  New
+                </Badge>
+              </Text>
+            </Styles.StyledToolElement>
+          </Link>
         )}
 
         <SearchInput />

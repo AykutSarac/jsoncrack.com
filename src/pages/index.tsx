@@ -137,6 +137,19 @@ const HeroSection = () => (
           >
             GO TO EDITOR
           </Button>
+          <Button
+            href="https://pro.jsoncrack.com"
+            target="_blank"
+            variant="outline"
+            color="yellow"
+            component={Link}
+            fw="bold"
+            size="xl"
+            visibleFrom="md"
+            prefetch={false}
+          >
+            GET PRO+
+          </Button>
         </Group>
       </Stack>
     </StyledHeroSectionBody>
