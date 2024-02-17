@@ -3,6 +3,7 @@ import { Modal, Stack, Text, ScrollArea, ModalProps, Button } from "@mantine/cor
 import { CodeHighlight } from "@mantine/code-highlight";
 import Editor from "@monaco-editor/react";
 import { VscLock } from "react-icons/vsc";
+import { gaEvent } from "src/lib/utils/gaEvent";
 import { isIframe } from "src/lib/utils/widget";
 import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
@@ -36,6 +37,7 @@ export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
     if (!isPremium) return;
     editContents(path!, value, () => {
       setEditMode(false);
+      gaEvent("input", "node contents update");
       onModalClose();
     });
   };

@@ -11,9 +11,9 @@ import {
   ColorInput,
 } from "@mantine/core";
 import { toBlob, toJpeg, toPng, toSvg } from "html-to-image";
-import ReactGA from "react-ga4";
 import toast from "react-hot-toast";
 import { FiCopy, FiDownload } from "react-icons/fi";
+import { gaEvent } from "src/lib/utils/gaEvent";
 
 enum Extensions {
   SVG = "svg",
@@ -90,11 +90,11 @@ export const DownloadModal: React.FC<ModalProps> = ({ opened, onClose }) => {
       ]);
 
       toast.success("Copied to clipboard");
+      gaEvent("click", "clipboard image");
     } catch (error) {
       toast.error("Failed to copy to clipboard");
     } finally {
       toast.dismiss("toastClipboard");
-      ReactGA.event({ action: "click_clipboard_image", category: "User" });
       onClose();
     }
   };
@@ -111,11 +111,11 @@ export const DownloadModal: React.FC<ModalProps> = ({ opened, onClose }) => {
       });
 
       downloadURI(dataURI, `${fileDetails.filename}.${extension}`);
+      gaEvent("download", "download graph image", extension);
     } catch (error) {
       toast.error("Failed to download image!");
     } finally {
       toast.dismiss("toastDownload");
-      ReactGA.event({ action: "click_download_image", category: "User" });
       onClose();
     }
   };

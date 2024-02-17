@@ -1,12 +1,12 @@
 import React from "react";
 import { Menu, Flex, Text, SegmentedControl } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
-import ReactGA from "react-ga4";
 import toast from "react-hot-toast";
 import { CgChevronDown } from "react-icons/cg";
 import { VscExpandAll, VscCollapseAll, VscTarget } from "react-icons/vsc";
 import { ViewMode } from "src/enums/viewMode.enum";
 import useToggleHide from "src/hooks/useToggleHide";
+import { gaEvent } from "src/lib/utils/gaEvent";
 import { getNextDirection } from "src/lib/utils/graph/getNextDirection";
 import useConfig from "src/store/useConfig";
 import useGraph from "src/store/useGraph";
@@ -65,7 +65,7 @@ export const ViewMenu = () => {
   return (
     <Menu shadow="md" closeOnItemClick={false} withArrow>
       <Menu.Target>
-        <Styles.StyledToolElement>
+        <Styles.StyledToolElement onClick={() => gaEvent("click", "view menu")}>
           <Flex align="center" gap={3}>
             View <CgChevronDown />
           </Flex>
@@ -88,14 +88,7 @@ export const ViewMenu = () => {
             <Menu.Item
               mt="xs"
               fz={12}
-              onClick={() => {
-                toggleDirection();
-                ReactGA.event({
-                  action: "toggle_layout_direction",
-                  category: "User",
-                  label: "Tools",
-                });
-              }}
+              onClick={toggleDirection}
               leftSection={<Styles.StyledFlowIcon rotate={rotateLayout(direction || "RIGHT")} />}
               rightSection={
                 <Text ml="md" fz={10} c="dimmed">
@@ -107,14 +100,7 @@ export const ViewMenu = () => {
             </Menu.Item>
             <Menu.Item
               fz={12}
-              onClick={() => {
-                toggleExpandCollapseGraph();
-                ReactGA.event({
-                  action: "toggle_collapse_nodes",
-                  category: "User",
-                  label: "Tools",
-                });
-              }}
+              onClick={toggleExpandCollapseGraph}
               leftSection={graphCollapsed ? <VscExpandAll /> : <VscCollapseAll />}
               rightSection={
                 <Text ml="md" fz={10} c="dimmed">
