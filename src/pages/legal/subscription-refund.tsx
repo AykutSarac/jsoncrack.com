@@ -35,9 +35,7 @@ const SubscriptionRefund = () => {
               To cancel your subscription, follow these steps:
               <List type="ordered" my="lg">
                 <List.Item>Log in to your account.</List.Item>
-                <List.Item>
-                  Click on your account name located at the bottom left of the editor.
-                </List.Item>
+                <List.Item>Click on the account icon at the top right of the editor.</List.Item>
                 <List.Item>Select the &quot;Unsubscribe&quot; option.</List.Item>
               </List>
               Please note that subscription cancellations made after the initial 3-day period are
