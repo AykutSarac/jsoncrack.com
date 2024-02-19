@@ -4,7 +4,7 @@ WORKDIR /src
 
 # Cache dependencies first
 COPY package.json pnpm-lock.yaml ./
-RUN pnpm install
+RUN corepack enable; pnpm install
 
 # Copy other files and build
 COPY . /src/

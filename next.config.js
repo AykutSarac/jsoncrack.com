@@ -1,5 +1,4 @@
 const million = require("million/compiler");
-const { withSentryConfig } = require("@sentry/nextjs");
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
@@ -25,22 +24,4 @@ const config = {
 
 const bundleAnalyzerConfig = withBundleAnalyzer(config);
 
-const sentryConfig = withSentryConfig(
-  config,
-  {
-    silent: true,
-    org: "aykut-sarac",
-    project: "json-crack",
-  },
-  {
-    widenClientFileUpload: true,
-    hideSourceMaps: true,
-    disableLogger: true,
-    disableServerWebpackPlugin: true,
-  }
-);
-
-module.exports = million.next(
-  process.env.ANALYZE === "true" ? bundleAnalyzerConfig : sentryConfig,
-  { auto: true }
-);
+module.exports = million.next(bundleAnalyzerConfig, { auto: true });
