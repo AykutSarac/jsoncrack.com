@@ -17,7 +17,7 @@ import useGraph from "src/store/useGraph";
 type Options = {
   theme: "light" | "dark";
   direction: CanvasDirection;
-  viewMode: (typeof ViewMode)[keyof typeof ViewMode];
+  viewMode: ViewMode.Graph | ViewMode.Tree;
 };
 interface EmbedMessage {
   data: {
