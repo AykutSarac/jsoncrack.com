@@ -40,11 +40,11 @@ export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           <Title order={3}>JSON Crack Plus</Title>
           <Button
             component="a"
-            href="/pricing"
+            href="https://pro.jsoncrack.com/pricing"
+            target="_blank"
             variant="filled"
             color="teal"
             size="md"
-            target="_blank"
           >
             Upgrade plan
           </Button>

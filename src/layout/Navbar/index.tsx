@@ -59,8 +59,9 @@ export const Navbar = () => {
           <JSONCrackLogo />
           <Button
             ml="lg"
-            component={Link}
-            href="/pricing"
+            component="a"
+            href="https://pro.jsoncrack.com/pricing"
+            target="_blank"
             variant="subtle"
             color="black"
             radius="md"
@@ -176,8 +177,9 @@ export const Navbar = () => {
               >
                 <Flex pt="lg" direction="column" align="center" justify="center" gap="lg">
                   <Button
-                    component={Link}
-                    href="/pricing"
+                    component="a"
+                    href="https://pro.jsoncrack.com/pricing"
+                    target="_blank"
                     variant="transparent"
                     color="black"
                     radius="md"
@@ -270,7 +272,7 @@ export const Navbar = () => {
           )}
         </Right>
       </StyledNavbar>
-      <Link href="/pricing">
+      <Link href="https://pro.jsoncrack.com/pricing" target="_blank">
         <Alert color="red" variant="filled" radius={0} fw="bold" h={56} visibleFrom="xs">
           Unlock premium features now with ~30% discount on the Premium plan!
         </Alert>

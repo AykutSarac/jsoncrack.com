@@ -187,7 +187,7 @@ export const PremiumView = () => (
         fw="bolder"
         variant="gradient"
         gradient={{ from: "blue", to: "teal" }}
-        href="/pricing"
+        href="https://pro.jsoncrack.com/pricing"
         target="_blank"
       >
         UPGRADE TO PREMIUM
