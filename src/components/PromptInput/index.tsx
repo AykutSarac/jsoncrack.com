@@ -82,7 +82,7 @@ export const PromptInput = () => {
 
       if (match && match[1]) {
         const extractedString = match[1];
-        updateJson(extractedString);
+        await updateJson(extractedString);
         toast.success(`${data.credits} credits left for today.`);
       } else {
         throw Error("An error occured while parsing result.");

@@ -14,7 +14,7 @@ const useJsonQuery = () => {
   const updateJson = async (query: string, cb?: () => void) => {
     try {
       const jq = await import("jq-web");
-      const res = jq.json(JSON.parse(getJson()), query);
+      const res = await jq.promised.json(JSON.parse(getJson()), query);
 
       setContents({ contents: JSON.stringify(res, null, 2) });
       cb?.();
