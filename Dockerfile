@@ -1,5 +1,9 @@
 # Builder
 FROM node:18-alpine as builder
+# Reference :: https://pnpm.io/docker
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 WORKDIR /src
 
 # Cache dependencies first
