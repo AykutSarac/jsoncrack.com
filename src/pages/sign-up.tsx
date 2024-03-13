@@ -22,7 +22,7 @@ const SignUp = () => {
   const [loading, setLoading] = React.useState(false);
   const [done, setDone] = React.useState(false);
   const [userData, setUserData] = React.useState({
-    name: "",
+    display_name: "",
     email: "",
     password: "",
   });
@@ -36,7 +36,7 @@ const SignUp = () => {
         email: userData.email,
         password: userData.password,
         options: {
-          data: { name: userData.name },
+          data: { display_name: userData.display_name },
         },
       })
       .then(({ error }) => {
@@ -78,7 +78,7 @@ const SignUp = () => {
             <form onSubmit={onSubmit}>
               <Stack>
                 <TextInput
-                  onChange={e => setUserData(d => ({ ...d, name: e.target.value }))}
+                  onChange={e => setUserData(d => ({ ...d, display_name: e.target.value }))}
                   required
                   label="Name"
                   placeholder="John Doe"
