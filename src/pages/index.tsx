@@ -131,7 +131,7 @@ export const HomePage = () => {
         <StyledFeaturedSection>
           <Flex
             mx="auto"
-            align="flex-start"
+            align="center"
             justify="center"
             pb={120}
             gap="xl"
