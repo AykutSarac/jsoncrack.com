@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import Link from "next/link";
-import { Button, Group } from "@mantine/core";
+import { Button, Flex, Group, Text } from "@mantine/core";
 import styled from "styled-components";
 import { MdChevronRight } from "react-icons/md";
 import Layout from "src/layout/Layout";
@@ -57,6 +57,17 @@ const StyledImageWrapper = styled.div`
 
   @media only screen and (max-width: 768px) {
     display: none;
+  }
+`;
+
+const StyledFeaturedSection = styled.section`
+  img {
+    filter: brightness(70%) grayscale(100%);
+    transition: filter 200ms ease;
+  }
+
+  img:hover {
+    filter: none;
   }
 `;
 
@@ -117,6 +128,41 @@ export const HomePage = () => {
             </Button>
           </Group>
         </StyledHeroSectionBody>
+        <StyledFeaturedSection>
+          <Flex
+            mx="auto"
+            align="flex-start"
+            justify="center"
+            pb={120}
+            gap="xl"
+            style={{ whiteSpace: "nowrap" }}
+          >
+            <Text fz="xs" c="dimmed">
+              Featured on
+            </Text>
+            <a
+              href="https://news.ycombinator.com/item?id=32626873"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img width={128} src="./assets/hn.svg" alt="Hacker News" />
+            </a>
+            <a
+              href="https://www.producthunt.com/products/JSON-Crack"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img width={128} src="./assets/ph.svg" alt="Product Hunt" />
+            </a>
+            <a
+              href="https://twitter.com/github/status/1519363257794015233"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <img width={32} src="./assets/x.svg" alt="X" />
+            </a>
+          </Flex>
+        </StyledFeaturedSection>
         <StyledImageWrapper>
           <img src="./assets/preview.png" alt="JSON Crack Preview" />
         </StyledImageWrapper>
