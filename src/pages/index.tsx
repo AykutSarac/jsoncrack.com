@@ -134,7 +134,8 @@ export const HomePage = () => {
             align="center"
             justify="center"
             pb={120}
-            gap="xl"
+            gap="md"
+            wrap="wrap"
             style={{ whiteSpace: "nowrap" }}
           >
             <Text fz="xs" c="dimmed">
