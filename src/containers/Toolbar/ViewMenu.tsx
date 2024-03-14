@@ -108,7 +108,7 @@ export const ViewMenu = () => {
                 </Text>
               }
             >
-              {graphCollapsed ? "Expand" : "Collapse"} Nodes
+              {graphCollapsed ? "Expand" : "Collapse"} Graph
             </Menu.Item>
             <Menu.Item fz={12} onClick={focusFirstNode} leftSection={<VscTarget />}>
               Focus to First Node
