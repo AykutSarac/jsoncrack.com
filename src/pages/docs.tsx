@@ -43,7 +43,7 @@ const Docs = () => {
       </Head>
       <Stack mx="auto" maw="75%">
         <Group mb="lg" mt={40}>
-          <Title order={1} c="dark">
+          <Title order={1} c="white">
             Documentation
           </Title>
         </Group>

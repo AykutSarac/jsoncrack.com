@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Alert, Box, Burger, Button, Flex, Menu, Overlay } from "@mantine/core";
+import { Box, Burger, Button, Flex, Menu, Overlay } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import styled from "styled-components";
 import { BiChevronDown } from "react-icons/bi";
@@ -272,11 +272,6 @@ export const Navbar = () => {
           )}
         </Right>
       </StyledNavbar>
-      <Link href="https://pro.jsoncrack.com/pricing" target="_blank">
-        <Alert color="red" variant="filled" radius={0} fw="bold" h={56} visibleFrom="xs">
-          Unlock premium features now with ~30% discount on the Premium plan!
-        </Alert>
-      </Link>
     </StyledNavbarWrapper>
   );
 };

@@ -50,7 +50,7 @@ const SignUp = () => {
   const handleLoginClick = (provider: "github" | "google") => {
     supabase.auth.signInWithOAuth({
       provider,
-      options: { redirectTo: "https://jsoncrack.com/editor" },
+      options: { redirectTo: `${window.location.origin}/editor` },
     });
   };
 
@@ -60,7 +60,7 @@ const SignUp = () => {
         <title>Sign Up - JSON Crack</title>
       </Head>
       {done ? (
-        <Paper mx="auto" maw={400} mt={50} p="lg" withBorder>
+        <Paper mx="auto" maw={400} mt={100} p="lg" withBorder>
           <Text mt="lg" style={{ textAlign: "center" }}>
             Registration successul!
             <br />
@@ -74,10 +74,11 @@ const SignUp = () => {
         </Paper>
       ) : (
         <>
-          <Paper mx="auto" maw={400} mt={50} p="lg" withBorder>
+          <Paper mx="auto" maw={400} mt={100} p="lg" withBorder>
             <form onSubmit={onSubmit}>
               <Stack>
                 <TextInput
+                  name="name"
                   onChange={e => setUserData(d => ({ ...d, display_name: e.target.value }))}
                   required
                   label="Name"
@@ -87,6 +88,7 @@ const SignUp = () => {
                 />
 
                 <TextInput
+                  name="email"
                   onChange={e => setUserData(d => ({ ...d, email: e.target.value }))}
                   type="email"
                   required
@@ -97,6 +99,7 @@ const SignUp = () => {
                 />
 
                 <PasswordInput
+                  name="password"
                   onChange={e => setUserData(d => ({ ...d, password: e.target.value }))}
                   min={6}
                   required
@@ -110,7 +113,7 @@ const SignUp = () => {
                   Sign up for free
                 </Button>
 
-                <Divider label="OR CONTINUE WITH" labelPosition="center" />
+                <Divider color="dimmed" label="OR CONTINUE WITH" labelPosition="center" />
 
                 <Flex gap="sm">
                   <Button
@@ -163,7 +166,7 @@ const SignUp = () => {
           </Paper>
 
           <Center my="xl">
-            <Anchor component={Link} prefetch={false} href="/sign-in" c="dark" fw="bold">
+            <Anchor component={Link} prefetch={false} href="/sign-in" c="gray.5" fw="bold">
               Already have an account?
             </Anchor>
           </Center>

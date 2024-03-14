@@ -2,8 +2,8 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
   html, body {
-    background: rgb(246,249,253);
-    background: radial-gradient(circle, rgb(245 245 245) 33%, rgb(252 252 255) 100%);
+    background: #000;
+    overscroll-behavior: none;
     -webkit-font-smoothing: subpixel-antialiased !important;
   }
 

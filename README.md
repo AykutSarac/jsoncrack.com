@@ -26,7 +26,7 @@
 
 ## About the Project
 
-<img width="100%" alt="booking-screen" src="./public/assets/jsoncrack-screenshot.jpeg">
+<img width="100%" alt="booking-screen" src="./public/assets/preview.png">
 
 # More Than a JSON Editor
 

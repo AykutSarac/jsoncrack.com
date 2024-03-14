@@ -12,6 +12,7 @@ import {
   Anchor,
   Stack,
   Center,
+  Text,
 } from "@mantine/core";
 import { useSession } from "@supabase/auth-helpers-react";
 import { toast } from "react-hot-toast";
@@ -22,39 +23,61 @@ import { isIframe } from "src/lib/utils/widget";
 import useUser from "src/store/useUser";
 
 export function AuthenticationForm(props: PaperProps) {
+  const { push } = useRouter();
   const setSession = useUser(state => state.setSession);
-  const [loading, setLoading] = React.useState(false);
+  const isAuthenticated = useUser(state => state.isAuthenticated);
+  const [sessionLoading, setSessionLoading] = React.useState(false);
   const [userData, setUserData] = React.useState({
     name: "",
     email: "",
     password: "",
   });
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
+    setSessionLoading(true);
 
-    supabase.auth
-      .signInWithPassword({
-        email: userData.email,
-        password: userData.password,
-      })
-      .then(({ data, error }) => {
-        if (error) return toast.error(error.message);
-        setSession(data.session);
-      })
-      .finally(() => setLoading(false));
-  };
-
-  const handleLoginClick = (provider: "github" | "google") => {
-    supabase.auth.signInWithOAuth({
-      provider,
-      options: { redirectTo: "https://jsoncrack.com/editor" },
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: userData.email,
+      password: userData.password,
     });
+
+    if (error) {
+      setSessionLoading(false);
+      return toast.error(error.message);
+    }
+
+    await setSession(data.session);
+    push("/editor");
+    setSessionLoading(false);
   };
+
+  const handleLoginClick = async (provider: "github" | "google") => {
+    setSessionLoading(true);
+    await supabase.auth.signInWithOAuth({
+      provider,
+      options: { redirectTo: `${window.location.origin}/editor` },
+    });
+    setSessionLoading(false);
+  };
+
+  if (isAuthenticated) {
+    return (
+      <Paper p="lg" maw={400} style={{ textAlign: "center" }}>
+        <Text fz="sm" c="dark">
+          You are already signed in. Click the button below to go to the editor.
+        </Text>
+        <Link href="/editor">
+          <Button mt="lg" color="dark" size="lg">
+            GO TO EDITOR
+          </Button>
+        </Link>
+      </Paper>
+    );
+  }
 
   return (
-    <Paper {...props}>
+    <Paper {...props} style={{ textAlign: "left" }}>
       <form onSubmit={onSubmit}>
         <Stack>
           <TextInput
@@ -79,7 +102,7 @@ export function AuthenticationForm(props: PaperProps) {
             style={{ color: "black" }}
           />
 
-          <Button color="dark" type="submit" radius="sm" loading={loading}>
+          <Button color="dark" type="submit" radius="sm" loading={sessionLoading}>
             Sign in
           </Button>
 
@@ -132,11 +155,11 @@ const SignIn = () => {
       <Head>
         <title>Sign In - JSON Crack</title>
       </Head>
-      <Paper mt={50} mx="auto" maw={400} p="lg" withBorder>
+      <Paper mt={100} mx="auto" maw={400} p="lg" withBorder>
         <AuthenticationForm />
       </Paper>
       <Center my="xl">
-        <Anchor component={Link} prefetch={false} href="/sign-up" c="dark" fw="bold">
+        <Anchor component={Link} prefetch={false} href="/sign-up" c="gray.5" fw="bold">
           Don&apos;t have an account?
         </Anchor>
       </Center>
