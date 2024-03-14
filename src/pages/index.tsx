@@ -64,7 +64,7 @@ export const HomePage = () => {
   return (
     <Layout>
       <Head>
-        <title>JSON Crack+ | More Than a JSON Editor</title>
+        <title>JSON Crack | More Than a JSON Editor</title>
       </Head>
       <StyledHeroSection id="hero-section">
         <StyledHeroSectionBody>
