@@ -1,4 +1,4 @@
-import { PostgrestSingleResponse } from "@supabase/supabase-js";
+import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 import toast from "react-hot-toast";
 import { FileFormat } from "src/enums/file.enum";
 import { supabase } from "src/lib/api/supabase";

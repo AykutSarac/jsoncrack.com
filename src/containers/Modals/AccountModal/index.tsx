@@ -24,8 +24,11 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const setVisible = useModal(state => state.setVisible);
   const logout = useUser(state => state.logout);
 
+  const username =
+    user?.user_metadata.full_name || user?.user_metadata.display_name || user?.user_metadata.name;
+
   return (
-    <Modal title={`Hello, ${user?.user_metadata.name}!`} opened={opened} onClose={onClose} centered>
+    <Modal title={`Hello, ${username}!`} opened={opened} onClose={onClose} centered>
       <Paper p="md">
         <Group>
           <Avatar src={user?.user_metadata.avatar_url} size={94}>
@@ -33,7 +36,7 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           </Avatar>
           <div>
             <Text fz="lg" tt="uppercase" fw={700}>
-              {user?.user_metadata.name}
+              {username}
             </Text>
 
             <Group gap={10} mt={3}>

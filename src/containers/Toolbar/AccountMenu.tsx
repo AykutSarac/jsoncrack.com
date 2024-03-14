@@ -8,9 +8,11 @@ import useUser from "src/store/useUser";
 import * as Styles from "./styles";
 
 export const AccountMenu = () => {
-  const user = useSupabaseUser();
+  const user = useSupabaseUser()?.user_metadata;
   const logout = useUser(state => state.logout);
   const setVisible = useModal(state => state.setVisible);
+
+  const username = user?.full_name || user?.display_name || user?.name;
 
   return (
     <Menu shadow="md" trigger="click" closeOnItemClick={false} withArrow>
@@ -24,13 +26,11 @@ export const AccountMenu = () => {
       <Menu.Dropdown>
         {user ? (
           <Menu.Item
-            leftSection={
-              <Avatar color="indigo" alt={user.user_metadata?.name} size={20} radius="xl" />
-            }
+            leftSection={<Avatar color="indigo" alt={username} size={20} radius="xl" />}
             onClick={() => setVisible("account")(true)}
             closeMenuOnClick
           >
-            <Text size="xs">{user.user_metadata?.name ?? "Account"}</Text>
+            <Text size="xs">{username ?? "Account"}</Text>
           </Menu.Item>
         ) : (
           <Link href="/sign-in">

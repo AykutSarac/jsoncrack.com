@@ -1,4 +1,4 @@
-import { Session, User } from "@supabase/supabase-js";
+import type { Session, User } from "@supabase/supabase-js";
 import toast from "react-hot-toast";
 import { create } from "zustand";
 import { supabase } from "src/lib/api/supabase";

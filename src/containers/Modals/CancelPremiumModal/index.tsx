@@ -1,41 +1,67 @@
 import React from "react";
-import { Modal, Group, Button, Divider, ModalProps, Text, Image, Anchor } from "@mantine/core";
+import {
+  Modal,
+  Group,
+  Button,
+  Divider,
+  ModalProps,
+  Text,
+  Anchor,
+  List,
+  Checkbox,
+  TextInput,
+} from "@mantine/core";
+import { useUser as useSupabaseUser } from "@supabase/auth-helpers-react";
 import { toast } from "react-hot-toast";
 import { supabase } from "src/lib/api/supabase";
 import useModal from "src/store/useModal";
 
 export const CancelPremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
+  const user = useSupabaseUser()?.user_metadata;
   const [cancelling, setCancelling] = React.useState(false);
+  const [reasons, setReasons] = React.useState<number[]>([]);
+  const [textReason, setTextReason] = React.useState("");
   const showFeedback = useModal(state => state.setVisible("review"));
+
+  const username = user?.full_name || user?.display_name || user?.name;
 
   const cancelSub = async () => {
     try {
       setCancelling(true);
       const { data: user } = await supabase.auth.getSession();
+      if (!user) {
+        throw new Error("Couldn't fetch user details, please contact: contact@jsoncrack.com");
+      }
 
-      if (user) {
-        const { error } = await supabase.functions.invoke("lemonsqueezy", {
-          method: "DELETE",
-          body: {
-            jwt: user.session?.access_token,
-          },
-        });
+      const { error: lmError } = await supabase.functions.invoke("lemonsqueezy", {
+        method: "DELETE",
+        body: { jwt: user.session?.access_token },
+      });
 
-        if (error) {
-          return toast.error(
-            "An error occured while cancelling subscription, please contact: contact@jsoncrack.com"
-          );
-        }
+      if (lmError) {
+        throw new Error(
+          "An error occured while cancelling subscription, please contact: contact@jsoncrack.com"
+        );
+      }
 
-        toast.success("Cancelled premium plan!");
-        showFeedback(true);
-      } else {
-        toast.error("Couldn't fetch user details, please contact: contact@jsoncrack.com");
+      const { error: feedbackError } = await supabase.from("cancel_feedback").insert({
+        email: user.session?.user.email,
+        text_reason: textReason,
+        reasons,
+      });
+
+      if (feedbackError) {
+        throw new Error(feedbackError.message);
       }
 
       toast.success("Cancelled premium plan!");
+      showFeedback(true);
       onClose();
     } catch (err) {
+      if (err instanceof Error) {
+        toast.error(err.message);
+      }
+
       console.error(err);
     } finally {
       setCancelling(false);
@@ -43,28 +69,87 @@ export const CancelPremiumModal: React.FC<ModalProps> = ({ opened, onClose }) =>
   };
 
   return (
-    <Modal title="CANCEL PREMIUM?" opened={opened} onClose={onClose} centered>
-      <Image py="xs" src="assets/taken.svg" mx="auto" w={200} alt="taken" />
-      <Text fz="sm" pb="md">
-        Cancellation will take effect at the end of your current billing period.
-        <br />
-        <br />
-        You can restart your subscription anytime.
-        <br />
-        <Anchor fz="xs" target="_blank" href="https://patreon.com/herowand">
-          Click here to cancel if you are Patreon member
-        </Anchor>
-        <Text size="xs" c="dimmed" mt="lg">
-          If you have problems with cancelling plan please contact: contact@jsoncrack.com
-        </Text>
+    <Modal title="PREMIUM" opened={opened} onClose={onClose} centered>
+      <Text fz="lg" fw="bold" pb="md">
+        {username}, are you sure you want to cancel?
       </Text>
+      <Text fz="sm" pb="lg">
+        If you cancel, you will lose access to premium features and existing pricing. Your plan will
+        remain active until the end of the current billing cycle.
+      </Text>
+      <Text fz="sm" fw="bold">
+        Why are you cancelling your plan?
+      </Text>
+      <List icon={<></>} pb="lg">
+        <List.Item>
+          <Checkbox
+            checked={reasons.includes(1)}
+            onChange={e => {
+              if (e.target.checked) {
+                setReasons([...reasons, 1]);
+              } else {
+                setReasons(reasons.filter(r => r !== 1));
+              }
+            }}
+            label="The software is too difficult to use."
+          />
+        </List.Item>
+        <List.Item>
+          <Checkbox
+            checked={reasons.includes(2)}
+            onChange={e => {
+              if (e.target.checked) {
+                setReasons([...reasons, 2]);
+              } else {
+                setReasons(reasons.filter(r => r !== 2));
+              }
+            }}
+            label="I'm not satisfied with its performance."
+          />
+        </List.Item>
+        <List.Item>
+          <Checkbox
+            checked={reasons.includes(3)}
+            onChange={e => {
+              if (e.target.checked) {
+                setReasons([...reasons, 3]);
+              } else {
+                setReasons(reasons.filter(r => r !== 3));
+              }
+            }}
+            label="Features I need are missing."
+          />
+        </List.Item>
+        <List.Item>
+          <Checkbox
+            checked={reasons.includes(4)}
+            onChange={e => {
+              if (e.target.checked) {
+                setReasons([...reasons, 4]);
+              } else {
+                setReasons(reasons.filter(r => r !== 4));
+              }
+            }}
+            label="I don't use the app enough."
+          />
+        </List.Item>
+      </List>
+      <TextInput
+        value={textReason}
+        onChange={e => setTextReason(e.currentTarget.value)}
+        placeholder="Give more details about your reason..."
+        pb="lg"
+      />
+      <Anchor fz="xs" target="_blank" href="https://patreon.com/herowand">
+        Click here to cancel if you are Patreon member
+      </Anchor>
       <Divider py="xs" />
       <Group justify="right">
-        <Button color="dark" variant="subtle" onClick={onClose}>
-          Cancel
+        <Button color="red" variant="outline" onClick={onClose}>
+          Never mind, keep premium
         </Button>
         <Button onClick={cancelSub} loading={cancelling} color="red">
-          QUIT SUBSCRIPTION
+          Cancel Plan
         </Button>
       </Group>
     </Modal>
