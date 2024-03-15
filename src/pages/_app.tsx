@@ -7,7 +7,6 @@ import { MantineProvider, createTheme } from "@mantine/core";
 import "@mantine/core/styles.css";
 import "@mantine/code-highlight/styles.css";
 import { ThemeProvider } from "styled-components";
-import { SessionContextProvider, Session } from "@supabase/auth-helpers-react";
 import ReactGA from "react-ga4";
 import GlobalStyle from "src/constants/globalStyle";
 import { lightTheme } from "src/constants/theme";
@@ -25,12 +24,7 @@ ReactGA.initialize(GA_TRACKING_ID, { testMode: isDevelopment });
 
 const ExternalMode = dynamic(() => import("src/layout/ExternalMode"));
 
-function JsonCrack({
-  Component,
-  pageProps,
-}: AppProps<{
-  initialSession: Session;
-}>) {
+function JsonCrack({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const setSession = useUser(state => state.setSession);
 
@@ -57,15 +51,14 @@ function JsonCrack({
       <Head>
         <title>JSON Crack | More Than a JSON Editor</title>
       </Head>
-      <SessionContextProvider supabaseClient={supabase}>
-        <MantineProvider theme={mantineTheme}>
-          <ThemeProvider theme={lightTheme}>
-            <GlobalStyle />
-            <Component {...pageProps} />
-            <ExternalMode />
-          </ThemeProvider>
-        </MantineProvider>
-      </SessionContextProvider>
+
+      <MantineProvider theme={mantineTheme}>
+        <ThemeProvider theme={lightTheme}>
+          <GlobalStyle />
+          <Component {...pageProps} />
+          <ExternalMode />
+        </ThemeProvider>
+      </MantineProvider>
     </>
   );
 }

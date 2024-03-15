@@ -11,13 +11,13 @@ import {
   Checkbox,
   TextInput,
 } from "@mantine/core";
-import { useUser as useSupabaseUser } from "@supabase/auth-helpers-react";
 import { toast } from "react-hot-toast";
 import { supabase } from "src/lib/api/supabase";
 import useModal from "src/store/useModal";
+import useUser from "src/store/useUser";
 
 export const CancelPremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
-  const user = useSupabaseUser()?.user_metadata;
+  const user = useUser(state => state.user?.user_metadata);
   const [cancelling, setCancelling] = React.useState(false);
   const [reasons, setReasons] = React.useState<number[]>([]);
   const [textReason, setTextReason] = React.useState("");

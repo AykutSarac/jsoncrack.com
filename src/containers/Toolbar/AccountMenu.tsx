@@ -1,14 +1,13 @@
 import React from "react";
 import Link from "next/link";
 import { Menu, Avatar, Text } from "@mantine/core";
-import { useUser as useSupabaseUser } from "@supabase/auth-helpers-react";
 import { VscSignIn, VscFeedback, VscSignOut } from "react-icons/vsc";
 import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
 import * as Styles from "./styles";
 
 export const AccountMenu = () => {
-  const user = useSupabaseUser()?.user_metadata;
+  const user = useUser(state => state.user?.user_metadata);
   const logout = useUser(state => state.logout);
   const setVisible = useModal(state => state.setVisible);
 

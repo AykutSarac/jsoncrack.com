@@ -7,7 +7,20 @@ import { MdChevronRight } from "react-icons/md";
 import Layout from "src/layout/Layout";
 
 const StyledHeroSection = styled.section`
+  position: relative;
   padding: 4em;
+
+  &::before {
+    position: absolute;
+    content: "";
+    top: 0%;
+    right: 0;
+    width: 80%;
+    height: 100%;
+    background: linear-gradient(84deg, #8b32ff 0%, #a837dc 100%);
+    -webkit-mask-image: radial-gradient(rgba(0, 0, 0, 0.45), transparent 70%);
+    mask-image: radial-gradient(rgba(0, 0, 0, 0.45), transparent 70%);
+  }
 `;
 
 const StyledHeroSectionBody = styled.div`
@@ -128,46 +141,42 @@ export const HomePage = () => {
             </Button>
           </Group>
         </StyledHeroSectionBody>
-        <StyledFeaturedSection>
-          <Flex
-            mx="auto"
-            align="center"
-            justify="center"
-            pb={120}
-            gap="md"
-            wrap="wrap"
-            style={{ whiteSpace: "nowrap" }}
-          >
-            <Text fz="xs" c="dimmed">
-              Featured on
-            </Text>
-            <a
-              href="https://news.ycombinator.com/item?id=32626873"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <img width={128} src="./assets/hn.svg" alt="Hacker News" />
-            </a>
-            <a
-              href="https://www.producthunt.com/products/JSON-Crack"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <img width={128} src="./assets/ph.svg" alt="Product Hunt" />
-            </a>
-            <a
-              href="https://twitter.com/github/status/1519363257794015233"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <img width={32} src="./assets/x.svg" alt="X" />
-            </a>
-          </Flex>
-        </StyledFeaturedSection>
-        <StyledImageWrapper>
-          <img src="./assets/preview.png" alt="JSON Crack Preview" />
-        </StyledImageWrapper>
       </StyledHeroSection>
+      <StyledFeaturedSection>
+        <Flex
+          mx="auto"
+          align="center"
+          justify="center"
+          pb={120}
+          gap="md"
+          wrap="wrap"
+          style={{ whiteSpace: "nowrap" }}
+        >
+          <Text fz="xs" c="dimmed">
+            Featured on
+          </Text>
+          <a href="https://news.ycombinator.com/item?id=32626873" target="_blank" rel="noreferrer">
+            <img width={128} src="./assets/hn.svg" alt="Hacker News" />
+          </a>
+          <a
+            href="https://www.producthunt.com/products/JSON-Crack"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img width={128} src="./assets/ph.svg" alt="Product Hunt" />
+          </a>
+          <a
+            href="https://twitter.com/github/status/1519363257794015233"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img width={32} src="./assets/x.svg" alt="X" />
+          </a>
+        </Flex>
+      </StyledFeaturedSection>
+      <StyledImageWrapper>
+        <img src="./assets/preview.png" alt="JSON Crack Preview" />
+      </StyledImageWrapper>
     </Layout>
   );
 };

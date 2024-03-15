@@ -14,7 +14,6 @@ import {
   Center,
   Text,
 } from "@mantine/core";
-import { useSession } from "@supabase/auth-helpers-react";
 import { toast } from "react-hot-toast";
 import { AiOutlineGithub, AiOutlineGoogle } from "react-icons/ai";
 import Layout from "src/layout/Layout";
@@ -142,13 +141,13 @@ export function AuthenticationForm(props: PaperProps) {
 
 const SignIn = () => {
   const { isReady, push, query } = useRouter();
-  const session = useSession();
+  const hasSession = useUser(state => !!state.user);
   const isPasswordReset = query?.type === "recovery" && !query?.error;
 
   React.useEffect(() => {
     if (isIframe()) push("/");
-    if (isReady && session && !isPasswordReset) push("/editor");
-  }, [isReady, session, push, isPasswordReset]);
+    if (isReady && hasSession && !isPasswordReset) push("/editor");
+  }, [isReady, hasSession, push, isPasswordReset]);
 
   return (
     <Layout>

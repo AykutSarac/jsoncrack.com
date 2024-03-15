@@ -10,13 +10,12 @@ import {
   Paper,
   Badge,
 } from "@mantine/core";
-import { useUser as useSupaUser } from "@supabase/auth-helpers-react";
 import { IoRocketSharp } from "react-icons/io5";
 import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
 
 export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
-  const user = useSupaUser();
+  const user = useUser(state => state.user);
   const isPremium = useUser(state => state.premium);
   const isOrg = useUser(state => state.organization);
   const isOrgAdmin = useUser(state => state.orgAdmin);
