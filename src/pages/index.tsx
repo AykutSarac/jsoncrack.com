@@ -1,16 +1,17 @@
 import React from "react";
 import Head from "next/head";
 import Link from "next/link";
-import { Button, Flex, Group, Text } from "@mantine/core";
+import { Button, Flex, Group, Stack, Text } from "@mantine/core";
 import styled from "styled-components";
 import { MdChevronRight } from "react-icons/md";
 import Layout from "src/layout/Layout";
 
 const StyledHeroSection = styled.section`
   position: relative;
-  padding: 4em;
+  padding: 4em 4em 2em;
 
   &::before {
+    z-index: 0;
     position: absolute;
     content: "";
     top: 0%;
@@ -21,20 +22,24 @@ const StyledHeroSection = styled.section`
     -webkit-mask-image: radial-gradient(rgba(0, 0, 0, 0.45), transparent 70%);
     mask-image: radial-gradient(rgba(0, 0, 0, 0.45), transparent 70%);
   }
+
+  @media only screen and (max-width: 768px) {
+    padding: 2em;
+  }
 `;
 
 const StyledHeroSectionBody = styled.div`
   min-height: 70vh;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
   margin: 0 auto;
   width: fit-content;
-  gap: 24px;
+  gap: 4vw;
 `;
 
 const StyledHeroTitle = styled.h1`
-  font-size: 60px;
+  font-size: clamp(24px, 4vw, 50px);
   color: white;
 
   @media only screen and (max-width: 768px) {
@@ -43,9 +48,9 @@ const StyledHeroTitle = styled.h1`
 `;
 
 const StyledHeroText = styled.p`
-  font-size: 24px;
+  font-size: clamp(18px, 2vw, 22px);
   color: #bcbcbc;
-  max-width: 60%;
+  max-width: 600px;
 
   @media only screen and (max-width: 768px) {
     font-size: 20px;
@@ -57,15 +62,16 @@ const StyledImageWrapper = styled.div`
   border: 8px solid #36393e;
   border-radius: 6px;
   border-top: none;
-  width: 80%;
-  height: auto;
+  width: 100%;
+  max-width: 40vw;
+  flex: auto;
+  height: fit-content;
   margin: 0 auto;
+  z-index: 1;
 
   img {
     display: block;
     width: 100%;
-    height: 100%;
-    object-fit: contain;
   }
 
   @media only screen and (max-width: 768px) {
@@ -74,6 +80,8 @@ const StyledImageWrapper = styled.div`
 `;
 
 const StyledFeaturedSection = styled.section`
+  padding: 0 1em;
+
   img {
     filter: brightness(70%) grayscale(100%);
     transition: filter 200ms ease;
@@ -92,54 +100,59 @@ export const HomePage = () => {
       </Head>
       <StyledHeroSection id="hero-section">
         <StyledHeroSectionBody>
-          <StyledHeroTitle>More than a JSON editor.</StyledHeroTitle>
+          <Stack gap="xs">
+            <StyledHeroTitle>More than a JSON editor.</StyledHeroTitle>
 
-          <StyledHeroText>
-            Visualize, analyze, and manipulate data with ease, a versatile and powerful tool for
-            data representation and exploration.
-          </StyledHeroText>
-          <Group justify="left">
-            <Link href="/editor" prefetch={false}>
+            <StyledHeroText>
+              Visualize, analyze, and manipulate data with ease, a versatile and powerful tool for
+              data representation and exploration.
+            </StyledHeroText>
+            <Group mt="sm" justify="left">
+              <Link href="/editor" prefetch={false}>
+                <Button
+                  size="xl"
+                  color="violet"
+                  rightSection={<MdChevronRight size={30} />}
+                  visibleFrom="md"
+                >
+                  GO TO EDITOR
+                </Button>
+                <Button
+                  size="lg"
+                  color="violet"
+                  rightSection={<MdChevronRight size={30} />}
+                  hiddenFrom="md"
+                >
+                  GO TO EDITOR
+                </Button>
+              </Link>
               <Button
+                component="a"
+                href="https://pro.jsoncrack.com"
+                target="_blank"
                 size="xl"
-                color="violet"
-                rightSection={<MdChevronRight size={30} />}
-                visibleFrom="sm"
+                variant="outline"
+                color="#A771FE"
+                visibleFrom="md"
               >
-                GO TO EDITOR
+                Get Premium+
               </Button>
               <Button
+                component="a"
+                href="https://pro.jsoncrack.com"
+                target="_blank"
                 size="lg"
-                color="violet"
-                rightSection={<MdChevronRight size={30} />}
-                hiddenFrom="sm"
+                variant="outline"
+                color="#A771FE"
+                hiddenFrom="md"
               >
-                GO TO EDITOR
+                Get Premium+
               </Button>
-            </Link>
-            <Button
-              component="a"
-              href="https://pro.jsoncrack.com"
-              target="_blank"
-              size="xl"
-              variant="outline"
-              color="#A771FE"
-              visibleFrom="sm"
-            >
-              Get Premium+
-            </Button>
-            <Button
-              component="a"
-              href="https://pro.jsoncrack.com"
-              target="_blank"
-              size="lg"
-              variant="outline"
-              color="#A771FE"
-              hiddenFrom="sm"
-            >
-              Get Premium+
-            </Button>
-          </Group>
+            </Group>
+          </Stack>
+          <StyledImageWrapper>
+            <img src="./assets/preview.png" alt="JSON Crack Preview" />
+          </StyledImageWrapper>
         </StyledHeroSectionBody>
       </StyledHeroSection>
       <StyledFeaturedSection>
@@ -174,9 +187,6 @@ export const HomePage = () => {
           </a>
         </Flex>
       </StyledFeaturedSection>
-      <StyledImageWrapper>
-        <img src="./assets/preview.png" alt="JSON Crack Preview" />
-      </StyledImageWrapper>
     </Layout>
   );
 };
