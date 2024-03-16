@@ -152,7 +152,12 @@ export const HomePage = () => {
             </Group>
           </Stack>
           <StyledImageWrapper>
-            <img src="./assets/preview.png" alt="JSON Crack Preview" />
+            <img
+              loading="eager"
+              fetchPriority="high"
+              src="./assets/preview.png"
+              alt="JSON Crack Preview"
+            />
           </StyledImageWrapper>
         </StyledHeroSectionBody>
       </StyledHeroSection>
