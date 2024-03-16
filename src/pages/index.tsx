@@ -29,6 +29,8 @@ const StyledHeroSection = styled.section`
 `;
 
 const StyledHeroSectionBody = styled.div`
+  position: relative;
+  z-index: 1;
   min-height: 70vh;
   display: flex;
   justify-content: space-between;
@@ -67,7 +69,6 @@ const StyledImageWrapper = styled.div`
   flex: auto;
   height: fit-content;
   margin: 0 auto;
-  z-index: 1;
 
   img {
     display: block;
