@@ -4,7 +4,7 @@ import { create } from "zustand";
 import { getChildrenEdges } from "src/lib/utils/graph/getChildrenEdges";
 import { getOutgoers } from "src/lib/utils/graph/getOutgoers";
 import { parser } from "src/lib/utils/json/jsonParser";
-import { NodeData, EdgeData } from "src/types/models";
+import { NodeData, EdgeData } from "src/types/graph";
 import useJson from "./useJson";
 
 export interface Graph {
@@ -12,7 +12,6 @@ export interface Graph {
   direction: CanvasDirection;
   loading: boolean;
   graphCollapsed: boolean;
-  foldNodes: boolean;
   fullscreen: boolean;
   collapseAll: boolean;
   nodes: NodeData[];
@@ -29,7 +28,6 @@ const initialStates: Graph = {
   direction: "RIGHT",
   loading: true,
   graphCollapsed: false,
-  foldNodes: false,
   fullscreen: false,
   collapseAll: false,
   nodes: [],
@@ -54,13 +52,13 @@ interface GraphActions {
   collapseGraph: () => void;
   getCollapsedNodeIds: () => string[];
   getCollapsedEdgeIds: () => string[];
-  toggleFold: (value: boolean) => void;
   toggleFullscreen: (value: boolean) => void;
   toggleCollapseAll: (value: boolean) => void;
   zoomIn: () => void;
   zoomOut: () => void;
   centerView: () => void;
   clearGraph: () => void;
+  setZoomFactor: (zoomFactor: number) => void;
 }
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
@@ -193,6 +191,10 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       elementExtraMarginForZoom: 100,
     });
   },
+  setZoomFactor: zoomFactor => {
+    const viewPort = get().viewPort;
+    viewPort?.camera?.recenter(viewPort.centerX, viewPort.centerY, zoomFactor);
+  },
   zoomIn: () => {
     const viewPort = get().viewPort;
     viewPort?.camera?.recenter(viewPort.centerX, viewPort.centerY, viewPort.zoomFactor + 0.1);
@@ -209,10 +211,6 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
     if (canvas) {
       viewPort?.camera?.centerFitElementIntoView(canvas);
     }
-  },
-  toggleFold: foldNodes => {
-    set({ foldNodes });
-    get().setGraph();
   },
   toggleFullscreen: fullscreen => set({ fullscreen }),
   setViewPort: viewPort => set({ viewPort }),

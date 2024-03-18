@@ -1,10 +1,13 @@
 import React from "react";
+import dynamic from "next/dynamic";
+import { MantineProvider } from "@mantine/core";
 import { ThemeProvider } from "styled-components";
-import { MantineProvider, MantineThemeOverride } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { monaSans } from "src/constants/fonts";
 import { lightTheme, darkTheme } from "src/constants/theme";
-import useStored from "src/store/useStored";
+import useConfig from "src/store/useConfig";
+
+const Toaster = dynamic(() => import("react-hot-toast").then(c => c.Toaster));
+const ModalController = dynamic(() => import("src/layout/ModalController"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,57 +18,33 @@ const queryClient = new QueryClient({
   },
 });
 
-const mantineTheme: MantineThemeOverride = {
-  fontFamily: monaSans.style.fontFamily,
-  headings: {
-    fontFamily: monaSans.style.fontFamily,
-  },
-  components: {
-    Divider: {
-      styles: () => ({
-        root: {
-          borderTopColor: "#4D4D4D !important",
-        },
-      }),
-    },
-    Modal: {
-      styles: theme => ({
-        title: {
-          fontWeight: 700,
-        },
-        header: {
-          backgroundColor: theme.colorScheme === "dark" ? "#4a4d52" : "#F3F3F3",
-        },
-        body: {
-          backgroundColor: theme.colorScheme === "dark" ? "#4a4d52" : "#F3F3F3",
-        },
-      }),
-    },
-    Button: {
-      styles: () => ({
-        inner: {
-          fontWeight: 700,
-        },
-      }),
-    },
-  },
-};
-
-export const EditorWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const lightmode = useStored(state => state.lightmode);
+export const EditorWrapper: React.FC<{
+  children: React.ReactNode;
+}> = ({ children }) => {
+  const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
 
   return (
-    <ThemeProvider theme={lightmode ? lightTheme : darkTheme}>
-      <MantineProvider
-        theme={{
-          colorScheme: lightmode ? "light" : "dark",
-          ...mantineTheme,
+    <ThemeProvider theme={darkmodeEnabled ? darkTheme : lightTheme}>
+      <Toaster
+        position="bottom-right"
+        containerStyle={{
+          bottom: 34,
+          right: 8,
+          fontSize: 14,
         }}
-        withCSSVariables
-        withGlobalStyles
-        withNormalizeCSS
-      >
-        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+        toastOptions={{
+          style: {
+            background: "#4D4D4D",
+            color: "#B9BBBE",
+            borderRadius: 4,
+          },
+        }}
+      />
+      <MantineProvider forceColorScheme={darkmodeEnabled ? "dark" : "light"}>
+        <QueryClientProvider client={queryClient}>
+          <ModalController />
+          {children}
+        </QueryClientProvider>
       </MantineProvider>
     </ThemeProvider>
   );

@@ -7,15 +7,13 @@ import {
   Modal,
   Button,
   Divider,
-  Grid,
   ModalProps,
   ColorInput,
-  Stack,
 } from "@mantine/core";
 import { toBlob, toJpeg, toPng, toSvg } from "html-to-image";
-import ReactGA from "react-ga4";
 import toast from "react-hot-toast";
 import { FiCopy, FiDownload } from "react-icons/fi";
+import { gaEvent } from "src/lib/utils/gaEvent";
 
 enum Extensions {
   SVG = "svg",
@@ -92,11 +90,11 @@ export const DownloadModal: React.FC<ModalProps> = ({ opened, onClose }) => {
       ]);
 
       toast.success("Copied to clipboard");
+      gaEvent("click", "clipboard image");
     } catch (error) {
       toast.error("Failed to copy to clipboard");
     } finally {
       toast.dismiss("toastClipboard");
-      ReactGA.event({ action: "click_clipboard_image", category: "User" });
       onClose();
     }
   };
@@ -113,11 +111,11 @@ export const DownloadModal: React.FC<ModalProps> = ({ opened, onClose }) => {
       });
 
       downloadURI(dataURI, `${fileDetails.filename}.${extension}`);
+      gaEvent("download", "download graph image", extension);
     } catch (error) {
       toast.error("Failed to download image!");
     } finally {
       toast.dismiss("toastDownload");
-      ReactGA.event({ action: "click_download_image", category: "User" });
       onClose();
     }
   };
@@ -127,49 +125,44 @@ export const DownloadModal: React.FC<ModalProps> = ({ opened, onClose }) => {
 
   return (
     <Modal opened={opened} onClose={onClose} title="Download Image" centered>
-      <Grid py="sm" align="end" grow>
-        <Grid.Col span={8}>
-          <TextInput
-            label="File Name"
-            value={fileDetails.filename}
-            onChange={e => updateDetails("filename", e.target.value)}
-          />
-        </Grid.Col>
-        <Grid.Col span={4}>
-          <SegmentedControl
-            value={extension}
-            onChange={e => setExtension(e as Extensions)}
-            fullWidth
-            data={[
-              { label: "SVG", value: Extensions.SVG },
-              { label: "PNG", value: Extensions.PNG },
-              { label: "JPEG", value: Extensions.JPEG },
-            ]}
-          />
-        </Grid.Col>
-      </Grid>
-      <Stack py="sm">
-        <ColorInput
-          label="Background Color"
-          value={fileDetails.backgroundColor}
-          onChange={color => updateDetails("backgroundColor", color)}
-          withEyeDropper={false}
-        />
-        <ColorPicker
-          format="rgba"
-          value={fileDetails.backgroundColor}
-          onChange={color => updateDetails("backgroundColor", color)}
-          swatches={swatches}
-          withPicker={false}
-          fullWidth
-        />
-      </Stack>
-      <Divider py="xs" />
-      <Group position="right">
-        <Button leftIcon={<FiCopy />} onClick={clipboardImage}>
+      <TextInput
+        label="File Name"
+        value={fileDetails.filename}
+        onChange={e => updateDetails("filename", e.target.value)}
+        mb="lg"
+      />
+      <SegmentedControl
+        value={extension}
+        onChange={e => setExtension(e as Extensions)}
+        fullWidth
+        data={[
+          { label: "SVG", value: Extensions.SVG },
+          { label: "PNG", value: Extensions.PNG },
+          { label: "JPEG", value: Extensions.JPEG },
+        ]}
+        mb="lg"
+      />
+      <ColorInput
+        label="Background Color"
+        value={fileDetails.backgroundColor}
+        onChange={color => updateDetails("backgroundColor", color)}
+        withEyeDropper={false}
+        mb="lg"
+      />
+      <ColorPicker
+        format="rgba"
+        value={fileDetails.backgroundColor}
+        onChange={color => updateDetails("backgroundColor", color)}
+        swatches={swatches}
+        withPicker={false}
+        fullWidth
+      />
+      <Divider my="xs" />
+      <Group justify="right">
+        <Button leftSection={<FiCopy />} onClick={clipboardImage}>
           Clipboard
         </Button>
-        <Button color="green" leftIcon={<FiDownload />} onClick={exportAsImage}>
+        <Button color="green" leftSection={<FiDownload />} onClick={exportAsImage}>
           Download
         </Button>
       </Group>

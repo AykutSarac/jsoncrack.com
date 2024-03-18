@@ -9,7 +9,6 @@ import {
   List,
   ThemeIcon,
   Divider,
-  Text,
 } from "@mantine/core";
 import { BsCheck } from "react-icons/bs";
 
@@ -17,13 +16,8 @@ export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   return (
     <Modal title="Your Plan" size="auto" opened={opened} onClose={onClose} centered zIndex={202}>
       <Flex gap="lg">
-        <Stack spacing="xs">
-          <Title order={3}>
-            Free plan
-            <Text size="sm" color="dimmed">
-              (Free)
-            </Text>
-          </Title>
+        <Stack gap="xs">
+          <Title order={3}>Free plan</Title>
           <Button variant="filled" color="dark" size="md">
             Your current plan
           </Button>
@@ -42,20 +36,15 @@ export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           </List>
         </Stack>
         <Divider color="gray" orientation="vertical" />
-        <Stack spacing="xs">
-          <Title order={3}>
-            JSON Crack Plus
-            <Text size="sm" color="dimmed">
-              USD 5$/mo
-            </Text>
-          </Title>
+        <Stack gap="xs">
+          <Title order={3}>JSON Crack Plus</Title>
           <Button
             component="a"
-            href="/pricing"
+            href="https://pro.jsoncrack.com/pricing"
+            target="_blank"
             variant="filled"
             color="teal"
             size="md"
-            target="_blank"
           >
             Upgrade plan
           </Button>

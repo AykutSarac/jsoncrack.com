@@ -1,51 +1,33 @@
 import React from "react";
+import Head from "next/head";
 import { useRouter } from "next/router";
-import styled from "styled-components";
-import { Button } from "@mantine/core";
+import { Button, Stack, Text, Title } from "@mantine/core";
+import Layout from "src/layout/Layout";
 
-const StyledNotFound = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 0 40px;
-  text-align: center;
-`;
-
-const StyledMessage = styled.h4`
-  color: ${({ theme }) => theme.FULL_WHITE};
-  font-size: 25px;
-  font-weight: 800;
-  margin: 10px 0;
-`;
-
-const StyledSubMessage = styled.div`
-  width: 50%;
-  color: ${({ theme }) => theme.SILVER};
-  margin-bottom: 25px;
-`;
-
-const StyledImageWrapper = styled.div`
-  width: 300px;
-`;
-
-const NotFound: React.FC = () => {
+const Custom500 = () => {
   const router = useRouter();
 
   return (
-    <StyledNotFound>
-      <StyledImageWrapper>
-        <img src="/assets/404.svg" alt="not found" width={300} height={400} />
-      </StyledImageWrapper>
-      <StyledMessage>WIZARDS BEHIND CURTAINS?</StyledMessage>
-      <StyledSubMessage>
-        Looks like you&apos;re lost, let&apos;s head back to the home!
-      </StyledSubMessage>
-      <Button type="button" onClick={() => router.push("/")}>
-        Go Home
-      </Button>
-    </StyledNotFound>
+    <Layout>
+      <Head>
+        <title>Unexpected Error Occured | JSON Crack</title>
+        <meta name="robots" content="noindex,nofollow" />
+      </Head>
+      <Stack mt={100} justify="center" align="center">
+        <Title fz={150} style={{ fontFamily: "monospace" }}>
+          500
+        </Title>
+        <Title order={2}>Something bad just happened...</Title>
+        <Text c="dimmed" maw={800} style={{ textAlign: "center" }}>
+          Our servers could not handle your request. Don&apos;t worry, our development team was
+          already notified. Try refreshing the page.
+        </Text>
+        <Button size="lg" color="gray" type="button" onClick={() => router.reload()}>
+          Refresh the page
+        </Button>
+      </Stack>
+    </Layout>
   );
 };
 
-export default NotFound;
+export default Custom500;

@@ -23,13 +23,13 @@ git clone https://github.com/AykutSarac/jsoncrack.com.git
 After cloning the repository, you can install the required dependencies by running the following command:
 
 ```bash
-yarn install
+pnpm install
 ```
 
 To run the development server, you can run the following command:
 
 ```bash
-yarn dev
+pnpm dev
 ```
 
 ## Contributing Guidelines

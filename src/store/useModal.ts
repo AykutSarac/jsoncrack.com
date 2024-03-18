@@ -1,6 +1,6 @@
-import ReactGA from "react-ga4";
 import { create } from "zustand";
 import { Modal } from "src/containers/Modals";
+import { gaEvent } from "src/lib/utils/gaEvent";
 import useUser from "./useUser";
 
 type ModalState = {
@@ -18,7 +18,6 @@ const initialStates: ModalState = {
   import: false,
   account: false,
   node: false,
-  settings: false,
   share: false,
   login: false,
   premium: false,
@@ -27,6 +26,7 @@ const initialStates: ModalState = {
   cancelPremium: false,
   review: false,
   jq: false,
+  type: false,
 };
 
 const authModals: Modal[] = ["cloud", "account"];
@@ -43,7 +43,7 @@ const useModal = create<ModalState & ModalActions>()(set => ({
       return set({ premium: true });
     }
 
-    if (visible) ReactGA.event({ category: "Modal View", action: `modal_view_${modal}` });
+    if (visible) gaEvent("modal", `open ${modal}`);
     set({ [modal]: visible });
   },
 }));

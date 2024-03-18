@@ -1,8 +1,8 @@
-import { Session, User } from "@supabase/supabase-js";
-import ReactGA from "react-ga4";
+import type { Session, User } from "@supabase/supabase-js";
 import toast from "react-hot-toast";
 import { create } from "zustand";
 import { supabase } from "src/lib/api/supabase";
+import { gaEvent } from "src/lib/utils/gaEvent";
 
 interface UserActions {
   logout: () => void;
@@ -30,19 +30,18 @@ const initialStates: UserStates = {
 const useUser = create<UserStates & UserActions>()(set => ({
   ...initialStates,
   setSession: async session => {
-    supabase.rpc("get_subscription_info").then(({ data }) => {
+    supabase.rpc("get_subscription_details").then(({ data }) => {
       if (data) {
         set({
           premium: data.premium,
-          organization: data.organization,
+          organization: data.orgPremium,
           premiumCancelled: !!data.cancelled,
-          orgAdmin: data.org_admin,
+          orgAdmin: data.orgAdmin,
         });
-        ReactGA.set({ tier: data.premium ? "premium" : "free" });
       }
 
+      gaEvent("engagement", "login");
       set({ user: session.user, isAuthenticated: true });
-      ReactGA.set({ userId: session.user.id });
     });
   },
   logout: async () => {

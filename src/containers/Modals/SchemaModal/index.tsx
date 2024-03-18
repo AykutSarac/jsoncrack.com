@@ -1,19 +1,37 @@
 import React from "react";
-import { Stack, Modal, Button, ModalProps, Text, Anchor, Group } from "@mantine/core";
+import { Stack, Modal, Button, ModalProps, Text, Anchor, Group, Divider } from "@mantine/core";
 import Editor from "@monaco-editor/react";
 import { toast } from "react-hot-toast";
-import { VscLock } from "react-icons/vsc";
+import { VscLinkExternal, VscLock } from "react-icons/vsc";
+import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
 import useModal from "src/store/useModal";
-import useStored from "src/store/useStored";
 import useUser from "src/store/useUser";
 
 export const SchemaModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const isPremium = useUser(state => state.premium);
   const showPremiumModal = useModal(state => state.setVisible("premium"));
   const setJsonSchema = useFile(state => state.setJsonSchema);
-  const [schema, setSchema] = React.useState("");
-  const lightmode = useStored(state => (state.lightmode ? "light" : "vs-dark"));
+  const [schema, setSchema] = React.useState(
+    JSON.stringify(
+      {
+        $schema: "http://json-schema.org/draft-04/schema#",
+        title: "Product",
+        description: "A product from catalog",
+        type: "object",
+        properties: {
+          id: {
+            description: "The unique identifier for a product",
+            type: "integer",
+          },
+        },
+        required: ["id"],
+      },
+      null,
+      2
+    )
+  );
+  const darkmodeEnabled = useConfig(state => (state.darkmodeEnabled ? "vs-dark" : "light"));
 
   const onApply = () => {
     if (!isPremium) return showPremiumModal(true);
@@ -39,15 +57,13 @@ export const SchemaModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   return (
     <Modal title="JSON Schema" size="lg" opened={opened} onClose={onClose} centered>
       <Stack py="sm">
-        <Text fz="sm">
-          Any validation failures are shown at the bottom toolbar of pane.{" "}
-          <Anchor target="_blank" href="https://json-schema.org/">
-            What is a JSON Schema?
-          </Anchor>
-        </Text>
+        <Text fz="sm">Any validation failures are shown at the bottom toolbar of pane.</Text>
+        <Anchor fz="sm" target="_blank" href="https://niem.github.io/json/sample-schema/">
+          View Examples <VscLinkExternal />
+        </Anchor>
         <Editor
           value={schema ?? ""}
-          theme={lightmode}
+          theme={darkmodeEnabled}
           onChange={e => setSchema(e!)}
           height={300}
           language="json"
@@ -59,11 +75,12 @@ export const SchemaModal: React.FC<ModalProps> = ({ opened, onClose }) => {
             },
           }}
         />
-        <Group position="right">
+        <Divider my="xs" />
+        <Group p="0" justify="right">
           <Button variant="outline" onClick={onClear} disabled={!schema}>
             Clear
           </Button>
-          <Button onClick={onApply} disabled={!schema} rightIcon={!isPremium && <VscLock />}>
+          <Button onClick={onApply} disabled={!schema} rightSection={!isPremium && <VscLock />}>
             Apply
           </Button>
         </Group>

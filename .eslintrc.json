@@ -22,5 +22,6 @@
     ]
   },
   "extends": ["next/core-web-vitals", "prettier"],
-  "plugins": ["prettier", "unused-imports"]
+  "plugins": ["prettier", "unused-imports"],
+  "ignorePatterns": ["src/enums"]
 }

@@ -1,293 +1,199 @@
 import React from "react";
-import dynamic from "next/dynamic";
 import Head from "next/head";
 import Link from "next/link";
-import Script from "next/script";
-import styled, { ThemeProvider } from "styled-components";
-import {
-  Anchor,
-  Button,
-  Center,
-  Container,
-  Flex,
-  Group,
-  MediaQuery,
-  Stack,
-  Text,
-  Title,
-  Tooltip,
-  rem,
-} from "@mantine/core";
-import { FaChevronRight } from "react-icons/fa";
-import { SiVisualstudiocode } from "react-icons/si";
-import { Typewriter } from "react-simple-typewriter";
-import { HovercardAds } from "src/components/HovercardAds";
-import { lightTheme } from "src/constants/theme";
-import { FeaturesCards } from "src/containers/Features";
-import { Navbar } from "src/layout/Navbar";
+import { Button, Flex, Group, Stack, Text } from "@mantine/core";
+import styled from "styled-components";
+import { MdChevronRight } from "react-icons/md";
+import Layout from "src/layout/Layout";
 
-const Footer = dynamic(() => import("src/layout/Footer").then(c => c.Footer));
+const StyledHeroSection = styled.section`
+  position: relative;
+  padding: 4em 4em 2em;
 
-const StyledHeroSection = styled.div`
-  --bg-color: ${({ theme }) => theme.GRID_BG_COLOR};
-  --line-color-1: ${({ theme }) => theme.GRID_COLOR_PRIMARY};
-  --line-color-2: ${({ theme }) => theme.GRID_COLOR_SECONDARY};
+  &::before {
+    z-index: 0;
+    position: absolute;
+    content: "";
+    top: 0%;
+    right: 0;
+    width: 80%;
+    height: 100%;
+    background: linear-gradient(84deg, #8b32ff 0%, #a837dc 100%);
+    -webkit-mask-image: radial-gradient(rgba(0, 0, 0, 0.45), transparent 70%);
+    mask-image: radial-gradient(rgba(0, 0, 0, 0.45), transparent 70%);
+  }
 
-  background-color: var(--bg-color);
-  background-image: linear-gradient(var(--line-color-1) 1.5px, transparent 1.5px),
-    linear-gradient(90deg, var(--line-color-1) 1.5px, transparent 1.5px),
-    linear-gradient(var(--line-color-2) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line-color-2) 1px, transparent 1px);
-  background-position:
-    -1.5px -1.5px,
-    -1.5px -1.5px,
-    -1px -1px,
-    -1px -1px;
-  background-size:
-    100px 100px,
-    100px 100px,
-    20px 20px,
-    20px 20px;
-
-  @media only screen and (max-width: 1240px) {
-    flex-direction: column;
+  @media only screen and (max-width: 768px) {
+    padding: 2em;
   }
 `;
 
 const StyledHeroSectionBody = styled.div`
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 5em 10%;
-  overflow: hidden;
-  backdrop-filter: blur(1px);
-  -webkit-backdrop-filter: blur(1px);
-  height: 70vh;
-
-  @media only screen and (max-width: 1200px) {
-    flex-direction: column;
-  }
-`;
-
-const Left = styled.div`
-  width: 100%;
   z-index: 1;
+  min-height: 70vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  width: fit-content;
+  gap: 4vw;
 `;
 
-const Right = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  transform: translate(20em, 15em) rotate(3deg);
-  width: 80%;
-  filter: blur(1px);
-  user-select: none;
+const StyledHeroTitle = styled.h1`
+  font-size: clamp(24px, 4vw, 50px);
+  color: white;
 
-  @media only screen and (max-width: 600px) {
-    display: none;
+  @media only screen and (max-width: 768px) {
+    font-size: 34px;
   }
-`;
-
-const StyledHighlightedText = styled.span`
-  text-decoration: underline;
-  text-decoration-style: wavy;
-  text-decoration-color: #eab308;
 `;
 
 const StyledHeroText = styled.p`
-  font-size: 18px;
-  color: #5e656b;
-  font-weight: 600;
+  font-size: clamp(18px, 2vw, 22px);
+  color: #bcbcbc;
   max-width: 600px;
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 768px) {
+    font-size: 20px;
     max-width: 100%;
   }
 `;
 
-const StyledStatsWrapper = styled.div`
-  display: flex;
-  gap: 24px;
-  justify-content: center;
-  align-items: center;
-  background: #421665;
-  padding: 24px;
+const StyledImageWrapper = styled.div`
+  border: 8px solid #36393e;
+  border-radius: 6px;
+  border-top: none;
+  width: 100%;
+  max-width: 40vw;
+  flex: auto;
+  height: fit-content;
+  margin: 0 auto;
 
-  @media screen and (max-width: 768px) {
-    flex-direction: column;
+  img {
+    display: block;
+    width: 100%;
+  }
+
+  @media only screen and (max-width: 768px) {
+    display: none;
   }
 `;
 
-const HeroSection = () => (
-  <StyledHeroSection id="hero-section">
-    <Navbar />
-    <StyledHeroSectionBody>
-      <Left>
-        <Stack w="100%" mx="auto">
-          <MediaQuery query="(max-width: 40em)" styles={{ fontSize: rem(30) }}>
-            <Title order={1} fz={40} c="gray" fw={800}>
-              Visualize{" "}
-              <StyledHighlightedText>
-                <Typewriter
-                  words={["JSON", "YAML", "XML", "TOML", "CSV"]}
-                  typeSpeed={100}
-                  deleteSpeed={60}
-                  delaySpeed={2000}
-                  loop
-                />
-              </StyledHighlightedText>
-              <br />
-              instantly into
-              <Text
-                variant="gradient"
-                gradient={{ from: "purple", to: "orange", deg: 45 }}
-                display="inline"
-              >
-                {" "}
-                graphs
-              </Text>
-            </Title>
-          </MediaQuery>
+const StyledFeaturedSection = styled.section`
+  padding: 0 1em;
 
-          <StyledHeroText>
-            Visualize, analyze, and manipulate data with ease, a versatile and powerful tool for
-            data representation and exploration.
-          </StyledHeroText>
-          <Group spacing="xl">
-            <Button
-              component={Link}
-              href="/editor"
-              prefetch={false}
-              fw="bold"
-              rightIcon={<FaChevronRight />}
-              size="lg"
-            >
-              GO TO EDITOR
-            </Button>
-            <Tooltip
-              maw={400}
-              label="VS Code extension only contains JSON visualization without additional features."
-              withArrow
-              multiline
-              position="bottom"
-            >
-              <Anchor
-                href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode"
-                target="_blank"
-                fw="bold"
-              >
-                <Flex gap="xs" align="center">
-                  <SiVisualstudiocode />
-                  Get it on VS Code
-                </Flex>
-              </Anchor>
-            </Tooltip>
-          </Group>
-        </Stack>
-      </Left>
-      <Right>
-        <img
-          src="/assets/diagram_bg.webp"
-          width="1200"
-          height="593"
-          alt="diagram"
-          loading="eager"
-          fetchPriority="high"
-        />
-      </Right>
-    </StyledHeroSectionBody>
-  </StyledHeroSection>
-);
+  img {
+    filter: brightness(70%) grayscale(100%);
+    transition: filter 200ms ease;
+  }
 
-const StatsBanner = () => (
-  <StyledStatsWrapper>
-    <Flex gap="lg">
-      <Stack spacing="0">
-        <Text fw="bolder" fz="1.8rem" truncate>
-          24.8K
-        </Text>
-        <Text color="gray.5" fw="bold" fz="0.8rem" truncate>
-          GITHUB STARS
-        </Text>
-      </Stack>
-      <Stack spacing="0">
-        <Text fw="bolder" fz="1.8rem" truncate>
-          50K+
-        </Text>
-        <Text color="gray.5" fw="bold" fz="12px" truncate>
-          MONTHLY USERS
-        </Text>
-      </Stack>
-      <Stack spacing="0">
-        <Text fw="bolder" fz="1.8rem" truncate>
-          GPL-3
-        </Text>
-        <Text color="gray.5" fw="bold" fz="0.8rem" truncate>
-          LICENSE
-        </Text>
-      </Stack>
-    </Flex>
-    <Stack ml={60}>
-      <Text maw={600} fw="bold" fz="0.9rem">
-        JSON Crack is an open-source project under GPL-3 license. Support us through our premium
-        plan for continued development and exclusive benefits.
-      </Text>
-      <Anchor
-        component={Link}
-        href="/pricing"
-        prefetch={false}
-        color="yellow"
-        fw="bold"
-        w="fit-content"
-      >
-        View Premium Plan <FaChevronRight />
-      </Anchor>
-    </Stack>
-  </StyledStatsWrapper>
-);
-
-const HeroBottom = () => (
-  <Container mt={100}>
-    <Stack>
-      <Title color="dark" order={2} fz="xl" maw={500} mx="auto" align="center">
-        But that&apos;s not all yet!
-        <br />
-        Explore the full potential of your data now......
-      </Title>
-      <Center>
-        <Button
-          component={Link}
-          href="/editor"
-          prefetch={false}
-          color="violet"
-          fw="bold"
-          rightIcon={<FaChevronRight />}
-          size="lg"
-        >
-          GO TO EDITOR
-        </Button>
-      </Center>
-    </Stack>
-  </Container>
-);
+  img:hover {
+    filter: none;
+  }
+`;
 
 export const HomePage = () => {
-  const [ads, setAds] = React.useState(false);
-
   return (
-    <ThemeProvider theme={lightTheme}>
+    <Layout>
       <Head>
-        <title>JSON Crack | Visualize Instantly Into Graphs</title>
+        <title>JSON Crack | More Than a JSON Editor</title>
       </Head>
-      <HeroSection />
-      <StatsBanner />
-      <FeaturesCards />
-      <HeroBottom />
-      <Footer />
-      {ads && <HovercardAds />}
-      <Script src="https://m.servedby-buysellads.com/monetization.js" onLoad={() => setAds(true)} />
-    </ThemeProvider>
+      <StyledHeroSection id="hero-section">
+        <StyledHeroSectionBody>
+          <Stack gap="xs">
+            <StyledHeroTitle>More than a JSON editor.</StyledHeroTitle>
+
+            <StyledHeroText>
+              Visualize, analyze, and manipulate data with ease, a versatile and powerful tool for
+              data representation and exploration.
+            </StyledHeroText>
+            <Group mt="sm" justify="left">
+              <Link href="/editor" prefetch={false}>
+                <Button
+                  size="xl"
+                  color="violet"
+                  rightSection={<MdChevronRight size={30} />}
+                  visibleFrom="md"
+                >
+                  GO TO EDITOR
+                </Button>
+                <Button
+                  size="lg"
+                  color="violet"
+                  rightSection={<MdChevronRight size={30} />}
+                  hiddenFrom="md"
+                >
+                  GO TO EDITOR
+                </Button>
+              </Link>
+              <Button
+                component="a"
+                href="https://pro.jsoncrack.com"
+                target="_blank"
+                size="xl"
+                variant="outline"
+                color="#A771FE"
+                visibleFrom="md"
+              >
+                Get Premium+
+              </Button>
+              <Button
+                component="a"
+                href="https://pro.jsoncrack.com"
+                target="_blank"
+                size="lg"
+                variant="outline"
+                color="#A771FE"
+                hiddenFrom="md"
+              >
+                Get Premium+
+              </Button>
+            </Group>
+          </Stack>
+          <StyledImageWrapper>
+            <img
+              loading="eager"
+              fetchPriority="high"
+              src="./assets/preview.png"
+              alt="JSON Crack Preview"
+            />
+          </StyledImageWrapper>
+        </StyledHeroSectionBody>
+      </StyledHeroSection>
+      <StyledFeaturedSection>
+        <Flex
+          mx="auto"
+          align="center"
+          justify="center"
+          pb={120}
+          gap="md"
+          wrap="wrap"
+          style={{ whiteSpace: "nowrap" }}
+        >
+          <Text fz="xs" c="dimmed">
+            Featured on
+          </Text>
+          <a href="https://news.ycombinator.com/item?id=32626873" target="_blank" rel="noreferrer">
+            <img width={128} src="./assets/hn.svg" alt="Hacker News" />
+          </a>
+          <a
+            href="https://www.producthunt.com/products/JSON-Crack"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img width={128} src="./assets/ph.svg" alt="Product Hunt" />
+          </a>
+          <a
+            href="https://twitter.com/github/status/1519363257794015233"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img width={32} src="./assets/x.svg" alt="X" />
+          </a>
+        </Flex>
+      </StyledFeaturedSection>
+    </Layout>
   );
 };
 

@@ -2,11 +2,11 @@ import React from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import { MantineProvider } from "@mantine/core";
 import { ThemeProvider } from "styled-components";
 import toast from "react-hot-toast";
 import { darkTheme, lightTheme } from "src/constants/theme";
-import { Tools } from "src/containers/Editor/LiveEditor/Tools";
-import { EditorWrapper } from "src/layout/EditorWrapper";
+import { Toolbar } from "src/containers/Toolbar";
 import useFile from "src/store/useFile";
 import useGraph from "src/store/useGraph";
 
@@ -17,13 +17,13 @@ interface EmbedMessage {
   };
 }
 
-const Graph = dynamic(() => import("src/components/Graph").then(c => c.Graph), {
+const Graph = dynamic(() => import("src/containers/Views/GraphView").then(c => c.Graph), {
   ssr: false,
 });
 
 const WidgetPage = () => {
   const { query, push, isReady } = useRouter();
-  const [theme, setTheme] = React.useState("dark");
+  const [theme, setTheme] = React.useState<"dark" | "light">("dark");
   const checkEditorSession = useFile(state => state.checkEditorSession);
   const setContents = useFile(state => state.setContents);
   const setDirection = useGraph(state => state.setDirection);
@@ -58,15 +58,15 @@ const WidgetPage = () => {
   }, [setContents, setDirection, theme]);
 
   return (
-    <EditorWrapper>
-      <Head>
-        <meta name="robots" content="noindex,nofollow" />
-      </Head>
+    <MantineProvider forceColorScheme={theme}>
       <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
-        <Tools isWidget />
+        <Head>
+          <meta name="robots" content="noindex,nofollow" />
+        </Head>
+        <Toolbar isWidget />
         <Graph isWidget />
       </ThemeProvider>
-    </EditorWrapper>
+    </MantineProvider>
   );
 };
 

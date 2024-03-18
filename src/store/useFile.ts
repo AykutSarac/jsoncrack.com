@@ -1,17 +1,17 @@
 import debounce from "lodash.debounce";
 import _get from "lodash.get";
 import _set from "lodash.set";
-import ReactGA from "react-ga4";
 import { toast } from "react-hot-toast";
 import { create } from "zustand";
 import { defaultJson } from "src/constants/data";
+import { FileFormat } from "src/enums/file.enum";
+import { gaEvent } from "src/lib/utils/gaEvent";
 import { contentToJson, jsonToContent } from "src/lib/utils/json/jsonAdapter";
 import { isIframe } from "src/lib/utils/widget";
-import { getFromCloud } from "src/services/json";
-import { FileFormat } from "src/types/models";
+import { documentSvc } from "src/services/document.service";
+import useConfig from "./useConfig";
 import useGraph from "./useGraph";
 import useJson from "./useJson";
-import useStored from "./useStored";
 import useUser from "./useUser";
 
 type SetContents = {
@@ -26,7 +26,7 @@ interface JsonActions {
   getContents: () => string;
   getFormat: () => FileFormat;
   getHasChanges: () => boolean;
-  setError: (error: object | null) => void;
+  setError: (error: string | null) => void;
   setHasChanges: (hasChanges: boolean) => void;
   setContents: (data: SetContents) => void;
   fetchFile: (fileId: string) => void;
@@ -111,8 +111,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       const jsonContent = await jsonToContent(JSON.stringify(contentJson, null, 2), format);
 
       get().setContents({ contents: jsonContent });
-
-      ReactGA.event({ action: "change_data_format", category: "User" });
+      gaEvent("input", "file format change");
     } catch (error) {
       get().clear();
       console.warn("The content was unable to be converted, so it was cleared instead.");
@@ -125,7 +124,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       const isFetchURL = window.location.href.includes("?");
       const json = await contentToJson(get().contents, get().format);
 
-      if (!useStored.getState().liveTransform && skipUpdate) return;
+      if (!useConfig.getState().liveTransformEnabled && skipUpdate) return;
 
       if (get().hasChanges && contents && contents.length < 80_000 && !isIframe() && !isFetchURL) {
         sessionStorage.setItem("content", contents);
@@ -172,7 +171,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
   },
   fetchFile: async id => {
     try {
-      const { data, error } = await getFromCloud(id);
+      const { data, error } = await documentSvc.getById(id);
       if (error) throw error;
 
       if (data?.length) get().setFile(data[0]);

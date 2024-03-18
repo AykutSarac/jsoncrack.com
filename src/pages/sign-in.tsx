@@ -5,17 +5,15 @@ import { useRouter } from "next/router";
 import {
   TextInput,
   PasswordInput,
-  Text,
   Paper,
-  Group,
   PaperProps,
   Button,
   Divider,
   Anchor,
   Stack,
   Center,
+  Text,
 } from "@mantine/core";
-import { useSession } from "@supabase/auth-helpers-react";
 import { toast } from "react-hot-toast";
 import { AiOutlineGithub, AiOutlineGoogle } from "react-icons/ai";
 import Layout from "src/layout/Layout";
@@ -24,39 +22,61 @@ import { isIframe } from "src/lib/utils/widget";
 import useUser from "src/store/useUser";
 
 export function AuthenticationForm(props: PaperProps) {
+  const { push } = useRouter();
   const setSession = useUser(state => state.setSession);
-  const [loading, setLoading] = React.useState(false);
+  const isAuthenticated = useUser(state => state.isAuthenticated);
+  const [sessionLoading, setSessionLoading] = React.useState(false);
   const [userData, setUserData] = React.useState({
     name: "",
     email: "",
     password: "",
   });
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
+    setSessionLoading(true);
 
-    supabase.auth
-      .signInWithPassword({
-        email: userData.email,
-        password: userData.password,
-      })
-      .then(({ data, error }) => {
-        if (error) return toast.error(error.message);
-        setSession(data.session);
-      })
-      .finally(() => setLoading(false));
-  };
-
-  const handleLoginClick = (provider: "github" | "google") => {
-    supabase.auth.signInWithOAuth({
-      provider,
-      options: { redirectTo: "https://jsoncrack.com/editor" },
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: userData.email,
+      password: userData.password,
     });
+
+    if (error) {
+      setSessionLoading(false);
+      return toast.error(error.message);
+    }
+
+    await setSession(data.session);
+    push("/editor");
+    setSessionLoading(false);
   };
+
+  const handleLoginClick = async (provider: "github" | "google") => {
+    setSessionLoading(true);
+    await supabase.auth.signInWithOAuth({
+      provider,
+      options: { redirectTo: `${window.location.origin}/editor` },
+    });
+    setSessionLoading(false);
+  };
+
+  if (isAuthenticated) {
+    return (
+      <Paper p="lg" maw={400} style={{ textAlign: "center" }}>
+        <Text fz="sm" c="dark">
+          You are already signed in. Click the button below to go to the editor.
+        </Text>
+        <Link href="/editor">
+          <Button mt="lg" color="dark" size="lg">
+            GO TO EDITOR
+          </Button>
+        </Link>
+      </Paper>
+    );
+  }
 
   return (
-    <Paper {...props}>
+    <Paper {...props} style={{ textAlign: "left" }}>
       <form onSubmit={onSubmit}>
         <Stack>
           <TextInput
@@ -66,7 +86,8 @@ export function AuthenticationForm(props: PaperProps) {
             placeholder="hello@jsoncrack.com"
             value={userData.email}
             onChange={event => setUserData(d => ({ ...d, email: event.target.value }))}
-            radius="md"
+            radius="sm"
+            style={{ color: "black" }}
           />
 
           <PasswordInput
@@ -76,21 +97,16 @@ export function AuthenticationForm(props: PaperProps) {
             placeholder="∗∗∗∗∗∗∗∗∗∗∗"
             value={userData.password}
             onChange={event => setUserData(d => ({ ...d, password: event.target.value }))}
-            radius="md"
+            radius="sm"
+            style={{ color: "black" }}
           />
 
-          <Button color="dark" type="submit" radius="md" loading={loading}>
+          <Button color="dark" type="submit" radius="sm" loading={sessionLoading}>
             Sign in
           </Button>
 
-          <Stack spacing="sm" mx="auto" align="center">
-            <Anchor
-              component={Link}
-              prefetch={false}
-              href="/forgot-password"
-              color="dark"
-              size="xs"
-            >
+          <Stack gap="sm" mx="auto" align="center">
+            <Anchor component={Link} prefetch={false} href="/forgot-password" c="dark" size="xs">
               Forgot your password?
             </Anchor>
           </Stack>
@@ -101,8 +117,8 @@ export function AuthenticationForm(props: PaperProps) {
 
       <Stack mb="md" mt="md">
         <Button
-          radius="md"
-          leftIcon={<AiOutlineGoogle size="20" />}
+          radius="sm"
+          leftSection={<AiOutlineGoogle size="20" />}
           onClick={() => handleLoginClick("google")}
           color="red"
           variant="outline"
@@ -110,8 +126,8 @@ export function AuthenticationForm(props: PaperProps) {
           Sign in with Google
         </Button>
         <Button
-          radius="md"
-          leftIcon={<AiOutlineGithub size="20" />}
+          radius="sm"
+          leftSection={<AiOutlineGithub size="20" />}
           onClick={() => handleLoginClick("github")}
           color="dark"
           variant="outline"
@@ -123,83 +139,26 @@ export function AuthenticationForm(props: PaperProps) {
   );
 }
 
-function ResetPassword(props: PaperProps) {
-  const { query } = useRouter();
-  const [loading, setLoading] = React.useState(false);
-  const [password, setPassword] = React.useState("");
-  const [password2, setPassword2] = React.useState("");
-
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (query?.token && typeof query?.token === "string") {
-      setLoading(true);
-      supabase.auth
-        .updateUser({
-          password,
-        })
-        .then(({ error }) => {
-          if (error) return toast.error(error.message);
-          toast.success("Successfully updated password!");
-          setTimeout(() => window.location.assign("/sign-in"), 2000);
-        })
-        .finally(() => setLoading(false));
-    }
-  };
-
-  return (
-    <Paper radius="md" {...props}>
-      <Text size="lg" weight={500}>
-        Reset Password
-      </Text>
-
-      <form onSubmit={onSubmit}>
-        <Stack>
-          <PasswordInput
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            required
-            label="Password"
-            radius="md"
-          />
-          <PasswordInput
-            value={password2}
-            onChange={e => setPassword2(e.target.value)}
-            required
-            label="Validate Password"
-            radius="md"
-          />
-        </Stack>
-
-        <Group position="apart" mt="xl">
-          <Button type="submit" radius="xl" loading={loading}>
-            Reset Password
-          </Button>
-        </Group>
-      </form>
-    </Paper>
-  );
-}
-
 const SignIn = () => {
   const { isReady, push, query } = useRouter();
-  const session = useSession();
+  const hasSession = useUser(state => !!state.user);
   const isPasswordReset = query?.type === "recovery" && !query?.error;
 
   React.useEffect(() => {
     if (isIframe()) push("/");
-    if (isReady && session && !isPasswordReset) push("/editor");
-  }, [isReady, session, push, isPasswordReset]);
+    if (isReady && hasSession && !isPasswordReset) push("/editor");
+  }, [isReady, hasSession, push, isPasswordReset]);
 
   return (
     <Layout>
       <Head>
         <title>Sign In - JSON Crack</title>
       </Head>
-      <Paper mt={50} shadow="xs" mx="auto" maw={400} p="lg" withBorder>
-        {isPasswordReset ? <ResetPassword /> : <AuthenticationForm />}
+      <Paper mt={100} mx="auto" maw={400} p="lg" withBorder>
+        <AuthenticationForm />
       </Paper>
       <Center my="xl">
-        <Anchor component={Link} prefetch={false} href="/sign-up" color="dark" fw="bold">
+        <Anchor component={Link} prefetch={false} href="/sign-up" c="gray.5" fw="bold">
           Don&apos;t have an account?
         </Anchor>
       </Center>

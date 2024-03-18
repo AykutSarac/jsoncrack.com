@@ -1,4 +1,4 @@
-import { NodeData, EdgeData } from "src/types/models";
+import { NodeData, EdgeData } from "src/types/graph";
 
 type Outgoers = [NodeData[], string[]];
 

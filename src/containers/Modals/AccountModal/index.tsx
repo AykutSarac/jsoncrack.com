@@ -10,13 +10,12 @@ import {
   Paper,
   Badge,
 } from "@mantine/core";
-import { useUser as useSupaUser } from "@supabase/auth-helpers-react";
 import { IoRocketSharp } from "react-icons/io5";
 import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
 
 export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
-  const user = useSupaUser();
+  const user = useUser(state => state.user);
   const isPremium = useUser(state => state.premium);
   const isOrg = useUser(state => state.organization);
   const isOrgAdmin = useUser(state => state.orgAdmin);
@@ -24,25 +23,28 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const setVisible = useModal(state => state.setVisible);
   const logout = useUser(state => state.logout);
 
+  const username =
+    user?.user_metadata.full_name || user?.user_metadata.display_name || user?.user_metadata.name;
+
   return (
-    <Modal title={`Hello, ${user?.user_metadata.name}!`} opened={opened} onClose={onClose} centered>
+    <Modal title={`Hello, ${username}!`} opened={opened} onClose={onClose} centered>
       <Paper p="md">
-        <Group noWrap>
+        <Group>
           <Avatar src={user?.user_metadata.avatar_url} size={94}>
             JC
           </Avatar>
           <div>
             <Text fz="lg" tt="uppercase" fw={700}>
-              {user?.user_metadata.name}
+              {username}
             </Text>
 
-            <Group noWrap spacing={10} mt={3}>
+            <Group gap={10} mt={3}>
               <Text fz="xs" c="dimmed">
                 {user?.email}
               </Text>
             </Group>
 
-            <Group noWrap spacing={10} mt={5}>
+            <Group gap={10} mt={5}>
               <Text fz="xs" c="dimmed">
                 <Badge
                   size="sm"
@@ -60,7 +62,7 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
       </Paper>
 
       <Divider py="xs" />
-      <Group position="right">
+      <Group justify="right">
         {isPremium && !premiumCancelled ? (
           <Button
             variant="light"
@@ -77,7 +79,7 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           <Button
             variant="gradient"
             gradient={{ from: "teal", to: "lime", deg: 105 }}
-            leftIcon={<IoRocketSharp />}
+            leftSection={<IoRocketSharp />}
             onClick={() => setVisible("premium")(true)}
           >
             UPGRADE TO PREMIUM!

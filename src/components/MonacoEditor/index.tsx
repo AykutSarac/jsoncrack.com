@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Editor, { loader, useMonaco } from "@monaco-editor/react";
 import { Loading } from "src/layout/Loading";
+import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
-import useStored from "src/store/useStored";
 
 loader.config({
   paths: {
@@ -21,7 +21,7 @@ const editorOptions = {
 
 const StyledWrapper = styled.div`
   display: grid;
-  height: calc(100vh - 63px);
+  height: calc(100vh - 67px);
   grid-template-columns: 100%;
   grid-template-rows: minmax(0, 1fr);
 `;
@@ -33,7 +33,7 @@ export const MonacoEditor = () => {
   const setError = useFile(state => state.setError);
   const jsonSchema = useFile(state => state.jsonSchema);
   const getHasChanges = useFile(state => state.getHasChanges);
-  const theme = useStored(state => (state.lightmode ? "light" : "vs-dark"));
+  const theme = useConfig(state => (state.darkmodeEnabled ? "vs-dark" : "light"));
   const fileType = useFile(state => state.format);
 
   React.useEffect(() => {
@@ -44,6 +44,7 @@ export const MonacoEditor = () => {
       ...(jsonSchema && {
         schemas: [
           {
+            uri: "http://myserver/foo-schema.json",
             fileMatch: ["*"],
             schema: jsonSchema,
           },
@@ -80,7 +81,7 @@ export const MonacoEditor = () => {
         options={editorOptions}
         onValidate={errors => setError(errors[0]?.message)}
         onChange={contents => setContents({ contents, skipUpdate: true })}
-        loading={<Loading message="Loading Editor..." />}
+        loading={<Loading message="Loading Monaco Editor..." loading />}
       />
     </StyledWrapper>
   );
