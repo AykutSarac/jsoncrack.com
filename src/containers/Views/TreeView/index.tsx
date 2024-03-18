@@ -15,6 +15,9 @@ export const TreeView = () => {
   const [value, setValue] = React.useState("");
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
 
+  if (!json) {
+    return;
+  }
   return (
     <>
       <JSONTree
