@@ -9,19 +9,14 @@ import Layout from "src/layout/Layout";
 const StyledHeroSection = styled.section`
   position: relative;
   padding: 4em 4em 2em;
+  background-size: 20px 20px;
+  background-image: linear-gradient(to right, #1a1c20 1px, transparent 1px),
+    linear-gradient(to bottom, #1a1c20 1px, transparent 1px);
 
-  &::before {
-    z-index: 0;
-    position: absolute;
-    content: "";
-    top: 0%;
-    right: 0;
-    width: 80%;
-    height: 100%;
-    background: linear-gradient(84deg, #8b32ff 0%, #a837dc 100%);
-    -webkit-mask-image: radial-gradient(rgba(0, 0, 0, 0.45), transparent 70%);
-    mask-image: radial-gradient(rgba(0, 0, 0, 0.45), transparent 70%);
-  }
+  background-position: top center;
+  image-rendering: pixelated;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, 20%, white, 90%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, 20%, white, 90%, transparent);
 
   @media only screen and (max-width: 768px) {
     padding: 2em;
