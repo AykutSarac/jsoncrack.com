@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu, Text, Flex, Badge } from "@mantine/core";
+import { Menu, Text, Flex } from "@mantine/core";
 import { BsCheck2 } from "react-icons/bs";
 import { MdSettings } from "react-icons/md";
 import useConfig from "src/store/useConfig";
@@ -12,7 +12,6 @@ export const OptionsMenu = () => {
   const toggleRulers = useConfig(state => state.toggleRulers);
   const toggleCollapseButton = useConfig(state => state.toggleCollapseButton);
   const toggleImagePreview = useConfig(state => state.toggleImagePreview);
-  const toggleAI = useConfig(state => state.toggleAI);
 
   const gesturesEnabled = useConfig(state => state.gesturesEnabled);
   const childrenCountVisible = useConfig(state => state.childrenCountVisible);
@@ -20,7 +19,6 @@ export const OptionsMenu = () => {
   const rulersEnabled = useConfig(state => state.rulersEnabled);
   const collapseButtonVisible = useConfig(state => state.collapseButtonVisible);
   const imagePreviewEnabled = useConfig(state => state.imagePreviewEnabled);
-  const aiEnabled = useConfig(state => state.aiEnabled);
 
   return (
     <Menu shadow="md" trigger="click" closeOnItemClick={false} withArrow>
@@ -67,17 +65,6 @@ export const OptionsMenu = () => {
           onClick={() => toggleDarkMode(!darkmodeEnabled)}
         >
           <Text size="xs">Dark Mode</Text>
-        </Menu.Item>
-        <Menu.Item
-          leftSection={<BsCheck2 opacity={aiEnabled ? 100 : 0} />}
-          onClick={() => toggleAI(!aiEnabled)}
-        >
-          <Flex align="center" gap={2}>
-            <Text size="xs">JSON Crack AI</Text>
-            <Badge ml={2} size="xs" variant="light" radius={2}>
-              Alpha
-            </Badge>
-          </Flex>
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>
