@@ -11,16 +11,10 @@ import {
   Text,
 } from "@mantine/core";
 import { Dropzone } from "@mantine/dropzone";
-import styled from "styled-components";
 import toast from "react-hot-toast";
 import { AiOutlineUpload } from "react-icons/ai";
 import { FileFormat } from "src/enums/file.enum";
 import useFile from "src/store/useFile";
-
-const StyledFileName = styled.span`
-  padding-top: 14px;
-  color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
-`;
 
 export const ImportModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const [url, setURL] = React.useState("");
@@ -75,7 +69,7 @@ export const ImportModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           placeholder="URL of JSON to fetch"
           data-autofocus
         />
-        <Paper bg="dark" radius="md" style={{ cursor: "pointer" }}>
+        <Paper radius="md" style={{ cursor: "pointer" }} withBorder>
           <Dropzone
             onDrop={files => setFile(files[0])}
             onReject={files => toast.error(`Unable to load file ${files[0].file.name}`)}

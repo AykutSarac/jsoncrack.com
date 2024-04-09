@@ -2,20 +2,15 @@ import React from "react";
 import dynamic from "next/dynamic";
 import styled from "styled-components";
 import debounce from "lodash.debounce";
-import { toast } from "react-hot-toast";
 import { Space } from "react-zoomable-ui";
 import { ElkRoot } from "reaflow/dist/layout/useLayout";
 import { useLongPress } from "use-long-press";
 import { CustomNode } from "src/containers/Views/GraphView/CustomNode";
-import { ViewMode } from "src/enums/viewMode.enum";
 import useToggleHide from "src/hooks/useToggleHide";
 import { Loading } from "src/layout/Loading";
 import useConfig from "src/store/useConfig";
 import useGraph from "src/store/useGraph";
-import useUser from "src/store/useUser";
-import { NodeData } from "src/types/graph";
 import { CustomEdge } from "./CustomEdge";
-import { ErrorView } from "./ErrorView";
 import { PremiumView } from "./PremiumView";
 
 const Canvas = dynamic(() => import("reaflow").then(r => r.Canvas), {
@@ -86,10 +81,6 @@ const layoutOptions = {
   "elk.layered.nodePlacement.strategy": "NETWORK_SIMPLEX",
 };
 
-const PREMIUM_LIMIT = 200;
-const ERROR_LIMIT_TREE = 5_000;
-const ERROR_LIMIT = 10_000;
-
 const GraphCanvas = ({ isWidget }: GraphProps) => {
   const { validateHiddenNodes } = useToggleHide();
   const setLoading = useGraph(state => state.setLoading);
@@ -147,22 +138,13 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
   );
 };
 
-function getViewType(nodes: NodeData[]) {
-  if (nodes.length > ERROR_LIMIT) return "error";
-  if (nodes.length > ERROR_LIMIT_TREE) return "tree";
-  if (nodes.length > PREMIUM_LIMIT) return "premium";
-  return "graph";
-}
-
 export const Graph = ({ isWidget = false }: GraphProps) => {
   const setViewPort = useGraph(state => state.setViewPort);
   const viewPort = useGraph(state => state.viewPort);
+  const aboveSupportedLimit = useGraph(state => state.nodes.length > 1_000);
   const loading = useGraph(state => state.loading);
-  const isPremium = useUser(state => state.premium);
-  const viewType = useGraph(state => getViewType(state.nodes));
   const gesturesEnabled = useConfig(state => state.gesturesEnabled);
   const rulersEnabled = useConfig(state => state.rulersEnabled);
-  const setViewMode = useConfig(state => state.setViewMode);
 
   const callback = React.useCallback(() => {
     const canvas = document.querySelector(".jsoncrack-canvas") as HTMLDivElement | null;
@@ -181,21 +163,13 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
     if ("activeElement" in document) (document.activeElement as HTMLElement)?.blur();
   }, []);
 
-  if (viewType === "error") {
-    return <ErrorView />;
-  }
-
-  if (viewType === "tree") {
-    setViewMode(ViewMode.Tree);
-    toast("This document is too large to display as a graph. Switching to tree view.");
-  }
-
-  if (viewType === "premium" && !isWidget) {
-    if (!isPremium) return <PremiumView />;
-  }
   const debouncedOnZoomChangeHandler = debounce(() => {
     setViewPort(viewPort!);
   }, 300);
+
+  if (aboveSupportedLimit) {
+    return <PremiumView />;
+  }
 
   return (
     <>
