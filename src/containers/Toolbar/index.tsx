@@ -62,6 +62,7 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
               { value: FileFormat.TOML, label: "TOML" },
               { value: FileFormat.CSV, label: "CSV" },
             ]}
+            allowDeselect={false}
           />
 
           <FileMenu />
@@ -93,7 +94,7 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
                 style={{ textAlign: "center", gap: 8, alignItems: "center" }}
               >
                 <BsBoxArrowUpLeft />
-                You&apos;re invited to try the new editor!
+                Premium editor has moved!
                 <Badge size="xs" variant="light" color="teal">
                   New
                 </Badge>

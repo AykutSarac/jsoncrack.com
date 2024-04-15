@@ -1,7 +1,7 @@
 import React from "react";
-import { Button, List, ThemeIcon, Title } from "@mantine/core";
+import { Button, Title } from "@mantine/core";
 import styled from "styled-components";
-import { BsCheck } from "react-icons/bs";
+import { MdChevronRight } from "react-icons/md";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
 
 const StyledPremiumView = styled.div`
@@ -13,6 +13,7 @@ const StyledPremiumView = styled.div`
   width: 100%;
   height: 100%;
   background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
+  overflow: hidden;
 
   img {
     filter: drop-shadow(2px 2px 1px black);
@@ -136,7 +137,7 @@ const StyledInfo = styled.p`
   font-weight: 600;
   font-size: 20px;
   text-align: center;
-  color: ${({ theme }) => theme.TEXT_NORMAL};
+  color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
 `;
 
 const StyledContent = styled.div`
@@ -159,38 +160,22 @@ export const PremiumView = () => (
         <JSONCrackLogo fontSize="4rem" />
       </Title>
       <StyledInfo>
-        Upgrade JSON Crack to premium and explore the full potential of your data!
+        Free version is not optimized to handle data of this size. Check out the premium version for
+        more features and capabilities.
       </StyledInfo>
-
-      <List
-        c="dimmed"
-        mt="lg"
-        spacing="xs"
-        size="md"
-        center
-        icon={
-          <ThemeIcon color="teal" size={20} radius="xl">
-            <BsCheck size="1rem" />
-          </ThemeIcon>
-        }
-      >
-        <List.Item>Edit directly on graph</List.Item>
-        <List.Item>JSON Schema support</List.Item>
-        <List.Item>Visualize data at full capability</List.Item>
-        <List.Item>Save & share up to 200 files</List.Item>
-      </List>
 
       <Button
         mt="lg"
         size="lg"
         component="a"
         fw="bolder"
-        variant="gradient"
-        gradient={{ from: "blue", to: "teal" }}
-        href="https://pro.jsoncrack.com/pricing"
+        color="indigo"
+        radius="sm"
+        href="https://pro.jsoncrack.com"
         target="_blank"
+        rightSection={<MdChevronRight size="24" />}
       >
-        UPGRADE TO PREMIUM
+        Take me there
       </Button>
     </StyledContent>
 

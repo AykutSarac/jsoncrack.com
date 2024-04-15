@@ -2,15 +2,11 @@ import React from "react";
 import { Stack, Modal, Button, ModalProps, Text, Anchor, Group, Divider } from "@mantine/core";
 import Editor from "@monaco-editor/react";
 import { toast } from "react-hot-toast";
-import { VscLinkExternal, VscLock } from "react-icons/vsc";
+import { VscLinkExternal } from "react-icons/vsc";
 import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
-import useModal from "src/store/useModal";
-import useUser from "src/store/useUser";
 
 export const SchemaModal: React.FC<ModalProps> = ({ opened, onClose }) => {
-  const isPremium = useUser(state => state.premium);
-  const showPremiumModal = useModal(state => state.setVisible("premium"));
   const setJsonSchema = useFile(state => state.setJsonSchema);
   const [schema, setSchema] = React.useState(
     JSON.stringify(
@@ -34,8 +30,6 @@ export const SchemaModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const darkmodeEnabled = useConfig(state => (state.darkmodeEnabled ? "vs-dark" : "light"));
 
   const onApply = () => {
-    if (!isPremium) return showPremiumModal(true);
-
     try {
       const parsedSchema = JSON.parse(schema);
 
@@ -80,7 +74,7 @@ export const SchemaModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           <Button variant="outline" onClick={onClear} disabled={!schema}>
             Clear
           </Button>
-          <Button onClick={onApply} disabled={!schema} rightSection={!isPremium && <VscLock />}>
+          <Button onClick={onApply} disabled={!schema}>
             Apply
           </Button>
         </Group>

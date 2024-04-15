@@ -13,6 +13,8 @@ import { lightTheme } from "src/constants/theme";
 import { supabase } from "src/lib/api/supabase";
 import useUser from "src/store/useUser";
 
+const Toaster = dynamic(() => import("react-hot-toast").then(c => c.Toaster));
+
 const mantineTheme = createTheme({
   primaryShade: 8,
 });
@@ -54,6 +56,21 @@ function JsonCrack({ Component, pageProps }: AppProps) {
 
       <MantineProvider theme={mantineTheme}>
         <ThemeProvider theme={lightTheme}>
+          <Toaster
+            position="bottom-right"
+            containerStyle={{
+              bottom: 34,
+              right: 8,
+              fontSize: 14,
+            }}
+            toastOptions={{
+              style: {
+                background: "#4D4D4D",
+                color: "#B9BBBE",
+                borderRadius: 4,
+              },
+            }}
+          />
           <GlobalStyle />
           <Component {...pageProps} />
           <ExternalMode />
