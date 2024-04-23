@@ -96,7 +96,7 @@ export const PricingCards = () => {
           >
             Sign up
           </Button>
-          <Flex direction="column" justify="space-between" h={280}>
+          <Flex direction="column" justify="space-between" h={250}>
             <List spacing="xs" size="sm" mt="lg" center icon="✦">
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
@@ -105,12 +105,33 @@ export const PricingCards = () => {
               </List.Item>
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
-                  Visualize graphs up to 800 nodes
+                  Graph & Tree visualizations
                 </Text>
               </List.Item>
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
-                  Download graphs as images
+                  Small size graph visualizations
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Download as image
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Generate types
+                </Text>
+                <Text c="dimmed" fz="xs">
+                  TypeScript, Go, Rust, JSON Schema and more...
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Multiple format support
+                  <Text c="dimmed" fz="xs">
+                    JSON, YAML, TOML, XML, CSV, and more...
+                  </Text>
                 </Text>
               </List.Item>
             </List>
@@ -149,31 +170,26 @@ export const PricingCards = () => {
           >
             Upgrade
           </Button>
-          <Flex direction="column" justify="space-between" h={280}>
+          <Flex direction="column" justify="space-between" h={250}>
             <List spacing="xs" size="sm" mt="lg" center icon="✦">
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
-                  Live Graph & Tree visualization
+                  Graphs: 5X faster, compact and smooth
                 </Text>
               </List.Item>
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
-                  Compare data differences on graph
+                  Compare data differences on graphs
                 </Text>
               </List.Item>
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
-                  Modify directly on the visualization
+                  Edit data directly on visualizations
                 </Text>
               </List.Item>
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
                   Built-in tabs for multiple documents
-                </Text>
-              </List.Item>
-              <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Download graphs as images
                 </Text>
               </List.Item>
               <List.Item>
