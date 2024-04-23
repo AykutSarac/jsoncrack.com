@@ -142,12 +142,31 @@ export function AuthenticationForm(props: PaperProps) {
 const SignIn = () => {
   const { isReady, push, query } = useRouter();
   const hasSession = useUser(state => !!state.user);
+  const setSession = useUser(state => state.setSession);
   const isPasswordReset = query?.type === "recovery" && !query?.error;
 
   React.useEffect(() => {
-    if (isIframe()) push("/");
-    if (isReady && hasSession && !isPasswordReset) push("/editor");
-  }, [isReady, hasSession, push, isPasswordReset]);
+    if (isIframe()) {
+      push("/");
+      return;
+    }
+
+    if (!isReady) return;
+
+    if (query?.access_token && query?.refresh_token) {
+      (async () => {
+        const { data, error } = await supabase.auth.setSession({
+          access_token: query.access_token as string,
+          refresh_token: query.refresh_token as string,
+        });
+
+        if (error) return toast.error(error.message);
+        if (data.session) setSession(data.session);
+      })();
+    }
+
+    if (hasSession && !isPasswordReset) push("/editor");
+  }, [isReady, hasSession, push, isPasswordReset, query, setSession]);
 
   return (
     <Layout>
