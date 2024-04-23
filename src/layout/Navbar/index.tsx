@@ -175,8 +175,8 @@ export const Navbar = () => {
           {!hasSession && (
             <>
               <Button
-                component={Link}
-                href="/sign-in"
+                component="a"
+                href="https://app.jsoncrack.com/sign-in"
                 variant="outline"
                 color="gray"
                 className="hide-mobile"
@@ -188,14 +188,14 @@ export const Navbar = () => {
               </Button>
               <Button
                 component={Link}
-                href="/sign-up"
+                href="/editor"
                 color="dark"
                 className="hide-mobile"
                 visibleFrom="sm"
                 radius="md"
                 size="md"
               >
-                Sign Up
+                Editor
               </Button>
             </>
           )}
@@ -203,7 +203,7 @@ export const Navbar = () => {
             <Button
               color="dark"
               size="md"
-              radius="xl"
+              radius="md"
               component={Link}
               href="/editor"
               prefetch={false}

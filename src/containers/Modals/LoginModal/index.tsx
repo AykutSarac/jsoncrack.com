@@ -7,7 +7,7 @@ export const LoginModal: React.FC<ModalProps> = ({ opened, onClose }) => {
       <Stack py="sm">
         <Title order={2}>Welcome Back!</Title>
         <Text>Login to unlock full potential of JSON Crack!</Text>
-        <Button component="a" href="/sign-in" size="md" fullWidth>
+        <Button component="a" href="https://app.jsoncrack.com/sign-in" size="md" fullWidth>
           Sign In
         </Button>
       </Stack>

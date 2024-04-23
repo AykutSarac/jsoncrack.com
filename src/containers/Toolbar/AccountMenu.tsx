@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import { Menu, Avatar, Text } from "@mantine/core";
 import { VscSignIn, VscFeedback, VscSignOut } from "react-icons/vsc";
 import useModal from "src/store/useModal";
@@ -32,11 +31,11 @@ export const AccountMenu = () => {
             <Text size="xs">{username ?? "Account"}</Text>
           </Menu.Item>
         ) : (
-          <Link href="/sign-in">
+          <a href="https://app.jsoncrack.com/sign-in">
             <Menu.Item leftSection={<VscSignIn />}>
               <Text size="xs">Sign in</Text>
             </Menu.Item>
-          </Link>
+          </a>
         )}
         {user && (
           <>

@@ -83,7 +83,7 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
         )}
 
         {premium && !isWidget && (
-          <a href="https://pro.jsoncrack.com/sign-in">
+          <a href="https://app.jsoncrack.com/sign-in">
             <Styles.StyledToolElement>
               <Text
                 display="flex"
