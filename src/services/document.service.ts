@@ -46,4 +46,7 @@ export const documentSvc = {
   delete: async (id: string) => {
     await supabase.from("document").delete().eq("id", id);
   },
+  updateLastSaved: async (id: string, lastSaved: string) => {
+    return await supabase.from("document").update({ last_saved: lastSaved }).eq("id", id);
+  },
 };

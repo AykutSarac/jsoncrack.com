@@ -106,6 +106,8 @@ export const BottomBar = () => {
   const [isPrivate, setIsPrivate] = React.useState(false);
   const [isUpdating, setIsUpdating] = React.useState(false);
 
+  const [lastSaved, setLastSaved] = React.useState<string | null>(null);
+
   const toggleEditor = () => toggleFullscreen(!fullscreen);
 
   React.useEffect(() => {
@@ -131,10 +133,13 @@ export const BottomBar = () => {
         });
 
         if (error) throw error;
-        if (data) replace({ query: { json: data } });
-
-        toast.success("Document saved to cloud", { id: "fileSave" });
-        setHasChanges(false);
+        if (data) {
+          await documentSvc.updateLastSaved(query.json as string, new Date().toISOString());
+          setLastSaved(new Date().toISOString());
+          replace({ query: { json: query.json } });
+          toast.success("Document saved to cloud", { id: "fileSave" });
+          setHasChanges(false);
+        }
       } catch (error: any) {
         toast.error(error.message, { id: "fileSave" });
       } finally {
@@ -165,6 +170,7 @@ export const BottomBar = () => {
       if (error) return toast.error(error.message);
 
       if (updatedJsonData[0]) {
+        await documentSvc.updateLastSaved(query.json as string, new Date().toISOString());
         setIsPrivate(updatedJsonData[0].private);
         toast.success(`Document set to ${isPrivate ? "public" : "private"}.`);
       } else throw error;
@@ -223,6 +229,11 @@ export const BottomBar = () => {
           <StyledBottomBarItem onClick={handleSaveJson} disabled={isUpdating || error}>
             {hasChanges || !user ? <AiOutlineCloudUpload /> : <AiOutlineCloudSync />}
             {hasChanges || !user ? (query?.json ? "Unsaved Changes" : "Save to Cloud") : "Saved"}
+          </StyledBottomBarItem>
+        )}
+        {lastSaved && (
+          <StyledBottomBarItem>
+            <Text>Last saved: {lastSaved}</Text>
           </StyledBottomBarItem>
         )}
         {data?.owner_email === user?.email && (
