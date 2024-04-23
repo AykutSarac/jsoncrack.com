@@ -398,11 +398,11 @@ export const HomePage = () => {
         <Stack align="center">
           <StyledHeroText>More than an editor.</StyledHeroText>
 
-          <Link href="/sign-up" prefetch={false}>
+          <a href="https://app.jsoncrack.com/sign-up">
             <Button size="lg" color="dark" rightSection={<MdOutlineArrowRightAlt />} fullWidth>
               Start using now
             </Button>
-          </Link>
+          </a>
         </Stack>
       </Center>
     </Layout>
