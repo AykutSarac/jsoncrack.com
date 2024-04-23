@@ -59,6 +59,7 @@ const Right = styled.div`
 
 export const Navbar = () => {
   const hasSession = useUser(state => !!state.user);
+  const premium = useUser(state => !!state.premium);
   const [opened, { toggle }] = useDisclosure();
 
   React.useEffect(() => {
@@ -104,6 +105,7 @@ export const Navbar = () => {
           </Button>
           <Button
             component={Link}
+            prefetch={false}
             href="/docs"
             variant="subtle"
             color="gray"
@@ -188,7 +190,8 @@ export const Navbar = () => {
               </Button>
               <Button
                 component={Link}
-                href="/editor"
+                prefetch={false}
+                href={premium ? "https://app.jsoncrack.com/editor" : "/editor"}
                 color="dark"
                 className="hide-mobile"
                 visibleFrom="sm"
