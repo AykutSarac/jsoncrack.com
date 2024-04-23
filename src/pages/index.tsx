@@ -205,9 +205,9 @@ export const HomePage = () => {
                 withArrow
               >
                 <Button
-                  component="a"
-                  href="https://jsoncrack.com/editor"
-                  target="_blank"
+                  component={Link}
+                  prefetch={false}
+                  href="/editor"
                   size="xl"
                   fw="bold"
                   variant="outline"
@@ -226,9 +226,9 @@ export const HomePage = () => {
               </Tooltip>
 
               <Button
-                component="a"
-                href="https://jsoncrack.com/editor"
-                target="_blank"
+                component={Link}
+                prefetch={false}
+                href="/editor"
                 fw="bold"
                 size="md"
                 variant="outline"
