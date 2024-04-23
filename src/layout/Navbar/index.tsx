@@ -9,24 +9,33 @@ import { JSONCrackLogo } from "../JsonCrackLogo";
 
 const StyledNavbarWrapper = styled.div`
   position: sticky;
-  top: 0;
+  top: -1px;
   left: 0;
   z-index: 3;
+  transition: background 0.2s ease-in-out;
+
+  &.is-pinned {
+    background: rgba(255, 255, 255, 0.5);
+    border-bottom: 1px solid gray;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  }
 `;
 
-const StyledNavbar = styled.div`
+const StyledNavbar = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   height: 56px;
   margin: 0 auto;
-  border-bottom: 1px solid gray;
-  background: #ffffff;
-  padding: 8px 16px;
-  box-shadow:
-    0 0 0 1px rgba(0, 0, 0, 0.35),
-    0 2px 5px 0 rgba(0, 0, 0, 0.35);
+  padding: 46px 40px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+
+  @media only screen and (max-width: 768px) {
+    padding: 16px 24px;
+  }
 
   @media only screen and (max-width: 1024px) {
     .desktop {
@@ -49,56 +58,70 @@ const Right = styled.div`
 `;
 
 export const Navbar = () => {
-  const isAuthenticated = useUser(state => state.isAuthenticated);
+  const hasSession = useUser(state => !!state.user);
   const [opened, { toggle }] = useDisclosure();
 
+  React.useEffect(() => {
+    const el = document.querySelector(".navbar");
+    const observer = new IntersectionObserver(
+      ([e]) => e.target.classList.toggle("is-pinned", e.intersectionRatio < 1),
+      { threshold: [1] }
+    );
+
+    if (el) observer.observe(el);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <StyledNavbarWrapper>
+    <StyledNavbarWrapper className="navbar">
       <StyledNavbar>
         <Left>
           <JSONCrackLogo />
           <Button
             ml="lg"
             component="a"
-            href="https://pro.jsoncrack.com/pricing"
-            target="_blank"
-            variant="subtle"
-            color="black"
-            radius="md"
-            visibleFrom="sm"
-          >
-            Pricing
-          </Button>
-          <Button
-            component="a"
             href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode"
             target="_blank"
             variant="subtle"
-            color="black"
+            color="gray"
             radius="md"
             visibleFrom="sm"
+            size="md"
           >
             VS Code
           </Button>
           <Button
             component={Link}
-            href="/docs"
-            prefetch={false}
+            href="/pricing"
             variant="subtle"
-            color="black"
+            color="gray"
             radius="md"
             visibleFrom="sm"
+            size="md"
           >
-            Docs
+            Pricing
+          </Button>
+          <Button
+            component={Link}
+            href="/docs"
+            variant="subtle"
+            color="gray"
+            radius="md"
+            visibleFrom="sm"
+            size="md"
+          >
+            Embed
           </Button>
           <Menu trigger="hover" offset={15} withArrow shadow="md">
             <Menu.Target>
               <Button
                 variant="subtle"
-                color="black"
+                color="gray"
                 radius="md"
                 rightSection={<BiChevronDown size="18" />}
                 visibleFrom="sm"
+                size="md"
               >
                 Legal
               </Button>
@@ -123,10 +146,11 @@ export const Navbar = () => {
             <Menu.Target>
               <Button
                 variant="subtle"
-                color="black"
+                color="gray"
                 radius="md"
                 rightSection={<BiChevronDown size="18" />}
                 visibleFrom="sm"
+                size="md"
               >
                 Social
               </Button>
@@ -148,21 +172,46 @@ export const Navbar = () => {
           </Menu>
         </Left>
         <Right>
-          {!isAuthenticated && (
+          {!hasSession && (
+            <>
+              <Button
+                component={Link}
+                href="/sign-in"
+                variant="outline"
+                color="gray"
+                className="hide-mobile"
+                radius="md"
+                visibleFrom="sm"
+                size="md"
+              >
+                Login
+              </Button>
+              <Button
+                component={Link}
+                href="/sign-up"
+                color="dark"
+                className="hide-mobile"
+                visibleFrom="sm"
+                radius="md"
+                size="md"
+              >
+                Sign Up
+              </Button>
+            </>
+          )}
+          {hasSession && (
             <Button
-              component={Link}
-              href="/sign-in"
-              variant="outline"
               color="dark"
-              className="hide-mobile"
+              size="md"
+              radius="xl"
+              component={Link}
+              href="/editor"
+              prefetch={false}
               visibleFrom="sm"
             >
-              Login
+              Editor
             </Button>
           )}
-          <Button color="dark" component={Link} href="/editor" prefetch={false} visibleFrom="sm">
-            Editor
-          </Button>
           <Burger opened={opened} onClick={toggle} aria-label="Toggle navigation" hiddenFrom="sm" />
           {opened && (
             <Overlay top={56} h="100dvh">
@@ -177,43 +226,20 @@ export const Navbar = () => {
               >
                 <Flex pt="lg" direction="column" align="center" justify="center" gap="lg">
                   <Button
-                    component="a"
-                    href="https://pro.jsoncrack.com/pricing"
-                    target="_blank"
+                    component={Link}
+                    href="/pricing"
                     variant="transparent"
-                    color="black"
+                    color="dark"
                     radius="md"
                     onClick={toggle}
                   >
                     Pricing
                   </Button>
-                  <Button
-                    component="a"
-                    href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode"
-                    target="_blank"
-                    variant="transparent"
-                    color="black"
-                    radius="md"
-                    onClick={toggle}
-                  >
-                    VS Code
-                  </Button>
-                  <Button
-                    component={Link}
-                    href="/docs"
-                    prefetch={false}
-                    variant="transparent"
-                    color="black"
-                    radius="md"
-                    onClick={toggle}
-                  >
-                    Docs
-                  </Button>
                   <Menu trigger="click" offset={15} withArrow shadow="md">
                     <Menu.Target>
                       <Button
                         variant="transparent"
-                        color="black"
+                        color="dark"
                         radius="md"
                         rightSection={<BiChevronDown size="18" />}
                       >
@@ -244,7 +270,7 @@ export const Navbar = () => {
                     <Menu.Target>
                       <Button
                         variant="transparent"
-                        color="black"
+                        color="dark"
                         radius="md"
                         rightSection={<BiChevronDown size="18" />}
                       >

@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@mantine/carousel':
+    specifier: ^7.6.2
+    version: 7.6.2(@mantine/core@7.6.2)(@mantine/hooks@7.6.2)(embla-carousel-react@8.0.2)(react-dom@18.2.0)(react@18.2.0)
   '@mantine/code-highlight':
     specifier: ^7.6.2
     version: 7.6.2(@mantine/core@7.6.2)(@mantine/hooks@7.6.2)(react-dom@18.2.0)(react@18.2.0)
@@ -596,6 +599,22 @@ packages:
     engines: {node: '>= 0.4'}
     dependencies:
       call-bind: 1.0.7
+    dev: false
+
+  /@mantine/carousel@7.6.2(@mantine/core@7.6.2)(@mantine/hooks@7.6.2)(embla-carousel-react@8.0.2)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-Iy0ffVyJz+5zNhiNhVALhXne0reQ/PhF7BFmyLDj/LKBrJG9aPNDiYZehOUeBOuXHsdhX5yIb/kuEKxd+3fMlA==}
+    peerDependencies:
+      '@mantine/core': 7.6.2
+      '@mantine/hooks': 7.6.2
+      embla-carousel-react: '>=7.0.0'
+      react: ^18.2.0
+      react-dom: ^18.2.0
+    dependencies:
+      '@mantine/core': 7.6.2(@mantine/hooks@7.6.2)(@types/react@18.2.51)(react-dom@18.2.0)(react@18.2.0)
+      '@mantine/hooks': 7.6.2(react@18.2.0)
+      embla-carousel-react: 8.0.2(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
     dev: false
 
   /@mantine/code-highlight@7.6.2(@mantine/core@7.6.2)(@mantine/hooks@7.6.2)(react-dom@18.2.0)(react@18.2.0):
@@ -1930,6 +1949,28 @@ packages:
     resolution: {integrity: sha512-InJhblLPZbBjw3N49knOWonfprgKPLKGySmG6bGHi7WsD5OkXIIlLkU4AguROmaMZ0v1BRdo267wEc0Pexw8ww==}
     dependencies:
       tape: 4.17.0
+    dev: false
+
+  /embla-carousel-react@8.0.2(react@18.2.0):
+    resolution: {integrity: sha512-RHe1GKLulOW8EDN+cJgbFbVVfRXcaLT2/89dyVw3ONGgVpZjD19wB87I1LUZ1aCzOSrTccx0PFSQanK4OOfGPA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.1 || ^18.0.0
+    dependencies:
+      embla-carousel: 8.0.2
+      embla-carousel-reactive-utils: 8.0.2(embla-carousel@8.0.2)
+      react: 18.2.0
+    dev: false
+
+  /embla-carousel-reactive-utils@8.0.2(embla-carousel@8.0.2):
+    resolution: {integrity: sha512-nLZqDkQdO0hvOP49/dUwjkkepMnUXgIzhyRuDjwGqswpB4Ibnc5M+w7rSQQAM+uMj0cPaXnYOTlv8XD7I/zVNw==}
+    peerDependencies:
+      embla-carousel: 8.0.2
+    dependencies:
+      embla-carousel: 8.0.2
+    dev: false
+
+  /embla-carousel@8.0.2:
+    resolution: {integrity: sha512-bogsDO8xosuh/l3PxIvA5AMl3+BnRVAse9sDW/60amzj4MbGS5re4WH5eVEXiuH8G1/3G7QUAX2QNr3Yx8z5rA==}
     dev: false
 
   /emoji-regex@8.0.0:

@@ -1,10 +1,19 @@
 import React from "react";
 import Head from "next/head";
-import { Flex, Stack, Button, List, Text, Paper, SegmentedControl, Center } from "@mantine/core";
+import Link from "next/link";
+import {
+  Flex,
+  Stack,
+  Button,
+  List,
+  Text,
+  Paper,
+  SegmentedControl,
+  Center,
+  Badge,
+} from "@mantine/core";
 import styled from "styled-components";
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import { FaCheck } from "react-icons/fa";
-import { ImCheckmark } from "react-icons/im";
 import { VscArrowRight } from "react-icons/vsc";
 import Layout from "src/layout/Layout";
 import useUser from "src/store/useUser";
@@ -16,28 +25,21 @@ const purchaseLinks = {
     "https://herowand.lemonsqueezy.com/checkout/buy/577928ea-fb09-4076-9307-3e5931b35ad0?enabled=82417",
 };
 
+const StyledPaperFree = styled(Paper)`
+  padding: 1.5em;
+  width: 400px;
+  border-radius: 1em;
+  border: 2px solid #e1e1e1;
+`;
+
 const StyledPaper = styled(Paper)`
   padding: 1.5em;
-  border-radius: 1rem;
   width: 400px;
-  background: rgb(14, 14, 14);
-
-  background: linear-gradient(
-    180deg,
-    rgba(48, 48, 48, 0.5) 0%,
-    rgba(0, 0, 0, 1) 25%,
-    rgba(0, 0, 0, 1) 50%,
-    rgba(0, 0, 0, 1) 90%,
-    rgba(101, 0, 94, 0.5) 100%
-  );
-
-  border-bottom: 1px solid rgba(101, 0, 94, 1);
-  border-top: 1px solid rgba(48, 48, 48, 1);
-  transition: transform 0.5s;
-
-  &:hover {
-    transform: scale(1.01);
-  }
+  background:
+    linear-gradient(white, white) padding-box,
+    linear-gradient(#ec85f5, #fb7eb0 28%, #fc9f96 53%, #ffbc88 78%, #ffc86a) border-box;
+  border-radius: 1em;
+  border: 2px solid transparent;
 `;
 
 export const PricingCards = () => {
@@ -50,100 +52,87 @@ export const PricingCards = () => {
   };
 
   return (
-    <Stack gap="0" align="center">
+    <Stack component="section" id="pricing" gap="0" align="center">
       <Center my="lg">
         <SegmentedControl
           color="dark"
+          value={isMonthly ? "Monthly" : "Yearly"}
           onChange={v => setIsMonthly(v === "Monthly")}
-          size="lg"
+          size="md"
           data={["Monthly", "Yearly"]}
           w={200}
-          radius="xl"
+          radius="lg"
         />
       </Center>
-      <Flex gap="lg" wrap="wrap" justify="center" w="fit-content" p="lg" mx="auto">
-        <StyledPaper>
+      <Flex gap="lg" wrap="wrap" justify="center" w="fit-content" p="lg" mx="auto" maw="100%">
+        <StyledPaperFree>
           <Flex justify="space-between">
             <Stack gap="0">
-              <Text fz="xl" fw="bold" c="white">
+              <Badge mb="lg" size="lg" variant="outline" color="gray.3" c="dark">
                 Free
-              </Text>
-              <Text fz={32} fw="bold" c="white">
-                $0
-              </Text>
-              <Text fz="xs" c="gray.6">
+              </Badge>
+
+              <Flex gap="xs" align="baseline">
+                <Text fz={32} fw="bold" c="dark">
+                  $0
+                </Text>
+                <Text fz="sm" fw={500} c="gray.8">
+                  / month
+                </Text>
+              </Flex>
+              <Text fz="xs" c="gray.7">
                 billed {isMonthly ? "monthly" : "annually"}
               </Text>
             </Stack>
           </Flex>
           <Button
-            component="a"
-            href="https://jsoncrack.com"
-            target="_blank"
-            my="md"
-            size="md"
+            component={Link}
+            href="/sign-up"
+            size="lg"
             radius="md"
-            color="gray.6"
             variant="outline"
+            color="dark"
             fullWidth
+            my="md"
           >
-            Free
+            Sign up
           </Button>
-          <Flex direction="column" justify="space-between" h={270}>
-            <List
-              spacing="xs"
-              size="sm"
-              mt="lg"
-              center
-              icon={<FaCheck color="white" size="1rem" />}
-            >
+          <Flex direction="column" justify="space-between" h={280}>
+            <List spacing="xs" size="sm" mt="lg" center icon="✦">
               <List.Item>
-                <Text c="white" fz="sm">
+                <Text c="gray.7" fw={500} fz="sm">
                   Open Source
                 </Text>
               </List.Item>
               <List.Item>
-                <Text c="white" fz="sm">
-                  Visualize multiple data formats
-                </Text>
-                <Text c="dimmed" fz="xs">
-                  JSON, YAML, CSV, XML, TOML
+                <Text c="gray.7" fw={500} fz="sm">
+                  Visualize graphs up to 800 nodes
                 </Text>
               </List.Item>
               <List.Item>
-                <Text c="white" fz="sm">
-                  Download graph as image
-                </Text>
-              </List.Item>
-              <List.Item>
-                <Text c="white" fz="sm">
-                  Generate types
-                </Text>
-                <Text c="dimmed" fz="xs">
-                  TypeScript, Rust, Go, etc.
+                <Text c="gray.7" fw={500} fz="sm">
+                  Download graphs as images
                 </Text>
               </List.Item>
             </List>
           </Flex>
-        </StyledPaper>
-
+        </StyledPaperFree>
         <StyledPaper>
           <Flex justify="space-between">
             <Stack gap="0">
-              <Flex align="center" gap="xs">
-                <Text fz="xl" fw="bold" c="white">
-                  Premium
-                </Text>
-              </Flex>
-              <Flex gap="xs" align="center">
-                <Text fz={32} fw="bold" c="white">
+              <Badge mb="lg" size="lg" variant="outline" color="gray.3" c="dark" leftSection="✦">
+                Premium
+              </Badge>
+
+              <Flex gap="xs" align="baseline">
+                <Text fz={32} fw="bold" c="dark">
                   ${isMonthly ? "6" : "5"}
                 </Text>
-                <Text fz="md" fw={500} c="gray.5">
+                <Text fz="sm" fw={500} c="gray.8">
                   / month
                 </Text>
               </Flex>
-              <Text fz="xs" c="gray.6">
+              <Text fz="xs" c="gray.7">
                 billed {isMonthly ? "monthly" : "annually"}
               </Text>
             </Stack>
@@ -152,64 +141,54 @@ export const PricingCards = () => {
             component="a"
             href={paymentURL(isMonthly ? purchaseLinks.monthly : purchaseLinks.annual)}
             target="_blank"
-            size="md"
+            size="lg"
             radius="md"
-            color="white"
-            bg="grape"
+            color="indigo"
             fullWidth
             my="md"
             rightSection={<VscArrowRight />}
           >
             Upgrade
           </Button>
-          <Flex direction="column" justify="space-between" h={300}>
-            <List
-              spacing="xs"
-              size="sm"
-              mt="lg"
-              center
-              icon={<ImCheckmark color="white" size="1rem" />}
-            >
+          <Flex direction="column" justify="space-between" h={280}>
+            <List spacing="xs" size="sm" mt="lg" center icon="✦">
               <List.Item>
-                <Text c="gray.4" fz="sm">
-                  Lightning speed graph visualization
+                <Text c="gray.7" fw={500} fz="sm">
+                  Live Graph & Tree visualization
                 </Text>
               </List.Item>
               <List.Item>
-                <Text c="gray.4" fz="sm">
-                  Smooth user interface & experience
+                <Text c="gray.7" fw={500} fz="sm">
+                  Compare data differences on graph
                 </Text>
               </List.Item>
               <List.Item>
-                <Text c="gray.4" fz="sm">
-                  Modify data directly through the graph
+                <Text c="gray.7" fw={500} fz="sm">
+                  Modify directly on the visualization
                 </Text>
               </List.Item>
               <List.Item>
-                <Text c="gray.4" fz="sm">
-                  Switch tabs within the editor
+                <Text c="gray.7" fw={500} fz="sm">
+                  Built-in tabs for multiple documents
                 </Text>
               </List.Item>
               <List.Item>
-                <Text c="gray.4" fz="sm">
+                <Text c="gray.7" fw={500} fz="sm">
+                  Download graphs as images
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
                   Save up to 200 documents in the cloud
                 </Text>
               </List.Item>
               <List.Item>
-                <Text c="gray.4" fz="sm">
-                  JSON Schema
+                <Text c="gray.7" fw={500} fz="sm">
+                  Visualize up to 4 MBs
                 </Text>
               </List.Item>
               <List.Item>
-                <Text c="gray.4" fz="sm">
-                  Bigger dataset support
-                </Text>
-                <Text c="dimmed" fz="xs">
-                  Supports up to 4 MB.
-                </Text>
-              </List.Item>
-              <List.Item>
-                <Text c="gray.4" fz="sm">
+                <Text c="gray.7" fw={500} fz="sm">
                   Join alpha test of AI
                 </Text>
                 <Text c="dimmed" fz="xs">

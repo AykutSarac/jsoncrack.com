@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { Button, Title } from "@mantine/core";
 import styled from "styled-components";
 import { MdChevronRight } from "react-icons/md";
@@ -165,17 +166,18 @@ export const PremiumView = () => (
       </StyledInfo>
 
       <Button
+        component={Link}
+        prefetch={false}
+        href="/pricing"
         mt="lg"
         size="lg"
-        component="a"
         fw="bolder"
         color="indigo"
         radius="sm"
-        href="https://pro.jsoncrack.com"
         target="_blank"
         rightSection={<MdChevronRight size="24" />}
       >
-        Take me there
+        Get Pro Editor
       </Button>
     </StyledContent>
 

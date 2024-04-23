@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import {
   Modal,
   ModalProps,
@@ -39,8 +40,9 @@ export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
         <Stack gap="xs">
           <Title order={3}>JSON Crack Plus</Title>
           <Button
-            component="a"
-            href="https://pro.jsoncrack.com/pricing"
+            component={Link}
+            prefetch={false}
+            href="/pricing"
             target="_blank"
             variant="filled"
             color="teal"

@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import { Badge, Flex, Group, Select, Text } from "@mantine/core";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
@@ -84,7 +83,7 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
         )}
 
         {premium && !isWidget && (
-          <Link href="https://pro.jsoncrack.com" target="_blank" passHref>
+          <a href="https://pro.jsoncrack.com/sign-in">
             <Styles.StyledToolElement>
               <Text
                 display="flex"
@@ -100,7 +99,7 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
                 </Badge>
               </Text>
             </Styles.StyledToolElement>
-          </Link>
+          </a>
         )}
 
         <SearchInput />
