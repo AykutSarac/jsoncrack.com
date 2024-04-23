@@ -54,7 +54,7 @@ const EditorPage: React.FC = () => {
       <StyledEditorWrapper>
         <Head>
           <title>Editor | JSON Crack</title>
-          {hasQuery && <meta name="robots" content="noindex,nofollow" />}
+          <link rel="canonical" href="https://jsoncrack.com/editor" />
         </Head>
         <StyledPageWrapper>
           <Toolbar />

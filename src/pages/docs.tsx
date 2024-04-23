@@ -38,13 +38,13 @@ const Docs = () => {
   return (
     <Layout>
       <Head>
-        <title>Documentation - JSON Crack</title>
+        <title>Embed - JSON Crack</title>
         <meta name="description" content="Embedding JSON Crack tutorial into your websites." />
       </Head>
       <Stack mx="auto" maw="90%">
         <Group mb="lg" mt={40}>
           <Title order={1} c="dark">
-            Documentation
+            Embed
           </Title>
         </Group>
         <Paper p="md" radius="md" withBorder>
