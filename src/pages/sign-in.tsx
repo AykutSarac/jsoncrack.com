@@ -168,6 +168,8 @@ const SignIn = () => {
     if (hasSession && !isPasswordReset) push("/editor");
   }, [isReady, hasSession, push, isPasswordReset, query, setSession]);
 
+  if (!isReady) return null;
+
   return (
     <Layout>
       <Head>
