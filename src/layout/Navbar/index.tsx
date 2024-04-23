@@ -59,7 +59,7 @@ const Right = styled.div`
 
 export const Navbar = () => {
   const hasSession = useUser(state => !!state.user);
-  const premium = useUser(state => !!state.premium);
+  const premium = useUser(state => state.premium);
   const [opened, { toggle }] = useDisclosure();
 
   React.useEffect(() => {
