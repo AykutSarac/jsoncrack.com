@@ -274,44 +274,21 @@ export const HomePage = () => {
           style={{ flex: 1 }}
         >
           <Carousel.Slide>
-            <img width="1440" height="760" src="./assets/preview/1.webp" alt="Preview 1" />
+            <img width="1440" height="760" src="./assets/preview/1.jpeg" alt="Preview 1" />
           </Carousel.Slide>
-          <Carousel.Slide>
-            <img
-              loading="lazy"
-              width="1440"
-              height="760"
-              src="./assets/preview/2.webp"
-              alt="Preview 2"
-            />
-          </Carousel.Slide>
-          <Carousel.Slide>
-            <img
-              loading="lazy"
-              width="1440"
-              height="760"
-              src="./assets/preview/3.webp"
-              alt="Preview 3"
-            />
-          </Carousel.Slide>
-          <Carousel.Slide>
-            <img
-              loading="lazy"
-              width="1440"
-              height="760"
-              src="./assets/preview/4.webp"
-              alt="Preview 4"
-            />
-          </Carousel.Slide>
-          <Carousel.Slide>
-            <img
-              loading="lazy"
-              width="1440"
-              height="760"
-              src="./assets/preview/5.webp"
-              alt="Preview 5"
-            />
-          </Carousel.Slide>
+          {Array(6)
+            .fill(0)
+            .map((_, index) => (
+              <Carousel.Slide key={index}>
+                <img
+                  loading="lazy"
+                  width="1440"
+                  height="760"
+                  src={`./assets/preview/${index + 2}.jpeg`}
+                  alt={`Preview ${index + 2}`}
+                />
+              </Carousel.Slide>
+            ))}
         </Carousel>
       </StyledCarouselWrapper>
       <Paper

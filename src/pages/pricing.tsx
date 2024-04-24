@@ -129,9 +129,9 @@ export const PricingCards = () => {
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
                   Multiple format support
-                  <Text c="dimmed" fz="xs">
-                    JSON, YAML, TOML, XML, CSV, and more...
-                  </Text>
+                </Text>
+                <Text c="dimmed" fz="xs">
+                  JSON, YAML, TOML, XML, CSV, and more...
                 </Text>
               </List.Item>
             </List>
