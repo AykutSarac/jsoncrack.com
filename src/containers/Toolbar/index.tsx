@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import { Badge, Flex, Group, Select, Text } from "@mantine/core";
-import prettier from "prettier";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen, AiFillGift } from "react-icons/ai";
 import { BsBoxArrowUpLeft } from "react-icons/bs";
@@ -39,7 +38,7 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
   const { contents: json, setContents: setJson } = useFile();
 
   const formatJson = async () => {
-    const formattedJson = await prettier.format(json, { parser: "json" });
+    const formattedJson = JSON.stringify(JSON.parse(json), null, 2);
     setJson({ contents: formattedJson });
   };
 
