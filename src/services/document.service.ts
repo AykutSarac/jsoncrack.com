@@ -9,6 +9,7 @@ type CloudSave = {
   id?: string;
   contents: string;
   format: FileFormat;
+  lastSaved: string;
 };
 
 export const documentSvc = {
@@ -18,6 +19,7 @@ export const documentSvc = {
       p_content,
       p_format,
       p_id,
+      p_last_saved: new Date().toISOString(),
     });
   },
   getById: async (doc_id: string): Promise<PostgrestSingleResponse<File[]>> => {
@@ -45,8 +47,5 @@ export const documentSvc = {
   },
   delete: async (id: string) => {
     await supabase.from("document").delete().eq("id", id);
-  },
-  updateLastSaved: async (id: string, lastSaved: string) => {
-    return await supabase.from("document").update({ last_saved: lastSaved }).eq("id", id);
   },
 };

@@ -126,22 +126,32 @@ export const BottomBar = () => {
       try {
         setIsUpdating(true);
         toast.loading("Saving document...", { id: "fileSave" });
+        console.log("Saving document...");
+        console.log(query.json);
+        console.log(getContents());
 
         const { data, error } = await documentSvc.upsert({
           id: query?.json,
           contents: getContents(),
           format: getFormat(),
+          lastSaved: new Date().toISOString(),
         });
 
         if (error) throw error;
+        console.log(data);
         if (data) {
-          await documentSvc.updateLastSaved(query.json as string, new Date().toISOString());
+          // await documentSvc.updateLastSaved(query.json as string, new Date().toISOString());
+          await documentSvc.update(query.json as string, {
+            lastSaved: new Date().toISOString(),
+          });
           setLastSaved(new Date().toISOString());
           replace({ query: { json: query.json } });
           toast.success("Document saved to cloud", { id: "fileSave" });
+          console.log("Document saved to cloud");
           setHasChanges(false);
         }
       } catch (error: any) {
+        console.error(error);
         toast.error(error.message, { id: "fileSave" });
       } finally {
         setIsUpdating(false);
@@ -171,7 +181,9 @@ export const BottomBar = () => {
       if (error) return toast.error(error.message);
 
       if (updatedJsonData[0]) {
-        await documentSvc.updateLastSaved(query.json as string, new Date().toISOString());
+        await documentSvc.update(query.json as string, {
+          lastSaved: new Date().toISOString(),
+        });
         setIsPrivate(updatedJsonData[0].private);
         toast.success(`Document set to ${isPrivate ? "public" : "private"}.`);
       } else throw error;
@@ -233,7 +245,7 @@ export const BottomBar = () => {
           </StyledBottomBarItem>
         )}
         {lastSaved && (
-          <StyledBottomBarItem>
+          <StyledBottomBarItem disabled>
             <AiOutlineClockCircle />
             Last saved: {lastSaved}
           </StyledBottomBarItem>
