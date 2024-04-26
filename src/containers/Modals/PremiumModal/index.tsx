@@ -15,7 +15,7 @@ import { BsCheck } from "react-icons/bs";
 
 export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   return (
-    <Modal title="Your Plan" size="auto" opened={opened} onClose={onClose} centered zIndex={202}>
+    <Modal title="Upgrade Plan" size="auto" opened={opened} onClose={onClose} centered zIndex={202}>
       <Flex gap="lg" justify="center" px="md">
         <Stack gap="xs">
           <Title order={3}>Free plan</Title>
@@ -62,10 +62,10 @@ export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
               </ThemeIcon>
             }
           >
-            <List.Item>5X Faster visualizations, no freezing</List.Item>
+            <List.Item>5X Faster visualizations, no lagging</List.Item>
             <List.Item>Accurate and compact graphs</List.Item>
             <List.Item>Edit data through visualizations</List.Item>
-            <List.Item>Bigger data support</List.Item>
+            <List.Item>Visualize data up to 5 MBs</List.Item>
             <List.Item>Compare data on graphs</List.Item>
             <List.Item>Save & share up to 200 files</List.Item>
           </List>

@@ -1,7 +1,9 @@
 import React from "react";
-import { Modal, Stack, Text, ScrollArea, ModalProps } from "@mantine/core";
+import { Modal, Stack, Text, ScrollArea, ModalProps, Button } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
+import { VscLock } from "react-icons/vsc";
 import useGraph from "src/store/useGraph";
+import useModal from "src/store/useModal";
 
 const dataToString = (data: any) => {
   const text = Array.isArray(data) ? Object.fromEntries(data) : data;
@@ -14,6 +16,7 @@ const dataToString = (data: any) => {
 };
 
 export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
+  const setVisible = useModal(state => state.setVisible);
   const nodeData = useGraph(state => dataToString(state.selectedNode?.text));
   const path = useGraph(state => state.selectedNode?.path || "");
 
@@ -28,8 +31,14 @@ export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
             <CodeHighlight code={nodeData} miw={350} maw={600} language="json" withCopyButton />
           </ScrollArea.Autosize>
         </Stack>
+        <Button
+          onClick={() => setVisible("premium")(true)}
+          rightSection={<VscLock strokeWidth={0.5} />}
+        >
+          Edit
+        </Button>
         <Text fz="sm" fw={700}>
-          Node Path
+          JSON Path
         </Text>
         <ScrollArea.Autosize maw={600}>
           <CodeHighlight

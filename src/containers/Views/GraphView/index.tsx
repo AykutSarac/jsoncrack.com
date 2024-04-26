@@ -138,10 +138,12 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
   );
 };
 
+const SUPPORTED_LIMIT = 600;
+
 export const Graph = ({ isWidget = false }: GraphProps) => {
   const setViewPort = useGraph(state => state.setViewPort);
   const viewPort = useGraph(state => state.viewPort);
-  const aboveSupportedLimit = useGraph(state => state.nodes.length > 800);
+  const aboveSupportedLimit = useGraph(state => state.nodes.length > SUPPORTED_LIMIT);
   const loading = useGraph(state => state.loading);
   const gesturesEnabled = useConfig(state => state.gesturesEnabled);
   const rulersEnabled = useConfig(state => state.rulersEnabled);

@@ -60,7 +60,7 @@ export const PricingCards = () => {
           size="md"
           data={["Monthly", "Yearly"]}
           w={200}
-          radius="lg"
+          radius="xl"
         />
       </Center>
       <Flex gap="lg" wrap="wrap" justify="center" w="fit-content" p="lg" mx="auto" maw="100%">
@@ -140,8 +140,8 @@ export const PricingCards = () => {
         <StyledPaper>
           <Flex justify="space-between">
             <Stack gap="0">
-              <Badge mb="lg" size="lg" variant="outline" color="gray.3" c="dark" leftSection="✦">
-                Premium
+              <Badge mb="lg" size="lg" variant="filled" color="violet" c="white" leftSection="✦">
+                Popular
               </Badge>
 
               <Flex gap="xs" align="baseline">

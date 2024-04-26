@@ -1,8 +1,9 @@
 import React from "react";
 import { Menu, Flex } from "@mantine/core";
 import { CgChevronDown } from "react-icons/cg";
+import { MdCompare } from "react-icons/md";
 import { SiJsonwebtokens } from "react-icons/si";
-import { VscSearchFuzzy, VscJson, VscGroupByRefType } from "react-icons/vsc";
+import { VscSearchFuzzy, VscJson, VscGroupByRefType, VscLock } from "react-icons/vsc";
 import { gaEvent } from "src/lib/utils/gaEvent";
 import useModal from "src/store/useModal";
 import * as Styles from "./styles";
@@ -20,6 +21,14 @@ export const ToolsMenu = () => {
         </Styles.StyledToolElement>
       </Menu.Target>
       <Menu.Dropdown>
+        <Menu.Item
+          fz={12}
+          leftSection={<MdCompare />}
+          rightSection={<VscLock />}
+          onClick={() => setVisible("premium")(true)}
+        >
+          Compare Data
+        </Menu.Item>
         <Menu.Item fz={12} leftSection={<VscSearchFuzzy />} onClick={() => setVisible("jq")(true)}>
           JSON Query (jq)
         </Menu.Item>
