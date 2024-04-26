@@ -104,7 +104,7 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
       <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
         {!premium && !isWidget && (
           <Styles.StyledToolElement onClick={handleFormat}>
-            <Text display="flex" c="teal" fz="xs" fw={600} style={{ textAlign: "center", gap: 4 }}>
+            <Text display="flex" c="blue" fz="xs" fw={600} style={{ textAlign: "center", gap: 4 }}>
               <AiOutlineEdit size="18" />
               Format
             </Text>
