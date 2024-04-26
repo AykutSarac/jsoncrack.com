@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import {
   AiOutlineCloudSync,
   AiOutlineCloudUpload,
+  AiOutlineClockCircle,
   AiOutlineLink,
   AiOutlineLock,
   AiOutlineUnlock,
@@ -233,7 +234,8 @@ export const BottomBar = () => {
         )}
         {lastSaved && (
           <StyledBottomBarItem>
-            <Text>Last saved: {lastSaved}</Text>
+            <AiOutlineClockCircle />
+            Last saved: {lastSaved}
           </StyledBottomBarItem>
         )}
         {data?.owner_email === user?.email && (
