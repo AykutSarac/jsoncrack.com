@@ -126,9 +126,6 @@ export const BottomBar = () => {
       try {
         setIsUpdating(true);
         toast.loading("Saving document...", { id: "fileSave" });
-        console.log("Saving document...");
-        console.log(query.json);
-        console.log(getContents());
 
         const { data, error } = await documentSvc.upsert({
           id: query?.json,
@@ -138,20 +135,16 @@ export const BottomBar = () => {
         });
 
         if (error) throw error;
-        console.log(data);
         if (data) {
-          // await documentSvc.updateLastSaved(query.json as string, new Date().toISOString());
           await documentSvc.update(query.json as string, {
             lastSaved: new Date().toISOString(),
           });
           setLastSaved(new Date().toISOString());
           replace({ query: { json: query.json } });
           toast.success("Document saved to cloud", { id: "fileSave" });
-          console.log("Document saved to cloud");
           setHasChanges(false);
         }
       } catch (error: any) {
-        console.error(error);
         toast.error(error.message, { id: "fileSave" });
       } finally {
         setIsUpdating(false);
