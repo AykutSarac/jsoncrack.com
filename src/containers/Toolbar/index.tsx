@@ -1,8 +1,9 @@
 import React from "react";
 import Link from "next/link";
 import { Badge, Flex, Group, Select, Text } from "@mantine/core";
+import yaml from "js-yaml";
 import toast from "react-hot-toast";
-import { AiOutlineFullscreen, AiFillGift } from "react-icons/ai";
+import { AiOutlineFullscreen, AiFillGift, AiOutlineEdit } from "react-icons/ai";
 import { BsBoxArrowUpLeft } from "react-icons/bs";
 import { FiDownload } from "react-icons/fi";
 import { SearchInput } from "src/components/SearchInput";
@@ -30,6 +31,28 @@ function fullscreenBrowser() {
   }
 }
 
+function formatContent(content, format) {
+  try {
+    switch (format) {
+      case FileFormat.JSON:
+        return JSON.stringify(JSON.parse(content), null, 2);
+      case FileFormat.YAML:
+        return yaml.dump(yaml.load(content));
+      case FileFormat.XML:
+        return content.replace(/(>)(<)(\/*)/g, "$1\n$2$3");
+      case FileFormat.TOML:
+        return content;
+      case FileFormat.CSV:
+        return content;
+      default:
+        return content;
+    }
+  } catch (e) {
+    toast.error(`Failed to format as ${format}.`);
+    return content;
+  }
+}
+
 export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) => {
   const setVisible = useModal(state => state.setVisible);
   const setFormat = useFile(state => state.setFormat);
@@ -37,9 +60,9 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
   const premium = useUser(state => state.premium);
   const { contents: json, setContents: setJson } = useFile();
 
-  const formatJson = async () => {
-    const formattedJson = JSON.stringify(JSON.parse(json), null, 2);
-    setJson({ contents: formattedJson });
+  const handleFormat = async () => {
+    const formattedContent = formatContent(json, format);
+    setJson({ contents: formattedContent });
   };
 
   return (
@@ -80,10 +103,10 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
       )}
       <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
         {!premium && !isWidget && (
-          <Styles.StyledToolElement onClick={() => formatJson()}>
+          <Styles.StyledToolElement onClick={handleFormat}>
             <Text display="flex" c="teal" fz="xs" fw={600} style={{ textAlign: "center", gap: 4 }}>
-              <AiFillGift size="18" />
-              Format JSON
+              <AiOutlineEdit size="18" />
+              Format
             </Text>
           </Styles.StyledToolElement>
         )}
