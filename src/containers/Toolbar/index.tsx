@@ -1,9 +1,9 @@
 import React from "react";
 import Link from "next/link";
 import { Badge, Flex, Group, Select, Text } from "@mantine/core";
+import prettier from "prettier";
 import toast from "react-hot-toast";
-import { AiOutlineFullscreen } from "react-icons/ai";
-import { AiFillGift } from "react-icons/ai";
+import { AiOutlineFullscreen, AiFillGift } from "react-icons/ai";
 import { BsBoxArrowUpLeft } from "react-icons/bs";
 import { FiDownload } from "react-icons/fi";
 import { SearchInput } from "src/components/SearchInput";
@@ -36,6 +36,12 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
   const setFormat = useFile(state => state.setFormat);
   const format = useFile(state => state.format);
   const premium = useUser(state => state.premium);
+  const { contents: json, setContents: setJson } = useFile();
+
+  const formatJson = async () => {
+    const formattedJson = await prettier.format(json, { parser: "json" });
+    setJson({ contents: formattedJson });
+  };
 
   return (
     <Styles.StyledTools>
@@ -74,6 +80,15 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
         </Group>
       )}
       <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
+        {!premium && !isWidget && (
+          <Styles.StyledToolElement onClick={() => formatJson()}>
+            <Text display="flex" c="teal" fz="xs" fw={600} style={{ textAlign: "center", gap: 4 }}>
+              <AiFillGift size="18" />
+              Format JSON
+            </Text>
+          </Styles.StyledToolElement>
+        )}
+
         {!premium && !isWidget && (
           <Styles.StyledToolElement onClick={() => setVisible("premium")(true)}>
             <Text display="flex" c="teal" fz="xs" fw={600} style={{ textAlign: "center", gap: 4 }}>
