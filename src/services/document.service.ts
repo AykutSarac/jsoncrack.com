@@ -14,12 +14,17 @@ type CloudSave = {
 
 export const documentSvc = {
   upsert: async (args: CloudSave): Promise<PostgrestSingleResponse<string>> => {
-    const { id: p_id = "", contents: p_content, format: p_format = FileFormat.JSON } = args;
+    const {
+      id: p_id = "",
+      contents: p_content,
+      format: p_format = FileFormat.JSON,
+      lastSaved: p_last_saved,
+    } = args;
     return await supabase.rpc("upsert_document", {
       p_content,
       p_format,
       p_id,
-      p_last_saved: new Date().toISOString(),
+      p_last_saved,
     });
   },
   getById: async (doc_id: string): Promise<PostgrestSingleResponse<File[]>> => {

@@ -194,6 +194,21 @@ export const BottomBar = () => {
     }
   };
 
+  function formatDate(isoString) {
+    const date = new Date(isoString);
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: true,
+    };
+    return `Last saved: ${date.toLocaleDateString("en-US", options)}`;
+  }
+
   return (
     <StyledBottomBar>
       {data?.name && (
@@ -247,7 +262,7 @@ export const BottomBar = () => {
         {lastSaved && (
           <StyledBottomBarItem disabled>
             <AiOutlineClockCircle />
-            Last saved: {lastSaved}
+            {formatDate(lastSaved)}
           </StyledBottomBarItem>
         )}
         {data?.owner_email === user?.email && (
