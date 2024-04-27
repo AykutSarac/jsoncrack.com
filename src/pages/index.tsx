@@ -159,11 +159,17 @@ const StyledCarouselWrapper = styled.section`
   }
 `;
 
+const metaDescription =
+  "JSON Crack Editor is a tool for visualizing into graphs, analyzing, editing, formatting, querying, transforming and validating JSON, CSV, YAML, XML, and more.";
+
 export const HomePage = () => {
   return (
     <Layout>
       <Head>
         <title>JSON Crack | Best JSON Visualizer, Formatter and Viewer for everyone</title>
+        <meta name="description" content={metaDescription} key="description" />
+        <meta property="og:description" content={metaDescription} key="ogdescription" />
+        <meta name="twitter:description" content={metaDescription} key="twdescription" />
       </Head>
       <StyledHeroSection id="hero-section">
         <StyledHeroSectionBody>
