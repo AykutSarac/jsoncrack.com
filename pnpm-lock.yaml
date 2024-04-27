@@ -110,6 +110,9 @@ dependencies:
   toml:
     specifier: ^3.0.0
     version: 3.0.0
+  use-bg-cursor-pos:
+    specifier: ^1.0.1
+    version: 1.0.1(react@18.2.0)
   use-long-press:
     specifier: ^3.2.0
     version: 3.2.0(react@18.2.0)
@@ -4590,6 +4593,14 @@ packages:
     dependencies:
       punycode: 2.3.1
     dev: true
+
+  /use-bg-cursor-pos@1.0.1(react@18.2.0):
+    resolution: {integrity: sha512-5eg6GrQepu2Yrh/dpQLIhO/2rRZzNtuyNxcX9z2RGnkKX4pUykDxseAb52I2pjBGTncuwJDaoGSvizvj5bIykw==}
+    peerDependencies:
+      react: ^16.8.0
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /use-callback-ref@1.3.1(@types/react@18.2.51)(react@18.2.0):
     resolution: {integrity: sha512-Lg4Vx1XZQauB42Hw3kK7JM6yjVjgFmFC5/Ab797s79aARomD2nEErc4mCgM8EZrARLmmbWpi5DGCadmK50DcAQ==}
