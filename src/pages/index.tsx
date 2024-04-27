@@ -10,6 +10,7 @@ import {
   Flex,
   Grid,
   Group,
+  Image,
   Paper,
   Stack,
   Text,
@@ -21,9 +22,16 @@ import {
 import { Carousel } from "@mantine/carousel";
 import "@mantine/carousel/styles.css";
 import styled from "styled-components";
+import { BiChevronDown } from "react-icons/bi";
 import { FaGithub } from "react-icons/fa";
-import { MdChevronRight, MdCompare, MdImage, MdOutlineArrowRightAlt } from "react-icons/md";
-import { MdRebaseEdit, MdOutlineSearch } from "react-icons/md";
+import {
+  MdChevronRight,
+  MdCompare,
+  MdExtension,
+  MdOutlineArrowRightAlt,
+  MdRebaseEdit,
+  MdSearch,
+} from "react-icons/md";
 import Layout from "src/layout/Layout";
 
 const PricingCards = dynamic(() => import("./pricing").then(mod => mod.PricingCards));
@@ -296,7 +304,7 @@ export const HomePage = () => {
         id="features"
         pt={rem(280)}
         px={rem(80)}
-        pb={rem(100)}
+        pb={rem(20)}
         maw="95%"
         radius="xl"
         bg="dark.9"
@@ -312,63 +320,235 @@ export const HomePage = () => {
           Designed to help you navigate through your data with ease. The editor provides a clean and
           intuitive interface that allows you to focus on what matters most: your data.
         </Text>
-        <Grid justify="space-between" gutter="xl" mx="auto" style={{ textAlign: "center" }}>
-          <Grid.Col span={{ sm: 6, md: 3 }}>
-            <Flex gap="xs" justify="center" align="center">
-              <ThemeIcon variant="transparent" size="md" color="gray.4">
-                <MdRebaseEdit size="24" />
-              </ThemeIcon>
-              <Text fz={28} c="gray.4">
-                Modify
-              </Text>
-            </Flex>
-            <Text fz={16} c="dimmed">
+      </Paper>
+
+      <Stack mt={100} align="center" px="lg" mx="auto" maw={{ sm: "80%", md: "65%" }}>
+        <ThemeIcon variant="transparent" color="dark" mx="auto" size="xl">
+          <BiChevronDown size={40} />
+        </ThemeIcon>
+
+        <Title order={2} fz={{ sm: 36, md: 48 }} fw={600} mt={50} style={{ textAlign: "center" }}>
+          Unlock the Ease of Visualizing Your Data
+        </Title>
+        <Text c="dark.2" fz={{ base: 12, md: 16 }} style={{ textAlign: "center" }}>
+          Forget juggling JSON formatters, validators, and viewers! JSON Crack simplifies your
+          workflow with effortless formatting, robust validation, and intuitive visualizations - all
+          in one user-friendly platform. See your data sing and make smarter decisions, faster.
+        </Text>
+      </Stack>
+
+      <Grid w="90%" gutter={24} mt={50} mb={150} mx="auto">
+        <Grid.Col span={{ base: 12, sm: 6 }}>
+          <Paper
+            p={30}
+            withBorder
+            shadow="xs"
+            radius="md"
+            w="100%"
+            h={{ sm: 300, md: 370 }}
+            style={{
+              overflow: "hidden",
+            }}
+          >
+            <ThemeIcon
+              color="gray.3"
+              c="dark.4"
+              bg="gray.1"
+              variant="outline"
+              size="xl"
+              radius="md"
+              visibleFrom="md"
+              mb="md"
+            >
+              <MdCompare size={28} />
+            </ThemeIcon>
+            <Title order={3} fw={500} fz={{ sm: 20, md: 28 }}>
+              Compare
+            </Title>
+            <Text fz={{ sm: 14, md: 18 }} fw={300} lts={0.4} c="dark.5" mt={10}>
+              Compare and analyze your data smoothly with the interactive graphs.
+            </Text>
+            <Image
+              loading="lazy"
+              src="./assets/features/compare.webp"
+              alt="Compare"
+              w={{ sm: 350, md: 500 }}
+              mt={20}
+              style={{
+                filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
+              }}
+            />
+          </Paper>
+        </Grid.Col>
+        <Grid.Col span={{ base: 12, sm: 6 }}>
+          <Paper
+            p={30}
+            withBorder
+            shadow="xs"
+            radius="md"
+            w="100%"
+            h={{ sm: 300, md: 370 }}
+            style={{
+              overflow: "hidden",
+            }}
+          >
+            <ThemeIcon
+              color="gray.3"
+              c="dark.4"
+              bg="gray.1"
+              variant="outline"
+              size="xl"
+              radius="md"
+              visibleFrom="md"
+              mb="md"
+            >
+              <MdRebaseEdit size={28} />
+            </ThemeIcon>
+            <Title order={3} fw={500} fz={{ sm: 20, md: 28 }}>
+              Edit
+            </Title>
+            <Text fz={{ sm: 14, md: 16 }} fw={300} lts={0.4} c="dark.5" my={10}>
               Directly modify your data through the graphs, without wasting time on manual editing.
             </Text>
-          </Grid.Col>
-          <Grid.Col span={{ sm: 6, md: 3 }}>
-            <Flex gap="xs" justify="center" align="center">
-              <ThemeIcon variant="transparent" size="md" color="gray.4">
-                <MdOutlineSearch size="24" />
-              </ThemeIcon>
-              <Text fz={28} c="gray.4">
-                Search
-              </Text>
-            </Flex>
-            <Text fz={16} c="dimmed">
+            <Paper withBorder shadow="sm" radius="sm" w="fit-content" mx="auto">
+              <Image
+                loading="lazy"
+                radius="sm"
+                src="./assets/features/edit.webp"
+                alt="Edit"
+                w={340}
+              />
+            </Paper>
+          </Paper>
+        </Grid.Col>
+        <Grid.Col span={{ base: 12, sm: 6 }}>
+          <Paper
+            p={30}
+            withBorder
+            shadow="xs"
+            radius="md"
+            w="100%"
+            h={{ sm: 300, md: 370 }}
+            style={{
+              overflow: "hidden",
+            }}
+          >
+            <ThemeIcon
+              color="gray.3"
+              c="dark.4"
+              bg="gray.1"
+              variant="outline"
+              size="xl"
+              radius="md"
+              visibleFrom="md"
+              mb="md"
+            >
+              <MdSearch size={28} />
+            </ThemeIcon>
+            <Title order={3} fw={500} fz={{ sm: 20, md: 28 }}>
+              Search
+            </Title>
+            <Text fz={{ sm: 14, md: 18 }} fw={300} lts={0.4} c="dark.5" mt={10}>
               Highlight and search what you need in your data, without any hassle.
             </Text>
-          </Grid.Col>
-          <Grid.Col span={{ sm: 6, md: 3 }}>
-            <Flex gap="xs" justify="center" align="center">
-              <ThemeIcon variant="transparent" size="md" color="gray.4">
-                <MdImage size="24" />
-              </ThemeIcon>
-              <Text fz={28} c="gray.4">
-                Download
-              </Text>
-            </Flex>
-            <Text fz={16} c="dimmed">
-              Export as image, use at your presentations, documentations or share with your team.
+            <Image
+              loading="lazy"
+              src="./assets/features/search.webp"
+              alt="Search"
+              w={{ sm: 400, md: 500 }}
+              mx="auto"
+              mt={20}
+              style={{
+                filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
+              }}
+            />
+          </Paper>
+        </Grid.Col>
+        <Grid.Col span={{ base: 12, sm: 6 }}>
+          <Paper
+            p={30}
+            withBorder
+            shadow="xs"
+            radius="md"
+            w="100%"
+            h={{ sm: 300, md: 370 }}
+            style={{
+              overflow: "hidden",
+            }}
+          >
+            <ThemeIcon
+              color="gray.3"
+              c="dark.4"
+              bg="gray.1"
+              variant="outline"
+              size="xl"
+              radius="md"
+              visibleFrom="md"
+              mb="md"
+            >
+              <MdExtension size={28} />
+            </ThemeIcon>
+            <Title order={3} fw={500} fz={{ sm: 20, md: 28 }}>
+              Choose Your Format
+            </Title>
+            <Text fz={{ sm: 14, md: 18 }} fw={300} lts={0.4} c="dark.5" mt={10}>
+              Visualize and edit your data in multiple formats. JSON, YAML, CSV, XML, and TOML are
+              supported.
             </Text>
-          </Grid.Col>
-          <Grid.Col span={{ sm: 6, md: 3 }}>
-            <Flex gap="xs" justify="center" align="center">
-              <ThemeIcon variant="transparent" size="md" color="gray.4">
-                <MdCompare size="24" />
-              </ThemeIcon>
-              <Text fz={28} c="gray.4">
-                Compare
-              </Text>
-            </Flex>
-            <Text fz={16} c="dimmed">
-              Compare and analyze your data smoothly with the interactive graphs. See the
-              differences at a glance.
-            </Text>
-          </Grid.Col>
-        </Grid>
-      </Paper>
-      <Divider label="◆" color="dimmed" mt={120} mb={40} w="40%" mx="auto" />
+            <Grid gutter="lg" mt={20}>
+              <Grid.Col span={6}>
+                <Badge
+                  w="100%"
+                  mih={{ sm: 10, md: 40 }}
+                  variant="light"
+                  color="indigo"
+                  radius="sm"
+                  size="xl"
+                >
+                  JSON
+                </Badge>
+              </Grid.Col>
+              <Grid.Col span={6}>
+                <Badge
+                  w="100%"
+                  mih={{ sm: 10, md: 40 }}
+                  variant="light"
+                  color="cyan"
+                  radius="sm"
+                  size="xl"
+                >
+                  YAML
+                </Badge>
+              </Grid.Col>
+              <Grid.Col span={6}>
+                <Badge
+                  w="100%"
+                  mih={{ sm: 10, md: 40 }}
+                  variant="light"
+                  color="grape"
+                  radius="sm"
+                  size="xl"
+                >
+                  CSV
+                </Badge>
+              </Grid.Col>
+              <Grid.Col span={6}>
+                <Badge
+                  w="100%"
+                  mih={{ sm: 10, md: 40 }}
+                  variant="light"
+                  color="red"
+                  radius="sm"
+                  size="xl"
+                >
+                  XML
+                </Badge>
+              </Grid.Col>
+            </Grid>
+          </Paper>
+        </Grid.Col>
+      </Grid>
+
       <PricingCards />
       <Divider color="dimmed" my={80} w="70%" mx="auto" />
       <Center>
