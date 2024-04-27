@@ -174,6 +174,7 @@ const SignIn = () => {
     <Layout>
       <Head>
         <title>Sign In - JSON Crack</title>
+        <link rel="canonical" href="https://app.jsoncrack.com/sign-in" />
       </Head>
       <Paper mt={100} mx="auto" maw={400} p="lg" withBorder>
         <AuthenticationForm />
