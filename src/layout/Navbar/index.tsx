@@ -67,6 +67,7 @@ export const Navbar = () => {
             radius="md"
             visibleFrom="sm"
             size="md"
+            fw="normal"
           >
             VS Code
           </Button>
@@ -78,6 +79,7 @@ export const Navbar = () => {
             radius="md"
             visibleFrom="sm"
             size="md"
+            fw="normal"
           >
             Pricing
           </Button>
@@ -90,6 +92,7 @@ export const Navbar = () => {
             radius="md"
             visibleFrom="sm"
             size="md"
+            fw="normal"
           >
             Docs
           </Button>
