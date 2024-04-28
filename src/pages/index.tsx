@@ -6,7 +6,6 @@ import {
   Badge,
   Button,
   Center,
-  Divider,
   Flex,
   Grid,
   Group,
@@ -603,8 +602,7 @@ export const HomePage = () => {
       </Grid>
 
       <PricingCards />
-      <Divider color="dimmed" my={80} w="70%" mx="auto" />
-      <Center>
+      <Center mt={80}>
         <Stack align="center">
           <StyledHeroText>More than an editor.</StyledHeroText>
 

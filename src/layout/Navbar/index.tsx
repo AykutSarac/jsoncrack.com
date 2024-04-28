@@ -1,9 +1,8 @@
 import React from "react";
 import Link from "next/link";
-import { Box, Burger, Button, Flex, Menu, Overlay } from "@mantine/core";
+import { Box, Burger, Button, Flex, Overlay } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import styled from "styled-components";
-import { BiChevronDown } from "react-icons/bi";
 import useUser from "src/store/useUser";
 import { JSONCrackLogo } from "../JsonCrackLogo";
 
@@ -113,65 +112,8 @@ export const Navbar = () => {
             visibleFrom="sm"
             size="md"
           >
-            Embed
+            Docs
           </Button>
-          <Menu trigger="hover" offset={15} withArrow shadow="md">
-            <Menu.Target>
-              <Button
-                variant="subtle"
-                color="gray"
-                radius="md"
-                rightSection={<BiChevronDown size="18" />}
-                visibleFrom="sm"
-                size="md"
-              >
-                Legal
-              </Button>
-            </Menu.Target>
-            <Menu.Dropdown>
-              <Menu.Item component={Link} href="/legal/privacy" prefetch={false}>
-                Privacy Policy
-              </Menu.Item>
-              <Menu.Item component={Link} href="/legal/terms" prefetch={false}>
-                Terms and Conditions
-              </Menu.Item>
-              <Menu.Item component={Link} href="/legal/subscription-refund" prefetch={false}>
-                Subscription
-              </Menu.Item>
-              <Menu.Divider />
-              <Menu.Item component="a" href="mailto:contact@jsoncrack.com">
-                contact@jsoncrack.com
-              </Menu.Item>
-            </Menu.Dropdown>
-          </Menu>
-          <Menu trigger="hover" offset={15} withArrow shadow="md">
-            <Menu.Target>
-              <Button
-                variant="subtle"
-                color="gray"
-                radius="md"
-                rightSection={<BiChevronDown size="18" />}
-                visibleFrom="sm"
-                size="md"
-              >
-                Social
-              </Button>
-            </Menu.Target>
-            <Menu.Dropdown>
-              <Menu.Item component="a" href="https://twitter.com/jsoncrack">
-                𝕏 (Twitter)
-              </Menu.Item>
-              <Menu.Item component="a" href="https://discord.gg/yVyTtCRueq">
-                Discord
-              </Menu.Item>
-              <Menu.Item component="a" href="https://www.linkedin.com/company/herowand">
-                LinkedIn
-              </Menu.Item>
-              <Menu.Item component="a" href="https://github.com/AykutSarac/jsoncrack.com">
-                GitHub
-              </Menu.Item>
-            </Menu.Dropdown>
-          </Menu>
         </Left>
         <Right>
           {!hasSession && (
@@ -238,63 +180,6 @@ export const Navbar = () => {
                   >
                     Pricing
                   </Button>
-                  <Menu trigger="click" offset={15} withArrow shadow="md">
-                    <Menu.Target>
-                      <Button
-                        variant="transparent"
-                        color="dark"
-                        radius="md"
-                        rightSection={<BiChevronDown size="18" />}
-                      >
-                        Legal
-                      </Button>
-                    </Menu.Target>
-                    <Menu.Dropdown>
-                      <Menu.Item component={Link} href="/legal/privacy" prefetch={false}>
-                        Privacy Policy
-                      </Menu.Item>
-                      <Menu.Item component={Link} href="/legal/terms" prefetch={false}>
-                        Terms and Conditions
-                      </Menu.Item>
-                      <Menu.Item
-                        component={Link}
-                        href="/legal/subscription-refund"
-                        prefetch={false}
-                      >
-                        Subscription
-                      </Menu.Item>
-                      <Menu.Divider />
-                      <Menu.Item component="a" href="mailto:contact@jsoncrack.com">
-                        contact@jsoncrack.com
-                      </Menu.Item>
-                    </Menu.Dropdown>
-                  </Menu>
-                  <Menu trigger="click" offset={15} withArrow shadow="md">
-                    <Menu.Target>
-                      <Button
-                        variant="transparent"
-                        color="dark"
-                        radius="md"
-                        rightSection={<BiChevronDown size="18" />}
-                      >
-                        Social
-                      </Button>
-                    </Menu.Target>
-                    <Menu.Dropdown>
-                      <Menu.Item component="a" href="https://twitter.com/jsoncrack">
-                        𝕏 (Twitter)
-                      </Menu.Item>
-                      <Menu.Item component="a" href="https://discord.gg/yVyTtCRueq">
-                        Discord
-                      </Menu.Item>
-                      <Menu.Item component="a" href="https://www.linkedin.com/company/herowand">
-                        LinkedIn
-                      </Menu.Item>
-                      <Menu.Item component="a" href="https://github.com/AykutSarac/jsoncrack.com">
-                        GitHub
-                      </Menu.Item>
-                    </Menu.Dropdown>
-                  </Menu>
                 </Flex>
               </Box>
             </Overlay>
