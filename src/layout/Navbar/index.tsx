@@ -7,17 +7,8 @@ import useUser from "src/store/useUser";
 import { JSONCrackLogo } from "../JsonCrackLogo";
 
 const StyledNavbarWrapper = styled.div`
-  position: sticky;
-  top: -1px;
-  left: 0;
   z-index: 3;
   transition: background 0.2s ease-in-out;
-
-  &.is-pinned {
-    background: rgba(255, 255, 255, 0.5);
-    border-bottom: 1px solid gray;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  }
 `;
 
 const StyledNavbar = styled.nav`
@@ -60,18 +51,6 @@ export const Navbar = () => {
   const hasSession = useUser(state => !!state.user);
   const premium = useUser(state => state.premium);
   const [opened, { toggle }] = useDisclosure();
-
-  React.useEffect(() => {
-    const el = document.querySelector(".navbar");
-    const observer = new IntersectionObserver(
-      ([e]) => e.target.classList.toggle("is-pinned", e.intersectionRatio < 1),
-      { threshold: [1] }
-    );
-
-    if (el) observer.observe(el);
-
-    return () => observer.disconnect();
-  }, []);
 
   return (
     <StyledNavbarWrapper className="navbar">
