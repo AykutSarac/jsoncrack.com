@@ -28,7 +28,7 @@ const StyledPaperFree = styled(Paper)`
   padding: 1.5em;
   width: 400px;
   border-radius: 1em;
-  border: 2px solid #e1e1e1;
+  border: 2px solid #e9e9e9;
 `;
 
 const StyledPaper = styled(Paper)`
@@ -140,8 +140,8 @@ export const PricingCards = () => {
         <StyledPaper>
           <Flex justify="space-between">
             <Stack gap="0">
-              <Badge mb="lg" size="lg" variant="filled" color="violet" c="white" leftSection="✦">
-                Popular
+              <Badge mb="lg" size="lg" variant="outline" color="gray.3" c="dark" leftSection="✦">
+                Premium
               </Badge>
 
               <Flex gap="xs" align="baseline">
@@ -168,7 +168,7 @@ export const PricingCards = () => {
             my="md"
             rightSection={<VscArrowRight />}
           >
-            Upgrade
+            Get Started
           </Button>
           <Flex direction="column" justify="space-between" h={250}>
             <List spacing="xs" size="sm" mt="lg" center icon="✦">
