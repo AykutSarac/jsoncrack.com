@@ -1,21 +1,17 @@
 import React from "react";
-import dynamic from "next/dynamic";
+import { LoadingOverlay } from "@mantine/core";
 import styled from "styled-components";
 import debounce from "lodash.debounce";
 import { Space } from "react-zoomable-ui";
+import { Canvas } from "reaflow";
 import { ElkRoot } from "reaflow/dist/layout/useLayout";
 import { useLongPress } from "use-long-press";
 import { CustomNode } from "src/containers/Views/GraphView/CustomNode";
 import useToggleHide from "src/hooks/useToggleHide";
-import { Loading } from "src/layout/Loading";
 import useConfig from "src/store/useConfig";
 import useGraph from "src/store/useGraph";
 import { CustomEdge } from "./CustomEdge";
 import { PremiumView } from "./PremiumView";
-
-const Canvas = dynamic(() => import("reaflow").then(r => r.Canvas), {
-  ssr: false,
-});
 
 interface GraphProps {
   isWidget?: boolean;
@@ -175,7 +171,7 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
 
   return (
     <>
-      <Loading loading={loading} message="Painting graph..." />
+      <LoadingOverlay visible={loading} />
       <StyledEditorWrapper
         $widget={isWidget}
         onContextMenu={e => e.preventDefault()}

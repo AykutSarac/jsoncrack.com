@@ -8,12 +8,14 @@ import "@mantine/core/styles.css";
 import "@mantine/code-highlight/styles.css";
 import { ThemeProvider } from "styled-components";
 import ReactGA from "react-ga4";
+import { Loading } from "src/components/Loading";
 import GlobalStyle from "src/constants/globalStyle";
 import { lightTheme } from "src/constants/theme";
 import { supabase } from "src/lib/api/supabase";
 import useUser from "src/store/useUser";
 
 const Toaster = dynamic(() => import("react-hot-toast").then(c => c.Toaster));
+const ExternalMode = dynamic(() => import("src/layout/ExternalMode"));
 
 const mantineTheme = createTheme({
   primaryShade: 8,
@@ -23,8 +25,6 @@ const isDevelopment = process.env.NODE_ENV === "development";
 const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID;
 
 ReactGA.initialize(GA_TRACKING_ID, { testMode: isDevelopment });
-
-const ExternalMode = dynamic(() => import("src/layout/ExternalMode"));
 
 function JsonCrack({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -72,6 +72,7 @@ function JsonCrack({ Component, pageProps }: AppProps) {
             }}
           />
           <GlobalStyle />
+          <Loading />
           <Component {...pageProps} />
           <ExternalMode />
         </ThemeProvider>

@@ -1,5 +1,6 @@
 import React from "react";
-import { Badge, Flex, Group, Select, Text } from "@mantine/core";
+import { Badge, Flex, Group, Indicator, Select, Text } from "@mantine/core";
+import { useSessionStorage } from "@mantine/hooks";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import { AiFillGift } from "react-icons/ai";
@@ -35,6 +36,10 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
   const setFormat = useFile(state => state.setFormat);
   const format = useFile(state => state.format);
   const premium = useUser(state => state.premium);
+  const [seenPremium, setSeenPremium] = useSessionStorage({
+    key: "seenPremium",
+    defaultValue: false,
+  });
 
   return (
     <Styles.StyledTools>
@@ -74,11 +79,30 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
       )}
       <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
         {!premium && !isWidget && (
-          <Styles.StyledToolElement onClick={() => setVisible("premium")(true)}>
-            <Text display="flex" c="teal" fz="xs" fw={600} style={{ textAlign: "center", gap: 4 }}>
-              <AiFillGift size="18" />
-              Get Premium
-            </Text>
+          <Styles.StyledToolElement
+            onClick={() => {
+              setSeenPremium(true);
+              setVisible("premium")(true);
+            }}
+          >
+            <Indicator
+              size={5}
+              color="green"
+              position="top-start"
+              processing
+              disabled={seenPremium}
+            >
+              <Text
+                display="flex"
+                c="teal"
+                fz="xs"
+                fw={600}
+                style={{ textAlign: "center", gap: 4 }}
+              >
+                <AiFillGift size="18" />
+                Get Premium
+              </Text>
+            </Indicator>
           </Styles.StyledToolElement>
         )}
 

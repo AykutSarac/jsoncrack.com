@@ -55,41 +55,34 @@ export const TypeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
     return typeOptions[typeOptions.findIndex(o => o.value === selectedType)]?.lang;
   }, [selectedType]);
 
-  const transformer = React.useCallback(
-    async ({ value }) => {
-      const { run } = await import("json_typegen_wasm");
-      return run(
-        "Root",
-        value,
-        JSON.stringify({
-          output_mode: selectedType,
-        })
-      );
-    },
-    [selectedType]
-  );
-
   React.useEffect(() => {
     if (opened) {
-      try {
-        setLoading(true);
-        if (selectedType === Language.Go) {
-          import("src/lib/utils/json2go").then(jtg => {
-            import("gofmt.js").then(gofmt => {
-              const types = jtg.default(getJson());
-              setType(gofmt.default(types.go));
-            });
-          });
-        } else {
-          transformer({ value: getJson() }).then(setType);
+      (async () => {
+        try {
+          setLoading(true);
+          const json = getJson();
+
+          if (selectedType === Language.Go) {
+            const jtg = await import("src/lib/utils/json2go");
+            const gofmt = await import("gofmt.js");
+
+            const types = jtg.default(json);
+            setType(gofmt.default(types.go));
+          } else {
+            const { run } = await import("json_typegen_wasm");
+            const output_mode = selectedType;
+            const types = run("Root", json, JSON.stringify({ output_mode }));
+
+            setType(types);
+          }
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setLoading(false);
         }
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
+      })();
     }
-  }, [getJson, opened, selectedType, transformer]);
+  }, [getJson, opened, selectedType]);
 
   return (
     <Modal title="Generate Types" size="md" opened={opened} onClose={onClose} centered>

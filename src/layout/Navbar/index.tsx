@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Box, Burger, Button, Flex, Overlay } from "@mantine/core";
+import { Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import styled from "styled-components";
 import useUser from "src/store/useUser";
@@ -25,18 +25,6 @@ const StyledNavbar = styled.nav`
 
   @media only screen and (max-width: 768px) {
     padding: 16px 24px;
-  }
-
-  @media only screen and (max-width: 1024px) {
-    .desktop {
-      display: none;
-    }
-  }
-
-  @media only screen and (max-width: 768px) {
-    .hide-mobile {
-      display: none;
-    }
   }
 `;
 
@@ -98,74 +86,28 @@ export const Navbar = () => {
           </Button>
         </Left>
         <Right>
-          {!hasSession && (
-            <>
-              <Button
-                component="a"
-                href="https://app.jsoncrack.com/sign-in"
-                variant="outline"
-                color="gray"
-                className="hide-mobile"
-                radius="md"
-                visibleFrom="sm"
-                size="md"
-              >
-                Login
-              </Button>
-              <Button
-                component={Link}
-                prefetch={false}
-                href={premium ? "https://app.jsoncrack.com/editor" : "/editor"}
-                color="dark"
-                className="hide-mobile"
-                visibleFrom="sm"
-                radius="md"
-                size="md"
-              >
-                Editor
-              </Button>
-            </>
-          )}
-          {hasSession && (
-            <Button
-              color="dark"
-              size="md"
-              radius="md"
-              component={Link}
-              href="/editor"
-              prefetch={false}
-              visibleFrom="sm"
-            >
-              Editor
-            </Button>
-          )}
-          <Burger opened={opened} onClick={toggle} aria-label="Toggle navigation" hiddenFrom="sm" />
-          {opened && (
-            <Overlay top={56} h="100dvh">
-              <Box
-                bg="white"
-                top={56}
-                left={0}
-                pos="fixed"
-                w="100%"
-                pb="lg"
-                style={{ zIndex: 3, borderBottom: "1px solid black" }}
-              >
-                <Flex pt="lg" direction="column" align="center" justify="center" gap="lg">
-                  <Button
-                    component={Link}
-                    href="/pricing"
-                    variant="transparent"
-                    color="dark"
-                    radius="md"
-                    onClick={toggle}
-                  >
-                    Pricing
-                  </Button>
-                </Flex>
-              </Box>
-            </Overlay>
-          )}
+          <Button
+            component="a"
+            href="https://app.jsoncrack.com/sign-in"
+            variant="subtle"
+            color="gray"
+            radius="xl"
+            visibleFrom="sm"
+            size="md"
+          >
+            Login
+          </Button>
+          <Button
+            component={Link}
+            prefetch={false}
+            href={premium ? "https://app.jsoncrack.com/editor" : "/editor"}
+            color="dark"
+            visibleFrom="sm"
+            radius="xl"
+            size="md"
+          >
+            Editor
+          </Button>
         </Right>
       </StyledNavbar>
     </StyledNavbarWrapper>

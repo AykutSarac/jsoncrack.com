@@ -8,7 +8,6 @@ import {
   Center,
   Flex,
   Grid,
-  Group,
   Image,
   Paper,
   Stack,
@@ -21,7 +20,6 @@ import { Carousel } from "@mantine/carousel";
 import "@mantine/carousel/styles.css";
 import styled from "styled-components";
 import { BiChevronDown } from "react-icons/bi";
-import { FaRocket } from "react-icons/fa";
 import {
   MdChevronRight,
   MdCompare,
@@ -78,19 +76,19 @@ const StyledHeroSectionBody = styled.div`
 
 const StyledHeroText = styled.p`
   font-size: 0.8rem;
-  color: #414141;
+  color: #5b5b5b;
   font-weight: 400;
   max-width: 100%;
   min-width: 400px;
   text-align: center;
 
   @media only screen and (min-width: 576px) {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     max-width: 80%;
   }
 
   @media only screen and (min-width: 1400px) {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     max-width: 60%;
   }
 `;
@@ -212,77 +210,51 @@ export const HomePage = () => {
               Experience the ultimate online editor designed to empower you in visualizing,
               refining, and formatting data effortlessly.
             </StyledHeroText>
-            <Group justify="center">
-              <Button
-                component={Link}
-                prefetch={false}
-                href="/editor"
-                size="xl"
-                fw="bold"
-                color="indigo"
-                rightSection={<MdChevronRight size={30} />}
-                visibleFrom="sm"
-                radius="md"
-              >
-                Go To Editor
-              </Button>
-              <Button
-                component={Link}
-                prefetch={false}
-                href="/editor"
-                fw="bold"
-                size="md"
-                color="indigo"
-                rightSection={<MdChevronRight size={24} />}
-                hiddenFrom="sm"
-                radius="md"
-              >
-                Go To Editor
-              </Button>
-              <Button
-                component="a"
-                href="/#features"
-                size="xl"
-                fw="bold"
-                variant="outline"
-                color="gray.7"
-                leftSection={<FaRocket />}
-                visibleFrom="sm"
-                radius="md"
-              >
-                Explore Premium
-              </Button>
-              <Button
-                component="a"
-                href="/#features"
-                fw="bold"
-                size="md"
-                variant="outline"
-                color="gray.7"
-                leftSection={<FaRocket />}
-                hiddenFrom="sm"
-                radius="md"
-              >
-                Explore Premium
-              </Button>
-            </Group>
             <Flex gap="xs">
-              <Badge color="dark" radius="sm" variant="light">
+              <Badge size="xs" color="dark" radius="sm" variant="light">
                 JSON
               </Badge>
-              <Badge color="dark" radius="sm" variant="light">
+              <Badge size="xs" color="dark" radius="sm" variant="light">
                 YAML
               </Badge>
-              <Badge color="dark" radius="sm" variant="light">
+              <Badge size="xs" color="dark" radius="sm" variant="light">
                 CSV
               </Badge>
-              <Badge color="dark" radius="sm" variant="light">
+              <Badge size="xs" color="dark" radius="sm" variant="light">
                 XML
               </Badge>
-              <Badge color="dark" radius="sm" variant="light">
+              <Badge size="xs" color="dark" radius="sm" variant="light">
                 TOML
               </Badge>
             </Flex>
+            <Button
+              component={Link}
+              prefetch={false}
+              href="/editor"
+              size="xl"
+              fw="bold"
+              color="orange"
+              rightSection={<MdChevronRight size={30} />}
+              visibleFrom="sm"
+              radius="xl"
+              mt="lg"
+            >
+              Go to Editor
+            </Button>
+            <Button
+              component={Link}
+              prefetch={false}
+              href="/editor"
+              fw="bold"
+              size="md"
+              color="indigo"
+              rightSection={<MdChevronRight size={24} />}
+              hiddenFrom="sm"
+              radius="xl"
+              mt="lg"
+            >
+              Go to Editor
+            </Button>
           </Stack>
         </StyledHeroSectionBody>
       </StyledHeroSection>

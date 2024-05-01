@@ -1,5 +1,4 @@
 import React from "react";
-import { Menu, Text } from "@mantine/core";
 import styled from "styled-components";
 import { firaMono } from "src/constants/fonts";
 import { Graph } from "src/containers/Views/GraphView";
@@ -32,44 +31,8 @@ const View = () => {
 };
 
 const LiveEditor: React.FC = () => {
-  const [contextOpened, setContextOpened] = React.useState(false);
-  const [contextPosition, setContextPosition] = React.useState({
-    x: 0,
-    y: 0,
-  });
-
   return (
-    <StyledLiveEditor
-      onContextMenuCapture={e => {
-        e.preventDefault();
-        setContextOpened(true);
-        setContextPosition({ x: e.pageX, y: e.pageY });
-      }}
-      onClick={() => setContextOpened(false)}
-    >
-      <div
-        style={{
-          position: "fixed",
-          top: contextPosition.y,
-          left: contextPosition.x,
-          zIndex: 100,
-        }}
-      >
-        <Menu opened={false} shadow="sm">
-          <Menu.Dropdown>
-            <Menu.Item>
-              <Text size="xs">Download as Image</Text>
-            </Menu.Item>
-            <Menu.Item>
-              <Text size="xs">Zoom to Fit</Text>
-            </Menu.Item>
-            <Menu.Item>
-              <Text size="xs">Rotate</Text>
-            </Menu.Item>
-          </Menu.Dropdown>
-        </Menu>
-      </div>
-
+    <StyledLiveEditor onContextMenuCapture={e => e.preventDefault()}>
       <View />
     </StyledLiveEditor>
   );
