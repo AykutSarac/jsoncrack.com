@@ -12,13 +12,14 @@ import {
   Divider,
 } from "@mantine/core";
 import { BsCheck } from "react-icons/bs";
+import { MdChevronRight } from "react-icons/md";
 
 export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   return (
     <Modal title="Upgrade Plan" size="auto" opened={opened} onClose={onClose} centered zIndex={202}>
       <Flex gap="lg" justify="center" px="md">
         <Stack gap="xs">
-          <Title order={3}>Free plan</Title>
+          <Title order={3}>Free</Title>
           <Button variant="outline" color="dark" size="md">
             Your current plan
           </Button>
@@ -39,7 +40,7 @@ export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
         </Stack>
         <Divider color="gray" orientation="vertical" />
         <Stack gap="xs">
-          <Title order={3}>JSON Crack Pro</Title>
+          <Title order={3}>Premium</Title>
           <Button
             component={Link}
             prefetch={false}
@@ -48,8 +49,9 @@ export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
             variant="filled"
             color="teal"
             size="md"
+            rightSection={<MdChevronRight size="24" />}
           >
-            Upgrade plan
+            Start 3 Days Free Trial
           </Button>
           <List
             mt="xs"
