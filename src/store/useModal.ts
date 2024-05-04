@@ -30,7 +30,6 @@ const initialStates: ModalState = {
 };
 
 const authModals: Modal[] = ["cloud", "account"];
-const premiumModals: Modal[] = [];
 
 const useModal = create<ModalState & ModalActions>()(set => ({
   ...initialStates,
@@ -39,8 +38,6 @@ const useModal = create<ModalState & ModalActions>()(set => ({
 
     if (authModals.includes(modal) && !user.isAuthenticated) {
       return set({ login: true });
-    } else if (premiumModals.includes(modal) && !user.premium) {
-      return set({ premium: true });
     }
 
     if (visible) gaEvent("modal", `open ${modal}`);

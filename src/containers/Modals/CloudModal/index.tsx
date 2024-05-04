@@ -33,7 +33,6 @@ import { VscAdd, VscEdit, VscLock, VscUnlock } from "react-icons/vsc";
 import { FileFormat } from "src/enums/file.enum";
 import { documentSvc } from "src/services/document.service";
 import useFile, { File } from "src/store/useFile";
-import useUser from "src/store/useUser";
 
 dayjs.extend(relativeTime);
 
@@ -86,9 +85,9 @@ const UpdateNameModal: React.FC<{
   );
 };
 
+const TOTAL_QUOTA = 25;
+
 export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
-  const totalQuota = useUser(state => (state.premium ? 200 : 25));
-  const isPremium = useUser(state => state.premium);
   const getContents = useFile(state => state.getContents);
   const setHasChanges = useFile(state => state.setHasChanges);
   const getFormat = useFile(state => state.getFormat);
@@ -101,8 +100,8 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
 
   const isCreateDisabled = React.useMemo(() => {
     if (!data?.length) return false;
-    return isPremium ? data.length >= 200 : data.length >= 25;
-  }, [isPremium, data?.length]);
+    return data.length >= TOTAL_QUOTA;
+  }, [data?.length]);
 
   const onCreate = async () => {
     try {
@@ -227,8 +226,8 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
                 thickness={6}
                 sections={[
                   {
-                    value: (data.length * 100) / totalQuota,
-                    color: data.length > totalQuota / 1.5 ? "red" : "blue",
+                    value: (data.length * 100) / TOTAL_QUOTA,
+                    color: data.length > TOTAL_QUOTA / 1.5 ? "red" : "blue",
                   },
                 ]}
               />
@@ -237,7 +236,7 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
                   Total Quota
                 </Text>
                 <Text fw={700} size="lg">
-                  {data.length} / {totalQuota}
+                  {data.length} / {TOTAL_QUOTA}
                 </Text>
               </div>
             </Group>

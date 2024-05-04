@@ -1,9 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Button } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 import styled from "styled-components";
-import useUser from "src/store/useUser";
 import { JSONCrackLogo } from "../JsonCrackLogo";
 
 const StyledNavbarWrapper = styled.div`
@@ -36,10 +34,6 @@ const Right = styled.div`
 `;
 
 export const Navbar = () => {
-  const hasSession = useUser(state => !!state.user);
-  const premium = useUser(state => state.premium);
-  const [opened, { toggle }] = useDisclosure();
-
   return (
     <StyledNavbarWrapper className="navbar">
       <StyledNavbar>
@@ -100,7 +94,7 @@ export const Navbar = () => {
           <Button
             component={Link}
             prefetch={false}
-            href={premium ? "https://app.jsoncrack.com/editor" : "/editor"}
+            href="/editor"
             color="dark"
             visibleFrom="sm"
             radius="xl"

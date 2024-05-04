@@ -12,19 +12,11 @@ interface UserActions {
 interface UserStates {
   user: User | null;
   isAuthenticated: boolean;
-  premium: boolean;
-  premiumCancelled: boolean;
-  organization: boolean;
-  orgAdmin: boolean;
 }
 
 const initialStates: UserStates = {
   user: null,
   isAuthenticated: false,
-  premium: false,
-  premiumCancelled: false,
-  organization: false,
-  orgAdmin: false,
 };
 
 const useUser = create<UserStates & UserActions>()(set => ({

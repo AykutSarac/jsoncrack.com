@@ -1,17 +1,15 @@
 import React from "react";
-import { Badge, Flex, Group, Indicator, Select, Text } from "@mantine/core";
+import { Flex, Group, Indicator, Select, Text } from "@mantine/core";
 import { useSessionStorage } from "@mantine/hooks";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import { AiFillGift } from "react-icons/ai";
-import { BsBoxArrowUpLeft } from "react-icons/bs";
 import { FiDownload } from "react-icons/fi";
 import { SearchInput } from "src/components/SearchInput";
 import { FileFormat } from "src/enums/file.enum";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
 import useFile from "src/store/useFile";
 import useModal from "src/store/useModal";
-import useUser from "src/store/useUser";
 import { AccountMenu } from "./AccountMenu";
 import { FileMenu } from "./FileMenu";
 import { Logo } from "./Logo";
@@ -35,7 +33,6 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
   const setVisible = useModal(state => state.setVisible);
   const setFormat = useFile(state => state.setFormat);
   const format = useFile(state => state.format);
-  const premium = useUser(state => state.premium);
   const [seenPremium, setSeenPremium] = useSessionStorage({
     key: "seenPremium",
     defaultValue: false,
@@ -78,7 +75,7 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
         </Group>
       )}
       <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
-        {!premium && !isWidget && (
+        {!isWidget && (
           <Styles.StyledToolElement
             onClick={() => {
               setSeenPremium(true);
@@ -104,26 +101,6 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
               </Text>
             </Indicator>
           </Styles.StyledToolElement>
-        )}
-
-        {premium && !isWidget && (
-          <a href="https://app.jsoncrack.com/sign-in">
-            <Styles.StyledToolElement>
-              <Text
-                display="flex"
-                c="teal"
-                fz="xs"
-                fw={600}
-                style={{ textAlign: "center", gap: 8, alignItems: "center" }}
-              >
-                <BsBoxArrowUpLeft />
-                Premium editor has moved!
-                <Badge size="xs" variant="light" color="teal">
-                  New
-                </Badge>
-              </Text>
-            </Styles.StyledToolElement>
-          </a>
         )}
 
         <SearchInput />

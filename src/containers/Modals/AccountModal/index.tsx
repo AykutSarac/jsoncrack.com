@@ -16,10 +16,6 @@ import useUser from "src/store/useUser";
 
 export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const user = useUser(state => state.user);
-  const isPremium = useUser(state => state.premium);
-  const isOrg = useUser(state => state.organization);
-  const isOrgAdmin = useUser(state => state.orgAdmin);
-  const premiumCancelled = useUser(state => state.premiumCancelled);
   const setVisible = useModal(state => state.setVisible);
   const logout = useUser(state => state.logout);
 
@@ -48,12 +44,11 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
               <Text fz="xs" c="dimmed">
                 <Badge
                   size="sm"
-                  variant={isPremium ? "gradient" : "dot"}
-                  color={premiumCancelled || !isPremium ? "dark" : "green"}
+                  variant="dot"
+                  color="dark"
                   gradient={{ from: "#8800fe", to: "#ff00cc", deg: 35 }}
                 >
-                  {isPremium ? "Premium" : "Free"}{" "}
-                  {premiumCancelled ? "(Cancelled)" : isOrg && "(Organization)"}
+                  Free
                 </Badge>
               </Text>
             </Group>
@@ -63,28 +58,14 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
 
       <Divider py="xs" />
       <Group justify="right">
-        {isPremium && !premiumCancelled ? (
-          <Button
-            variant="light"
-            color="red"
-            onClick={() => {
-              setVisible("cancelPremium")(true);
-              onClose();
-            }}
-            disabled={isOrg && !isOrgAdmin}
-          >
-            Cancel Subscription
-          </Button>
-        ) : (
-          <Button
-            variant="gradient"
-            gradient={{ from: "teal", to: "lime", deg: 105 }}
-            leftSection={<IoRocketSharp />}
-            onClick={() => setVisible("premium")(true)}
-          >
-            UPGRADE TO PREMIUM!
-          </Button>
-        )}
+        <Button
+          variant="gradient"
+          gradient={{ from: "teal", to: "lime", deg: 105 }}
+          leftSection={<IoRocketSharp />}
+          onClick={() => setVisible("premium")(true)}
+        >
+          Upgrade to Premium
+        </Button>
         <Button
           color="red"
           onClick={() => {
