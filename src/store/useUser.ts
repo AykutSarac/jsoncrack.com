@@ -30,19 +30,8 @@ const initialStates: UserStates = {
 const useUser = create<UserStates & UserActions>()(set => ({
   ...initialStates,
   setSession: async session => {
-    supabase.rpc("get_subscription_details").then(({ data }) => {
-      if (data) {
-        set({
-          premium: data.premium,
-          organization: data.orgPremium,
-          premiumCancelled: !!data.cancelled,
-          orgAdmin: data.orgAdmin,
-        });
-      }
-
-      gaEvent("engagement", "login");
-      set({ user: session.user, isAuthenticated: true });
-    });
+    gaEvent("engagement", "login");
+    set({ user: session.user, isAuthenticated: true });
   },
   logout: async () => {
     toast.loading("Logging out...", { id: "logout" });
