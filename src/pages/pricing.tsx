@@ -1,5 +1,6 @@
 import React from "react";
 import Head from "next/head";
+import Link from "next/link";
 import {
   Flex,
   Stack,
@@ -28,7 +29,7 @@ const StyledPaperFree = styled(Paper)`
   padding: 1.5em;
   width: 400px;
   border-radius: 1em;
-  border: 2px solid #e9e9e9;
+  border: 3px solid #e9e9e9;
 `;
 
 const StyledPaper = styled(Paper)`
@@ -38,7 +39,7 @@ const StyledPaper = styled(Paper)`
     linear-gradient(white, white) padding-box,
     linear-gradient(#ec85f5, #fb7eb0 28%, #fc9f96 53%, #ffbc88 78%, #ffc86a) border-box;
   border-radius: 1em;
-  border: 2px solid transparent;
+  border: 3px solid transparent;
 `;
 
 export const PricingCards = () => {
@@ -85,16 +86,18 @@ export const PricingCards = () => {
             </Stack>
           </Flex>
           <Button
-            component="a"
-            href="https://app.jsoncrack.com/sign-up"
+            component={Link}
+            prefetch={false}
+            href="/editor"
             size="lg"
-            radius="md"
+            radius="xl"
             variant="outline"
             color="dark"
             fullWidth
             my="md"
+            rightSection={<VscArrowRight />}
           >
-            Sign up
+            Sign Up
           </Button>
           <Flex direction="column" justify="space-between" h={250}>
             <List spacing="xs" size="sm" mt="lg" center icon="✦">
@@ -162,13 +165,13 @@ export const PricingCards = () => {
             href={paymentURL(isMonthly ? purchaseLinks.monthly : purchaseLinks.annual)}
             target="_blank"
             size="lg"
-            radius="md"
-            color="indigo"
+            radius="xl"
+            color="green"
             fullWidth
             my="md"
             rightSection={<VscArrowRight />}
           >
-            Get Started
+            Start 3 Days Free Trial
           </Button>
           <Flex direction="column" justify="space-between" h={250}>
             <List spacing="xs" size="sm" mt="lg" center icon="✦">

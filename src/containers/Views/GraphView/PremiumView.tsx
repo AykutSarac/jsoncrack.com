@@ -161,8 +161,8 @@ export const PremiumView = () => (
         <JSONCrackLogo fontSize="4rem" />
       </Title>
       <StyledInfo>
-        Free version is not optimized to handle data of this size. Check out the premium version for
-        more features and capabilities.
+        Free version is not optimized to handle data of this size. Try the premium version for more
+        features and capabilities.
       </StyledInfo>
 
       <Button
@@ -172,12 +172,12 @@ export const PremiumView = () => (
         mt="lg"
         size="lg"
         fw="bolder"
-        color="indigo"
-        radius="sm"
+        color="green"
+        radius="xl"
         target="_blank"
         rightSection={<MdChevronRight size="24" />}
       >
-        Get Pro Editor
+        Start 3 Days Free Trial
       </Button>
     </StyledContent>
 
