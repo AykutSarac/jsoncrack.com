@@ -9,7 +9,7 @@ import Document, {
 import { ServerStyleSheet } from "styled-components";
 
 const metatags = Object.freeze({
-  title: "JSON Crack | More Than A JSON Editor",
+  title: "JSON Crack | Best JSON Visualizer, Formatter and Viewer for everyone",
   image: "https://jsoncrack.com/assets/jsoncrack.png",
 });
 

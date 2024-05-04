@@ -51,7 +51,7 @@ function JsonCrack({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>JSON Crack | More Than a JSON Editor</title>
+        <title>JSON Crack | Best JSON Visualizer, Formatter and Viewer for everyone</title>
       </Head>
 
       <MantineProvider theme={mantineTheme}>
