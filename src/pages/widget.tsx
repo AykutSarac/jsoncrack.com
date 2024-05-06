@@ -2,7 +2,7 @@ import React from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { MantineProvider, useMantineColorScheme } from "@mantine/core";
+import { MantineProvider } from "@mantine/core";
 import { ThemeProvider } from "styled-components";
 import toast from "react-hot-toast";
 import { darkTheme, lightTheme } from "src/constants/theme";
@@ -23,7 +23,6 @@ const Graph = dynamic(() => import("src/containers/Views/GraphView").then(c => c
 
 const WidgetPage = () => {
   const { query, push, isReady } = useRouter();
-  const { setColorScheme } = useMantineColorScheme();
   const [theme, setTheme] = React.useState<"dark" | "light">("dark");
   const checkEditorSession = useFile(state => state.checkEditorSession);
   const setContents = useFile(state => state.setContents);
@@ -43,7 +42,6 @@ const WidgetPage = () => {
       try {
         if (!event.data?.json) return;
         if (event.data?.options?.theme === "light" || event.data?.options?.theme === "dark") {
-          setColorScheme(event.data.options.theme);
           setTheme(event.data.options.theme);
         }
 
@@ -57,18 +55,20 @@ const WidgetPage = () => {
 
     window.addEventListener("message", handler);
     return () => window.removeEventListener("message", handler);
-  }, [setColorScheme, setContents, setDirection, theme]);
+  }, [setContents, setDirection, theme]);
 
   return (
-    <MantineProvider forceColorScheme={theme}>
-      <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
-        <Head>
-          <meta name="robots" content="noindex,nofollow" />
-        </Head>
-        <Toolbar isWidget />
-        <Graph isWidget />
-      </ThemeProvider>
-    </MantineProvider>
+    <>
+      <Head>
+        <meta name="robots" content="noindex,nofollow" />
+      </Head>
+      <MantineProvider forceColorScheme={theme}>
+        <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
+          <Toolbar isWidget />
+          <Graph isWidget />
+        </ThemeProvider>
+      </MantineProvider>
+    </>
   );
 };
 

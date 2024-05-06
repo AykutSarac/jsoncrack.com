@@ -15,16 +15,15 @@ import { supabase } from "src/lib/api/supabase";
 import useUser from "src/store/useUser";
 
 const Toaster = dynamic(() => import("react-hot-toast").then(c => c.Toaster));
-const ExternalMode = dynamic(() => import("src/layout/ExternalMode"));
-
-const mantineTheme = createTheme({
-  primaryShade: 8,
-});
 
 const isDevelopment = process.env.NODE_ENV === "development";
 const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID;
 
 ReactGA.initialize(GA_TRACKING_ID, { testMode: isDevelopment });
+
+const mantineTheme = createTheme({
+  primaryShade: 8,
+});
 
 function JsonCrack({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -53,7 +52,6 @@ function JsonCrack({ Component, pageProps }: AppProps) {
       <Head>
         <title>JSON Crack | Best JSON Visualizer, Formatter and Viewer for everyone</title>
       </Head>
-
       <MantineProvider theme={mantineTheme}>
         <ThemeProvider theme={lightTheme}>
           <Toaster
@@ -74,7 +72,6 @@ function JsonCrack({ Component, pageProps }: AppProps) {
           <GlobalStyle />
           <Loading />
           <Component {...pageProps} />
-          <ExternalMode />
         </ThemeProvider>
       </MantineProvider>
     </>
