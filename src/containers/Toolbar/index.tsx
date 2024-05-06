@@ -97,7 +97,7 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
                 style={{ textAlign: "center", gap: 4 }}
               >
                 <AiFillGift size="18" />
-                Get Premium
+                Start 3 Days Free Trial
               </Text>
             </Indicator>
           </Styles.StyledToolElement>
