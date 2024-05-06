@@ -52,7 +52,7 @@ function JsonCrack({ Component, pageProps }: AppProps) {
       <Head>
         <title>JSON Crack | Best JSON Visualizer, Formatter and Viewer for everyone</title>
       </Head>
-      <MantineProvider theme={mantineTheme} defaultColorScheme="light">
+      <MantineProvider theme={mantineTheme}>
         <ThemeProvider theme={lightTheme}>
           <Toaster
             position="bottom-right"

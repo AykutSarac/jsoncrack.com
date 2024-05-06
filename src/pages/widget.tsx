@@ -13,7 +13,10 @@ import useGraph from "src/store/useGraph";
 interface EmbedMessage {
   data: {
     json?: string;
-    options?: any;
+    options?: {
+      theme?: "light" | "dark";
+      direction?: "LEFT" | "RIGHT" | "DOWN" | "UP";
+    };
   };
 }
 
@@ -46,7 +49,7 @@ const WidgetPage = () => {
         }
 
         setContents({ contents: event.data.json, hasChanges: false });
-        setDirection(event.data.options?.direction);
+        setDirection(event.data.options?.direction || "RIGHT");
       } catch (error) {
         console.error(error);
         toast.error("Invalid JSON!");
@@ -62,12 +65,12 @@ const WidgetPage = () => {
       <Head>
         <meta name="robots" content="noindex,nofollow" />
       </Head>
-      <MantineProvider forceColorScheme={theme}>
-        <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
+      <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
+        <MantineProvider forceColorScheme={theme}>
           <Toolbar isWidget />
           <Graph isWidget />
-        </ThemeProvider>
-      </MantineProvider>
+        </MantineProvider>
+      </ThemeProvider>
     </>
   );
 };

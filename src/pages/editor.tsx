@@ -54,8 +54,8 @@ const EditorPage: React.FC = () => {
         <title>Editor | JSON Crack</title>
         <link rel="canonical" href="https://jsoncrack.com/editor" />
       </Head>
-      <MantineProvider forceColorScheme={darkmodeEnabled ? "dark" : "light"}>
-        <ThemeProvider theme={darkmodeEnabled ? darkTheme : lightTheme}>
+      <ThemeProvider theme={darkmodeEnabled ? darkTheme : lightTheme}>
+        <MantineProvider forceColorScheme={darkmodeEnabled ? "dark" : "light"}>
           <QueryClientProvider client={queryClient}>
             <ExternalMode />
             <ModalController />
@@ -69,8 +69,8 @@ const EditorPage: React.FC = () => {
               <BottomBar />
             </StyledEditorWrapper>
           </QueryClientProvider>
-        </ThemeProvider>
-      </MantineProvider>
+        </MantineProvider>
+      </ThemeProvider>
     </>
   );
 };
