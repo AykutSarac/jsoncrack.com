@@ -1,5 +1,5 @@
 import React from "react";
-import { Stack, Modal, ModalProps, Select, LoadingOverlay } from "@mantine/core";
+import { Stack, Modal, ModalProps, Select, ScrollArea } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
 import useJson from "src/store/useJson";
 
@@ -49,56 +49,62 @@ export const TypeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const getJson = useJson(state => state.getJson);
   const [type, setType] = React.useState("");
   const [selectedType, setSelectedType] = React.useState<Language>(Language.TypeScript);
-  const [loading, setLoading] = React.useState(false);
 
   const editorLanguage = React.useMemo(() => {
     return typeOptions[typeOptions.findIndex(o => o.value === selectedType)]?.lang;
   }, [selectedType]);
 
+  const transformer = React.useCallback(
+    async ({ value }) => {
+      const { run } = await import("json_typegen_wasm");
+      return run(
+        "Root",
+        value,
+        JSON.stringify({
+          output_mode: selectedType,
+        })
+      );
+    },
+    [selectedType]
+  );
+
   React.useEffect(() => {
     if (opened) {
-      (async () => {
-        try {
-          setLoading(true);
-          const json = getJson();
-
-          if (selectedType === Language.Go) {
-            const jtg = await import("src/lib/utils/json2go");
-            const gofmt = await import("gofmt.js");
-
-            const types = jtg.default(json);
-            setType(gofmt.default(types.go));
-          } else {
-            const { run } = await import("json_typegen_wasm");
-            const output_mode = selectedType;
-            const types = run("Root", json, JSON.stringify({ output_mode }));
-
-            setType(types);
-          }
-        } catch (error) {
-          console.error(error);
-        } finally {
-          setLoading(false);
+      try {
+        if (selectedType === Language.Go) {
+          import("src/lib/utils/json2go").then(jtg => {
+            import("gofmt.js").then(gofmt => {
+              const types = jtg.default(getJson());
+              setType(gofmt.default(types.go));
+            });
+          });
+        } else {
+          transformer({ value: getJson() }).then(setType);
         }
-      })();
+      } catch (error) {
+        console.error(error);
+      }
     }
-  }, [getJson, opened, selectedType]);
+  }, [getJson, opened, selectedType, transformer]);
 
   return (
-    <Modal title="Generate Types" size="md" opened={opened} onClose={onClose} centered>
+    <Modal title="Generate Types" size="lg" opened={opened} onClose={onClose} centered>
       <Stack pos="relative">
         <Select
           value={selectedType}
           data={typeOptions}
           onChange={e => setSelectedType(e as Language)}
+          allowDeselect={false}
         />
-        <LoadingOverlay visible={loading} />
-        <CodeHighlight
-          language={editorLanguage}
-          copyLabel="Copy to clipboard"
-          copiedLabel="Copied to clipboard"
-          code={type}
-        />
+        <ScrollArea.Autosize mah={400} maw={700}>
+          <CodeHighlight
+            language={editorLanguage}
+            copyLabel="Copy to clipboard"
+            copiedLabel="Copied to clipboard"
+            code={type}
+            styles={{ root: { borderRadius: 6 } }}
+          />
+        </ScrollArea.Autosize>
       </Stack>
     </Modal>
   );

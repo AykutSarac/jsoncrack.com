@@ -23,7 +23,7 @@ export const documentSvc = {
   getById: async (doc_id: string): Promise<PostgrestSingleResponse<File[]>> => {
     return await supabase.rpc("get_document_by_id", { doc_id });
   },
-  getAll: async (): Promise<File[]> => {
+  getAll: async (searchText?: string): Promise<File[]> => {
     const userEmail = useUser.getState().user?.email;
     if (!userEmail) return [];
 
@@ -31,6 +31,7 @@ export const documentSvc = {
       .from("document")
       .select()
       .eq("owner_email", userEmail)
+      .ilike("name", `%${searchText}%`)
       .order("created_at", { ascending: false });
 
     if (error) {

@@ -88,7 +88,7 @@ export const ImportModal: React.FC<ModalProps> = ({ opened, onClose }) => {
               <AiOutlineUpload size={48} />
               <Text fw="bold">Drop here or click to upload files</Text>
               <Text c="dimmed" fz="xs">
-                (Max 500 Kb)
+                (Max 500 KB)
               </Text>
               <Text c="dimmed" fz="sm">
                 {file?.name ?? "None"}
