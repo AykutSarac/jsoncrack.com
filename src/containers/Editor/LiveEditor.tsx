@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { firaMono } from "src/constants/fonts";
 import { Graph } from "src/containers/Views/GraphView";
 import { TreeView } from "src/containers/Views/TreeView";
 import { ViewMode } from "src/enums/viewMode.enum";
@@ -16,7 +15,7 @@ const StyledLiveEditor = styled.div`
   & > ul {
     margin-top: 0 !important;
     padding: 12px !important;
-    font-family: ${firaMono.style.fontFamily};
+    font-family: monospace;
     font-size: 14px;
     font-weight: 500;
   }
