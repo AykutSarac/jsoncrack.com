@@ -37,6 +37,7 @@ const WidgetPage = () => {
     if (isReady) {
       if (typeof query?.json === "string") checkEditorSession(query.json, true);
       else clearGraph();
+
       window.parent.postMessage(window.frameElement?.getAttribute("id"), "*");
     }
   }, [clearGraph, checkEditorSession, isReady, push, query.json, query.partner]);

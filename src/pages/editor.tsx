@@ -2,7 +2,7 @@ import React from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { MantineProvider } from "@mantine/core";
+import { useMantineColorScheme } from "@mantine/core";
 import styled, { ThemeProvider } from "styled-components";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { darkTheme, lightTheme } from "src/constants/theme";
@@ -41,12 +41,17 @@ export const StyledEditorWrapper = styled.div`
 
 const EditorPage: React.FC = () => {
   const { query, isReady } = useRouter();
+  const { setColorScheme } = useMantineColorScheme();
   const checkEditorSession = useFile(state => state.checkEditorSession);
   const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
 
   React.useEffect(() => {
     if (isReady) checkEditorSession(query?.json);
   }, [checkEditorSession, isReady, query]);
+
+  React.useEffect(() => {
+    setColorScheme(darkmodeEnabled ? "dark" : "light");
+  }, [darkmodeEnabled, setColorScheme]);
 
   return (
     <>
@@ -55,21 +60,19 @@ const EditorPage: React.FC = () => {
         <link rel="canonical" href="https://jsoncrack.com/editor" />
       </Head>
       <ThemeProvider theme={darkmodeEnabled ? darkTheme : lightTheme}>
-        <MantineProvider forceColorScheme={darkmodeEnabled ? "dark" : "light"}>
-          <QueryClientProvider client={queryClient}>
-            <ExternalMode />
-            <ModalController />
-            <StyledEditorWrapper>
-              <StyledPageWrapper>
-                <Toolbar />
-                <StyledEditorWrapper>
-                  <Panes />
-                </StyledEditorWrapper>
-              </StyledPageWrapper>
-              <BottomBar />
-            </StyledEditorWrapper>
-          </QueryClientProvider>
-        </MantineProvider>
+        <QueryClientProvider client={queryClient}>
+          <ExternalMode />
+          <ModalController />
+          <StyledEditorWrapper>
+            <StyledPageWrapper>
+              <Toolbar />
+              <StyledEditorWrapper>
+                <Panes />
+              </StyledEditorWrapper>
+            </StyledPageWrapper>
+            <BottomBar />
+          </StyledEditorWrapper>
+        </QueryClientProvider>
       </ThemeProvider>
     </>
   );

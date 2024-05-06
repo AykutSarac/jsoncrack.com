@@ -8,7 +8,7 @@ export const Loading = () => {
 
   React.useEffect(() => {
     const handleStart = (url: string) => {
-      return url !== router.asPath && url === "/editor" && setLoading(true);
+      return url !== router.asPath && (url === "/editor" || url === "/widget") && setLoading(true);
     };
 
     const handleComplete = (url: string) => url === router.asPath && setLoading(false);
