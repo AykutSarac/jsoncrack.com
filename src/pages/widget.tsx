@@ -2,7 +2,7 @@ import React from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { MantineProvider, useMantineColorScheme } from "@mantine/core";
+import { useMantineColorScheme } from "@mantine/core";
 import { ThemeProvider } from "styled-components";
 import toast from "react-hot-toast";
 import { darkTheme, lightTheme } from "src/constants/theme";
@@ -47,7 +47,6 @@ const WidgetPage = () => {
       try {
         if (!event.data?.json) return;
         if (event.data?.options?.theme === "light" || event.data?.options?.theme === "dark") {
-          setColorScheme(event.data.options.theme);
           setTheme(event.data.options.theme);
         }
 
@@ -63,16 +62,18 @@ const WidgetPage = () => {
     return () => window.removeEventListener("message", handler);
   }, [setColorScheme, setContents, setDirection, theme]);
 
+  React.useEffect(() => {
+    setColorScheme(theme);
+  }, [setColorScheme, theme]);
+
   return (
     <>
       <Head>
         <meta name="robots" content="noindex,nofollow" />
       </Head>
       <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
-        <MantineProvider defaultColorScheme={theme}>
-          <Toolbar isWidget />
-          <Graph isWidget />
-        </MantineProvider>
+        <Toolbar isWidget />
+        <Graph isWidget />
       </ThemeProvider>
     </>
   );

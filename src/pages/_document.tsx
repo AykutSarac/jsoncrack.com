@@ -58,7 +58,7 @@ class MyDocument extends Document {
           <meta property="twitter:url" content="https://jsoncrack.com" key="twurl" />
           <meta name="twitter:title" content={metatags.title} key="twtitle" />
           <meta name="twitter:image" content={metatags.image} key="twimage" />
-          <ColorSchemeScript defaultColorScheme="light" />
+          <ColorSchemeScript />
         </Head>
         <body>
           <Main />
