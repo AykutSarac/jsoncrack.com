@@ -1,6 +1,6 @@
 import React from "react";
 import dynamic from "next/dynamic";
-import { MantineProvider } from "@mantine/core";
+import { MantineProvider, useMantineColorScheme } from "@mantine/core";
 import { ThemeProvider } from "styled-components";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { lightTheme, darkTheme } from "src/constants/theme";
@@ -20,7 +20,12 @@ const queryClient = new QueryClient({
 export const EditorWrapper: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
+  const { setColorScheme } = useMantineColorScheme();
   const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
+
+  React.useEffect(() => {
+    if (darkmodeEnabled) setColorScheme("dark");
+  }, [darkmodeEnabled, setColorScheme]);
 
   return (
     <ThemeProvider theme={darkmodeEnabled ? darkTheme : lightTheme}>
