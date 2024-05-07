@@ -1,5 +1,5 @@
 import React from "react";
-import { useMantineColorScheme } from "@mantine/core";
+import { MantineProvider } from "@mantine/core";
 import styled, { ThemeProvider } from "styled-components";
 import { lightTheme } from "src/constants/theme";
 import { Footer } from "../Footer";
@@ -10,21 +10,17 @@ const StyledLayoutWrapper = styled.div`
 `;
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { setColorScheme } = useMantineColorScheme();
-
-  React.useEffect(() => {
-    setColorScheme("light");
-  }, [setColorScheme]);
-
   return (
     <React.Suspense>
-      <ThemeProvider theme={lightTheme}>
-        <StyledLayoutWrapper>
-          <Navbar />
-          {children}
-          <Footer />
-        </StyledLayoutWrapper>
-      </ThemeProvider>
+      <MantineProvider forceColorScheme="light">
+        <ThemeProvider theme={lightTheme}>
+          <StyledLayoutWrapper>
+            <Navbar />
+            {children}
+            <Footer />
+          </StyledLayoutWrapper>
+        </ThemeProvider>
+      </MantineProvider>
     </React.Suspense>
   );
 };
