@@ -20,7 +20,7 @@ export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
       <Flex gap="lg" justify="center" px="md">
         <Stack gap="xs">
           <Title order={3}>Free</Title>
-          <Button variant="outline" color="dark" size="md">
+          <Button variant="outline" color="dark.2" size="md">
             Your current plan
           </Button>
           <List

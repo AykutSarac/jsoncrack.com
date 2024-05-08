@@ -264,12 +264,11 @@ export const HomePage = () => {
               href="/editor"
               size="xl"
               fw="bold"
-              color="orange"
+              color="orange.5"
               rightSection={<MdChevronRight size={30} />}
               visibleFrom="sm"
               radius="xl"
               mt="lg"
-              autoContrast
             >
               Go to Editor
             </Button>
@@ -279,12 +278,11 @@ export const HomePage = () => {
               href="/editor"
               fw="bold"
               size="md"
-              color="orange"
+              color="orange.5"
               rightSection={<MdChevronRight size={24} />}
               hiddenFrom="sm"
               radius="xl"
               mt="lg"
-              autoContrast
             >
               Go to Editor
             </Button>

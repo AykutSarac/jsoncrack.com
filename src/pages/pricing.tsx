@@ -1,6 +1,5 @@
 import React from "react";
 import Head from "next/head";
-import Link from "next/link";
 import {
   Flex,
   Stack,
@@ -30,6 +29,7 @@ const StyledPaperFree = styled(Paper)`
   width: 400px;
   border-radius: 1em;
   border: 3px solid #e9e9e9;
+  background: white;
 `;
 
 const StyledPaper = styled(Paper)`
@@ -86,11 +86,10 @@ export const PricingCards = () => {
             </Stack>
           </Flex>
           <Button
-            component={Link}
-            prefetch={false}
-            href="/editor"
+            component="a"
+            href="https://app.jsoncrack.com/sign-up"
             size="lg"
-            radius="xl"
+            radius="md"
             variant="outline"
             color="dark"
             fullWidth
@@ -165,7 +164,7 @@ export const PricingCards = () => {
             href={paymentURL(isMonthly ? purchaseLinks.monthly : purchaseLinks.annual)}
             target="_blank"
             size="lg"
-            radius="xl"
+            radius="md"
             color="green"
             fullWidth
             my="md"

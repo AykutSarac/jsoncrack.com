@@ -14,16 +14,19 @@ import { lightTheme } from "src/constants/theme";
 import { supabase } from "src/lib/api/supabase";
 import useUser from "src/store/useUser";
 
+const theme = createTheme({
+  autoContrast: true,
+  fontSmoothing: false,
+  respectReducedMotion: true,
+  primaryShade: 8,
+});
+
 const Toaster = dynamic(() => import("react-hot-toast").then(c => c.Toaster));
 
 const isDevelopment = process.env.NODE_ENV === "development";
 const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID;
 
 ReactGA.initialize(GA_TRACKING_ID, { testMode: isDevelopment });
-
-const mantineTheme = createTheme({
-  primaryShade: 8,
-});
 
 function JsonCrack({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -52,28 +55,28 @@ function JsonCrack({ Component, pageProps }: AppProps) {
       <Head>
         <title>JSON Crack | Best JSON Visualizer, Formatter and Viewer for everyone</title>
       </Head>
-      <MantineProvider theme={mantineTheme}>
-        <ThemeProvider theme={lightTheme}>
-          <Toaster
-            position="bottom-right"
-            containerStyle={{
-              bottom: 34,
-              right: 8,
-              fontSize: 14,
-            }}
-            toastOptions={{
-              style: {
-                background: "#4D4D4D",
-                color: "#B9BBBE",
-                borderRadius: 4,
-              },
-            }}
-          />
-          <GlobalStyle />
+      <ThemeProvider theme={lightTheme}>
+        <Toaster
+          position="bottom-right"
+          containerStyle={{
+            bottom: 34,
+            right: 8,
+            fontSize: 14,
+          }}
+          toastOptions={{
+            style: {
+              background: "#4D4D4D",
+              color: "#B9BBBE",
+              borderRadius: 4,
+            },
+          }}
+        />
+        <GlobalStyle />
+        <MantineProvider defaultColorScheme="light" theme={theme}>
           <Loading />
           <Component {...pageProps} />
-        </ThemeProvider>
-      </MantineProvider>
+        </MantineProvider>
+      </ThemeProvider>
     </>
   );
 }
