@@ -3,6 +3,7 @@ import { Stack, Modal, Button, ModalProps, Text, Anchor, Group, Divider } from "
 import Editor from "@monaco-editor/react";
 import { toast } from "react-hot-toast";
 import { VscLinkExternal } from "react-icons/vsc";
+import { gaEvent } from "src/lib/utils/gaEvent";
 import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
 
@@ -32,8 +33,9 @@ export const SchemaModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const onApply = () => {
     try {
       const parsedSchema = JSON.parse(schema);
-
       setJsonSchema(parsedSchema);
+
+      gaEvent("Schema Modal", "apply");
       toast.success("Applied schema!");
       onClose();
     } catch (error) {

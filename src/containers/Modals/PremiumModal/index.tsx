@@ -13,6 +13,7 @@ import {
 } from "@mantine/core";
 import { BsCheck } from "react-icons/bs";
 import { MdChevronRight } from "react-icons/md";
+import { gaEvent } from "src/lib/utils/gaEvent";
 
 export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   return (
@@ -42,6 +43,7 @@ export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
         <Stack gap="xs">
           <Title order={3}>Premium</Title>
           <Button
+            onClick={() => gaEvent("Premium Modal", "click upgrade premium")}
             component={Link}
             prefetch={false}
             href="/pricing"

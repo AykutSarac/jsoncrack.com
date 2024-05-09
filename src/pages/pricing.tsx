@@ -15,6 +15,7 @@ import styled from "styled-components";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { VscArrowRight } from "react-icons/vsc";
 import Layout from "src/layout/Layout";
+import { gaEvent } from "src/lib/utils/gaEvent";
 import useUser from "src/store/useUser";
 
 const purchaseLinks = {
@@ -161,6 +162,7 @@ export const PricingCards = () => {
           </Flex>
           <Button
             component="a"
+            onClick={() => gaEvent("Pricing", "click upgrade premium")}
             href={paymentURL(isMonthly ? purchaseLinks.monthly : purchaseLinks.annual)}
             target="_blank"
             size="lg"

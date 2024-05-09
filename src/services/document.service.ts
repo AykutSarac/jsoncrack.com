@@ -45,6 +45,6 @@ export const documentSvc = {
     return await supabase.from("document").update(data).eq("id", id).select("private");
   },
   delete: async (id: string) => {
-    await supabase.from("document").delete().eq("id", id);
+    return await supabase.from("document").delete().eq("id", id);
   },
 };

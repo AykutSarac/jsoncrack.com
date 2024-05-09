@@ -3,7 +3,6 @@ import { toast } from "react-hot-toast";
 import { create } from "zustand";
 import { defaultJson } from "src/constants/data";
 import { FileFormat } from "src/enums/file.enum";
-import { gaEvent } from "src/lib/utils/gaEvent";
 import { contentToJson, jsonToContent } from "src/lib/utils/json/jsonAdapter";
 import { isIframe } from "src/lib/utils/widget";
 import { documentSvc } from "src/services/document.service";
@@ -69,19 +68,6 @@ const debouncedUpdateJson = debounce((value: unknown) => {
   useJson.getState().setJson(JSON.stringify(value, null, 2));
 }, 800);
 
-const filterArrayAndObjectFields = (obj: object) => {
-  const result = {};
-
-  for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      if (Array.isArray(obj[key]) || typeof obj[key] === "object") {
-        result[key] = obj[key];
-      }
-    }
-  }
-
-  return result;
-};
 const useFile = create<FileStates & JsonActions>()((set, get) => ({
   ...initialStates,
   clear: () => {
@@ -105,7 +91,6 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       const jsonContent = await jsonToContent(JSON.stringify(contentJson, null, 2), format);
 
       get().setContents({ contents: jsonContent });
-      gaEvent("input", "file format change");
     } catch (error) {
       get().clear();
       console.warn("The content was unable to be converted, so it was cleared instead.");

@@ -2,6 +2,7 @@ import React from "react";
 import { Menu, Text, Flex } from "@mantine/core";
 import { BsCheck2 } from "react-icons/bs";
 import { MdSettings } from "react-icons/md";
+import { gaEvent } from "src/lib/utils/gaEvent";
 import useConfig from "src/store/useConfig";
 import * as Styles from "./styles";
 
@@ -32,37 +33,55 @@ export const OptionsMenu = () => {
       <Menu.Dropdown>
         <Menu.Item
           leftSection={<BsCheck2 opacity={rulersEnabled ? 100 : 0} />}
-          onClick={() => toggleRulers(!rulersEnabled)}
+          onClick={() => {
+            toggleRulers(!rulersEnabled);
+            gaEvent("Options Menu", "toggle rulers", rulersEnabled ? "on" : "off");
+          }}
         >
           <Text size="xs">Rulers</Text>
         </Menu.Item>
         <Menu.Item
           leftSection={<BsCheck2 opacity={gesturesEnabled ? 100 : 0} />}
-          onClick={() => toggleGestures(!gesturesEnabled)}
+          onClick={() => {
+            toggleGestures(!gesturesEnabled);
+            gaEvent("Options Menu", "toggle gestures", gesturesEnabled ? "on" : "off");
+          }}
         >
           <Text size="xs">Trackpad Gestures</Text>
         </Menu.Item>
         <Menu.Item
           leftSection={<BsCheck2 opacity={childrenCountVisible ? 100 : 0} />}
-          onClick={() => toggleChildrenCount(!childrenCountVisible)}
+          onClick={() => {
+            toggleChildrenCount(!childrenCountVisible);
+            gaEvent("Options Menu", "toggle children count", childrenCountVisible ? "on" : "off");
+          }}
         >
           <Text size="xs">Item Count</Text>
         </Menu.Item>
         <Menu.Item
           leftSection={<BsCheck2 opacity={imagePreviewEnabled ? 100 : 0} />}
-          onClick={() => toggleImagePreview(!imagePreviewEnabled)}
+          onClick={() => {
+            toggleImagePreview(!imagePreviewEnabled);
+            gaEvent("Options Menu", "toggle image preview", imagePreviewEnabled ? "on" : "off");
+          }}
         >
           <Text size="xs">Image Link Preview</Text>
         </Menu.Item>
         <Menu.Item
           leftSection={<BsCheck2 opacity={collapseButtonVisible ? 100 : 0} />}
-          onClick={() => toggleCollapseButton(!collapseButtonVisible)}
+          onClick={() => {
+            toggleCollapseButton(!collapseButtonVisible);
+            gaEvent("Options Menu", "toggle collapse button", collapseButtonVisible ? "on" : "off");
+          }}
         >
           <Text size="xs">Show Expand/Collapse</Text>
         </Menu.Item>
         <Menu.Item
           leftSection={<BsCheck2 opacity={darkmodeEnabled ? 100 : 0} />}
-          onClick={() => toggleDarkMode(!darkmodeEnabled)}
+          onClick={() => {
+            toggleDarkMode(!darkmodeEnabled);
+            gaEvent("Options Menu", "toggle dark mode", darkmodeEnabled ? "on" : "off");
+          }}
         >
           <Text size="xs">Dark Mode</Text>
         </Menu.Item>

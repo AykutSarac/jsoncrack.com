@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { Modal } from "src/containers/Modals";
-import { gaEvent } from "src/lib/utils/gaEvent";
 import useUser from "./useUser";
 
 type ModalState = {
@@ -40,7 +39,6 @@ const useModal = create<ModalState & ModalActions>()(set => ({
       return set({ login: true });
     }
 
-    if (visible) gaEvent("modal", `open ${modal}`);
     set({ [modal]: visible });
   },
 }));

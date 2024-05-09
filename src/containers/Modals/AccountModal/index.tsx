@@ -11,6 +11,7 @@ import {
   Badge,
 } from "@mantine/core";
 import { IoRocketSharp } from "react-icons/io5";
+import { gaEvent } from "src/lib/utils/gaEvent";
 import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
 
@@ -62,7 +63,10 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           variant="gradient"
           gradient={{ from: "teal", to: "lime", deg: 105 }}
           leftSection={<IoRocketSharp />}
-          onClick={() => setVisible("premium")(true)}
+          onClick={() => {
+            setVisible("premium")(true);
+            gaEvent("Account Modal", "click upgrade premium");
+          }}
         >
           Upgrade to Premium
         </Button>

@@ -30,6 +30,7 @@ import { FaTrash } from "react-icons/fa";
 import { SlOptionsVertical } from "react-icons/sl";
 import { VscAdd } from "react-icons/vsc";
 import { FileFormat } from "src/enums/file.enum";
+import { gaEvent } from "src/lib/utils/gaEvent";
 import { documentSvc } from "src/services/document.service";
 import useFile, { File } from "src/store/useFile";
 
@@ -124,6 +125,7 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
         if (error) throw new Error(error.message);
 
         if (data[0]) setFile(data[0]);
+        gaEvent("Cloud Modal", "open file");
       } catch (error) {
         if (error instanceof Error) toast.error(error.message);
       } finally {
@@ -134,14 +136,23 @@ export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   );
 
   const onDeleteClick = React.useCallback(
-    (file: File) => {
-      toast
-        .promise(documentSvc.delete(file.id), {
-          loading: "Deleting file...",
-          error: "An error occurred while deleting the file!",
-          success: `Deleted ${file.name}!`,
-        })
-        .then(() => refetch());
+    async (file: File) => {
+      try {
+        toast.loading("Deleting file...", { id: "delete-file" });
+
+        const { error } = await documentSvc.delete(file.id);
+        if (error) throw new Error(error.message);
+
+        await refetch();
+        toast.success(`Deleted ${file.name}!`, { id: "delete-file" });
+        gaEvent("Cloud Modal", "delete file");
+      } catch (error) {
+        if (error instanceof Error) {
+          toast.error(error.message, { id: "delete-file" });
+        }
+      } finally {
+        toast.dismiss("delete-file");
+      }
     },
     [refetch]
   );

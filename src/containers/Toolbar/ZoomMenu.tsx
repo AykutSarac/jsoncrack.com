@@ -27,7 +27,7 @@ export const ZoomMenu = () => {
   return (
     <Menu shadow="md" trigger="click" closeOnItemClick={false} withArrow>
       <Menu.Target>
-        <Styles.StyledToolElement onClick={() => gaEvent("click", "zoom menu")}>
+        <Styles.StyledToolElement onClick={() => gaEvent("Zoom Menu", "open menu")}>
           <Flex gap={4} align="center">
             {Math.round(zoomFactor * 100)}%
             <CgChevronDown />
@@ -45,22 +45,56 @@ export const ZoomMenu = () => {
             rightSection="%"
           />
         </Menu.Item>
-        <Menu.Item rightSection="+" onClick={zoomIn}>
+        <Menu.Item
+          rightSection="+"
+          onClick={() => {
+            zoomIn();
+            gaEvent("Zoom Menu", "zoom in");
+          }}
+        >
           <Text size="xs">Zoom in</Text>
         </Menu.Item>
-        <Menu.Item rightSection="-" onClick={zoomOut}>
+        <Menu.Item
+          rightSection="-"
+          onClick={() => {
+            zoomOut();
+            gaEvent("Zoom Menu", "zoom out");
+          }}
+        >
           <Text size="xs">Zoom out</Text>
         </Menu.Item>
-        <Menu.Item rightSection="⇧ 1" onClick={centerView}>
+        <Menu.Item
+          rightSection="⇧ 1"
+          onClick={() => {
+            centerView();
+            gaEvent("Zoom Menu", "center view");
+          }}
+        >
           <Text size="xs">Zoom to fit</Text>
         </Menu.Item>
-        <Menu.Item onClick={() => setZoomFactor(50 / 100)}>
+        <Menu.Item
+          onClick={() => {
+            setZoomFactor(50 / 100);
+            gaEvent("Zoom Menu", "zoom to 50%");
+          }}
+        >
           <Text size="xs">Zoom to %50</Text>
         </Menu.Item>
-        <Menu.Item rightSection="⇧ 0" onClick={() => setZoomFactor(100 / 100)}>
+        <Menu.Item
+          rightSection="⇧ 0"
+          onClick={() => {
+            setZoomFactor(100 / 100);
+            gaEvent("Zoom Menu", "zoom to 100%");
+          }}
+        >
           <Text size="xs">Zoom to %100</Text>
         </Menu.Item>
-        <Menu.Item onClick={() => setZoomFactor(200 / 100)}>
+        <Menu.Item
+          onClick={() => {
+            setZoomFactor(200 / 100);
+            gaEvent("Zoom Menu", "zoom to 200%");
+          }}
+        >
           <Text size="xs">Zoom to %200</Text>
         </Menu.Item>
       </Menu.Dropdown>

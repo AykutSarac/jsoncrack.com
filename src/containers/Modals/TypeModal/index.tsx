@@ -1,6 +1,7 @@
 import React from "react";
 import { Stack, Modal, ModalProps, Select, ScrollArea } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
+import { gaEvent } from "src/lib/utils/gaEvent";
 import useJson from "src/store/useJson";
 
 enum Language {
@@ -93,7 +94,10 @@ export const TypeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
         <Select
           value={selectedType}
           data={typeOptions}
-          onChange={e => setSelectedType(e as Language)}
+          onChange={e => {
+            setSelectedType(e as Language);
+            gaEvent("Type Modal", "generate", e as string);
+          }}
           allowDeselect={false}
         />
         <ScrollArea.Autosize mah={400} maw={700}>

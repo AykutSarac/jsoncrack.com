@@ -2,6 +2,7 @@ import React from "react";
 import { Modal, Stack, Text, ScrollArea, ModalProps, Button } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
 import { VscLock } from "react-icons/vsc";
+import { gaEvent } from "src/lib/utils/gaEvent";
 import useGraph from "src/store/useGraph";
 import useModal from "src/store/useModal";
 
@@ -32,7 +33,10 @@ export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           </ScrollArea.Autosize>
         </Stack>
         <Button
-          onClick={() => setVisible("premium")(true)}
+          onClick={() => {
+            setVisible("premium")(true);
+            gaEvent("Node Modal", "edit");
+          }}
           rightSection={<VscLock strokeWidth={0.5} />}
         >
           Edit

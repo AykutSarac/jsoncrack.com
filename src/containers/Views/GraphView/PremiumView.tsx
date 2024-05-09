@@ -4,6 +4,7 @@ import { Button, Title } from "@mantine/core";
 import styled from "styled-components";
 import { MdChevronRight } from "react-icons/md";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
+import { gaEvent } from "src/lib/utils/gaEvent";
 
 const StyledPremiumView = styled.div`
   position: relative;
@@ -166,6 +167,7 @@ export const PremiumView = () => (
       </StyledInfo>
 
       <Button
+        onClick={() => gaEvent("Premium View", "click upgrade premium")}
         component={Link}
         prefetch={false}
         href="/pricing"

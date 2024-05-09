@@ -90,7 +90,7 @@ export const DownloadModal: React.FC<ModalProps> = ({ opened, onClose }) => {
       ]);
 
       toast.success("Copied to clipboard");
-      gaEvent("click", "clipboard image");
+      gaEvent("Download Modal", "clipboard image");
     } catch (error) {
       toast.error("Failed to copy to clipboard");
     } finally {
@@ -111,7 +111,7 @@ export const DownloadModal: React.FC<ModalProps> = ({ opened, onClose }) => {
       });
 
       downloadURI(dataURI, `${fileDetails.filename}.${extension}`);
-      gaEvent("download", "download graph image", extension);
+      gaEvent("Download Modal", "download image", extension);
     } catch (error) {
       toast.error("Failed to download image!");
     } finally {

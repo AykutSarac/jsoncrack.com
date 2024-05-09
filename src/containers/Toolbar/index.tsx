@@ -8,6 +8,7 @@ import { FiDownload } from "react-icons/fi";
 import { SearchInput } from "src/components/SearchInput";
 import { FileFormat } from "src/enums/file.enum";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
+import { gaEvent } from "src/lib/utils/gaEvent";
 import useFile from "src/store/useFile";
 import useModal from "src/store/useModal";
 import { AccountMenu } from "./AccountMenu";
@@ -80,6 +81,7 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
             onClick={() => {
               setSeenPremium(true);
               setVisible("premium")(true);
+              gaEvent("Toolbar", "click upgrade premium");
             }}
           >
             <Indicator
