@@ -1,6 +1,7 @@
 import React from "react";
-import { styled, DefaultTheme } from "styled-components";
-import { KeyPath } from "react-json-tree";
+import type { DefaultTheme } from "styled-components";
+import { styled } from "styled-components";
+import type { KeyPath } from "react-json-tree";
 
 interface LabelProps {
   keyPath: KeyPath;

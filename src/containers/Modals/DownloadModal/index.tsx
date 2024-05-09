@@ -1,4 +1,5 @@
 import React from "react";
+import type { ModalProps } from "@mantine/core";
 import {
   ColorPicker,
   TextInput,
@@ -7,7 +8,6 @@ import {
   Modal,
   Button,
   Divider,
-  ModalProps,
   ColorInput,
 } from "@mantine/core";
 import { toBlob, toJpeg, toPng, toSvg } from "html-to-image";
@@ -53,7 +53,7 @@ const swatches = [
 ];
 
 function downloadURI(uri: string, name: string) {
-  var link = document.createElement("a");
+  const link = document.createElement("a");
 
   link.download = name;
   link.href = uri;

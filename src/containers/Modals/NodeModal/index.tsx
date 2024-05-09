@@ -1,5 +1,6 @@
 import React from "react";
-import { Modal, Stack, Text, ScrollArea, ModalProps, Button } from "@mantine/core";
+import type { ModalProps } from "@mantine/core";
+import { Modal, Stack, Text, ScrollArea, Button } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
 import { VscLock } from "react-icons/vsc";
 import { gaEvent } from "src/lib/utils/gaEvent";

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import debounce from "lodash.debounce";
 import { Space } from "react-zoomable-ui";
 import { Canvas } from "reaflow";
-import { ElkRoot } from "reaflow/dist/layout/useLayout";
+import type { ElkRoot } from "reaflow/dist/layout/useLayout";
 import { useLongPress } from "use-long-press";
 import { CustomNode } from "src/containers/Views/GraphView/CustomNode";
 import useToggleHide from "src/hooks/useToggleHide";

@@ -1,6 +1,7 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { Modal, Group, Button, Text, Divider, ModalProps } from "@mantine/core";
+import type { ModalProps } from "@mantine/core";
+import { Modal, Group, Button, Text, Divider } from "@mantine/core";
 import { documentSvc } from "src/services/document.service";
 import useJson from "src/store/useJson";
 

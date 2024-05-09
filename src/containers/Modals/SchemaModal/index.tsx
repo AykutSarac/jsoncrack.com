@@ -1,5 +1,6 @@
 import React from "react";
-import { Stack, Modal, Button, ModalProps, Text, Anchor, Group, Divider } from "@mantine/core";
+import type { ModalProps } from "@mantine/core";
+import { Stack, Modal, Button, Text, Anchor, Group, Divider } from "@mantine/core";
 import Editor from "@monaco-editor/react";
 import { toast } from "react-hot-toast";
 import { VscLinkExternal } from "react-icons/vsc";

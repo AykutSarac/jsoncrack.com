@@ -24,7 +24,7 @@ const theme = createTheme({
 const Toaster = dynamic(() => import("react-hot-toast").then(c => c.Toaster));
 
 const isDevelopment = process.env.NODE_ENV === "development";
-const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID;
+const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID as string;
 
 ReactGA.initialize(GA_TRACKING_ID, { testMode: isDevelopment });
 

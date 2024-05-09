@@ -2,7 +2,7 @@ import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 import toast from "react-hot-toast";
 import { FileFormat } from "src/enums/file.enum";
 import { supabase } from "src/lib/api/supabase";
-import { File } from "src/store/useFile";
+import type { File } from "src/store/useFile";
 import useUser from "src/store/useUser";
 
 type CloudSave = {

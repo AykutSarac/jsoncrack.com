@@ -1,15 +1,6 @@
 import React from "react";
-import {
-  Modal,
-  Group,
-  Button,
-  Avatar,
-  Text,
-  Divider,
-  ModalProps,
-  Paper,
-  Badge,
-} from "@mantine/core";
+import type { ModalProps } from "@mantine/core";
+import { Modal, Group, Button, Avatar, Text, Divider, Paper, Badge } from "@mantine/core";
 import { IoRocketSharp } from "react-icons/io5";
 import { gaEvent } from "src/lib/utils/gaEvent";
 import useModal from "src/store/useModal";

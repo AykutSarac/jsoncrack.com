@@ -1,10 +1,10 @@
 import React from "react";
+import type { ModalProps } from "@mantine/core";
 import {
   Modal,
   Group,
   Button,
   Divider,
-  ModalProps,
   Text,
   Anchor,
   List,

@@ -1,4 +1,5 @@
-import styled, { DefaultTheme } from "styled-components";
+import type { DefaultTheme } from "styled-components";
+import styled from "styled-components";
 import { LinkItUrl } from "react-linkify-it";
 
 type TextColorFn = {

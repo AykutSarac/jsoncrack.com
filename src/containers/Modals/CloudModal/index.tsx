@@ -1,16 +1,15 @@
 import React from "react";
 import { useRouter } from "next/router";
+import type { ModalProps, DefaultMantineColor } from "@mantine/core";
 import {
   Modal,
   Text,
   ScrollArea,
-  ModalProps,
   Table,
   ActionIcon,
   Badge,
   Paper,
   Flex,
-  DefaultMantineColor,
   Button,
   Group,
   Stack,
@@ -29,10 +28,11 @@ import { BiSearch, BiSolidFolderOpen, BiText } from "react-icons/bi";
 import { FaTrash } from "react-icons/fa";
 import { SlOptionsVertical } from "react-icons/sl";
 import { VscAdd } from "react-icons/vsc";
-import { FileFormat } from "src/enums/file.enum";
+import type { FileFormat } from "src/enums/file.enum";
 import { gaEvent } from "src/lib/utils/gaEvent";
 import { documentSvc } from "src/services/document.service";
-import useFile, { File } from "src/store/useFile";
+import type { File } from "src/store/useFile";
+import useFile from "src/store/useFile";
 
 dayjs.extend(relativeTime);
 

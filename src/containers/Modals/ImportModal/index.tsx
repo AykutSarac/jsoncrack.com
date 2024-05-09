@@ -1,19 +1,10 @@
 import React from "react";
-import {
-  Modal,
-  Group,
-  Button,
-  TextInput,
-  Stack,
-  Divider,
-  ModalProps,
-  Paper,
-  Text,
-} from "@mantine/core";
+import type { ModalProps } from "@mantine/core";
+import { Modal, Group, Button, TextInput, Stack, Divider, Paper, Text } from "@mantine/core";
 import { Dropzone } from "@mantine/dropzone";
 import toast from "react-hot-toast";
 import { AiOutlineUpload } from "react-icons/ai";
-import { FileFormat } from "src/enums/file.enum";
+import type { FileFormat } from "src/enums/file.enum";
 import { gaEvent } from "src/lib/utils/gaEvent";
 import useFile from "src/store/useFile";
 

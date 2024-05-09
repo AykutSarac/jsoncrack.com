@@ -1,11 +1,5 @@
-import Document, {
-  Html,
-  Head,
-  Main,
-  NextScript,
-  DocumentContext,
-  DocumentInitialProps,
-} from "next/document";
+import type { DocumentContext, DocumentInitialProps } from "next/document";
+import Document, { Html, Head, Main, NextScript } from "next/document";
 import Script from "next/script";
 import { ColorSchemeScript } from "@mantine/core";
 import { ServerStyleSheet } from "styled-components";

@@ -1,5 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
+import type { ModalProps } from "@mantine/core";
 import {
   TextInput,
   Stack,
@@ -9,7 +10,6 @@ import {
   Tooltip,
   ActionIcon,
   Text,
-  ModalProps,
 } from "@mantine/core";
 import { FiExternalLink } from "react-icons/fi";
 import { MdCheck, MdCopyAll } from "react-icons/md";

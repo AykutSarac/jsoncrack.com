@@ -1,7 +1,7 @@
 import React from "react";
-import { ModalProps } from "@mantine/core";
+import type { ModalProps } from "@mantine/core";
 import * as Modals from "src/containers/Modals";
-import { Modal } from "src/containers/Modals";
+import type { Modal } from "src/containers/Modals";
 import useModal from "src/store/useModal";
 
 type ModalComponent = { key: Modal; component: React.FC<ModalProps> };

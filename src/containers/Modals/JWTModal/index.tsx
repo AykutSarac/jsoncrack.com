@@ -1,5 +1,6 @@
 import React from "react";
-import { Modal, Button, ModalProps, Textarea, Divider, Group } from "@mantine/core";
+import type { ModalProps } from "@mantine/core";
+import { Modal, Button, Textarea, Divider, Group } from "@mantine/core";
 import { decode } from "jsonwebtoken";
 import { gaEvent } from "src/lib/utils/gaEvent";
 import useFile from "src/store/useFile";

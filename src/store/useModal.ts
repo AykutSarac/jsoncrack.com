@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { Modal } from "src/containers/Modals";
+import type { Modal } from "src/containers/Modals";
 import useUser from "./useUser";
 
 type ModalState = {

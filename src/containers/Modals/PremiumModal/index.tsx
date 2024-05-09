@@ -1,16 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import {
-  Modal,
-  ModalProps,
-  Title,
-  Flex,
-  Button,
-  Stack,
-  List,
-  ThemeIcon,
-  Divider,
-} from "@mantine/core";
+import type { ModalProps } from "@mantine/core";
+import { Modal, Title, Flex, Button, Stack, List, ThemeIcon, Divider } from "@mantine/core";
 import { BsCheck } from "react-icons/bs";
 import { MdChevronRight } from "react-icons/md";
 import { gaEvent } from "src/lib/utils/gaEvent";

@@ -1,5 +1,6 @@
 import React from "react";
-import { Stack, Modal, ModalProps, Select, ScrollArea } from "@mantine/core";
+import type { ModalProps } from "@mantine/core";
+import { Stack, Modal, Select, ScrollArea } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
 import { gaEvent } from "src/lib/utils/gaEvent";
 import useJson from "src/store/useJson";

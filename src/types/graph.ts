@@ -1,4 +1,4 @@
-import { NodeType } from "jsonc-parser";
+import type { NodeType } from "jsonc-parser";
 
 export interface NodeData {
   id: string;
