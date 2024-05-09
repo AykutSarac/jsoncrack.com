@@ -31,9 +31,6 @@ export const Footer = () => {
             <Anchor fz="sm" c="dark" href="/pricing">
               Pricing
             </Anchor>
-            <Anchor fz="sm" c="dark" href="/docs">
-              Docs
-            </Anchor>
           </Stack>
           <Stack gap="xs">
             <Text fz="sm" c="dimmed">
@@ -49,6 +46,9 @@ export const Footer = () => {
             </Anchor>
             <Anchor fz="sm" c="dark" href="/#faq">
               FAQ
+            </Anchor>
+            <Anchor fz="sm" c="dark" href="/docs">
+              Docs
             </Anchor>
           </Stack>
           <Stack gap="xs">
