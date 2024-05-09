@@ -3,12 +3,15 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import Link from "next/link";
 import {
+  Accordion,
   Badge,
   Button,
   Center,
+  Container,
   Flex,
   Grid,
   Image,
+  List,
   Paper,
   Stack,
   Text,
@@ -210,6 +213,41 @@ const images = [
   {
     id: 7,
     alt: "Preview JSON Crack Premium Editor highlighting the image download feature, showing the download options for the data.",
+  },
+];
+
+export const FAQ = [
+  {
+    title: "What is JSON Crack and what does it do?",
+    content:
+      "JSON Crack is an open-source free with paid option data visualization app capable of visualizing data formats such as JSON, YAML, XML, CSV and more, into interactive graphs. This makes it much simpler to analyze complex JSON structures.",
+  },
+  {
+    title: "What are the advantages of the premium plan?",
+    content: (
+      <>
+        JSON Crack Premium helps you to work with data easier than the free version; it&apos;s more
+        compact, faster and smoother than ever. It&apos;s designed for anybody who works with data.
+        Most significant features include:
+        <List mt="lg">
+          <List.Item>Expanded support for larger datasets</List.Item>
+          <List.Item>Compact visualization style: what you see is what you need!</List.Item>
+          <List.Item>Searching is faster and smoother</List.Item>
+          <List.Item>Ask AI to filter your data</List.Item>
+          <List.Item>Direct data editing within the graphs & tree view</List.Item>
+        </List>
+      </>
+    ),
+  },
+  {
+    title: "Who is it for and what are the use-cases?",
+    content:
+      "JSON Crack is for developers, data analysts, and anyone who works with JSON data. It's useful for visualizing JSON data structures, debugging, and understanding complex data. It's also helpful for creating documentation and presentations for your teams/customers.",
+  },
+  {
+    title: "Do you see my data pasted on the editor?",
+    content:
+      "No, JSON Crack does not store your data anywhere unless you upload it manually. When you paste your data into the editor, it's processed on your device only to create the visualization. Your data remains completely private.",
   },
 ];
 
@@ -585,16 +623,33 @@ export const HomePage = () => {
       </section>
 
       <PricingCards />
-      <Center mt={80}>
-        <Stack align="center">
-          <StyledHeroText>More than an editor.</StyledHeroText>
 
-          <a href="https://app.jsoncrack.com/sign-up">
-            <Button size="lg" color="dark" rightSection={<MdOutlineArrowRightAlt />} fullWidth>
-              Start using now
-            </Button>
-          </a>
-        </Stack>
+      <Container id="faq" component="section">
+        <Title order={2} fz={36} fw={600} mt={100} style={{ textAlign: "center" }}>
+          Frequently Asked Questions
+        </Title>
+        <Accordion variant="contained" mt={60}>
+          {FAQ.map(({ title, content }) => (
+            <Accordion.Item key={title} value={title}>
+              <Accordion.Control bg="white">{title}</Accordion.Control>
+              <Accordion.Panel bg="gray.1">{content}</Accordion.Panel>
+            </Accordion.Item>
+          ))}
+        </Accordion>
+      </Container>
+
+      <Center mt={120}>
+        <Button
+          component="a"
+          variant="outline"
+          href="https://app.jsoncrack.com/sign-up"
+          size="lg"
+          radius="md"
+          color="dark"
+          rightSection={<MdOutlineArrowRightAlt />}
+        >
+          Start using now
+        </Button>
       </Center>
     </Layout>
   );

@@ -6,6 +6,7 @@ import Document, {
   DocumentContext,
   DocumentInitialProps,
 } from "next/document";
+import Script from "next/script";
 import { ColorSchemeScript } from "@mantine/core";
 import { ServerStyleSheet } from "styled-components";
 
@@ -63,6 +64,14 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <Script
+            id="lemon-squeezy-affiliate"
+            strategy="afterInteractive"
+            dangerouslySetInnerHTML={{
+              __html: 'window.lemonSqueezyAffiliateConfig = { store: "herowand" };',
+            }}
+          />
+          <Script src="https://lmsqueezy.com/affiliate.js" strategy="afterInteractive"></Script>
         </body>
       </Html>
     );

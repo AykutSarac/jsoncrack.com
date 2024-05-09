@@ -37,6 +37,19 @@ export const Footer = () => {
           </Stack>
           <Stack gap="xs">
             <Text fz="sm" c="dimmed">
+              Resources
+            </Text>
+            <Anchor
+              fz="sm"
+              c="dark"
+              href="https://herowand.lemonsqueezy.com/affiliates"
+              target="_blank"
+            >
+              Affiliate
+            </Anchor>
+          </Stack>
+          <Stack gap="xs">
+            <Text fz="sm" c="dimmed">
               Social
             </Text>
             <Flex gap="xs">
@@ -74,16 +87,16 @@ export const Footer = () => {
       </Flex>
       <Flex gap="xl">
         <Text fz="sm" c="dimmed">
-          © {dayjs().get("year")} JSON Crack.
+          © {dayjs().get("year")} JSON Crack
         </Text>
-        <Anchor fz="sm" c="dimmed" href="/legal/privacy">
-          <Text fz="sm" c="dimmed">
-            Privacy Policy
-          </Text>
-        </Anchor>
         <Anchor fz="sm" c="dimmed" href="/legal/terms">
           <Text fz="sm" c="dimmed">
-            Terms of Service
+            Terms
+          </Text>
+        </Anchor>
+        <Anchor fz="sm" c="dimmed" href="/legal/privacy">
+          <Text fz="sm" c="dimmed">
+            Privacy
           </Text>
         </Anchor>
       </Flex>
