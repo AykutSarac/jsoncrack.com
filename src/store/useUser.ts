@@ -27,7 +27,14 @@ const useUser = create<UserStates & UserActions>()(set => ({
   },
   logout: async () => {
     toast.loading("Logging out...", { id: "logout" });
-    await supabase.auth.signOut();
+
+    const { error } = await supabase.auth.signOut({ scope: "local" });
+    if (error) {
+      toast.error("Failed to log out.");
+      return;
+    }
+
+    gaEvent("engagement", "logout");
     set(initialStates);
     toast.success("Logged out.", { id: "logout" });
   },
