@@ -170,7 +170,7 @@ export const PricingCards = () => {
             my="md"
             rightSection={<VscArrowRight />}
           >
-            Start 3 Days Free Trial
+            Start 1 Day Free Trial
           </Button>
           <Flex direction="column" justify="space-between" h={250}>
             <List spacing="xs" size="sm" mt="lg" center icon="✦">

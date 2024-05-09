@@ -46,11 +46,11 @@ const SubscriptionRefund = () => {
               Refund Policy
             </Title>
             <Text c="gray.8">
-              If you cancel your subscription within 3 days of the initial purchase and haven&apos;t
-              utilized the free trial, you are eligible for a full refund. Refunds will be issued to
-              the original payment method used during the purchase. For refund inquiries or
-              assistance, please contact our customer support team at{" "}
-              <Anchor href="mailto:contact@jsoncrack.com">contact@jsoncrack.com</Anchor>.
+              The users that has subscribed to the premium plan and did not utilize the free trial
+              are eligible for full refund if cancelled within the first 3 days of the initial
+              purchase. Refunds will be issued to the original payment method used during the
+              purchase. For refund inquiries or assistance, please contact our customer support team
+              at <Anchor href="mailto:contact@jsoncrack.com">contact@jsoncrack.com</Anchor>.
             </Text>
             <Title order={3} c="gray.8">
               Changes to this Policy

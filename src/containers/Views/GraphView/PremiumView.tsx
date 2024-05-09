@@ -177,7 +177,7 @@ export const PremiumView = () => (
         target="_blank"
         rightSection={<MdChevronRight size="24" />}
       >
-        Start 3 Days Free Trial
+        Start 1 Day Free Trial
       </Button>
     </StyledContent>
 

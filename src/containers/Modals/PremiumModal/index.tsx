@@ -51,7 +51,7 @@ export const PremiumModal: React.FC<ModalProps> = ({ opened, onClose }) => {
             size="md"
             rightSection={<MdChevronRight size="24" />}
           >
-            Start 3 Days Free Trial
+            Start 1 Day Free Trial
           </Button>
           <List
             mt="xs"
