@@ -47,6 +47,9 @@ export const Footer = () => {
             >
               Affiliate
             </Anchor>
+            <Anchor fz="sm" c="dark" href="/#faq">
+              FAQ
+            </Anchor>
           </Stack>
           <Stack gap="xs">
             <Text fz="sm" c="dimmed">
