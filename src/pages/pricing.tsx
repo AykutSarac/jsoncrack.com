@@ -56,7 +56,7 @@ export const PricingCards = () => {
     <Stack component="section" id="pricing" gap="0" align="center">
       <Center my="lg">
         <SegmentedControl
-          color="dark"
+          color="white"
           value={isMonthly ? "Monthly" : "Yearly"}
           onChange={v => setIsMonthly(v === "Monthly")}
           size="md"
@@ -100,7 +100,7 @@ export const PricingCards = () => {
             Sign Up
           </Button>
           <Flex direction="column" justify="space-between" h={250}>
-            <List spacing="xs" size="sm" mt="lg" center icon="✦">
+            <List spacing="xs" size="sm" mt="lg" c="black" center icon="✦">
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
                   Open Source
@@ -175,7 +175,7 @@ export const PricingCards = () => {
             Start 1 Day Free Trial
           </Button>
           <Flex direction="column" justify="space-between" h={250}>
-            <List spacing="xs" size="sm" mt="lg" center icon="✦">
+            <List spacing="xs" size="sm" mt="lg" c="black" center icon="✦">
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
                   Graphs: 5X faster, compact and smooth

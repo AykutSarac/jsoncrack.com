@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { Anchor, Container, Divider, Flex, Stack, Text, ThemeIcon } from "@mantine/core";
 import dayjs from "dayjs";
 import { FaDiscord, FaGithub, FaLinkedin } from "react-icons/fa";
@@ -28,7 +29,7 @@ export const Footer = () => {
             >
               VS Code
             </Anchor>
-            <Anchor fz="sm" c="dark" href="/pricing">
+            <Anchor component={Link} prefetch={false} fz="sm" c="dark" href="/pricing">
               Pricing
             </Anchor>
           </Stack>
@@ -44,10 +45,10 @@ export const Footer = () => {
             >
               Affiliate
             </Anchor>
-            <Anchor fz="sm" c="dark" href="/#faq">
+            <Anchor component={Link} prefetch={false} fz="sm" c="dark" href="/#faq">
               FAQ
             </Anchor>
-            <Anchor fz="sm" c="dark" href="/docs">
+            <Anchor component={Link} prefetch={false} fz="sm" c="dark" href="/docs">
               Docs
             </Anchor>
           </Stack>
@@ -92,12 +93,12 @@ export const Footer = () => {
         <Text fz="sm" c="dimmed">
           © {dayjs().get("year")} JSON Crack
         </Text>
-        <Anchor fz="sm" c="dimmed" href="/legal/terms">
+        <Anchor component={Link} prefetch={false} fz="sm" c="dimmed" href="/legal/terms">
           <Text fz="sm" c="dimmed">
             Terms
           </Text>
         </Anchor>
-        <Anchor fz="sm" c="dimmed" href="/legal/privacy">
+        <Anchor component={Link} prefetch={false} fz="sm" c="dimmed" href="/legal/privacy">
           <Text fz="sm" c="dimmed">
             Privacy
           </Text>

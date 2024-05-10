@@ -47,7 +47,7 @@ const Docs = () => {
             Embed
           </Title>
         </Group>
-        <Paper p="md" radius="md" withBorder>
+        <Paper bg="white" c="black" p="md" radius="md" withBorder>
           <Title mb="sm" order={3} c="dark">
             # Fetching from URL
           </Title>
@@ -77,7 +77,7 @@ const Docs = () => {
             </StyledFrame>
           </StyledContentBody>
         </Paper>
-        <Paper p="md" radius="md" withBorder>
+        <Paper bg="white" c="black" p="md" radius="md" withBorder>
           <Title mb="sm" order={3} c="dark">
             # Embed Saved JSON
           </Title>
@@ -98,7 +98,7 @@ const Docs = () => {
             </StyledFrame>
           </StyledContentBody>
         </Paper>
-        <Paper p="md" radius="md" withBorder>
+        <Paper bg="white" c="black" p="md" radius="md" withBorder>
           <Title mb="sm" order={3} c="dark">
             # Communicating with API
           </Title>
@@ -137,7 +137,7 @@ const Docs = () => {
             </StyledFrame>
           </StyledContentBody>
         </Paper>
-        <Paper p="md" radius="md" withBorder>
+        <Paper bg="white" c="black" p="md" radius="md" withBorder>
           <Title order={4}>◼︎ On Page Load</Title>
           <StyledContentBody>
             <Text>

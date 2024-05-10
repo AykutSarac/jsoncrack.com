@@ -380,7 +380,14 @@ export const HomePage = () => {
             <BiChevronDown size={40} />
           </ThemeIcon>
 
-          <Title order={2} fz={{ sm: 36, md: 48 }} fw={600} mt={50} style={{ textAlign: "center" }}>
+          <Title
+            c="dark"
+            order={2}
+            fz={{ sm: 36, md: 48 }}
+            fw={600}
+            mt={50}
+            style={{ textAlign: "center" }}
+          >
             Unlock the Ease of Visualizing Your Data
           </Title>
           <Text c="dark.2" fz={{ base: 12, md: 16 }} style={{ textAlign: "center" }}>
@@ -420,7 +427,7 @@ export const HomePage = () => {
                 >
                   <MdCompare size={28} />
                 </ThemeIcon>
-                <Title order={3} fw={500} fz={{ sm: 20, md: 28 }}>
+                <Title c="black" order={3} fw={500} fz={{ sm: 20, md: 28 }}>
                   Compare
                 </Title>
                 <Text fz={{ sm: 14, md: 18 }} fw={300} lts={0.4} c="dark.5" mt={10}>
@@ -466,7 +473,7 @@ export const HomePage = () => {
                 >
                   <MdRebaseEdit size={28} />
                 </ThemeIcon>
-                <Title order={3} fw={500} fz={{ sm: 20, md: 28 }}>
+                <Title c="black" order={3} fw={500} fz={{ sm: 20, md: 28 }}>
                   Edit
                 </Title>
                 <Text fz={{ sm: 14, md: 16 }} fw={300} lts={0.4} c="dark.5" my={10}>
@@ -512,7 +519,7 @@ export const HomePage = () => {
                 >
                   <MdSearch size={28} />
                 </ThemeIcon>
-                <Title order={3} fw={500} fz={{ sm: 20, md: 28 }}>
+                <Title c="black" order={3} fw={500} fz={{ sm: 20, md: 28 }}>
                   Search
                 </Title>
                 <Text fz={{ sm: 14, md: 18 }} fw={300} lts={0.4} c="dark.5" mt={10}>
@@ -559,7 +566,7 @@ export const HomePage = () => {
                 >
                   <MdExtension size={28} />
                 </ThemeIcon>
-                <Title order={3} fw={500} fz={{ sm: 20, md: 28 }}>
+                <Title c="black" order={3} fw={500} fz={{ sm: 20, md: 28 }}>
                   Choose Your Format
                 </Title>
                 <Text fz={{ sm: 14, md: 18 }} fw={300} lts={0.4} c="dark.5" mt={10}>
@@ -572,6 +579,7 @@ export const HomePage = () => {
                       w="100%"
                       mih={{ sm: 10, md: 40 }}
                       variant="light"
+                      c="indigo"
                       color="indigo"
                       radius="sm"
                       size="xl"
@@ -587,6 +595,7 @@ export const HomePage = () => {
                       color="cyan"
                       radius="sm"
                       size="xl"
+                      c="cyan"
                     >
                       YAML
                     </Badge>
@@ -598,6 +607,7 @@ export const HomePage = () => {
                       variant="light"
                       color="grape"
                       radius="sm"
+                      c="grape"
                       size="xl"
                     >
                       CSV
@@ -611,6 +621,7 @@ export const HomePage = () => {
                       color="red"
                       radius="sm"
                       size="xl"
+                      c="red"
                     >
                       XML
                     </Badge>
@@ -625,14 +636,18 @@ export const HomePage = () => {
       <PricingCards />
 
       <Container id="faq" component="section">
-        <Title order={2} fz={36} fw={600} mt={100} style={{ textAlign: "center" }}>
+        <Title c="dark" order={2} fz={36} fw={600} mt={100} style={{ textAlign: "center" }}>
           Frequently Asked Questions
         </Title>
-        <Accordion variant="contained" mt={60}>
+        <Accordion bg="white" variant="contained" mt={60}>
           {FAQ.map(({ title, content }) => (
             <Accordion.Item key={title} value={title}>
-              <Accordion.Control bg="white">{title}</Accordion.Control>
-              <Accordion.Panel bg="gray.1">{content}</Accordion.Panel>
+              <Accordion.Control bg="white" c="dark">
+                {title}
+              </Accordion.Control>
+              <Accordion.Panel bg="gray.1" c="dark">
+                {content}
+              </Accordion.Panel>
             </Accordion.Item>
           ))}
         </Accordion>
