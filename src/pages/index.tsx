@@ -6,7 +6,6 @@ import {
   Accordion,
   Badge,
   Button,
-  Center,
   Container,
   Flex,
   Grid,
@@ -23,16 +22,11 @@ import { Carousel } from "@mantine/carousel";
 import "@mantine/carousel/styles.css";
 import styled from "styled-components";
 import { BiChevronDown } from "react-icons/bi";
-import {
-  MdChevronRight,
-  MdCompare,
-  MdExtension,
-  MdOutlineArrowRightAlt,
-  MdRebaseEdit,
-  MdSearch,
-} from "react-icons/md";
+import { MdChevronRight, MdCompare, MdExtension, MdRebaseEdit, MdSearch } from "react-icons/md";
 import useBackgroundCursorPosition from "use-bg-cursor-pos";
+import { images, metaDescription } from "src/constants/landing";
 import Layout from "src/layout/Layout";
+import { gaEvent } from "src/lib/utils/gaEvent";
 
 const PricingCards = dynamic(() => import("./pricing").then(mod => mod.PricingCards));
 
@@ -182,41 +176,7 @@ const StyledCarouselWrapper = styled.section`
   }
 `;
 
-const metaDescription =
-  "JSON Crack Editor is a tool for visualizing into graphs, analyzing, editing, formatting, querying, transforming and validating JSON, CSV, YAML, XML, and more.";
-
-const images = [
-  {
-    id: 1,
-    alt: "Preview of JSON Crack Premium Editor highligting the compact visualization style of the graphs.",
-  },
-  {
-    id: 2,
-    alt: "Preview JSON Crack Premium Editor highlighting the data compare feature feature, showing the differences with red background color and using symbols to indicate the changes.",
-  },
-  {
-    id: 3,
-    alt: "Preview JSON Crack Premium Editor highlighting the data search feature, showing the search results in the data.",
-  },
-  {
-    id: 4,
-    alt: "Preview JSON Crack Premium Editor highlighting the data edit feature, showing the data in a table format with the ability to edit the data directly.",
-  },
-  {
-    id: 5,
-    alt: "Preview JSON Crack Premium Editor highlighting the data view options, showing the data in a tree view and graph view.",
-  },
-  {
-    id: 6,
-    alt: "Preview JSON Crack Premium Editor highlighting type generation feature. TypeScript, Go, JSON Schema, and more are shown.",
-  },
-  {
-    id: 7,
-    alt: "Preview JSON Crack Premium Editor highlighting the image download feature, showing the download options for the data.",
-  },
-];
-
-export const FAQ = [
+export const FAQ = Object.freeze([
   {
     title: "What is JSON Crack and what does it do?",
     content:
@@ -249,7 +209,7 @@ export const FAQ = [
     content:
       "No, JSON Crack does not store your data anywhere unless you upload it manually. When you paste your data into the editor, it's processed on your device only to create the visualization. Your data remains completely private.",
   },
-];
+]);
 
 export const HomePage = () => {
   const [card1, bg1] = useBackgroundCursorPosition("#f2f2f2", "#ffffff", "200px");
@@ -296,30 +256,47 @@ export const HomePage = () => {
                 TOML
               </Badge>
             </Flex>
-            <Button
-              component={Link}
-              prefetch={false}
-              href="/editor"
-              size="xl"
-              fw="bold"
-              color="orange.5"
-              rightSection={<MdChevronRight size={30} />}
-              visibleFrom="sm"
-              radius="xl"
-              mt="lg"
-            >
-              Go to Editor
-            </Button>
+            <Flex gap="xs">
+              <Button
+                onClick={() => gaEvent("Hero Section", "click upgrade premium")}
+                component={Link}
+                prefetch={false}
+                href="/editor"
+                size="xl"
+                fw="bold"
+                color="orange.6"
+                rightSection={<MdChevronRight size={30} />}
+                visibleFrom="sm"
+                radius="lg"
+                mt="lg"
+                style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)" }}
+              >
+                Go to Editor
+              </Button>
+              <Button
+                variant="light"
+                component="a"
+                href="/#pricing"
+                size="xl"
+                fw="bold"
+                color="orange.6"
+                visibleFrom="sm"
+                radius="lg"
+                mt="lg"
+              >
+                Explore Premium
+              </Button>
+            </Flex>
             <Button
               component={Link}
               prefetch={false}
               href="/editor"
               fw="bold"
               size="md"
-              color="orange.5"
+              color="orange.6"
               rightSection={<MdChevronRight size={24} />}
               hiddenFrom="sm"
-              radius="xl"
+              radius="lg"
               mt="lg"
             >
               Go to Editor
@@ -636,7 +613,7 @@ export const HomePage = () => {
       <PricingCards />
 
       <Container id="faq" component="section">
-        <Title c="dark" order={2} fz={36} fw={600} mt={100} style={{ textAlign: "center" }}>
+        <Title c="black" order={2} fz={36} fw={600} mt={100} style={{ textAlign: "center" }}>
           Frequently Asked Questions
         </Title>
         <Accordion bg="white" variant="contained" mt={60}>
@@ -652,20 +629,6 @@ export const HomePage = () => {
           ))}
         </Accordion>
       </Container>
-
-      <Center mt={120}>
-        <Button
-          component="a"
-          variant="outline"
-          href="https://app.jsoncrack.com/sign-up"
-          size="lg"
-          radius="md"
-          color="dark"
-          rightSection={<MdOutlineArrowRightAlt />}
-        >
-          Start using now
-        </Button>
-      </Center>
     </Layout>
   );
 };

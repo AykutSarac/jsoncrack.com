@@ -1,6 +1,17 @@
 import React from "react";
 import Link from "next/link";
-import { Anchor, Container, Divider, Flex, Stack, Text, ThemeIcon } from "@mantine/core";
+import {
+  Anchor,
+  Button,
+  Center,
+  Container,
+  Divider,
+  Flex,
+  Stack,
+  Text,
+  ThemeIcon,
+  Title,
+} from "@mantine/core";
 import dayjs from "dayjs";
 import { FaDiscord, FaGithub, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
@@ -8,7 +19,16 @@ import { JSONCrackLogo } from "../JsonCrackLogo";
 
 export const Footer = () => {
   return (
-    <Container mt={100}>
+    <Container mt={150}>
+      <Stack align="center">
+        <Title c="black" order={3}>Get Started with JSON Crack</Title>
+        <Text fz="lg" c="dimmed">
+          Designed for everyone, save time understanding your data.
+        </Text>
+        <Button color="dark" component={Link} prefetch={false} href="/pricing" radius="lg" size="xl">
+          Get Started
+        </Button>
+      </Stack>
       <Divider my={60} />
       <Flex justify="space-between">
         <Stack gap={4} visibleFrom="sm">

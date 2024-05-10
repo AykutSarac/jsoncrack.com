@@ -31,16 +31,18 @@ const StyledPaperFree = styled(Paper)`
   border-radius: 1em;
   border: 3px solid #e9e9e9;
   background: white;
+  box-shadow:
+    12.5px 12.5px 10px rgba(0, 0, 0, 0.005),
+    100px 100px 80px rgba(0, 0, 0, 0.01);
 `;
 
 const StyledPaper = styled(Paper)`
   padding: 1.5em;
   width: 400px;
-  background:
-    linear-gradient(white, white) padding-box,
-    linear-gradient(#ec85f5, #fb7eb0 28%, #fc9f96 53%, #ffbc88 78%, #ffc86a) border-box;
   border-radius: 1em;
-  border: 3px solid transparent;
+  border: 3px solid #424242;
+  background: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `;
 
 export const PricingCards = () => {
@@ -167,12 +169,12 @@ export const PricingCards = () => {
             target="_blank"
             size="lg"
             radius="md"
-            color="green"
+            color="dark"
             fullWidth
             my="md"
             rightSection={<VscArrowRight />}
           >
-            Start 1 Day Free Trial
+            Start Free Trial
           </Button>
           <Flex direction="column" justify="space-between" h={250}>
             <List spacing="xs" size="sm" mt="lg" c="black" center icon="✦">
