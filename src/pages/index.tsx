@@ -22,6 +22,7 @@ import { Carousel } from "@mantine/carousel";
 import "@mantine/carousel/styles.css";
 import styled from "styled-components";
 import { BiChevronDown } from "react-icons/bi";
+import { IoMdInformationCircle } from "react-icons/io";
 import { MdChevronRight, MdCompare, MdExtension, MdRebaseEdit, MdSearch } from "react-icons/md";
 import useBackgroundCursorPosition from "use-bg-cursor-pos";
 import { images, metaDescription } from "src/constants/landing";
@@ -159,9 +160,7 @@ const StyledCarouselWrapper = styled.section`
   max-width: 75%;
   position: relative;
   z-index: 1;
-  border: 6px solid #bdbdbd;
   margin: 60px auto;
-  border-radius: 14px;
   overflow: hidden;
 
   img {
@@ -212,10 +211,10 @@ export const FAQ = Object.freeze([
 ]);
 
 export const HomePage = () => {
-  const [card1, bg1] = useBackgroundCursorPosition("#f2f2f2", "#ffffff", "200px");
-  const [card2, bg2] = useBackgroundCursorPosition("#f2f2f2", "#ffffff", "200px");
-  const [card3, bg3] = useBackgroundCursorPosition("#f2f2f2", "#ffffff", "200px");
-  const [card4, bg4] = useBackgroundCursorPosition("#f2f2f2", "#ffffff", "200px");
+  const [card1, bg1] = useBackgroundCursorPosition("#fff7f7", "#ffecec", "300px");
+  const [card2, bg2] = useBackgroundCursorPosition("#f7fff7", "#ecffec", "300px");
+  const [card3, bg3] = useBackgroundCursorPosition("#fff7fe", "#ffecf7", "300px");
+  const [card4, bg4] = useBackgroundCursorPosition("#f5fbff", "#e9f3ff", "300px");
 
   return (
     <Layout>
@@ -256,41 +255,24 @@ export const HomePage = () => {
                 TOML
               </Badge>
             </Flex>
-            <Flex gap="xs">
-              <Button
-                onClick={() => gaEvent("Hero Section", "click upgrade premium")}
-                component={Link}
-                prefetch={false}
-                href="/editor"
-                size="xl"
-                fw="bold"
-                color="orange.6"
-                rightSection={<MdChevronRight size={30} />}
-                visibleFrom="sm"
-                radius="lg"
-                mt="lg"
-                style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)" }}
-              >
-                Go to Editor
-              </Button>
-              <Button
-                variant="light"
-                component="a"
-                href="/#pricing"
-                size="xl"
-                fw="bold"
-                color="orange.6"
-                visibleFrom="sm"
-                radius="lg"
-                mt="lg"
-              >
-                Explore Premium
-              </Button>
-            </Flex>
+            <Button
+              onClick={() => gaEvent("Hero Section", "click upgrade premium")}
+              component={Link}
+              href="/pricing"
+              size="xl"
+              fw="bold"
+              color="orange.6"
+              rightSection={<MdChevronRight size={30} />}
+              visibleFrom="sm"
+              radius="lg"
+              mt="lg"
+              style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)" }}
+            >
+              Get Started
+            </Button>
             <Button
               component={Link}
-              prefetch={false}
-              href="/editor"
+              href="/pricing"
               fw="bold"
               size="md"
               color="orange.6"
@@ -299,7 +281,7 @@ export const HomePage = () => {
               radius="lg"
               mt="lg"
             >
-              Go to Editor
+              Get Started
             </Button>
           </Stack>
         </StyledHeroSectionBody>
@@ -312,10 +294,11 @@ export const HomePage = () => {
               embla.scrollNext();
             }, 10_000);
           }}
+          flex="1"
+          height="100%"
           withIndicators
           loop
-          height="100%"
-          style={{ flex: 1 }}
+          style={{ border: "5px solid #bdbdbd", borderRadius: "14px", overflow: "hidden" }}
         >
           {images.map(image => (
             <Carousel.Slide key={image.id}>
@@ -329,9 +312,16 @@ export const HomePage = () => {
             </Carousel.Slide>
           ))}
         </Carousel>
+        <Flex justify="center" align="center" mt={10} gap={4}>
+          <IoMdInformationCircle color="gray" />
+          <Text c="dimmed" fz="sm" ta="center">
+            Preview images are from the premium version
+          </Text>
+        </Flex>
       </StyledCarouselWrapper>
+
       <Paper
-        pt={rem(280)}
+        pt={rem(300)}
         px={rem(80)}
         pb={rem(20)}
         maw="95%"
@@ -395,7 +385,6 @@ export const HomePage = () => {
                 <ThemeIcon
                   color="gray.3"
                   c="dark.4"
-                  bg="gray.1"
                   variant="outline"
                   size="xl"
                   radius="md"
@@ -441,7 +430,6 @@ export const HomePage = () => {
                 <ThemeIcon
                   color="gray.3"
                   c="dark.4"
-                  bg="gray.1"
                   variant="outline"
                   size="xl"
                   radius="md"
@@ -487,7 +475,6 @@ export const HomePage = () => {
                 <ThemeIcon
                   color="gray.3"
                   c="dark.4"
-                  bg="gray.1"
                   variant="outline"
                   size="xl"
                   radius="md"
@@ -534,7 +521,6 @@ export const HomePage = () => {
                 <ThemeIcon
                   color="gray.3"
                   c="dark.4"
-                  bg="gray.1"
                   variant="outline"
                   size="xl"
                   radius="md"

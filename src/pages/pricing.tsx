@@ -1,5 +1,6 @@
 import React from "react";
 import Head from "next/head";
+import Link from "next/link";
 import {
   Flex,
   Stack,
@@ -10,6 +11,7 @@ import {
   SegmentedControl,
   Center,
   Badge,
+  Anchor,
 } from "@mantine/core";
 import styled from "styled-components";
 import { AiOutlineInfoCircle } from "react-icons/ai";
@@ -58,13 +60,15 @@ export const PricingCards = () => {
     <Stack component="section" id="pricing" gap="0" align="center">
       <Center my="lg">
         <SegmentedControl
+          bg="gray.1"
           color="white"
           value={isMonthly ? "Monthly" : "Yearly"}
           onChange={v => setIsMonthly(v === "Monthly")}
           size="md"
           data={["Monthly", "Yearly"]}
           w={200}
-          radius="xl"
+          radius="lg"
+          styles={{ label: { color: "black" } }}
         />
       </Center>
       <Flex gap="lg" wrap="wrap" justify="center" w="fit-content" p="lg" mx="auto" maw="100%">
@@ -89,8 +93,9 @@ export const PricingCards = () => {
             </Stack>
           </Flex>
           <Button
-            component="a"
-            href="https://app.jsoncrack.com/sign-up"
+            component={Link}
+            prefetch={false}
+            href="/editor"
             size="lg"
             radius="md"
             variant="outline"
@@ -99,28 +104,23 @@ export const PricingCards = () => {
             my="md"
             rightSection={<VscArrowRight />}
           >
-            Sign Up
+            Start for Free
           </Button>
-          <Flex direction="column" justify="space-between" h={250}>
+          <Flex direction="column" justify="space-between">
             <List spacing="xs" size="sm" mt="lg" c="black" center icon="✦">
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
-                  Open Source
+                  Graph/Tree visualizations
                 </Text>
               </List.Item>
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
-                  Graph & Tree visualizations
+                  Basic data size support
                 </Text>
               </List.Item>
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
-                  Small size graph visualizations
-                </Text>
-              </List.Item>
-              <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Download as image
+                  Download as Image
                 </Text>
               </List.Item>
               <List.Item>
@@ -137,6 +137,11 @@ export const PricingCards = () => {
                 </Text>
                 <Text c="dimmed" fz="xs">
                   JSON, YAML, TOML, XML, CSV, and more...
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Store 25 documents
                 </Text>
               </List.Item>
             </List>
@@ -161,6 +166,9 @@ export const PricingCards = () => {
                 billed {isMonthly ? "monthly" : "annually"}
               </Text>
             </Stack>
+            <Anchor c="dark" fz="sm" component={Link} h="fit-content" href="/#preview">
+              Preview
+            </Anchor>
           </Flex>
           <Button
             component="a"
@@ -176,16 +184,32 @@ export const PricingCards = () => {
           >
             Start Free Trial
           </Button>
-          <Flex direction="column" justify="space-between" h={250}>
-            <List spacing="xs" size="sm" mt="lg" c="black" center icon="✦">
+          <Text mt="xs" fz="xs" c="dimmed">
+            Designed for individuals who works with data regularly.
+          </Text>
+          <Flex direction="column" justify="space-between">
+            <List spacing="xs" size="sm" mt="xs" c="black" center icon="✦">
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
-                  Graphs: 5X faster, compact and smooth
+                  Larger data support
+                </Text>
+                <Text c="dimmed" fz="xs">
+                  (Up to ~4 MB)
                 </Text>
               </List.Item>
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
-                  Compare data differences on graphs
+                  Compact graph visualizations & faster rendering
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Compare data differences
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  AI powered data filter
                 </Text>
               </List.Item>
               <List.Item>
@@ -200,20 +224,7 @@ export const PricingCards = () => {
               </List.Item>
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
-                  Save up to 200 documents in the cloud
-                </Text>
-              </List.Item>
-              <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Visualize up to 4 MBs
-                </Text>
-              </List.Item>
-              <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Join alpha test of AI
-                </Text>
-                <Text c="dimmed" fz="xs">
-                  (10 credits/day)
+                  Store 200 documents
                 </Text>
               </List.Item>
             </List>
