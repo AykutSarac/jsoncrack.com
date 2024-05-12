@@ -26,6 +26,10 @@ const alignChildren = (nodeA: Node, nodeB: Node): number => {
     return -1;
   }
 
+  if (!isPrimitiveOrNullType(aChildType) && isPrimitiveOrNullType(bChildType)) {
+    return 1;
+  }
+
   return 0;
 };
 
