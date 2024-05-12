@@ -65,7 +65,7 @@ class MyDocument extends Document {
               __html: 'window.lemonSqueezyAffiliateConfig = { store: "herowand" };',
             }}
           />
-          <Script src="https://lmsqueezy.com/affiliate.js" strategy="afterInteractive"></Script>
+          <Script src="https://lmsqueezy.com/affiliate.js" strategy="afterInteractive" />
         </body>
       </Html>
     );

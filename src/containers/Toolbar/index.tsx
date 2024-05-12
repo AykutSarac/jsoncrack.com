@@ -80,7 +80,7 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
           <Styles.StyledToolElement
             onClick={() => {
               setSeenPremium(true);
-              setVisible("premium")(true);
+              setVisible("upgrade")(true);
               gaEvent("Toolbar", "click upgrade premium");
             }}
           >
@@ -99,7 +99,7 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
                 style={{ textAlign: "center", gap: 4 }}
               >
                 <AiFillGift size="18" />
-                Start 1 Day Free Trial
+                Get Premium!
               </Text>
             </Indicator>
           </Styles.StyledToolElement>

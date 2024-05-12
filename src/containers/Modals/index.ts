@@ -6,10 +6,9 @@ export { AccountModal } from "./AccountModal";
 export { NodeModal } from "./NodeModal";
 export { ShareModal } from "./ShareModal";
 export { LoginModal } from "./LoginModal";
-export { PremiumModal } from "./PremiumModal";
+export { UpgradeModal } from "./UpgradeModal";
 export { JWTModal } from "./JWTModal";
 export { SchemaModal } from "./SchemaModal";
-export { CancelPremiumModal } from "./CancelPremiumModal";
 export { ReviewModal } from "./ReviewModal";
 export { JQModal } from "./JQModal";
 export { TypeModal } from "./TypeModal";
@@ -23,10 +22,9 @@ type Modal =
   | "node"
   | "share"
   | "login"
-  | "premium"
+  | "upgrade"
   | "jwt"
   | "schema"
-  | "cancelPremium"
   | "review"
   | "jq"
   | "type";

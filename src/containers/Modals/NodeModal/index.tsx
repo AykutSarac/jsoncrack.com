@@ -35,7 +35,7 @@ export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
         </Stack>
         <Button
           onClick={() => {
-            setVisible("premium")(true);
+            setVisible("upgrade")(true);
             gaEvent("Node Modal", "edit");
           }}
           rightSection={<VscLock strokeWidth={0.5} />}

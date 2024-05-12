@@ -18,9 +18,13 @@ import { AiOutlineInfoCircle } from "react-icons/ai";
 import { VscArrowRight } from "react-icons/vsc";
 import Layout from "src/layout/Layout";
 import { gaEvent } from "src/lib/utils/gaEvent";
-import useUser from "src/store/useUser";
 
-const purchaseLinks = {
+export const PRICING = {
+  MONTHLY: 6,
+  ANNUAL: 5,
+};
+
+export const purchaseLinks = {
   monthly:
     "https://herowand.lemonsqueezy.com/checkout/buy/ce30521f-c7cc-44f3-9435-995d3260ba22?enabled=67805",
   annual:
@@ -48,13 +52,7 @@ const StyledPaper = styled(Paper)`
 `;
 
 export const PricingCards = () => {
-  const email = useUser(state => state.user?.email);
   const [isMonthly, setIsMonthly] = React.useState(true);
-
-  const paymentURL = (url: string) => {
-    if (email) url += `?checkout[email]=${email}`;
-    return url;
-  };
 
   return (
     <Stack component="section" id="pricing" gap="0" align="center">
@@ -156,7 +154,7 @@ export const PricingCards = () => {
 
               <Flex gap="xs" align="baseline">
                 <Text fz={32} fw="bold" c="dark">
-                  ${isMonthly ? "6" : "5"}
+                  ${isMonthly ? PRICING.MONTHLY : PRICING.ANNUAL}
                 </Text>
                 <Text fz="sm" fw={500} c="gray.8">
                   / month
@@ -173,7 +171,7 @@ export const PricingCards = () => {
           <Button
             component="a"
             onClick={() => gaEvent("Pricing", "click upgrade premium")}
-            href={paymentURL(isMonthly ? purchaseLinks.monthly : purchaseLinks.annual)}
+            href={isMonthly ? purchaseLinks.monthly : purchaseLinks.annual}
             target="_blank"
             size="lg"
             radius="md"

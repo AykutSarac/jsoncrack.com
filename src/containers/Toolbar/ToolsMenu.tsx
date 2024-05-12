@@ -26,7 +26,7 @@ export const ToolsMenu = () => {
           leftSection={<MdCompare />}
           rightSection={<VscLock />}
           onClick={() => {
-            setVisible("premium")(true);
+            setVisible("upgrade")(true);
             gaEvent("Tools Menu", "open", "Compare Data");
           }}
         >

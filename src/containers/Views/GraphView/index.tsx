@@ -11,7 +11,7 @@ import useToggleHide from "src/hooks/useToggleHide";
 import useConfig from "src/store/useConfig";
 import useGraph from "src/store/useGraph";
 import { CustomEdge } from "./CustomEdge";
-import { PremiumView } from "./PremiumView";
+import { NotSupported } from "./NotSupported";
 
 interface GraphProps {
   isWidget?: boolean;
@@ -166,7 +166,7 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
   }, 300);
 
   if (aboveSupportedLimit) {
-    return <PremiumView />;
+    return <NotSupported />;
   }
 
   return (

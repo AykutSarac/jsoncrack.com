@@ -55,7 +55,7 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           gradient={{ from: "teal", to: "lime", deg: 105 }}
           leftSection={<IoRocketSharp />}
           onClick={() => {
-            setVisible("premium")(true);
+            setVisible("upgrade")(true);
             gaEvent("Account Modal", "click upgrade premium");
           }}
         >
