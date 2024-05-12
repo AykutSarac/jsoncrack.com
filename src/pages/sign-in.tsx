@@ -2,11 +2,11 @@ import React from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import type { PaperProps } from "@mantine/core";
 import {
   TextInput,
   PasswordInput,
   Paper,
-  PaperProps,
   Button,
   Divider,
   Anchor,
@@ -142,17 +142,39 @@ export function AuthenticationForm(props: PaperProps) {
 const SignIn = () => {
   const { isReady, push, query } = useRouter();
   const hasSession = useUser(state => !!state.user);
+  const setSession = useUser(state => state.setSession);
   const isPasswordReset = query?.type === "recovery" && !query?.error;
 
   React.useEffect(() => {
-    if (isIframe()) push("/");
-    if (isReady && hasSession && !isPasswordReset) push("/editor");
-  }, [isReady, hasSession, push, isPasswordReset]);
+    if (isIframe()) {
+      push("/");
+      return;
+    }
+
+    if (!isReady) return;
+
+    if (query?.access_token && query?.refresh_token) {
+      (async () => {
+        const { data, error } = await supabase.auth.setSession({
+          access_token: query.access_token as string,
+          refresh_token: query.refresh_token as string,
+        });
+
+        if (error) return toast.error(error.message);
+        if (data.session) setSession(data.session);
+      })();
+    }
+
+    if (hasSession && !isPasswordReset) push("/editor");
+  }, [isReady, hasSession, push, isPasswordReset, query, setSession]);
+
+  if (!isReady) return null;
 
   return (
     <Layout>
       <Head>
         <title>Sign In - JSON Crack</title>
+        <link rel="canonical" href="https://app.jsoncrack.com/sign-in" />
       </Head>
       <Paper mt={100} mx="auto" maw={400} p="lg" withBorder>
         <AuthenticationForm />

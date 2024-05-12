@@ -8,23 +8,25 @@ import "@mantine/core/styles.css";
 import "@mantine/code-highlight/styles.css";
 import { ThemeProvider } from "styled-components";
 import ReactGA from "react-ga4";
+import { Loading } from "src/components/Loading";
 import GlobalStyle from "src/constants/globalStyle";
 import { lightTheme } from "src/constants/theme";
 import { supabase } from "src/lib/api/supabase";
 import useUser from "src/store/useUser";
 
-const Toaster = dynamic(() => import("react-hot-toast").then(c => c.Toaster));
-
-const mantineTheme = createTheme({
+const theme = createTheme({
+  autoContrast: true,
+  fontSmoothing: false,
+  respectReducedMotion: true,
   primaryShade: 8,
 });
 
+const Toaster = dynamic(() => import("react-hot-toast").then(c => c.Toaster));
+
 const isDevelopment = process.env.NODE_ENV === "development";
-const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID;
+const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID as string;
 
 ReactGA.initialize(GA_TRACKING_ID, { testMode: isDevelopment });
-
-const ExternalMode = dynamic(() => import("src/layout/ExternalMode"));
 
 function JsonCrack({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -51,31 +53,30 @@ function JsonCrack({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>JSON Crack | More Than a JSON Editor</title>
+        <title>JSON Crack | Best JSON Visualizer, Formatter and Viewer for everyone</title>
       </Head>
-
-      <MantineProvider theme={mantineTheme}>
-        <ThemeProvider theme={lightTheme}>
-          <Toaster
-            position="bottom-right"
-            containerStyle={{
-              bottom: 34,
-              right: 8,
-              fontSize: 14,
-            }}
-            toastOptions={{
-              style: {
-                background: "#4D4D4D",
-                color: "#B9BBBE",
-                borderRadius: 4,
-              },
-            }}
-          />
-          <GlobalStyle />
+      <ThemeProvider theme={lightTheme}>
+        <Toaster
+          position="bottom-right"
+          containerStyle={{
+            bottom: 34,
+            right: 8,
+            fontSize: 14,
+          }}
+          toastOptions={{
+            style: {
+              background: "#4D4D4D",
+              color: "#B9BBBE",
+              borderRadius: 4,
+            },
+          }}
+        />
+        <GlobalStyle />
+        <MantineProvider defaultColorScheme="light" theme={theme}>
+          <Loading />
           <Component {...pageProps} />
-          <ExternalMode />
-        </ThemeProvider>
-      </MantineProvider>
+        </MantineProvider>
+      </ThemeProvider>
     </>
   );
 }

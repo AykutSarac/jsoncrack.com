@@ -1,10 +1,13 @@
 import React from "react";
+import Link from "next/link";
 import { Button, Title } from "@mantine/core";
 import styled from "styled-components";
 import { MdChevronRight } from "react-icons/md";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
+import { gaEvent } from "src/lib/utils/gaEvent";
+import useModal from "src/store/useModal";
 
-const StyledPremiumView = styled.div`
+const StyledNotSupported = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -153,36 +156,41 @@ const StyledContent = styled.div`
   z-index: 1;
 `;
 
-export const PremiumView = () => (
-  <StyledPremiumView>
-    <StyledContent>
-      <Title mb="lg" style={{ pointerEvents: "none" }}>
-        <JSONCrackLogo fontSize="4rem" />
-      </Title>
-      <StyledInfo>
-        Free version is not optimized to handle data of this size. Check out the premium version for
-        more features and capabilities.
-      </StyledInfo>
+export const NotSupported = () => {
+  const setVisible = useModal(state => state.setVisible);
 
-      <Button
-        mt="lg"
-        size="lg"
-        component="a"
-        fw="bolder"
-        color="indigo"
-        radius="sm"
-        href="https://pro.jsoncrack.com"
-        target="_blank"
-        rightSection={<MdChevronRight size="24" />}
-      >
-        Take me there
-      </Button>
-    </StyledContent>
+  return (
+    <StyledNotSupported>
+      <StyledContent>
+        <Title mb="lg" style={{ pointerEvents: "none" }}>
+          <JSONCrackLogo fontSize="4rem" />
+        </Title>
+        <StyledInfo>
+          Free version is not optimized to handle data of this size. Try the premium version for
+          more features and capabilities.
+        </StyledInfo>
 
-    <div className="glowing">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  </StyledPremiumView>
-);
+        <Button
+          onClick={() => {
+            gaEvent("Premium View", "click upgrade premium");
+            setVisible("upgrade")(true);
+          }}
+          mt="lg"
+          size="lg"
+          fw="bolder"
+          color="green"
+          radius="xl"
+          rightSection={<MdChevronRight size="24" />}
+        >
+          Start Free Trial
+        </Button>
+      </StyledContent>
+
+      <div className="glowing">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </StyledNotSupported>
+  );
+};

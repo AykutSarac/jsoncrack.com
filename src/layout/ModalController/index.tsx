@@ -1,7 +1,7 @@
 import React from "react";
-import { ModalProps } from "@mantine/core";
+import type { ModalProps } from "@mantine/core";
 import * as Modals from "src/containers/Modals";
-import { Modal } from "src/containers/Modals";
+import type { Modal } from "src/containers/Modals";
 import useModal from "src/store/useModal";
 
 type ModalComponent = { key: Modal; component: React.FC<ModalProps> };
@@ -12,13 +12,12 @@ const modalComponents: ModalComponent[] = [
   { key: "download", component: Modals.DownloadModal },
   { key: "cloud", component: Modals.CloudModal },
   { key: "account", component: Modals.AccountModal },
-  { key: "premium", component: Modals.PremiumModal },
+  { key: "upgrade", component: Modals.UpgradeModal },
   { key: "login", component: Modals.LoginModal },
   { key: "share", component: Modals.ShareModal },
   { key: "jwt", component: Modals.JWTModal },
   { key: "node", component: Modals.NodeModal },
   { key: "schema", component: Modals.SchemaModal },
-  { key: "cancelPremium", component: Modals.CancelPremiumModal },
   { key: "review", component: Modals.ReviewModal },
   { key: "jq", component: Modals.JQModal },
   { key: "type", component: Modals.TypeModal },

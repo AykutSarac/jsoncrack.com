@@ -99,6 +99,7 @@ const ForgotPassword = () => {
     <Layout>
       <Head>
         <title>Reset Password - JSON Crack</title>
+        <link rel="canonical" href="https://app.jsoncrack.com/forgot-password" />
         <meta name="robots" content="noindex,nofollow" />
       </Head>
       {isPasswordReset ? (

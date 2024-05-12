@@ -1,10 +1,9 @@
-# Allow all crawlers
 User-agent: *
 Allow: /
 
-
-# Block all crawlers for /accounts
 User-agent: *
 Disallow: /*?*
+Disallow: /sign-in
+Disallow: /sign-up
 Disallow: /forgot-password
 Disallow: /widget

@@ -65,7 +65,7 @@ export const ViewMenu = () => {
   return (
     <Menu shadow="md" closeOnItemClick={false} withArrow>
       <Menu.Target>
-        <Styles.StyledToolElement onClick={() => gaEvent("click", "view menu")}>
+        <Styles.StyledToolElement onClick={() => gaEvent("View Menu", "open menu")}>
           <Flex align="center" gap={3}>
             View <CgChevronDown />
           </Flex>
@@ -76,7 +76,10 @@ export const ViewMenu = () => {
           miw={205}
           size="xs"
           value={viewMode}
-          onChange={e => setViewMode(e as ViewMode)}
+          onChange={e => {
+            setViewMode(e as ViewMode);
+            gaEvent("View Menu", "change view mode", e as string);
+          }}
           data={[
             { value: ViewMode.Graph, label: "Graph" },
             { value: ViewMode.Tree, label: "Tree" },
@@ -88,7 +91,10 @@ export const ViewMenu = () => {
             <Menu.Item
               mt="xs"
               fz={12}
-              onClick={toggleDirection}
+              onClick={() => {
+                toggleDirection();
+                gaEvent("View Menu", "rotate layout");
+              }}
               leftSection={<Styles.StyledFlowIcon rotate={rotateLayout(direction || "RIGHT")} />}
               rightSection={
                 <Text ml="md" fz={10} c="dimmed">
@@ -100,7 +106,10 @@ export const ViewMenu = () => {
             </Menu.Item>
             <Menu.Item
               fz={12}
-              onClick={toggleExpandCollapseGraph}
+              onClick={() => {
+                toggleExpandCollapseGraph();
+                gaEvent("View Menu", "expand collapse graph");
+              }}
               leftSection={graphCollapsed ? <VscExpandAll /> : <VscCollapseAll />}
               rightSection={
                 <Text ml="md" fz={10} c="dimmed">

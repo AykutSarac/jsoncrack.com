@@ -1,4 +1,5 @@
 import React from "react";
+import type { ModalProps } from "@mantine/core";
 import {
   ColorPicker,
   TextInput,
@@ -7,7 +8,6 @@ import {
   Modal,
   Button,
   Divider,
-  ModalProps,
   ColorInput,
 } from "@mantine/core";
 import { toBlob, toJpeg, toPng, toSvg } from "html-to-image";
@@ -53,7 +53,7 @@ const swatches = [
 ];
 
 function downloadURI(uri: string, name: string) {
-  var link = document.createElement("a");
+  const link = document.createElement("a");
 
   link.download = name;
   link.href = uri;
@@ -90,7 +90,7 @@ export const DownloadModal: React.FC<ModalProps> = ({ opened, onClose }) => {
       ]);
 
       toast.success("Copied to clipboard");
-      gaEvent("click", "clipboard image");
+      gaEvent("Download Modal", "clipboard image");
     } catch (error) {
       toast.error("Failed to copy to clipboard");
     } finally {
@@ -111,7 +111,7 @@ export const DownloadModal: React.FC<ModalProps> = ({ opened, onClose }) => {
       });
 
       downloadURI(dataURI, `${fileDetails.filename}.${extension}`);
-      gaEvent("download", "download graph image", extension);
+      gaEvent("Download Modal", "download image", extension);
     } catch (error) {
       toast.error("Failed to download image!");
     } finally {

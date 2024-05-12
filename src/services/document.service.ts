@@ -2,7 +2,7 @@ import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 import toast from "react-hot-toast";
 import { FileFormat } from "src/enums/file.enum";
 import { supabase } from "src/lib/api/supabase";
-import { File } from "src/store/useFile";
+import type { File } from "src/store/useFile";
 import useUser from "src/store/useUser";
 
 type CloudSave = {
@@ -23,7 +23,7 @@ export const documentSvc = {
   getById: async (doc_id: string): Promise<PostgrestSingleResponse<File[]>> => {
     return await supabase.rpc("get_document_by_id", { doc_id });
   },
-  getAll: async (): Promise<File[]> => {
+  getAll: async (searchText?: string): Promise<File[]> => {
     const userEmail = useUser.getState().user?.email;
     if (!userEmail) return [];
 
@@ -31,6 +31,7 @@ export const documentSvc = {
       .from("document")
       .select()
       .eq("owner_email", userEmail)
+      .ilike("name", `%${searchText}%`)
       .order("created_at", { ascending: false });
 
     if (error) {
@@ -44,6 +45,6 @@ export const documentSvc = {
     return await supabase.from("document").update(data).eq("id", id).select("private");
   },
   delete: async (id: string) => {
-    await supabase.from("document").delete().eq("id", id);
+    return await supabase.from("document").delete().eq("id", id);
   },
 };

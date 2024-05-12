@@ -1,4 +1,3 @@
-import { firaMono } from "src/constants/fonts";
 import useConfig from "src/store/useConfig";
 
 type Text = string | [string, string][];
@@ -34,7 +33,7 @@ const calculateWidthAndHeight = (str: string, single = false) => {
   dummyElement.style.padding = "10px";
   dummyElement.style.fontWeight = "500";
   dummyElement.style.overflowWrap = "break-word";
-  dummyElement.style.fontFamily = firaMono.style.fontFamily;
+  dummyElement.style.fontFamily = "monospace";
   document.body.appendChild(dummyElement);
 
   const clientRect = dummyElement.getBoundingClientRect();

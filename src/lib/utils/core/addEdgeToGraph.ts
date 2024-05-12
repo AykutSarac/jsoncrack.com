@@ -1,4 +1,4 @@
-import { Graph } from "../json/jsonParser";
+import type { Graph } from "../json/jsonParser";
 
 export const addEdgeToGraph = (graph: Graph, from: string, to: string) => {
   const newEdge = {

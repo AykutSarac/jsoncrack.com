@@ -1,6 +1,6 @@
-import styled, { DefaultTheme } from "styled-components";
+import type { DefaultTheme } from "styled-components";
+import styled from "styled-components";
 import { LinkItUrl } from "react-linkify-it";
-import { firaMono } from "src/constants/fonts";
 
 type TextColorFn = {
   theme: DefaultTheme;
@@ -34,7 +34,7 @@ export const StyledLinkItUrl = styled(LinkItUrl)`
 export const StyledForeignObject = styled.foreignObject<{ $isObject?: boolean }>`
   text-align: ${({ $isObject }) => !$isObject && "center"};
   color: ${({ theme }) => theme.NODE_COLORS.TEXT};
-  font-family: ${firaMono.style.fontFamily};
+  font-family: monospace;
   font-size: 12px;
   font-weight: 500;
   overflow: hidden;

@@ -1,6 +1,8 @@
 import React from "react";
-import { Stack, Modal, ModalProps, Select, LoadingOverlay } from "@mantine/core";
+import type { ModalProps } from "@mantine/core";
+import { Stack, Modal, Select, ScrollArea } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
+import { gaEvent } from "src/lib/utils/gaEvent";
 import useJson from "src/store/useJson";
 
 enum Language {
@@ -49,7 +51,6 @@ export const TypeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   const getJson = useJson(state => state.getJson);
   const [type, setType] = React.useState("");
   const [selectedType, setSelectedType] = React.useState<Language>(Language.TypeScript);
-  const [loading, setLoading] = React.useState(false);
 
   const editorLanguage = React.useMemo(() => {
     return typeOptions[typeOptions.findIndex(o => o.value === selectedType)]?.lang;
@@ -72,7 +73,6 @@ export const TypeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   React.useEffect(() => {
     if (opened) {
       try {
-        setLoading(true);
         if (selectedType === Language.Go) {
           import("src/lib/utils/json2go").then(jtg => {
             import("gofmt.js").then(gofmt => {
@@ -85,27 +85,31 @@ export const TypeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
         }
       } catch (error) {
         console.error(error);
-      } finally {
-        setLoading(false);
       }
     }
   }, [getJson, opened, selectedType, transformer]);
 
   return (
-    <Modal title="Generate Types" size="md" opened={opened} onClose={onClose} centered>
+    <Modal title="Generate Types" size="lg" opened={opened} onClose={onClose} centered>
       <Stack pos="relative">
         <Select
           value={selectedType}
           data={typeOptions}
-          onChange={e => setSelectedType(e as Language)}
+          onChange={e => {
+            setSelectedType(e as Language);
+            gaEvent("Type Modal", "generate", e as string);
+          }}
+          allowDeselect={false}
         />
-        <LoadingOverlay visible={loading} />
-        <CodeHighlight
-          language={editorLanguage}
-          copyLabel="Copy to clipboard"
-          copiedLabel="Copied to clipboard"
-          code={type}
-        />
+        <ScrollArea.Autosize mah={400} maw={700}>
+          <CodeHighlight
+            language={editorLanguage}
+            copyLabel="Copy to clipboard"
+            copiedLabel="Copied to clipboard"
+            code={type}
+            styles={{ root: { borderRadius: 6 } }}
+          />
+        </ScrollArea.Autosize>
       </Stack>
     </Modal>
   );

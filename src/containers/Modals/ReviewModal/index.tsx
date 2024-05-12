@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Modal, ModalProps, Rating, Text, Textarea } from "@mantine/core";
+import type { ModalProps } from "@mantine/core";
+import { Button, Modal, Rating, Text, Textarea } from "@mantine/core";
 import { toast } from "react-hot-toast";
 import { supabase } from "src/lib/api/supabase";
 

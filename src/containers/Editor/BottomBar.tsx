@@ -15,6 +15,7 @@ import { BiSolidDockLeft } from "react-icons/bi";
 import { MdOutlineCheckCircleOutline } from "react-icons/md";
 import { TbTransform } from "react-icons/tb";
 import { VscError, VscFeedback, VscSourceControl, VscSync, VscSyncIgnored } from "react-icons/vsc";
+import { gaEvent } from "src/lib/utils/gaEvent";
 import { documentSvc } from "src/services/document.service";
 import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
@@ -106,7 +107,10 @@ export const BottomBar = () => {
   const [isPrivate, setIsPrivate] = React.useState(false);
   const [isUpdating, setIsUpdating] = React.useState(false);
 
-  const toggleEditor = () => toggleFullscreen(!fullscreen);
+  const toggleEditor = () => {
+    toggleFullscreen(!fullscreen);
+    gaEvent("Bottom Bar", "toggle fullscreen");
+  };
 
   React.useEffect(() => {
     setIsPrivate(data?.private ?? true);
@@ -239,12 +243,22 @@ export const BottomBar = () => {
           Share
         </StyledBottomBarItem>
         {liveTransformEnabled ? (
-          <StyledBottomBarItem onClick={() => toggleLiveTransform(false)}>
+          <StyledBottomBarItem
+            onClick={() => {
+              toggleLiveTransform(false);
+              gaEvent("Bottom Bar", "toggle live transform", "manual");
+            }}
+          >
             <VscSync />
             <Text fz="xs">Live Transform</Text>
           </StyledBottomBarItem>
         ) : (
-          <StyledBottomBarItem onClick={() => toggleLiveTransform(true)}>
+          <StyledBottomBarItem
+            onClick={() => {
+              toggleLiveTransform(true);
+              gaEvent("Bottom Bar", "toggle live transform", "live");
+            }}
+          >
             <VscSyncIgnored />
             <Text fz="xs">Manual Transform</Text>
           </StyledBottomBarItem>

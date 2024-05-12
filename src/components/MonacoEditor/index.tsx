@@ -1,7 +1,7 @@
 import React from "react";
+import { LoadingOverlay } from "@mantine/core";
 import styled from "styled-components";
 import Editor, { loader, useMonaco } from "@monaco-editor/react";
-import { Loading } from "src/layout/Loading";
 import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
 
@@ -81,7 +81,7 @@ export const MonacoEditor = () => {
         options={editorOptions}
         onValidate={errors => setError(errors[0]?.message)}
         onChange={contents => setContents({ contents, skipUpdate: true })}
-        loading={<Loading message="Loading Monaco Editor..." loading />}
+        loading={<LoadingOverlay visible />}
       />
     </StyledWrapper>
   );

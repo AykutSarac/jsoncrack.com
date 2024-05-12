@@ -1,7 +1,9 @@
 {
   "rules": {
     "@next/next/no-img-element": "off",
+    "@typescript-eslint/consistent-type-imports": "error",
     "unused-imports/no-unused-imports": "error",
+    "@typescript-eslint/no-explicit-any": "off",
     "prettier/prettier": "error",
     "space-in-parens": "error",
     "no-empty": "error",
@@ -21,7 +23,7 @@
       }
     ]
   },
-  "extends": ["next/core-web-vitals", "prettier"],
+  "extends": ["next/core-web-vitals", "prettier", "plugin:@typescript-eslint/recommended"],
   "plugins": ["prettier", "unused-imports"],
   "ignorePatterns": ["src/enums"]
 }

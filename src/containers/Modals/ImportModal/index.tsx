@@ -1,19 +1,11 @@
 import React from "react";
-import {
-  Modal,
-  Group,
-  Button,
-  TextInput,
-  Stack,
-  Divider,
-  ModalProps,
-  Paper,
-  Text,
-} from "@mantine/core";
+import type { ModalProps } from "@mantine/core";
+import { Modal, Group, Button, TextInput, Stack, Divider, Paper, Text } from "@mantine/core";
 import { Dropzone } from "@mantine/dropzone";
 import toast from "react-hot-toast";
 import { AiOutlineUpload } from "react-icons/ai";
-import { FileFormat } from "src/enums/file.enum";
+import type { FileFormat } from "src/enums/file.enum";
+import { gaEvent } from "src/lib/utils/gaEvent";
 import useFile from "src/store/useFile";
 
 export const ImportModal: React.FC<ModalProps> = ({ opened, onClose }) => {
@@ -28,6 +20,8 @@ export const ImportModal: React.FC<ModalProps> = ({ opened, onClose }) => {
       setFile(null);
 
       toast.loading("Loading...", { id: "toastFetch" });
+      gaEvent("Import Modal", "fetch url");
+
       return fetch(url)
         .then(res => res.json())
         .then(json => {
@@ -47,6 +41,8 @@ export const ImportModal: React.FC<ModalProps> = ({ opened, onClose }) => {
         setURL("");
         onClose();
       });
+
+      gaEvent("Import Modal", "import file", format);
     }
   };
 
@@ -88,7 +84,7 @@ export const ImportModal: React.FC<ModalProps> = ({ opened, onClose }) => {
               <AiOutlineUpload size={48} />
               <Text fw="bold">Drop here or click to upload files</Text>
               <Text c="dimmed" fz="xs">
-                (Max 500 Kb)
+                (Max 500 KB)
               </Text>
               <Text c="dimmed" fz="sm">
                 {file?.name ?? "None"}

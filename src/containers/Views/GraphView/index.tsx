@@ -1,21 +1,17 @@
 import React from "react";
-import dynamic from "next/dynamic";
+import { LoadingOverlay } from "@mantine/core";
 import styled from "styled-components";
 import debounce from "lodash.debounce";
 import { Space } from "react-zoomable-ui";
-import { ElkRoot } from "reaflow/dist/layout/useLayout";
+import { Canvas } from "reaflow";
+import type { ElkRoot } from "reaflow/dist/layout/useLayout";
 import { useLongPress } from "use-long-press";
 import { CustomNode } from "src/containers/Views/GraphView/CustomNode";
 import useToggleHide from "src/hooks/useToggleHide";
-import { Loading } from "src/layout/Loading";
 import useConfig from "src/store/useConfig";
 import useGraph from "src/store/useGraph";
 import { CustomEdge } from "./CustomEdge";
-import { PremiumView } from "./PremiumView";
-
-const Canvas = dynamic(() => import("reaflow").then(r => r.Canvas), {
-  ssr: false,
-});
+import { NotSupported } from "./NotSupported";
 
 interface GraphProps {
   isWidget?: boolean;
@@ -138,10 +134,12 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
   );
 };
 
+const SUPPORTED_LIMIT = 600;
+
 export const Graph = ({ isWidget = false }: GraphProps) => {
   const setViewPort = useGraph(state => state.setViewPort);
   const viewPort = useGraph(state => state.viewPort);
-  const aboveSupportedLimit = useGraph(state => state.nodes.length > 800);
+  const aboveSupportedLimit = useGraph(state => state.nodes.length > SUPPORTED_LIMIT);
   const loading = useGraph(state => state.loading);
   const gesturesEnabled = useConfig(state => state.gesturesEnabled);
   const rulersEnabled = useConfig(state => state.rulersEnabled);
@@ -168,12 +166,12 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
   }, 300);
 
   if (aboveSupportedLimit) {
-    return <PremiumView />;
+    return <NotSupported />;
   }
 
   return (
     <>
-      <Loading loading={loading} message="Painting graph..." />
+      <LoadingOverlay visible={loading} />
       <StyledEditorWrapper
         $widget={isWidget}
         onContextMenu={e => e.preventDefault()}

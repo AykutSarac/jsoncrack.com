@@ -1,6 +1,6 @@
-import { NodeType } from "jsonc-parser";
+import type { NodeType } from "jsonc-parser";
 import { calculateNodeSize } from "src/lib/utils/graph/calculateNodeSize";
-import { Graph } from "src/lib/utils/json/jsonParser";
+import type { Graph } from "src/lib/utils/json/jsonParser";
 
 type Props = {
   graph: Graph;

@@ -58,6 +58,7 @@ const SignUp = () => {
     <Layout>
       <Head>
         <title>Sign Up - JSON Crack</title>
+        <link rel="canonical" href="https://app.jsoncrack.com/sign-up" />
       </Head>
       {done ? (
         <Paper mx="auto" maw={400} mt={100} p="lg" withBorder>

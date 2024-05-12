@@ -38,16 +38,16 @@ const Docs = () => {
   return (
     <Layout>
       <Head>
-        <title>Documentation - JSON Crack</title>
+        <title>Embed - JSON Crack</title>
         <meta name="description" content="Embedding JSON Crack tutorial into your websites." />
       </Head>
-      <Stack mx="auto" maw="75%">
+      <Stack mx="auto" maw="90%">
         <Group mb="lg" mt={40}>
-          <Title order={1} c="white">
-            Documentation
+          <Title order={1} c="dark">
+            Embed
           </Title>
         </Group>
-        <Paper p="md" radius="md" withBorder>
+        <Paper bg="white" c="black" p="md" radius="md" withBorder>
           <Title mb="sm" order={3} c="dark">
             # Fetching from URL
           </Title>
@@ -77,7 +77,7 @@ const Docs = () => {
             </StyledFrame>
           </StyledContentBody>
         </Paper>
-        <Paper p="md" radius="md" withBorder>
+        <Paper bg="white" c="black" p="md" radius="md" withBorder>
           <Title mb="sm" order={3} c="dark">
             # Embed Saved JSON
           </Title>
@@ -98,7 +98,7 @@ const Docs = () => {
             </StyledFrame>
           </StyledContentBody>
         </Paper>
-        <Paper p="md" radius="md" withBorder>
+        <Paper bg="white" c="black" p="md" radius="md" withBorder>
           <Title mb="sm" order={3} c="dark">
             # Communicating with API
           </Title>
@@ -137,7 +137,7 @@ const Docs = () => {
             </StyledFrame>
           </StyledContentBody>
         </Paper>
-        <Paper p="md" radius="md" withBorder>
+        <Paper bg="white" c="black" p="md" radius="md" withBorder>
           <Title order={4}>◼︎ On Page Load</Title>
           <StyledContentBody>
             <Text>

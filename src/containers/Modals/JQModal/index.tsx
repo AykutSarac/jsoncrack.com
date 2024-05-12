@@ -1,15 +1,6 @@
 import React from "react";
-import {
-  Stack,
-  Modal,
-  Button,
-  ModalProps,
-  Text,
-  Anchor,
-  Group,
-  TextInput,
-  Divider,
-} from "@mantine/core";
+import type { ModalProps } from "@mantine/core";
+import { Stack, Modal, Button, Text, Anchor, Group, TextInput, Divider } from "@mantine/core";
 import { VscLinkExternal } from "react-icons/vsc";
 import useJsonQuery from "src/hooks/useJsonQuery";
 
