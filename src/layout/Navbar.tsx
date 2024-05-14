@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Button } from "@mantine/core";
 import styled from "styled-components";
-import { JSONCrackLogo } from "../JsonCrackLogo";
+import { JSONCrackLogo } from "./JsonCrackLogo";
 
 const StyledNavbarWrapper = styled.div`
   z-index: 3;

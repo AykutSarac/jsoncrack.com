@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import { Button, Title } from "@mantine/core";
 import styled from "styled-components";
 import { MdChevronRight } from "react-icons/md";

@@ -20,9 +20,12 @@ interface EmbedMessage {
   };
 }
 
-const Graph = dynamic(() => import("src/containers/Editor/LiveEditor/GraphView").then(c => c.Graph), {
-  ssr: false,
-});
+const Graph = dynamic(
+  () => import("src/containers/Editor/LiveEditor/GraphView").then(c => c.Graph),
+  {
+    ssr: false,
+  }
+);
 
 const WidgetPage = () => {
   const { query, push, isReady } = useRouter();

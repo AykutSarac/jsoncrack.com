@@ -3,7 +3,6 @@ import Link from "next/link";
 import {
   Anchor,
   Button,
-  Center,
   Container,
   Divider,
   Flex,
@@ -15,17 +14,26 @@ import {
 import dayjs from "dayjs";
 import { FaDiscord, FaGithub, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { JSONCrackLogo } from "../JsonCrackLogo";
+import { JSONCrackLogo } from "./JsonCrackLogo";
 
 export const Footer = () => {
   return (
     <Container mt={150}>
       <Stack align="center">
-        <Title c="black" order={3}>Get Started with JSON Crack</Title>
+        <Title c="black" order={3}>
+          Get Started with JSON Crack
+        </Title>
         <Text fz="lg" c="dimmed">
           Designed for everyone, save time understanding your data.
         </Text>
-        <Button color="dark" component={Link} prefetch={false} href="/pricing" radius="lg" size="xl">
+        <Button
+          color="dark"
+          component={Link}
+          prefetch={false}
+          href="/pricing"
+          radius="lg"
+          size="xl"
+        >
           Get Started
         </Button>
       </Stack>
