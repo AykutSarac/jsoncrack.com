@@ -15,7 +15,7 @@ import { FiExternalLink } from "react-icons/fi";
 import { MdCheck, MdCopyAll } from "react-icons/md";
 import { gaEvent } from "src/lib/utils/gaEvent";
 
-export const ShareModal: React.FC<ModalProps> = ({ opened, onClose }) => {
+export const ShareModal = ({ opened, onClose }: ModalProps) => {
   const { query } = useRouter();
   const shareURL = `https://jsoncrack.com/editor?json=${query.json}`;
 

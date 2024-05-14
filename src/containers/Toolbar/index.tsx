@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import { AiFillGift } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
-import { SearchInput } from "src/components/SearchInput";
+import { SearchInput } from "src/containers/Toolbar/SearchInput";
 import { FileFormat } from "src/enums/file.enum";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
 import { gaEvent } from "src/lib/utils/gaEvent";
@@ -30,7 +30,11 @@ function fullscreenBrowser() {
   }
 }
 
-export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) => {
+interface ToolbarProps {
+  isWidget?: boolean;
+}
+
+export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
   const setVisible = useModal(state => state.setVisible);
   const setFormat = useFile(state => state.setFormat);
   const format = useFile(state => state.format);

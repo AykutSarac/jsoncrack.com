@@ -1,5 +1,5 @@
 import React from "react";
-import type { CustomNodeProps } from "src/containers/Views/GraphView/CustomNode";
+import type { CustomNodeProps } from "src/containers/Editor/LiveEditor/GraphView/CustomNode";
 import { TextRenderer } from "./TextRenderer";
 import * as Styled from "./styles";
 
@@ -25,7 +25,7 @@ const Row = ({ val, x, y, index }: RowProps) => {
   );
 };
 
-const Node: React.FC<CustomNodeProps> = ({ node, x, y }) => (
+const Node = ({ node, x, y }: CustomNodeProps) => (
   <Styled.StyledForeignObject width={node.width} height={node.height} x={0} y={0} $isObject>
     {(node.text as Value[]).map((val, idx) => (
       <Row val={val} index={idx} x={x} y={y} key={idx} />

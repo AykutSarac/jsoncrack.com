@@ -6,16 +6,12 @@ import { Space } from "react-zoomable-ui";
 import { Canvas } from "reaflow";
 import type { ElkRoot } from "reaflow/dist/layout/useLayout";
 import { useLongPress } from "use-long-press";
-import { CustomNode } from "src/containers/Views/GraphView/CustomNode";
+import { CustomNode } from "src/containers/Editor/LiveEditor/GraphView/CustomNode";
 import useToggleHide from "src/hooks/useToggleHide";
 import useConfig from "src/store/useConfig";
 import useGraph from "src/store/useGraph";
 import { CustomEdge } from "./CustomEdge";
 import { NotSupported } from "./NotSupported";
-
-interface GraphProps {
-  isWidget?: boolean;
-}
 
 const StyledEditorWrapper = styled.div<{ $widget: boolean; $showRulers: boolean }>`
   position: absolute;
@@ -76,6 +72,10 @@ const layoutOptions = {
   "elk.layered.compaction.postCompaction.strategy": "EDGE_LENGTH",
   "elk.layered.nodePlacement.strategy": "NETWORK_SIMPLEX",
 };
+
+interface GraphProps {
+  isWidget?: boolean;
+}
 
 const GraphCanvas = ({ isWidget }: GraphProps) => {
   const { validateHiddenNodes } = useToggleHide();

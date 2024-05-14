@@ -6,7 +6,7 @@ import { gaEvent } from "src/lib/utils/gaEvent";
 import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
 
-export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
+export const AccountModal = ({ opened, onClose }: ModalProps) => {
   const user = useUser(state => state.user);
   const setVisible = useModal(state => state.setVisible);
   const logout = useUser(state => state.logout);

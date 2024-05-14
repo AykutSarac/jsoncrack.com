@@ -4,7 +4,7 @@ import { getHotkeyHandler } from "@mantine/hooks";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useFocusNode } from "src/hooks/useFocusNode";
 
-export const SearchInput: React.FC = () => {
+export const SearchInput = () => {
   const [searchValue, setValue, skip, nodeCount, currentNode] = useFocusNode();
 
   return (

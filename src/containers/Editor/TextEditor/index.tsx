@@ -19,14 +19,7 @@ const editorOptions = {
   },
 };
 
-const StyledWrapper = styled.div`
-  display: grid;
-  height: calc(100vh - 67px);
-  grid-template-columns: 100%;
-  grid-template-rows: minmax(0, 1fr);
-`;
-
-export const MonacoEditor = () => {
+const TextEditor = () => {
   const monaco = useMonaco();
   const contents = useFile(state => state.contents);
   const setContents = useFile(state => state.setContents);
@@ -72,17 +65,35 @@ export const MonacoEditor = () => {
   }, [getHasChanges]);
 
   return (
-    <StyledWrapper>
-      <Editor
-        height="100%"
-        language={fileType}
-        theme={theme}
-        value={contents}
-        options={editorOptions}
-        onValidate={errors => setError(errors[0]?.message)}
-        onChange={contents => setContents({ contents, skipUpdate: true })}
-        loading={<LoadingOverlay visible />}
-      />
-    </StyledWrapper>
+    <StyledEditorWrapper>
+      <StyledWrapper>
+        <Editor
+          height="100%"
+          language={fileType}
+          theme={theme}
+          value={contents}
+          options={editorOptions}
+          onValidate={errors => setError(errors[0]?.message)}
+          onChange={contents => setContents({ contents, skipUpdate: true })}
+          loading={<LoadingOverlay visible />}
+        />
+      </StyledWrapper>
+    </StyledEditorWrapper>
   );
 };
+
+export default TextEditor;
+
+const StyledEditorWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  user-select: none;
+`;
+
+const StyledWrapper = styled.div`
+  display: grid;
+  height: calc(100vh - 67px);
+  grid-template-columns: 100%;
+  grid-template-rows: minmax(0, 1fr);
+`;

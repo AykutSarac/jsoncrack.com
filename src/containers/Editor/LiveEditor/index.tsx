@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { Graph } from "src/containers/Views/GraphView";
-import { TreeView } from "src/containers/Views/TreeView";
+import { Graph } from "src/containers/Editor/LiveEditor/GraphView";
+import { TreeView } from "src/containers/Editor/LiveEditor/TreeView";
 import { ViewMode } from "src/enums/viewMode.enum";
 import useConfig from "src/store/useConfig";
 
@@ -29,7 +29,7 @@ const View = () => {
   return null;
 };
 
-const LiveEditor: React.FC = () => {
+const LiveEditor = () => {
   return (
     <StyledLiveEditor onContextMenuCapture={e => e.preventDefault()}>
       <View />

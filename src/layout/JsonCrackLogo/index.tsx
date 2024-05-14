@@ -19,7 +19,7 @@ interface LogoProps extends React.ComponentPropsWithoutRef<"a"> {
   fontSize?: string;
 }
 
-export const JSONCrackLogo: React.FC<LogoProps> = ({ fontSize = "1.2rem", ...props }) => {
+export const JSONCrackLogo = ({ fontSize = "1.2rem", ...props }: LogoProps) => {
   const logoText = React.useMemo(() => {
     if (typeof window === "undefined") return "JSON CRACK";
     return isIframe() ? "JC" : "JSON CRACK";

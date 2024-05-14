@@ -17,7 +17,7 @@ const dataToString = (data: any) => {
   return JSON.stringify(text, replacer, 2);
 };
 
-export const NodeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
+export const NodeModal = ({ opened, onClose }: ModalProps) => {
   const setVisible = useModal(state => state.setVisible);
   const nodeData = useGraph(state => dataToString(state.selectedNode?.text));
   const path = useGraph(state => state.selectedNode?.path || "");

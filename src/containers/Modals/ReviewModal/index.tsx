@@ -4,7 +4,7 @@ import { Button, Modal, Rating, Text, Textarea } from "@mantine/core";
 import { toast } from "react-hot-toast";
 import { supabase } from "src/lib/api/supabase";
 
-export const ReviewModal: React.FC<ModalProps> = ({ opened, onClose }) => {
+export const ReviewModal = ({ opened, onClose }: ModalProps) => {
   const [stars, setStars] = React.useState(0);
   const [review, setReview] = React.useState("");
 

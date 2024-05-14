@@ -8,7 +8,7 @@ import { gaEvent } from "src/lib/utils/gaEvent";
 import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
 
-export const SchemaModal: React.FC<ModalProps> = ({ opened, onClose }) => {
+export const SchemaModal = ({ opened, onClose }: ModalProps) => {
   const setJsonSchema = useFile(state => state.setJsonSchema);
   const [schema, setSchema] = React.useState(
     JSON.stringify(

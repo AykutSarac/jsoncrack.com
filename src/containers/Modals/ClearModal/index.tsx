@@ -5,7 +5,7 @@ import { Modal, Group, Button, Text, Divider } from "@mantine/core";
 import { documentSvc } from "src/services/document.service";
 import useJson from "src/store/useJson";
 
-export const ClearModal: React.FC<ModalProps> = ({ opened, onClose }) => {
+export const ClearModal = ({ opened, onClose }: ModalProps) => {
   const setJson = useJson(state => state.setJson);
   const { query, replace } = useRouter();
 

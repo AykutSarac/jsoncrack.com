@@ -44,11 +44,13 @@ const colorByFormat: Record<FileFormat, DefaultMantineColor> = {
   csv: "grape",
 };
 
-const UpdateNameModal: React.FC<{
+interface UpdateNameModalProps {
   file: File | null;
   onClose: () => void;
   refetch: () => void;
-}> = ({ file, onClose, refetch }) => {
+}
+
+const UpdateNameModal = ({ file, onClose, refetch }: UpdateNameModalProps) => {
   const [name, setName] = React.useState("");
 
   React.useEffect(() => {
@@ -95,7 +97,7 @@ const UpdateNameModal: React.FC<{
 
 const TOTAL_QUOTA = 25;
 
-export const CloudModal: React.FC<ModalProps> = ({ opened, onClose }) => {
+export const CloudModal = ({ opened, onClose }: ModalProps) => {
   const setFile = useFile(state => state.setFile);
   const [currentFile, setCurrentFile] = React.useState<File | null>(null);
   const [searchValue, setSearchValue] = React.useState("");

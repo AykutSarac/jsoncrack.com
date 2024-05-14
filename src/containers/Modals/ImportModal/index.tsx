@@ -8,7 +8,7 @@ import type { FileFormat } from "src/enums/file.enum";
 import { gaEvent } from "src/lib/utils/gaEvent";
 import useFile from "src/store/useFile";
 
-export const ImportModal: React.FC<ModalProps> = ({ opened, onClose }) => {
+export const ImportModal = ({ opened, onClose }: ModalProps) => {
   const [url, setURL] = React.useState("");
   const [file, setFile] = React.useState<File | null>(null);
 

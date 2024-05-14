@@ -8,9 +8,9 @@ import "@mantine/core/styles.css";
 import "@mantine/code-highlight/styles.css";
 import { ThemeProvider } from "styled-components";
 import ReactGA from "react-ga4";
-import { Loading } from "src/components/Loading";
 import GlobalStyle from "src/constants/globalStyle";
 import { lightTheme } from "src/constants/theme";
+import { Loading } from "src/layout/Loading";
 import { supabase } from "src/lib/api/supabase";
 import useUser from "src/store/useUser";
 

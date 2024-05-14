@@ -4,7 +4,7 @@ import { Stack, Modal, Button, Text, Anchor, Group, TextInput, Divider } from "@
 import { VscLinkExternal } from "react-icons/vsc";
 import useJsonQuery from "src/hooks/useJsonQuery";
 
-export const JQModal: React.FC<ModalProps> = ({ opened, onClose }) => {
+export const JQModal = ({ opened, onClose }: ModalProps) => {
   const { updateJson } = useJsonQuery();
   const [query, setQuery] = React.useState("");
 

@@ -62,7 +62,7 @@ function downloadURI(uri: string, name: string) {
   document.body.removeChild(link);
 }
 
-export const DownloadModal: React.FC<ModalProps> = ({ opened, onClose }) => {
+export const DownloadModal = ({ opened, onClose }: ModalProps) => {
   const [extension, setExtension] = React.useState(Extensions.PNG);
   const [fileDetails, setFileDetails] = React.useState({
     filename: "jsoncrack.com",

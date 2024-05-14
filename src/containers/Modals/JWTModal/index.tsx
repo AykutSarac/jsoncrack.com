@@ -5,7 +5,7 @@ import { decode } from "jsonwebtoken";
 import { gaEvent } from "src/lib/utils/gaEvent";
 import useFile from "src/store/useFile";
 
-export const JWTModal: React.FC<ModalProps> = ({ opened, onClose }) => {
+export const JWTModal = ({ opened, onClose }: ModalProps) => {
   const setContents = useFile(state => state.setContents);
   const [token, setToken] = React.useState("");
 

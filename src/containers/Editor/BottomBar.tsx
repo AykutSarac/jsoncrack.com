@@ -208,11 +208,7 @@ export const BottomBar = () => {
                   </Text>
                 </Flex>
               </Popover.Target>
-              <Popover.Dropdown
-                style={{
-                  pointerEvents: "none",
-                }}
-              >
+              <Popover.Dropdown style={{ pointerEvents: "none" }}>
                 <Text size="xs">{error}</Text>
               </Popover.Dropdown>
             </Popover>

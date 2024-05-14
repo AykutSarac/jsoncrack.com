@@ -6,8 +6,8 @@ import { useMantineColorScheme } from "@mantine/core";
 import styled, { ThemeProvider } from "styled-components";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { darkTheme, lightTheme } from "src/constants/theme";
+import { Editor } from "src/containers/Editor";
 import { BottomBar } from "src/containers/Editor/BottomBar";
-import Panes from "src/containers/Editor/Panes";
 import { Toolbar } from "src/containers/Toolbar";
 import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
@@ -39,7 +39,7 @@ export const StyledEditorWrapper = styled.div`
   overflow: hidden;
 `;
 
-const EditorPage: React.FC = () => {
+const EditorPage = () => {
   const { query, isReady } = useRouter();
   const { setColorScheme } = useMantineColorScheme();
   const checkEditorSession = useFile(state => state.checkEditorSession);
@@ -67,7 +67,7 @@ const EditorPage: React.FC = () => {
             <StyledPageWrapper>
               <Toolbar />
               <StyledEditorWrapper>
-                <Panes />
+                <Editor />
               </StyledEditorWrapper>
             </StyledPageWrapper>
             <BottomBar />

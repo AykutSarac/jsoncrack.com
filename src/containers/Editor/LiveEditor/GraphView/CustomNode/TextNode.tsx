@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { MdLink, MdLinkOff } from "react-icons/md";
-import type { CustomNodeProps } from "src/containers/Views/GraphView/CustomNode";
+import type { CustomNodeProps } from "src/containers/Editor/LiveEditor/GraphView/CustomNode";
 import useToggleHide from "src/hooks/useToggleHide";
 import { isContentImage } from "src/lib/utils/graph/calculateNodeSize";
 import useConfig from "src/store/useConfig";
@@ -43,7 +43,7 @@ const StyledImage = styled.img`
   background: ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
 `;
 
-const Node: React.FC<CustomNodeProps> = ({ node, x, y, hasCollapse = false }) => {
+const Node = ({ node, x, y, hasCollapse = false }: CustomNodeProps) => {
   const {
     id,
     text,

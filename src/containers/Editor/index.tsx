@@ -16,7 +16,7 @@ export const StyledEditor = styled(Allotment)`
   }
 `;
 
-const JsonEditor = dynamic(() => import("src/containers/Editor/JsonEditor"), {
+const TextEditor = dynamic(() => import("src/containers/Editor/TextEditor"), {
   ssr: false,
 });
 
@@ -24,7 +24,7 @@ const LiveEditor = dynamic(() => import("src/containers/Editor/LiveEditor"), {
   ssr: false,
 });
 
-const Panes: React.FC = () => {
+export const Editor = () => {
   const fullscreen = useGraph(state => state.fullscreen);
 
   return (
@@ -35,7 +35,7 @@ const Panes: React.FC = () => {
         maxSize={800}
         visible={!fullscreen}
       >
-        <JsonEditor />
+        <TextEditor />
       </Allotment.Pane>
       <Allotment.Pane minSize={0}>
         <LiveEditor />
@@ -43,5 +43,3 @@ const Panes: React.FC = () => {
     </StyledEditor>
   );
 };
-
-export default Panes;

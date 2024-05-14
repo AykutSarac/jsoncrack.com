@@ -47,7 +47,7 @@ const typeOptions = [
   },
 ];
 
-export const TypeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
+export const TypeModal = ({ opened, onClose }: ModalProps) => {
   const getJson = useJson(state => state.getJson);
   const [type, setType] = React.useState("");
   const [selectedType, setSelectedType] = React.useState<Language>(Language.TypeScript);

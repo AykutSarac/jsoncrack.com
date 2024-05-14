@@ -20,7 +20,7 @@ interface EmbedMessage {
   };
 }
 
-const Graph = dynamic(() => import("src/containers/Views/GraphView").then(c => c.Graph), {
+const Graph = dynamic(() => import("src/containers/Editor/LiveEditor/GraphView").then(c => c.Graph), {
   ssr: false,
 });
 

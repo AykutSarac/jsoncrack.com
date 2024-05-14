@@ -8,7 +8,7 @@ const StyledLayoutWrapper = styled.div`
   padding-bottom: 48px;
 `;
 
-const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const Layout = ({ children }: React.PropsWithChildren) => {
   return (
     <ThemeProvider theme={lightTheme}>
       <StyledLayoutWrapper>
