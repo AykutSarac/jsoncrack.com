@@ -2,17 +2,19 @@ import React from "react";
 import type { ModalProps } from "@mantine/core";
 import {
   Button,
-  Image,
   Radio,
   Modal,
   Text,
-  Stack,
-  Tooltip,
   Flex,
   Badge,
   Divider,
-  CheckIcon,
+  Paper,
+  useMantineTheme,
+  useMantineColorScheme,
+  List,
+  Anchor,
 } from "@mantine/core";
+import { IoIosCheckmarkCircle, IoMdArrowForward } from "react-icons/io";
 import { gaEvent } from "src/lib/utils/gaEvent";
 import { PRICING } from "src/pages/pricing";
 import useUser from "src/store/useUser";
@@ -25,8 +27,10 @@ const overlayLinks = {
 };
 
 export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
-  const [plan, setPlan] = React.useState<string>("annual");
+  const [plan, setPlan] = React.useState("monthly");
   const user = useUser(state => state.user);
+  const { colorScheme } = useMantineColorScheme();
+  const theme = useMantineTheme();
 
   const handleSelect = () => {
     const link = new URL(overlayLinks[plan]);
@@ -43,67 +47,108 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
     window.open(link.toString(), "_blank");
   };
 
+  const getBorderColor = (value: string) => {
+    console.log(colorScheme);
+
+    if (plan === value) return theme.colors.blue[6];
+    if (colorScheme === "dark") return theme.colors.gray[7];
+    return theme.colors.gray[2];
+  };
+
   return (
-    <Modal size="md" opened={opened} onClose={onClose} centered zIndex={202}>
-      <Flex justify="center" gap="xl" mx="auto">
-        <Image src="./assets/pacman.png" radius="md" w={50} alt="green tetris block" />
-        <Image src="./assets/tetris.png" radius="md" w={50} alt="yellow tetris block" />
-      </Flex>
-      <Text fw="bold" fz="xl" ta="center" my="lg">
-        Unlock even more features!
-      </Text>
-      <Text fz="sm">
-        We&apos;ve developed a new editor for individuals & professionals who deal with data on a
-        regular basis.
-      </Text>
-      <Text mt="xs" fz="sm">
-        Upgrade your plan and take advantage of improved speed, enhanced readability, and a more
-        compact design.
+    <Modal
+      title={
+        <Text fz="xl" fw="bold" ml="auto">
+          Unlock even more features!
+        </Text>
+      }
+      centered
+      size="md"
+      opened={opened}
+      onClose={onClose}
+      zIndex={202}
+    >
+      <Text fz="sm" ta="center" c="gray.6">
+        Do you work with data on a daily basis? Upgrade to Pro and unlock advanced features to
+        improve your workflow.
       </Text>
 
-      <Radio.Group value={plan} onChange={setPlan} mt="md" label="Choose one:">
-        <Stack mt="xs" gap="xs">
-          <Flex align="center" justify="space-between">
-            <Radio
-              icon={CheckIcon}
-              value="annual"
-              label={
-                <Flex align="center" w="100%" justify="space-between">
-                  <Text>1 Year</Text>
-                  <Badge ml="xs" size="xs" color="green">
-                    Save 16%
-                  </Badge>
-                </Flex>
-              }
-            />
-            <Text c="dimmed" fz="sm">
-              ${PRICING.ANNUAL * 12}
-            </Text>
-          </Flex>
-          <Flex align="center" justify="space-between">
-            <Radio icon={CheckIcon} value="monthly" label={<Text>1 Month</Text>} />
-            <Text c="dimmed" fz="sm">
-              ${PRICING.MONTHLY}
-            </Text>
-          </Flex>
-        </Stack>
+      <Radio.Group value={plan} onChange={setPlan} mt="md" label="Select your plan" size="md">
+        <Flex gap="xs" mt="sm" align="center" justify="space-between">
+          <Paper
+            flex="1"
+            withBorder
+            radius="md"
+            py="xs"
+            px="sm"
+            style={{
+              borderColor: getBorderColor("monthly"),
+            }}
+            onClick={() => setPlan("monthly")}
+          >
+            <Radio value="monthly" label="Monthly" size="xs" />
+          </Paper>
+          <Paper
+            flex="1"
+            withBorder
+            radius="md"
+            p="sm"
+            style={{
+              borderColor: getBorderColor("annual"),
+            }}
+            onClick={() => setPlan("annual")}
+          >
+            <Flex justify="space-between">
+              <Radio value="annual" label="Annual" size="xs" />
+              <Badge color="blue" size="xs" radius="sm">
+                Save 16%
+              </Badge>
+            </Flex>
+          </Paper>
+        </Flex>
       </Radio.Group>
 
-      <Divider my="xs" />
-      <Flex justify="space-between">
-        <Button color="gray" variant="subtle" onClick={onClose}>
-          Back
+      <Text mt="lg" fz="sm" fw="bold" mb="xs">
+        What You Get
+      </Text>
+      <List
+        fz="sm"
+        lts={0.2}
+        icon={
+          <IoIosCheckmarkCircle
+            color={theme.colors.dark[2]}
+            size={20}
+            style={{ verticalAlign: "middle" }}
+          />
+        }
+      >
+        <List.Item>Compact Graph Visualization (50% less nodes)</List.Item>
+        <List.Item>Improved Performance 4X Faster</List.Item>
+        <List.Item>Compare Data</List.Item>
+        <List.Item>Edit on Graphs</List.Item>
+        <List.Item>
+          <Anchor fz="sm" href="/#preview" target="_blank">
+            ...and more
+          </Anchor>
+        </List.Item>
+      </List>
+
+      <Divider my="md" />
+      <Flex align="center" justify="space-between">
+        <Flex h={32} align="center">
+          <Text c="gray" fz="xs" style={{ alignSelf: "baseline" }}>
+            $
+          </Text>
+          <Text fz={28} fw="bold">
+            {plan === "monthly" ? PRICING.MONTHLY : PRICING.ANNUAL}
+          </Text>
+          <Text ml="xs" fz="xs" c="dimmed">
+            /mo (billed {plan === "monthly" ? "monthly" : "annually"})
+          </Text>
+        </Flex>
+        <Button onClick={handleSelect} color="blue" rightSection={<IoMdArrowForward />}>
+          Upgrade to Pro
         </Button>
-        <Tooltip
-          label="You will be taken to the checkout screen"
-          position="bottom"
-          fz="xs"
-          withArrow
-        >
-          <Button onClick={handleSelect} color="blue" px="xl">
-            Select
-          </Button>
-        </Tooltip>
       </Flex>
     </Modal>
   );
