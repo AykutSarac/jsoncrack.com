@@ -46,8 +46,8 @@ export const UpgradeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
   return (
     <Modal size="md" opened={opened} onClose={onClose} centered zIndex={202}>
       <Flex justify="center" gap="xl" mx="auto">
-        <Image src="./assets/pacman.png" radius="md" w={100} alt="green tetris block" />
-        <Image src="./assets/tetris.png" radius="md" w={100} alt="yellow tetris block" />
+        <Image src="./assets/pacman.png" radius="md" w={50} alt="green tetris block" />
+        <Image src="./assets/tetris.png" radius="md" w={50} alt="yellow tetris block" />
       </Flex>
       <Text fw="bold" fz="xl" ta="center" my="lg">
         Unlock even more features!
@@ -61,13 +61,7 @@ export const UpgradeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
         compact design.
       </Text>
 
-      <Radio.Group
-        value={plan}
-        onChange={setPlan}
-        mt="md"
-        label="Choose one:"
-        description="You will start with a 1 day free trial"
-      >
+      <Radio.Group value={plan} onChange={setPlan} mt="md" label="Choose one:">
         <Stack mt="xs" gap="xs">
           <Flex align="center" justify="space-between">
             <Radio
@@ -83,13 +77,13 @@ export const UpgradeModal: React.FC<ModalProps> = ({ opened, onClose }) => {
               }
             />
             <Text c="dimmed" fz="sm">
-              US${PRICING.ANNUAL * 12}
+              ${PRICING.ANNUAL * 12}
             </Text>
           </Flex>
           <Flex align="center" justify="space-between">
             <Radio icon={CheckIcon} value="monthly" label={<Text>1 Month</Text>} />
             <Text c="dimmed" fz="sm">
-              US${PRICING.MONTHLY}
+              ${PRICING.MONTHLY}
             </Text>
           </Flex>
         </Stack>

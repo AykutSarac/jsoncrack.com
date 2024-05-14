@@ -180,7 +180,7 @@ export const PricingCards = () => {
             my="md"
             rightSection={<VscArrowRight />}
           >
-            Start Free Trial
+            Get Premium
           </Button>
           <Text mt="xs" fz="xs" c="dimmed">
             Designed for individuals who works with data regularly.
