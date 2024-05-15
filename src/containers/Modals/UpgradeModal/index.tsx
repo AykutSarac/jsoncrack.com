@@ -83,6 +83,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
             px="sm"
             style={{
               borderColor: getBorderColor("monthly"),
+              cursor: "pointer",
             }}
             onClick={() => setPlan("monthly")}
           >
@@ -95,12 +96,13 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
             p="sm"
             style={{
               borderColor: getBorderColor("annual"),
+              cursor: "pointer",
             }}
             onClick={() => setPlan("annual")}
           >
             <Flex justify="space-between">
               <Radio value="annual" label="Annual" size="xs" />
-              <Badge color="blue" size="xs" radius="sm">
+              <Badge variant="light" color="blue" size="xs" radius="sm">
                 Save 16%
               </Badge>
             </Flex>
@@ -127,7 +129,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
         <List.Item>Compare Data</List.Item>
         <List.Item>Edit on Graphs</List.Item>
         <List.Item>
-          <Anchor fz="sm" href="/#preview" target="_blank">
+          <Anchor c="gray" fz="sm" href="/#preview" target="_blank">
             ...and more
           </Anchor>
         </List.Item>

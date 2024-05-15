@@ -18,6 +18,7 @@ const theme = createTheme({
   autoContrast: true,
   fontSmoothing: false,
   respectReducedMotion: true,
+  cursorType: "pointer",
   primaryShade: 8,
 });
 
