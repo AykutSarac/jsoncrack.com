@@ -147,7 +147,7 @@ const StyledHeroTitle = styled.h1`
   }
 
   @media only screen and (min-width: 1400px) {
-    max-width: 85%;
+    max-width: 75%;
     letter-spacing: -4px;
     font-size: 4rem;
   }
@@ -462,7 +462,14 @@ export const HomePage = () => {
                   Directly modify your data through the graphs, without wasting time on manual
                   editing.
                 </Text>
-                <Paper withBorder shadow="sm" radius="sm" w="fit-content" mx="auto">
+                <Paper
+                  withBorder
+                  shadow="sm"
+                  radius={5}
+                  w="fit-content"
+                  mx="auto"
+                  style={{ borderColor: "gray" }}
+                >
                   <Image
                     loading="lazy"
                     radius="sm"
