@@ -153,16 +153,6 @@ const StyledHeroTitle = styled.h1`
   }
 `;
 
-const StyledHeroGradient = styled.span`
-  background: linear-gradient(90deg, #7b75f3, #4e49f3);
-  background-size: 200% 200%;
-  animation: textShine 2s linear infinite alternate;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  padding-left: 8px;
-`;
-
 const StyledCarouselWrapper = styled.section`
   max-width: 85%;
   position: relative;
@@ -247,7 +237,9 @@ export const HomePage = () => {
               Transform data to graphs in 3 seconds
             </Badge>
             <StyledHeroTitle>Data into Clarity with Powerful Visualization</StyledHeroTitle>
-            <StyledHeroText>Transform data into interactive graphs. See what you need.</StyledHeroText>
+            <StyledHeroText>
+              Transform data into interactive graphs. See what you need.
+            </StyledHeroText>
             <Flex gap="xs">
               <Badge size="xs" color="gray.7" autoContrast radius="sm" variant="light">
                 JSON
