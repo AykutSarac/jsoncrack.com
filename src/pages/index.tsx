@@ -249,19 +249,19 @@ export const HomePage = () => {
             <StyledHeroTitle>Data into Clarity with Powerful Visualization</StyledHeroTitle>
             <StyledHeroText>Transform into interactive graphs. See what you need.</StyledHeroText>
             <Flex gap="xs">
-              <Badge size="xs" color="gray.6" autoContrast radius="sm" variant="light">
+              <Badge size="xs" color="gray.7" autoContrast radius="sm" variant="light">
                 JSON
               </Badge>
-              <Badge size="xs" color="gray.6" autoContrast radius="sm" variant="light">
+              <Badge size="xs" color="gray.7" autoContrast radius="sm" variant="light">
                 YAML
               </Badge>
-              <Badge size="xs" color="gray.6" autoContrast radius="sm" variant="light">
+              <Badge size="xs" color="gray.7" autoContrast radius="sm" variant="light">
                 CSV
               </Badge>
-              <Badge size="xs" color="gray.6" autoContrast radius="sm" variant="light">
+              <Badge size="xs" color="gray.7" autoContrast radius="sm" variant="light">
                 XML
               </Badge>
-              <Badge size="xs" color="gray.6" autoContrast radius="sm" variant="light">
+              <Badge size="xs" color="gray.7" autoContrast radius="sm" variant="light">
                 TOML
               </Badge>
             </Flex>
