@@ -95,7 +95,7 @@ export const Navbar = () => {
             component="a"
             href="https://app.jsoncrack.com/sign-in"
             variant="gradient"
-            gradient={{ from: "#FFFFFF", to: "#FBFBFB", deg: 180 }}
+            gradient={{ from: "#FFFFFF", to: "#f5f5f5", deg: 180 }}
             c="dark"
             radius="lg"
             visibleFrom="sm"
