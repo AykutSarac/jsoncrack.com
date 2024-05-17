@@ -46,7 +46,7 @@ const StyledPaper = styled(Paper)`
   width: 400px;
   border-radius: 1em;
   border: 2px solid #e9e9e9;
-  border-top: 3px solid #601bf4;
+  border-top: 3px solid #625bf6;
   background: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
@@ -96,6 +96,7 @@ export const PricingCards = () => {
           <Button
             component="a"
             variant="gradient"
+            style={{ border: "1px solid #625BF6" }}
             onClick={() => gaEvent("Pricing", "click upgrade premium")}
             href={isMonthly ? purchaseLinks.monthly : purchaseLinks.annual}
             target="_blank"

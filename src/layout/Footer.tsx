@@ -28,6 +28,7 @@ export const Footer = () => {
 
         <Button
           variant="gradient"
+          style={{ border: "1px solid #625BF6" }}
           component={Link}
           prefetch={false}
           href="/pricing"

@@ -79,6 +79,7 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
           <Button
             size="xs"
             variant="gradient"
+            style={{ border: "1px solid #625BF6" }}
             leftSection={<AiFillGift />}
             onClick={() => {
               setVisible("upgrade")(true);

@@ -262,6 +262,7 @@ export const HomePage = () => {
                 onClick={() => gaEvent("Hero Section", "click upgrade premium")}
                 component="a"
                 variant="gradient"
+                style={{ border: "1px solid #625BF6" }}
                 href="/#pricing"
                 size="lg"
                 visibleFrom="sm"
@@ -288,6 +289,7 @@ export const HomePage = () => {
                 href="/pricing"
                 size="md"
                 variant="gradient"
+                style={{ border: "1px solid #625BF6" }}
                 rightSection={<MdChevronRight size={24} />}
                 hiddenFrom="sm"
                 radius="lg"
@@ -328,12 +330,6 @@ export const HomePage = () => {
             </Carousel.Slide>
           ))}
         </Carousel>
-        <Flex justify="center" align="center" mt={10} gap={4}>
-          <IoMdInformationCircle color="gray" />
-          <Text c="dimmed" fz="sm" ta="center">
-            Preview images are from the premium version
-          </Text>
-        </Flex>
       </StyledCarouselWrapper>
 
       <Paper
@@ -342,16 +338,18 @@ export const HomePage = () => {
         pb={rem(20)}
         maw="95%"
         radius="xl"
-        bg="dark.9"
         mx="auto"
         mt="-17.5rem"
-        style={{ textAlign: "center" }}
+        style={{
+          textAlign: "center",
+          background: "linear-gradient(rgb(98, 91, 246) 0%, rgb(54, 46, 243) 100%)",
+        }}
         visibleFrom="sm"
       >
-        <Title c="white" order={2} fz={36} fw={500} mb="md">
+        <Title c="white" order={2} fz={42} fw={700} mb="md">
           Optimized for easy navigation
         </Title>
-        <Text mx="auto" fz={16} maw="80%" c="dimmed" mb={60}>
+        <Text mx="auto" fz={16} maw="80%" c="gray.4" mb={60}>
           Designed to help you navigate through your data with ease. The editor provides a clean and
           intuitive interface that allows you to focus on what matters most: your data.
         </Text>
