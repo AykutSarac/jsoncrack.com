@@ -37,9 +37,7 @@ const StyledPaperFree = styled(Paper)`
   border-radius: 1em;
   border: 2px solid #e9e9e9;
   background: white;
-  box-shadow:
-    12.5px 12.5px 10px rgba(0, 0, 0, 0.005),
-    100px 100px 80px rgba(0, 0, 0, 0.01);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 const StyledPaper = styled(Paper)`
@@ -49,7 +47,7 @@ const StyledPaper = styled(Paper)`
   border: 2px solid #e9e9e9;
   border-top: 3px solid #601bf4;
   background: white;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 export const PricingCards = () => {
