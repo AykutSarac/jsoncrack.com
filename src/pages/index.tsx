@@ -244,10 +244,10 @@ export const HomePage = () => {
               variant="light"
               leftSection={<IoSparklesSharp />}
             >
-              Transform into graphs in 3 seconds
+              Transform data to graphs in 3 seconds
             </Badge>
             <StyledHeroTitle>Data into Clarity with Powerful Visualization</StyledHeroTitle>
-            <StyledHeroText>Transform into interactive graphs. See what you need.</StyledHeroText>
+            <StyledHeroText>Transform data into interactive graphs. See what you need.</StyledHeroText>
             <Flex gap="xs">
               <Badge size="xs" color="gray.7" autoContrast radius="sm" variant="light">
                 JSON
