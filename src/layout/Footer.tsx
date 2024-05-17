@@ -23,7 +23,7 @@ export const Footer = () => {
         <Title c="black" order={3}>
           Get Started with JSON Crack
         </Title>
-        <Text fz="lg" c="dimmed">
+        <Text fz="lg" c="dimmed" ta="center">
           Designed for everyone, save time understanding your data.
         </Text>
         <Button
