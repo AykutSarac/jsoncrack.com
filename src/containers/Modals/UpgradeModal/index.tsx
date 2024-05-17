@@ -27,10 +27,10 @@ const overlayLinks = {
 };
 
 export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
-  const [plan, setPlan] = React.useState("monthly");
-  const user = useUser(state => state.user);
   const { colorScheme } = useMantineColorScheme();
   const theme = useMantineTheme();
+  const [plan, setPlan] = React.useState("monthly");
+  const user = useUser(state => state.user);
 
   const handleSelect = () => {
     const link = new URL(overlayLinks[plan]);
@@ -115,11 +115,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
         fz="sm"
         lts={0.2}
         icon={
-          <IoIosCheckmarkCircle
-            color={theme.colors.dark[2]}
-            size={20}
-            style={{ verticalAlign: "middle" }}
-          />
+          <IoIosCheckmarkCircle color="#008736" size={20} style={{ verticalAlign: "middle" }} />
         }
       >
         <List.Item>Compact Graph Visualization (50% less nodes)</List.Item>

@@ -177,7 +177,7 @@ export const NotSupported = () => {
           mt="lg"
           size="lg"
           fw="bolder"
-          color="green"
+          variant="gradient"
           radius="xl"
           rightSection={<MdChevronRight size="24" />}
         >
