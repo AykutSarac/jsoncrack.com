@@ -48,8 +48,6 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
   };
 
   const getBorderColor = (value: string) => {
-    console.log(colorScheme);
-
     if (plan === value) return theme.colors.blue[6];
     if (colorScheme === "dark") return theme.colors.gray[7];
     return theme.colors.gray[2];
