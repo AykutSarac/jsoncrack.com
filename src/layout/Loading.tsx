@@ -25,7 +25,7 @@ export const Loading = () => {
   });
 
   if (loading) {
-    return <LoadingOverlay visible loaderProps={{ color: "orange", type: "oval" }} />;
+    return <LoadingOverlay visible loaderProps={{ color: "#7AB1FF", size: 70 }} />;
   }
 
   return null;

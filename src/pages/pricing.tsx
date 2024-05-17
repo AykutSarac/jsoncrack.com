@@ -35,7 +35,7 @@ const StyledPaperFree = styled(Paper)`
   padding: 1.5em;
   width: 400px;
   border-radius: 1em;
-  border: 3px solid #e9e9e9;
+  border: 2px solid #e9e9e9;
   background: white;
   box-shadow:
     12.5px 12.5px 10px rgba(0, 0, 0, 0.005),
@@ -46,7 +46,8 @@ const StyledPaper = styled(Paper)`
   padding: 1.5em;
   width: 400px;
   border-radius: 1em;
-  border: 3px solid #424242;
+  border: 2px solid #e9e9e9;
+  border-top: 3px solid #601bf4;
   background: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 `;
@@ -70,81 +71,6 @@ export const PricingCards = () => {
         />
       </Center>
       <Flex gap="lg" wrap="wrap" justify="center" w="fit-content" p="lg" mx="auto" maw="100%">
-        <StyledPaperFree>
-          <Flex justify="space-between">
-            <Stack gap="0">
-              <Badge mb="lg" size="lg" variant="outline" color="gray.3" c="dark">
-                Free
-              </Badge>
-
-              <Flex gap="xs" align="baseline">
-                <Text fz={32} fw="bold" c="dark">
-                  $0
-                </Text>
-                <Text fz="sm" fw={500} c="gray.8">
-                  / month
-                </Text>
-              </Flex>
-              <Text fz="xs" c="gray.7">
-                billed {isMonthly ? "monthly" : "annually"}
-              </Text>
-            </Stack>
-          </Flex>
-          <Button
-            component={Link}
-            prefetch={false}
-            href="/editor"
-            size="lg"
-            radius="md"
-            variant="outline"
-            color="dark"
-            fullWidth
-            my="md"
-            rightSection={<VscArrowRight />}
-          >
-            Start for Free
-          </Button>
-          <Flex direction="column" justify="space-between">
-            <List spacing="xs" size="sm" mt="lg" c="black" center icon="✦">
-              <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Graph/Tree visualizations
-                </Text>
-              </List.Item>
-              <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Basic data size support
-                </Text>
-              </List.Item>
-              <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Download as Image
-                </Text>
-              </List.Item>
-              <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Generate types
-                </Text>
-                <Text c="dimmed" fz="xs">
-                  TypeScript, Go, Rust, JSON Schema and more...
-                </Text>
-              </List.Item>
-              <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Multiple format support
-                </Text>
-                <Text c="dimmed" fz="xs">
-                  JSON, YAML, TOML, XML, CSV, and more...
-                </Text>
-              </List.Item>
-              <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Store 25 documents
-                </Text>
-              </List.Item>
-            </List>
-          </Flex>
-        </StyledPaperFree>
         <StyledPaper>
           <Flex justify="space-between">
             <Stack gap="0">
@@ -153,10 +79,10 @@ export const PricingCards = () => {
               </Badge>
 
               <Flex gap="xs" align="baseline">
-                <Text fz={32} fw="bold" c="dark">
+                <Text fz={38} fw="bold" c="black">
                   ${isMonthly ? PRICING.MONTHLY : PRICING.ANNUAL}
                 </Text>
-                <Text fz="sm" fw={500} c="gray.8">
+                <Text fz="md" fw={500} c="gray.6">
                   / month
                 </Text>
               </Flex>
@@ -170,17 +96,17 @@ export const PricingCards = () => {
           </Flex>
           <Button
             component="a"
+            variant="gradient"
             onClick={() => gaEvent("Pricing", "click upgrade premium")}
             href={isMonthly ? purchaseLinks.monthly : purchaseLinks.annual}
             target="_blank"
             size="lg"
             radius="md"
-            color="dark"
             fullWidth
             my="md"
             rightSection={<VscArrowRight />}
           >
-            Get Premium
+            Get Started
           </Button>
           <Text mt="xs" fz="xs" c="dimmed">
             Designed for individuals who works with data regularly.
@@ -189,7 +115,7 @@ export const PricingCards = () => {
             <List spacing="xs" size="sm" mt="xs" c="black" center icon="✦">
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
-                  Larger data support
+                  Large data support
                 </Text>
                 <Text c="dimmed" fz="xs">
                   (Up to ~4 MB)
@@ -197,7 +123,7 @@ export const PricingCards = () => {
               </List.Item>
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
-                  Compact graph visualizations & faster rendering
+                  Compact graph visualizations & fast rendering
                 </Text>
               </List.Item>
               <List.Item>
@@ -228,6 +154,54 @@ export const PricingCards = () => {
             </List>
           </Flex>
         </StyledPaper>
+        <StyledPaperFree>
+          <Flex justify="space-between">
+            <Stack gap="0">
+              <Badge mb="lg" size="lg" variant="outline" color="gray.3" c="dark">
+                Starter
+              </Badge>
+
+              <Flex gap="xs" align="baseline">
+                <Text fz={38} fw="bold" c="black">
+                  Free
+                </Text>
+              </Flex>
+              <Text fz="xs" c="gray.7">
+                billed {isMonthly ? "monthly" : "annually"}
+              </Text>
+            </Stack>
+          </Flex>
+          <Button
+            component="a"
+            href="https://app.jsoncrack.com/sign-up"
+            size="lg"
+            radius="md"
+            variant="outline"
+            color="dark"
+            fullWidth
+            my="md"
+            rightSection={<VscArrowRight />}
+          >
+            Get Started
+          </Button>
+          <Flex direction="column" justify="space-between">
+            <List spacing="xs" size="sm" mt="lg" c="black" center icon="✦">
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Basic data support
+                </Text>
+                <Text c="dimmed" fz="xs">
+                  (~300 KB)
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Store 25 documents
+                </Text>
+              </List.Item>
+            </List>
+          </Flex>
+        </StyledPaperFree>
       </Flex>
     </Stack>
   );

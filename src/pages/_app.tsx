@@ -1,6 +1,7 @@
 import React from "react";
 import type { AppProps } from "next/app";
 import dynamic from "next/dynamic";
+import { DM_Sans } from "next/font/google";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { MantineProvider, createTheme } from "@mantine/core";
@@ -14,12 +15,32 @@ import { Loading } from "src/layout/Loading";
 import { supabase } from "src/lib/api/supabase";
 import useUser from "src/store/useUser";
 
+const dmSans = DM_Sans({
+  subsets: ["latin-ext"],
+});
+
 const theme = createTheme({
   autoContrast: true,
   fontSmoothing: false,
   respectReducedMotion: true,
   cursorType: "pointer",
+  fontFamily: dmSans.style.fontFamily,
+  defaultGradient: {
+    from: "#625BF6",
+    to: "#362EF3",
+    deg: 180,
+  },
   primaryShade: 8,
+  radius: {
+    lg: "12px",
+  },
+  components: {
+    Button: {
+      defaultProps: {
+        fw: 500,
+      },
+    },
+  },
 });
 
 const Toaster = dynamic(() => import("react-hot-toast").then(c => c.Toaster));

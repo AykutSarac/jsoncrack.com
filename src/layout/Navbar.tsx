@@ -26,7 +26,9 @@ const StyledNavbar = styled.nav`
   }
 `;
 
-const Left = styled.div``;
+const Left = styled.div`
+  width: 100%;
+`;
 
 const Right = styled.div`
   display: flex;
@@ -49,7 +51,6 @@ export const Navbar = () => {
             radius="md"
             visibleFrom="sm"
             size="md"
-            fw="normal"
           >
             VS Code
           </Button>
@@ -61,9 +62,20 @@ export const Navbar = () => {
             radius="md"
             visibleFrom="sm"
             size="md"
-            fw="normal"
           >
             Pricing
+          </Button>
+          <Button
+            component={Link}
+            prefetch={false}
+            href="/#faq"
+            variant="subtle"
+            color="black"
+            radius="md"
+            visibleFrom="sm"
+            size="md"
+          >
+            FAQ
           </Button>
           <Button
             component={Link}
@@ -74,7 +86,6 @@ export const Navbar = () => {
             radius="md"
             visibleFrom="sm"
             size="md"
-            fw="normal"
           >
             Docs
           </Button>
@@ -83,24 +94,26 @@ export const Navbar = () => {
           <Button
             component="a"
             href="https://app.jsoncrack.com/sign-in"
-            variant="subtle"
-            color="black"
-            radius="xl"
+            variant="gradient"
+            gradient={{ from: "#FFFFFF", to: "#FBFBFB", deg: 180 }}
+            c="dark"
+            radius="lg"
             visibleFrom="sm"
             size="md"
+            style={{ border: "1px solid #E2E2E2" }}
           >
-            Login
+            Sign in
           </Button>
           <Button
+            variant="gradient"
             component={Link}
             prefetch={false}
-            href="/editor"
-            color="dark"
+            href="/pricing"
             visibleFrom="sm"
-            radius="xl"
+            radius="lg"
             size="md"
           >
-            Editor
+            Get started for free
           </Button>
         </Right>
       </StyledNavbar>

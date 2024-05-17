@@ -22,7 +22,9 @@ import { Carousel } from "@mantine/carousel";
 import "@mantine/carousel/styles.css";
 import styled from "styled-components";
 import { BiChevronDown } from "react-icons/bi";
+import { FaGithub } from "react-icons/fa";
 import { IoMdInformationCircle } from "react-icons/io";
+import { IoSparklesSharp } from "react-icons/io5";
 import { MdChevronRight, MdCompare, MdExtension, MdRebaseEdit, MdSearch } from "react-icons/md";
 import useBackgroundCursorPosition from "use-bg-cursor-pos";
 import { images, metaDescription } from "src/constants/landing";
@@ -59,7 +61,7 @@ const StyledHeroSectionBody = styled.div`
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  padding: 5em 10%;
+  padding: 3em 10%;
   overflow: hidden;
   backdrop-filter: blur(1px);
   -webkit-backdrop-filter: blur(1px);
@@ -74,8 +76,8 @@ const StyledHeroSectionBody = styled.div`
 
 const StyledHeroText = styled.p`
   font-size: 0.8rem;
-  color: #5b5b5b;
-  font-weight: 400;
+  color: #898989;
+  font-weight: 500;
   max-width: 100%;
   min-width: 400px;
   text-align: center;
@@ -86,7 +88,7 @@ const StyledHeroText = styled.p`
   }
 
   @media only screen and (min-width: 1400px) {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     max-width: 60%;
   }
 `;
@@ -98,7 +100,7 @@ const StyledPaper = styled.div`
   &:before {
     position: absolute;
     z-index: -1;
-    opacity: 0.7;
+    opacity: 0.4;
     top: 0;
     left: 0;
     content: "";
@@ -117,10 +119,11 @@ const StyledPaper = styled.div`
 const StyledHeroTitle = styled.h1`
   position: relative;
   font-size: 1.8rem;
-  font-weight: 800;
+  font-weight: 900;
   display: inline;
-  color: #2e2e2e;
+  color: #272727;
   width: fit-content;
+  letter-spacing: -1px;
   line-height: 1.2;
   filter: drop-shadow(2px 1px 1px rgba(0, 0, 0, 0.1));
 
@@ -135,19 +138,23 @@ const StyledHeroTitle = styled.h1`
 
   @media only screen and (min-width: 576px) {
     font-size: 3rem;
+    letter-spacing: -2px;
   }
 
   @media only screen and (min-width: 992px) {
+    letter-spacing: -4px;
     font-size: 4rem;
   }
 
   @media only screen and (min-width: 1400px) {
-    font-size: 4.5rem;
+    max-width: 85%;
+    letter-spacing: -4px;
+    font-size: 4rem;
   }
 `;
 
 const StyledHeroGradient = styled.span`
-  background: linear-gradient(90deg, #f5a623, #ff5f6d);
+  background: linear-gradient(90deg, #7b75f3, #4e49f3);
   background-size: 200% 200%;
   animation: textShine 2s linear infinite alternate;
   -webkit-background-clip: text;
@@ -157,11 +164,12 @@ const StyledHeroGradient = styled.span`
 `;
 
 const StyledCarouselWrapper = styled.section`
-  max-width: 75%;
+  max-width: 85%;
   position: relative;
   z-index: 1;
   margin: 60px auto;
   overflow: hidden;
+  filter: drop-shadow(0px -4px 10px rgba(70, 70, 70, 0.25));
 
   img {
     width: 100%;
@@ -175,11 +183,11 @@ const StyledCarouselWrapper = styled.section`
   }
 `;
 
-export const FAQ = Object.freeze([
+const FAQ = [
   {
-    title: "What is JSON Crack and what does it do?",
+    title: "What is JSON Crack?",
     content:
-      "JSON Crack is an open-source free with paid option data visualization app capable of visualizing data formats such as JSON, YAML, XML, CSV and more, into interactive graphs. This makes it much simpler to analyze complex JSON structures.",
+      "JSON Crack is a data visualization app capable of visualizing data formats such as JSON, YAML, XML, CSV and more, into interactive graphs. It helps you to understand, analyze and debug your data easily. JSON Crack is designed for developers, data analysts, and anyone who works with structured data formats. It's also helpful for creating documentation and presentations for your teams/customers.",
   },
   {
     title: "What are the advantages of the premium plan?",
@@ -190,10 +198,11 @@ export const FAQ = Object.freeze([
         Most significant features include:
         <List mt="lg">
           <List.Item>Expanded support for larger datasets</List.Item>
-          <List.Item>Compact visualization style: what you see is what you need!</List.Item>
+          <List.Item>Compare data on graphs</List.Item>
+          <List.Item>Compact visualization style: see only what you need to</List.Item>
           <List.Item>Searching is faster and smoother</List.Item>
           <List.Item>Ask AI to filter your data</List.Item>
-          <List.Item>Direct data editing within the graphs & tree view</List.Item>
+          <List.Item>Direct data editing on the graphs & tree view</List.Item>
         </List>
       </>
     ),
@@ -201,14 +210,14 @@ export const FAQ = Object.freeze([
   {
     title: "Who is it for and what are the use-cases?",
     content:
-      "JSON Crack is for developers, data analysts, and anyone who works with JSON data. It's useful for visualizing JSON data structures, debugging, and understanding complex data. It's also helpful for creating documentation and presentations for your teams/customers.",
+      "JSON Crack is for developers, data analysts, and anyone who works with data. It's useful for visualizing data structures, debugging, and understanding complex data. It's also helpful for creating documentation and presentations for your teams/customers.",
   },
   {
     title: "Do you see my data pasted on the editor?",
     content:
       "No, JSON Crack does not store your data anywhere unless you upload it manually. When you paste your data into the editor, it's processed on your device only to create the visualization. Your data remains completely private.",
   },
-]);
+];
 
 export const HomePage = () => {
   const [card1, bg1] = useBackgroundCursorPosition("#fff7f7", "#ffecec", "300px");
@@ -227,62 +236,73 @@ export const HomePage = () => {
       <StyledHeroSection id="hero-section">
         <StyledHeroSectionBody>
           <Stack flex="1" miw={250} mx="auto" align="center">
-            <StyledHeroTitle>
-              Transform your data
-              <br />
-              into
-              <StyledHeroGradient>interactive graphs</StyledHeroGradient>
-            </StyledHeroTitle>
-
-            <StyledHeroText>
-              Experience the ultimate online editor designed to empower you in visualizing,
-              refining, and formatting data effortlessly.
-            </StyledHeroText>
+            <Badge
+              tt="none"
+              size="xl"
+              fw={500}
+              color="#362EF3"
+              variant="light"
+              leftSection={<IoSparklesSharp />}
+            >
+              Transform into graphs in 3 seconds
+            </Badge>
+            <StyledHeroTitle>Data into Clarity with Powerful Visualization</StyledHeroTitle>
+            <StyledHeroText>Transform into interactive graphs. See what you need.</StyledHeroText>
             <Flex gap="xs">
-              <Badge size="xs" color="dark" radius="sm" variant="light">
+              <Badge size="xs" color="gray.6" autoContrast radius="sm" variant="light">
                 JSON
               </Badge>
-              <Badge size="xs" color="dark" radius="sm" variant="light">
+              <Badge size="xs" color="gray.6" autoContrast radius="sm" variant="light">
                 YAML
               </Badge>
-              <Badge size="xs" color="dark" radius="sm" variant="light">
+              <Badge size="xs" color="gray.6" autoContrast radius="sm" variant="light">
                 CSV
               </Badge>
-              <Badge size="xs" color="dark" radius="sm" variant="light">
+              <Badge size="xs" color="gray.6" autoContrast radius="sm" variant="light">
                 XML
               </Badge>
-              <Badge size="xs" color="dark" radius="sm" variant="light">
+              <Badge size="xs" color="gray.6" autoContrast radius="sm" variant="light">
                 TOML
               </Badge>
             </Flex>
-            <Button
-              onClick={() => gaEvent("Hero Section", "click upgrade premium")}
-              component={Link}
-              href="/pricing"
-              size="xl"
-              fw="bold"
-              color="orange.6"
-              rightSection={<MdChevronRight size={30} />}
-              visibleFrom="sm"
-              radius="lg"
-              mt="lg"
-              style={{ boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)" }}
-            >
-              Get Started
-            </Button>
-            <Button
-              component={Link}
-              href="/pricing"
-              fw="bold"
-              size="md"
-              color="orange.6"
-              rightSection={<MdChevronRight size={24} />}
-              hiddenFrom="sm"
-              radius="lg"
-              mt="lg"
-            >
-              Get Started
-            </Button>
+            <Flex gap="md" mt="lg">
+              <Button
+                onClick={() => gaEvent("Hero Section", "click upgrade premium")}
+                component="a"
+                variant="gradient"
+                href="/#pricing"
+                size="lg"
+                visibleFrom="sm"
+                radius="lg"
+                rightSection={<MdChevronRight size={30} />}
+              >
+                Get started for free
+              </Button>
+              <Button
+                component={Link}
+                prefetch={false}
+                variant="subtle"
+                color="dark.8"
+                href="/editor"
+                size="lg"
+                visibleFrom="sm"
+                radius="lg"
+                leftSection={<FaGithub />}
+              >
+                Free Version
+              </Button>
+              <Button
+                component={Link}
+                href="/pricing"
+                size="md"
+                variant="gradient"
+                rightSection={<MdChevronRight size={24} />}
+                hiddenFrom="sm"
+                radius="lg"
+              >
+                Get started for free
+              </Button>
+            </Flex>
           </Stack>
         </StyledHeroSectionBody>
       </StyledHeroSection>
@@ -298,7 +318,11 @@ export const HomePage = () => {
           height="100%"
           withIndicators
           loop
-          style={{ border: "5px solid #bdbdbd", borderRadius: "14px", overflow: "hidden" }}
+          style={{
+            border: "3px solid #bdbdbd",
+            borderRadius: "14px",
+            overflow: "hidden",
+          }}
         >
           {images.map(image => (
             <Carousel.Slide key={image.id}>
@@ -348,7 +372,8 @@ export const HomePage = () => {
           </ThemeIcon>
 
           <Title
-            c="dark"
+            c="black"
+            lts={-1}
             order={2}
             fz={{ sm: 36, md: 48 }}
             fw={600}
@@ -396,7 +421,7 @@ export const HomePage = () => {
                 <Title c="black" order={3} fw={500} fz={{ sm: 20, md: 28 }}>
                   Compare
                 </Title>
-                <Text fz={{ sm: 14, md: 18 }} fw={300} lts={0.4} c="dark.5" mt={10}>
+                <Text fz={{ sm: 14, md: 18 }} c="dark.5" mt={10}>
                   Compare and analyze your data smoothly with the interactive graphs.
                 </Text>
                 <Image
@@ -441,7 +466,7 @@ export const HomePage = () => {
                 <Title c="black" order={3} fw={500} fz={{ sm: 20, md: 28 }}>
                   Edit
                 </Title>
-                <Text fz={{ sm: 14, md: 16 }} fw={300} lts={0.4} c="dark.5" my={10}>
+                <Text fz={{ sm: 14, md: 18 }} c="dark.5" my={10}>
                   Directly modify your data through the graphs, without wasting time on manual
                   editing.
                 </Text>
@@ -486,7 +511,7 @@ export const HomePage = () => {
                 <Title c="black" order={3} fw={500} fz={{ sm: 20, md: 28 }}>
                   Search
                 </Title>
-                <Text fz={{ sm: 14, md: 18 }} fw={300} lts={0.4} c="dark.5" mt={10}>
+                <Text fz={{ sm: 14, md: 18 }} c="dark.5" mt={10}>
                   Highlight and search what you need in your data, without any hassle.
                 </Text>
                 <Image
@@ -532,7 +557,7 @@ export const HomePage = () => {
                 <Title c="black" order={3} fw={500} fz={{ sm: 20, md: 28 }}>
                   Choose Your Format
                 </Title>
-                <Text fz={{ sm: 14, md: 18 }} fw={300} lts={0.4} c="dark.5" mt={10}>
+                <Text fz={{ sm: 14, md: 18 }} c="dark.5" mt={10}>
                   Visualize and edit your data in multiple formats. JSON, YAML, CSV, XML, and TOML
                   are supported.
                 </Text>
@@ -596,21 +621,48 @@ export const HomePage = () => {
         </Grid>
       </section>
 
+      <Title c="black" order={2} fz={42} fw={600} mt={50} mb={15} style={{ textAlign: "center" }}>
+        Pricing
+      </Title>
       <PricingCards />
 
       <Container id="faq" component="section">
-        <Title c="black" order={2} fz={36} fw={600} mt={100} style={{ textAlign: "center" }}>
+        <Title
+          c="black"
+          order={2}
+          fz={36}
+          fw={600}
+          mt={100}
+          mb={60}
+          style={{ textAlign: "center" }}
+        >
           Frequently Asked Questions
         </Title>
-        <Accordion bg="white" variant="contained" mt={60}>
+        <Accordion
+          variant="separated"
+          styles={{
+            panel: {
+              background: "#f9f9f9",
+              color: "#1d1d1d",
+            },
+            label: {
+              color: "#1d1d1d",
+              fontWeight: 500,
+            },
+            item: {
+              background: "#f9f9f9",
+              color: "#1d1d1d",
+              overflow: "hidden",
+              border: "1px solid #ededed",
+              borderRadius: 12,
+              fontWeight: 300,
+            },
+          }}
+        >
           {FAQ.map(({ title, content }) => (
             <Accordion.Item key={title} value={title}>
-              <Accordion.Control bg="white" c="dark">
-                {title}
-              </Accordion.Control>
-              <Accordion.Panel bg="gray.1" c="dark">
-                {content}
-              </Accordion.Panel>
+              <Accordion.Control>{title}</Accordion.Control>
+              <Accordion.Panel>{content}</Accordion.Panel>
             </Accordion.Item>
           ))}
         </Accordion>
