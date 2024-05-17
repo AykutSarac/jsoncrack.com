@@ -15,6 +15,7 @@ import {
 } from "@mantine/core";
 import styled from "styled-components";
 import { AiOutlineInfoCircle } from "react-icons/ai";
+import { MdCheck } from "react-icons/md";
 import { VscArrowRight } from "react-icons/vsc";
 import Layout from "src/layout/Layout";
 import { gaEvent } from "src/lib/utils/gaEvent";
@@ -110,18 +111,40 @@ export const PricingCards = () => {
             Designed for individuals who works with data regularly.
           </Text>
           <Flex direction="column" justify="space-between">
-            <List spacing="xs" size="sm" mt="xs" c="black" center icon="✦">
+            <List
+              spacing="md"
+              size="sm"
+              mt="xs"
+              c="black"
+              center
+              icon={<MdCheck color="blue" size="18" />}
+            >
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
                   Large data support
                 </Text>
                 <Text c="dimmed" fz="xs">
-                  (Up to ~4 MB)
+                  (~4 MB)
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Store 200 documents
                 </Text>
               </List.Item>
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
                   Compact graph visualizations & fast rendering
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Edit directly on visualizations reflecting on data
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Built-in tabs for multiple documents
                 </Text>
               </List.Item>
               <List.Item>
@@ -132,21 +155,6 @@ export const PricingCards = () => {
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
                   AI powered data filter
-                </Text>
-              </List.Item>
-              <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Edit data directly on visualizations
-                </Text>
-              </List.Item>
-              <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Built-in tabs for multiple documents
-                </Text>
-              </List.Item>
-              <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Store 200 documents
                 </Text>
               </List.Item>
             </List>
@@ -183,7 +191,14 @@ export const PricingCards = () => {
             Get Started
           </Button>
           <Flex direction="column" justify="space-between">
-            <List spacing="xs" size="sm" mt="lg" c="black" center icon="✦">
+            <List
+              spacing="md"
+              size="sm"
+              mt="lg"
+              c="black"
+              center
+              icon={<MdCheck size="18" color="blue" />}
+            >
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
                   Basic data support

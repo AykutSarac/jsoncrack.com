@@ -39,7 +39,7 @@ const Docs = () => {
     <Layout>
       <Head>
         <title>Embed - JSON Crack</title>
-        <meta name="description" content="Embedding JSON Crack tutorial into your websites." />
+        <meta name="description" content="Integrate JSON Crack widgets into your website." />
       </Head>
       <Stack mx="auto" maw="90%">
         <Group mb="lg" mt={40}>

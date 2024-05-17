@@ -20,14 +20,14 @@ export const Footer = () => {
   return (
     <Container mt={150}>
       <Stack align="center">
-        <Title c="black" order={3}>
-          Get Started with JSON Crack
+        <Title fz={26} c="gray.7" lts={-1} order={3} ta="center">
+          Designed for everyone
+          <br />
+          Save time understanding your data.
         </Title>
-        <Text fz="lg" c="dimmed" ta="center">
-          Designed for everyone, save time understanding your data.
-        </Text>
+
         <Button
-          color="dark"
+          variant="gradient"
           component={Link}
           prefetch={false}
           href="/pricing"
@@ -37,7 +37,7 @@ export const Footer = () => {
           Get Started
         </Button>
       </Stack>
-      <Divider my={60} />
+      <Divider my={60} color="gray.3" />
       <Flex justify="space-between">
         <Stack gap={4} visibleFrom="sm">
           <JSONCrackLogo />

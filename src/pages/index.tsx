@@ -388,12 +388,12 @@ export const HomePage = () => {
               pos="relative"
               ref={card1 as React.RefObject<HTMLDivElement>}
               p={30}
-              withBorder
               shadow="xs"
               radius="md"
               w="100%"
               h={{ sm: 300, md: 370 }}
               style={{
+                border: "1px solid #ffc1c1",
                 overflow: "hidden",
                 background: bg1,
               }}
@@ -433,12 +433,12 @@ export const HomePage = () => {
             <Paper
               ref={card2 as React.RefObject<HTMLDivElement>}
               p={30}
-              withBorder
               shadow="xs"
               radius="md"
               w="100%"
               h={{ sm: 300, md: 370 }}
               style={{
+                border: "1px solid #bfffb5",
                 overflow: "hidden",
                 background: bg2,
               }}
@@ -478,12 +478,12 @@ export const HomePage = () => {
             <Paper
               ref={card3 as React.RefObject<HTMLDivElement>}
               p={30}
-              withBorder
               shadow="xs"
               radius="md"
               w="100%"
               h={{ sm: 300, md: 370 }}
               style={{
+                border: "1px solid #dbb5ff",
                 overflow: "hidden",
                 background: bg3,
               }}
@@ -524,12 +524,12 @@ export const HomePage = () => {
             <Paper
               ref={card4 as React.RefObject<HTMLDivElement>}
               p={30}
-              withBorder
               shadow="xs"
               radius="md"
               w="100%"
               h={{ sm: 300, md: 370 }}
               style={{
+                border: "1px solid #b5f0ff",
                 overflow: "hidden",
                 background: bg4,
               }}

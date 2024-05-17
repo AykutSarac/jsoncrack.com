@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useMantineColorScheme } from "@mantine/core";
 import styled, { ThemeProvider } from "styled-components";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { metaDescription } from "src/constants/landing";
 import { darkTheme, lightTheme } from "src/constants/theme";
 import { Editor } from "src/containers/Editor";
 import { BottomBar } from "src/containers/Editor/BottomBar";
@@ -57,6 +58,9 @@ const EditorPage = () => {
     <>
       <Head>
         <title>Editor | JSON Crack</title>
+        <meta name="description" content={metaDescription} key="description" />
+        <meta property="og:description" content={metaDescription} key="ogdescription" />
+        <meta name="twitter:description" content={metaDescription} key="twdescription" />{" "}
         <link rel="canonical" href="https://jsoncrack.com/editor" />
       </Head>
       <ThemeProvider theme={darkmodeEnabled ? darkTheme : lightTheme}>

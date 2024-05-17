@@ -1,6 +1,5 @@
 import React from "react";
-import { Button, Flex, Group, Indicator, Select, Text } from "@mantine/core";
-import { useSessionStorage } from "@mantine/hooks";
+import { Button, Flex, Group, Select } from "@mantine/core";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import { AiFillGift } from "react-icons/ai";
@@ -38,10 +37,6 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
   const setVisible = useModal(state => state.setVisible);
   const setFormat = useFile(state => state.setFormat);
   const format = useFile(state => state.format);
-  const [seenPremium, setSeenPremium] = useSessionStorage({
-    key: "seenPremium",
-    defaultValue: false,
-  });
 
   return (
     <Styles.StyledTools>
@@ -86,7 +81,6 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
             variant="gradient"
             leftSection={<AiFillGift />}
             onClick={() => {
-              setSeenPremium(true);
               setVisible("upgrade")(true);
               gaEvent("Toolbar", "click upgrade premium");
             }}
