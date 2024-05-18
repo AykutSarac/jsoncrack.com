@@ -152,7 +152,7 @@ export const Graph = ({ isWidget = false }: GraphProps) => {
   });
 
   useEffect(() => {
-    if (nodeCount > 20 && !isDialogClosed) {
+    if (nodeCount > 100 && !isDialogClosed) {
       setDialogVisible(true);
     }
   }, [isDialogClosed, nodeCount, setDialogVisible]);
