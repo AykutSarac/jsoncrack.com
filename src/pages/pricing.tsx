@@ -232,6 +232,12 @@ export const PricingCards = () => {
           </Flex>
         </StyledPaperFree>
       </Flex>
+      <Text fz="sm" c="dimmed" style={{ textAlign: "center" }}>
+        Get custom pricing for enterprise plan.{" "}
+        <Anchor inherit href="mailto:contact@jsoncrack.com" c="blue" style={{ display: "inline" }}>
+          Contact us
+        </Anchor>
+      </Text>
     </Stack>
   );
 };
@@ -244,10 +250,12 @@ const Pricing = () => {
       </Head>
       <Layout>
         <PricingCards />
-        <Text pt="sm" size="sm" c="dimmed" style={{ textAlign: "center" }}>
-          <AiOutlineInfoCircle style={{ marginRight: "4px" }} />
-          Payment email must be matching with the account registered to the JSON Crack.
-        </Text>
+        <Flex pt="sm" c="dimmed" justify="center" align="center" gap={4}>
+          <AiOutlineInfoCircle />
+          <Text size="sm">
+            Payment email must be matching with the account registered to the JSON Crack.
+          </Text>
+        </Flex>
       </Layout>
     </>
   );
