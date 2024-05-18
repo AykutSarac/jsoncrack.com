@@ -15,14 +15,15 @@ import {
 } from "@mantine/core";
 import styled from "styled-components";
 import { AiOutlineInfoCircle } from "react-icons/ai";
+import { FaArrowTrendDown } from "react-icons/fa6";
 import { MdCheck } from "react-icons/md";
 import { VscArrowRight } from "react-icons/vsc";
 import Layout from "src/layout/Layout";
 import { gaEvent } from "src/lib/utils/gaEvent";
 
 export const PRICING = {
-  MONTHLY: 6,
-  ANNUAL: 5,
+  MONTHLY: 5,
+  ANNUAL: 4,
 };
 
 export const purchaseLinks = {
@@ -73,16 +74,30 @@ export const PricingCards = () => {
         <StyledPaper>
           <Flex justify="space-between">
             <Stack gap="0">
-              <Badge mb="lg" size="lg" variant="outline" color="gray.3" c="dark" leftSection="✦">
-                Premium
-              </Badge>
+              <Flex align="center" mb="lg">
+                <Text fw={500} size="xl" c="black">
+                  Premium
+                </Text>
+                <Badge
+                  size="lg"
+                  variant="light"
+                  color="#ff0000"
+                  ml="sm"
+                  leftSection={<FaArrowTrendDown />}
+                >
+                  %16
+                </Badge>
+              </Flex>
 
               <Flex gap="xs" align="baseline">
                 <Text fz={38} fw="bold" c="black">
                   ${isMonthly ? PRICING.MONTHLY : PRICING.ANNUAL}
                 </Text>
                 <Text fz="md" fw={500} c="gray.6">
-                  / month
+                  / mo
+                </Text>
+                <Text fz="xl" lts={1} c="dark" td="line-through" style={{ alignSelf: "start" }}>
+                  ${isMonthly ? PRICING.MONTHLY + 1 : PRICING.ANNUAL + 1}
                 </Text>
               </Flex>
               <Text fz="xs" c="gray.7">
@@ -164,13 +179,13 @@ export const PricingCards = () => {
         <StyledPaperFree>
           <Flex justify="space-between">
             <Stack gap="0">
-              <Badge mb="lg" size="lg" variant="outline" color="gray.3" c="dark">
-                Starter
-              </Badge>
+              <Text fw={500} mb="lg" size="xl" c="black">
+                Free
+              </Text>
 
               <Flex gap="xs" align="baseline">
                 <Text fz={38} fw="bold" c="black">
-                  Free
+                  $0
                 </Text>
               </Flex>
               <Text fz="xs" c="gray.7">
