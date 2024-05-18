@@ -28,9 +28,9 @@ export const PRICING = {
 
 export const purchaseLinks = {
   monthly:
-    "https://herowand.lemonsqueezy.com/checkout/buy/ce30521f-c7cc-44f3-9435-995d3260ba22?enabled=67805",
+    "https://herowand.lemonsqueezy.com/checkout/buy/ce30521f-c7cc-44f3-9435-995d3260ba22?checkout[discount_code]=Q2MDE1MA&desc=0&enabled=67805",
   annual:
-    "https://herowand.lemonsqueezy.com/checkout/buy/577928ea-fb09-4076-9307-3e5931b35ad0?enabled=82417",
+    "https://herowand.lemonsqueezy.com/checkout/buy/577928ea-fb09-4076-9307-3e5931b35ad0?checkout[discount_code]=Q5OTKYMW&desc=0&enabled=82417",
 };
 
 const StyledPaperFree = styled(Paper)`
