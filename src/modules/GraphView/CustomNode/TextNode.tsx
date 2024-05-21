@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { MdLink, MdLinkOff } from "react-icons/md";
-import type { CustomNodeProps } from "src/containers/Editor/LiveEditor/GraphView/CustomNode";
 import useToggleHide from "src/hooks/useToggleHide";
-import { isContentImage } from "src/lib/utils/graph/calculateNodeSize";
+import type { CustomNodeProps } from "src/modules/GraphView/CustomNode";
+import { isContentImage } from "src/modules/GraphView/lib/utils/calculateNodeSize";
+import useGraph from "src/modules/GraphView/stores/useGraph";
 import useConfig from "src/store/useConfig";
-import useGraph from "src/store/useGraph";
 import { TextRenderer } from "./TextRenderer";
 import * as Styled from "./styles";
 

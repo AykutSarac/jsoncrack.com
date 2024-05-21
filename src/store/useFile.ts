@@ -3,11 +3,11 @@ import { toast } from "react-hot-toast";
 import { create } from "zustand";
 import { defaultJson } from "src/constants/data";
 import { FileFormat } from "src/enums/file.enum";
-import { contentToJson, jsonToContent } from "src/lib/utils/json/jsonAdapter";
+import { contentToJson, jsonToContent } from "src/lib/utils/jsonAdapter";
 import { isIframe } from "src/lib/utils/widget";
 import { documentSvc } from "src/services/document.service";
+import useGraph from "../modules/GraphView/stores/useGraph";
 import useConfig from "./useConfig";
-import useGraph from "./useGraph";
 import useJson from "./useJson";
 
 type SetContents = {

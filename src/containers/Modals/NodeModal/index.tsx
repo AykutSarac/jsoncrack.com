@@ -4,7 +4,7 @@ import { Modal, Stack, Text, ScrollArea, Button } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
 import { VscLock } from "react-icons/vsc";
 import { gaEvent } from "src/lib/utils/gaEvent";
-import useGraph from "src/store/useGraph";
+import useGraph from "src/modules/GraphView/stores/useGraph";
 import useModal from "src/store/useModal";
 
 const dataToString = (data: any) => {

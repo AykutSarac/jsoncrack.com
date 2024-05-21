@@ -16,10 +16,10 @@ import { MdOutlineCheckCircleOutline } from "react-icons/md";
 import { TbTransform } from "react-icons/tb";
 import { VscError, VscFeedback, VscSourceControl, VscSync, VscSyncIgnored } from "react-icons/vsc";
 import { gaEvent } from "src/lib/utils/gaEvent";
+import useGraph from "src/modules/GraphView/stores/useGraph";
 import { documentSvc } from "src/services/document.service";
 import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
-import useGraph from "src/store/useGraph";
 import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
 

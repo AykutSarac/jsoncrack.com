@@ -7,10 +7,10 @@ import { Space } from "react-zoomable-ui";
 import { Canvas } from "reaflow";
 import type { ElkRoot } from "reaflow/dist/layout/useLayout";
 import { useLongPress } from "use-long-press";
-import { CustomNode } from "src/containers/Editor/LiveEditor/GraphView/CustomNode";
 import useToggleHide from "src/hooks/useToggleHide";
+import { CustomNode } from "src/modules/GraphView/CustomNode";
+import useGraph from "src/modules/GraphView/stores/useGraph";
 import useConfig from "src/store/useConfig";
-import useGraph from "src/store/useGraph";
 import { CustomEdge } from "./CustomEdge";
 import { NotSupported } from "./NotSupported";
 
@@ -137,7 +137,7 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
 
 const SUPPORTED_LIMIT = 600;
 
-export const Graph = ({ isWidget = false }: GraphProps) => {
+export const GraphView = ({ isWidget = false }: GraphProps) => {
   const setViewPort = useGraph(state => state.setViewPort);
   const viewPort = useGraph(state => state.viewPort);
   const aboveSupportedLimit = useGraph(state => state.nodes.length > SUPPORTED_LIMIT);

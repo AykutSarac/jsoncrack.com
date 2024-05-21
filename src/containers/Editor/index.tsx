@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import styled from "styled-components";
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
-import useGraph from "src/store/useGraph";
+import useGraph from "src/modules/GraphView/stores/useGraph";
 
 export const StyledEditor = styled(Allotment)`
   position: relative !important;

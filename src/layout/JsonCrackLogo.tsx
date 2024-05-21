@@ -1,8 +1,15 @@
 import React from "react";
+import localFont from "next/font/local";
 import Link from "next/link";
 import styled from "styled-components";
-import { monaSans } from "src/constants/fonts";
 import { isIframe } from "src/lib/utils/widget";
+
+const monaSans = localFont({
+  src: "../assets/fonts/Mona-Sans.woff2",
+  variable: "--mona-sans",
+  display: "swap",
+  fallback: ["Futura, Helvetica, sans-serif", "Tahoma, Verdana, sans-serif"],
+});
 
 const StyledTitle = styled.div<{ fontSize: string }>`
   font-weight: 800;

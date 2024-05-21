@@ -1,5 +1,5 @@
 import React from "react";
-import type { CustomNodeProps } from "src/containers/Editor/LiveEditor/GraphView/CustomNode";
+import type { CustomNodeProps } from "src/modules/GraphView/CustomNode";
 import { TextRenderer } from "./TextRenderer";
 import * as Styled from "./styles";
 

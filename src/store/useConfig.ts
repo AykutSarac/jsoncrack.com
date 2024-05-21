@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { ViewMode } from "src/enums/viewMode.enum";
-import useGraph from "./useGraph";
+import useGraph from "../modules/GraphView/stores/useGraph";
 
 const initialStates = {
   darkmodeEnabled: false,

@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { Graph } from "src/containers/Editor/LiveEditor/GraphView";
-import { TreeView } from "src/containers/Editor/LiveEditor/TreeView";
 import { ViewMode } from "src/enums/viewMode.enum";
+import { GraphView } from "src/modules/GraphView";
+import { TreeView } from "src/modules/TreeView";
 import useConfig from "src/store/useConfig";
 
 const StyledLiveEditor = styled.div`
@@ -24,7 +24,7 @@ const StyledLiveEditor = styled.div`
 const View = () => {
   const viewMode = useConfig(state => state.viewMode);
 
-  if (viewMode === ViewMode.Graph) return <Graph />;
+  if (viewMode === ViewMode.Graph) return <GraphView />;
   if (viewMode === ViewMode.Tree) return <TreeView />;
   return null;
 };

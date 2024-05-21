@@ -7,8 +7,8 @@ import { ThemeProvider } from "styled-components";
 import toast from "react-hot-toast";
 import { darkTheme, lightTheme } from "src/constants/theme";
 import { Toolbar } from "src/containers/Toolbar";
+import useGraph from "src/modules/GraphView/stores/useGraph";
 import useFile from "src/store/useFile";
-import useGraph from "src/store/useGraph";
 
 interface EmbedMessage {
   data: {
@@ -20,12 +20,9 @@ interface EmbedMessage {
   };
 }
 
-const Graph = dynamic(
-  () => import("src/containers/Editor/LiveEditor/GraphView").then(c => c.Graph),
-  {
-    ssr: false,
-  }
-);
+const GraphView = dynamic(() => import("src/modules/GraphView").then(c => c.GraphView), {
+  ssr: false,
+});
 
 const WidgetPage = () => {
   const { query, push, isReady } = useRouter();
@@ -76,7 +73,7 @@ const WidgetPage = () => {
       </Head>
       <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
         <Toolbar isWidget />
-        <Graph isWidget />
+        <GraphView isWidget />
       </ThemeProvider>
     </>
   );

@@ -3,7 +3,7 @@ import { Menu, Flex, Input, Text } from "@mantine/core";
 import { getHotkeyHandler, useHotkeys } from "@mantine/hooks";
 import { CgChevronDown } from "react-icons/cg";
 import { gaEvent } from "src/lib/utils/gaEvent";
-import useGraph from "src/store/useGraph";
+import useGraph from "src/modules/GraphView/stores/useGraph";
 import * as Styles from "./styles";
 
 export const ZoomMenu = () => {

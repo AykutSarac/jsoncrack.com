@@ -7,9 +7,9 @@ import { VscExpandAll, VscCollapseAll, VscTarget } from "react-icons/vsc";
 import { ViewMode } from "src/enums/viewMode.enum";
 import useToggleHide from "src/hooks/useToggleHide";
 import { gaEvent } from "src/lib/utils/gaEvent";
-import { getNextDirection } from "src/lib/utils/graph/getNextDirection";
+import { getNextDirection } from "src/lib/utils/getNextDirection";
+import useGraph from "src/modules/GraphView/stores/useGraph";
 import useConfig from "src/store/useConfig";
-import useGraph from "src/store/useGraph";
 import * as Styles from "./styles";
 
 function rotateLayout(direction: "LEFT" | "RIGHT" | "DOWN" | "UP") {

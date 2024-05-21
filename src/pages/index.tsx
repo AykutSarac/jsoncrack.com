@@ -23,7 +23,6 @@ import "@mantine/carousel/styles.css";
 import styled from "styled-components";
 import { BiChevronDown } from "react-icons/bi";
 import { FaGithub } from "react-icons/fa";
-import { IoMdInformationCircle } from "react-icons/io";
 import { IoSparklesSharp } from "react-icons/io5";
 import { MdChevronRight, MdCompare, MdExtension, MdRebaseEdit, MdSearch } from "react-icons/md";
 import useBackgroundCursorPosition from "use-bg-cursor-pos";
