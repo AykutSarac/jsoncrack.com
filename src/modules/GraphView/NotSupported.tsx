@@ -165,8 +165,8 @@ export const NotSupported = () => {
           <JSONCrackLogo fontSize="4rem" />
         </Title>
         <StyledInfo>
-          Free version is not optimized to handle data of this size. Try the premium version for
-          more features and capabilities.
+          Upgrade to premium for larger data size support. The free version is incapable of handling
+          data of this size!
         </StyledInfo>
 
         <Button
