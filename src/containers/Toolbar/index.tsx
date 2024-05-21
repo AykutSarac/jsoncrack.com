@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, Flex, Group, Select } from "@mantine/core";
+import { Text, Flex, Group, Indicator, Select } from "@mantine/core";
+import { useSessionStorage } from "@mantine/hooks";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import { AiFillGift } from "react-icons/ai";
@@ -37,6 +38,10 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
   const setVisible = useModal(state => state.setVisible);
   const setFormat = useFile(state => state.setFormat);
   const format = useFile(state => state.format);
+  const [seenPremium, setSeenPremium] = useSessionStorage({
+    key: "seenPremium",
+    defaultValue: false,
+  });
 
   return (
     <Styles.StyledTools>
@@ -76,18 +81,32 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
       )}
       <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
         {!isWidget && (
-          <Button
-            size="xs"
-            variant="gradient"
-            style={{ border: "1px solid #625BF6" }}
-            leftSection={<AiFillGift />}
+          <Styles.StyledToolElement
             onClick={() => {
+              setSeenPremium(true);
               setVisible("upgrade")(true);
               gaEvent("Toolbar", "click upgrade premium");
             }}
           >
-            Get Premium
-          </Button>
+            <Indicator
+              size={5}
+              color="green"
+              position="top-start"
+              processing
+              disabled={seenPremium}
+            >
+              <Text
+                display="flex"
+                c="teal"
+                fz="xs"
+                fw={600}
+                style={{ textAlign: "center", gap: 4 }}
+              >
+                <AiFillGift size="18" />
+                Get Premium
+              </Text>
+            </Indicator>
+          </Styles.StyledToolElement>
         )}
 
         <SearchInput />
