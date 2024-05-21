@@ -281,7 +281,7 @@ export const HomePage = () => {
                 radius="lg"
                 leftSection={<FaGithub />}
               >
-                Free Version
+                Lite Version
               </Button>
               <Button
                 component={Link}
