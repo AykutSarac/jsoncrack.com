@@ -21,6 +21,7 @@ import {
 import { Carousel } from "@mantine/carousel";
 import "@mantine/carousel/styles.css";
 import styled from "styled-components";
+import { ImgComparisonSlider } from "@img-comparison-slider/react";
 import { BiChevronDown } from "react-icons/bi";
 import { FaGithub } from "react-icons/fa";
 import { IoSparklesSharp } from "react-icons/io5";
@@ -170,6 +171,14 @@ const StyledCarouselWrapper = styled.section`
     max-width: 85%;
     margin: 0 auto;
   }
+`;
+
+const StyledImgComparisonSlider = styled(ImgComparisonSlider)`
+  --divider-width: 2px;
+  --divider-color: #515151;
+  --default-handle-opacity: 0.3;
+  --default-handle-color: #000;
+  overflow: hidden;
 `;
 
 const FAQ = [
@@ -621,6 +630,31 @@ export const HomePage = () => {
         Pricing
       </Title>
       <PricingCards />
+      <Paper mx="auto" bg="transparent" my="lg" maw="70%" w="fit-content" visibleFrom="sm">
+        <StyledImgComparisonSlider
+          hover
+          style={{
+            border: "1px solid #999999",
+            overflow: "hidden",
+            borderRadius: 12,
+          }}
+        >
+          <Image
+            slot="first"
+            width={600}
+            src="./assets/compare/pro.webp"
+            loading="lazy"
+            alt="Premium Editor"
+          />
+          <Image
+            slot="second"
+            width={600}
+            src="./assets/compare/free.webp"
+            loading="lazy"
+            alt="Free Editor"
+          />
+        </StyledImgComparisonSlider>
+      </Paper>
 
       <Container id="faq" component="section">
         <Title

@@ -13,6 +13,7 @@
     "analyze": "ANALYZE=true npm run build"
   },
   "dependencies": {
+    "@img-comparison-slider/react": "^8.0.2",
     "@mantine/carousel": "^7.9.2",
     "@mantine/code-highlight": "^7.9.2",
     "@mantine/core": "^7.9.2",

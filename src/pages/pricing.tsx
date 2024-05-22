@@ -1,6 +1,5 @@
 import React from "react";
 import Head from "next/head";
-import Link from "next/link";
 import {
   Flex,
   Stack,
@@ -22,15 +21,15 @@ import Layout from "src/layout/Layout";
 import { gaEvent } from "src/lib/utils/gaEvent";
 
 export const PRICING = {
-  MONTHLY: 5,
-  ANNUAL: 4,
+  MONTHLY: 6,
+  ANNUAL: 5,
 };
 
 export const purchaseLinks = {
   monthly:
-    "https://herowand.lemonsqueezy.com/checkout/buy/ce30521f-c7cc-44f3-9435-995d3260ba22?checkout[discount_code]=Q2MDE1MA&desc=0&enabled=67805",
+    "https://herowand.lemonsqueezy.com/checkout/buy/ce30521f-c7cc-44f3-9435-995d3260ba22?desc=0&enabled=67805",
   annual:
-    "https://herowand.lemonsqueezy.com/checkout/buy/577928ea-fb09-4076-9307-3e5931b35ad0?checkout[discount_code]=Q5OTKYMW&desc=0&enabled=82417",
+    "https://herowand.lemonsqueezy.com/checkout/buy/577928ea-fb09-4076-9307-3e5931b35ad0?desc=0&enabled=82417",
 };
 
 const StyledPaperFree = styled(Paper)`
@@ -78,15 +77,17 @@ export const PricingCards = () => {
                 <Text fw={500} size="xl" c="black">
                   Premium
                 </Text>
-                <Badge
-                  size="lg"
-                  variant="light"
-                  color="#ff0000"
-                  ml="sm"
-                  leftSection={<FaArrowTrendDown />}
-                >
-                  %{isMonthly ? 16 : 20}
-                </Badge>
+                {!isMonthly && (
+                  <Badge
+                    size="lg"
+                    variant="light"
+                    color="#ff0000"
+                    ml="sm"
+                    leftSection={<FaArrowTrendDown />}
+                  >
+                    20%
+                  </Badge>
+                )}
               </Flex>
 
               <Flex gap="xs" align="baseline">
@@ -96,17 +97,11 @@ export const PricingCards = () => {
                 <Text fz="md" fw={500} c="gray.6">
                   / mo
                 </Text>
-                <Text fz="xl" lts={1} c="dark" td="line-through" style={{ alignSelf: "start" }}>
-                  ${isMonthly ? PRICING.MONTHLY + 1 : PRICING.ANNUAL + 1}
-                </Text>
               </Flex>
               <Text fz="xs" c="gray.7">
                 billed {isMonthly ? "monthly" : "annually"}
               </Text>
             </Stack>
-            <Anchor c="dark" fz="sm" component={Link} h="fit-content" href="/#preview">
-              Preview
-            </Anchor>
           </Flex>
           <Button
             component="a"
@@ -155,7 +150,7 @@ export const PricingCards = () => {
               </List.Item>
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
-                  Edit directly on visualizations reflecting on data
+                  Edit Nodes
                 </Text>
               </List.Item>
               <List.Item>
