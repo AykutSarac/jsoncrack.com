@@ -2,31 +2,13 @@ import React from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import Link from "next/link";
-import {
-  Accordion,
-  Badge,
-  Button,
-  Container,
-  Flex,
-  Grid,
-  Image,
-  List,
-  Paper,
-  Stack,
-  Text,
-  ThemeIcon,
-  Title,
-  rem,
-} from "@mantine/core";
+import { Accordion, Badge, Button, Container, Flex, List, Stack, Title } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import "@mantine/carousel/styles.css";
 import styled from "styled-components";
-import { ImgComparisonSlider } from "@img-comparison-slider/react";
-import { BiChevronDown } from "react-icons/bi";
 import { FaGithub } from "react-icons/fa";
 import { IoSparklesSharp } from "react-icons/io5";
-import { MdChevronRight, MdCompare, MdExtension, MdRebaseEdit, MdSearch } from "react-icons/md";
-import useBackgroundCursorPosition from "use-bg-cursor-pos";
+import { MdChevronRight } from "react-icons/md";
 import { images, metaDescription } from "src/constants/landing";
 import Layout from "src/layout/Layout";
 import { gaEvent } from "src/lib/utils/gaEvent";
@@ -93,29 +75,6 @@ const StyledHeroText = styled.p`
   }
 `;
 
-const StyledPaper = styled.div`
-  position: relative;
-  z-index: 1;
-
-  &:before {
-    position: absolute;
-    z-index: -1;
-    opacity: 0.4;
-    top: 0;
-    left: 0;
-    content: "";
-    width: 100%;
-    height: 100%;
-    background-size: 20px 20px;
-    background-image: linear-gradient(to right, #dcdcdc 1px, transparent 1px),
-      linear-gradient(to bottom, #dcdcdc 1px, transparent 1px);
-    background-position: top center;
-    image-rendering: pixelated;
-    -webkit-mask-image: linear-gradient(to bottom, transparent, 20%, white, 90%, transparent);
-    mask-image: linear-gradient(to bottom, transparent, 20%, white, 90%, transparent);
-  }
-`;
-
 const StyledHeroTitle = styled.h1`
   position: relative;
   font-size: 1.8rem;
@@ -173,14 +132,6 @@ const StyledCarouselWrapper = styled.section`
   }
 `;
 
-const StyledImgComparisonSlider = styled(ImgComparisonSlider)`
-  --divider-width: 2px;
-  --divider-color: #515151;
-  --default-handle-opacity: 0.3;
-  --default-handle-color: #000;
-  overflow: hidden;
-`;
-
 const FAQ = [
   {
     title: "What is JSON Crack?",
@@ -218,11 +169,6 @@ const FAQ = [
 ];
 
 export const HomePage = () => {
-  const [card1, bg1] = useBackgroundCursorPosition("#fff7f7", "#ffecec", "300px");
-  const [card2, bg2] = useBackgroundCursorPosition("#f7fff7", "#ecffec", "300px");
-  const [card3, bg3] = useBackgroundCursorPosition("#fff7fe", "#ffecf7", "300px");
-  const [card4, bg4] = useBackgroundCursorPosition("#f5fbff", "#e9f3ff", "300px");
-
   return (
     <Layout>
       <Head>
@@ -268,21 +214,21 @@ export const HomePage = () => {
             <Flex gap="md" mt="lg">
               <Button
                 onClick={() => gaEvent("Hero Section", "click upgrade premium")}
-                component="a"
+                component={Link}
                 variant="gradient"
                 style={{ border: "1px solid #625BF6" }}
-                href="/#pricing"
+                href="/premium"
                 size="lg"
                 visibleFrom="sm"
                 radius="lg"
                 rightSection={<MdChevronRight size={30} />}
               >
-                Get started for free
+                Explore Premium
               </Button>
               <Button
                 component={Link}
                 prefetch={false}
-                variant="subtle"
+                variant="outline"
                 color="dark.8"
                 href="/editor"
                 size="lg"
@@ -290,11 +236,11 @@ export const HomePage = () => {
                 radius="lg"
                 leftSection={<FaGithub />}
               >
-                Lite Version
+                Free Version
               </Button>
               <Button
                 component={Link}
-                href="/pricing"
+                href="/premium"
                 size="md"
                 variant="gradient"
                 style={{ border: "1px solid #625BF6" }}
@@ -302,7 +248,7 @@ export const HomePage = () => {
                 hiddenFrom="sm"
                 radius="lg"
               >
-                Get started for free
+                Explore Premium
               </Button>
             </Flex>
           </Stack>
@@ -340,321 +286,10 @@ export const HomePage = () => {
         </Carousel>
       </StyledCarouselWrapper>
 
-      <Paper
-        pt={rem(300)}
-        px={rem(80)}
-        pb={rem(20)}
-        maw="95%"
-        radius="xl"
-        mx="auto"
-        mt="-17.5rem"
-        style={{
-          textAlign: "center",
-          background: "linear-gradient(rgb(98, 91, 246) 0%, rgb(54, 46, 243) 100%)",
-        }}
-        visibleFrom="sm"
-      >
-        <Title c="white" order={2} fz={42} fw={700} mb="md">
-          Optimized for easy navigation
-        </Title>
-        <Text mx="auto" fz={16} maw="80%" c="gray.4" mb={60}>
-          Designed to help you navigate through your data with ease. The editor provides a clean and
-          intuitive interface that allows you to focus on what matters most: your data.
-        </Text>
-      </Paper>
-
-      <section id="features">
-        <Stack mt={100} align="center" px="lg" mx="auto" maw={{ sm: "80%", md: "65%" }}>
-          <ThemeIcon variant="transparent" color="dark" mx="auto" size="xl">
-            <BiChevronDown size={40} />
-          </ThemeIcon>
-
-          <Title
-            c="black"
-            lts={-1}
-            order={2}
-            fz={{ sm: 36, md: 48 }}
-            fw={600}
-            mt={50}
-            style={{ textAlign: "center" }}
-          >
-            Unlock the Ease of Visualizing Your Data
-          </Title>
-          <Text c="dark.2" fz={{ base: 12, md: 16 }} style={{ textAlign: "center" }}>
-            Forget juggling JSON formatters, validators, and viewers! JSON Crack simplifies your
-            workflow with effortless formatting, robust validation, and intuitive visualizations -
-            all in one user-friendly platform. See your data sing and make smarter decisions,
-            faster.
-          </Text>
-        </Stack>
-
-        <Grid w="90%" gutter={24} mt={50} mb={150} mx="auto">
-          <Grid.Col span={{ base: 12, sm: 6 }}>
-            <Paper
-              pos="relative"
-              ref={card1 as React.RefObject<HTMLDivElement>}
-              p={30}
-              shadow="xs"
-              radius="md"
-              w="100%"
-              h={{ sm: 300, md: 370 }}
-              style={{
-                border: "1px solid #ffc1c1",
-                overflow: "hidden",
-                background: bg1,
-              }}
-            >
-              <StyledPaper>
-                <ThemeIcon
-                  color="gray.3"
-                  c="dark.4"
-                  variant="outline"
-                  size="xl"
-                  radius="md"
-                  visibleFrom="md"
-                  mb="md"
-                >
-                  <MdCompare size={28} />
-                </ThemeIcon>
-                <Title c="black" order={3} fw={500} fz={{ sm: 20, md: 28 }}>
-                  Compare
-                </Title>
-                <Text fz={{ sm: 14, md: 18 }} c="dark.5" mt={10}>
-                  Compare and analyze your data smoothly with the interactive graphs.
-                </Text>
-                <Image
-                  loading="lazy"
-                  src="./assets/features/compare.webp"
-                  alt="Compare"
-                  w={{ sm: 350, md: 400 }}
-                  mt={20}
-                  style={{
-                    filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
-                  }}
-                />
-              </StyledPaper>
-            </Paper>
-          </Grid.Col>
-          <Grid.Col span={{ base: 12, sm: 6 }}>
-            <Paper
-              ref={card2 as React.RefObject<HTMLDivElement>}
-              p={30}
-              shadow="xs"
-              radius="md"
-              w="100%"
-              h={{ sm: 300, md: 370 }}
-              style={{
-                border: "1px solid #bfffb5",
-                overflow: "hidden",
-                background: bg2,
-              }}
-            >
-              <StyledPaper>
-                <ThemeIcon
-                  color="gray.3"
-                  c="dark.4"
-                  variant="outline"
-                  size="xl"
-                  radius="md"
-                  visibleFrom="md"
-                  mb="md"
-                >
-                  <MdRebaseEdit size={28} />
-                </ThemeIcon>
-                <Title c="black" order={3} fw={500} fz={{ sm: 20, md: 28 }}>
-                  Edit
-                </Title>
-                <Text fz={{ sm: 14, md: 18 }} c="dark.5" my={10}>
-                  Directly modify your data through the graphs, without wasting time on manual
-                  editing.
-                </Text>
-                <Paper
-                  withBorder
-                  shadow="sm"
-                  radius={5}
-                  w="fit-content"
-                  mx="auto"
-                  style={{ borderColor: "gray" }}
-                >
-                  <Image
-                    loading="lazy"
-                    radius="sm"
-                    src="./assets/features/edit.webp"
-                    alt="Edit"
-                    w={340}
-                  />
-                </Paper>
-              </StyledPaper>
-            </Paper>
-          </Grid.Col>
-          <Grid.Col span={{ base: 12, sm: 6 }}>
-            <Paper
-              ref={card3 as React.RefObject<HTMLDivElement>}
-              p={30}
-              shadow="xs"
-              radius="md"
-              w="100%"
-              h={{ sm: 300, md: 370 }}
-              style={{
-                border: "1px solid #dbb5ff",
-                overflow: "hidden",
-                background: bg3,
-              }}
-            >
-              <StyledPaper>
-                <ThemeIcon
-                  color="gray.3"
-                  c="dark.4"
-                  variant="outline"
-                  size="xl"
-                  radius="md"
-                  visibleFrom="md"
-                  mb="md"
-                >
-                  <MdSearch size={28} />
-                </ThemeIcon>
-                <Title c="black" order={3} fw={500} fz={{ sm: 20, md: 28 }}>
-                  Search
-                </Title>
-                <Text fz={{ sm: 14, md: 18 }} c="dark.5" mt={10}>
-                  Highlight and search what you need in your data, without any hassle.
-                </Text>
-                <Image
-                  loading="lazy"
-                  src="./assets/features/search.webp"
-                  alt="Search"
-                  w={{ sm: 400, md: 500 }}
-                  mx="auto"
-                  mt={20}
-                  style={{
-                    filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
-                  }}
-                />
-              </StyledPaper>
-            </Paper>
-          </Grid.Col>
-          <Grid.Col span={{ base: 12, sm: 6 }}>
-            <Paper
-              ref={card4 as React.RefObject<HTMLDivElement>}
-              p={30}
-              shadow="xs"
-              radius="md"
-              w="100%"
-              h={{ sm: 300, md: 370 }}
-              style={{
-                border: "1px solid #b5f0ff",
-                overflow: "hidden",
-                background: bg4,
-              }}
-            >
-              <StyledPaper>
-                <ThemeIcon
-                  color="gray.3"
-                  c="dark.4"
-                  variant="outline"
-                  size="xl"
-                  radius="md"
-                  visibleFrom="md"
-                  mb="md"
-                >
-                  <MdExtension size={28} />
-                </ThemeIcon>
-                <Title c="black" order={3} fw={500} fz={{ sm: 20, md: 28 }}>
-                  Choose Your Format
-                </Title>
-                <Text fz={{ sm: 14, md: 18 }} c="dark.5" mt={10}>
-                  Visualize and edit your data in multiple formats. JSON, YAML, CSV, XML, and TOML
-                  are supported.
-                </Text>
-                <Grid gutter="lg" mt={20}>
-                  <Grid.Col span={6}>
-                    <Badge
-                      w="100%"
-                      mih={{ sm: 10, md: 40 }}
-                      variant="light"
-                      c="indigo"
-                      color="indigo"
-                      radius="sm"
-                      size="xl"
-                    >
-                      JSON
-                    </Badge>
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <Badge
-                      w="100%"
-                      mih={{ sm: 10, md: 40 }}
-                      variant="light"
-                      color="cyan"
-                      radius="sm"
-                      size="xl"
-                      c="cyan"
-                    >
-                      YAML
-                    </Badge>
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <Badge
-                      w="100%"
-                      mih={{ sm: 10, md: 40 }}
-                      variant="light"
-                      color="grape"
-                      radius="sm"
-                      c="grape"
-                      size="xl"
-                    >
-                      CSV
-                    </Badge>
-                  </Grid.Col>
-                  <Grid.Col span={6}>
-                    <Badge
-                      w="100%"
-                      mih={{ sm: 10, md: 40 }}
-                      variant="light"
-                      color="red"
-                      radius="sm"
-                      size="xl"
-                      c="red"
-                    >
-                      XML
-                    </Badge>
-                  </Grid.Col>
-                </Grid>
-              </StyledPaper>
-            </Paper>
-          </Grid.Col>
-        </Grid>
-      </section>
-
       <Title c="black" order={2} fz={42} fw={600} mt={50} mb={15} style={{ textAlign: "center" }}>
         Pricing
       </Title>
       <PricingCards />
-      <Paper mx="auto" bg="transparent" my="lg" maw="70%" w="fit-content" visibleFrom="sm">
-        <StyledImgComparisonSlider
-          hover
-          style={{
-            border: "1px solid #999999",
-            overflow: "hidden",
-            borderRadius: 12,
-          }}
-        >
-          <Image
-            slot="first"
-            width={600}
-            src="./assets/compare/pro.webp"
-            loading="lazy"
-            alt="Premium Editor"
-          />
-          <Image
-            slot="second"
-            width={600}
-            src="./assets/compare/free.webp"
-            loading="lazy"
-            alt="Free Editor"
-          />
-        </StyledImgComparisonSlider>
-      </Paper>
 
       <Container id="faq" component="section">
         <Title

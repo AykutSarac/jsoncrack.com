@@ -1,5 +1,6 @@
 import React from "react";
 import Head from "next/head";
+import Link from "next/link";
 import {
   Flex,
   Stack,
@@ -189,8 +190,9 @@ export const PricingCards = () => {
             </Stack>
           </Flex>
           <Button
-            component="a"
-            href="https://app.jsoncrack.com/sign-up"
+            component={Link}
+            href="/editor"
+            prefetch={false}
             size="lg"
             radius="md"
             variant="outline"

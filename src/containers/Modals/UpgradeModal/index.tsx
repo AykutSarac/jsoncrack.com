@@ -13,26 +13,12 @@ import {
   useMantineColorScheme,
   List,
   Anchor,
-  Image,
-  ScrollArea,
 } from "@mantine/core";
-import styled from "styled-components";
-import { ImgComparisonSlider } from "@img-comparison-slider/react";
 import { IoMdArrowForward } from "react-icons/io";
 import { MdCheck } from "react-icons/md";
 import { gaEvent } from "src/lib/utils/gaEvent";
 import { PRICING } from "src/pages/pricing";
 import useUser from "src/store/useUser";
-
-const StyledImgComparisonSlider = styled(ImgComparisonSlider)`
-  --divider-width: 2px;
-  --divider-color: #515151;
-  --default-handle-opacity: 0.3;
-  --default-handle-color: #000;
-  border: 1px solid #999999;
-  overflow: hidden;
-  border-radius: 12px;
-`;
 
 const overlayLinks = {
   monthly:
@@ -44,8 +30,8 @@ const overlayLinks = {
 export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
   const { colorScheme } = useMantineColorScheme();
   const theme = useMantineTheme();
-  const [plan, setPlan] = React.useState("monthly");
   const user = useUser(state => state.user);
+  const [plan, setPlan] = React.useState("monthly");
 
   const handleSelect = () => {
     const link = new URL(overlayLinks[plan]);
@@ -76,7 +62,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
         </Text>
       }
       centered
-      size="lg"
+      size="md"
       opened={opened}
       onClose={onClose}
       zIndex={202}
@@ -124,46 +110,25 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
         </Flex>
       </Radio.Group>
 
-      <ScrollArea.Autosize h={400} offsetScrollbars>
-        <Text mt="md" fz="sm" fw="bold" mb="xs">
-          What You Get
-        </Text>
-        <List
-          fz="sm"
-          lts={0.2}
-          icon={<MdCheck color="#5199FF" size={20} style={{ verticalAlign: "middle" }} />}
-        >
-          <List.Item>500% Larger data size support (~4 MB)</List.Item>
-          <List.Item>400% Better performance</List.Item>
-          <List.Item>50% Less Nodes & Compact Graph Visualization</List.Item>
-          <List.Item>Compare Data on Graphs</List.Item>
-          <List.Item>Edit on Graphs</List.Item>
-          <List.Item>
-            <Anchor c="gray" fz="sm" href="/#preview" target="_blank">
-              ...and more
-            </Anchor>
-          </List.Item>
-        </List>
-
-        <Paper mx="auto" maw="100%" mt="sm" w="fit-content">
-          <StyledImgComparisonSlider hover allowTransparency>
-            <Image
-              slot="first"
-              width={600}
-              src="./assets/compare/graph_pro.webp"
-              loading="lazy"
-              alt="Premium Editor"
-            />
-            <Image
-              slot="second"
-              width={600}
-              src="./assets/compare/graph_free.webp"
-              loading="lazy"
-              alt="Free Editor"
-            />
-          </StyledImgComparisonSlider>
-        </Paper>
-      </ScrollArea.Autosize>
+      <Text mt="md" fz="sm" fw="bold" mb="xs">
+        What You Get
+      </Text>
+      <List
+        fz="sm"
+        lts={0.2}
+        icon={<MdCheck color="#5199FF" size={20} style={{ verticalAlign: "middle" }} />}
+      >
+        <List.Item>500% Larger data size support (~4 MB)</List.Item>
+        <List.Item>400% Better performance</List.Item>
+        <List.Item>50% Less Nodes & Compact Graph Visualization</List.Item>
+        <List.Item>Compare Data on Graphs</List.Item>
+        <List.Item>Edit on Graphs</List.Item>
+        <List.Item>
+          <Anchor c="gray" fz="sm" href="/#preview" target="_blank">
+            ...and more
+          </Anchor>
+        </List.Item>
+      </List>
 
       <Divider my="md" />
       <Flex align="center" justify="space-between">
