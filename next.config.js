@@ -1,4 +1,3 @@
-const million = require("million/compiler");
 const { withSentryConfig } = require("@sentry/nextjs");
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
@@ -40,7 +39,4 @@ const sentryConfig = withSentryConfig(
   }
 );
 
-module.exports = million.next(
-  process.env.ANALYZE === "true" ? bundleAnalyzerConfig : sentryConfig,
-  { auto: true }
-);
+module.exports = process.env.ANALYZE === "true" ? bundleAnalyzerConfig : sentryConfig;

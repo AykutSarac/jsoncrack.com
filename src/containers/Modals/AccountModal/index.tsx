@@ -1,31 +1,21 @@
 import React from "react";
-import {
-  Modal,
-  Group,
-  Button,
-  Avatar,
-  Text,
-  Divider,
-  ModalProps,
-  Paper,
-  Badge,
-} from "@mantine/core";
-import { useUser as useSupaUser } from "@supabase/auth-helpers-react";
+import type { ModalProps } from "@mantine/core";
+import { Modal, Group, Button, Avatar, Text, Divider, Paper, Badge } from "@mantine/core";
 import { IoRocketSharp } from "react-icons/io5";
+import { gaEvent } from "src/lib/utils/gaEvent";
 import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
 
-export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
-  const user = useSupaUser();
-  const isPremium = useUser(state => state.premium);
-  const isOrg = useUser(state => state.organization);
-  const isOrgAdmin = useUser(state => state.orgAdmin);
-  const premiumCancelled = useUser(state => state.premiumCancelled);
+export const AccountModal = ({ opened, onClose }: ModalProps) => {
+  const user = useUser(state => state.user);
   const setVisible = useModal(state => state.setVisible);
   const logout = useUser(state => state.logout);
 
+  const username =
+    user?.user_metadata.full_name || user?.user_metadata.display_name || user?.user_metadata.name;
+
   return (
-    <Modal title={`Hello, ${user?.user_metadata.name}!`} opened={opened} onClose={onClose} centered>
+    <Modal title={`Hello, ${username}!`} opened={opened} onClose={onClose} centered>
       <Paper p="md">
         <Group>
           <Avatar src={user?.user_metadata.avatar_url} size={94}>
@@ -33,7 +23,7 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
           </Avatar>
           <div>
             <Text fz="lg" tt="uppercase" fw={700}>
-              {user?.user_metadata.name}
+              {username}
             </Text>
 
             <Group gap={10} mt={3}>
@@ -46,12 +36,11 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
               <Text fz="xs" c="dimmed">
                 <Badge
                   size="sm"
-                  variant={isPremium ? "gradient" : "dot"}
-                  color={premiumCancelled || !isPremium ? "dark" : "green"}
+                  variant="dot"
+                  color="dark"
                   gradient={{ from: "#8800fe", to: "#ff00cc", deg: 35 }}
                 >
-                  {isPremium ? "Premium" : "Free"}{" "}
-                  {premiumCancelled ? "(Cancelled)" : isOrg && "(Organization)"}
+                  Free
                 </Badge>
               </Text>
             </Group>
@@ -61,28 +50,17 @@ export const AccountModal: React.FC<ModalProps> = ({ opened, onClose }) => {
 
       <Divider py="xs" />
       <Group justify="right">
-        {isPremium && !premiumCancelled ? (
-          <Button
-            variant="light"
-            color="red"
-            onClick={() => {
-              setVisible("cancelPremium")(true);
-              onClose();
-            }}
-            disabled={isOrg && !isOrgAdmin}
-          >
-            Cancel Subscription
-          </Button>
-        ) : (
-          <Button
-            variant="gradient"
-            gradient={{ from: "teal", to: "lime", deg: 105 }}
-            leftSection={<IoRocketSharp />}
-            onClick={() => setVisible("premium")(true)}
-          >
-            UPGRADE TO PREMIUM!
-          </Button>
-        )}
+        <Button
+          variant="gradient"
+          style={{ border: "1px solid #625BF6" }}
+          leftSection={<IoRocketSharp />}
+          onClick={() => {
+            setVisible("upgrade")(true);
+            gaEvent("Account Modal", "click upgrade premium");
+          }}
+        >
+          Upgrade to Premium
+        </Button>
         <Button
           color="red"
           onClick={() => {

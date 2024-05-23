@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Button, Stack, Text, Title } from "@mantine/core";
 import Layout from "src/layout/Layout";
 
-const NotFound: React.FC = () => {
+const NotFound = () => {
   return (
     <Layout>
       <Head>

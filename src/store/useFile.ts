@@ -1,18 +1,14 @@
 import debounce from "lodash.debounce";
-import _get from "lodash.get";
-import _set from "lodash.set";
 import { toast } from "react-hot-toast";
 import { create } from "zustand";
 import { defaultJson } from "src/constants/data";
 import { FileFormat } from "src/enums/file.enum";
-import { gaEvent } from "src/lib/utils/gaEvent";
-import { contentToJson, jsonToContent } from "src/lib/utils/json/jsonAdapter";
+import { contentToJson, jsonToContent } from "src/lib/utils/jsonAdapter";
 import { isIframe } from "src/lib/utils/widget";
 import { documentSvc } from "src/services/document.service";
+import useGraph from "../modules/GraphView/stores/useGraph";
 import useConfig from "./useConfig";
-import useGraph from "./useGraph";
 import useJson from "./useJson";
-import useUser from "./useUser";
 
 type SetContents = {
   contents?: string;
@@ -31,7 +27,6 @@ interface JsonActions {
   setContents: (data: SetContents) => void;
   fetchFile: (fileId: string) => void;
   fetchUrl: (url: string) => void;
-  editContents: (path: string, value: string, callback?: () => void) => void;
   setFormat: (format: FileFormat) => void;
   clear: () => void;
   setFile: (fileData: File) => void;
@@ -73,28 +68,13 @@ const debouncedUpdateJson = debounce((value: unknown) => {
   useJson.getState().setJson(JSON.stringify(value, null, 2));
 }, 800);
 
-const filterArrayAndObjectFields = (obj: object) => {
-  const result = {};
-
-  for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      if (Array.isArray(obj[key]) || typeof obj[key] === "object") {
-        result[key] = obj[key];
-      }
-    }
-  }
-
-  return result;
-};
 const useFile = create<FileStates & JsonActions>()((set, get) => ({
   ...initialStates,
   clear: () => {
     set({ contents: "" });
     useJson.getState().clear();
   },
-  setJsonSchema: jsonSchema => {
-    if (useUser.getState().premium) set({ jsonSchema });
-  },
+  setJsonSchema: jsonSchema => set({ jsonSchema }),
   setFile: fileData => {
     set({ fileData, format: fileData.format || FileFormat.JSON });
     get().setContents({ contents: fileData.content, hasChanges: false });
@@ -111,7 +91,6 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       const jsonContent = await jsonToContent(JSON.stringify(contentJson, null, 2), format);
 
       get().setContents({ contents: jsonContent });
-      gaEvent("input", "file format change");
     } catch (error) {
       get().clear();
       console.warn("The content was unable to be converted, so it was cleared instead.");
@@ -179,37 +158,6 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
     } catch (error: any) {
       if (error?.message) toast.error(error?.message);
       get().setContents({ contents: defaultJson, hasChanges: false });
-    }
-  },
-  editContents: async (path, value, callback) => {
-    try {
-      if (!value) return;
-
-      let tempValue = value;
-      const pathJson = _get(JSON.parse(useJson.getState().json), path.replace("{Root}.", ""));
-      const changedValue = JSON.parse(value);
-
-      if (typeof changedValue !== "string") {
-        tempValue = {
-          ...filterArrayAndObjectFields(pathJson),
-          ...changedValue,
-        };
-      } else {
-        tempValue = tempValue.replaceAll('"', "");
-      }
-
-      const newJson = _set(
-        JSON.parse(useJson.getState().json),
-        path.replace("{Root}.", ""),
-        tempValue
-      );
-
-      const contents = await jsonToContent(JSON.stringify(newJson, null, 2), get().format);
-
-      get().setContents({ contents });
-      if (callback) callback();
-    } catch (error) {
-      toast.error("Invalid Property!");
     }
   },
 }));

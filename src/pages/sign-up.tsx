@@ -22,7 +22,7 @@ const SignUp = () => {
   const [loading, setLoading] = React.useState(false);
   const [done, setDone] = React.useState(false);
   const [userData, setUserData] = React.useState({
-    name: "",
+    display_name: "",
     email: "",
     password: "",
   });
@@ -36,7 +36,7 @@ const SignUp = () => {
         email: userData.email,
         password: userData.password,
         options: {
-          data: { name: userData.name },
+          data: { display_name: userData.display_name },
         },
       })
       .then(({ error }) => {
@@ -50,7 +50,7 @@ const SignUp = () => {
   const handleLoginClick = (provider: "github" | "google") => {
     supabase.auth.signInWithOAuth({
       provider,
-      options: { redirectTo: "https://jsoncrack.com/editor" },
+      options: { redirectTo: `${window.location.origin}/editor` },
     });
   };
 
@@ -58,9 +58,10 @@ const SignUp = () => {
     <Layout>
       <Head>
         <title>Sign Up - JSON Crack</title>
+        <link rel="canonical" href="https://app.jsoncrack.com/sign-up" />
       </Head>
       {done ? (
-        <Paper mx="auto" maw={400} mt={50} p="lg" withBorder>
+        <Paper mx="auto" maw={400} mt={100} p="lg" withBorder>
           <Text mt="lg" style={{ textAlign: "center" }}>
             Registration successul!
             <br />
@@ -74,11 +75,12 @@ const SignUp = () => {
         </Paper>
       ) : (
         <>
-          <Paper mx="auto" maw={400} mt={50} p="lg" withBorder>
+          <Paper mx="auto" maw={400} mt={100} p="lg" withBorder>
             <form onSubmit={onSubmit}>
               <Stack>
                 <TextInput
-                  onChange={e => setUserData(d => ({ ...d, name: e.target.value }))}
+                  name="name"
+                  onChange={e => setUserData(d => ({ ...d, display_name: e.target.value }))}
                   required
                   label="Name"
                   placeholder="John Doe"
@@ -87,6 +89,7 @@ const SignUp = () => {
                 />
 
                 <TextInput
+                  name="email"
                   onChange={e => setUserData(d => ({ ...d, email: e.target.value }))}
                   type="email"
                   required
@@ -97,6 +100,7 @@ const SignUp = () => {
                 />
 
                 <PasswordInput
+                  name="password"
                   onChange={e => setUserData(d => ({ ...d, password: e.target.value }))}
                   min={6}
                   required
@@ -110,7 +114,7 @@ const SignUp = () => {
                   Sign up for free
                 </Button>
 
-                <Divider label="OR CONTINUE WITH" labelPosition="center" />
+                <Divider color="dimmed" label="OR CONTINUE WITH" labelPosition="center" />
 
                 <Flex gap="sm">
                   <Button
@@ -163,7 +167,7 @@ const SignUp = () => {
           </Paper>
 
           <Center my="xl">
-            <Anchor component={Link} prefetch={false} href="/sign-in" c="dark" fw="bold">
+            <Anchor component={Link} prefetch={false} href="/sign-in" c="gray.5" fw="bold">
               Already have an account?
             </Anchor>
           </Center>

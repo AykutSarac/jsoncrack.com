@@ -1,7 +1,8 @@
 import React from "react";
-import { Menu, Text, Flex, Badge } from "@mantine/core";
+import { Menu, Text, Flex } from "@mantine/core";
 import { BsCheck2 } from "react-icons/bs";
 import { MdSettings } from "react-icons/md";
+import { gaEvent } from "src/lib/utils/gaEvent";
 import useConfig from "src/store/useConfig";
 import * as Styles from "./styles";
 
@@ -12,7 +13,6 @@ export const OptionsMenu = () => {
   const toggleRulers = useConfig(state => state.toggleRulers);
   const toggleCollapseButton = useConfig(state => state.toggleCollapseButton);
   const toggleImagePreview = useConfig(state => state.toggleImagePreview);
-  const toggleAI = useConfig(state => state.toggleAI);
 
   const gesturesEnabled = useConfig(state => state.gesturesEnabled);
   const childrenCountVisible = useConfig(state => state.childrenCountVisible);
@@ -20,7 +20,6 @@ export const OptionsMenu = () => {
   const rulersEnabled = useConfig(state => state.rulersEnabled);
   const collapseButtonVisible = useConfig(state => state.collapseButtonVisible);
   const imagePreviewEnabled = useConfig(state => state.imagePreviewEnabled);
-  const aiEnabled = useConfig(state => state.aiEnabled);
 
   return (
     <Menu shadow="md" trigger="click" closeOnItemClick={false} withArrow>
@@ -34,50 +33,57 @@ export const OptionsMenu = () => {
       <Menu.Dropdown>
         <Menu.Item
           leftSection={<BsCheck2 opacity={rulersEnabled ? 100 : 0} />}
-          onClick={() => toggleRulers(!rulersEnabled)}
+          onClick={() => {
+            toggleRulers(!rulersEnabled);
+            gaEvent("Options Menu", "toggle rulers", rulersEnabled ? "on" : "off");
+          }}
         >
           <Text size="xs">Rulers</Text>
         </Menu.Item>
         <Menu.Item
           leftSection={<BsCheck2 opacity={gesturesEnabled ? 100 : 0} />}
-          onClick={() => toggleGestures(!gesturesEnabled)}
+          onClick={() => {
+            toggleGestures(!gesturesEnabled);
+            gaEvent("Options Menu", "toggle gestures", gesturesEnabled ? "on" : "off");
+          }}
         >
           <Text size="xs">Trackpad Gestures</Text>
         </Menu.Item>
         <Menu.Item
           leftSection={<BsCheck2 opacity={childrenCountVisible ? 100 : 0} />}
-          onClick={() => toggleChildrenCount(!childrenCountVisible)}
+          onClick={() => {
+            toggleChildrenCount(!childrenCountVisible);
+            gaEvent("Options Menu", "toggle children count", childrenCountVisible ? "on" : "off");
+          }}
         >
           <Text size="xs">Item Count</Text>
         </Menu.Item>
         <Menu.Item
           leftSection={<BsCheck2 opacity={imagePreviewEnabled ? 100 : 0} />}
-          onClick={() => toggleImagePreview(!imagePreviewEnabled)}
+          onClick={() => {
+            toggleImagePreview(!imagePreviewEnabled);
+            gaEvent("Options Menu", "toggle image preview", imagePreviewEnabled ? "on" : "off");
+          }}
         >
           <Text size="xs">Image Link Preview</Text>
         </Menu.Item>
         <Menu.Item
           leftSection={<BsCheck2 opacity={collapseButtonVisible ? 100 : 0} />}
-          onClick={() => toggleCollapseButton(!collapseButtonVisible)}
+          onClick={() => {
+            toggleCollapseButton(!collapseButtonVisible);
+            gaEvent("Options Menu", "toggle collapse button", collapseButtonVisible ? "on" : "off");
+          }}
         >
           <Text size="xs">Show Expand/Collapse</Text>
         </Menu.Item>
         <Menu.Item
           leftSection={<BsCheck2 opacity={darkmodeEnabled ? 100 : 0} />}
-          onClick={() => toggleDarkMode(!darkmodeEnabled)}
+          onClick={() => {
+            toggleDarkMode(!darkmodeEnabled);
+            gaEvent("Options Menu", "toggle dark mode", darkmodeEnabled ? "on" : "off");
+          }}
         >
           <Text size="xs">Dark Mode</Text>
-        </Menu.Item>
-        <Menu.Item
-          leftSection={<BsCheck2 opacity={aiEnabled ? 100 : 0} />}
-          onClick={() => toggleAI(!aiEnabled)}
-        >
-          <Flex align="center" gap={2}>
-            <Text size="xs">JSON Crack AI</Text>
-            <Badge ml={2} size="xs" variant="light" radius={2}>
-              Alpha
-            </Badge>
-          </Flex>
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>

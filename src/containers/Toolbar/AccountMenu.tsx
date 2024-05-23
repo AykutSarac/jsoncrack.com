@@ -1,16 +1,16 @@
 import React from "react";
-import Link from "next/link";
 import { Menu, Avatar, Text } from "@mantine/core";
-import { useUser as useSupabaseUser } from "@supabase/auth-helpers-react";
 import { VscSignIn, VscFeedback, VscSignOut } from "react-icons/vsc";
 import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
 import * as Styles from "./styles";
 
 export const AccountMenu = () => {
-  const user = useSupabaseUser();
+  const user = useUser(state => state.user?.user_metadata);
   const logout = useUser(state => state.logout);
   const setVisible = useModal(state => state.setVisible);
+
+  const username = user?.full_name || user?.display_name || user?.name;
 
   return (
     <Menu shadow="md" trigger="click" closeOnItemClick={false} withArrow>
@@ -24,20 +24,18 @@ export const AccountMenu = () => {
       <Menu.Dropdown>
         {user ? (
           <Menu.Item
-            leftSection={
-              <Avatar color="indigo" alt={user.user_metadata?.name} size={20} radius="xl" />
-            }
+            leftSection={<Avatar color="indigo" alt={username} size={20} radius="xl" />}
             onClick={() => setVisible("account")(true)}
             closeMenuOnClick
           >
-            <Text size="xs">{user.user_metadata?.name ?? "Account"}</Text>
+            <Text size="xs">{username ?? "Account"}</Text>
           </Menu.Item>
         ) : (
-          <Link href="/sign-in">
+          <a href="https://app.jsoncrack.com/sign-in">
             <Menu.Item leftSection={<VscSignIn />}>
               <Text size="xs">Sign in</Text>
             </Menu.Item>
-          </Link>
+          </a>
         )}
         {user && (
           <>

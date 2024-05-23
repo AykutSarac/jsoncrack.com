@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { ViewMode } from "src/enums/viewMode.enum";
-import useGraph from "./useGraph";
+import useGraph from "../modules/GraphView/stores/useGraph";
 
 const initialStates = {
   darkmodeEnabled: false,
@@ -12,7 +12,6 @@ const initialStates = {
   gesturesEnabled: false,
   rulersEnabled: true,
   viewMode: ViewMode.Graph,
-  aiEnabled: true,
 };
 
 export interface ConfigActions {
@@ -24,14 +23,12 @@ export interface ConfigActions {
   toggleGestures: (value: boolean) => void;
   toggleRulers: (value: boolean) => void;
   setViewMode: (value: ViewMode) => void;
-  toggleAI: (value: boolean) => void;
 }
 
 const useConfig = create(
   persist<typeof initialStates & ConfigActions>(
     set => ({
       ...initialStates,
-      toggleAI: aiEnabled => set({ aiEnabled }),
       toggleRulers: rulersEnabled => set({ rulersEnabled }),
       toggleGestures: gesturesEnabled => set({ gesturesEnabled }),
       toggleLiveTransform: liveTransformEnabled => set({ liveTransformEnabled }),

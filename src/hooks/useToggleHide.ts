@@ -1,5 +1,5 @@
 import React from "react";
-import useGraph from "src/store/useGraph";
+import useGraph from "src/modules/GraphView/stores/useGraph";
 
 const useToggleHide = () => {
   const getCollapsedNodeIds = useGraph(state => state.getCollapsedNodeIds);

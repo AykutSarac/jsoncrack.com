@@ -19,7 +19,7 @@ export const FileMenu = () => {
     a.download = `jsoncrack.${getFormat()}`;
     a.click();
 
-    gaEvent("download", "file download");
+    gaEvent("File Menu", "download", getFormat());
   };
 
   return (

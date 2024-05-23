@@ -1,5 +1,3 @@
-export const baseURL = process.env.NEXT_PUBLIC_BASE_URL as string;
-
 // Example taken from https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json
 const sampleJson = Object.freeze({
   squadName: "Super hero squad",

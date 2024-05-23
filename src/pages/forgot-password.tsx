@@ -40,6 +40,7 @@ function ResetPassword() {
       <form onSubmit={onSubmit}>
         <Stack>
           <PasswordInput
+            name="password"
             value={password}
             onChange={e => setPassword(e.target.value)}
             required
@@ -49,6 +50,7 @@ function ResetPassword() {
             style={{ color: "black" }}
           />
           <PasswordInput
+            name="password"
             value={password2}
             onChange={e => setPassword2(e.target.value)}
             required
@@ -97,12 +99,13 @@ const ForgotPassword = () => {
     <Layout>
       <Head>
         <title>Reset Password - JSON Crack</title>
+        <link rel="canonical" href="https://app.jsoncrack.com/forgot-password" />
         <meta name="robots" content="noindex,nofollow" />
       </Head>
       {isPasswordReset ? (
         <ResetPassword />
       ) : (
-        <Paper mx="auto" mt={70} maw={400} p="lg" withBorder>
+        <Paper mx="auto" mt={100} maw={400} p="lg" withBorder>
           <Text size="lg" w={500} c="dark">
             Reset Password
           </Text>
@@ -113,12 +116,13 @@ const ForgotPassword = () => {
               <form onSubmit={onSubmit}>
                 <Stack>
                   <TextInput
+                    name="email"
                     type="email"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     required
                     label="Email"
-                    placeholder="hello@herowand.com"
+                    placeholder="hello@jsoncrack.com"
                     radius="sm"
                     style={{ color: "black" }}
                   />

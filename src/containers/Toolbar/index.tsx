@@ -1,17 +1,16 @@
 import React from "react";
-import Link from "next/link";
-import { Badge, Flex, Group, Select, Text } from "@mantine/core";
+import { Text, Flex, Group, Indicator, Select } from "@mantine/core";
+import { useSessionStorage } from "@mantine/hooks";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import { AiFillGift } from "react-icons/ai";
-import { BsBoxArrowUpLeft } from "react-icons/bs";
 import { FiDownload } from "react-icons/fi";
-import { SearchInput } from "src/components/SearchInput";
+import { SearchInput } from "src/containers/Toolbar/SearchInput";
 import { FileFormat } from "src/enums/file.enum";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
+import { gaEvent } from "src/lib/utils/gaEvent";
 import useFile from "src/store/useFile";
 import useModal from "src/store/useModal";
-import useUser from "src/store/useUser";
 import { AccountMenu } from "./AccountMenu";
 import { FileMenu } from "./FileMenu";
 import { Logo } from "./Logo";
@@ -31,11 +30,18 @@ function fullscreenBrowser() {
   }
 }
 
-export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) => {
+interface ToolbarProps {
+  isWidget?: boolean;
+}
+
+export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
   const setVisible = useModal(state => state.setVisible);
   const setFormat = useFile(state => state.setFormat);
   const format = useFile(state => state.format);
-  const premium = useUser(state => state.premium);
+  const [seenPremium, setSeenPremium] = useSessionStorage({
+    key: "seenPremium",
+    defaultValue: false,
+  });
 
   return (
     <Styles.StyledTools>
@@ -62,6 +68,7 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
               { value: FileFormat.TOML, label: "TOML" },
               { value: FileFormat.CSV, label: "CSV" },
             ]}
+            allowDeselect={false}
           />
 
           <FileMenu />
@@ -73,33 +80,33 @@ export const Toolbar: React.FC<{ isWidget?: boolean }> = ({ isWidget = false }) 
         </Group>
       )}
       <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
-        {!premium && !isWidget && (
-          <Styles.StyledToolElement onClick={() => setVisible("premium")(true)}>
-            <Text display="flex" c="teal" fz="xs" fw={600} style={{ textAlign: "center", gap: 4 }}>
-              <AiFillGift size="18" />
-              Get Premium
-            </Text>
-          </Styles.StyledToolElement>
-        )}
-
-        {premium && !isWidget && (
-          <Link href="https://pro.jsoncrack.com" target="_blank" passHref>
-            <Styles.StyledToolElement>
+        {!isWidget && (
+          <Styles.StyledToolElement
+            onClick={() => {
+              setSeenPremium(true);
+              setVisible("upgrade")(true);
+              gaEvent("Toolbar", "click upgrade premium");
+            }}
+          >
+            <Indicator
+              size={5}
+              color="green"
+              position="top-start"
+              processing
+              disabled={seenPremium}
+            >
               <Text
                 display="flex"
                 c="teal"
                 fz="xs"
                 fw={600}
-                style={{ textAlign: "center", gap: 8, alignItems: "center" }}
+                style={{ textAlign: "center", gap: 4 }}
               >
-                <BsBoxArrowUpLeft />
-                You&apos;re invited to try the new editor!
-                <Badge size="xs" variant="light" color="teal">
-                  New
-                </Badge>
+                <AiFillGift size="18" />
+                Get Premium
               </Text>
-            </Styles.StyledToolElement>
-          </Link>
+            </Indicator>
+          </Styles.StyledToolElement>
         )}
 
         <SearchInput />

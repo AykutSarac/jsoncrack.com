@@ -1,5 +1,6 @@
 import React from "react";
 import { useRouter } from "next/router";
+import type { ModalProps } from "@mantine/core";
 import {
   TextInput,
   Stack,
@@ -9,12 +10,12 @@ import {
   Tooltip,
   ActionIcon,
   Text,
-  ModalProps,
 } from "@mantine/core";
 import { FiExternalLink } from "react-icons/fi";
 import { MdCheck, MdCopyAll } from "react-icons/md";
+import { gaEvent } from "src/lib/utils/gaEvent";
 
-export const ShareModal: React.FC<ModalProps> = ({ opened, onClose }) => {
+export const ShareModal = ({ opened, onClose }: ModalProps) => {
   const { query } = useRouter();
   const shareURL = `https://jsoncrack.com/editor?json=${query.json}`;
 
@@ -32,7 +33,13 @@ export const ShareModal: React.FC<ModalProps> = ({ opened, onClose }) => {
             <CopyButton value={shareURL} timeout={2000}>
               {({ copied, copy }) => (
                 <Tooltip label={copied ? "Copied" : "Copy"} withArrow position="right">
-                  <ActionIcon color={copied ? "teal" : "gray"} onClick={copy}>
+                  <ActionIcon
+                    color={copied ? "teal" : "gray"}
+                    onClick={() => {
+                      copy();
+                      gaEvent("Share Modal", "copy");
+                    }}
+                  >
                     {copied ? <MdCheck size="1rem" /> : <MdCopyAll size="1rem" />}
                   </ActionIcon>
                 </Tooltip>

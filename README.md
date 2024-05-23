@@ -26,7 +26,7 @@
 
 ## About the Project
 
-<img width="100%" alt="booking-screen" src="./public/assets/jsoncrack-screenshot.jpeg">
+<img width="100%" alt="booking-screen" src="./public/assets/preview.png">
 
 # More Than a JSON Editor
 
@@ -86,7 +86,7 @@ Here is what you need to be able to run JSON Crack.
 
 ### Setup
 
-1. Clone the repo into a public GitHub repository (or fork https://github.com/AykutSarac/jsoncrack.com/fork). If you plan to distribute the code, keep the source code public to comply with [GPLv3](https://github.com/AykutSarac/jsoncrack.com/blob/main/LICENSE). To clone in a private repository, [acquire a commercial license](mailto:contact@jsoncrack.com)
+1. Clone the repo into a public GitHub repository (or fork https://github.com/AykutSarac/jsoncrack.com/fork). If you plan to distribute the code, read the `LICENSE` for additional details.
 
    ```sh
    git clone https://github.com/AykutSarac/jsoncrack.com.git
@@ -152,4 +152,4 @@ We have a list of [help wanted](https://github.com/AykutSarac/jsoncrack.com/issu
 
 ## License
 
-Distributed under the [GPLv3 License](https://github.com/AykutSarac/jsoncrack.com/blob/main/LICENSE). See `LICENSE` for more information.
+Distributed under the [AGPLv3 License](https://github.com/AykutSarac/jsoncrack.com/blob/main/LICENSE). See `LICENSE` for more information.

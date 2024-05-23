@@ -1,303 +1,258 @@
 import React from "react";
 import Head from "next/head";
+import Link from "next/link";
 import {
   Flex,
   Stack,
   Button,
   List,
-  ThemeIcon,
   Text,
   Paper,
-  Badge,
   SegmentedControl,
   Center,
-  Tooltip,
-  ActionIcon,
+  Badge,
+  Anchor,
 } from "@mantine/core";
+import styled from "styled-components";
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import { BsCheck, BsX } from "react-icons/bs";
-import { FaBolt } from "react-icons/fa6";
-import { VscArrowRight, VscInfo } from "react-icons/vsc";
+import { FaArrowTrendDown } from "react-icons/fa6";
+import { MdCheck } from "react-icons/md";
+import { VscArrowRight } from "react-icons/vsc";
 import Layout from "src/layout/Layout";
-import useUser from "src/store/useUser";
+import { gaEvent } from "src/lib/utils/gaEvent";
 
-const purchaseLinks = {
+export const PRICING = {
+  MONTHLY: 6,
+  ANNUAL: 5,
+};
+
+export const purchaseLinks = {
   monthly:
-    "https://herowand.lemonsqueezy.com/checkout/buy/ce30521f-c7cc-44f3-9435-995d3260ba22?media=0&enabled=67805%2C82417",
+    "https://herowand.lemonsqueezy.com/checkout/buy/ce30521f-c7cc-44f3-9435-995d3260ba22?desc=0&enabled=67805",
   annual:
-    "https://herowand.lemonsqueezy.com/checkout/buy/577928ea-fb09-4076-9307-3e5931b35ad0?media=0&enabled=67805%2C82417",
+    "https://herowand.lemonsqueezy.com/checkout/buy/577928ea-fb09-4076-9307-3e5931b35ad0?desc=0&enabled=82417",
+};
+
+const StyledPaperFree = styled(Paper)`
+  padding: 1.5em;
+  width: 400px;
+  border-radius: 1em;
+  border: 2px solid #e9e9e9;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+`;
+
+const StyledPaper = styled(Paper)`
+  padding: 1.5em;
+  width: 400px;
+  border-radius: 1em;
+  border: 2px solid #e9e9e9;
+  border-top: 3px solid #625bf6;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+`;
+
+export const PricingCards = () => {
+  const [isMonthly, setIsMonthly] = React.useState(true);
+
+  return (
+    <Stack component="section" id="pricing" gap="0" align="center">
+      <Center my="lg">
+        <SegmentedControl
+          bg="gray.1"
+          color="white"
+          value={isMonthly ? "Monthly" : "Yearly"}
+          onChange={v => setIsMonthly(v === "Monthly")}
+          size="md"
+          data={["Monthly", "Yearly"]}
+          w={200}
+          radius="lg"
+          styles={{ label: { color: "black" } }}
+        />
+      </Center>
+      <Flex gap="lg" wrap="wrap" justify="center" w="fit-content" p="lg" mx="auto" maw="100%">
+        <StyledPaper>
+          <Flex justify="space-between">
+            <Stack gap="0">
+              <Flex align="center" mb="lg">
+                <Text fw={500} size="xl" c="black">
+                  Premium
+                </Text>
+                {!isMonthly && (
+                  <Badge
+                    size="lg"
+                    variant="light"
+                    color="#ff0000"
+                    ml="sm"
+                    leftSection={<FaArrowTrendDown />}
+                  >
+                    20%
+                  </Badge>
+                )}
+              </Flex>
+
+              <Flex gap="xs" align="baseline">
+                <Text fz={38} fw="bold" c="black">
+                  ${isMonthly ? PRICING.MONTHLY : PRICING.ANNUAL}
+                </Text>
+                <Text fz="md" fw={500} c="gray.6">
+                  / mo
+                </Text>
+              </Flex>
+              <Text fz="xs" c="gray.7">
+                billed {isMonthly ? "monthly" : "annually"}
+              </Text>
+            </Stack>
+          </Flex>
+          <Button
+            component="a"
+            variant="gradient"
+            style={{ border: "1px solid #625BF6" }}
+            onClick={() => gaEvent("Pricing", "click upgrade premium")}
+            href={isMonthly ? purchaseLinks.monthly : purchaseLinks.annual}
+            target="_blank"
+            size="lg"
+            radius="md"
+            fullWidth
+            my="md"
+            rightSection={<VscArrowRight />}
+          >
+            Get Started
+          </Button>
+          <Text mt="xs" fz="xs" c="dimmed">
+            Designed for individuals who works with data regularly.
+          </Text>
+          <Flex direction="column" justify="space-between">
+            <List
+              spacing="md"
+              size="sm"
+              mt="xs"
+              c="black"
+              center
+              icon={<MdCheck color="blue" size="18" />}
+            >
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Large data support
+                </Text>
+                <Text c="dimmed" fz="xs">
+                  (~4 MB)
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Store 200 documents
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Compact graph visualizations & fast rendering
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Edit Nodes
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Built-in tabs for multiple documents
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Compare data differences
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  AI powered data filter
+                </Text>
+              </List.Item>
+            </List>
+          </Flex>
+        </StyledPaper>
+        <StyledPaperFree>
+          <Flex justify="space-between">
+            <Stack gap="0">
+              <Text fw={500} mb="lg" size="xl" c="black">
+                Free
+              </Text>
+
+              <Flex gap="xs" align="baseline">
+                <Text fz={38} fw="bold" c="black">
+                  $0
+                </Text>
+              </Flex>
+              <Text fz="xs" c="gray.7">
+                billed {isMonthly ? "monthly" : "annually"}
+              </Text>
+            </Stack>
+          </Flex>
+          <Button
+            component={Link}
+            href="/editor"
+            prefetch={false}
+            size="lg"
+            radius="md"
+            variant="outline"
+            color="dark"
+            fullWidth
+            my="md"
+            rightSection={<VscArrowRight />}
+          >
+            Get Started
+          </Button>
+          <Flex direction="column" justify="space-between">
+            <List
+              spacing="md"
+              size="sm"
+              mt="lg"
+              c="black"
+              center
+              icon={<MdCheck size="18" color="blue" />}
+            >
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Basic data support
+                </Text>
+                <Text c="dimmed" fz="xs">
+                  (~300 KB)
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Store 25 documents
+                </Text>
+              </List.Item>
+            </List>
+          </Flex>
+        </StyledPaperFree>
+      </Flex>
+      <Text fz="sm" c="dimmed" style={{ textAlign: "center" }}>
+        Get custom pricing for enterprise plan.{" "}
+        <Anchor inherit href="mailto:contact@jsoncrack.com" c="blue" style={{ display: "inline" }}>
+          Contact us
+        </Anchor>
+      </Text>
+    </Stack>
+  );
 };
 
 const Pricing = () => {
-  const email = useUser(state => state.user?.email);
-  const [isMonthly, setIsMonthly] = React.useState(true);
-
-  const paymentURL = (url: string) => {
-    if (email) url += `?checkout[email]=${email}`;
-    return url;
-  };
-
   return (
     <>
       <Head>
         <title>Pricing - JSON Crack</title>
       </Head>
       <Layout>
-        <Center my="lg">
-          <SegmentedControl
-            onChange={v => setIsMonthly(v === "Monthly")}
-            size="lg"
-            data={["Monthly", "Yearly"]}
-            w={200}
-            radius="xl"
-          />
-        </Center>
-        <Flex gap="lg" wrap="wrap" justify="center" w="fit-content" p="lg" mx="auto">
-          <Paper bg="white" p="xl" radius="lg" withBorder w={325}>
-            <Flex justify="space-between">
-              <Stack gap="0">
-                <Text fz="xl" fw="bold" c="black">
-                  Free
-                </Text>
-                <Text fz={32} fw="bold" c="black">
-                  $0
-                </Text>
-                <Text fz="xs" c="gray.6">
-                  billed {isMonthly ? "monthly" : "annually"}
-                </Text>
-              </Stack>
-            </Flex>
-            <Button my="md" size="md" radius="md" color="black" variant="outline" fullWidth>
-              Free
-            </Button>
-            <Flex direction="column" justify="space-between" h={200}>
-              <List
-                spacing="xs"
-                size="sm"
-                mt="lg"
-                center
-                icon={
-                  <ThemeIcon color="dark.6" size={20} radius="xl">
-                    <BsCheck size="1rem" />
-                  </ThemeIcon>
-                }
-              >
-                <List.Item>
-                  <Text c="black" fz="sm">
-                    Save & share up to 15 files
-                  </Text>
-                </List.Item>
-                <List.Item>
-                  <Text c="black" fz="sm">
-                    Visualize all data formats
-                  </Text>
-                </List.Item>
-                <List.Item
-                  icon={
-                    <ThemeIcon color="gray.5" size={20} radius="xl">
-                      <BsX size="1rem" />
-                    </ThemeIcon>
-                  }
-                >
-                  <Text c="gray.6" fz="sm">
-                    Maximum Capability
-                  </Text>
-                </List.Item>
-                <List.Item
-                  icon={
-                    <ThemeIcon color="gray.5" size={20} radius="xl">
-                      <BsX size="1rem" />
-                    </ThemeIcon>
-                  }
-                >
-                  <Text c="gray.6" fz="sm">
-                    JSON Schema
-                  </Text>
-                </List.Item>
-                <List.Item
-                  icon={
-                    <ThemeIcon color="gray.5" size={20} radius="xl">
-                      <BsX size="1rem" />
-                    </ThemeIcon>
-                  }
-                >
-                  <Text c="gray.6" fz="sm">
-                    Edit data through graph
-                  </Text>
-                </List.Item>
-              </List>
-            </Flex>
-          </Paper>
-
-          <Paper
-            p="xl"
-            radius="lg"
-            bg="white"
-            withBorder
-            w={325}
-            style={{ borderColor: "black", borderWidth: "2px" }}
-          >
-            <Flex justify="space-between">
-              <Stack gap="0">
-                <Flex align="center" gap="xs">
-                  <Text fz="xl" fw="bold" c="black">
-                    Premium
-                  </Text>
-                  <Badge size="sm" color="red" leftSection={<FaBolt />}>
-                    Most Popular
-                  </Badge>
-                </Flex>
-                <Flex gap="xs" align="center">
-                  <Text fz={32} fw="bold" c="black">
-                    ${isMonthly ? "5" : "60"}
-                  </Text>
-                  <Text fz="md" fw="bold" c="dimmed" style={{ textDecoration: "line-through" }}>
-                    ${isMonthly ? "7" : "84"}
-                  </Text>
-                </Flex>
-                <Text fz="xs" c="gray.6">
-                  billed {isMonthly ? "monthly" : "annually"}
-                </Text>
-              </Stack>
-            </Flex>
-            <Button
-              component="a"
-              href={paymentURL(isMonthly ? purchaseLinks.monthly : purchaseLinks.annual)}
-              target="_blank"
-              size="md"
-              radius="md"
-              color="dark"
-              fullWidth
-              my="md"
-              rightSection={<VscArrowRight />}
-            >
-              Upgrade
-            </Button>
-            <Flex direction="column" justify="space-between" h={200}>
-              <List
-                spacing="xs"
-                size="sm"
-                mt="lg"
-                center
-                icon={
-                  <ThemeIcon color="dark.6" size={20} radius="xl">
-                    <BsCheck size="1rem" />
-                  </ThemeIcon>
-                }
-              >
-                <List.Item>
-                  <Text c="black" fz="sm">
-                    Maximum capability
-                  </Text>
-                </List.Item>
-                <List.Item>
-                  <Text c="black" fz="sm">
-                    Save & share up to 200 files
-                  </Text>
-                </List.Item>
-                <List.Item>
-                  <Text c="black" fz="sm">
-                    Visualize all data formats
-                  </Text>
-                </List.Item>
-                <List.Item>
-                  <Text c="black" fz="sm">
-                    JSON Schema
-                  </Text>
-                </List.Item>
-                <List.Item>
-                  <Text c="black" fz="sm">
-                    Edit data through graph
-                  </Text>
-                </List.Item>
-                <List.Item>
-                  <Text fw={500} c="violet" fz="sm">
-                    Join alpha test of AI{" "}
-                    <Tooltip label="You will receive 10 credits per day.">
-                      <ActionIcon
-                        size="xs"
-                        variant="transparent"
-                        style={{ verticalAlign: "middle" }}
-                      >
-                        <VscInfo />
-                      </ActionIcon>
-                    </Tooltip>
-                  </Text>
-                </List.Item>
-              </List>
-            </Flex>
-          </Paper>
-
-          <Paper bg="white" p="xl" radius="lg" withBorder w={325}>
-            <Flex justify="space-between">
-              <Stack gap="0">
-                <Text fz="xl" fw="bold" c="black">
-                  Enterprise
-                </Text>
-                <Text fz={32} fw="bold" c="black">
-                  Custom
-                </Text>
-                <Text fz="xs" c="gray.6">
-                  billed {isMonthly ? "monthly" : "annually"}
-                </Text>
-              </Stack>
-            </Flex>
-            <Button
-              component="a"
-              href="mailto:contact@jsoncrack.com?subject=Enterprise%20Plan%20Inquiry&body=Please%20replace%20this%20text%20with%20your%20inquiry%20content."
-              target="_blank"
-              size="md"
-              radius="md"
-              variant="outline"
-              color="dark"
-              fullWidth
-              my="md"
-              rightSection={<VscArrowRight />}
-            >
-              Contact Us
-            </Button>
-            <Flex direction="column" justify="space-between" h={200}>
-              <List
-                spacing="xs"
-                size="sm"
-                mt="lg"
-                center
-                icon={
-                  <ThemeIcon color="dark.6" size={20} radius="xl">
-                    <BsCheck size="1rem" />
-                  </ThemeIcon>
-                }
-                c="black"
-              >
-                <List.Item>Everything from previous plans</List.Item>
-                <List.Item
-                  icon={
-                    <ThemeIcon color="dark.6" size={20} radius="xl">
-                      <BsCheck size="1rem" />
-                    </ThemeIcon>
-                  }
-                  c="black"
-                >
-                  Unlimited premium accounts for work email
-                </List.Item>
-                <List.Item
-                  icon={
-                    <ThemeIcon color="dark.6" size={20} radius="xl">
-                      <BsCheck size="1rem" />
-                    </ThemeIcon>
-                  }
-                  c="black"
-                >
-                  Shared cloud in app
-                </List.Item>
-              </List>
-            </Flex>
-          </Paper>
+        <PricingCards />
+        <Flex pt="sm" c="dimmed" justify="center" align="center" gap={4}>
+          <AiOutlineInfoCircle />
+          <Text size="sm">
+            Payment email must be matching with the account registered to the JSON Crack.
+          </Text>
         </Flex>
-        <Text pt="sm" size="sm" c="dimmed" style={{ textAlign: "center" }}>
-          <AiOutlineInfoCircle style={{ marginRight: "4px" }} />
-          Payment email must be matching with the account registered to the JSON Crack.
-        </Text>
       </Layout>
     </>
   );

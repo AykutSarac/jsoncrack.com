@@ -1,8 +1,8 @@
 import React from "react";
 import { useDebouncedValue } from "@mantine/hooks";
 import { gaEvent } from "src/lib/utils/gaEvent";
-import { searchQuery, cleanupHighlight, highlightMatchedNodes } from "src/lib/utils/graph/search";
-import useGraph from "src/store/useGraph";
+import { searchQuery, cleanupHighlight, highlightMatchedNodes } from "src/lib/utils/search";
+import useGraph from "src/modules/GraphView/stores/useGraph";
 
 export const useFocusNode = () => {
   const viewPort = useGraph(state => state.viewPort);
@@ -39,7 +39,7 @@ export const useFocusNode = () => {
       setNodeCount(0);
     }
 
-    gaEvent("input", "search node in graph");
+    gaEvent("Graph", "search");
   }, [selectedNode, debouncedValue, value, viewPort]);
 
   return [value, setValue, skip, nodeCount, selectedNode] as const;

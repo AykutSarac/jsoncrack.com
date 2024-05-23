@@ -7,9 +7,9 @@ import { VscExpandAll, VscCollapseAll, VscTarget } from "react-icons/vsc";
 import { ViewMode } from "src/enums/viewMode.enum";
 import useToggleHide from "src/hooks/useToggleHide";
 import { gaEvent } from "src/lib/utils/gaEvent";
-import { getNextDirection } from "src/lib/utils/graph/getNextDirection";
+import { getNextDirection } from "src/lib/utils/getNextDirection";
+import useGraph from "src/modules/GraphView/stores/useGraph";
 import useConfig from "src/store/useConfig";
-import useGraph from "src/store/useGraph";
 import * as Styles from "./styles";
 
 function rotateLayout(direction: "LEFT" | "RIGHT" | "DOWN" | "UP") {
@@ -65,7 +65,7 @@ export const ViewMenu = () => {
   return (
     <Menu shadow="md" closeOnItemClick={false} withArrow>
       <Menu.Target>
-        <Styles.StyledToolElement onClick={() => gaEvent("click", "view menu")}>
+        <Styles.StyledToolElement onClick={() => gaEvent("View Menu", "open menu")}>
           <Flex align="center" gap={3}>
             View <CgChevronDown />
           </Flex>
@@ -76,7 +76,10 @@ export const ViewMenu = () => {
           miw={205}
           size="xs"
           value={viewMode}
-          onChange={e => setViewMode(e as ViewMode)}
+          onChange={e => {
+            setViewMode(e as ViewMode);
+            gaEvent("View Menu", "change view mode", e as string);
+          }}
           data={[
             { value: ViewMode.Graph, label: "Graph" },
             { value: ViewMode.Tree, label: "Tree" },
@@ -88,7 +91,10 @@ export const ViewMenu = () => {
             <Menu.Item
               mt="xs"
               fz={12}
-              onClick={toggleDirection}
+              onClick={() => {
+                toggleDirection();
+                gaEvent("View Menu", "rotate layout");
+              }}
               leftSection={<Styles.StyledFlowIcon rotate={rotateLayout(direction || "RIGHT")} />}
               rightSection={
                 <Text ml="md" fz={10} c="dimmed">
@@ -100,7 +106,10 @@ export const ViewMenu = () => {
             </Menu.Item>
             <Menu.Item
               fz={12}
-              onClick={toggleExpandCollapseGraph}
+              onClick={() => {
+                toggleExpandCollapseGraph();
+                gaEvent("View Menu", "expand collapse graph");
+              }}
               leftSection={graphCollapsed ? <VscExpandAll /> : <VscCollapseAll />}
               rightSection={
                 <Text ml="md" fz={10} c="dimmed">
@@ -108,7 +117,7 @@ export const ViewMenu = () => {
                 </Text>
               }
             >
-              {graphCollapsed ? "Expand" : "Collapse"} Nodes
+              {graphCollapsed ? "Expand" : "Collapse"} Graph
             </Menu.Item>
             <Menu.Item fz={12} onClick={focusFirstNode} leftSection={<VscTarget />}>
               Focus to First Node
