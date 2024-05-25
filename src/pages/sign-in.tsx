@@ -153,10 +153,11 @@ const SignIn = () => {
 
     if (!isReady) return;
 
-    if (query?.refresh_token) {
+    if (query?.access_token && query?.refresh_token) {
       (async () => {
         const refresh_token = query.refresh_token as string;
-        const { data, error } = await supabase.auth.refreshSession({ refresh_token });
+        const access_token = query.access_token as string;
+        const { data, error } = await supabase.auth.setSession({ refresh_token, access_token });
 
         if (error) return toast.error(error.message);
         if (data.session) setSession(data.session);
