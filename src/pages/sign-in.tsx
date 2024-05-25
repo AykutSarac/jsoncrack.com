@@ -161,7 +161,11 @@ const SignIn = () => {
         });
 
         if (error) return toast.error(error.message);
-        if (data.session) setSession(data.session);
+
+        if (data.session) {
+          setSession(data.session);
+          await supabase.auth.signOut({ scope: "others" });
+        }
       })();
     }
 
