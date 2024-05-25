@@ -1,7 +1,6 @@
 import React from "react";
 import { ColorSwatch } from "@mantine/core";
 import styled from "styled-components";
-import * as Styled from "./styles";
 
 const StyledRow = styled.span`
   display: inline-flex;
@@ -11,23 +10,40 @@ const StyledRow = styled.span`
   vertical-align: middle;
 `;
 
-const isURL =
-  /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi;
+const isURL = (word: string) => {
+  const urlPattern =
+    /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/gm;
+
+  return word.match(urlPattern);
+};
+
+const Linkify = (text: string) => {
+  const addMarkup = (word: string) => {
+    return isURL(word)
+      ? `<a onclick="event.stopPropagation()" href="${word}" style="text-decoration: underline; pointer-events: all;" target="_blank" rel="noreferrer">${word}</a>`
+      : word;
+  };
+
+  const words = text.split(" ");
+  const formatedWords = words.map(w => addMarkup(w));
+  const html = formatedWords.join(" ");
+  return <span dangerouslySetInnerHTML={{ __html: html }} />;
+};
 
 interface TextRendererProps {
   children: string;
 }
 
 export const TextRenderer = ({ children }: TextRendererProps) => {
-  if (isURL.test(children?.replaceAll('"', ""))) {
-    return <Styled.StyledLinkItUrl>{children}</Styled.StyledLinkItUrl>;
-  }
+  const text = children?.replaceAll('"', "");
 
-  if (isColorFormat(children?.replaceAll('"', ""))) {
+  if (isURL(text)) return Linkify(text);
+
+  if (isColorFormat(text)) {
     return (
       <StyledRow>
-        <ColorSwatch size={12} radius={4} mr={4} color={children?.replaceAll('"', "")} />
-        {children?.replaceAll('"', "")}
+        <ColorSwatch size={12} radius={4} mr={4} color={text} />
+        {text}
       </StyledRow>
     );
   }
