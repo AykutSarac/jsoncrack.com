@@ -12,10 +12,12 @@ import {
   Center,
   Badge,
   Anchor,
+  ThemeIcon,
 } from "@mantine/core";
 import styled from "styled-components";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { FaArrowTrendDown } from "react-icons/fa6";
+import { IoMdChatbubbles } from "react-icons/io";
 import { MdCheck } from "react-icons/md";
 import { VscArrowRight } from "react-icons/vsc";
 import Layout from "src/layout/Layout";
@@ -71,6 +73,88 @@ export const PricingCards = () => {
         />
       </Center>
       <Flex gap="lg" wrap="wrap" justify="center" w="fit-content" p="lg" mx="auto" maw="100%">
+        <StyledPaper>
+          <Flex justify="space-between">
+            <Stack gap="0">
+              <Flex align="center" mb="lg">
+                <Text fw={500} size="xl" c="black">
+                  Partner
+                </Text>
+              </Flex>
+
+              <ThemeIcon variant="transparent" size={59}>
+                <IoMdChatbubbles color="black" size={50} />
+              </ThemeIcon>
+              <Text fz="xs" c="gray.7">
+                Contact us for custom pricing
+              </Text>
+            </Stack>
+          </Flex>
+          <Button
+            component="a"
+            variant="gradient"
+            style={{ border: "1px solid #625BF6" }}
+            onClick={() => gaEvent("Pricing", "click partner plan")}
+            href="mailto:contact@jsoncrack.com"
+            target="_blank"
+            size="lg"
+            radius="md"
+            fullWidth
+            my="md"
+            rightSection={<VscArrowRight />}
+          >
+            Contact Us
+          </Button>
+          <Text mt="xs" fz="xs" c="dimmed">
+            Integrate JSON Crack into your applications and websites.
+          </Text>
+          <Flex direction="column" justify="space-between">
+            <List
+              spacing="md"
+              size="sm"
+              mt="xs"
+              c="black"
+              center
+              icon={<MdCheck color="blue" size="18" />}
+            >
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Integrate JSON Crack Premium to your website
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  1 Domain / Plan
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Embed API
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Custom Theming
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  White Labeling
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Dedicated onboarding and engineering support
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  High-priority customer support
+                </Text>
+              </List.Item>
+            </List>
+          </Flex>
+        </StyledPaper>
         <StyledPaper>
           <Flex justify="space-between">
             <Stack gap="0">
