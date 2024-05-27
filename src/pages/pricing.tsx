@@ -17,8 +17,8 @@ import {
 import styled from "styled-components";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { FaArrowTrendDown } from "react-icons/fa6";
-import { IoMdChatbubbles } from "react-icons/io";
 import { MdCheck } from "react-icons/md";
+import { PiChats } from "react-icons/pi";
 import { VscArrowRight } from "react-icons/vsc";
 import Layout from "src/layout/Layout";
 import { gaEvent } from "src/lib/utils/gaEvent";
@@ -83,7 +83,7 @@ export const PricingCards = () => {
               </Flex>
 
               <ThemeIcon variant="transparent" size={59}>
-                <IoMdChatbubbles color="black" size={50} />
+                <PiChats color="black" size={50} />
               </ThemeIcon>
               <Text fz="xs" c="gray.7">
                 Contact us for custom pricing
