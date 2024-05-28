@@ -319,14 +319,14 @@ export const Premium = () => {
             slot="first"
             width={600}
             src="./assets/compare/free.webp"
-            loading="lazy"
+            loading="eager"
             alt="Free Editor"
           />
           <Image
             slot="second"
             width={600}
             src="./assets/compare/pro.webp"
-            loading="lazy"
+            loading="eager"
             alt="Premium Editor"
           />
         </StyledImgComparisonSlider>
