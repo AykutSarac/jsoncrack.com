@@ -27,7 +27,7 @@ import { ImgComparisonSlider } from "@img-comparison-slider/react";
 import { BiChevronDown } from "react-icons/bi";
 import { MdChevronRight, MdCompare, MdExtension, MdRebaseEdit, MdSearch } from "react-icons/md";
 import useBackgroundCursorPosition from "use-bg-cursor-pos";
-import { images, metaDescription } from "src/constants/landing";
+import { images } from "src/constants/landing";
 import Layout from "src/layout/Layout";
 import { gaEvent } from "src/lib/utils/gaEvent";
 
@@ -238,10 +238,7 @@ export const Premium = () => {
   return (
     <Layout>
       <Head>
-        <title>JSON Crack Premium | Data into Clarity with Powerful Visualization</title>
-        <meta name="description" content={metaDescription} key="description" />
-        <meta property="og:description" content={metaDescription} key="ogdescription" />
-        <meta name="twitter:description" content={metaDescription} key="twdescription" />
+        <title>Free vs Premium | JSON Crack</title>
       </Head>
       <StyledHeroSection id="hero-section">
         <StyledHeroSectionBody>
