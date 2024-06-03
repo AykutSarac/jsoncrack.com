@@ -20,7 +20,16 @@ export const Footer = () => {
   return (
     <Container mt={150}>
       <Stack align="center">
-        <Title fz={26} c="gray.7" lts={-1} order={3} ta="center">
+        <Title
+          fz={{
+            sm: 32,
+            md: 36,
+          }}
+          c="gray.7"
+          lts={-1}
+          order={3}
+          ta="center"
+        >
           Designed for everyone
           <br />
           Save time understanding your data.

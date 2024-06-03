@@ -56,6 +56,7 @@ export const Navbar = () => {
           </Button>
           <Button
             component={Link}
+            prefetch={false}
             href="/#pricing"
             variant="subtle"
             color="black"

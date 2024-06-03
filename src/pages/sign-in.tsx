@@ -106,7 +106,7 @@ export function AuthenticationForm(props: PaperProps) {
           </Button>
 
           <Stack gap="sm" mx="auto" align="center">
-            <Anchor component={Link} prefetch={false} href="/forgot-password" c="dark" size="xs">
+            <Anchor component={Link} href="/forgot-password" c="dark" size="xs">
               Forgot your password?
             </Anchor>
           </Stack>
@@ -179,7 +179,7 @@ const SignIn = () => {
         <AuthenticationForm />
       </Paper>
       <Center my="xl">
-        <Anchor component={Link} prefetch={false} href="/sign-up" c="gray.5" fw="bold">
+        <Anchor component={Link} href="/sign-up" c="gray.5" fw="bold">
           Don&apos;t have an account?
         </Anchor>
       </Center>

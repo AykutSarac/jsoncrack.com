@@ -134,7 +134,7 @@ const ForgotPassword = () => {
                   </Button>
                 </Group>
                 <Stack mt="lg" align="center">
-                  <Anchor component={Link} prefetch={false} href="/sign-in" c="dark" size="xs">
+                  <Anchor component={Link} href="/sign-in" c="dark" size="xs">
                     Don&apos;t have an account? Sign Up
                   </Anchor>
                 </Stack>
