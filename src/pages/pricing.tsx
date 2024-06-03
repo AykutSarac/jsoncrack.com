@@ -58,15 +58,15 @@ export const PricingCards = () => {
   const [isMonthly, setIsMonthly] = React.useState(true);
 
   return (
-    <Stack component="section" id="pricing" gap="0" align="center">
+    <Stack gap="0" align="center">
       <Center my="lg">
         <SegmentedControl
           bg="gray.1"
           color="white"
-          value={isMonthly ? "Monthly" : "Yearly"}
+          value={isMonthly ? "Monthly" : "Annual"}
           onChange={v => setIsMonthly(v === "Monthly")}
           size="md"
-          data={["Monthly", "Yearly"]}
+          data={["Monthly", "Annual"]}
           w={200}
           radius="lg"
           styles={{ label: { color: "black" } }}

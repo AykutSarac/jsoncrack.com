@@ -56,18 +56,7 @@ export const Navbar = () => {
           </Button>
           <Button
             component={Link}
-            href="/premium"
-            variant="subtle"
-            color="black"
-            radius="md"
-            visibleFrom="sm"
-            size="md"
-          >
-            Premium
-          </Button>
-          <Button
-            component={Link}
-            href="/premium#pricing"
+            href="/#pricing"
             variant="subtle"
             color="black"
             radius="md"

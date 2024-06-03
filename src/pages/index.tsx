@@ -2,12 +2,36 @@ import React from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import Link from "next/link";
-import { Accordion, Badge, Button, Container, Flex, List, Stack, Title } from "@mantine/core";
+import {
+  Accordion,
+  Badge,
+  Button,
+  Container,
+  Divider,
+  Flex,
+  Grid,
+  List,
+  Paper,
+  Stack,
+  Title,
+  Text,
+  Image,
+  rem,
+  Anchor,
+  Overlay,
+} from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import "@mantine/carousel/styles.css";
 import styled from "styled-components";
-import { FaGithub } from "react-icons/fa";
-import { IoSparklesSharp } from "react-icons/io5";
+import { ReactCompareSlider } from "react-compare-slider";
+import {
+  FaBolt,
+  FaExpand,
+  FaLifeRing,
+  FaParachuteBox,
+  FaShapes,
+  FaShieldHalved,
+} from "react-icons/fa6";
 import { MdChevronRight } from "react-icons/md";
 import { images, metaDescription } from "src/constants/landing";
 import Layout from "src/layout/Layout";
@@ -43,10 +67,10 @@ const StyledHeroSectionBody = styled.div`
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  padding: 3em 10%;
+  padding: 4em 10%;
   overflow: hidden;
-  backdrop-filter: blur(1px);
-  -webkit-backdrop-filter: blur(1px);
+  backdrop-filter: blur(1.2px);
+  -webkit-backdrop-filter: blur(1.2px);
   text-align: center;
   gap: 60px;
   min-height: 60vh;
@@ -84,7 +108,6 @@ const StyledHeroTitle = styled.h1`
   width: fit-content;
   letter-spacing: -1px;
   line-height: 1.2;
-  filter: drop-shadow(2px 1px 1px rgba(0, 0, 0, 0.1));
 
   @keyframes textShine {
     0% {
@@ -112,23 +135,37 @@ const StyledHeroTitle = styled.h1`
   }
 `;
 
-const StyledCarouselWrapper = styled.section`
+const StyledImageWrapper = styled.div`
   max-width: 85%;
-  position: relative;
-  z-index: 1;
-  margin: 60px auto;
-  overflow: hidden;
+  margin: 0 auto;
   filter: drop-shadow(0px -4px 10px rgba(70, 70, 70, 0.25));
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
 
   @media only screen and (max-width: 768px) {
     max-width: 85%;
     margin: 0 auto;
+  }
+`;
+
+const StyledPaper = styled.div`
+  position: relative;
+  z-index: 1;
+
+  &:before {
+    position: absolute;
+    z-index: -1;
+    opacity: 0.4;
+    top: 0;
+    left: 0;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-size: 20px 20px;
+    background-image: linear-gradient(to right, #dcdcdc 1px, transparent 1px),
+      linear-gradient(to bottom, #dcdcdc 1px, transparent 1px);
+    background-position: top center;
+    image-rendering: pixelated;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, 20%, white, 90%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, 20%, white, 90%, transparent);
   }
 `;
 
@@ -137,24 +174,6 @@ const FAQ = [
     title: "What is JSON Crack?",
     content:
       "JSON Crack is a data visualization app capable of visualizing data formats such as JSON, YAML, XML, CSV and more, into interactive graphs. It helps you to understand, analyze and debug your data easily. JSON Crack is designed for developers, data analysts, and anyone who works with structured data formats. It's also helpful for creating documentation and presentations for your teams/customers.",
-  },
-  {
-    title: "What are the advantages of the premium plan?",
-    content: (
-      <>
-        JSON Crack Premium helps you to work with data easier than the free version; it&apos;s more
-        compact, faster and smoother than ever. It&apos;s designed for anybody who works with data.
-        Most significant features include:
-        <List mt="lg">
-          <List.Item>Expanded support for larger datasets</List.Item>
-          <List.Item>Compare data on graphs</List.Item>
-          <List.Item>Compact visualization style: see only what you need to</List.Item>
-          <List.Item>Searching is faster and smoother</List.Item>
-          <List.Item>Ask AI to filter your data</List.Item>
-          <List.Item>Direct data editing on the graphs & tree view</List.Item>
-        </List>
-      </>
-    ),
   },
   {
     title: "Who is it for and what are the use-cases?",
@@ -166,13 +185,32 @@ const FAQ = [
     content:
       "No, JSON Crack does not store your data anywhere unless you upload it manually. When you paste your data into the editor, it's processed on your device only to create the visualization. Your data remains completely private.",
   },
+  {
+    title: "What are the advantages of the premium plan?",
+    content: (
+      <>
+        The key features are:
+        <List mt="lg">
+          <List.Item>Expanded support for larger datasets</List.Item>
+          <List.Item>Compare data on graphs</List.Item>
+          <List.Item>Compact visualization style: see only what you need to</List.Item>
+          <List.Item>Searching is faster and smoother</List.Item>
+          <List.Item>Ask AI to filter your data</List.Item>
+          <List.Item>Direct data editing on the graphs & tree view</List.Item>
+        </List>
+        <Text mt="sm" inherit>
+          You may visit the <Anchor href="#pricing">pricing page</Anchor> for more details.
+        </Text>
+      </>
+    ),
+  },
 ];
 
 export const HomePage = () => {
   return (
     <Layout>
       <Head>
-        <title>JSON Crack | Best JSON Visualizer, Formatter and Viewer for everyone</title>
+        <title>JSON Crack | Best JSON Viewer, Formatter and Visualizer for everyone</title>
         <meta name="description" content={metaDescription} key="description" />
         <meta property="og:description" content={metaDescription} key="ogdescription" />
         <meta name="twitter:description" content={metaDescription} key="twdescription" />
@@ -180,20 +218,8 @@ export const HomePage = () => {
       <StyledHeroSection id="hero-section">
         <StyledHeroSectionBody>
           <Stack flex="1" miw={250} mx="auto" align="center">
-            <Badge
-              tt="none"
-              size="xl"
-              fw={500}
-              color="#362EF3"
-              variant="light"
-              leftSection={<IoSparklesSharp />}
-            >
-              Transform data to graphs in 3 seconds
-            </Badge>
             <StyledHeroTitle>Data into Clarity with Powerful Visualization</StyledHeroTitle>
-            <StyledHeroText>
-              Transform data into interactive graphs. See what you need.
-            </StyledHeroText>
+            <StyledHeroText>Transform data into interactive graphs.</StyledHeroText>
             <Flex gap="xs">
               <Badge size="xs" color="gray.7" autoContrast radius="sm" variant="light">
                 JSON
@@ -217,30 +243,17 @@ export const HomePage = () => {
                 component={Link}
                 variant="gradient"
                 style={{ border: "1px solid #625BF6" }}
-                href="/premium"
+                href="/#pricing"
                 size="lg"
                 visibleFrom="sm"
                 radius="lg"
                 rightSection={<MdChevronRight size={30} />}
               >
-                Explore Premium
+                Get Started
               </Button>
               <Button
                 component={Link}
-                prefetch={false}
-                variant="outline"
-                color="dark.8"
-                href="/editor"
-                size="lg"
-                visibleFrom="sm"
-                radius="lg"
-                leftSection={<FaGithub />}
-              >
-                Free Version
-              </Button>
-              <Button
-                component={Link}
-                href="/premium"
+                href="/#pricing"
                 size="md"
                 variant="gradient"
                 style={{ border: "1px solid #625BF6" }}
@@ -248,48 +261,386 @@ export const HomePage = () => {
                 hiddenFrom="sm"
                 radius="lg"
               >
-                Explore Premium
+                Get Started
               </Button>
             </Flex>
           </Stack>
         </StyledHeroSectionBody>
       </StyledHeroSection>
 
-      <StyledCarouselWrapper id="preview">
-        <Carousel
-          getEmblaApi={embla => {
-            setInterval(() => {
-              embla.scrollNext();
-            }, 10_000);
-          }}
-          flex="1"
-          height="100%"
-          withIndicators
-          loop
-          style={{
-            border: "3px solid #bdbdbd",
-            borderRadius: "14px",
-            overflow: "hidden",
-          }}
-        >
-          {images.map(image => (
-            <Carousel.Slide key={image.id}>
-              <img
-                src={`./assets/preview/${image.id}.jpeg`}
-                alt={image.alt}
-                loading={image.id === 1 ? "eager" : "lazy"}
-                width="1440"
-                height="760"
-              />
-            </Carousel.Slide>
-          ))}
-        </Carousel>
-      </StyledCarouselWrapper>
+      <StyledImageWrapper id="preview">
+        <Image
+          loading="eager"
+          src="./assets/compare/free.webp"
+          alt="JSON Crack Preview"
+          w="100%"
+          h="100%"
+          radius="md"
+        />
+      </StyledImageWrapper>
 
-      <Title c="black" order={2} fz={42} fw={600} mt={50} mb={15} style={{ textAlign: "center" }}>
-        Pricing
-      </Title>
-      <PricingCards />
+      <section id="features">
+        <Title
+          c="black"
+          order={2}
+          px="lg"
+          fz={{
+            sm: 32,
+            md: 42,
+          }}
+          fw={600}
+          mt={120}
+          mb={15}
+          style={{ textAlign: "center" }}
+        >
+          An intuitive and user-friendly interface
+        </Title>
+        <Text
+          c="gray.6"
+          fz={{
+            sm: 12,
+            md: 16,
+          }}
+          px="lg"
+          w={{
+            sm: "80%",
+            md: "60%",
+          }}
+          mx="auto"
+          ta="center"
+          mb={50}
+        >
+          Enhance your workflow with JSON Crack, the ultimate JSON editor! Effortless formatting,
+          robust validation, and intuitive visualizations in one platform. Make smarter decisions
+          faster.
+        </Text>
+
+        <Grid w="80%" gutter={24} mt={50} mb={150} mx="auto">
+          <Grid.Col span={{ base: 12, sm: 6 }}>
+            <Paper
+              pos="relative"
+              p={30}
+              shadow="xs"
+              radius="md"
+              w="100%"
+              h={{ sm: 300, md: 370 }}
+              withBorder
+              style={{ overflow: "hidden" }}
+            >
+              <StyledPaper>
+                <Title c="black" order={3} fw={500} fz={{ sm: 20, md: 28 }}>
+                  Graphs
+                </Title>
+                <Text fz={{ sm: 14, md: 18 }} c="dark.5" mt={10}>
+                  Visualize your data in a graph format to understand and analyze it better.
+                </Text>
+                <Image
+                  loading="lazy"
+                  src="./assets/features/compare.webp"
+                  alt="Compare"
+                  w={{ sm: 350, md: 400 }}
+                  mt={20}
+                  style={{
+                    filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
+                  }}
+                />
+              </StyledPaper>
+            </Paper>
+          </Grid.Col>
+          <Grid.Col span={{ base: 12, sm: 6 }}>
+            <Paper
+              p={30}
+              shadow="xs"
+              radius="md"
+              w="100%"
+              h={{ sm: 300, md: 370 }}
+              withBorder
+              style={{ overflow: "hidden" }}
+            >
+              <StyledPaper>
+                <Title c="black" order={3} fw={500} fz={{ sm: 20, md: 28 }}>
+                  Generate Types
+                </Title>
+                <Text fz={{ sm: 14, md: 18 }} c="dark.5" my={10}>
+                  Generate types for your data with a single click: TypeScript, Go, Rust & more.
+                </Text>
+                <Paper
+                  withBorder
+                  shadow="sm"
+                  radius={5}
+                  w="fit-content"
+                  mx="auto"
+                  style={{ borderColor: "gray" }}
+                >
+                  <Image
+                    loading="lazy"
+                    radius="sm"
+                    src="./assets/features/edit.webp"
+                    alt="Edit"
+                    w={340}
+                  />
+                </Paper>
+              </StyledPaper>
+            </Paper>
+          </Grid.Col>
+          <Grid.Col span={{ base: 12, sm: 6 }}>
+            <Paper
+              p={30}
+              shadow="xs"
+              radius="md"
+              w="100%"
+              h={{ sm: 300, md: 370 }}
+              withBorder
+              style={{ overflow: "hidden" }}
+            >
+              <StyledPaper>
+                <Title c="black" order={3} fw={500} fz={{ sm: 20, md: 28 }}>
+                  Search
+                </Title>
+                <Text fz={{ sm: 14, md: 18 }} c="dark.5" mt={10}>
+                  Highlight and search what you need in your data, without any hassle.
+                </Text>
+                <Image
+                  loading="lazy"
+                  src="./assets/features/search.webp"
+                  alt="Search"
+                  w={{ sm: 400, md: 500 }}
+                  mx="auto"
+                  mt={20}
+                  style={{
+                    filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
+                  }}
+                />
+              </StyledPaper>
+            </Paper>
+          </Grid.Col>
+          <Grid.Col span={{ base: 12, sm: 6 }}>
+            <Paper
+              p={30}
+              shadow="xs"
+              radius="md"
+              w="100%"
+              h={{ sm: 300, md: 370 }}
+              withBorder
+              style={{ overflow: "hidden" }}
+            >
+              <StyledPaper>
+                <Title c="black" order={3} fw={500} fz={{ sm: 20, md: 28 }}>
+                  Choose Your Format
+                </Title>
+                <Text fz={{ sm: 14, md: 18 }} c="dark.5" mt={10}>
+                  Visualize and edit your data in multiple formats. JSON, YAML, CSV, XML, and TOML
+                  are supported.
+                </Text>
+                <Grid gutter="lg" mt={50}>
+                  <Grid.Col span={6}>
+                    <Badge
+                      w="100%"
+                      mih={{ sm: 10, md: 40 }}
+                      variant="light"
+                      c="indigo"
+                      color="indigo"
+                      radius="sm"
+                      size="xl"
+                    >
+                      JSON
+                    </Badge>
+                  </Grid.Col>
+                  <Grid.Col span={6}>
+                    <Badge
+                      w="100%"
+                      mih={{ sm: 10, md: 40 }}
+                      variant="light"
+                      color="cyan"
+                      radius="sm"
+                      size="xl"
+                      c="cyan"
+                    >
+                      YAML
+                    </Badge>
+                  </Grid.Col>
+                  <Grid.Col span={6}>
+                    <Badge
+                      w="100%"
+                      mih={{ sm: 10, md: 40 }}
+                      variant="light"
+                      color="grape"
+                      radius="sm"
+                      c="grape"
+                      size="xl"
+                    >
+                      CSV
+                    </Badge>
+                  </Grid.Col>
+                  <Grid.Col span={6}>
+                    <Badge
+                      w="100%"
+                      mih={{ sm: 10, md: 40 }}
+                      variant="light"
+                      color="red"
+                      radius="sm"
+                      size="xl"
+                      c="red"
+                    >
+                      XML
+                    </Badge>
+                  </Grid.Col>
+                </Grid>
+              </StyledPaper>
+            </Paper>
+          </Grid.Col>
+        </Grid>
+      </section>
+
+      <Divider w="80%" my={100} mx="auto" />
+
+      <section id="premium">
+        <Title c="black" order={2} fz={42} fw={600} mb={80} ta="center">
+          Premium vs Free
+        </Title>
+
+        <StyledImageWrapper>
+          <ReactCompareSlider
+            itemOne={<Image loading="lazy" src="./assets/compare/pro.webp" alt="Pro" />}
+            itemTwo={
+              <>
+                <Overlay color="#000" backgroundOpacity={0.1} />
+                <Image loading="lazy" src="./assets/compare/free.webp" alt="Free" />
+              </>
+            }
+          />
+        </StyledImageWrapper>
+
+        <Paper
+          pt={rem(300)}
+          px={rem(80)}
+          pb={rem(20)}
+          maw="95%"
+          radius="xl"
+          mx="auto"
+          mt="-16.5rem"
+          style={{
+            textAlign: "center",
+            background: "linear-gradient(rgb(255, 255, 255) 0%, rgb(7, 5, 90) 60%)",
+          }}
+          visibleFrom="sm"
+        >
+          <Title c="white" order={2} fz={42} fw={700} mb="md">
+            Optimized for user experience
+          </Title>
+          <Text mx="auto" fz={16} maw="80%" c="gray.4" mb={60}>
+            Designed to help you navigate through your data with ease. The editor provides a clean
+            and intuitive interface that allows you to focus on what matters most: your data.
+          </Text>
+        </Paper>
+
+        <Grid
+          w={{ sm: "100%", md: "80%" }}
+          px={{ sm: "xl", md: 0 }}
+          mt={100}
+          mx="auto"
+          gutter={50}
+          visibleFrom="sm"
+        >
+          <Grid.Col span={4}>
+            <Flex align="center" gap={8} mb={16}>
+              <FaBolt color="orange" size={28} />
+              <Title c="black" order={3} fz={{ sm: 20, md: 28 }} fw={600}>
+                High Performance
+              </Title>
+            </Flex>
+            <Text c="gray.6" fz={{ sm: 12, md: 14 }}>
+              Designed to handle large datasets with ease. It&apos;s optimized for performance and
+              speed currently supporting up to 4MB of data.
+            </Text>
+          </Grid.Col>
+          <Grid.Col span={4}>
+            <Flex align="center" gap={8} mb={16}>
+              <FaExpand color="blue" size={28} />
+              <Title c="black" order={3} fz={{ sm: 20, md: 28 }} fw={600}>
+                Clean & Focused
+              </Title>
+            </Flex>
+            <Text c="gray.6" fz={{ sm: 12, md: 14 }}>
+              Compared to the free version, the premium version creates 50% less nodes on the graph
+              and helps you to focus on what matters most.
+            </Text>
+          </Grid.Col>
+          <Grid.Col span={4}>
+            <Flex align="center" gap={8} mb={16}>
+              <FaLifeRing color="#FF6B00" size={28} />
+              <Title c="black" order={3} fz={{ sm: 20, md: 28 }} fw={600}>
+                Quick Support
+              </Title>
+            </Flex>
+            <Text c="gray.6" fz={{ sm: 12, md: 14 }}>
+              Get quick support from our team. We&apos;re here to help you with any issues or
+              questions you may have. Usual response time is within 24 hours.
+            </Text>
+          </Grid.Col>
+          <Grid.Col span={4}>
+            <Flex align="center" gap={8} mb={16}>
+              <FaParachuteBox color="#00848C" size={28} />
+              <Title c="black" order={3} fz={{ sm: 20, md: 28 }} fw={600}>
+                Always Improving
+              </Title>
+            </Flex>
+            <Text c="gray.6" fz={{ sm: 12, md: 14 }}>
+              Have an idea? We&apos;re always looking to improve JSON Crack. We take your feedback
+              seriously and are constantly working on new features.
+            </Text>
+          </Grid.Col>
+          <Grid.Col span={4}>
+            <Flex align="center" gap={8} mb={16}>
+              <FaShapes color="#A854A5" size={28} />
+              <Title c="black" order={3} fz={{ sm: 20, md: 28 }} fw={600}>
+                Advanced Features
+              </Title>
+            </Flex>
+            <Text c="gray.6" fz={{ sm: 12, md: 14 }}>
+              Unlock advanced features such as data comparison, direct editing on the graph,
+              customized themes and compact visualization style.
+            </Text>
+          </Grid.Col>
+          <Grid.Col span={4}>
+            <Flex align="center" gap={8} mb={16}>
+              <FaShieldHalved color="black" size={28} />
+              <Title c="black" order={3} fz={{ sm: 20, md: 28 }} fw={600}>
+                Privacy First
+              </Title>
+            </Flex>
+            <Text c="gray.6" fz={{ sm: 12, md: 14 }}>
+              JSON Crack does not store your data unless you upload it manually. Your data remains
+              completely private.
+            </Text>
+          </Grid.Col>
+        </Grid>
+
+        <Paper w="95%" mt={100} mx="auto" radius="md" style={{ overflow: "hidden" }}>
+          <Carousel slideGap="md" slideSize="50%" height="100%" loop>
+            {images.map(image => (
+              <Carousel.Slide key={image.id}>
+                <Image
+                  src={`./assets/preview/${image.id}.jpeg`}
+                  alt={image.alt}
+                  loading="lazy"
+                  radius="md"
+                  style={{
+                    border: "1px solid #d5d5d5",
+                  }}
+                />
+              </Carousel.Slide>
+            ))}
+          </Carousel>
+        </Paper>
+      </section>
+
+      <section id="pricing">
+        <Title c="black" order={2} fz={42} fw={600} mt={150} mb={15} ta="center">
+          Pricing
+        </Title>
+        <PricingCards />
+      </section>
 
       <Container id="faq" component="section">
         <Title
@@ -297,7 +648,7 @@ export const HomePage = () => {
           order={2}
           fz={36}
           fw={600}
-          mt={100}
+          mt={150}
           mb={60}
           style={{ textAlign: "center" }}
         >

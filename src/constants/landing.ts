@@ -20,14 +20,10 @@ export const images = Object.freeze([
   },
   {
     id: 5,
-    alt: "Preview JSON Crack Premium Editor highlighting the data view options, showing the data in a tree view and graph view.",
-  },
-  {
-    id: 6,
     alt: "Preview JSON Crack Premium Editor highlighting type generation feature. TypeScript, Go, JSON Schema, and more are shown.",
   },
   {
-    id: 7,
+    id: 6,
     alt: "Preview JSON Crack Premium Editor highlighting the image download feature, showing the download options for the data.",
   },
 ]);

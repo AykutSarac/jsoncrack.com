@@ -75,7 +75,7 @@ function JsonCrack({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>JSON Crack | Best JSON Visualizer, Formatter and Viewer for everyone</title>
+        <title>JSON Crack | Best JSON Viewer, Formatter and Visualizer for everyone</title>
       </Head>
       <ThemeProvider theme={lightTheme}>
         <Toaster
