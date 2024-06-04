@@ -11,7 +11,6 @@ import {
   SegmentedControl,
   Center,
   Badge,
-  Anchor,
   ThemeIcon,
 } from "@mantine/core";
 import styled from "styled-components";
@@ -35,21 +34,12 @@ export const purchaseLinks = {
     "https://herowand.lemonsqueezy.com/checkout/buy/577928ea-fb09-4076-9307-3e5931b35ad0?desc=0&enabled=82417",
 };
 
-const StyledPaperFree = styled(Paper)`
+const StyledPaper = styled(Paper)<{ $highlight?: boolean } & any>`
   padding: 1.5em;
-  width: 400px;
-  border-radius: 1em;
+  width: 350px;
+  border-radius: 4px;
   border: 2px solid #e9e9e9;
-  background: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-`;
-
-const StyledPaper = styled(Paper)`
-  padding: 1.5em;
-  width: 400px;
-  border-radius: 1em;
-  border: 2px solid #e9e9e9;
-  border-top: 3px solid #625bf6;
+  ${({ $highlight }) => $highlight && "border-top: 3px solid #625bf6;"}
   background: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
@@ -72,11 +62,21 @@ export const PricingCards = () => {
           styles={{ label: { color: "black" } }}
         />
       </Center>
-      <Flex gap="lg" wrap="wrap" justify="center" w="fit-content" p="lg" mx="auto" maw="100%">
+      <Flex
+        gap="0"
+        wrap="wrap"
+        justify="center"
+        w="fit-content"
+        p={{
+          xs: 4,
+          md: 6,
+        }}
+        mx="auto"
+      >
         <StyledPaper>
           <Flex justify="space-between">
             <Stack gap="0">
-              <Flex align="center" mb="lg">
+              <Flex align="center" mb="sm">
                 <Text fw={500} size="xl" c="black">
                   Partner
                 </Text>
@@ -119,7 +119,7 @@ export const PricingCards = () => {
             >
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
-                  Integrate JSON Crack Premium to your website
+                  JSON Crack Premium Widget
                 </Text>
               </List.Item>
               <List.Item>
@@ -155,10 +155,10 @@ export const PricingCards = () => {
             </List>
           </Flex>
         </StyledPaper>
-        <StyledPaper>
+        <StyledPaper $highlight>
           <Flex justify="space-between">
             <Stack gap="0">
-              <Flex align="center" mb="lg">
+              <Flex align="center" mb="sm">
                 <Text fw={500} size="xl" c="black">
                   Premium
                 </Text>
@@ -230,7 +230,12 @@ export const PricingCards = () => {
               </List.Item>
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
-                  Compact graph visualizations & fast rendering
+                  Compact Graphs & High Performance
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Compare Data Differences
                 </Text>
               </List.Item>
               <List.Item>
@@ -240,12 +245,7 @@ export const PricingCards = () => {
               </List.Item>
               <List.Item>
                 <Text c="gray.7" fw={500} fz="sm">
-                  Built-in tabs for multiple documents
-                </Text>
-              </List.Item>
-              <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Compare data differences
+                  Built-in tabs for Multiple Documents
                 </Text>
               </List.Item>
               <List.Item>
@@ -256,10 +256,10 @@ export const PricingCards = () => {
             </List>
           </Flex>
         </StyledPaper>
-        <StyledPaperFree>
+        <StyledPaper>
           <Flex justify="space-between">
             <Stack gap="0">
-              <Text fw={500} mb="lg" size="xl" c="black">
+              <Text fw={500} mb="sm" size="xl" c="black">
                 Free
               </Text>
 
@@ -285,7 +285,7 @@ export const PricingCards = () => {
             my="md"
             rightSection={<VscArrowRight />}
           >
-            Get Started
+            Free forever
           </Button>
           <Flex direction="column" justify="space-between">
             <List
@@ -311,14 +311,8 @@ export const PricingCards = () => {
               </List.Item>
             </List>
           </Flex>
-        </StyledPaperFree>
+        </StyledPaper>
       </Flex>
-      <Text fz="sm" c="dimmed" style={{ textAlign: "center" }}>
-        Get custom pricing for enterprise plan.{" "}
-        <Anchor inherit href="mailto:contact@jsoncrack.com" c="blue" style={{ display: "inline" }}>
-          Contact us
-        </Anchor>
-      </Text>
     </Stack>
   );
 };
