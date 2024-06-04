@@ -113,7 +113,7 @@ export const PremiumVsFree = () => {
           </Flex>
           <Text c="gray.6" fz={{ sm: 12, md: 14 }}>
             Designed to handle large datasets with ease. It&apos;s optimized for performance and
-            speed currently supporting up to 4MB of data.
+            speed; currently supporting up to 4MB of data.
           </Text>
         </Grid.Col>
         <Grid.Col span={4}>

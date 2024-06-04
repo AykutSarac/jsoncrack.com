@@ -12,7 +12,6 @@ import {
   useMantineTheme,
   useMantineColorScheme,
   List,
-  Anchor,
 } from "@mantine/core";
 import { IoMdArrowForward } from "react-icons/io";
 import { MdCheck } from "react-icons/md";
@@ -123,12 +122,18 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
         <List.Item>50% Less Nodes & Compact Graph Visualization</List.Item>
         <List.Item>Compare Data on Graphs</List.Item>
         <List.Item>Edit on Graphs</List.Item>
-        <List.Item>
-          <Anchor c="gray" fz="sm" href="/#preview" target="_blank">
-            ...and more
-          </Anchor>
-        </List.Item>
       </List>
+
+      <Button
+        component="a"
+        href="/#premium"
+        target="_blank"
+        size="compact-sm"
+        variant="subtle"
+        mt="sm"
+      >
+        ...and more, see all features!
+      </Button>
 
       <Divider my="md" />
       <Flex align="center" justify="space-between">
