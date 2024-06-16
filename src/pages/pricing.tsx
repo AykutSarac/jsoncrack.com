@@ -12,13 +12,16 @@ import {
   Center,
   Badge,
   ThemeIcon,
+  Tooltip,
+  Anchor,
 } from "@mantine/core";
 import styled from "styled-components";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { FaArrowTrendDown } from "react-icons/fa6";
-import { MdCheck } from "react-icons/md";
+import { IoIosCheckmarkCircle } from "react-icons/io";
+import { IoCheckmarkCircle } from "react-icons/io5";
 import { PiChats } from "react-icons/pi";
-import { VscArrowRight } from "react-icons/vsc";
+import { VscArrowRight, VscLinkExternal } from "react-icons/vsc";
 import Layout from "src/layout/Layout";
 import { gaEvent } from "src/lib/utils/gaEvent";
 
@@ -39,7 +42,7 @@ const StyledPaper = styled(Paper)<{ $highlight?: boolean } & any>`
   width: 350px;
   border-radius: 4px;
   border: 2px solid #e9e9e9;
-  ${({ $highlight }) => $highlight && "border-top: 3px solid #625bf6;"}
+  ${({ $highlight }) => $highlight && "border-top: 3px solid #28c417;"}
   background: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
@@ -76,11 +79,9 @@ export const PricingCards = () => {
         <StyledPaper>
           <Flex justify="space-between">
             <Stack gap="0">
-              <Flex align="center" mb="sm">
-                <Text fw={500} size="xl" c="black">
-                  Partner
-                </Text>
-              </Flex>
+              <Text fw={500} size="xl" c="black">
+                Partner
+              </Text>
 
               <ThemeIcon variant="transparent" size={59}>
                 <PiChats color="black" size={50} />
@@ -92,8 +93,7 @@ export const PricingCards = () => {
           </Flex>
           <Button
             component="a"
-            variant="gradient"
-            style={{ border: "1px solid #625BF6" }}
+            color="green"
             onClick={() => gaEvent("Pricing", "click partner plan")}
             href="mailto:contact@jsoncrack.com"
             target="_blank"
@@ -115,40 +115,76 @@ export const PricingCards = () => {
               mt="xs"
               c="black"
               center
-              icon={<MdCheck color="blue" size="18" />}
+              icon={<IoIosCheckmarkCircle color="green" size="20" />}
             >
               <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
-                  JSON Crack Premium Widget
-                </Text>
+                <Tooltip
+                  color="blue"
+                  label="Integrate premium graph visualization into your own website/apps using iframe"
+                  maw={350}
+                  multiline
+                >
+                  <Text
+                    c="gray.7"
+                    fw={600}
+                    fz="sm"
+                    style={{ textDecoration: "underline", textDecorationStyle: "dashed" }}
+                  >
+                    JSON Crack Premium Widget
+                  </Text>
+                </Tooltip>
               </List.Item>
               <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
+                <Text c="gray.7" fw={600} fz="sm">
                   1 Domain / Plan
                 </Text>
               </List.Item>
               <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Embed API
-                </Text>
+                <Tooltip
+                  color="blue"
+                  label="Listen for events like node click, hover, center etc. Display your own UI"
+                  maw={350}
+                  multiline
+                >
+                  <Text
+                    c="gray.7"
+                    fw={600}
+                    fz="sm"
+                    style={{ textDecoration: "underline", textDecorationStyle: "dashed" }}
+                  >
+                    Events API
+                  </Text>
+                </Tooltip>
               </List.Item>
               <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Custom Theming
-                </Text>
+                <Tooltip
+                  color="blue"
+                  label="Customize the look and feel of the editor matching with your own branding"
+                  maw={350}
+                  multiline
+                >
+                  <Text
+                    c="gray.7"
+                    fw={600}
+                    fz="sm"
+                    style={{ textDecoration: "underline", textDecorationStyle: "dashed" }}
+                  >
+                    Custom Theming
+                  </Text>
+                </Tooltip>
               </List.Item>
               <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
+                <Text c="gray.7" fw={600} fz="sm">
                   White Labeling
                 </Text>
               </List.Item>
               <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Dedicated onboarding and engineering support
+                <Text c="gray.7" fw={600} fz="sm">
+                  Onboarding and engineering support
                 </Text>
               </List.Item>
               <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
+                <Text c="gray.7" fw={600} fz="sm">
                   High-priority customer support
                 </Text>
               </List.Item>
@@ -158,7 +194,7 @@ export const PricingCards = () => {
         <StyledPaper $highlight>
           <Flex justify="space-between">
             <Stack gap="0">
-              <Flex align="center" mb="sm">
+              <Flex align="center">
                 <Text fw={500} size="xl" c="black">
                   Premium
                 </Text>
@@ -190,8 +226,7 @@ export const PricingCards = () => {
           </Flex>
           <Button
             component="a"
-            variant="gradient"
-            style={{ border: "1px solid #625BF6" }}
+            color="green"
             onClick={() => gaEvent("Pricing", "click upgrade premium")}
             href={isMonthly ? purchaseLinks.monthly : purchaseLinks.annual}
             target="_blank"
@@ -204,7 +239,7 @@ export const PricingCards = () => {
             Get Started
           </Button>
           <Text mt="xs" fz="xs" c="dimmed">
-            Designed for individuals who works with data regularly.
+            Designed for individuals who works with data regularly and wants to save time.
           </Text>
           <Flex direction="column" justify="space-between">
             <List
@@ -213,43 +248,78 @@ export const PricingCards = () => {
               mt="xs"
               c="black"
               center
-              icon={<MdCheck color="blue" size="18" />}
+              icon={<IoCheckmarkCircle color="green" size="20" />}
             >
               <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Large data support
-                </Text>
-                <Text c="dimmed" fz="xs">
-                  (~4 MB)
-                </Text>
+                <Tooltip
+                  color="blue"
+                  label="Visualize up to ~4 MB or above depending on your hardware"
+                  maw={350}
+                  multiline
+                  withArrow
+                >
+                  <Text
+                    c="gray.7"
+                    fw={600}
+                    fz="sm"
+                    style={{ textDecoration: "underline", textDecorationStyle: "dashed" }}
+                  >
+                    Large data support
+                  </Text>
+                </Tooltip>
               </List.Item>
               <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Store 200 documents
-                </Text>
+                <Tooltip
+                  color="blue"
+                  label="Load data 5x faster and 50% smaller graph size. Only see what matters."
+                  maw={350}
+                  multiline
+                  withArrow
+                >
+                  <Text
+                    c="gray.7"
+                    fw={600}
+                    fz="sm"
+                    style={{ textDecoration: "underline", textDecorationStyle: "dashed" }}
+                  >
+                    Compact Graphs & High Performance
+                  </Text>
+                </Tooltip>
               </List.Item>
               <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Compact Graphs & High Performance
-                </Text>
-              </List.Item>
-              <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
+                <Text c="gray.7" fw={600} fz="sm">
                   Compare Data Differences
                 </Text>
               </List.Item>
               <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Edit Nodes
+                <Tooltip
+                  color="blue"
+                  label="Edit nodes directly on the graph reflecting to the data"
+                  maw={350}
+                  multiline
+                >
+                  <Text
+                    c="gray.7"
+                    fw={600}
+                    fz="sm"
+                    style={{ textDecoration: "underline", textDecorationStyle: "dashed" }}
+                  >
+                    Edit Nodes
+                  </Text>
+                </Tooltip>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={600} fz="sm">
+                  Built-in tabs for multiple documents
                 </Text>
               </List.Item>
               <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Built-in tabs for Multiple Documents
+                <Text c="gray.7" fw={600} fz="sm">
+                  Store 200 documents
                 </Text>
               </List.Item>
               <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
+                <Text c="gray.7" fw={600} fz="sm">
                   AI powered data filter
                 </Text>
               </List.Item>
@@ -259,15 +329,12 @@ export const PricingCards = () => {
         <StyledPaper>
           <Flex justify="space-between">
             <Stack gap="0">
-              <Text fw={500} mb="sm" size="xl" c="black">
+              <Text fw={500} size="xl" c="black">
                 Free
               </Text>
-
-              <Flex gap="xs" align="baseline">
-                <Text fz={38} fw="bold" c="black">
-                  $0
-                </Text>
-              </Flex>
+              <Text fz={38} fw="bold" c="black">
+                $0
+              </Text>
               <Text fz="xs" c="gray.7">
                 billed {isMonthly ? "monthly" : "annually"}
               </Text>
@@ -287,6 +354,10 @@ export const PricingCards = () => {
           >
             Free forever
           </Button>
+          <Text mt="xs" fz="xs" c="dimmed">
+            For individuals who occasionally work with data and doesn&apos;t require advanced
+            features.
+          </Text>
           <Flex direction="column" justify="space-between">
             <List
               spacing="md"
@@ -294,18 +365,52 @@ export const PricingCards = () => {
               mt="lg"
               c="black"
               center
-              icon={<MdCheck size="18" color="blue" />}
+              icon={<IoIosCheckmarkCircle color="green" size="20" />}
             >
               <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Basic data support
-                </Text>
-                <Text c="dimmed" fz="xs">
-                  (~300 KB)
-                </Text>
+                <Tooltip
+                  color="blue"
+                  label="Visualize up to ~300 KB depending on your hardware"
+                  maw={350}
+                  multiline
+                  withArrow
+                >
+                  <Text
+                    c="gray.7"
+                    fw={600}
+                    fz="sm"
+                    style={{ textDecoration: "underline", textDecorationStyle: "dashed" }}
+                  >
+                    Basic data size support
+                  </Text>
+                </Tooltip>
               </List.Item>
               <List.Item>
-                <Text c="gray.7" fw={500} fz="sm">
+                <Tooltip
+                  color="blue"
+                  label={
+                    <Flex align="center" gap="xs">
+                      Open source and free to use
+                      <VscLinkExternal />
+                    </Flex>
+                  }
+                  maw={350}
+                  multiline
+                >
+                  <Anchor
+                    href="https://github.com/AykutSarac/jsoncrack.com"
+                    target="_blank"
+                    c="gray.7"
+                    fw={600}
+                    fz="sm"
+                    style={{ textDecoration: "underline", textDecorationStyle: "dashed" }}
+                  >
+                    Open Source
+                  </Anchor>
+                </Tooltip>
+              </List.Item>
+              <List.Item>
+                <Text c="gray.7" fw={600} fz="sm">
                   Store 25 documents
                 </Text>
               </List.Item>

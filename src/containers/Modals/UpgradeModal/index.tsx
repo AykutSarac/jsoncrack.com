@@ -81,6 +81,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
             py="xs"
             px="sm"
             style={{
+              borderWidth: 2,
               borderColor: getBorderColor("monthly"),
               cursor: "pointer",
             }}
@@ -94,6 +95,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
             radius="md"
             p="sm"
             style={{
+              borderWidth: 2,
               borderColor: getBorderColor("annual"),
               cursor: "pointer",
             }}
@@ -148,7 +150,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
             /mo (billed {plan === "monthly" ? "monthly" : "annually"})
           </Text>
         </Flex>
-        <Button onClick={handleSelect} color="indigo" rightSection={<IoMdArrowForward />}>
+        <Button onClick={handleSelect} color="green" rightSection={<IoMdArrowForward />}>
           Upgrade
         </Button>
       </Flex>

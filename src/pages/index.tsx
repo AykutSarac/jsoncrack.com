@@ -1,5 +1,4 @@
 import React from "react";
-import dynamic from "next/dynamic";
 import Head from "next/head";
 import { Divider } from "@mantine/core";
 import "@mantine/carousel/styles.css";
@@ -8,13 +7,9 @@ import { FAQ } from "src/containers/Landing/FAQ";
 import { Features } from "src/containers/Landing/Features";
 import { HeroPreview } from "src/containers/Landing/HeroPreview";
 import { HeroSection } from "src/containers/Landing/HeroSection";
+import { PremiumVsFree } from "src/containers/Landing/PremiumVsFree";
+import { Pricing } from "src/containers/Landing/Pricing";
 import Layout from "src/layout/Layout";
-
-const PremiumVsFree = dynamic(() =>
-  import("src/containers/Landing/PremiumVsFree").then(mod => mod.PremiumVsFree)
-);
-
-const Pricing = dynamic(() => import("src/containers/Landing/Pricing").then(mod => mod.Pricing));
 
 export const HomePage = () => {
   return (
