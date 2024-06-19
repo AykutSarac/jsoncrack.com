@@ -206,7 +206,7 @@ export const PricingCards = () => {
                     ml="sm"
                     leftSection={<FaArrowTrendDown />}
                   >
-                    20%
+                    16%
                   </Badge>
                 )}
               </Flex>
