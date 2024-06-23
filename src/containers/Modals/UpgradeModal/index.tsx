@@ -14,7 +14,7 @@ import {
   List,
 } from "@mantine/core";
 import { IoMdArrowForward } from "react-icons/io";
-import { MdCheck } from "react-icons/md";
+import { IoCheckmarkCircle } from "react-icons/io5";
 import { gaEvent } from "src/lib/utils/gaEvent";
 import { PRICING } from "src/pages/pricing";
 import useUser from "src/store/useUser";
@@ -114,16 +114,24 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
       <Text mt="md" fz="sm" fw="bold" mb="xs">
         What You Get
       </Text>
-      <List
-        fz="sm"
-        lts={0.2}
-        icon={<MdCheck color="#5199FF" size={20} style={{ verticalAlign: "middle" }} />}
-      >
-        <List.Item>500% Larger data size support (~4 MB)</List.Item>
-        <List.Item>400% Better performance</List.Item>
-        <List.Item>50% Less Nodes & Compact Graph Visualization</List.Item>
-        <List.Item>Compare Data on Graphs</List.Item>
-        <List.Item>Edit on Graphs</List.Item>
+      <List fz="sm" lts={0.2} icon={<IoCheckmarkCircle color="#41B619" size="20" />}>
+        <List.Item>Compact graph visualization</List.Item>
+        <List.Item>
+          5x larger data size support
+          <Text component="span" fw={500} c="light" ml={4} inherit>
+            (up to ~4 MB)
+          </Text>
+        </List.Item>
+        <List.Item>
+          <Text component="span" fw={500} c="light" mr={4} inherit>
+            4x faster
+          </Text>
+          load and render
+        </List.Item>
+        <List.Item>50% less nodes, easier to navigate</List.Item>
+        <List.Item>Customizable graph colors</List.Item>
+        <List.Item>Compare data on graphs</List.Item>
+        <List.Item>Edit data on graphs</List.Item>
       </List>
 
       <Button
