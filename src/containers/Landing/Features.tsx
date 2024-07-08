@@ -68,12 +68,13 @@ export const Features = () => {
           <Paper
             pos="relative"
             p={30}
-            shadow="xs"
-            radius="md"
+            shadow="sm"
+            radius="sm"
             w="100%"
             h={{ sm: 300, md: 370 }}
             withBorder
-            style={{ overflow: "hidden" }}
+            style={{ overflow: "hidden", borderColor: "#ececec" }}
+            bg="white"
           >
             <StyledPaper>
               <Title c="black" order={3} fw={500} fz={{ sm: 20, md: 28 }}>
@@ -98,12 +99,13 @@ export const Features = () => {
         <Grid.Col span={{ base: 12, sm: 6 }}>
           <Paper
             p={30}
-            shadow="xs"
-            radius="md"
+            shadow="sm"
+            radius="sm"
             w="100%"
             h={{ sm: 300, md: 370 }}
+            bg="white"
             withBorder
-            style={{ overflow: "hidden" }}
+            style={{ overflow: "hidden", borderColor: "#ececec" }}
           >
             <StyledPaper>
               <Title c="black" order={3} fw={500} fz={{ sm: 20, md: 28 }}>
@@ -134,12 +136,13 @@ export const Features = () => {
         <Grid.Col span={{ base: 12, sm: 6 }}>
           <Paper
             p={30}
-            shadow="xs"
-            radius="md"
+            shadow="sm"
+            radius="sm"
             w="100%"
             h={{ sm: 300, md: 370 }}
             withBorder
-            style={{ overflow: "hidden" }}
+            style={{ overflow: "hidden", borderColor: "#ececec" }}
+            bg="white"
           >
             <StyledPaper>
               <Title c="black" order={3} fw={500} fz={{ sm: 20, md: 28 }}>
@@ -165,12 +168,13 @@ export const Features = () => {
         <Grid.Col span={{ base: 12, sm: 6 }}>
           <Paper
             p={30}
-            shadow="xs"
-            radius="md"
+            shadow="sm"
+            radius="sm"
             w="100%"
             h={{ sm: 300, md: 370 }}
             withBorder
-            style={{ overflow: "hidden" }}
+            style={{ overflow: "hidden", borderColor: "#ececec" }}
+            bg="white"
           >
             <StyledPaper>
               <Title c="black" order={3} fw={500} fz={{ sm: 20, md: 28 }}>

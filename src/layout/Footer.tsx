@@ -1,16 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import {
-  Anchor,
-  Button,
-  Container,
-  Divider,
-  Flex,
-  Stack,
-  Text,
-  ThemeIcon,
-  Title,
-} from "@mantine/core";
+import { Anchor, Container, Divider, Flex, Stack, Text, ThemeIcon } from "@mantine/core";
 import dayjs from "dayjs";
 import { FaDiscord, FaGithub, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
@@ -19,34 +9,6 @@ import { JSONCrackLogo } from "./JsonCrackLogo";
 export const Footer = () => {
   return (
     <Container mt={150}>
-      <Stack align="center">
-        <Title
-          fz={{
-            sm: 32,
-            md: 36,
-          }}
-          c="gray.7"
-          lts={-1}
-          order={3}
-          ta="center"
-        >
-          Designed for everyone
-          <br />
-          Save time understanding your data.
-        </Title>
-
-        <Button
-          variant="gradient"
-          style={{ border: "1px solid #625BF6" }}
-          component={Link}
-          prefetch={false}
-          href="/#pricing"
-          radius="lg"
-          size="xl"
-        >
-          Get Started
-        </Button>
-      </Stack>
       <Divider my={60} color="gray.3" />
       <Flex justify="space-between">
         <Stack gap={4} visibleFrom="sm">
