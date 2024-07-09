@@ -1,6 +1,5 @@
 import React from "react";
 import Head from "next/head";
-import { Divider } from "@mantine/core";
 import "@mantine/carousel/styles.css";
 import { metaDescription } from "src/constants/landing";
 import { FAQ } from "src/containers/Landing/FAQ";
@@ -24,9 +23,8 @@ export const HomePage = () => {
       <HeroSection />
       <HeroPreview />
       <Features />
-      <Divider w="80%" my={100} mx="auto" />
-      <PremiumVsFree />
       <Pricing />
+      <PremiumVsFree />
       <FAQ />
       <Outro />
     </Layout>

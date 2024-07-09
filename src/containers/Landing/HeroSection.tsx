@@ -133,8 +133,9 @@ export const HeroSection = () => {
             size="lg"
             radius="lg"
             rightSection={<MdChevronRight size={30} />}
+            mt="sm"
           >
-            Get Started
+            Visualize now
           </Button>
         </Stack>
       </StyledHeroSectionBody>

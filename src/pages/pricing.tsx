@@ -17,7 +17,6 @@ import {
 } from "@mantine/core";
 import styled from "styled-components";
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import { FaArrowTrendDown } from "react-icons/fa6";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { IoCheckmarkCircle } from "react-icons/io5";
 import { PiChats } from "react-icons/pi";
@@ -123,6 +122,7 @@ export const PricingCards = () => {
                   label="Integrate premium graph visualization into your own website/apps using iframe"
                   maw={350}
                   multiline
+                  withArrow
                 >
                   <Text
                     c="gray.7"
@@ -145,6 +145,7 @@ export const PricingCards = () => {
                   label="Listen for events like node click, hover, center etc. Display your own UI"
                   maw={350}
                   multiline
+                  withArrow
                 >
                   <Text
                     c="gray.7"
@@ -162,6 +163,7 @@ export const PricingCards = () => {
                   label="Customize the look and feel of the editor matching with your own branding"
                   maw={350}
                   multiline
+                  withArrow
                 >
                   <Text
                     c="gray.7"
@@ -199,14 +201,8 @@ export const PricingCards = () => {
                   Premium
                 </Text>
                 {!isMonthly && (
-                  <Badge
-                    size="lg"
-                    variant="light"
-                    color="#ff0000"
-                    ml="sm"
-                    leftSection={<FaArrowTrendDown />}
-                  >
-                    16%
+                  <Badge size="lg" variant="light" c="#41B619" radius="md" color="green" ml="sm">
+                    SAVE 16%
                   </Badge>
                 )}
               </Flex>
@@ -297,6 +293,7 @@ export const PricingCards = () => {
                   label="Edit nodes directly on the graph reflecting to the data"
                   maw={350}
                   multiline
+                  withArrow
                 >
                   <Text
                     c="gray.7"
@@ -370,7 +367,7 @@ export const PricingCards = () => {
               <List.Item>
                 <Tooltip
                   color="blue"
-                  label="Visualize up to ~300 KB depending on your hardware"
+                  label="Visualize up to ~300 KB of data"
                   maw={350}
                   multiline
                   withArrow
@@ -396,6 +393,7 @@ export const PricingCards = () => {
                   }
                   maw={350}
                   multiline
+                  withArrow
                 >
                   <Anchor
                     href="https://github.com/AykutSarac/jsoncrack.com"

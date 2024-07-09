@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Title, Grid, Paper, Badge, Image } from "@mantine/core";
+import { Text, Title, Grid, Paper, Badge, Image, Container } from "@mantine/core";
 import styled from "styled-components";
 
 const StyledPaper = styled.div`
@@ -27,7 +27,7 @@ const StyledPaper = styled.div`
 
 export const Features = () => {
   return (
-    <section id="features">
+    <Container component="section" id="features" fluid my={150}>
       <Title
         c="black"
         order={2}
@@ -242,6 +242,6 @@ export const Features = () => {
           </Paper>
         </Grid.Col>
       </Grid>
-    </section>
+    </Container>
   );
 };

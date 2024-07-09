@@ -1,5 +1,5 @@
 import React from "react";
-import { Title, Overlay, Paper, rem, Grid, Flex, Image, Text } from "@mantine/core";
+import { Title, Overlay, Paper, rem, Grid, Flex, Image, Text, Container } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import styled from "styled-components";
 import { ReactCompareSlider } from "react-compare-slider";
@@ -20,7 +20,7 @@ const StyledImageWrapper = styled.div`
 
 export const PremiumVsFree = () => {
   return (
-    <section id="premium">
+    <Container component="section" id="premium" fluid my={150}>
       <Title
         c="black"
         order={2}
@@ -179,7 +179,7 @@ export const PremiumVsFree = () => {
       </Grid>
 
       <Paper w="95%" mt={100} mx="auto" radius="md" style={{ overflow: "hidden" }} visibleFrom="xs">
-        <Carousel slideGap="md" slideSize="50%" height="100%" loop>
+        <Carousel bg="white" slideGap="md" slideSize="50%" height="100%" loop>
           {images.map(image => (
             <Carousel.Slide key={image.id}>
               <Image
@@ -195,6 +195,6 @@ export const PremiumVsFree = () => {
           ))}
         </Carousel>
       </Paper>
-    </section>
+    </Container>
   );
 };

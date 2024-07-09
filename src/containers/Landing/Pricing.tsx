@@ -1,10 +1,10 @@
 import React from "react";
-import { Title } from "@mantine/core";
+import { Container, Title } from "@mantine/core";
 import { PricingCards } from "src/pages/pricing";
 
 export const Pricing = () => {
   return (
-    <section id="pricing">
+    <Container component="section" id="pricing" my={150} fluid>
       <Title
         c="black"
         order={2}
@@ -20,6 +20,6 @@ export const Pricing = () => {
         Pricing
       </Title>
       <PricingCards />
-    </section>
+    </Container>
   );
 };

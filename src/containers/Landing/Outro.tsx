@@ -4,7 +4,7 @@ import { Stack, Title, Button } from "@mantine/core";
 
 export const Outro = () => {
   return (
-    <Stack align="center" mt={150}>
+    <Stack align="center" my={150}>
       <Title
         fz={{
           sm: 32,

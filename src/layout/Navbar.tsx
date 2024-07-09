@@ -115,7 +115,7 @@ export const Navbar = () => {
             radius="lg"
             size="md"
           >
-            Get started for free
+            Start for free
           </Button>
         </Right>
       </StyledNavbar>
