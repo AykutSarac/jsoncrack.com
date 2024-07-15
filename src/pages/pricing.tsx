@@ -349,7 +349,7 @@ export const PricingCards = () => {
             my="md"
             rightSection={<VscArrowRight />}
           >
-            Free forever
+            Get Started
           </Button>
           <Text mt="xs" fz="xs" c="dimmed">
             For individuals who occasionally work with data and doesn&apos;t require advanced
