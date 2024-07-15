@@ -177,12 +177,11 @@ export const NotSupported = () => {
           mt="lg"
           size="lg"
           fw="bolder"
-          variant="gradient"
-          radius="xl"
+          color="green"
+          radius="md"
           rightSection={<MdChevronRight size="24" />}
-          style={{ border: "1px solid #388cdb" }}
         >
-          Get Premium
+          Upgrade now
         </Button>
       </StyledContent>
 

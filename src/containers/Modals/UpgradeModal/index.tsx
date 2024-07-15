@@ -57,7 +57,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
     <Modal
       title={
         <Text fz="xl" fw="bold" ml="auto">
-          Unlock even more features!
+          Upgrade
         </Text>
       }
       centered
@@ -104,7 +104,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
             <Flex justify="space-between">
               <Radio value="annual" label="Annual" size="xs" />
               <Badge variant="light" color="indigo" size="xs" radius="sm">
-                Save 16%
+                Save {Math.round(((PRICING.MONTHLY - PRICING.ANNUAL) / PRICING.MONTHLY) * 100)}%
               </Badge>
             </Flex>
           </Paper>
@@ -115,20 +115,15 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
         What You Get
       </Text>
       <List fz="sm" lts={0.2} icon={<IoCheckmarkCircle color="#41B619" size="20" />}>
-        <List.Item>Compact graph visualization</List.Item>
+        <List.Item>Powerful editor interface</List.Item>
+        <List.Item>Compact graphs and less nodes</List.Item>
         <List.Item>
-          5x larger data size support
+          Larger data size support
           <Text component="span" fw={500} c="light" ml={4} inherit>
             (up to ~4 MB)
           </Text>
         </List.Item>
-        <List.Item>
-          <Text component="span" fw={500} c="light" mr={4} inherit>
-            4x faster
-          </Text>
-          load and render
-        </List.Item>
-        <List.Item>50% less nodes, easier to navigate</List.Item>
+        <List.Item>Faster rendering</List.Item>
         <List.Item>Customizable graph colors</List.Item>
         <List.Item>Compare data on graphs</List.Item>
         <List.Item>Edit data on graphs</List.Item>
