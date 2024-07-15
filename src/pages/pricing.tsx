@@ -326,7 +326,7 @@ export const PricingCards = () => {
           <Flex justify="space-between">
             <Stack gap="0">
               <Text fw={500} size="xl" c="black">
-                Demo
+                Free
               </Text>
               <Text fz={38} fw="bold" c="black">
                 $0
