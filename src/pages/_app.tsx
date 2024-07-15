@@ -26,8 +26,8 @@ const theme = createTheme({
   cursorType: "pointer",
   fontFamily: dmSans.style.fontFamily,
   defaultGradient: {
-    from: "#625BF6",
-    to: "#362EF3",
+    from: "#388cdb",
+    to: "#0f037f",
     deg: 180,
   },
   primaryShade: 8,

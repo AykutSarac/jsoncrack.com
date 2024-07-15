@@ -22,7 +22,7 @@ export const Outro = () => {
 
       <Button
         variant="gradient"
-        style={{ border: "1px solid #625BF6" }}
+        style={{ border: "1px solid #388cdb" }}
         component={Link}
         prefetch={false}
         href="/#pricing"

@@ -67,14 +67,14 @@ export const Footer = () => {
             <Flex gap="xs">
               <Anchor
                 aria-label="LinkedIn"
-                href="https://www.linkedin.com/company/herowand"
+                href="https://www.linkedin.com/company/jsoncrack"
                 fz="sm"
               >
                 <ThemeIcon variant="transparent" color="black">
                   <FaLinkedin size={20} />
                 </ThemeIcon>
               </Anchor>
-              <Anchor aria-label="X" fz="sm" href="https://twitter.com/jsoncrack">
+              <Anchor aria-label="X" fz="sm" href="https://x.com/jsoncrack">
                 <ThemeIcon variant="transparent" color="black">
                   <FaXTwitter size={20} />
                 </ThemeIcon>

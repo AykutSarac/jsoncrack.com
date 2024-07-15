@@ -41,7 +41,7 @@ export const Features = () => {
         mb={15}
         style={{ textAlign: "center" }}
       >
-        An intuitive and user-friendly interface
+        Intuitive and User-Friendly
       </Title>
       <Text
         c="gray.6"
@@ -51,16 +51,15 @@ export const Features = () => {
         }}
         px="lg"
         w={{
-          sm: "80%",
-          md: "60%",
+          sm: "60%",
+          md: "40%",
         }}
         mx="auto"
         ta="center"
         mb={50}
       >
-        Enhance your workflow with JSON Crack, the ultimate JSON editor! Effortless formatting,
-        robust validation, and intuitive visualizations in one platform. Make smarter decisions
-        faster.
+        All-in-one tool for JSON, YAML, CSV, XML, and TOML. Formatter, validator, visualizer, and
+        editor. Make smarter decisions faster.
       </Text>
 
       <Grid w="80%" gutter={24} mt={50} mb={150} mx="auto">

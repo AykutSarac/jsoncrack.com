@@ -23,8 +23,8 @@ export const HomePage = () => {
       <HeroSection />
       <HeroPreview />
       <Features />
-      <Pricing />
       <PremiumVsFree />
+      <Pricing />
       <FAQ />
       <Outro />
     </Layout>

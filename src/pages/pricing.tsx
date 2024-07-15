@@ -10,8 +10,7 @@ import {
   Paper,
   SegmentedControl,
   Center,
-  Badge,
-  ThemeIcon,
+  Badge, // ThemeIcon,
   Tooltip,
   Anchor,
 } from "@mantine/core";
@@ -19,14 +18,14 @@ import styled from "styled-components";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { IoCheckmarkCircle } from "react-icons/io5";
-import { PiChats } from "react-icons/pi";
+// import { PiChats } from "react-icons/pi";
 import { VscArrowRight, VscLinkExternal } from "react-icons/vsc";
 import Layout from "src/layout/Layout";
 import { gaEvent } from "src/lib/utils/gaEvent";
 
 export const PRICING = {
-  MONTHLY: 6,
-  ANNUAL: 5,
+  MONTHLY: 9,
+  ANNUAL: 6,
 };
 
 export const purchaseLinks = {
@@ -75,7 +74,7 @@ export const PricingCards = () => {
         }}
         mx="auto"
       >
-        <StyledPaper>
+        {/* <StyledPaper>
           <Flex justify="space-between">
             <Stack gap="0">
               <Text fw={500} size="xl" c="black">
@@ -192,7 +191,7 @@ export const PricingCards = () => {
               </List.Item>
             </List>
           </Flex>
-        </StyledPaper>
+        </StyledPaper> */}
         <StyledPaper $highlight>
           <Flex justify="space-between">
             <Stack gap="0">
@@ -202,7 +201,7 @@ export const PricingCards = () => {
                 </Text>
                 {!isMonthly && (
                   <Badge size="lg" variant="light" c="#41B619" radius="md" color="green" ml="sm">
-                    SAVE 16%
+                    SAVE {Math.round(((PRICING.MONTHLY - PRICING.ANNUAL) / PRICING.MONTHLY) * 100)}%
                   </Badge>
                 )}
               </Flex>
@@ -222,7 +221,7 @@ export const PricingCards = () => {
           </Flex>
           <Button
             component="a"
-            color="green"
+            color="#2ba80f"
             onClick={() => gaEvent("Pricing", "click upgrade premium")}
             href={isMonthly ? purchaseLinks.monthly : purchaseLinks.annual}
             target="_blank"
@@ -327,7 +326,7 @@ export const PricingCards = () => {
           <Flex justify="space-between">
             <Stack gap="0">
               <Text fw={500} size="xl" c="black">
-                Free
+                Demo
               </Text>
               <Text fz={38} fw="bold" c="black">
                 $0
@@ -349,7 +348,7 @@ export const PricingCards = () => {
             my="md"
             rightSection={<VscArrowRight />}
           >
-            Get Started
+            Go to Editor
           </Button>
           <Text mt="xs" fz="xs" c="dimmed">
             For individuals who occasionally work with data and doesn&apos;t require advanced

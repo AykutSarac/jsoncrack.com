@@ -180,7 +180,7 @@ export const NotSupported = () => {
           variant="gradient"
           radius="xl"
           rightSection={<MdChevronRight size="24" />}
-          style={{ border: "1px solid #625BF6" }}
+          style={{ border: "1px solid #388cdb" }}
         >
           Get Premium
         </Button>

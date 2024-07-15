@@ -107,7 +107,7 @@ export const Navbar = () => {
           </Button>
           <Button
             variant="gradient"
-            style={{ border: "1px solid #625BF6" }}
+            style={{ borderTop: "1px solid #388cdb" }}
             component={Link}
             prefetch={false}
             href="/#pricing"

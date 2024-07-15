@@ -52,7 +52,7 @@ export const AccountModal = ({ opened, onClose }: ModalProps) => {
       <Group justify="right">
         <Button
           variant="gradient"
-          style={{ border: "1px solid #625BF6" }}
+          style={{ border: "1px solid #388cdb" }}
           leftSection={<IoRocketSharp />}
           onClick={() => {
             setVisible("upgrade")(true);

@@ -7,11 +7,10 @@ import { gaEvent } from "src/lib/utils/gaEvent";
 const StyledHeroTitle = styled.h1`
   position: relative;
   font-size: 2rem;
-  font-weight: 900;
+  font-weight: 500;
   display: inline;
   color: #272727;
   width: fit-content;
-  letter-spacing: -1px;
   line-height: 1.2;
 
   @keyframes textShine {
@@ -24,17 +23,17 @@ const StyledHeroTitle = styled.h1`
   }
 
   @media only screen and (min-width: 576px) {
-    font-size: 3.2rem;
+    font-size: 3.8rem;
     letter-spacing: -2px;
   }
 
   @media only screen and (min-width: 992px) {
     letter-spacing: -4px;
-    font-size: 4rem;
+    font-size: 3.6rem;
   }
 
   @media only screen and (min-width: 1400px) {
-    max-width: 75%;
+    max-width: 80%;
     letter-spacing: -4px;
     font-size: 4rem;
   }
@@ -105,7 +104,7 @@ export const HeroSection = () => {
     <StyledHeroSection id="hero-section">
       <StyledHeroSectionBody>
         <Stack flex="1" miw={250} mx="auto" align="center">
-          <StyledHeroTitle>Data into Clarity with Powerful Visualization</StyledHeroTitle>
+          <StyledHeroTitle>Graph Based Data Editor</StyledHeroTitle>
           <StyledHeroText>Transform data into interactive graphs.</StyledHeroText>
           <Flex gap="xs">
             <Badge size="xs" color="gray.7" autoContrast radius="sm" variant="light">
@@ -128,14 +127,18 @@ export const HeroSection = () => {
             onClick={() => gaEvent("Hero Section", "click upgrade premium")}
             component="a"
             variant="gradient"
-            style={{ border: "1px solid #625BF6" }}
+            style={{
+              borderTop: "1px solid #388cdb",
+              outline: "2px solid #c9e3ff",
+              outlineOffset: "2px",
+            }}
             href="/#pricing"
             size="lg"
             radius="lg"
             rightSection={<MdChevronRight size={30} />}
-            mt="sm"
+            mt="lg"
           >
-            Visualize now
+            Get Started
           </Button>
         </Stack>
       </StyledHeroSectionBody>
