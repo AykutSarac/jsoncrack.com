@@ -150,7 +150,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
             {plan === "monthly" ? PRICING.MONTHLY : PRICING.ANNUAL}
           </Text>
           <Text ml="xs" fz="xs" c="dimmed">
-            /mo (billed {plan === "monthly" ? "monthly" : "annually"})
+            / mo (billed {plan === "monthly" ? "monthly" : "annually"})
           </Text>
         </Flex>
         <Button onClick={handleSelect} color="green" rightSection={<IoMdArrowForward />}>

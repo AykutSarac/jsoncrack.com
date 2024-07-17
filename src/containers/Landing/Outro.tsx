@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Stack, Title, Button } from "@mantine/core";
+import { IoArrowForward } from "react-icons/io5";
 
 export const Outro = () => {
   return (
@@ -21,13 +22,13 @@ export const Outro = () => {
       </Title>
 
       <Button
-        variant="gradient"
-        style={{ border: "1px solid #388cdb" }}
+        color="brightBlue"
         component={Link}
         prefetch={false}
         href="/#pricing"
         radius="lg"
         size="xl"
+        rightSection={<IoArrowForward />}
       >
         Get Started
       </Button>

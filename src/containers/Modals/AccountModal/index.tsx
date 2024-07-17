@@ -51,8 +51,7 @@ export const AccountModal = ({ opened, onClose }: ModalProps) => {
       <Divider py="xs" />
       <Group justify="right">
         <Button
-          variant="gradient"
-          style={{ border: "1px solid #388cdb" }}
+          variant="default"
           leftSection={<IoRocketSharp />}
           onClick={() => {
             setVisible("upgrade")(true);

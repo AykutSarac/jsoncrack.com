@@ -2,7 +2,7 @@ import React from "react";
 import { Title, Overlay, Paper, rem, Grid, Flex, Image, Text, Container } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import styled from "styled-components";
-import { ReactCompareSlider } from "react-compare-slider";
+import { ReactCompareSlider, ReactCompareSliderHandle } from "react-compare-slider";
 import { FaBolt, FaExpand, FaLifeRing, FaParachuteBox, FaShapes } from "react-icons/fa";
 import { FaShieldHalved } from "react-icons/fa6";
 import { images } from "src/constants/landing";
@@ -19,6 +19,22 @@ const StyledImageWrapper = styled.div`
 `;
 
 export const PremiumVsFree = () => {
+  const [labelOpacity, setLabelOpacity] = React.useState(1);
+  const labelStyle = {
+    fontSize: "1rem",
+    position: "absolute" as any,
+    padding: "6px 12px",
+    margin: "0 -6px",
+    color: "white",
+    opacity: labelOpacity,
+    borderRadius: ".25rem",
+    border: "1px solid white",
+    backdropFilter: "blur(0.25rem) saturate(180%) contrast(80%) brightness(120%)",
+    WebkitBackdropFilter: "blur(0.25rem) saturate(180%) contrast(80%) brightness(120%)",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    transition: "opacity 0.25s ease-in-out",
+  };
+
   return (
     <Container component="section" id="premium" fluid my={150}>
       <Title
@@ -37,6 +53,8 @@ export const PremiumVsFree = () => {
 
       <StyledImageWrapper>
         <ReactCompareSlider
+          onPointerDown={() => setLabelOpacity(0)}
+          onPointerUp={() => setLabelOpacity(1)}
           style={{
             border: "1px solid #d5d5d5",
             borderRadius: 12,
@@ -47,6 +65,35 @@ export const PremiumVsFree = () => {
               <Overlay color="#000" backgroundOpacity={0.1} />
               <Image loading="lazy" src="./assets/compare/free.webp" alt="Free" />
             </>
+          }
+          handle={
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                height: "100%",
+              }}
+            >
+              <ReactCompareSliderHandle />
+              <div
+                style={{
+                  ...labelStyle,
+                  translate: "-100% 0",
+                  left: 0,
+                }}
+              >
+                Premium
+              </div>
+              <div
+                style={{
+                  ...labelStyle,
+                  translate: "100% 0",
+                  right: 0,
+                }}
+              >
+                Free
+              </div>
+            </div>
           }
         />
       </StyledImageWrapper>

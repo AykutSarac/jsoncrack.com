@@ -5,7 +5,7 @@ import { ColorSchemeScript } from "@mantine/core";
 import { ServerStyleSheet } from "styled-components";
 
 const metatags = Object.freeze({
-  title: "JSON Crack | Best JSON Viewer, Formatter and Visualizer for everyone",
+  title: "JSON Crack | Transform your data into interactive graphs",
   image: "https://jsoncrack.com/assets/jsoncrack.png",
 });
 

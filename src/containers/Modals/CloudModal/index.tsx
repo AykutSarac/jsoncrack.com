@@ -85,7 +85,7 @@ const UpdateNameModal = ({ file, onClose, refetch }: UpdateNameModalProps) => {
           data-autofocus
         />
         <Group justify="right">
-          <Button variant="outline" onClick={onClose}>
+          <Button variant="default" onClick={onClose}>
             Cancel
           </Button>
           <Button onClick={onSubmit}>Update</Button>

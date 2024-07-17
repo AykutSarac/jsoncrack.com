@@ -31,6 +31,20 @@ const theme = createTheme({
     deg: 180,
   },
   primaryShade: 8,
+  colors: {
+    brightBlue: [
+      "#e6f2ff",
+      "#cee1ff",
+      "#9bc0ff",
+      "#649dff",
+      "#3980fe",
+      "#1d6dfe",
+      "#0964ff",
+      "#0054e4",
+      "#004acc",
+      "#003fb5",
+    ],
+  },
   radius: {
     lg: "12px",
   },
@@ -75,7 +89,7 @@ function JsonCrack({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <title>JSON Crack | Best JSON Viewer, Formatter and Visualizer for everyone</title>
+        <title>JSON Crack | Transform your data into interactive graphs</title>
       </Head>
       <ThemeProvider theme={lightTheme}>
         <Toaster

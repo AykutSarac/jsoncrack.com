@@ -40,9 +40,25 @@ const StyledPaper = styled(Paper)<{ $highlight?: boolean } & any>`
   width: 350px;
   border-radius: 4px;
   border: 2px solid #e9e9e9;
-  ${({ $highlight }) => $highlight && "border-top: 3px solid #28c417;"}
+  ${({ $highlight }) => $highlight && "border: 3px solid #28c417;"}
   background: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  ${({ $highlight }) =>
+    $highlight &&
+    `
+  &::before {
+    content: "Recommended";
+    background: #28c417;
+    position: absolute;
+    transform: translate(-27px, -60px);
+    font-weight: 500;
+    color: white;
+    padding: 6px 8px;
+    border-top-right-radius: 6px;
+    border-top-left-radius: 6px;
+  }
+  `}
 `;
 
 export const PricingCards = () => {
@@ -61,10 +77,11 @@ export const PricingCards = () => {
           w={200}
           radius="lg"
           styles={{ label: { color: "black" } }}
+          mb="xl"
         />
       </Center>
       <Flex
-        gap="0"
+        gap="6"
         wrap="wrap"
         justify="center"
         w="fit-content"
@@ -200,17 +217,25 @@ export const PricingCards = () => {
                   Premium
                 </Text>
                 {!isMonthly && (
-                  <Badge size="lg" variant="light" c="#41B619" radius="md" color="green" ml="sm">
+                  <Badge
+                    fw={500}
+                    size="lg"
+                    variant="light"
+                    c="#41B619"
+                    radius="md"
+                    color="green"
+                    ml="sm"
+                  >
                     SAVE {Math.round(((PRICING.MONTHLY - PRICING.ANNUAL) / PRICING.MONTHLY) * 100)}%
                   </Badge>
                 )}
               </Flex>
 
               <Flex gap="xs" align="baseline">
-                <Text fz={38} fw="bold" c="black">
+                <Text fz={38} fw={500} c="black">
                   ${isMonthly ? PRICING.MONTHLY : PRICING.ANNUAL}
                 </Text>
-                <Text fz="md" fw={500} c="gray.6">
+                <Text fz="md" c="gray.6">
                   / mo
                 </Text>
               </Flex>
@@ -254,10 +279,14 @@ export const PricingCards = () => {
                   withArrow
                 >
                   <Text
-                    c="gray.7"
-                    fw={600}
+                    c="black"
+                    fw={500}
                     fz="sm"
-                    style={{ textDecoration: "underline", textDecorationStyle: "dashed" }}
+                    style={{
+                      textDecoration: "underline",
+                      textDecorationStyle: "dashed",
+                      textUnderlineOffset: "2px",
+                    }}
                   >
                     Large data support
                   </Text>
@@ -272,17 +301,21 @@ export const PricingCards = () => {
                   withArrow
                 >
                   <Text
-                    c="gray.7"
-                    fw={600}
+                    c="black"
+                    fw={500}
                     fz="sm"
-                    style={{ textDecoration: "underline", textDecorationStyle: "dashed" }}
+                    style={{
+                      textDecoration: "underline",
+                      textDecorationStyle: "dashed",
+                      textUnderlineOffset: "2px",
+                    }}
                   >
                     Compact Graphs & High Performance
                   </Text>
                 </Tooltip>
               </List.Item>
               <List.Item>
-                <Text c="gray.7" fw={600} fz="sm">
+                <Text c="black" fw={500} fz="sm">
                   Compare Data Differences
                 </Text>
               </List.Item>
@@ -295,27 +328,31 @@ export const PricingCards = () => {
                   withArrow
                 >
                   <Text
-                    c="gray.7"
-                    fw={600}
+                    c="black"
+                    fw={500}
                     fz="sm"
-                    style={{ textDecoration: "underline", textDecorationStyle: "dashed" }}
+                    style={{
+                      textDecoration: "underline",
+                      textDecorationStyle: "dashed",
+                      textUnderlineOffset: "2px",
+                    }}
                   >
                     Edit Nodes
                   </Text>
                 </Tooltip>
               </List.Item>
               <List.Item>
-                <Text c="gray.7" fw={600} fz="sm">
+                <Text c="black" fw={500} fz="sm">
                   Built-in tabs for multiple documents
                 </Text>
               </List.Item>
               <List.Item>
-                <Text c="gray.7" fw={600} fz="sm">
+                <Text c="black" fw={500} fz="sm">
                   Store 200 documents
                 </Text>
               </List.Item>
               <List.Item>
-                <Text c="gray.7" fw={600} fz="sm">
+                <Text c="black" fw={500} fz="sm">
                   AI powered data filter
                 </Text>
               </List.Item>
@@ -328,7 +365,7 @@ export const PricingCards = () => {
               <Text fw={500} size="xl" c="black">
                 Free
               </Text>
-              <Text fz={38} fw="bold" c="black">
+              <Text fz={38} fw={500} c="black">
                 $0
               </Text>
               <Text fz="xs" c="gray.7">
@@ -372,10 +409,14 @@ export const PricingCards = () => {
                   withArrow
                 >
                   <Text
-                    c="gray.7"
-                    fw={600}
+                    c="black"
+                    fw={500}
                     fz="sm"
-                    style={{ textDecoration: "underline", textDecorationStyle: "dashed" }}
+                    style={{
+                      textDecoration: "underline",
+                      textDecorationStyle: "dashed",
+                      textUnderlineOffset: "2px",
+                    }}
                   >
                     Basic data size support
                   </Text>
@@ -397,17 +438,21 @@ export const PricingCards = () => {
                   <Anchor
                     href="https://github.com/AykutSarac/jsoncrack.com"
                     target="_blank"
-                    c="gray.7"
-                    fw={600}
+                    c="black"
+                    fw={500}
                     fz="sm"
-                    style={{ textDecoration: "underline", textDecorationStyle: "dashed" }}
+                    style={{
+                      textDecoration: "underline",
+                      textDecorationStyle: "dashed",
+                      textUnderlineOffset: "2px",
+                    }}
                   >
                     Open Source
                   </Anchor>
                 </Tooltip>
               </List.Item>
               <List.Item>
-                <Text c="gray.7" fw={600} fz="sm">
+                <Text c="black" fw={500} fz="sm">
                   Store 25 documents
                 </Text>
               </List.Item>

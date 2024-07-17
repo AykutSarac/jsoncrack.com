@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Button } from "@mantine/core";
 import styled from "styled-components";
+import { IoArrowForward } from "react-icons/io5";
 import { JSONCrackLogo } from "./JsonCrackLogo";
 
 const StyledNavbarWrapper = styled.div`
@@ -14,9 +15,8 @@ const StyledNavbar = styled.nav`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 56px;
   margin: 0 auto;
-  padding: 46px 40px;
+  padding: 12px 24px;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
@@ -69,18 +69,6 @@ export const Navbar = () => {
           <Button
             component={Link}
             prefetch={false}
-            href="/#faq"
-            variant="subtle"
-            color="black"
-            radius="md"
-            visibleFrom="sm"
-            size="md"
-          >
-            FAQ
-          </Button>
-          <Button
-            component={Link}
-            prefetch={false}
             href="/docs"
             variant="subtle"
             color="black"
@@ -90,30 +78,41 @@ export const Navbar = () => {
           >
             Docs
           </Button>
+          <Button
+            component={Link}
+            prefetch={false}
+            href="/#faq"
+            variant="subtle"
+            color="black"
+            radius="md"
+            visibleFrom="sm"
+            size="md"
+          >
+            FAQ
+          </Button>
         </Left>
         <Right>
           <Button
+            variant="default"
             component="a"
             href="https://app.jsoncrack.com/sign-in"
-            variant="gradient"
-            gradient={{ from: "#FFFFFF", to: "#f5f5f5", deg: 180 }}
-            c="dark"
             radius="lg"
             visibleFrom="sm"
             size="md"
-            style={{ border: "1px solid #E2E2E2" }}
+            fw={600}
           >
             Sign in
           </Button>
           <Button
-            variant="gradient"
-            style={{ borderTop: "1px solid #388cdb" }}
+            color="brightBlue"
             component={Link}
             prefetch={false}
             href="/#pricing"
             visibleFrom="sm"
             radius="lg"
             size="md"
+            fw={600}
+            rightSection={<IoArrowForward />}
           >
             Start for free
           </Button>

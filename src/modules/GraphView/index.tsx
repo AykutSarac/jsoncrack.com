@@ -228,7 +228,7 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
             >
               Close
             </Button>
-            <Button component="a" variant="gradient" href="/#pricing" target="_blank">
+            <Button component="a" color="brightBlue" href="/#pricing" target="_blank">
               Explore
             </Button>
           </Group>

@@ -7,11 +7,12 @@ import { gaEvent } from "src/lib/utils/gaEvent";
 const StyledHeroTitle = styled.h1`
   position: relative;
   font-size: 2rem;
-  font-weight: 500;
+  font-weight: 600;
   display: inline;
   color: #272727;
   width: fit-content;
   line-height: 1.2;
+  letter-spacing: -2px;
 
   @keyframes textShine {
     0% {
@@ -23,18 +24,16 @@ const StyledHeroTitle = styled.h1`
   }
 
   @media only screen and (min-width: 576px) {
-    font-size: 3.8rem;
-    letter-spacing: -2px;
+    font-size: 3.2rem;
   }
 
   @media only screen and (min-width: 992px) {
-    letter-spacing: -4px;
+    max-width: 75%;
     font-size: 3.6rem;
   }
 
   @media only screen and (min-width: 1400px) {
-    max-width: 80%;
-    letter-spacing: -4px;
+    max-width: 65%;
     font-size: 4rem;
   }
 `;
@@ -58,22 +57,22 @@ const StyledHeroText = styled.p`
   }
 `;
 
-const StyledHeroSection = styled.section`
+const StyledHeroSection = styled.main`
   position: relative;
 
-  &:before {
+  /* &:before {
     position: absolute;
     content: "";
     width: 100%;
     height: 100%;
-    background-color: #ffffff;
-    background-image: radial-gradient(#e3e1e1 1px, #ffffff 1px);
-    background-size: 10px 10px;
+    background-color: transparent;
+    background-image: radial-gradient(#0000002a 1px, transparent 1px);
+    background-size: 15px 15px;
     background-position: top center;
     image-rendering: pixelated;
     -webkit-mask-image: linear-gradient(to bottom, transparent, 20%, white, 80%, transparent);
     mask-image: linear-gradient(to bottom, transparent, 20%, white, 80%, transparent);
-  }
+  } */
 
   @media only screen and (max-width: 1240px) {
     flex-direction: column;
@@ -86,13 +85,13 @@ const StyledHeroSectionBody = styled.div`
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  padding: 4em 10%;
+  padding: 9rem 10%;
   overflow: hidden;
   backdrop-filter: blur(1.2px);
   -webkit-backdrop-filter: blur(1.2px);
   text-align: center;
   gap: 60px;
-  min-height: 60vh;
+  min-height: 40vh;
 
   @media only screen and (max-width: 768px) {
     padding: 3em 16px;
@@ -104,42 +103,49 @@ export const HeroSection = () => {
     <StyledHeroSection id="hero-section">
       <StyledHeroSectionBody>
         <Stack flex="1" miw={250} mx="auto" align="center">
-          <StyledHeroTitle>Graph Based Data Editor</StyledHeroTitle>
-          <StyledHeroText>Transform data into interactive graphs.</StyledHeroText>
-          <Flex gap="xs">
-            <Badge size="xs" color="gray.7" autoContrast radius="sm" variant="light">
+          <StyledHeroTitle>Transform your data into interactive graphs</StyledHeroTitle>
+          <StyledHeroText>Powerful editor to explore data visually.</StyledHeroText>
+          <Flex gap="md">
+            <Badge size="sm" color="gray" autoContrast radius="sm" variant="light">
               JSON
             </Badge>
-            <Badge size="xs" color="gray.7" autoContrast radius="sm" variant="light">
+            <Badge size="sm" color="gray" autoContrast radius="sm" variant="light">
               YAML
             </Badge>
-            <Badge size="xs" color="gray.7" autoContrast radius="sm" variant="light">
+            <Badge size="sm" color="gray" autoContrast radius="sm" variant="light">
               CSV
             </Badge>
-            <Badge size="xs" color="gray.7" autoContrast radius="sm" variant="light">
+            <Badge size="sm" color="gray" autoContrast radius="sm" variant="light">
               XML
             </Badge>
-            <Badge size="xs" color="gray.7" autoContrast radius="sm" variant="light">
+            <Badge size="sm" color="gray" autoContrast radius="sm" variant="light">
               TOML
             </Badge>
           </Flex>
-          <Button
-            onClick={() => gaEvent("Hero Section", "click upgrade premium")}
-            component="a"
-            variant="gradient"
-            style={{
-              borderTop: "1px solid #388cdb",
-              outline: "2px solid #c9e3ff",
-              outlineOffset: "2px",
-            }}
-            href="/#pricing"
-            size="lg"
-            radius="lg"
-            rightSection={<MdChevronRight size={30} />}
-            mt="lg"
-          >
-            Get Started
-          </Button>
+          <Flex justify="center" gap="sm" mt="lg" wrap="wrap">
+            <Button
+              component="a"
+              color="brightBlue"
+              href="/#pricing"
+              size="lg"
+              radius="md"
+              fw={600}
+              rightSection={<MdChevronRight size={30} />}
+            >
+              Get Started
+            </Button>
+            <Button
+              onClick={() => gaEvent("Hero Section", "click upgrade premium")}
+              component="a"
+              variant="default"
+              href="/#premium"
+              size="lg"
+              radius="md"
+              fw={600}
+            >
+              Explore Premium
+            </Button>
+          </Flex>
         </Stack>
       </StyledHeroSectionBody>
     </StyledHeroSection>
