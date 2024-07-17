@@ -106,19 +106,19 @@ export const HeroSection = () => {
           <StyledHeroTitle>Transform your data into interactive graphs</StyledHeroTitle>
           <StyledHeroText>Powerful editor to explore data visually.</StyledHeroText>
           <Flex gap="md">
-            <Badge size="sm" color="gray" autoContrast radius="sm" variant="light">
+            <Badge size="sm" color="dark" autoContrast radius="sm" variant="light">
               JSON
             </Badge>
-            <Badge size="sm" color="gray" autoContrast radius="sm" variant="light">
+            <Badge size="sm" color="dark" autoContrast radius="sm" variant="light">
               YAML
             </Badge>
-            <Badge size="sm" color="gray" autoContrast radius="sm" variant="light">
+            <Badge size="sm" color="dark" autoContrast radius="sm" variant="light">
               CSV
             </Badge>
-            <Badge size="sm" color="gray" autoContrast radius="sm" variant="light">
+            <Badge size="sm" color="dark" autoContrast radius="sm" variant="light">
               XML
             </Badge>
-            <Badge size="sm" color="gray" autoContrast radius="sm" variant="light">
+            <Badge size="sm" color="dark" autoContrast radius="sm" variant="light">
               TOML
             </Badge>
           </Flex>
