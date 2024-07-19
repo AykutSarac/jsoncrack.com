@@ -1,11 +1,23 @@
 import React from "react";
+import dynamic from "next/dynamic";
 import { Title, Overlay, Paper, rem, Grid, Flex, Image, Text, Container } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import styled from "styled-components";
 import { ReactCompareSlider, ReactCompareSliderHandle } from "react-compare-slider";
-import { FaBolt, FaExpand, FaLifeRing, FaParachuteBox, FaShapes } from "react-icons/fa";
+import {
+  FaArrowLeft,
+  FaArrowRight,
+  FaBolt,
+  FaExpand,
+  FaLifeRing,
+  FaParachuteBox,
+  FaShapes,
+} from "react-icons/fa";
 import { FaShieldHalved } from "react-icons/fa6";
+import { presets } from "react-text-transition";
 import { images } from "src/constants/landing";
+
+const TextTransition = dynamic(() => import("react-text-transition"), { ssr: false });
 
 const StyledImageWrapper = styled.div`
   max-width: 85%;
@@ -19,6 +31,7 @@ const StyledImageWrapper = styled.div`
 `;
 
 export const PremiumVsFree = () => {
+  const [currentSlide, setCurrentSlide] = React.useState(0);
   const [labelOpacity, setLabelOpacity] = React.useState(1);
   const labelStyle = {
     fontSize: "1rem",
@@ -225,12 +238,49 @@ export const PremiumVsFree = () => {
         </Grid.Col>
       </Grid>
 
-      <Paper w="95%" mt={100} mx="auto" radius="md" style={{ overflow: "hidden" }} visibleFrom="xs">
-        <Carousel bg="white" slideGap="md" slideSize="50%" height="100%" loop>
+      <Paper
+        w="95%"
+        mt={100}
+        bg="transparent"
+        mx="auto"
+        radius="md"
+        style={{ overflow: "hidden" }}
+        visibleFrom="xs"
+      >
+        <Carousel
+          onSlideChange={setCurrentSlide}
+          nextControlIcon={<FaArrowRight />}
+          previousControlIcon={<FaArrowLeft />}
+          nextControlProps={{
+            style: {
+              width: 40,
+              height: 40,
+              background: "#5199FF",
+              border: "1px solid #006aff",
+              color: "white",
+              opacity: 1,
+            },
+          }}
+          previousControlProps={{
+            style: {
+              width: 40,
+              height: 40,
+              background: "#5199FF",
+              border: "1px solid #006aff",
+              color: "white",
+              opacity: 1,
+            },
+          }}
+          bg="white"
+          slideGap="md"
+          slideSize="55%"
+          height="100%"
+          loop
+        >
           {images.map(image => (
             <Carousel.Slide key={image.id}>
               <Image
-                src={`./assets/preview/${image.id}.jpeg`}
+                src={`./assets/preview/${image.id}.png`}
                 alt={image.alt}
                 loading="lazy"
                 radius="md"
@@ -241,6 +291,14 @@ export const PremiumVsFree = () => {
             </Carousel.Slide>
           ))}
         </Carousel>
+        <Text c="black" mt="xs" fz="md" fw={500} bg="gray.1" size="lg" px="md" py="sm">
+          <TextTransition
+            springConfig={presets.wobbly}
+            style={{ justifyContent: "center", textAlign: "center" }}
+          >
+            {images[currentSlide].alt}
+          </TextTransition>
+        </Text>
       </Paper>
     </Container>
   );
