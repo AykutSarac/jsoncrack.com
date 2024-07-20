@@ -4,10 +4,32 @@ import styled from "styled-components";
 import { MdChevronRight } from "react-icons/md";
 import { gaEvent } from "src/lib/utils/gaEvent";
 
+const StyledHeroSection = styled.main`
+  position: relative;
+
+  /* &:before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    background-image: radial-gradient(#0000002a 1px, transparent 1px);
+    background-size: 15px 15px;
+    background-position: top center;
+    image-rendering: pixelated;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, 20%, white, 80%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, 20%, white, 80%, transparent);
+  } */
+
+  @media only screen and (max-width: 1240px) {
+    flex-direction: column;
+  }
+`;
+
 const StyledHeroTitle = styled.h1`
   position: relative;
   font-size: 2rem;
-  font-weight: 600;
+  font-weight: 800;
   display: inline;
   color: #272727;
   width: fit-content;
@@ -57,28 +79,6 @@ const StyledHeroText = styled.p`
   }
 `;
 
-const StyledHeroSection = styled.main`
-  position: relative;
-
-  /* &:before {
-    position: absolute;
-    content: "";
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
-    background-image: radial-gradient(#0000002a 1px, transparent 1px);
-    background-size: 15px 15px;
-    background-position: top center;
-    image-rendering: pixelated;
-    -webkit-mask-image: linear-gradient(to bottom, transparent, 20%, white, 80%, transparent);
-    mask-image: linear-gradient(to bottom, transparent, 20%, white, 80%, transparent);
-  } */
-
-  @media only screen and (max-width: 1240px) {
-    flex-direction: column;
-  }
-`;
-
 const StyledHeroSectionBody = styled.div`
   position: relative;
   display: flex;
@@ -94,7 +94,7 @@ const StyledHeroSectionBody = styled.div`
   min-height: 40vh;
 
   @media only screen and (max-width: 768px) {
-    padding: 3em 16px;
+    padding: 6em 16px;
   }
 `;
 

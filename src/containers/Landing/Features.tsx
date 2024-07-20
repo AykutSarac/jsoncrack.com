@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Title, Grid, Paper, Badge, Image, Container } from "@mantine/core";
+import { Text, Title, Grid, Paper, Badge, Image, Container, rem } from "@mantine/core";
 import styled from "styled-components";
 
 const StyledPaper = styled.div`
@@ -27,7 +27,18 @@ const StyledPaper = styled.div`
 
 export const Features = () => {
   return (
-    <Container pos="relative" component="section" id="features" fluid my={150}>
+    <Container
+      pos="relative"
+      component="section"
+      id="features"
+      px={{
+        sm: rem(10),
+        md: rem(80),
+      }}
+      w="90%"
+      fluid
+      my={150}
+    >
       <Title
         c="black"
         order={2}
@@ -63,13 +74,13 @@ export const Features = () => {
         editor. Make smarter decisions faster.
       </Text>
 
-      <Grid w="80%" gutter={24} mt={50} mb={150} mx="auto">
-        <Grid.Col span={{ base: 12, sm: 6 }}>
+      <Grid gutter={24} mt={50} mb={150} mx="auto">
+        <Grid.Col span={{ base: 12, xs: 6 }}>
           <Paper
             pos="relative"
             p={30}
             shadow="sm"
-            radius="sm"
+            radius="md"
             w="100%"
             h={{ sm: 300, md: 370 }}
             withBorder
@@ -96,11 +107,11 @@ export const Features = () => {
             </StyledPaper>
           </Paper>
         </Grid.Col>
-        <Grid.Col span={{ base: 12, sm: 6 }}>
+        <Grid.Col span={{ base: 12, xs: 6 }}>
           <Paper
             p={30}
             shadow="sm"
-            radius="sm"
+            radius="md"
             w="100%"
             h={{ sm: 300, md: 370 }}
             bg="white"
@@ -133,11 +144,11 @@ export const Features = () => {
             </StyledPaper>
           </Paper>
         </Grid.Col>
-        <Grid.Col span={{ base: 12, sm: 6 }}>
+        <Grid.Col span={{ base: 12, xs: 6 }}>
           <Paper
             p={30}
             shadow="sm"
-            radius="sm"
+            radius="md"
             w="100%"
             h={{ sm: 300, md: 370 }}
             withBorder
@@ -209,11 +220,11 @@ export const Features = () => {
             </StyledPaper>
           </Paper>
         </Grid.Col>
-        <Grid.Col span={{ base: 12, sm: 6 }}>
+        <Grid.Col span={{ base: 12, xs: 6 }}>
           <Paper
             p={30}
             shadow="sm"
-            radius="sm"
+            radius="md"
             w="100%"
             h={{ sm: 300, md: 370 }}
             withBorder
