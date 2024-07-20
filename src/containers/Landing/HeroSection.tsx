@@ -28,13 +28,14 @@ const StyledHeroSection = styled.main`
 
 const StyledHeroTitle = styled.h1`
   position: relative;
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: 800;
   display: inline;
   color: #272727;
   width: fit-content;
   line-height: 1.2;
   letter-spacing: -2px;
+  max-width: 30rem;
 
   @keyframes textShine {
     0% {
@@ -47,23 +48,24 @@ const StyledHeroTitle = styled.h1`
 
   @media only screen and (min-width: 576px) {
     font-size: 3.2rem;
+    max-width: 32rem;
   }
 
   @media only screen and (min-width: 992px) {
-    max-width: 75%;
     font-size: 3.6rem;
+    max-width: 40rem;
   }
 
   @media only screen and (min-width: 1400px) {
-    max-width: 50%;
     font-size: 4rem;
+    max-width: 48rem;
   }
 `;
 
 const StyledHeroText = styled.p`
   font-size: 1rem;
-  color: #898989;
-  font-weight: 500;
+  color: #696969;
+  font-weight: 400;
   max-width: 100%;
   min-width: 400px;
   text-align: center;
