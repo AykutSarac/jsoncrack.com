@@ -35,7 +35,8 @@ export const Features = () => {
         sm: rem(10),
         md: rem(80),
       }}
-      w="90%"
+      w="100%"
+      maw={rem(1700)}
       fluid
       my={150}
     >
@@ -82,7 +83,8 @@ export const Features = () => {
             shadow="sm"
             radius="md"
             w="100%"
-            h={{ sm: 300, md: 370 }}
+            mah={{ sm: 300, md: 370 }}
+            h="100%"
             withBorder
             style={{ overflow: "hidden", borderColor: "#ececec" }}
             bg="white"
@@ -113,7 +115,8 @@ export const Features = () => {
             shadow="sm"
             radius="md"
             w="100%"
-            h={{ sm: 300, md: 370 }}
+            mah={{ sm: 300, md: 370 }}
+            h="100%"
             bg="white"
             withBorder
             style={{ overflow: "hidden", borderColor: "#ececec" }}
@@ -150,7 +153,8 @@ export const Features = () => {
             shadow="sm"
             radius="md"
             w="100%"
-            h={{ sm: 300, md: 370 }}
+            mah={{ sm: 300, md: 370 }}
+            h="100%"
             withBorder
             style={{ overflow: "hidden", borderColor: "#ececec" }}
             bg="white"
@@ -226,7 +230,8 @@ export const Features = () => {
             shadow="sm"
             radius="md"
             w="100%"
-            h={{ sm: 300, md: 370 }}
+            mah={{ sm: 300, md: 370 }}
+            h="100%"
             withBorder
             style={{ overflow: "hidden", borderColor: "#ececec" }}
             bg="white"

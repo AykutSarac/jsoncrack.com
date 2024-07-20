@@ -55,7 +55,7 @@ const StyledHeroTitle = styled.h1`
   }
 
   @media only screen and (min-width: 1400px) {
-    max-width: 65%;
+    max-width: 50%;
     font-size: 4rem;
   }
 `;
