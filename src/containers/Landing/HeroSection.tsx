@@ -103,7 +103,7 @@ export const HeroSection = () => {
     <StyledHeroSection id="hero-section">
       <StyledHeroSectionBody>
         <Stack flex="1" miw={250} mx="auto" align="center">
-          <StyledHeroTitle>Transform your data into interactive graphs</StyledHeroTitle>
+          <StyledHeroTitle>Transform data into interactive graphs</StyledHeroTitle>
           <StyledHeroText>Powerful editor to explore data visually.</StyledHeroText>
           <Flex gap="md">
             <Badge size="sm" color="dark" autoContrast radius="sm" variant="light">
@@ -143,7 +143,7 @@ export const HeroSection = () => {
               radius="md"
               fw={600}
             >
-              Explore Premium
+              Premium vs Free
             </Button>
           </Flex>
         </Stack>

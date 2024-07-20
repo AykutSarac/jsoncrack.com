@@ -5,13 +5,13 @@ import { IoArrowForward } from "react-icons/io5";
 
 export const Outro = () => {
   return (
-    <Stack align="center" my={150}>
+    <Stack align="center" mt={150}>
       <Title
         fz={{
           sm: 32,
           md: 36,
         }}
-        c="gray.7"
+        c="gray.9"
         lts={-1}
         order={3}
         ta="center"

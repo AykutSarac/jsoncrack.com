@@ -51,7 +51,7 @@ const StyledPaper = styled(Paper)<{ $highlight?: boolean } & any>`
     content: "Recommended";
     background: #28c417;
     position: absolute;
-    transform: translate(-27px, -60px);
+    transform: translate(-27px, -61px);
     font-weight: 500;
     color: white;
     padding: 6px 8px;
@@ -259,7 +259,7 @@ export const PricingCards = () => {
             Get Started
           </Button>
           <Text mt="xs" fz="xs" c="dimmed">
-            Designed for individuals who works with data regularly and wants to save time.
+            Advanced features, better performance and optimized user interface.
           </Text>
           <Flex direction="column" justify="space-between">
             <List
@@ -295,7 +295,7 @@ export const PricingCards = () => {
               <List.Item>
                 <Tooltip
                   color="blue"
-                  label="Load data 5x faster and 50% smaller graph size. Only see what matters."
+                  label="Load data 5x faster and 50% smaller graph size."
                   maw={350}
                   multiline
                   withArrow
@@ -322,7 +322,7 @@ export const PricingCards = () => {
               <List.Item>
                 <Tooltip
                   color="blue"
-                  label="Edit nodes directly on the graph reflecting to the data"
+                  label="Click on a node at graph to update data on editor."
                   maw={350}
                   multiline
                   withArrow
@@ -337,7 +337,7 @@ export const PricingCards = () => {
                       textUnderlineOffset: "2px",
                     }}
                   >
-                    Edit Nodes
+                    Update Data on Graphs
                   </Text>
                 </Tooltip>
               </List.Item>
@@ -388,8 +388,7 @@ export const PricingCards = () => {
             Go to Editor
           </Button>
           <Text mt="xs" fz="xs" c="dimmed">
-            For individuals who occasionally work with data and doesn&apos;t require advanced
-            features.
+            Basic version of the editor with limited features.
           </Text>
           <Flex direction="column" justify="space-between">
             <List

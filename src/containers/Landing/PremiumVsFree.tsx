@@ -1,23 +1,20 @@
 import React from "react";
-import dynamic from "next/dynamic";
-import { Title, Overlay, Paper, rem, Grid, Flex, Image, Text, Container } from "@mantine/core";
-import { Carousel } from "@mantine/carousel";
+import {
+  Title,
+  Overlay,
+  Paper,
+  rem,
+  Grid,
+  Flex,
+  Image,
+  Text,
+  Container,
+  Divider,
+} from "@mantine/core";
 import styled from "styled-components";
 import { ReactCompareSlider, ReactCompareSliderHandle } from "react-compare-slider";
-import {
-  FaArrowLeft,
-  FaArrowRight,
-  FaBolt,
-  FaExpand,
-  FaLifeRing,
-  FaParachuteBox,
-  FaShapes,
-} from "react-icons/fa";
+import { FaBolt, FaExpand, FaLifeRing, FaParachuteBox, FaShapes } from "react-icons/fa";
 import { FaShieldHalved } from "react-icons/fa6";
-import { presets } from "react-text-transition";
-import { images } from "src/constants/landing";
-
-const TextTransition = dynamic(() => import("react-text-transition"), { ssr: false });
 
 const StyledImageWrapper = styled.div`
   max-width: 85%;
@@ -31,7 +28,6 @@ const StyledImageWrapper = styled.div`
 `;
 
 export const PremiumVsFree = () => {
-  const [currentSlide, setCurrentSlide] = React.useState(0);
   const [labelOpacity, setLabelOpacity] = React.useState(1);
   const labelStyle = {
     fontSize: "1rem",
@@ -50,19 +46,50 @@ export const PremiumVsFree = () => {
 
   return (
     <Container component="section" id="premium" fluid my={150}>
-      <Title
-        c="black"
-        order={2}
-        fz={{
-          sm: 32,
-          md: 42,
+      <Paper
+        pb={rem(260)}
+        px={{
+          sm: rem(10),
+          md: rem(80),
         }}
-        fw={600}
-        mb={80}
-        ta="center"
+        pt={rem(20)}
+        maw={{
+          xs: "95%",
+        }}
+        radius="xl"
+        mx="auto"
+        mb="-16.5rem"
+        style={{
+          textAlign: "center",
+          background: "linear-gradient(rgb(7, 5, 90) 40%, rgb(255, 255, 255) 90%)",
+        }}
       >
-        Premium vs Free
-      </Title>
+        <Title
+          c="white"
+          order={2}
+          fz={{
+            sm: 32,
+            md: 42,
+          }}
+          fw={700}
+          mb="md"
+        >
+          Premium vs Free
+        </Title>
+        <Text
+          mx="auto"
+          fz={{
+            sm: 12,
+            md: 16,
+          }}
+          maw="60%"
+          c="gray.4"
+          mb={60}
+        >
+          Designed to help you navigate through your data with ease. The editor provides a clean and
+          intuitive interface that allows you to focus on what matters most: your data.
+        </Text>
+      </Paper>
 
       <StyledImageWrapper>
         <ReactCompareSlider
@@ -72,11 +99,11 @@ export const PremiumVsFree = () => {
             border: "1px solid #d5d5d5",
             borderRadius: 12,
           }}
-          itemOne={<Image loading="lazy" src="./assets/compare/pro.webp" alt="Pro" />}
+          itemOne={<Image loading="lazy" src="./assets/preview/1.webp" alt="Pro" />}
           itemTwo={
             <>
               <Overlay color="#000" backgroundOpacity={0.1} />
-              <Image loading="lazy" src="./assets/compare/free.webp" alt="Free" />
+              <Image loading="lazy" src="./assets/preview/free.webp" alt="Free" />
             </>
           }
           handle={
@@ -110,51 +137,6 @@ export const PremiumVsFree = () => {
           }
         />
       </StyledImageWrapper>
-
-      <Paper
-        pt={rem(300)}
-        px={{
-          sm: rem(10),
-          md: rem(80),
-        }}
-        pb={rem(20)}
-        maw={{
-          xs: "95%",
-        }}
-        radius="xl"
-        mx="auto"
-        mt="-16.5rem"
-        style={{
-          textAlign: "center",
-          background: "linear-gradient(rgb(255, 255, 255) 0%, rgb(7, 5, 90) 60%)",
-        }}
-      >
-        <Title
-          c="white"
-          order={2}
-          fz={{
-            sm: 32,
-            md: 42,
-          }}
-          fw={700}
-          mb="md"
-        >
-          Optimized for user experience
-        </Title>
-        <Text
-          mx="auto"
-          fz={{
-            sm: 12,
-            md: 16,
-          }}
-          maw="80%"
-          c="gray.4"
-          mb={60}
-        >
-          Designed to help you navigate through your data with ease. The editor provides a clean and
-          intuitive interface that allows you to focus on what matters most: your data.
-        </Text>
-      </Paper>
 
       <Grid
         w={{ sm: "100%", md: "80%" }}
@@ -237,69 +219,7 @@ export const PremiumVsFree = () => {
           </Text>
         </Grid.Col>
       </Grid>
-
-      <Paper
-        w="95%"
-        mt={100}
-        bg="transparent"
-        mx="auto"
-        radius="md"
-        style={{ overflow: "hidden" }}
-        visibleFrom="xs"
-      >
-        <Carousel
-          onSlideChange={setCurrentSlide}
-          nextControlIcon={<FaArrowRight />}
-          previousControlIcon={<FaArrowLeft />}
-          nextControlProps={{
-            style: {
-              width: 40,
-              height: 40,
-              background: "#5199FF",
-              border: "1px solid #006aff",
-              color: "white",
-              opacity: 1,
-            },
-          }}
-          previousControlProps={{
-            style: {
-              width: 40,
-              height: 40,
-              background: "#5199FF",
-              border: "1px solid #006aff",
-              color: "white",
-              opacity: 1,
-            },
-          }}
-          bg="white"
-          slideGap="md"
-          slideSize="55%"
-          height="100%"
-          loop
-        >
-          {images.map(image => (
-            <Carousel.Slide key={image.id}>
-              <Image
-                src={`./assets/preview/${image.id}.png`}
-                alt={image.alt}
-                loading="lazy"
-                radius="md"
-                style={{
-                  border: "1px solid #d5d5d5",
-                }}
-              />
-            </Carousel.Slide>
-          ))}
-        </Carousel>
-        <Text c="black" mt="xs" fz="md" fw={500} bg="gray.1" size="lg" px="md" py="sm">
-          <TextTransition
-            springConfig={presets.wobbly}
-            style={{ justifyContent: "center", textAlign: "center" }}
-          >
-            {images[currentSlide].alt}
-          </TextTransition>
-        </Text>
-      </Paper>
+      <Divider mt={100} w="80%" mx="auto" />
     </Container>
   );
 };
