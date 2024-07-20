@@ -1,16 +1,5 @@
 import React from "react";
-import {
-  Title,
-  Overlay,
-  Paper,
-  rem,
-  Grid,
-  Flex,
-  Image,
-  Text,
-  Container,
-  Divider,
-} from "@mantine/core";
+import { Title, Overlay, Paper, rem, Grid, Flex, Image, Text, Container } from "@mantine/core";
 import styled from "styled-components";
 import { ReactCompareSlider, ReactCompareSliderHandle } from "react-compare-slider";
 import { FaBolt, FaExpand, FaLifeRing, FaParachuteBox, FaShapes } from "react-icons/fa";
@@ -45,7 +34,7 @@ export const PremiumVsFree = () => {
   };
 
   return (
-    <Container component="section" id="premium" fluid my={150}>
+    <Container pos="relative" component="section" id="premium" fluid my={120}>
       <Paper
         pb={rem(260)}
         px={{
@@ -68,8 +57,9 @@ export const PremiumVsFree = () => {
           c="white"
           order={2}
           fz={{
-            sm: 32,
-            md: 42,
+            base: 26,
+            xs: 32,
+            sm: 42,
           }}
           fw={700}
           mb="md"
@@ -79,10 +69,13 @@ export const PremiumVsFree = () => {
         <Text
           mx="auto"
           fz={{
-            sm: 12,
-            md: 16,
+            base: 14,
+            xs: 16,
           }}
-          maw="60%"
+          maw={{
+            base: "80%",
+            sm: "70%",
+          }}
           c="gray.4"
           mb={60}
         >
@@ -140,86 +133,84 @@ export const PremiumVsFree = () => {
 
       <Grid
         w={{ sm: "100%", md: "80%" }}
-        px={{ sm: "xl", md: 0 }}
+        px="xl"
         mt={100}
         mx="auto"
-        gutter={50}
-        visibleFrom="sm"
+        gutter={{ base: 30, xs: 30, sm: 50 }}
       >
-        <Grid.Col span={4}>
+        <Grid.Col span={{ base: 12, xs: 6, md: 4 }}>
           <Flex align="center" gap={8} mb={16}>
             <FaBolt color="orange" size={28} />
-            <Title c="black" order={3} fz={{ sm: 20, md: 28 }} fw={600}>
+            <Text c="gray.8" fz={{ base: 16, md: 20, lg: 26, xl: 28 }} fw={600}>
               High Performance
-            </Title>
+            </Text>
           </Flex>
-          <Text c="gray.6" fz={{ sm: 12, md: 14 }}>
+          <Text c="gray.6" fz={14}>
             Designed to handle large datasets with ease. It&apos;s optimized for performance and
             speed; currently supporting up to 4MB of data.
           </Text>
         </Grid.Col>
-        <Grid.Col span={4}>
+        <Grid.Col span={{ base: 12, xs: 6, md: 4 }}>
           <Flex align="center" gap={8} mb={16}>
             <FaExpand color="blue" size={28} />
-            <Title c="black" order={3} fz={{ sm: 20, md: 28 }} fw={600}>
+            <Text c="gray.8" fz={{ base: 16, md: 20, lg: 26, xl: 28 }} fw={600}>
               Clean & Focused
-            </Title>
+            </Text>
           </Flex>
-          <Text c="gray.6" fz={{ sm: 12, md: 14 }}>
+          <Text c="gray.6" fz={14}>
             Compared to the free version, the premium version creates 50% less nodes on the graph
             and helps you to focus on what matters most.
           </Text>
         </Grid.Col>
-        <Grid.Col span={4}>
+        <Grid.Col span={{ base: 12, xs: 6, md: 4 }} visibleFrom="xs">
           <Flex align="center" gap={8} mb={16}>
             <FaLifeRing color="#FF6B00" size={28} />
-            <Title c="black" order={3} fz={{ sm: 20, md: 28 }} fw={600}>
+            <Text c="gray.8" fz={{ base: 16, md: 20, lg: 26, xl: 28 }} fw={600}>
               Quick Support
-            </Title>
+            </Text>
           </Flex>
-          <Text c="gray.6" fz={{ sm: 12, md: 14 }}>
+          <Text c="gray.6" fz={14}>
             Get quick support from our team. We&apos;re here to help you with any issues or
             questions you may have. Usual response time is within 24 hours.
           </Text>
         </Grid.Col>
-        <Grid.Col span={4}>
+        <Grid.Col span={{ base: 12, xs: 6, md: 4 }} visibleFrom="xs">
           <Flex align="center" gap={8} mb={16}>
             <FaParachuteBox color="#00848C" size={28} />
-            <Title c="black" order={3} fz={{ sm: 20, md: 28 }} fw={600}>
+            <Text c="gray.8" fz={{ base: 16, md: 20, lg: 26, xl: 28 }} fw={600}>
               Always Improving
-            </Title>
+            </Text>
           </Flex>
-          <Text c="gray.6" fz={{ sm: 12, md: 14 }}>
+          <Text c="gray.6" fz={14}>
             Have an idea? We&apos;re always looking to improve JSON Crack. We take your feedback
             seriously and are constantly working on new features.
           </Text>
         </Grid.Col>
-        <Grid.Col span={4}>
+        <Grid.Col span={{ base: 12, xs: 6, md: 4 }}>
           <Flex align="center" gap={8} mb={16}>
             <FaShapes color="#A854A5" size={28} />
-            <Title c="black" order={3} fz={{ sm: 20, md: 28 }} fw={600}>
+            <Text c="gray.8" fz={{ base: 16, md: 20, lg: 26, xl: 28 }} fw={600}>
               Advanced Features
-            </Title>
+            </Text>
           </Flex>
-          <Text c="gray.6" fz={{ sm: 12, md: 14 }}>
+          <Text c="gray.6" fz={14}>
             Unlock advanced features such as data comparison, direct editing on the graph,
             customized themes and compact visualization style.
           </Text>
         </Grid.Col>
-        <Grid.Col span={4}>
+        <Grid.Col span={{ base: 12, xs: 6, md: 4 }}>
           <Flex align="center" gap={8} mb={16}>
             <FaShieldHalved color="black" size={28} />
-            <Title c="black" order={3} fz={{ sm: 20, md: 28 }} fw={600}>
+            <Text c="gray.8" fz={{ base: 16, md: 20, lg: 26, xl: 28 }} fw={600}>
               Privacy First
-            </Title>
+            </Text>
           </Flex>
-          <Text c="gray.6" fz={{ sm: 12, md: 14 }}>
+          <Text c="gray.6" fz={14}>
             JSON Crack does not store your data unless you upload it manually. Your data remains
             completely private.
           </Text>
         </Grid.Col>
       </Grid>
-      <Divider mt={100} w="80%" mx="auto" />
     </Container>
   );
 };

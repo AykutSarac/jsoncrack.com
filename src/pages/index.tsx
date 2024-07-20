@@ -4,9 +4,9 @@ import "@mantine/carousel/styles.css";
 import styled from "styled-components";
 import { metaDescription } from "src/constants/landing";
 import { FAQ } from "src/containers/Landing/FAQ";
+import { Features } from "src/containers/Landing/Features";
 import { HeroPreview } from "src/containers/Landing/HeroPreview";
 import { HeroSection } from "src/containers/Landing/HeroSection";
-import { Outro } from "src/containers/Landing/Outro";
 import { PremiumVsFree } from "src/containers/Landing/PremiumVsFree";
 import { Pricing } from "src/containers/Landing/Pricing";
 import Layout from "src/layout/Layout";
@@ -37,10 +37,10 @@ export const HomePage = () => {
         <HeroSection />
         <HeroPreview />
       </StyledSectionWrapper>
+      <Features />
       <PremiumVsFree />
       <Pricing />
       <FAQ />
-      <Outro />
     </Layout>
   );
 };

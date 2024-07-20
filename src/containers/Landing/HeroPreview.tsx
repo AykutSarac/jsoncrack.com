@@ -6,6 +6,10 @@ import { images } from "src/constants/landing";
 const StyledPreviewWrapper = styled.div`
   margin: 0 auto;
   position: relative;
+
+  @media only screen and (max-width: 996px) {
+    display: none;
+  }
 `;
 
 export const HeroPreview = () => {
@@ -69,10 +73,11 @@ export const HeroPreview = () => {
           shadow="md"
         >
           <Image
+            fit="cover"
             src={`./assets/preview/${selectedFeature}.webp`}
             loading={selectedFeature === "1" ? "eager" : "lazy"}
             alt={images[+selectedFeature - 1].alt}
-            w="100%"
+            h="100%"
           />
         </Paper>
       </Flex>
