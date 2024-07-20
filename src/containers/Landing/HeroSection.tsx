@@ -28,7 +28,7 @@ const StyledHeroSection = styled.main`
 
 const StyledHeroTitle = styled.h1`
   position: relative;
-  font-size: 3rem;
+  font-size: 2.4rem;
   font-weight: 800;
   display: inline;
   color: #272727;

@@ -85,6 +85,7 @@ export const PricingCards = () => {
         wrap="wrap"
         justify="center"
         w="fit-content"
+        maw="100%"
         p={{
           xs: 4,
           md: 6,
