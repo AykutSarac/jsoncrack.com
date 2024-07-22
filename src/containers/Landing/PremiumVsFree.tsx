@@ -1,9 +1,7 @@
 import React from "react";
-import { Title, Overlay, Paper, rem, Grid, Flex, Image, Text, Container } from "@mantine/core";
+import { Title, Overlay, Paper, rem, Image, Text, Container } from "@mantine/core";
 import styled from "styled-components";
 import { ReactCompareSlider, ReactCompareSliderHandle } from "react-compare-slider";
-import { FaBolt, FaExpand, FaLifeRing, FaParachuteBox, FaShapes } from "react-icons/fa";
-import { FaShieldHalved } from "react-icons/fa6";
 
 const StyledImageWrapper = styled.div`
   max-width: 85%;
@@ -50,16 +48,16 @@ export const PremiumVsFree = () => {
         mb="-16.5rem"
         style={{
           textAlign: "center",
-          background: "linear-gradient(rgb(7, 5, 90) 40%, rgb(255, 255, 255) 90%)",
+          background: "linear-gradient(rgb(33, 148, 87) 40%, rgb(255, 255, 255) 90%)",
         }}
       >
         <Title
           c="white"
           order={2}
           fz={{
-            base: 26,
-            xs: 32,
-            sm: 42,
+            base: 24,
+            xs: 30,
+            sm: 36,
           }}
           fw={700}
           mb="md"
@@ -76,11 +74,12 @@ export const PremiumVsFree = () => {
             base: "80%",
             sm: "70%",
           }}
-          c="gray.4"
+          c="gray.2"
           mb={60}
         >
-          Designed to help you navigate through your data with ease. The editor provides a clean and
-          intuitive interface that allows you to focus on what matters most: your data.
+          Designed to help you navigate through your data with ease. <br />
+          The editor provides a clean and intuitive interface that allows you to focus on what
+          matters most: your data.
         </Text>
       </Paper>
 
@@ -130,87 +129,6 @@ export const PremiumVsFree = () => {
           }
         />
       </StyledImageWrapper>
-
-      <Grid
-        w={{ sm: "100%", md: "80%" }}
-        px="xl"
-        mt={100}
-        mx="auto"
-        gutter={{ base: 30, xs: 30, sm: 50 }}
-      >
-        <Grid.Col span={{ base: 12, xs: 6, md: 4 }}>
-          <Flex align="center" gap={8} mb={16}>
-            <FaBolt color="orange" size={28} />
-            <Text c="gray.9" fz={{ base: 16, md: 20, lg: 26, xl: 28 }} fw={600}>
-              High Performance
-            </Text>
-          </Flex>
-          <Text c="gray.7" fz={14}>
-            Designed to handle large datasets with ease. It&apos;s optimized for performance and
-            speed; currently supporting up to 4MB of data.
-          </Text>
-        </Grid.Col>
-        <Grid.Col span={{ base: 12, xs: 6, md: 4 }}>
-          <Flex align="center" gap={8} mb={16}>
-            <FaExpand color="blue" size={28} />
-            <Text c="gray.9" fz={{ base: 16, md: 20, lg: 26, xl: 28 }} fw={600}>
-              Clean & Focused
-            </Text>
-          </Flex>
-          <Text c="gray.7" fz={14}>
-            Compared to the free version, the premium version creates 50% less nodes on the graph
-            and helps you to focus on what matters most.
-          </Text>
-        </Grid.Col>
-        <Grid.Col span={{ base: 12, xs: 6, md: 4 }} visibleFrom="xs">
-          <Flex align="center" gap={8} mb={16}>
-            <FaLifeRing color="#FF6B00" size={28} />
-            <Text c="gray.9" fz={{ base: 16, md: 20, lg: 26, xl: 28 }} fw={600}>
-              Quick Support
-            </Text>
-          </Flex>
-          <Text c="gray.7" fz={14}>
-            Get quick support from our team. We&apos;re here to help you with any issues or
-            questions you may have. Usual response time is within 24 hours.
-          </Text>
-        </Grid.Col>
-        <Grid.Col span={{ base: 12, xs: 6, md: 4 }} visibleFrom="xs">
-          <Flex align="center" gap={8} mb={16}>
-            <FaParachuteBox color="#00848C" size={28} />
-            <Text c="gray.9" fz={{ base: 16, md: 20, lg: 26, xl: 28 }} fw={600}>
-              Always Improving
-            </Text>
-          </Flex>
-          <Text c="gray.7" fz={14}>
-            Have an idea? We&apos;re always looking to improve JSON Crack. We take your feedback
-            seriously and are constantly working on new features.
-          </Text>
-        </Grid.Col>
-        <Grid.Col span={{ base: 12, xs: 6, md: 4 }}>
-          <Flex align="center" gap={8} mb={16}>
-            <FaShapes color="#A854A5" size={28} />
-            <Text c="gray.9" fz={{ base: 16, md: 20, lg: 26, xl: 28 }} fw={600}>
-              Advanced Features
-            </Text>
-          </Flex>
-          <Text c="gray.7" fz={14}>
-            Unlock advanced features such as data comparison, direct editing on the graph,
-            customized themes and compact visualization style.
-          </Text>
-        </Grid.Col>
-        <Grid.Col span={{ base: 12, xs: 6, md: 4 }}>
-          <Flex align="center" gap={8} mb={16}>
-            <FaShieldHalved color="black" size={28} />
-            <Text c="gray.9" fz={{ base: 16, md: 20, lg: 26, xl: 28 }} fw={600}>
-              Privacy First
-            </Text>
-          </Flex>
-          <Text c="gray.7" fz={14}>
-            JSON Crack does not store your data unless you upload it manually. Your data remains
-            completely private.
-          </Text>
-        </Grid.Col>
-      </Grid>
     </Container>
   );
 };

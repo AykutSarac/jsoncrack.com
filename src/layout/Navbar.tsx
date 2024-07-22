@@ -28,6 +28,12 @@ const StyledNavbar = styled.nav`
 
 const Left = styled.div`
   width: 100%;
+
+  @media only screen and (max-width: 768px) {
+    & > *:not(:first-child) {
+      display: none;
+    }
+  }
 `;
 
 const Right = styled.div`
@@ -49,7 +55,6 @@ export const Navbar = () => {
             variant="subtle"
             color="black"
             radius="md"
-            visibleFrom="sm"
             size="md"
           >
             VS Code
@@ -61,7 +66,6 @@ export const Navbar = () => {
             variant="subtle"
             color="black"
             radius="md"
-            visibleFrom="sm"
             size="md"
           >
             Pricing
@@ -73,7 +77,6 @@ export const Navbar = () => {
             variant="subtle"
             color="black"
             radius="md"
-            visibleFrom="sm"
             size="md"
           >
             Docs
@@ -85,7 +88,6 @@ export const Navbar = () => {
             variant="subtle"
             color="black"
             radius="md"
-            visibleFrom="sm"
             size="md"
           >
             FAQ

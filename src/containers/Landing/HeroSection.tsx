@@ -97,6 +97,7 @@ const StyledHeroSectionBody = styled.div`
 
   @media only screen and (max-width: 768px) {
     padding: 6em 16px;
+    margin-top: 10vh;
   }
 `;
 

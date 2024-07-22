@@ -83,6 +83,9 @@ importers:
       react-compare-slider:
         specifier: ^3.1.0
         version: 3.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-countup:
+        specifier: ^6.5.3
+        version: 6.5.3(react@18.3.1)
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
@@ -1013,6 +1016,9 @@ packages:
 
   concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
+
+  countup.js@2.8.0:
+    resolution: {integrity: sha512-f7xEhX0awl4NOElHulrl4XRfKoNH3rB+qfNSZZyjSZhaAoUk6elvhH+MNxMmlmuUJ2/QNTWPSA7U4mNtIAKljQ==}
 
   create-require@1.1.1:
     resolution: {integrity: sha512-dcKFX3jn0MpIaXjisoRvexIJVEKzaq7z2rZKxf+MSr9TkdmHmsU4m2lcLojrj/FHl8mk5VxMmYA+ftRkP/3oKQ==}
@@ -2157,6 +2163,11 @@ packages:
     resolution: {integrity: sha512-z1VwkAAJ5d8QybDRuYIXTE41RxGr5GYsv1bQhbOBE8cMfoZQZpcF0odL64vdgrQVzat2jayedj1GoYi80FWcbA==}
     peerDependencies:
       react: '>= 16.8.0'
+
+  react-countup@6.5.3:
+    resolution: {integrity: sha512-udnqVQitxC7QWADSPDOxVWULkLvKUWrDapn5i53HE4DPRVgs+Y5rr4bo25qEl8jSh+0l2cToJgGMx+clxPM3+w==}
+    peerDependencies:
+      react: '>= 16.3.0'
 
   react-dom@18.3.1:
     resolution: {integrity: sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==}
@@ -3738,6 +3749,8 @@ snapshots:
 
   concat-map@0.0.1: {}
 
+  countup.js@2.8.0: {}
+
   create-require@1.1.1: {}
 
   cross-spawn@7.0.3:
@@ -4975,6 +4988,11 @@ snapshots:
 
   react-cool-dimensions@2.0.7(react@18.3.1):
     dependencies:
+      react: 18.3.1
+
+  react-countup@6.5.3(react@18.3.1):
+    dependencies:
+      countup.js: 2.8.0
       react: 18.3.1
 
   react-dom@18.3.1(react@18.3.1):

@@ -1,4 +1,5 @@
 import React from "react";
+import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
 import "@mantine/carousel/styles.css";
 import styled from "styled-components";
@@ -7,6 +8,7 @@ import { FAQ } from "src/containers/Landing/FAQ";
 import { Features } from "src/containers/Landing/Features";
 import { HeroPreview } from "src/containers/Landing/HeroPreview";
 import { HeroSection } from "src/containers/Landing/HeroSection";
+import { LovedBy } from "src/containers/Landing/LovedBy";
 import { PremiumVsFree } from "src/containers/Landing/PremiumVsFree";
 import { Pricing } from "src/containers/Landing/Pricing";
 import Layout from "src/layout/Layout";
@@ -24,7 +26,7 @@ const StyledSectionWrapper = styled.div`
   }
 `;
 
-export const HomePage = () => {
+export const HomePage = ({ stars }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <Layout>
       <Head>
@@ -39,6 +41,7 @@ export const HomePage = () => {
       </StyledSectionWrapper>
       <Features />
       <PremiumVsFree />
+      <LovedBy stars={stars} />
       <Pricing />
       <FAQ />
     </Layout>
@@ -46,3 +49,12 @@ export const HomePage = () => {
 };
 
 export default HomePage;
+
+export const getStaticProps = (async () => {
+  const res = await fetch("https://api.github.com/repos/AykutSarac/jsoncrack.com");
+  const repo = await res.json();
+  const stars = repo.stargazers_count;
+  return { props: { stars } };
+}) satisfies GetStaticProps<{
+  stars: number;
+}>;

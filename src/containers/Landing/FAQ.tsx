@@ -40,17 +40,16 @@ const Questions = [
 
 export const FAQ = () => {
   return (
-    <Container id="faq" component="section">
+    <Container id="faq" component="section" mt={150}>
       <Title
         c="black"
         order={2}
         fz={{
-          base: 26,
-          xs: 32,
-          sm: 42,
+          base: 24,
+          xs: 30,
+          sm: 36,
         }}
         fw={600}
-        mt={150}
         mb={60}
         style={{ textAlign: "center" }}
       >

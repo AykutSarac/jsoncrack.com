@@ -6,6 +6,8 @@ import { Navbar } from "./Navbar";
 
 const StyledLayoutWrapper = styled.div`
   padding-bottom: 48px;
+  background-image: radial-gradient(#e6e6e6 1px, transparent 1px);
+  background-size: 20px 20px;
 `;
 
 const Layout = ({ children }: React.PropsWithChildren) => {

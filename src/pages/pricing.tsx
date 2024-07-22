@@ -17,7 +17,7 @@ import {
 import styled from "styled-components";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { IoIosCheckmarkCircle } from "react-icons/io";
-import { IoCheckmarkCircle } from "react-icons/io5";
+import { IoCheckmarkCircle, IoCloseCircle } from "react-icons/io5";
 // import { PiChats } from "react-icons/pi";
 import { VscArrowRight, VscLinkExternal } from "react-icons/vsc";
 import Layout from "src/layout/Layout";
@@ -274,7 +274,7 @@ export const PricingCards = () => {
               <List.Item>
                 <Tooltip
                   color="blue"
-                  label="Visualize up to ~4 MB or above depending on your hardware"
+                  label="Visualize up to 4 MB of data"
                   maw={350}
                   multiline
                   withArrow
@@ -338,7 +338,7 @@ export const PricingCards = () => {
                       textUnderlineOffset: "2px",
                     }}
                   >
-                    Update Data on Graphs
+                    Edit Data on Graph
                   </Text>
                 </Tooltip>
               </List.Item>
@@ -354,7 +354,12 @@ export const PricingCards = () => {
               </List.Item>
               <List.Item>
                 <Text c="black" fw={500} fz="sm">
-                  AI powered data filter
+                  AI-powered data filter
+                </Text>
+              </List.Item>
+              <List.Item>
+                <Text c="black" fw={500} fz="sm">
+                  Customize graph colors
                 </Text>
               </List.Item>
             </List>
@@ -454,6 +459,31 @@ export const PricingCards = () => {
               <List.Item>
                 <Text c="black" fw={500} fz="sm">
                   Store 25 documents
+                </Text>
+              </List.Item>
+              <List.Item icon={<IoCloseCircle color="gray" size={20} />}>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Compact Visualization
+                </Text>
+              </List.Item>
+              <List.Item icon={<IoCloseCircle color="gray" size={20} />}>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Compare Data
+                </Text>
+              </List.Item>
+              <List.Item icon={<IoCloseCircle color="gray" size={20} />}>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Edit Data on Graph
+                </Text>
+              </List.Item>
+              <List.Item icon={<IoCloseCircle color="gray" size={20} />}>
+                <Text c="gray.7" fw={500} fz="sm">
+                  AI-powered data filter
+                </Text>
+              </List.Item>
+              <List.Item icon={<IoCloseCircle color="gray" size={20} />}>
+                <Text c="gray.7" fw={500} fz="sm">
+                  Customize graph colors
                 </Text>
               </List.Item>
             </List>

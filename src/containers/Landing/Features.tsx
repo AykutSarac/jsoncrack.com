@@ -1,29 +1,7 @@
 import React from "react";
-import { Text, Title, Grid, Paper, Badge, Image, Container, rem } from "@mantine/core";
-import styled from "styled-components";
-
-const StyledPaper = styled.div`
-  position: relative;
-  z-index: 1;
-
-  &:before {
-    position: absolute;
-    z-index: -1;
-    opacity: 0.4;
-    top: 0;
-    left: 0;
-    content: "";
-    width: 100%;
-    height: 100%;
-    background-size: 20px 20px;
-    background-image: linear-gradient(to right, #dcdcdc 1px, transparent 1px),
-      linear-gradient(to bottom, #dcdcdc 1px, transparent 1px);
-    background-position: top center;
-    image-rendering: pixelated;
-    -webkit-mask-image: linear-gradient(to bottom, transparent, 20%, white, 90%, transparent);
-    mask-image: linear-gradient(to bottom, transparent, 20%, white, 90%, transparent);
-  }
-`;
+import { Container, Grid, Flex, rem, Title, Text, Paper } from "@mantine/core";
+import { FaBolt, FaHeart, FaMagic, FaPalette, FaShapes } from "react-icons/fa";
+import { FaShieldHalved } from "react-icons/fa6";
 
 export const Features = () => {
   return (
@@ -39,6 +17,7 @@ export const Features = () => {
       maw={rem(1700)}
       fluid
       my={150}
+      mt={120}
     >
       <Title
         c="black"
@@ -50,14 +29,13 @@ export const Features = () => {
           sm: 42,
         }}
         fw={600}
-        mt={120}
         mb={15}
         style={{ textAlign: "center" }}
       >
-        Intuitive and User-Friendly
+        Explore Your Data Visually
       </Title>
       <Text
-        c="gray.6"
+        c="gray.7"
         fz={{
           sm: 14,
           md: 16,
@@ -71,190 +49,127 @@ export const Features = () => {
         ta="center"
         mb={50}
       >
-        All-in-one tool for JSON, YAML, CSV, XML, and TOML. Formatter, validator, visualizer, and
+        All in one tool for JSON, YAML, CSV, XML, and TOML. Formatter, validator, visualizer, and
         editor. Make smarter decisions faster.
       </Text>
 
-      <Grid gutter={24} mt={50} mb={150} mx="auto">
-        <Grid.Col span={{ base: 12, xs: 6 }}>
-          <Paper
-            pos="relative"
-            p={30}
-            shadow="sm"
-            radius="md"
-            w="100%"
-            mah={{ sm: 300, md: 370 }}
-            h="100%"
-            withBorder
-            style={{ overflow: "hidden", borderColor: "#ececec" }}
-            bg="white"
-          >
-            <StyledPaper>
-              <Title c="black" order={3} fw={500} fz={{ sm: 20, md: 28 }}>
-                Graphs
-              </Title>
-              <Text fz={{ sm: 14, md: 18 }} c="dark.5" mt={10}>
-                Visualize your data in a graph format to understand and analyze it better.
+      <Grid px={{ base: 0, xs: "xl", md: 0 }} mt={100} mx="auto" gutter={30}>
+        <Grid.Col span={{ base: 12, xs: 6, md: 4 }}>
+          <Paper h="100%" p="lg" radius="md" bg="gray.0" withBorder>
+            <Flex align="center" gap={8} mb={16}>
+              <FaBolt color="orange" size={24} />
+              <Text c="gray.9" fz={{ base: 16, md: 20, lg: 26, xl: 28 }} fw={600}>
+                Real-time Visualization
               </Text>
-              <Image
-                loading="lazy"
-                src="./assets/features/compare.webp"
-                alt="Compare"
-                w={{ sm: 350, md: 400 }}
-                mt={20}
-                style={{
-                  filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
-                }}
-              />
-            </StyledPaper>
+            </Flex>
+            <Text
+              c="gray.7"
+              fz={{
+                base: 14,
+                xs: 16,
+              }}
+            >
+              Transform into graphs as you type. Update your data from the graphs directly.
+            </Text>
           </Paper>
         </Grid.Col>
-        <Grid.Col span={{ base: 12, xs: 6 }}>
-          <Paper
-            p={30}
-            shadow="sm"
-            radius="md"
-            w="100%"
-            mah={{ sm: 300, md: 370 }}
-            h="100%"
-            bg="white"
-            withBorder
-            style={{ overflow: "hidden", borderColor: "#ececec" }}
-          >
-            <StyledPaper>
-              <Title c="black" order={3} fw={500} fz={{ sm: 20, md: 28 }}>
-                Generate Types
-              </Title>
-              <Text fz={{ sm: 14, md: 18 }} c="dark.5" my={10}>
-                Generate types for your data with a single click: TypeScript, Go, Rust & more.
+        <Grid.Col span={{ base: 12, xs: 6, md: 4 }}>
+          <Paper h="100%" p="lg" radius="md" bg="gray.0" withBorder>
+            <Flex align="center" gap={8} mb={16}>
+              <FaHeart color="#ff5555" size={26} />
+              <Text c="gray.9" fz={{ base: 16, md: 20, lg: 26, xl: 28 }} fw={600}>
+                Simple
               </Text>
-              <Paper
-                withBorder
-                shadow="sm"
-                radius={5}
-                w="fit-content"
-                mx="auto"
-                style={{ borderColor: "lightgray" }}
-              >
-                <Image
-                  loading="lazy"
-                  radius="sm"
-                  src="./assets/features/edit.webp"
-                  alt="Edit"
-                  w={340}
-                />
-              </Paper>
-            </StyledPaper>
+            </Flex>
+            <Text
+              c="gray.7"
+              fz={{
+                base: 14,
+                xs: 16,
+              }}
+            >
+              Designed for everyone. Clean, focused, and easy to use. No learning curve.
+            </Text>
           </Paper>
         </Grid.Col>
-        <Grid.Col span={{ base: 12, xs: 6 }}>
-          <Paper
-            p={30}
-            shadow="sm"
-            radius="md"
-            w="100%"
-            mah={{ sm: 300, md: 370 }}
-            h="100%"
-            withBorder
-            style={{ overflow: "hidden", borderColor: "#ececec" }}
-            bg="white"
-          >
-            <StyledPaper>
-              <Title c="black" order={3} fw={500} fz={{ sm: 20, md: 28 }}>
-                Choose Your Format
-              </Title>
-              <Text fz={{ sm: 14, md: 18 }} c="dark.5" mt={10}>
-                Visualize and edit your data in multiple formats. JSON, YAML, CSV, XML, and TOML are
-                supported.
+        <Grid.Col span={{ base: 12, xs: 6, md: 4 }} visibleFrom="xs">
+          <Paper h="100%" p="lg" radius="md" bg="gray.0" withBorder>
+            <Flex align="center" gap={8} mb={16}>
+              <FaMagic color="#8c0075" size={24} />
+              <Text c="gray.9" fz={{ base: 16, md: 20, lg: 26, xl: 28 }} fw={600}>
+                Generate
               </Text>
-              <Grid gutter="lg" mt={50}>
-                <Grid.Col span={6}>
-                  <Badge
-                    w="100%"
-                    mih={{ sm: 10, md: 40 }}
-                    variant="light"
-                    c="indigo"
-                    color="indigo"
-                    radius="sm"
-                    size="xl"
-                  >
-                    JSON
-                  </Badge>
-                </Grid.Col>
-                <Grid.Col span={6}>
-                  <Badge
-                    w="100%"
-                    mih={{ sm: 10, md: 40 }}
-                    variant="light"
-                    color="cyan"
-                    radius="sm"
-                    size="xl"
-                    c="cyan"
-                  >
-                    YAML
-                  </Badge>
-                </Grid.Col>
-                <Grid.Col span={6}>
-                  <Badge
-                    w="100%"
-                    mih={{ sm: 10, md: 40 }}
-                    variant="light"
-                    color="grape"
-                    radius="sm"
-                    c="grape"
-                    size="xl"
-                  >
-                    CSV
-                  </Badge>
-                </Grid.Col>
-                <Grid.Col span={6}>
-                  <Badge
-                    w="100%"
-                    mih={{ sm: 10, md: 40 }}
-                    variant="light"
-                    color="red"
-                    radius="sm"
-                    size="xl"
-                    c="red"
-                  >
-                    XML
-                  </Badge>
-                </Grid.Col>
-              </Grid>
-            </StyledPaper>
+            </Flex>
+            <Text
+              c="gray.7"
+              fz={{
+                base: 14,
+                xs: 16,
+              }}
+            >
+              Generate JSON Schema and mock data, TypeScript interfaces, Golang structs, and more
+              from your data with a single click.
+            </Text>
           </Paper>
         </Grid.Col>
-        <Grid.Col span={{ base: 12, xs: 6 }}>
-          <Paper
-            p={30}
-            shadow="sm"
-            radius="md"
-            w="100%"
-            mah={{ sm: 300, md: 370 }}
-            h="100%"
-            withBorder
-            style={{ overflow: "hidden", borderColor: "#ececec" }}
-            bg="white"
-          >
-            <StyledPaper>
-              <Title c="black" order={3} fw={500} fz={{ sm: 20, md: 28 }}>
-                Search
-              </Title>
-              <Text fz={{ sm: 14, md: 18 }} c="dark.5" mt={10}>
-                Highlight and search what you need in your data, without any hassle.
+        <Grid.Col span={{ base: 12, xs: 6, md: 4 }}>
+          <Paper h="100%" p="lg" radius="md" bg="gray.0" withBorder>
+            <Flex align="center" gap={8} mb={16}>
+              <FaPalette color="#4890fd" size={24} />
+              <Text c="gray.9" fz={{ base: 16, md: 20, lg: 26, xl: 28 }} fw={600}>
+                Customizable
               </Text>
-              <Image
-                loading="lazy"
-                src="./assets/features/search.webp"
-                alt="Search"
-                w={{ sm: 400, md: 500 }}
-                mx="auto"
-                mt={20}
-                style={{
-                  filter: "drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))",
-                }}
-              />
-            </StyledPaper>
+            </Flex>
+            <Text
+              c="gray.7"
+              fz={{
+                base: 14,
+                xs: 16,
+              }}
+            >
+              Besides the default light and dark themes, customize the editor&apos;s theme to your
+              liking, matching your brand or personal preference.
+            </Text>
+          </Paper>
+        </Grid.Col>
+        <Grid.Col span={{ base: 12, xs: 6, md: 4 }}>
+          <Paper h="100%" p="lg" radius="md" bg="gray.0" withBorder>
+            <Flex align="center" gap={8} mb={16}>
+              <FaShieldHalved color="black" size={24} />
+              <Text c="gray.9" fz={{ base: 16, md: 20, lg: 26, xl: 28 }} fw={600}>
+                Privacy First
+              </Text>
+            </Flex>
+            <Text
+              c="gray.7"
+              fz={{
+                base: 14,
+                xs: 16,
+              }}
+            >
+              JSON Crack does not store your data unless you upload it manually. Your data remains
+              completely private.
+            </Text>
+          </Paper>
+        </Grid.Col>
+        <Grid.Col span={{ base: 12, xs: 6, md: 4 }} visibleFrom="xs">
+          <Paper h="100%" p="lg" radius="md" bg="gray.0" withBorder>
+            <Flex align="center" gap={8} mb={16}>
+              <FaShapes color="#00a571" size={24} />
+              <Text c="gray.9" fz={{ base: 16, md: 20, lg: 26, xl: 28 }} fw={600}>
+                Advanced Features
+              </Text>
+            </Flex>
+            <Text
+              c="gray.7"
+              fz={{
+                base: 14,
+                xs: 16,
+              }}
+            >
+              Unlock advanced features like JSON Path, AI data filter, Compare Data, Search on
+              graph, Download as Image and many more!
+            </Text>
           </Paper>
         </Grid.Col>
       </Grid>

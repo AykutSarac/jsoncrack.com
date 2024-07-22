@@ -9,9 +9,9 @@ export const Pricing = () => {
         c="black"
         order={2}
         fz={{
-          base: 26,
-          xs: 32,
-          sm: 42,
+          base: 24,
+          xs: 30,
+          sm: 36,
         }}
         fw={600}
         mb={15}

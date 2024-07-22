@@ -1,7 +1,6 @@
 import React from "react";
 import type { AppProps } from "next/app";
 import dynamic from "next/dynamic";
-import { DM_Sans } from "next/font/google";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { MantineProvider, createTheme } from "@mantine/core";
@@ -15,16 +14,13 @@ import { Loading } from "src/layout/Loading";
 import { supabase } from "src/lib/api/supabase";
 import useUser from "src/store/useUser";
 
-const dmSans = DM_Sans({
-  subsets: ["latin-ext"],
-});
-
 const theme = createTheme({
   autoContrast: true,
   fontSmoothing: false,
   respectReducedMotion: true,
   cursorType: "pointer",
-  fontFamily: dmSans.style.fontFamily,
+  fontFamily:
+    'system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"',
   defaultGradient: {
     from: "#388cdb",
     to: "#0f037f",
