@@ -3,22 +3,22 @@ import { Container, Title, Accordion, Text, List, Anchor } from "@mantine/core";
 
 const Questions = [
   {
-    title: "What is JSON Crack?",
+    title: "What is JSON Crack and what does it do?",
     content:
-      "JSON Crack is a data visualization app capable of visualizing data formats such as JSON, YAML, XML, CSV and more, into interactive graphs. It helps you to understand, analyze and debug your data easily. JSON Crack is designed for developers, data analysts, and anyone who works with structured data formats. It's also helpful for creating documentation and presentations for your teams/customers.",
+      "JSON Crack is an online data visualization app capable of visualizing data formats such as JSON, YAML, XML, CSV and more, into interactive graphs. It helps you to understand, analyze and debug your data easily. JSON Crack is designed for developers, data analysts, and anyone who works with structured data formats. It's also helpful for creating documentation and presentations for your teams/customers.",
   },
   {
-    title: "Who is it for and what are the use-cases?",
+    title: "Who can benefit from using JSON Crack?",
     content:
-      "JSON Crack is for developers, data analysts, and anyone who works with data. It's useful for visualizing data structures, debugging, and understanding complex data. It's also helpful for creating documentation and presentations for your teams/customers.",
+      "JSON Crack is perfect for developers, data analysts, or anyone who works with structured data formats like JSON, YAML, XML, and CSV. It's ideal for visualizing data structures, debugging complex data, and creating clear documentation and presentations for your team or clients.",
   },
   {
-    title: "Do you see my data pasted on the editor?",
+    title: "Is my data secure with JSON Crack?",
     content:
-      "No, JSON Crack does not store your data anywhere unless you upload it manually. When you paste your data into the editor, it's processed on your device only to create the visualization. Your data remains completely private.",
+      "Absolutely! JSON Crack prioritizes your data privacy. When you paste your data into the editor, it's processed only on your device to create the visualization. Your data remains completely private and is never stored anywhere unless you choose to upload it manually.",
   },
   {
-    title: "What are the advantages of the premium plan?",
+    title: "What are the advantages of the JSON Crack premium plan?",
     content: (
       <>
         The key features are:
