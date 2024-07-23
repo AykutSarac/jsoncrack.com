@@ -1,7 +1,6 @@
 import React from "react";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
-import "@mantine/carousel/styles.css";
 import styled from "styled-components";
 import { metaDescription } from "src/constants/landing";
 import { FAQ } from "src/containers/Landing/FAQ";
