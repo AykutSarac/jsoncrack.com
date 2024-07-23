@@ -23,7 +23,7 @@ import Layout from "src/layout/Layout";
 import { gaEvent } from "src/lib/utils/gaEvent";
 
 export const PRICING = {
-  MONTHLY: 9,
+  MONTHLY: 7,
   ANNUAL: 5,
 };
 
