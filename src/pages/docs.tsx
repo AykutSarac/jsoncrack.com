@@ -40,6 +40,7 @@ const Docs = () => {
       <Head>
         <title>Embed - JSON Crack</title>
         <meta name="description" content="Integrate JSON Crack widgets into your website." />
+        <link rel="canonical" href="https://jsoncrack.com/docs" />
       </Head>
       <Stack mx="auto" maw="90%">
         <Group mb="lg" mt={40}>

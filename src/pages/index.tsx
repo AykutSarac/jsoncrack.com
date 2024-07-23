@@ -33,6 +33,7 @@ export const HomePage = ({ stars }: InferGetStaticPropsType<typeof getStaticProp
         <meta name="description" content={metaDescription} key="description" />
         <meta property="og:description" content={metaDescription} key="ogdescription" />
         <meta name="twitter:description" content={metaDescription} key="twdescription" />
+        <link rel="canonical" href="https://jsoncrack.com" />
       </Head>
       <StyledSectionWrapper>
         <HeroSection />

@@ -9,6 +9,7 @@ const Terms = () => {
     <Layout>
       <Head>
         <title>Terms of Service - JSON Crack</title>
+        <link rel="canonical" href="https://jsoncrack.com/legal/terms" />
       </Head>
       <Container my={50} size="md" pb="lg">
         <Paper bg="transparent">

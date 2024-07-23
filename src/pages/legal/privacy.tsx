@@ -9,6 +9,7 @@ const Privacy = () => {
     <Layout>
       <Head>
         <title>Privacy Policy - JSON Crack</title>
+        <link rel="canonical" href="https://jsoncrack.com/legal/privacy" />
       </Head>
       <Container my={50} size="md" pb="lg">
         <Paper bg="transparent">

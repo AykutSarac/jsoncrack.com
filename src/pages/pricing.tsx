@@ -515,6 +515,7 @@ const Pricing = () => {
     <>
       <Head>
         <title>Pricing - JSON Crack</title>
+        <link rel="canonical" href="https://jsoncrack.com/pricing" />
       </Head>
       <Layout>
         <PricingCards />
