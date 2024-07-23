@@ -48,7 +48,7 @@ export const Footer = () => {
             <Anchor
               fz="sm"
               c="black"
-              href="https://herowand.lemonsqueezy.com/affiliates"
+              href="https://jsoncrack.lemonsqueezy.com/affiliates"
               target="_blank"
             >
               Affiliate

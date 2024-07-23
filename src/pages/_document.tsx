@@ -62,7 +62,7 @@ class MyDocument extends Document {
             id="lemon-squeezy-affiliate"
             strategy="afterInteractive"
             dangerouslySetInnerHTML={{
-              __html: 'window.lemonSqueezyAffiliateConfig = { store: "herowand" };',
+              __html: 'window.lemonSqueezyAffiliateConfig = { store: "jsoncrack" };',
             }}
           />
           <Script src="https://lmsqueezy.com/affiliate.js" strategy="afterInteractive" />
