@@ -18,14 +18,13 @@ import styled from "styled-components";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { IoCheckmarkCircle, IoCloseCircle } from "react-icons/io5";
-// import { PiChats } from "react-icons/pi";
 import { VscArrowRight, VscLinkExternal } from "react-icons/vsc";
 import Layout from "src/layout/Layout";
 import { gaEvent } from "src/lib/utils/gaEvent";
 
 export const PRICING = {
   MONTHLY: 9,
-  ANNUAL: 6,
+  ANNUAL: 5,
 };
 
 export const purchaseLinks = {
@@ -73,9 +72,26 @@ export const PricingCards = () => {
           value={isMonthly ? "Monthly" : "Annual"}
           onChange={v => setIsMonthly(v === "Monthly")}
           size="md"
-          data={["Monthly", "Annual"]}
+          miw={300}
+          data={[
+            {
+              label: "Monthly",
+              value: "Monthly",
+            },
+            {
+              label: (
+                <Flex align="center" gap="xs">
+                  Annual{" "}
+                  <Badge radius="sm" variant="light" color="green">
+                    {Math.round(((PRICING.MONTHLY - PRICING.ANNUAL) / PRICING.MONTHLY) * 100)}% OFF
+                  </Badge>
+                </Flex>
+              ),
+              value: "Annual",
+            },
+          ]}
           w={200}
-          radius="lg"
+          radius="md"
           styles={{ label: { color: "black" } }}
           mb="xl"
         />
@@ -233,7 +249,7 @@ export const PricingCards = () => {
               </Flex>
 
               <Flex gap="xs" align="baseline">
-                <Text fz={38} fw={500} c="black">
+                <Text fz={38} fw={600} c="black">
                   ${isMonthly ? PRICING.MONTHLY : PRICING.ANNUAL}
                 </Text>
                 <Text fz="md" c="gray.6">
@@ -371,7 +387,7 @@ export const PricingCards = () => {
               <Text fw={500} size="xl" c="black">
                 Free
               </Text>
-              <Text fz={38} fw={500} c="black">
+              <Text fz={38} fw={600} c="black">
                 $0
               </Text>
               <Text fz="xs" c="gray.7">

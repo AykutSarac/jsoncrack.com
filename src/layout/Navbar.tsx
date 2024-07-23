@@ -2,7 +2,6 @@ import React from "react";
 import Link from "next/link";
 import { Button } from "@mantine/core";
 import styled from "styled-components";
-import { IoArrowForward } from "react-icons/io5";
 import { JSONCrackLogo } from "./JsonCrackLogo";
 
 const StyledNavbarWrapper = styled.div`
@@ -48,7 +47,18 @@ export const Navbar = () => {
         <Left>
           <JSONCrackLogo />
           <Button
+            component={Link}
+            prefetch={false}
+            href="/#pricing"
+            variant="subtle"
+            color="black"
+            radius="md"
+            size="md"
             ml="lg"
+          >
+            Pricing
+          </Button>
+          <Button
             component="a"
             href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode"
             target="_blank"
@@ -58,17 +68,6 @@ export const Navbar = () => {
             size="md"
           >
             VS Code
-          </Button>
-          <Button
-            component={Link}
-            prefetch={false}
-            href="/#pricing"
-            variant="subtle"
-            color="black"
-            radius="md"
-            size="md"
-          >
-            Pricing
           </Button>
           <Button
             component={Link}
@@ -98,25 +97,12 @@ export const Navbar = () => {
             variant="default"
             component="a"
             href="https://app.jsoncrack.com/sign-in"
-            radius="lg"
+            radius="md"
             visibleFrom="sm"
             size="md"
             fw={600}
           >
             Sign in
-          </Button>
-          <Button
-            color="brightBlue"
-            component={Link}
-            prefetch={false}
-            href="/#pricing"
-            visibleFrom="sm"
-            radius="lg"
-            size="md"
-            fw={600}
-            rightSection={<IoArrowForward />}
-          >
-            Start for free
           </Button>
         </Right>
       </StyledNavbar>

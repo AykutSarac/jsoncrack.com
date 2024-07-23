@@ -50,7 +50,7 @@ export const HeroPreview = () => {
             onChange={setSelectedFeature}
             orientation="vertical"
             withItemsBorders={false}
-            color="teal"
+            color="green"
             bg="transparent"
             size="lg"
             styles={{

@@ -2,7 +2,6 @@ import React from "react";
 import { Stack, Flex, Badge, Button } from "@mantine/core";
 import styled from "styled-components";
 import { MdChevronRight } from "react-icons/md";
-import { gaEvent } from "src/lib/utils/gaEvent";
 
 const StyledHeroSection = styled.main`
   position: relative;
@@ -125,30 +124,18 @@ export const HeroSection = () => {
               TOML
             </Badge>
           </Flex>
-          <Flex justify="center" gap="sm" mt="lg" wrap="wrap">
-            <Button
-              component="a"
-              color="brightBlue"
-              href="/#pricing"
-              size="lg"
-              radius="md"
-              fw={600}
-              rightSection={<MdChevronRight size={30} />}
-            >
-              Get Started
-            </Button>
-            <Button
-              onClick={() => gaEvent("Hero Section", "click upgrade premium")}
-              component="a"
-              variant="default"
-              href="/#premium"
-              size="lg"
-              radius="md"
-              fw={600}
-            >
-              Premium vs Free
-            </Button>
-          </Flex>
+          <Button
+            component="a"
+            color="brightBlue"
+            href="/#pricing"
+            size="xl"
+            radius="md"
+            fw={600}
+            rightSection={<MdChevronRight size={30} />}
+            mt="lg"
+          >
+            Get Started
+          </Button>
         </Stack>
       </StyledHeroSectionBody>
     </StyledHeroSection>
