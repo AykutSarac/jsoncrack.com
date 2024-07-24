@@ -14,6 +14,7 @@ type SetContents = {
   contents?: string;
   hasChanges?: boolean;
   skipUpdate?: boolean;
+  format?: FileFormat;
 };
 
 type Query = string | string[] | undefined;
@@ -96,9 +97,14 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       console.warn("The content was unable to be converted, so it was cleared instead.");
     }
   },
-  setContents: async ({ contents, hasChanges = true, skipUpdate = false }) => {
+  setContents: async ({ contents, hasChanges = true, skipUpdate = false, format }) => {
     try {
-      set({ ...(contents && { contents }), error: null, hasChanges });
+      set({
+        ...(contents && { contents }),
+        error: null,
+        hasChanges,
+        format: format ?? get().format,
+      });
 
       const isFetchURL = window.location.href.includes("?");
       const json = await contentToJson(get().contents, get().format);

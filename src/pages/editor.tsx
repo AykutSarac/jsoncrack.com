@@ -3,6 +3,7 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useMantineColorScheme } from "@mantine/core";
+import "@mantine/dropzone/styles.css";
 import styled, { ThemeProvider } from "styled-components";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { metaDescription } from "src/constants/landing";

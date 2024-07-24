@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
 import useGraph from "src/modules/GraphView/stores/useGraph";
+import { FullscreenDropzone } from "./FullscreenDropzone";
 
 export const StyledEditor = styled(Allotment)`
   position: relative !important;
@@ -28,18 +29,21 @@ export const Editor = () => {
   const fullscreen = useGraph(state => state.fullscreen);
 
   return (
-    <StyledEditor proportionalLayout={false}>
-      <Allotment.Pane
-        preferredSize={450}
-        minSize={fullscreen ? 0 : 300}
-        maxSize={800}
-        visible={!fullscreen}
-      >
-        <TextEditor />
-      </Allotment.Pane>
-      <Allotment.Pane minSize={0}>
-        <LiveEditor />
-      </Allotment.Pane>
-    </StyledEditor>
+    <>
+      <StyledEditor proportionalLayout={false}>
+        <Allotment.Pane
+          preferredSize={450}
+          minSize={fullscreen ? 0 : 300}
+          maxSize={800}
+          visible={!fullscreen}
+        >
+          <TextEditor />
+        </Allotment.Pane>
+        <Allotment.Pane minSize={0}>
+          <LiveEditor />
+        </Allotment.Pane>
+      </StyledEditor>
+      <FullscreenDropzone />
+    </>
   );
 };

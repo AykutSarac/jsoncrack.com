@@ -104,6 +104,17 @@ export const Navbar = () => {
           >
             Sign in
           </Button>
+          <Button
+            component="a"
+            color="brightBlue"
+            href="/editor"
+            radius="md"
+            visibleFrom="sm"
+            size="md"
+            fw={600}
+          >
+            Start for free
+          </Button>
         </Right>
       </StyledNavbar>
     </StyledNavbarWrapper>
