@@ -1,20 +1,20 @@
 import React from "react";
 import type { ModalProps } from "@mantine/core";
 import {
-  Button,
-  Radio,
-  Modal,
   Text,
   Flex,
-  Badge,
   Divider,
   Paper,
-  useMantineTheme,
-  useMantineColorScheme,
   List,
+  Drawer,
+  Stack,
+  Radio,
+  Badge,
+  Button,
+  Group,
 } from "@mantine/core";
-import { IoMdArrowForward } from "react-icons/io";
-import { IoCheckmarkCircle } from "react-icons/io5";
+import styled from "styled-components";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { gaEvent } from "src/lib/utils/gaEvent";
 import { PRICING } from "src/pages/pricing";
 import useUser from "src/store/useUser";
@@ -26,13 +26,30 @@ const overlayLinks = {
     "https://jsoncrack.lemonsqueezy.com/buy/577928ea-fb09-4076-9307-3e5931b35ad0?embed=1&media=0&logo=0&desc=0&discount=0&enabled=82417",
 };
 
+const StyledRadioCard = styled(Radio.Card)`
+  border-width: 2px;
+  border-color: #efefef;
+  min-width: 400px;
+  transition: 0.2s;
+
+  &[data-checked] {
+    border-color: black;
+  }
+
+  &[data-checked]:hover {
+    background: #f6f6f6;
+  }
+
+  &:hover {
+    border-color: #555555;
+  }
+`;
+
 export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
-  const { colorScheme } = useMantineColorScheme();
-  const theme = useMantineTheme();
   const user = useUser(state => state.user);
   const [plan, setPlan] = React.useState("monthly");
 
-  const handleSelect = () => {
+  const handleUpgrade = () => {
     const link = new URL(overlayLinks[plan]);
 
     if (user?.email) {
@@ -47,116 +64,93 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
     window.open(link.toString(), "_blank");
   };
 
-  const getBorderColor = (value: string) => {
-    if (plan === value) return theme.colors.blue[6];
-    if (colorScheme === "dark") return theme.colors.gray[7];
-    return theme.colors.gray[2];
-  };
-
   return (
-    <Modal
-      title={
-        <Text fz="xl" fw="bold" ml="auto">
-          Upgrade
-        </Text>
-      }
-      centered
+    <Drawer
       size="md"
       opened={opened}
       onClose={onClose}
       zIndex={202}
+      position="bottom"
+      radius="lg"
+      styles={{
+        body: {
+          background: "white",
+        },
+        header: {
+          background: "white",
+        },
+      }}
     >
-      <Radio.Group
-        color="indigo"
-        value={plan}
-        onChange={setPlan}
-        label="Select your plan:"
-        size="md"
+      <Paper
+        bg="white"
+        miw={600}
+        p={30}
+        radius="lg"
+        mx="auto"
+        w="fit-content"
+        style={{
+          border: "2px solid #e2e2e2",
+        }}
       >
-        <Flex gap="xs" mt="sm" align="center" justify="space-between">
-          <Paper
-            flex="1"
-            withBorder
-            radius="md"
-            py="xs"
-            px="sm"
-            style={{
-              borderWidth: 2,
-              borderColor: getBorderColor("monthly"),
-              cursor: "pointer",
-            }}
-            onClick={() => setPlan("monthly")}
-          >
-            <Radio value="monthly" label="Monthly" size="xs" />
-          </Paper>
-          <Paper
-            flex="1"
-            withBorder
-            radius="md"
-            p="sm"
-            style={{
-              borderWidth: 2,
-              borderColor: getBorderColor("annual"),
-              cursor: "pointer",
-            }}
-            onClick={() => setPlan("annual")}
-          >
-            <Flex justify="space-between">
-              <Radio value="annual" label="Annual" size="xs" />
-              <Badge variant="light" color="indigo" size="xs" radius="sm">
-                Save {Math.round(((PRICING.MONTHLY - PRICING.ANNUAL) / PRICING.MONTHLY) * 100)}%
-              </Badge>
-            </Flex>
-          </Paper>
+        <Flex gap="3vw" justify="space-between">
+          <Stack>
+            <Text c="black" fz="h2" fw={600}>
+              Upgrade
+            </Text>
+            <Divider fz="md" labelPosition="left" label="Included features" c="gray.4" />
+            <List
+              spacing="xs"
+              c="gray.7"
+              icon={<IoMdCheckmarkCircleOutline size="24" color="#16a34a" />}
+            >
+              <List.Item>Larger data support up to 4 MB</List.Item>
+              <List.Item>Compare data differences on graph</List.Item>
+              <List.Item>AI-powered data filter</List.Item>
+              <List.Item>Customizable graph colors</List.Item>
+              <List.Item>Edit data directly on graph</List.Item>
+              <List.Item>Tabs for multiple documents</List.Item>
+            </List>
+          </Stack>
+          <Radio.Group value={plan} onChange={setPlan}>
+            <Stack>
+              <StyledRadioCard value="monthly" radius="lg" px="xl" py="md">
+                <Group align="center" justify="space-between">
+                  <Text c="gray.7" fz="xl" fw={600}>
+                    Monthly
+                  </Text>
+                  <Flex fw={500} align="baseline" fz="sm" c="gray.5">
+                    <Text fw={600} fz="xl" c="gray.7">
+                      ${PRICING.MONTHLY}
+                    </Text>
+                    /month
+                  </Flex>
+                </Group>
+              </StyledRadioCard>
+              <StyledRadioCard value="annual" radius="lg" px="xl" py="md">
+                <Group align="center" justify="space-between">
+                  <Flex align="center" gap="xs">
+                    <Text fz="xl" c="gray.7" fw={600}>
+                      Yearly
+                    </Text>
+                    <Badge size="md" radius="lg" color="yellow.4">
+                      Save {PRICING.getAnnualSave()}%
+                    </Badge>
+                  </Flex>
+                  <Flex fw={500} align="baseline" fz="sm" c="gray.5">
+                    <Text fw={600} fz="xl" c="gray.7">
+                      ${PRICING.ANNUAL * 12}
+                    </Text>
+                    /year
+                  </Flex>
+                </Group>
+              </StyledRadioCard>
+            </Stack>
+            <Button color="dark" fullWidth mt="xl" size="xl" radius="md" onClick={handleUpgrade}>
+              Upgrade
+            </Button>
+          </Radio.Group>
         </Flex>
-      </Radio.Group>
-
-      <Text mt="md" fz="sm" fw="bold" mb="xs">
-        What You Get
-      </Text>
-      <List fz="sm" lts={0.2} icon={<IoCheckmarkCircle color="#41B619" size="20" />}>
-        <List.Item>Powerful editor interface</List.Item>
-        <List.Item>Compact graphs and less nodes</List.Item>
-        <List.Item>
-          Larger data size support
-          <Text component="span" fw={500} c="light" ml={4} inherit>
-            (up to ~4 MB)
-          </Text>
-        </List.Item>
-        <List.Item>Faster rendering</List.Item>
-        <List.Item>Customizable graph colors</List.Item>
-        <List.Item>Compare data on graphs</List.Item>
-        <List.Item>Edit data on graphs</List.Item>
-      </List>
-
-      <Button
-        component="a"
-        href="/#premium"
-        target="_blank"
-        size="compact-sm"
-        variant="subtle"
-        mt="sm"
-      >
-        ...and more, see all features!
-      </Button>
-
-      <Divider my="md" />
-      <Flex align="center" justify="space-between">
-        <Flex h={32} align="center">
-          <Text c="gray" fz="xs" style={{ alignSelf: "baseline" }}>
-            $
-          </Text>
-          <Text fz={28} fw="bold">
-            {plan === "monthly" ? PRICING.MONTHLY : PRICING.ANNUAL}
-          </Text>
-          <Text ml="xs" fz="xs" c="dimmed">
-            / mo (billed {plan === "monthly" ? "monthly" : "annually"})
-          </Text>
-        </Flex>
-        <Button onClick={handleSelect} color="green" rightSection={<IoMdArrowForward />}>
-          Upgrade
-        </Button>
-      </Flex>
-    </Modal>
+      </Paper>
+    </Drawer>
   );
 };

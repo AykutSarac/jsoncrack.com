@@ -25,6 +25,7 @@ import { gaEvent } from "src/lib/utils/gaEvent";
 export const PRICING = {
   MONTHLY: 7,
   ANNUAL: 5,
+  getAnnualSave: () => Math.round(((PRICING.MONTHLY - PRICING.ANNUAL) / PRICING.MONTHLY) * 100),
 };
 
 export const purchaseLinks = {
@@ -83,7 +84,7 @@ export const PricingCards = () => {
                 <Flex align="center" gap="xs">
                   Annual{" "}
                   <Badge radius="sm" variant="light" color="green">
-                    {Math.round(((PRICING.MONTHLY - PRICING.ANNUAL) / PRICING.MONTHLY) * 100)}% OFF
+                    {PRICING.getAnnualSave()}% OFF
                   </Badge>
                 </Flex>
               ),
@@ -243,7 +244,7 @@ export const PricingCards = () => {
                     color="green"
                     ml="sm"
                   >
-                    SAVE {Math.round(((PRICING.MONTHLY - PRICING.ANNUAL) / PRICING.MONTHLY) * 100)}%
+                    SAVE {PRICING.getAnnualSave()}%
                   </Badge>
                 )}
               </Flex>
