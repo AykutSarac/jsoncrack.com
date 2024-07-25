@@ -97,7 +97,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
             <Text c="black" fz="h2" fw={600}>
               Upgrade
             </Text>
-            <Divider fz="md" labelPosition="left" label="Included features" c="gray.4" />
+            <Divider fz="md" labelPosition="left" label="Included features" color="gray.4" />
             <List
               spacing="xs"
               c="gray.7"
@@ -125,6 +125,9 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
                     /month
                   </Flex>
                 </Group>
+                <Text fz="xs" c="gray.6">
+                  2 days money back guarantee
+                </Text>
               </StyledRadioCard>
               <StyledRadioCard value="annual" radius="lg" px="xl" py="md">
                 <Group align="center" justify="space-between">
@@ -143,6 +146,9 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
                     /year
                   </Flex>
                 </Group>
+                <Text fz="xs" c="gray.6">
+                  3 days money back guarantee
+                </Text>
               </StyledRadioCard>
             </Stack>
             <Button color="dark" fullWidth mt="xl" size="xl" radius="md" onClick={handleUpgrade}>
