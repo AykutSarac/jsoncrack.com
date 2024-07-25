@@ -23,12 +23,12 @@ const StyledHeroTitle = styled.h1`
   max-width: 30rem;
 
   span {
-    display: block;
+    display: inline-block;
     white-space: nowrap;
     padding: 0 0.5rem;
     color: white;
     background: black;
-    transform: rotate(-1deg);
+    transform: rotate(-1.5deg);
   }
 
   @media only screen and (min-width: 576px) {
