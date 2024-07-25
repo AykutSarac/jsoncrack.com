@@ -6,20 +6,6 @@ import { MdChevronRight } from "react-icons/md";
 const StyledHeroSection = styled.main`
   position: relative;
 
-  /* &:before {
-    position: absolute;
-    content: "";
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
-    background-image: radial-gradient(#0000002a 1px, transparent 1px);
-    background-size: 15px 15px;
-    background-position: top center;
-    image-rendering: pixelated;
-    -webkit-mask-image: linear-gradient(to bottom, transparent, 20%, white, 80%, transparent);
-    mask-image: linear-gradient(to bottom, transparent, 20%, white, 80%, transparent);
-  } */
-
   @media only screen and (max-width: 1240px) {
     flex-direction: column;
   }
@@ -27,27 +13,27 @@ const StyledHeroSection = styled.main`
 
 const StyledHeroTitle = styled.h1`
   position: relative;
-  font-size: 2.4rem;
-  font-weight: 800;
+  font-size: 2rem;
+  font-weight: 600;
   display: inline;
   color: #272727;
   width: fit-content;
   line-height: 1.2;
-  letter-spacing: -2px;
+  letter-spacing: -1px;
   max-width: 30rem;
 
-  @keyframes textShine {
-    0% {
-      background-position: 0% 50%;
-    }
-    100% {
-      background-position: 100% 50%;
-    }
+  span {
+    display: block;
+    white-space: nowrap;
+    padding: 0 0.5rem;
+    color: white;
+    background: black;
+    transform: rotate(-1deg);
   }
 
   @media only screen and (min-width: 576px) {
     font-size: 3.2rem;
-    max-width: 32rem;
+    max-width: 34rem;
   }
 
   @media only screen and (min-width: 992px) {
@@ -62,20 +48,26 @@ const StyledHeroTitle = styled.h1`
 `;
 
 const StyledHeroText = styled.p`
-  font-size: 1rem;
-  color: #696969;
-  font-weight: 400;
+  font-size: 1.2rem;
+  color: #626262;
+  font-weight: 500;
   max-width: 100%;
   min-width: 400px;
+  margin-top: 1rem;
   text-align: center;
 
+  strong {
+    font-weight: 500;
+    color: #8c00ff;
+  }
+
   @media only screen and (min-width: 576px) {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     max-width: 80%;
   }
 
   @media only screen and (min-width: 1400px) {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     max-width: 60%;
   }
 `;
@@ -88,8 +80,6 @@ const StyledHeroSectionBody = styled.div`
   justify-content: center;
   padding: 9rem 10%;
   overflow: hidden;
-  backdrop-filter: blur(1.2px);
-  -webkit-backdrop-filter: blur(1.2px);
   text-align: center;
   gap: 60px;
   min-height: 40vh;
@@ -105,8 +95,14 @@ export const HeroSection = () => {
     <StyledHeroSection id="hero-section">
       <StyledHeroSectionBody>
         <Stack flex="1" miw={250} mx="auto" align="center">
-          <StyledHeroTitle>Transform data into interactive graphs</StyledHeroTitle>
-          <StyledHeroText>Powerful editor to explore data visually.</StyledHeroText>
+          <StyledHeroTitle>
+            Convert any JSON into
+            <span>interactive graphs</span>
+          </StyledHeroTitle>
+          <StyledHeroText>
+            The best JSON viewer tool to <strong>visualize</strong>, <strong>format</strong> and{" "}
+            <strong>modify</strong>.
+          </StyledHeroText>
           <Flex gap="md">
             <Badge size="sm" color="dark" autoContrast radius="sm" variant="light">
               JSON
@@ -124,9 +120,14 @@ export const HeroSection = () => {
               TOML
             </Badge>
           </Flex>
+
           <Button
             component="a"
-            color="brightBlue"
+            variant="gradient"
+            gradient={{
+              from: "#9f19ff",
+              to: "#550091",
+            }}
             href="/#pricing"
             size="xl"
             radius="md"
@@ -134,7 +135,7 @@ export const HeroSection = () => {
             rightSection={<MdChevronRight size={30} />}
             mt="lg"
           >
-            Get Started
+            Start Typing
           </Button>
         </Stack>
       </StyledHeroSectionBody>

@@ -14,6 +14,7 @@ const StyledNavbar = styled.nav`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  max-width: 1157px;
   margin: 0 auto;
   padding: 12px 24px;
   background: rgba(255, 255, 255, 0.1);
@@ -53,8 +54,9 @@ export const Navbar = () => {
             variant="subtle"
             color="black"
             radius="md"
-            size="md"
-            ml="lg"
+            size="sm"
+            ml={50}
+            fw={400}
           >
             Pricing
           </Button>
@@ -65,7 +67,8 @@ export const Navbar = () => {
             variant="subtle"
             color="black"
             radius="md"
-            size="md"
+            size="sm"
+            fw={400}
           >
             VS Code
           </Button>
@@ -76,7 +79,8 @@ export const Navbar = () => {
             variant="subtle"
             color="black"
             radius="md"
-            size="md"
+            size="sm"
+            fw={400}
           >
             Docs
           </Button>
@@ -87,7 +91,8 @@ export const Navbar = () => {
             variant="subtle"
             color="black"
             radius="md"
-            size="md"
+            size="sm"
+            fw={400}
           >
             FAQ
           </Button>
@@ -106,14 +111,14 @@ export const Navbar = () => {
           </Button>
           <Button
             component="a"
-            color="brightBlue"
+            color="green"
             href="/editor"
             radius="md"
             visibleFrom="sm"
             size="md"
             fw={600}
           >
-            Start for free
+            Editor
           </Button>
         </Right>
       </StyledNavbar>

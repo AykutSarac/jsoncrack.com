@@ -50,12 +50,12 @@ export const HeroPreview = () => {
             onChange={setSelectedFeature}
             orientation="vertical"
             withItemsBorders={false}
-            color="green"
+            color="grape"
             bg="transparent"
             size="lg"
             styles={{
               control: {
-                background: "#67676714",
+                background: "#8f8f8f52",
                 borderRadius: "4px",
               },
               root: {
@@ -69,8 +69,13 @@ export const HeroPreview = () => {
           w="100%"
           p={0}
           radius="md"
-          style={{ overflow: "hidden", border: "1px solid #d5d5d5" }}
-          shadow="md"
+          style={{
+            overflow: "hidden",
+            border: "1px solid #c1c1c1",
+            outline: "1px solid #c1c1c1",
+            outlineOffset: "4px",
+          }}
+          shadow="xl"
         >
           <Image
             fit="cover"

@@ -44,13 +44,6 @@ const theme = createTheme({
   radius: {
     lg: "12px",
   },
-  components: {
-    Button: {
-      defaultProps: {
-        fw: 500,
-      },
-    },
-  },
 });
 
 const Toaster = dynamic(() => import("react-hot-toast").then(c => c.Toaster));

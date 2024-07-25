@@ -1,13 +1,18 @@
 import React from "react";
+import { Inter } from "next/font/google";
 import styled, { ThemeProvider } from "styled-components";
 import { lightTheme } from "src/constants/theme";
 import { Footer } from "./Footer";
 import { Navbar } from "./Navbar";
 
+const inter = Inter({
+  subsets: ["latin-ext"],
+});
+
 const StyledLayoutWrapper = styled.div`
-  padding-bottom: 48px;
-  background-image: radial-gradient(#e6e6e6 1px, transparent 1px);
-  background-size: 20px 20px;
+  background-image: radial-gradient(#ededed 2px, #ffffff 2px);
+  background-size: 40px 40px;
+  font-family: ${inter.style.fontFamily};
 `;
 
 const Layout = ({ children }: React.PropsWithChildren) => {

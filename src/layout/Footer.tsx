@@ -8,8 +8,8 @@ import { JSONCrackLogo } from "./JsonCrackLogo";
 
 export const Footer = () => {
   return (
-    <Container mt={100}>
-      <Divider my={60} color="gray.3" />
+    <Container mt={150} px={60} pb="xl" bg="white" fluid>
+      <Divider color="gray.3" mb="xl" mx={-60} />
       <Flex justify="space-between">
         <Stack gap={4} visibleFrom="sm">
           <JSONCrackLogo />
