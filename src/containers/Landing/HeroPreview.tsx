@@ -72,7 +72,8 @@ export const HeroPreview = () => {
 
         <Paper
           p={0}
-          w="auto"
+          w="100%"
+          maw={1440}
           h="fit-content"
           radius="lg"
           shadow="xl"
@@ -84,7 +85,7 @@ export const HeroPreview = () => {
             outlineOffset: "4px",
           }}
         >
-          <AspectRatio ratio={1440 / 760} maw={1440} h="100%">
+          <AspectRatio ratio={1440 / 760} maw={1440} w="100%" h="100%">
             <video
               autoPlay
               muted
