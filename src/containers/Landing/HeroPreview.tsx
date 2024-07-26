@@ -19,7 +19,8 @@ export const HeroPreview = () => {
           xs: "row",
         }}
         mx="auto"
-        w="85%"
+        w="fit-content"
+        maw="85%"
       >
         <Stack>
           <SegmentedControl
@@ -73,7 +74,7 @@ export const HeroPreview = () => {
           p={0}
           w="100%"
           h="fit-content"
-          radius="md"
+          radius="lg"
           shadow="xl"
           bg="transparent"
           style={{
