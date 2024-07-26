@@ -111,7 +111,7 @@ export const Navbar = () => {
           </Button>
           <Button
             component="a"
-            color="green"
+            color="brightBlue"
             href="/editor"
             radius="md"
             visibleFrom="sm"

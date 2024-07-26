@@ -58,7 +58,7 @@ const StyledHeroText = styled.p`
 
   strong {
     font-weight: 500;
-    color: #8c00ff;
+    color: #0073ff;
   }
 
   @media only screen and (min-width: 576px) {
@@ -125,8 +125,8 @@ export const HeroSection = () => {
             component="a"
             variant="gradient"
             gradient={{
-              from: "#9f19ff",
-              to: "#550091",
+              from: "#4466ff",
+              to: "#003ba9",
             }}
             href="/#pricing"
             size="xl"

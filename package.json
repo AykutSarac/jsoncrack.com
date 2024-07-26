@@ -29,6 +29,7 @@
     "jq-web": "^0.5.1",
     "js-yaml": "^4.1.0",
     "json-2-csv": "^5.5.4",
+    "json-schema-faker": "^0.5.6",
     "json_typegen_wasm": "^0.7.0",
     "jsonc-parser": "^3.3.1",
     "jsonwebtoken": "^9.0.2",
