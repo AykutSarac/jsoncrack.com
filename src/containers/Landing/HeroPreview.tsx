@@ -19,8 +19,8 @@ export const HeroPreview = () => {
           xs: "row",
         }}
         mx="auto"
-        w="fit-content"
         maw="85%"
+        justify="center"
       >
         <Stack>
           <SegmentedControl
@@ -72,7 +72,7 @@ export const HeroPreview = () => {
 
         <Paper
           p={0}
-          w="100%"
+          w="auto"
           h="fit-content"
           radius="lg"
           shadow="xl"
