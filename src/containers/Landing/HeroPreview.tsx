@@ -89,10 +89,9 @@ export const HeroPreview = () => {
               muted
               loop
               preload="auto"
-              style={{
-                display: "block",
-              }}
+              poster={`./assets/preview/${selectedFeature}.webp`}
               key={selectedFeature}
+              style={{ display: "block" }}
             >
               <source src={`./assets/videos/p${selectedFeature}.mp4`} type="video/mp4" />
             </video>
