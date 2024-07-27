@@ -65,7 +65,7 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
           placeholder="URL of JSON to fetch"
           data-autofocus
         />
-        <Paper radius="md" style={{ cursor: "pointer" }} withBorder>
+        <Paper radius="md" style={{ cursor: "pointer" }}>
           <Dropzone
             onDrop={files => setFile(files[0])}
             onReject={files => toast.error(`Unable to load file ${files[0].file.name}`)}

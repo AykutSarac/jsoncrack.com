@@ -83,7 +83,7 @@ const TweetCard = ({
       <Flex justify="space-between">
         <Link href={`https://twitter.com/${handle}`} target="_blank">
           <Flex align="flex-start" gap="sm" direction="row">
-            <Avatar src={profileImage} w={40} h={40} />
+            <Avatar src={profileImage} w={40} h={40} alt={handle} />
             <Stack gap={0}>
               <Flex align="center" gap={2}>
                 <Text c="dark" fz="sm" fw={500}>
@@ -99,7 +99,7 @@ const TweetCard = ({
             </Stack>
           </Flex>
         </Link>
-        <Link target="_blank" href={`https://x.com/${handle}/status/${tweetId}`}>
+        <Link title="twitter" target="_blank" href={`https://x.com/${handle}/status/${tweetId}`}>
           <FaTwitter color="#1EA1F1" size={20} />
         </Link>
       </Flex>
