@@ -10,14 +10,13 @@ import {
   Paper,
   SegmentedControl,
   Center,
-  Badge, // ThemeIcon,
+  Badge,
   Tooltip,
   Anchor,
 } from "@mantine/core";
 import styled from "styled-components";
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import { IoIosCheckmarkCircle } from "react-icons/io";
-import { IoCheckmarkCircle, IoCloseCircle } from "react-icons/io5";
+import { FaCheck, FaXmark } from "react-icons/fa6";
 import { VscArrowRight, VscLinkExternal } from "react-icons/vsc";
 import Layout from "src/layout/Layout";
 import { gaEvent } from "src/lib/utils/gaEvent";
@@ -35,30 +34,13 @@ export const purchaseLinks = {
     "https://jsoncrack.lemonsqueezy.com/checkout/buy/577928ea-fb09-4076-9307-3e5931b35ad0?desc=0&enabled=82417",
 };
 
-const StyledPaper = styled(Paper)<{ $highlight?: boolean } & any>`
+const StyledPaper = styled(Paper)`
   padding: 1.5em;
   width: 350px;
   border-radius: 4px;
   border: 2px solid #e9e9e9;
-  ${({ $highlight }) => $highlight && "border: 3px solid #28c417;"}
   background: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
-  ${({ $highlight }) =>
-    $highlight &&
-    `
-  &::before {
-    content: "Recommended";
-    background: #28c417;
-    position: absolute;
-    transform: translate(-27px, -61px);
-    font-weight: 500;
-    color: white;
-    padding: 6px 8px;
-    border-top-right-radius: 6px;
-    border-top-left-radius: 6px;
-  }
-  `}
 `;
 
 export const PricingCards = () => {
@@ -83,8 +65,8 @@ export const PricingCards = () => {
               label: (
                 <Flex align="center" gap="xs">
                   Annual{" "}
-                  <Badge radius="sm" variant="light" color="green">
-                    {PRICING.getAnnualSave()}% OFF
+                  <Badge radius="sm" variant="light" color="orange">
+                    Save {PRICING.getAnnualSave()}%
                   </Badge>
                 </Flex>
               ),
@@ -109,125 +91,7 @@ export const PricingCards = () => {
         }}
         mx="auto"
       >
-        {/* <StyledPaper>
-          <Flex justify="space-between">
-            <Stack gap="0">
-              <Text fw={500} size="xl" c="black">
-                Partner
-              </Text>
-
-              <ThemeIcon variant="transparent" size={59}>
-                <PiChats color="black" size={50} />
-              </ThemeIcon>
-              <Text fz="xs" c="gray.7">
-                Contact us for custom pricing
-              </Text>
-            </Stack>
-          </Flex>
-          <Button
-            component="a"
-            color="green"
-            onClick={() => gaEvent("Pricing", "click partner plan")}
-            href="mailto:contact@jsoncrack.com"
-            target="_blank"
-            size="lg"
-            radius="md"
-            fullWidth
-            my="md"
-            rightSection={<VscArrowRight />}
-          >
-            Contact Us
-          </Button>
-          <Text mt="xs" fz="xs" c="dimmed">
-            Integrate JSON Crack into your applications and websites.
-          </Text>
-          <Flex direction="column" justify="space-between">
-            <List
-              spacing="md"
-              size="sm"
-              mt="xs"
-              c="black"
-              center
-              icon={<IoIosCheckmarkCircle color="green" size="20" />}
-            >
-              <List.Item>
-                <Tooltip
-                  color="blue"
-                  label="Integrate premium graph visualization into your own website/apps using iframe"
-                  maw={350}
-                  multiline
-                  withArrow
-                >
-                  <Text
-                    c="gray.7"
-                    fw={600}
-                    fz="sm"
-                    style={{ textDecoration: "underline", textDecorationStyle: "dashed" }}
-                  >
-                    JSON Crack Premium Widget
-                  </Text>
-                </Tooltip>
-              </List.Item>
-              <List.Item>
-                <Text c="gray.7" fw={600} fz="sm">
-                  1 Domain / Plan
-                </Text>
-              </List.Item>
-              <List.Item>
-                <Tooltip
-                  color="blue"
-                  label="Listen for events like node click, hover, center etc. Display your own UI"
-                  maw={350}
-                  multiline
-                  withArrow
-                >
-                  <Text
-                    c="gray.7"
-                    fw={600}
-                    fz="sm"
-                    style={{ textDecoration: "underline", textDecorationStyle: "dashed" }}
-                  >
-                    Events API
-                  </Text>
-                </Tooltip>
-              </List.Item>
-              <List.Item>
-                <Tooltip
-                  color="blue"
-                  label="Customize the look and feel of the editor matching with your own branding"
-                  maw={350}
-                  multiline
-                  withArrow
-                >
-                  <Text
-                    c="gray.7"
-                    fw={600}
-                    fz="sm"
-                    style={{ textDecoration: "underline", textDecorationStyle: "dashed" }}
-                  >
-                    Custom Theming
-                  </Text>
-                </Tooltip>
-              </List.Item>
-              <List.Item>
-                <Text c="gray.7" fw={600} fz="sm">
-                  White Labeling
-                </Text>
-              </List.Item>
-              <List.Item>
-                <Text c="gray.7" fw={600} fz="sm">
-                  Onboarding and engineering support
-                </Text>
-              </List.Item>
-              <List.Item>
-                <Text c="gray.7" fw={600} fz="sm">
-                  High-priority customer support
-                </Text>
-              </List.Item>
-            </List>
-          </Flex>
-        </StyledPaper> */}
-        <StyledPaper $highlight>
+        <StyledPaper>
           <Flex justify="space-between">
             <Stack gap="0">
               <Flex align="center">
@@ -236,12 +100,12 @@ export const PricingCards = () => {
                 </Text>
                 {!isMonthly && (
                   <Badge
-                    fw={500}
-                    size="lg"
+                    fw={600}
+                    size="md"
                     variant="light"
-                    c="#41B619"
-                    radius="md"
-                    color="green"
+                    c="orange"
+                    radius="sm"
+                    color="orange"
                     ml="sm"
                   >
                     SAVE {PRICING.getAnnualSave()}%
@@ -264,7 +128,7 @@ export const PricingCards = () => {
           </Flex>
           <Button
             component="a"
-            color="#2ba80f"
+            color="orange"
             onClick={() => gaEvent("Pricing", "click upgrade premium")}
             href={isMonthly ? purchaseLinks.monthly : purchaseLinks.annual}
             target="_blank"
@@ -274,19 +138,19 @@ export const PricingCards = () => {
             my="md"
             rightSection={<VscArrowRight />}
           >
-            Get Started
+            Upgrade
           </Button>
           <Text mt="xs" fz="xs" c="dimmed">
-            Advanced features, better performance and optimized user interface.
+            Remake version with advanced features, better performance and smooth user interface.
           </Text>
           <Flex direction="column" justify="space-between">
             <List
-              spacing="md"
+              spacing="sm"
               size="sm"
               mt="xs"
               c="black"
               center
-              icon={<IoCheckmarkCircle color="green" size="20" />}
+              icon={<FaCheck size="18" color="#E8580C" />}
             >
               <List.Item>
                 <Tooltip
@@ -306,7 +170,7 @@ export const PricingCards = () => {
                       textUnderlineOffset: "2px",
                     }}
                   >
-                    Large data support
+                    Larger data support
                   </Text>
                 </Tooltip>
               </List.Item>
@@ -328,36 +192,19 @@ export const PricingCards = () => {
                       textUnderlineOffset: "2px",
                     }}
                   >
-                    Compact Graphs & High Performance
+                    Compact and Fast Visualization
                   </Text>
                 </Tooltip>
               </List.Item>
               <List.Item>
                 <Text c="black" fw={500} fz="sm">
-                  Compare Data Differences
+                  Compare data
                 </Text>
               </List.Item>
               <List.Item>
-                <Tooltip
-                  color="blue"
-                  label="Click on a node at graph to update data on editor."
-                  maw={350}
-                  multiline
-                  withArrow
-                >
-                  <Text
-                    c="black"
-                    fw={500}
-                    fz="sm"
-                    style={{
-                      textDecoration: "underline",
-                      textDecorationStyle: "dashed",
-                      textUnderlineOffset: "2px",
-                    }}
-                  >
-                    Edit Data on Graph
-                  </Text>
-                </Tooltip>
+                <Text c="black" fw={500} fz="sm">
+                  Edit data on graph
+                </Text>
               </List.Item>
               <List.Item>
                 <Text c="black" fw={500} fz="sm">
@@ -411,16 +258,16 @@ export const PricingCards = () => {
             Go to Editor
           </Button>
           <Text mt="xs" fz="xs" c="dimmed">
-            Basic version of the editor with limited features.
+            Basic version of the editor with limited features, open-source.
           </Text>
           <Flex direction="column" justify="space-between">
             <List
-              spacing="md"
+              spacing="sm"
               size="sm"
               mt="lg"
               c="black"
               center
-              icon={<IoIosCheckmarkCircle color="green" size="20" />}
+              icon={<FaCheck size="18" color="#E8580C" />}
             >
               <List.Item>
                 <Tooltip
@@ -478,28 +325,28 @@ export const PricingCards = () => {
                   Store 25 documents
                 </Text>
               </List.Item>
-              <List.Item icon={<IoCloseCircle color="gray" size={20} />}>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Compact Visualization
+              <List.Item icon={<FaXmark color="gray" size={20} />}>
+                <Text c="gray.6" fw={500} fz="sm">
+                  Edit data on graph
                 </Text>
               </List.Item>
-              <List.Item icon={<IoCloseCircle color="gray" size={20} />}>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Compare Data
-                </Text>
-              </List.Item>
-              <List.Item icon={<IoCloseCircle color="gray" size={20} />}>
-                <Text c="gray.7" fw={500} fz="sm">
-                  Edit Data on Graph
-                </Text>
-              </List.Item>
-              <List.Item icon={<IoCloseCircle color="gray" size={20} />}>
-                <Text c="gray.7" fw={500} fz="sm">
+              <List.Item icon={<FaXmark color="gray" size={20} />}>
+                <Text c="gray.6" fw={500} fz="sm">
                   AI-powered data filter
                 </Text>
               </List.Item>
-              <List.Item icon={<IoCloseCircle color="gray" size={20} />}>
-                <Text c="gray.7" fw={500} fz="sm">
+              <List.Item icon={<FaXmark color="gray" size={20} />}>
+                <Text c="gray.6" fw={500} fz="sm">
+                  Compact visualization
+                </Text>
+              </List.Item>
+              <List.Item icon={<FaXmark color="gray" size={20} />}>
+                <Text c="gray.6" fw={500} fz="sm">
+                  Compare data
+                </Text>
+              </List.Item>
+              <List.Item icon={<FaXmark color="gray" size={20} />}>
+                <Text c="gray.6" fw={500} fz="sm">
                   Customize graph colors
                 </Text>
               </List.Item>

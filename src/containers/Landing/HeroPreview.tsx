@@ -5,6 +5,7 @@ import styled from "styled-components";
 const StyledPreviewWrapper = styled.div`
   margin: 0 auto;
   position: relative;
+  padding: 5rem 0;
 `;
 
 export const HeroPreview = () => {
@@ -54,13 +55,13 @@ export const HeroPreview = () => {
             onChange={setSelectedFeature}
             orientation="vertical"
             withItemsBorders={false}
-            color="grape"
             bg="transparent"
+            color="orange.7"
             size="lg"
             visibleFrom="sm"
             styles={{
               control: {
-                background: "#8f8f8f52",
+                background: "rgba(168, 168, 168, 0.2)",
                 borderRadius: "4px",
               },
               root: {

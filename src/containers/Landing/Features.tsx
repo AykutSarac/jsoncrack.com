@@ -58,7 +58,7 @@ export const Features = () => {
           <Paper h="100%" p="lg" radius="md" bg="gray.0" withBorder>
             <Flex align="center" gap={8} mb={16}>
               <FaBolt color="orange" size={24} />
-              <Text c="gray.9" fz={{ base: 16, md: 20, lg: 26, xl: 28 }} fw={600}>
+              <Text c="gray.9" fz={{ base: 16, md: 18, lg: 24, xl: 26 }} fw={500}>
                 Real-time Visualization
               </Text>
             </Flex>
@@ -77,7 +77,7 @@ export const Features = () => {
           <Paper h="100%" p="lg" radius="md" bg="gray.0" withBorder>
             <Flex align="center" gap={8} mb={16}>
               <FaHeart color="#ff5555" size={26} />
-              <Text c="gray.9" fz={{ base: 16, md: 20, lg: 26, xl: 28 }} fw={600}>
+              <Text c="gray.9" fz={{ base: 16, md: 18, lg: 24, xl: 26 }} fw={500}>
                 Simple
               </Text>
             </Flex>
@@ -96,7 +96,7 @@ export const Features = () => {
           <Paper h="100%" p="lg" radius="md" bg="gray.0" withBorder>
             <Flex align="center" gap={8} mb={16}>
               <FaMagic color="#8c0075" size={24} />
-              <Text c="gray.9" fz={{ base: 16, md: 20, lg: 26, xl: 28 }} fw={600}>
+              <Text c="gray.9" fz={{ base: 16, md: 18, lg: 24, xl: 26 }} fw={500}>
                 Generate
               </Text>
             </Flex>
@@ -116,7 +116,7 @@ export const Features = () => {
           <Paper h="100%" p="lg" radius="md" bg="gray.0" withBorder>
             <Flex align="center" gap={8} mb={16}>
               <FaPalette color="#4890fd" size={24} />
-              <Text c="gray.9" fz={{ base: 16, md: 20, lg: 26, xl: 28 }} fw={600}>
+              <Text c="gray.9" fz={{ base: 16, md: 18, lg: 24, xl: 26 }} fw={500}>
                 Customizable
               </Text>
             </Flex>
@@ -136,7 +136,7 @@ export const Features = () => {
           <Paper h="100%" p="lg" radius="md" bg="gray.0" withBorder>
             <Flex align="center" gap={8} mb={16}>
               <FaShieldHalved color="black" size={24} />
-              <Text c="gray.9" fz={{ base: 16, md: 20, lg: 26, xl: 28 }} fw={600}>
+              <Text c="gray.9" fz={{ base: 16, md: 18, lg: 24, xl: 26 }} fw={500}>
                 Privacy First
               </Text>
             </Flex>
@@ -156,7 +156,7 @@ export const Features = () => {
           <Paper h="100%" p="lg" radius="md" bg="gray.0" withBorder>
             <Flex align="center" gap={8} mb={16}>
               <FaShapes color="#00a571" size={24} />
-              <Text c="gray.9" fz={{ base: 16, md: 20, lg: 26, xl: 28 }} fw={600}>
+              <Text c="gray.9" fz={{ base: 16, md: 18, lg: 24, xl: 26 }} fw={500}>
                 Advanced Features
               </Text>
             </Flex>

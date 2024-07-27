@@ -45,10 +45,10 @@ export const PremiumVsFree = () => {
         }}
         radius="xl"
         mx="auto"
-        mb="-16.5rem"
+        mb="-18rem"
         style={{
           textAlign: "center",
-          background: "linear-gradient(rgb(33, 148, 87) 40%, rgb(255, 255, 255) 90%)",
+          background: "linear-gradient(rgb(207, 116, 3) 40%, rgb(255, 255, 255) 90%)",
         }}
       >
         <Title
@@ -71,15 +71,14 @@ export const PremiumVsFree = () => {
             xs: 16,
           }}
           maw={{
-            base: "80%",
-            sm: "70%",
+            base: "60%",
+            sm: "50%",
           }}
           c="gray.2"
           mb={60}
         >
-          Designed to help you navigate through your data with ease. <br />
-          The editor provides a clean and intuitive interface that allows you to focus on what
-          matters most: your data.
+          Designed to help you navigate through your data with ease. <br /> Smaller, faster, and
+          more efficient than ever before.
         </Text>
       </Paper>
 

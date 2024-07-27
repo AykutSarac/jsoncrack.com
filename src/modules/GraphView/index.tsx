@@ -198,36 +198,38 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
         >
           <GraphCanvas isWidget={isWidget} />
         </Space>
-        <Dialog
-          opened={!isDialogClosed}
-          size="lg"
-          radius="md"
-          withBorder
-          position={{
-            right: 15,
-            bottom: 40,
-          }}
-          onClose={() => setDialogClosed(true)}
-        >
-          <Text size="sm" fw={500}>
-            Try the powerful Premium editor for larger graphs and advanced features with money-back
-            guarantee.
-          </Text>
-          <Group justify="right" mt="sm">
-            <Button variant="default" onClick={() => setDialogClosed(true)}>
-              Close
-            </Button>
-            <Button
-              color="green"
-              onClick={() => {
-                setVisible("upgrade")(true);
-                setDialogClosed(true);
-              }}
-            >
-              Explore
-            </Button>
-          </Group>
-        </Dialog>
+        {!isWidget && (
+          <Dialog
+            opened={!isDialogClosed}
+            size="lg"
+            radius="md"
+            withBorder
+            position={{
+              right: 15,
+              bottom: 40,
+            }}
+            onClose={() => setDialogClosed(true)}
+          >
+            <Text size="sm" fw={500}>
+              Try the powerful Premium editor for larger graphs and advanced features with
+              money-back guarantee.
+            </Text>
+            <Group justify="right" mt="sm">
+              <Button variant="default" onClick={() => setDialogClosed(true)}>
+                Close
+              </Button>
+              <Button
+                color="green"
+                onClick={() => {
+                  setVisible("upgrade")(true);
+                  setDialogClosed(true);
+                }}
+              >
+                Explore
+              </Button>
+            </Group>
+          </Dialog>
+        )}
       </StyledEditorWrapper>
     </>
   );

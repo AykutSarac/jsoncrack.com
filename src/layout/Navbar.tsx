@@ -6,6 +6,7 @@ import { JSONCrackLogo } from "./JsonCrackLogo";
 
 const StyledNavbarWrapper = styled.div`
   z-index: 3;
+  padding-top: 1rem;
   transition: background 0.2s ease-in-out;
 `;
 
@@ -14,7 +15,7 @@ const StyledNavbar = styled.nav`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1157px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 12px 24px;
   background: rgba(255, 255, 255, 0.1);
@@ -53,10 +54,10 @@ export const Navbar = () => {
             href="/#pricing"
             variant="subtle"
             color="black"
-            radius="md"
+            radius="sm"
             size="sm"
             ml={50}
-            fw={400}
+            fw={500}
           >
             Pricing
           </Button>
@@ -66,9 +67,9 @@ export const Navbar = () => {
             target="_blank"
             variant="subtle"
             color="black"
-            radius="md"
+            radius="sm"
             size="sm"
-            fw={400}
+            fw={500}
           >
             VS Code
           </Button>
@@ -78,9 +79,9 @@ export const Navbar = () => {
             href="/docs"
             variant="subtle"
             color="black"
-            radius="md"
+            radius="sm"
             size="sm"
-            fw={400}
+            fw={500}
           >
             Docs
           </Button>
@@ -90,9 +91,9 @@ export const Navbar = () => {
             href="/#faq"
             variant="subtle"
             color="black"
-            radius="md"
+            radius="sm"
             size="sm"
-            fw={400}
+            fw={500}
           >
             FAQ
           </Button>
@@ -102,21 +103,19 @@ export const Navbar = () => {
             variant="default"
             component="a"
             href="https://app.jsoncrack.com/sign-in"
-            radius="md"
+            radius="sm"
             visibleFrom="sm"
             size="md"
-            fw={600}
           >
             Sign in
           </Button>
           <Button
             component="a"
-            color="brightBlue"
+            color="orange"
             href="/editor"
-            radius="md"
+            radius="sm"
             visibleFrom="sm"
             size="md"
-            fw={600}
           >
             Editor
           </Button>

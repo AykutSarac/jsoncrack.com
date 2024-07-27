@@ -10,8 +10,9 @@ const inter = Inter({
 });
 
 const StyledLayoutWrapper = styled.div`
-  background-image: radial-gradient(#ededed 2px, #ffffff 2px);
-  background-size: 40px 40px;
+  background: #fff;
+  /* background-image: radial-gradient(#ededed 2px, #ffffff 2px); */
+  /* background-size: 40px 40px; */
   font-family: ${inter.style.fontFamily};
 `;
 

@@ -30,6 +30,11 @@ const Questions = [
     title: "Can I export the generated graphs?",
     content: "Yes, you can export the generated graphs as PNG, JPEG, or SVG files.",
   },
+  {
+    title: "How to use VS Code extension?",
+    content:
+      "You can use the VS Code extension to visualize JSON data directly in your editor. Install the extension from the VS Code marketplace and follow the instructions at extension's page.",
+  },
 ];
 
 export const FAQ = () => {
