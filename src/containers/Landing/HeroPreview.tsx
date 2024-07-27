@@ -96,7 +96,10 @@ export const HeroPreview = () => {
               key={selectedFeature}
               style={{ display: "block" }}
             >
-              <source src={`./assets/videos/p${selectedFeature}.mp4`} type="video/mp4" />
+              <source
+                src={`https://app.jsoncrack.com/assets/videos/p${selectedFeature}.mp4`}
+                type="video/mp4"
+              />
             </video>
           </AspectRatio>
         </Paper>
