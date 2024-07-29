@@ -1,7 +1,9 @@
 import React from "react";
 import Link from "next/link";
-import { Button } from "@mantine/core";
+import { Text, Alert, Button, ThemeIcon } from "@mantine/core";
 import styled from "styled-components";
+import { FaGift } from "react-icons/fa6";
+import { PRICING } from "src/pages/pricing";
 import { JSONCrackLogo } from "./JsonCrackLogo";
 
 const StyledNavbarWrapper = styled.div`
@@ -45,6 +47,18 @@ const Right = styled.div`
 export const Navbar = () => {
   return (
     <StyledNavbarWrapper className="navbar">
+      <Alert variant="filled" color="orange.4" fw={500} ta="center" p="6" mt="-1rem">
+        <Link href="/#buyonce">
+          <ThemeIcon size="sm" variant="transparent" color="black" mr={2}>
+            <FaGift size="12" />
+          </ThemeIcon>
+          Limited Offer: Lifetime Plan for ${PRICING.LTD}! Buy once,
+          <Text ml={4} component="span" inherit td="underline">
+            use forever
+          </Text>
+          .
+        </Link>
+      </Alert>
       <StyledNavbar>
         <Left>
           <JSONCrackLogo />

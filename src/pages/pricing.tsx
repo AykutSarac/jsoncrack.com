@@ -14,6 +14,7 @@ import {
   Tooltip,
   Anchor,
   type PaperProps,
+  Box,
 } from "@mantine/core";
 import styled from "styled-components";
 import { AiOutlineInfoCircle } from "react-icons/ai";
@@ -357,34 +358,36 @@ export const PricingCards = () => {
           </Flex>
         </StyledPaper>
       </Flex>
-      <StyledPaper w="100%" style={{ borderColor: "orange" }} mt="sm" visibleFrom="sm">
-        <Stack px="xl">
-          <Text fz="h2" fw={500} ta="center">
-            Buy once,
-            <Text ml={4} component="span" inherit c="orange">
-              use forever
+      <Box id="buyonce" pt="lg">
+        <StyledPaper w="100%" style={{ borderColor: "orange" }} visibleFrom="sm">
+          <Stack px="xl">
+            <Text fz="h2" fw={500} ta="center">
+              Buy once,
+              <Text ml={4} component="span" inherit c="orange">
+                use forever
+              </Text>
+              !
             </Text>
-            !
-          </Text>
-          <Text>
-            Gain lifetime access to JSON Crack, enjoy all the advantages of our Premium plan with
-            this one-time deal.
-          </Text>
-          <Button
-            component="a"
-            href={purchaseLinks.ltd}
-            target="_blank"
-            w="fit-content"
-            mx="auto"
-            fw={500}
-            size="md"
-            color="orange"
-            rightSection={<VscArrowRight />}
-          >
-            Get Lifetime Access for ${PRICING.LTD}
-          </Button>
-        </Stack>
-      </StyledPaper>
+            <Text>
+              Gain lifetime access to JSON Crack, enjoy all the advantages of our Premium plan with
+              this one-time deal.
+            </Text>
+            <Button
+              component="a"
+              href={purchaseLinks.ltd}
+              target="_blank"
+              w="fit-content"
+              mx="auto"
+              fw={500}
+              size="md"
+              color="orange"
+              rightSection={<VscArrowRight />}
+            >
+              Get Lifetime Access for ${PRICING.LTD}
+            </Button>
+          </Stack>
+        </StyledPaper>
+      </Box>
     </Stack>
   );
 };
