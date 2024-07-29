@@ -92,6 +92,7 @@ export const HeroPreview = () => {
               muted
               loop
               preload="auto"
+              playsInline
               poster={`./assets/preview/${selectedFeature}.webp`}
               key={selectedFeature}
               style={{ display: "block" }}

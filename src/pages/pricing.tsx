@@ -13,6 +13,7 @@ import {
   Badge,
   Tooltip,
   Anchor,
+  type PaperProps,
 } from "@mantine/core";
 import styled from "styled-components";
 import { AiOutlineInfoCircle } from "react-icons/ai";
@@ -24,6 +25,7 @@ import { gaEvent } from "src/lib/utils/gaEvent";
 export const PRICING = {
   MONTHLY: 7,
   ANNUAL: 5,
+  LTD: 120,
   getAnnualSave: () => Math.round(((PRICING.MONTHLY - PRICING.ANNUAL) / PRICING.MONTHLY) * 100),
 };
 
@@ -32,9 +34,10 @@ export const purchaseLinks = {
     "https://jsoncrack.lemonsqueezy.com/checkout/buy/ce30521f-c7cc-44f3-9435-995d3260ba22?enabled=67805",
   annual:
     "https://jsoncrack.lemonsqueezy.com/checkout/buy/577928ea-fb09-4076-9307-3e5931b35ad0?enabled=82417",
+  ltd: "https://jsoncrack.lemonsqueezy.com/buy/b4d2515e-1ed2-4f32-a6ad-615f208a89eb?enabled=384328",
 };
 
-const StyledPaper = styled(Paper)`
+const StyledPaper = styled(Paper)<PaperProps & any>`
   padding: 1.5em;
   width: 350px;
   border-radius: 4px;
@@ -47,7 +50,7 @@ export const PricingCards = () => {
   const [isMonthly, setIsMonthly] = React.useState(true);
 
   return (
-    <Stack gap="0" align="center">
+    <Stack gap="0" align="center" maw="720px" mx="auto">
       <Center my="lg">
         <SegmentedControl
           bg="gray.1"
@@ -354,6 +357,34 @@ export const PricingCards = () => {
           </Flex>
         </StyledPaper>
       </Flex>
+      <StyledPaper w="100%" style={{ borderColor: "orange" }} mt="sm" visibleFrom="sm">
+        <Stack px="xl">
+          <Text fz="h2" fw={500} ta="center">
+            Buy once,
+            <Text ml={4} component="span" inherit c="orange">
+              use forever
+            </Text>
+            !
+          </Text>
+          <Text>
+            Gain lifetime access to JSON Crack, enjoy all the advantages of our Premium plan with
+            this one-time deal.
+          </Text>
+          <Button
+            component="a"
+            href={purchaseLinks.ltd}
+            target="_blank"
+            w="fit-content"
+            mx="auto"
+            fw={500}
+            size="md"
+            color="orange"
+            rightSection={<VscArrowRight />}
+          >
+            Get Lifetime Access for ${PRICING.LTD}
+          </Button>
+        </Stack>
+      </StyledPaper>
     </Stack>
   );
 };

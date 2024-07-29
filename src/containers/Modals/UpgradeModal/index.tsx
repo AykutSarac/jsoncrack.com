@@ -16,15 +16,8 @@ import {
 import styled from "styled-components";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { gaEvent } from "src/lib/utils/gaEvent";
-import { PRICING } from "src/pages/pricing";
+import { PRICING, purchaseLinks } from "src/pages/pricing";
 import useUser from "src/store/useUser";
-
-const overlayLinks = {
-  monthly:
-    "https://jsoncrack.lemonsqueezy.com/buy/ce30521f-c7cc-44f3-9435-995d3260ba22?&discount=0&enabled=67805",
-  annual:
-    "https://jsoncrack.lemonsqueezy.com/buy/577928ea-fb09-4076-9307-3e5931b35ad0?&discount=0&enabled=82417",
-};
 
 const StyledRadioCard = styled(Radio.Card)`
   border-width: 2px;
@@ -50,7 +43,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
   const [plan, setPlan] = React.useState("monthly");
 
   const handleUpgrade = () => {
-    const link = new URL(overlayLinks[plan]);
+    const link = new URL(purchaseLinks[plan]);
 
     if (user?.email) {
       link.searchParams.append("checkout[email]", user.email);
@@ -125,9 +118,6 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
                     /month
                   </Flex>
                 </Group>
-                <Text fz="xs" c="gray.6">
-                  2 days money back guarantee
-                </Text>
               </StyledRadioCard>
               <StyledRadioCard value="annual" radius="lg" px="xl" py="md">
                 <Group align="center" justify="space-between">
@@ -146,9 +136,21 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
                     /year
                   </Flex>
                 </Group>
-                <Text fz="xs" c="gray.6">
-                  3 days money back guarantee
-                </Text>
+              </StyledRadioCard>
+              <StyledRadioCard value="ltd" radius="lg" px="xl" py="md">
+                <Group align="center" justify="space-between">
+                  <Flex align="center" gap="xs">
+                    <Text fz="xl" c="gray.7" fw={600}>
+                      Lifetime
+                    </Text>
+                  </Flex>
+                  <Flex fw={500} align="baseline" fz="sm" c="gray.5">
+                    <Text fw={600} fz="xl" c="gray.7">
+                      ${PRICING.LTD}
+                    </Text>
+                    /lifetime
+                  </Flex>
+                </Group>
               </StyledRadioCard>
             </Stack>
             <Button color="dark" fullWidth mt="xl" size="xl" radius="md" onClick={handleUpgrade}>
