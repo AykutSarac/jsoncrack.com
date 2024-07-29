@@ -29,9 +29,9 @@ export const PRICING = {
 
 export const purchaseLinks = {
   monthly:
-    "https://jsoncrack.lemonsqueezy.com/checkout/buy/ce30521f-c7cc-44f3-9435-995d3260ba22?desc=0&enabled=67805",
+    "https://jsoncrack.lemonsqueezy.com/checkout/buy/ce30521f-c7cc-44f3-9435-995d3260ba22?enabled=67805",
   annual:
-    "https://jsoncrack.lemonsqueezy.com/checkout/buy/577928ea-fb09-4076-9307-3e5931b35ad0?desc=0&enabled=82417",
+    "https://jsoncrack.lemonsqueezy.com/checkout/buy/577928ea-fb09-4076-9307-3e5931b35ad0?enabled=82417",
 };
 
 const StyledPaper = styled(Paper)`
