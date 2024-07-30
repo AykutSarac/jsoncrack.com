@@ -103,7 +103,7 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
                 style={{ textAlign: "center", gap: 4 }}
               >
                 <AiFillGift size="18" />
-                Get Premium
+                Try Premium
               </Text>
             </Indicator>
           </Styles.StyledToolElement>

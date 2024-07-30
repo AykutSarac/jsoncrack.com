@@ -22,19 +22,19 @@ import useUser from "src/store/useUser";
 const StyledRadioCard = styled(Radio.Card)`
   border-width: 2px;
   border-color: #efefef;
-  min-width: 400px;
+  min-width: 450px;
   transition: 0.2s;
 
   &[data-checked] {
-    border-color: black;
+    border-color: #ff7300;
   }
 
   &[data-checked]:hover {
-    background: #f6f6f6;
+    background: #fffdfb;
   }
 
   &:hover {
-    border-color: #555555;
+    border-color: #ffab6a;
   }
 `;
 
@@ -66,12 +66,8 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
       position="bottom"
       radius="lg"
       styles={{
-        body: {
-          background: "white",
-        },
-        header: {
-          background: "white",
-        },
+        body: { background: "white" },
+        header: { background: "white" },
       }}
     >
       <Paper
@@ -108,9 +104,14 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
             <Stack>
               <StyledRadioCard value="monthly" radius="lg" px="xl" py="md">
                 <Group align="center" justify="space-between">
-                  <Text c="gray.7" fz="xl" fw={600}>
-                    Monthly
-                  </Text>
+                  <Flex align="center" gap="xs">
+                    <Text fz="xl" c="gray.7" fw={600}>
+                      Monthly
+                    </Text>
+                    <Badge size="sm" radius="lg" color="yellow.4">
+                      2 days free
+                    </Badge>
+                  </Flex>
                   <Flex fw={500} align="baseline" fz="sm" c="gray.5">
                     <Text fw={600} fz="xl" c="gray.7">
                       ${PRICING.MONTHLY}
@@ -125,7 +126,10 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
                     <Text fz="xl" c="gray.7" fw={600}>
                       Yearly
                     </Text>
-                    <Badge size="md" radius="lg" color="yellow.4">
+                    <Badge size="sm" radius="lg" color="yellow.4">
+                      2 days free
+                    </Badge>
+                    <Badge size="sm" radius="lg" color="yellow.4">
                       Save {PRICING.getAnnualSave()}%
                     </Badge>
                   </Flex>
@@ -153,8 +157,8 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
                 </Group>
               </StyledRadioCard>
             </Stack>
-            <Button color="dark" fullWidth mt="xl" size="xl" radius="md" onClick={handleUpgrade}>
-              Upgrade
+            <Button color="orange" fullWidth mt="xl" size="xl" radius="md" onClick={handleUpgrade}>
+              {plan !== "ltd" ? "Start 2-Days Free Trial" : "Upgrade"}
             </Button>
           </Radio.Group>
         </Flex>

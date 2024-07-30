@@ -24,7 +24,7 @@ import Layout from "src/layout/Layout";
 import { gaEvent } from "src/lib/utils/gaEvent";
 
 export const PRICING = {
-  MONTHLY: 7,
+  MONTHLY: 6,
   ANNUAL: 5,
   LTD: 120,
   getAnnualSave: () => Math.round(((PRICING.MONTHLY - PRICING.ANNUAL) / PRICING.MONTHLY) * 100),
@@ -59,24 +59,7 @@ export const PricingCards = () => {
           value={isMonthly ? "Monthly" : "Annual"}
           onChange={v => setIsMonthly(v === "Monthly")}
           size="md"
-          miw={300}
-          data={[
-            {
-              label: "Monthly",
-              value: "Monthly",
-            },
-            {
-              label: (
-                <Flex align="center" gap="xs">
-                  Annual{" "}
-                  <Badge radius="sm" variant="light" color="orange">
-                    Save {PRICING.getAnnualSave()}%
-                  </Badge>
-                </Flex>
-              ),
-              value: "Annual",
-            },
-          ]}
+          data={["Monthly", "Annual"]}
           w={200}
           radius="md"
           styles={{ label: { color: "black" } }}
@@ -142,7 +125,7 @@ export const PricingCards = () => {
             my="md"
             rightSection={<VscArrowRight />}
           >
-            Upgrade
+            Start 2-Days Free Trial
           </Button>
           <Text mt="xs" fz="xs" c="dimmed">
             Remake version with advanced features, better performance and smooth user interface.
@@ -259,7 +242,7 @@ export const PricingCards = () => {
             my="md"
             rightSection={<VscArrowRight />}
           >
-            Go to Editor
+            Start Free
           </Button>
           <Text mt="xs" fz="xs" c="dimmed">
             Basic version of the editor with limited features, open-source.

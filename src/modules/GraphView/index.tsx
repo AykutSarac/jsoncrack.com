@@ -211,8 +211,7 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
             onClose={() => setDialogClosed(true)}
           >
             <Text size="sm" fw={500}>
-              Try the powerful Premium editor for larger graphs and advanced features with
-              money-back guarantee.
+              Try JSON Crack Premium for free! Start 2-days free trial to explore more features.
             </Text>
             <Group justify="right" mt="sm">
               <Button variant="default" onClick={() => setDialogClosed(true)}>
