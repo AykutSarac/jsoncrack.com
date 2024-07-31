@@ -125,7 +125,7 @@ export const PricingCards = () => {
             my="md"
             rightSection={<VscArrowRight />}
           >
-            Start 2-Days Free Trial
+            Get Started
           </Button>
           <Text mt="xs" fz="xs" c="dimmed">
             Remake version with advanced features, better performance and smooth user interface.

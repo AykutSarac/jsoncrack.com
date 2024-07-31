@@ -2,6 +2,7 @@ import React from "react";
 import { Manrope } from "next/font/google";
 import { Stack, Flex, Badge, Button, Text } from "@mantine/core";
 import styled from "styled-components";
+import { IoSparkles } from "react-icons/io5";
 import { MdChevronRight } from "react-icons/md";
 
 const manrope = Manrope({
@@ -117,6 +118,17 @@ export const HeroSection = () => {
     <StyledHeroSection id="hero-section">
       <StyledHeroSectionBody>
         <Stack flex="1" miw={250} mx="auto" align="center">
+          <Badge
+            size="lg"
+            fw={500}
+            lts={0.5}
+            variant="light"
+            color="red"
+            leftSection={<IoSparkles />}
+            tt="none"
+          >
+            Start in 30 seconds — no registration, no payment.
+          </Badge>
           <StyledHeroTitle>Visualize JSON into interactive graphs</StyledHeroTitle>
           <StyledHeroText>
             The best JSON viewer tool to <strong>visualize</strong>, <strong>format</strong> and{" "}

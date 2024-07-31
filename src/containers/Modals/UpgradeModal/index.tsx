@@ -15,6 +15,7 @@ import {
 } from "@mantine/core";
 import styled from "styled-components";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
+import { MdOutlineTimer } from "react-icons/md";
 import { gaEvent } from "src/lib/utils/gaEvent";
 import { PRICING, purchaseLinks } from "src/pages/pricing";
 import useUser from "src/store/useUser";
@@ -26,21 +27,21 @@ const StyledRadioCard = styled(Radio.Card)`
   transition: 0.2s;
 
   &[data-checked] {
-    border-color: #ff7300;
+    border-color: #2d2d2d;
   }
 
   &[data-checked]:hover {
-    background: #fffdfb;
+    background: #f3f3f3;
   }
 
   &:hover {
-    border-color: #ffab6a;
+    border-color: #7f7f7f;
   }
 `;
 
 export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
   const user = useUser(state => state.user);
-  const [plan, setPlan] = React.useState("monthly");
+  const [plan, setPlan] = React.useState("ltd");
 
   const handleUpgrade = () => {
     const link = new URL(purchaseLinks[plan]);
@@ -102,15 +103,12 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
           </Stack>
           <Radio.Group value={plan} onChange={setPlan}>
             <Stack>
-              <StyledRadioCard value="monthly" radius="lg" px="xl" py="md">
+              <StyledRadioCard value="montfhly" radius="lg" px="xl" py="md">
                 <Group align="center" justify="space-between">
                   <Flex align="center" gap="xs">
                     <Text fz="xl" c="gray.7" fw={600}>
                       Monthly
                     </Text>
-                    <Badge size="sm" radius="lg" color="yellow.4">
-                      2 days free
-                    </Badge>
                   </Flex>
                   <Flex fw={500} align="baseline" fz="sm" c="gray.5">
                     <Text fw={600} fz="xl" c="gray.7">
@@ -126,12 +124,6 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
                     <Text fz="xl" c="gray.7" fw={600}>
                       Yearly
                     </Text>
-                    <Badge size="sm" radius="lg" color="yellow.4">
-                      2 days free
-                    </Badge>
-                    <Badge size="sm" radius="lg" color="yellow.4">
-                      Save {PRICING.getAnnualSave()}%
-                    </Badge>
                   </Flex>
                   <Flex fw={500} align="baseline" fz="sm" c="gray.5">
                     <Text fw={600} fz="xl" c="gray.7">
@@ -147,6 +139,15 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
                     <Text fz="xl" c="gray.7" fw={600}>
                       Lifetime
                     </Text>
+                    <Badge
+                      variant="light"
+                      size="sm"
+                      radius="lg"
+                      color="red"
+                      leftSection={<MdOutlineTimer size="12" />}
+                    >
+                      Limited
+                    </Badge>
                   </Flex>
                   <Flex fw={500} align="baseline" fz="sm" c="gray.5">
                     <Text fw={600} fz="xl" c="gray.7">
@@ -157,8 +158,8 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
                 </Group>
               </StyledRadioCard>
             </Stack>
-            <Button color="orange" fullWidth mt="xl" size="xl" radius="md" onClick={handleUpgrade}>
-              {plan !== "ltd" ? "Start 2-Days Free Trial" : "Upgrade"}
+            <Button color="dark" fullWidth mt="xl" size="xl" radius="md" onClick={handleUpgrade}>
+              Upgrade
             </Button>
           </Radio.Group>
         </Flex>

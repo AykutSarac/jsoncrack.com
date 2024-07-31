@@ -181,7 +181,7 @@ export const NotSupported = () => {
           radius="md"
           rightSection={<MdChevronRight size="24" />}
         >
-          Start Free Trial
+          Upgrade Premium
         </Button>
       </StyledContent>
 
