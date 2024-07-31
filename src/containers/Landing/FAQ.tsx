@@ -31,6 +31,16 @@ const Questions = [
     content: "Yes, you can export the generated graphs as PNG, JPEG, or SVG files.",
   },
   {
+    title: "What is the difference between free and premium plans?",
+    content:
+      "The premium plan completely revamps the free editor, turning it into a much more powerful and efficient tool. It’s faster, more compact, and comes with a lot of extra features. Plus, you get higher data size limits and more customization options to suit your needs.",
+  },
+  {
+    title: "I purchased a premium plan, how do I access it?",
+    content:
+      "After purchasing a premium plan, you should sign up with the email you used during the purchase or log in with the same email. The premium features will be automatically unlocked for you.",
+  },
+  {
     title: "How to use VS Code extension?",
     content:
       "You can use the VS Code extension to visualize JSON data directly in your editor. Install the extension from the VS Code marketplace and follow the instructions at extension's page.",
