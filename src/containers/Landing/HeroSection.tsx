@@ -126,6 +126,7 @@ export const HeroSection = () => {
             color="red"
             leftSection={<IoSparkles />}
             tt="none"
+            visibleFrom="xs"
           >
             Start in 30 seconds — no registration, no payment.
           </Badge>
