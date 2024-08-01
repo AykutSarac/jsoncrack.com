@@ -155,19 +155,6 @@ export const HeroSection = () => {
           <Flex gap="md" wrap="wrap" justify="center">
             <Button
               component="a"
-              color="gray.2"
-              href="/#preview"
-              size="lg"
-              radius="sm"
-              fw={500}
-              fz="md"
-              mt="lg"
-              visibleFrom="xs"
-            >
-              Learn more
-            </Button>
-            <Button
-              component="a"
               color="orange"
               href="/#pricing"
               size="lg"
