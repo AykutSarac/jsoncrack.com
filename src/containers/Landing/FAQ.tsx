@@ -60,7 +60,7 @@ export const FAQ = () => {
         }}
         fw={600}
         mb={60}
-        style={{ textAlign: "center" }}
+        ta="center"
       >
         Frequently Asked Questions
       </Title>

@@ -22,10 +22,10 @@ export const HomePage = ({ stars }: InferGetStaticPropsType<typeof getStaticProp
         <link rel="canonical" href="https://jsoncrack.com" />
       </Head>
       <HeroSection />
+      <LovedBy stars={stars} />
       <HeroPreview />
       <Features />
       <PremiumVsFree />
-      <LovedBy stars={stars} />
       <Pricing />
       <FAQ />
     </Layout>

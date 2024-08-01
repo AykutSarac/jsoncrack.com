@@ -8,6 +8,33 @@ const StyledPreviewWrapper = styled.div`
   padding: 5rem 0;
 `;
 
+const features = [
+  {
+    label: "Fast & Compact",
+    value: "1",
+  },
+  {
+    label: "Search",
+    value: "2",
+  },
+  {
+    label: "Edit",
+    value: "3",
+  },
+  {
+    label: "Customize",
+    value: "5",
+  },
+  {
+    label: "Compare",
+    value: "6",
+  },
+  {
+    label: "AI-Powered Assistant",
+    value: "7",
+  },
+];
+
 export const HeroPreview = () => {
   const [selectedFeature, setSelectedFeature] = React.useState("1");
 
@@ -20,37 +47,15 @@ export const HeroPreview = () => {
           xs: "row",
         }}
         mx="auto"
-        maw="85%"
+        maw={{
+          base: "90%",
+          xs: "85%",
+        }}
         justify="center"
       >
         <Stack>
           <SegmentedControl
-            data={[
-              {
-                label: "Fast & Compact",
-                value: "1",
-              },
-              {
-                label: "Search",
-                value: "2",
-              },
-              {
-                label: "Edit",
-                value: "3",
-              },
-              {
-                label: "Customize",
-                value: "5",
-              },
-              {
-                label: "Compare",
-                value: "6",
-              },
-              {
-                label: "AI-Powered Assistant",
-                value: "7",
-              },
-            ]}
+            data={features}
             value={selectedFeature}
             onChange={setSelectedFeature}
             orientation="vertical"
