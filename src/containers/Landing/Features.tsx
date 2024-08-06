@@ -157,7 +157,7 @@ export const Features = () => {
           <Paper h="100%" p="lg" radius="md" bg="gray.0" withBorder>
             <Flex align="center" gap={8} mb={16}>
               <ThemeIcon color="grape" variant="light" size="lg" radius="md">
-                <MdOutlineGeneratingTokens size={24} />
+                <MdOutlineGeneratingTokens size={20} />
               </ThemeIcon>
               <Title order={3} c="gray.9" fz={{ base: 16, md: 16, lg: 22, xl: 24 }} fw={500}>
                 Generate Code and Schemas
@@ -180,7 +180,7 @@ export const Features = () => {
           <Paper h="100%" p="lg" radius="md" bg="gray.0" withBorder>
             <Flex align="center" gap={8} mb={16}>
               <ThemeIcon color="indigo" variant="light" size="lg" radius="md">
-                <FaToolbox size={24} />
+                <FaToolbox size={20} />
               </ThemeIcon>
               <Title order={3} c="gray.9" fz={{ base: 16, md: 16, lg: 22, xl: 24 }} fw={500}>
                 Advanced JSON Tools
@@ -204,7 +204,7 @@ export const Features = () => {
           <Paper h="100%" p="lg" radius="md" bg="gray.0" withBorder>
             <Flex align="center" gap={8} mb={16}>
               <ThemeIcon color="lime" variant="light" size="lg" radius="md">
-                <GrSearchAdvanced size={24} />
+                <GrSearchAdvanced size={20} />
               </ThemeIcon>
               <Title order={3} c="gray.9" fz={{ base: 16, md: 16, lg: 22, xl: 24 }} fw={500}>
                 Edit, Search, and Analyze
