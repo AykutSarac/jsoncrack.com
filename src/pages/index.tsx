@@ -1,6 +1,7 @@
 import React from "react";
 import type { GetStaticProps, InferGetStaticPropsType } from "next";
 import Head from "next/head";
+import { generateJsonld } from "src/constants/jsonld";
 import { metaDescription } from "src/constants/landing";
 import { FAQ } from "src/containers/Landing/FAQ";
 import { Features } from "src/containers/Landing/Features";
@@ -20,6 +21,11 @@ export const HomePage = ({ stars }: InferGetStaticPropsType<typeof getStaticProp
         <meta property="og:description" content={metaDescription} key="ogdescription" />
         <meta name="twitter:description" content={metaDescription} key="twdescription" />
         <link rel="canonical" href="https://jsoncrack.com" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={generateJsonld()}
+          key="product-jsonld"
+        />
       </Head>
       <HeroSection />
       <LovedBy stars={stars} />

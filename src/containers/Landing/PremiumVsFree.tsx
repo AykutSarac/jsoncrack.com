@@ -97,12 +97,7 @@ export const PremiumVsFree = () => {
             itemTwo={
               <>
                 <Overlay color="#000" backgroundOpacity={0.1} />
-                <Image
-                  loading="lazy"
-                  fetchPriority="low"
-                  src="./assets/preview/free.webp"
-                  alt="Free"
-                />
+                <Image loading="lazy" src="./assets/preview/free.webp" alt="Free" />
               </>
             }
             handle={
