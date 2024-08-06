@@ -1,7 +1,20 @@
 import React from "react";
-import { Container, Grid, Flex, rem, Title, Text, Paper } from "@mantine/core";
-import { FaBolt, FaHeart, FaMagic, FaPalette, FaShapes } from "react-icons/fa";
-import { FaShieldHalved } from "react-icons/fa6";
+import {
+  Container,
+  Grid,
+  Flex,
+  rem,
+  Title,
+  Text,
+  Paper,
+  Center,
+  Badge,
+  ThemeIcon,
+} from "@mantine/core";
+import { FaBolt, FaMagic, FaToolbox } from "react-icons/fa";
+import { GrSearchAdvanced } from "react-icons/gr";
+import { MdOutlineGeneratingTokens } from "react-icons/md";
+import { TbTransformFilled } from "react-icons/tb";
 
 export const Features = () => {
   return (
@@ -19,6 +32,11 @@ export const Features = () => {
       my={150}
       mt={120}
     >
+      <Center>
+        <Badge variant="light" color="orange">
+          Features
+        </Badge>
+      </Center>
       <Title
         c="black"
         order={2}
@@ -50,125 +68,159 @@ export const Features = () => {
         mb={50}
       >
         All in one tool for JSON, YAML, CSV, XML, and TOML. Formatter, validator, visualizer, and
-        editor. Make smarter decisions faster.
+        editor.
       </Text>
 
-      <Grid px={{ base: 0, xs: "xl", md: 0 }} mt={100} mx="auto" gutter={30}>
+      <Grid
+        px={{ base: 0, xs: "xs", sm: "xl", md: 0 }}
+        mt={100}
+        mx="auto"
+        gutter={{
+          base: 20,
+          sm: 30,
+        }}
+      >
         <Grid.Col span={{ base: 12, xs: 6, md: 4 }}>
           <Paper h="100%" p="lg" radius="md" bg="gray.0" withBorder>
             <Flex align="center" gap={8} mb={16}>
-              <FaBolt color="orange" size={24} />
-              <Text c="gray.9" fz={{ base: 16, md: 18, lg: 24, xl: 26 }} fw={500}>
-                Real-time Visualization
-              </Text>
+              <ThemeIcon color="yellow" variant="light" size="lg" radius="md">
+                <FaBolt size={20} />
+              </ThemeIcon>
+              <Title order={3} c="gray.9" fz={{ base: 16, md: 16, lg: 22, xl: 24 }} fw={500}>
+                Visualize Your JSON Data
+              </Title>
             </Flex>
             <Text
               c="gray.7"
               fz={{
-                base: 14,
-                xs: 16,
+                base: 12,
+                xs: 14,
               }}
+              lh={1.7}
             >
-              Transform into graphs as you type. Update your data from the graphs directly.
+              Transform complex JSON data into intuitive graphs and trees with JSON Crack&apos;s
+              powerful visualizer. Easily understand data relationships, identify patterns, and
+              debug issues. Our JSON graph and tree views provide unparalleled clarity for your JSON
+              data.
             </Text>
           </Paper>
         </Grid.Col>
         <Grid.Col span={{ base: 12, xs: 6, md: 4 }}>
           <Paper h="100%" p="lg" radius="md" bg="gray.0" withBorder>
             <Flex align="center" gap={8} mb={16}>
-              <FaHeart color="#ff5555" size={26} />
-              <Text c="gray.9" fz={{ base: 16, md: 18, lg: 24, xl: 26 }} fw={500}>
-                Simple
-              </Text>
+              <ThemeIcon color="orange" variant="light" size="lg" radius="md">
+                <TbTransformFilled size={20} />
+              </ThemeIcon>
+              <Title order={3} c="gray.9" fz={{ base: 16, md: 16, lg: 22, xl: 24 }} fw={500}>
+                Convert and Transform
+              </Title>
             </Flex>
             <Text
               c="gray.7"
               fz={{
-                base: 14,
-                xs: 16,
+                base: 12,
+                xs: 14,
               }}
+              lh={1.7}
             >
-              Designed for everyone. Clean, focused, and easy to use. No learning curve.
+              Seamlessly convert JSON to YAML, CSV, and other formats. Transform your data with our
+              flexible tools, including JSON path, JSON query (jq), and JSON schema. Edit data
+              directly within the graph or tree view for ultimate control.
             </Text>
           </Paper>
         </Grid.Col>
         <Grid.Col span={{ base: 12, xs: 6, md: 4 }} visibleFrom="xs">
           <Paper h="100%" p="lg" radius="md" bg="gray.0" withBorder>
             <Flex align="center" gap={8} mb={16}>
-              <FaMagic color="#8c0075" size={24} />
-              <Text c="gray.9" fz={{ base: 16, md: 18, lg: 24, xl: 26 }} fw={500}>
-                Generate
-              </Text>
+              <ThemeIcon color="green" variant="light" size="lg" radius="md">
+                <FaMagic size={20} />
+              </ThemeIcon>
+              <Title order={3} c="gray.9" fz={{ base: 16, md: 16, lg: 22, xl: 24 }} fw={500}>
+                Validate, Format, and Beautify
+              </Title>
             </Flex>
             <Text
               c="gray.7"
               fz={{
-                base: 14,
-                xs: 16,
+                base: 12,
+                xs: 14,
               }}
+              lh={1.7}
             >
-              Generate JSON Schema and mock data, TypeScript interfaces, Golang structs, and more
-              from your data with a single click.
+              Ensure data accuracy with our robust JSON validator. Format and beautify your JSON
+              code for improved readability. Our JSON formatter and beautifier make your code
+              cleaner and easier to maintain.
             </Text>
           </Paper>
         </Grid.Col>
         <Grid.Col span={{ base: 12, xs: 6, md: 4 }}>
           <Paper h="100%" p="lg" radius="md" bg="gray.0" withBorder>
             <Flex align="center" gap={8} mb={16}>
-              <FaPalette color="#4890fd" size={24} />
-              <Text c="gray.9" fz={{ base: 16, md: 18, lg: 24, xl: 26 }} fw={500}>
-                Customizable
-              </Text>
+              <ThemeIcon color="grape" variant="light" size="lg" radius="md">
+                <MdOutlineGeneratingTokens size={24} />
+              </ThemeIcon>
+              <Title order={3} c="gray.9" fz={{ base: 16, md: 16, lg: 22, xl: 24 }} fw={500}>
+                Generate Code and Schemas
+              </Title>
             </Flex>
             <Text
               c="gray.7"
               fz={{
-                base: 14,
-                xs: 16,
+                base: 12,
+                xs: 14,
               }}
+              lh={1.7}
             >
-              Besides the default light and dark themes, customize the editor&apos;s theme to your
-              liking, matching your brand or personal preference.
+              Generate code snippets, including TypeScript, Golang, and more, directly from your
+              JSON data. Create JSON Schemas to define and validate your data structures.
             </Text>
           </Paper>
         </Grid.Col>
         <Grid.Col span={{ base: 12, xs: 6, md: 4 }}>
           <Paper h="100%" p="lg" radius="md" bg="gray.0" withBorder>
             <Flex align="center" gap={8} mb={16}>
-              <FaShieldHalved color="black" size={24} />
-              <Text c="gray.9" fz={{ base: 16, md: 18, lg: 24, xl: 26 }} fw={500}>
-                Privacy First
-              </Text>
+              <ThemeIcon color="indigo" variant="light" size="lg" radius="md">
+                <FaToolbox size={24} />
+              </ThemeIcon>
+              <Title order={3} c="gray.9" fz={{ base: 16, md: 16, lg: 22, xl: 24 }} fw={500}>
+                Advanced JSON Tools
+              </Title>
             </Flex>
             <Text
               c="gray.7"
               fz={{
-                base: 14,
-                xs: 16,
+                base: 12,
+                xs: 14,
               }}
+              lh={1.7}
             >
-              JSON Crack does not store your data unless you upload it manually. Your data remains
-              completely private.
+              Explore additional features like JWT decoding, data comparison, AI-powered filtering,
+              and custom themes. Download your visualized data as an image for sharing or
+              documentation.
             </Text>
           </Paper>
         </Grid.Col>
         <Grid.Col span={{ base: 12, xs: 6, md: 4 }} visibleFrom="xs">
           <Paper h="100%" p="lg" radius="md" bg="gray.0" withBorder>
             <Flex align="center" gap={8} mb={16}>
-              <FaShapes color="#00a571" size={24} />
-              <Text c="gray.9" fz={{ base: 16, md: 18, lg: 24, xl: 26 }} fw={500}>
-                Advanced Features
-              </Text>
+              <ThemeIcon color="lime" variant="light" size="lg" radius="md">
+                <GrSearchAdvanced size={24} />
+              </ThemeIcon>
+              <Title order={3} c="gray.9" fz={{ base: 16, md: 16, lg: 22, xl: 24 }} fw={500}>
+                Edit, Search, and Analyze
+              </Title>
             </Flex>
             <Text
               c="gray.7"
               fz={{
-                base: 14,
-                xs: 16,
+                base: 12,
+                xs: 14,
               }}
+              lh={1.7}
             >
-              Unlock advanced features like JSON Path, AI data filter, Compare Data, Search on
-              graph, Download as Image and many more!
+              Edit your JSON data directly within the graph or tree view. Search through your data
+              effortlessly using our advanced search functionality. Gain deeper insights with our
+              powerful JSON parser and editor.
             </Text>
           </Paper>
         </Grid.Col>

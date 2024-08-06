@@ -78,7 +78,7 @@ export const PremiumVsFree = () => {
             component="a"
             href="/#preview"
           >
-            See in action!
+            See preview!
           </Button>
         </Box>
 

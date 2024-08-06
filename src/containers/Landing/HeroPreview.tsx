@@ -1,5 +1,5 @@
 import React from "react";
-import { AspectRatio, Flex, Paper, SegmentedControl, Stack } from "@mantine/core";
+import { AspectRatio, Flex, Paper, SegmentedControl, Stack, Text } from "@mantine/core";
 import styled from "styled-components";
 
 const StyledPreviewWrapper = styled.div`
@@ -75,40 +75,44 @@ export const HeroPreview = () => {
             }}
           />
         </Stack>
-
-        <Paper
-          p={0}
-          w="100%"
-          maw={1440}
-          h="fit-content"
-          radius="lg"
-          shadow="xl"
-          bg="transparent"
-          style={{
-            overflow: "hidden",
-            border: "1px solid #c1c1c1",
-            outline: "1px solid #c1c1c1",
-            outlineOffset: "4px",
-          }}
-        >
-          <AspectRatio ratio={1440 / 760} maw={1440} w="100%" h="100%">
-            <video
-              autoPlay
-              muted
-              loop
-              preload="auto"
-              playsInline
-              poster={`./assets/preview/${selectedFeature}.webp`}
-              key={selectedFeature}
-              style={{ display: "block" }}
-            >
-              <source
-                src={`https://app.jsoncrack.com/assets/videos/p${selectedFeature}.mp4`}
-                type="video/mp4"
-              />
-            </video>
-          </AspectRatio>
-        </Paper>
+        <Stack w="100%">
+          <Paper
+            p={0}
+            w="100%"
+            maw={1440}
+            h="fit-content"
+            radius="lg"
+            shadow="xl"
+            bg="transparent"
+            style={{
+              overflow: "hidden",
+              border: "1px solid #c1c1c1",
+              outline: "1px solid #c1c1c1",
+              outlineOffset: "4px",
+            }}
+          >
+            <AspectRatio ratio={1440 / 760} maw={1440} w="100%" h="100%">
+              <video
+                autoPlay
+                muted
+                loop
+                preload="auto"
+                playsInline
+                poster={`./assets/preview/${selectedFeature}.webp`}
+                key={selectedFeature}
+                style={{ display: "block" }}
+              >
+                <source
+                  src={`https://app.jsoncrack.com/assets/videos/p${selectedFeature}.mp4`}
+                  type="video/mp4"
+                />
+              </video>
+            </AspectRatio>
+          </Paper>
+          <Text c="gray.6" fz="sm" ta="center">
+            Previews are from the Premium version of the app
+          </Text>
+        </Stack>
       </Flex>
     </StyledPreviewWrapper>
   );
