@@ -103,7 +103,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
           </Stack>
           <Radio.Group value={plan} onChange={setPlan}>
             <Stack>
-              <StyledRadioCard value="montfhly" radius="lg" px="xl" py="md">
+              <StyledRadioCard value="monthly" radius="lg" px="xl" py="md">
                 <Group align="center" justify="space-between">
                   <Flex align="center" gap="xs">
                     <Text fz="xl" c="gray.7" fw={600}>

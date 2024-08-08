@@ -5,7 +5,6 @@ export function generateJsonld() {
     "@type": "WebApplication",
     "name": "JSON Crack",
     "applicationCategory": "DeveloperApplication",
-    "logo": "https://jsoncrack.com/assets/192.jpg",
     "screenshot": "https://jsoncrack.com/assets/preview/1.png",
     "description": "JSON Crack is a powerful JSON visualization tool that offers a wide range of features including formatting, validation, conversion, and more.",
     "url": "https://jsoncrack.com",
