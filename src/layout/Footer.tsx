@@ -8,7 +8,7 @@ import { JSONCrackLogo } from "./JsonCrackLogo";
 
 export const Footer = () => {
   return (
-    <Container mt={150} px={60} pb="xl" bg="white" fluid>
+    <Container mt={150} px={60} pb="xl" bg="black" fluid>
       <Divider color="gray.3" mb="xl" mx={-60} />
       <Flex justify="space-between">
         <Stack gap={4} visibleFrom="sm">
@@ -19,49 +19,44 @@ export const Footer = () => {
         </Stack>
         <Flex gap={60} visibleFrom="sm">
           <Stack gap="xs">
-            <Text fz="sm" c="dimmed">
+            <Text fz="sm" c="white">
               Product
             </Text>
             <Anchor
               fz="sm"
-              c="black"
+              c="gray.5"
               href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode"
             >
               VS Code
             </Anchor>
-            <Anchor component={Link} prefetch={false} fz="sm" c="black" href="/pricing">
+            <Anchor component={Link} prefetch={false} fz="sm" c="gray.5" href="/pricing">
               Pricing
             </Anchor>
             <Anchor
               href="https://github.com/AykutSarac/jsoncrack.com"
               fz="sm"
-              c="black"
+              c="gray.5"
               target="_blank"
             >
               Open Source
             </Anchor>
           </Stack>
           <Stack gap="xs">
-            <Text fz="sm" c="dimmed">
+            <Text fz="sm" c="white">
               Resources
             </Text>
-            <Anchor
-              fz="sm"
-              c="black"
-              href="https://jsoncrack.lemonsqueezy.com/affiliates"
-              target="_blank"
-            >
+            <Anchor component={Link} href="/affiliates" fz="sm" c="gray.5">
               Affiliate
             </Anchor>
-            <Anchor component={Link} prefetch={false} fz="sm" c="black" href="/#faq">
+            <Anchor component={Link} prefetch={false} fz="sm" c="gray.5" href="/#faq">
               FAQ
             </Anchor>
-            <Anchor component={Link} prefetch={false} fz="sm" c="black" href="/docs">
+            <Anchor component={Link} prefetch={false} fz="sm" c="gray.5" href="/docs">
               Docs
             </Anchor>
           </Stack>
           <Stack gap="xs">
-            <Text fz="sm" c="dimmed">
+            <Text fz="sm" c="white">
               Social
             </Text>
             <Flex gap="xs">
@@ -70,12 +65,12 @@ export const Footer = () => {
                 href="https://www.linkedin.com/company/jsoncrack"
                 fz="sm"
               >
-                <ThemeIcon variant="transparent" color="black">
+                <ThemeIcon variant="transparent" color="gray.5">
                   <FaLinkedin size={20} />
                 </ThemeIcon>
               </Anchor>
               <Anchor aria-label="X" fz="sm" href="https://x.com/jsoncrack">
-                <ThemeIcon variant="transparent" color="black">
+                <ThemeIcon variant="transparent" color="gray.5">
                   <FaXTwitter size={20} />
                 </ThemeIcon>
               </Anchor>
@@ -84,12 +79,12 @@ export const Footer = () => {
                 href="https://github.com/AykutSarac/jsoncrack.com"
                 fz="sm"
               >
-                <ThemeIcon variant="transparent" color="black">
+                <ThemeIcon variant="transparent" color="gray.5">
                   <FaGithub size={20} />
                 </ThemeIcon>
               </Anchor>
               <Anchor aria-label="Discord" fz="sm" href="https://discord.com/invite/yVyTtCRueq">
-                <ThemeIcon variant="transparent" color="black">
+                <ThemeIcon variant="transparent" color="gray.5">
                   <FaDiscord size={20} />
                 </ThemeIcon>
               </Anchor>

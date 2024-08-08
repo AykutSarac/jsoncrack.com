@@ -20,7 +20,7 @@ const StyledNavbar = styled.nav`
   max-width: 1200px;
   margin: 0 auto;
   padding: 12px 24px;
-  background: rgba(255, 255, 255, 0.1);
+  background: white;
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
 

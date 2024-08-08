@@ -18,8 +18,9 @@ const StyledTitle = styled.div<{ fontSize: string }>`
   font-size: ${({ fontSize }) => fontSize};
   white-space: nowrap;
   z-index: 10;
-  color: ${({ theme }) => theme.INTERACTIVE_HOVER};
   vertical-align: middle;
+  color: #e8e8e8;
+  mix-blend-mode: difference;
 `;
 
 interface LogoProps extends React.ComponentPropsWithoutRef<"a"> {
