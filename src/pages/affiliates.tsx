@@ -37,6 +37,16 @@ const Affiliate = () => {
           name="twitter:description"
           content="Monetize your website with JSON Crack's Affiliate Program. Promote JSON Crack to your audience earn up to $24 per commission! Join the program for free!"
         />
+        <meta
+          property="og:image"
+          content="https://jsoncrack.com/assets/og/affiliates.png"
+          key="ogimage"
+        />
+        <meta
+          name="twitter:image"
+          content="https://jsoncrack.com/assets/og/affiliates.png"
+          key="twimage"
+        />
       </Head>
       <Layout>
         <Container
