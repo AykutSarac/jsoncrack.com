@@ -49,11 +49,25 @@ const Affiliate = () => {
               "linear-gradient(150deg, #2b2e4a, #3e345e, #57386e, #723b78, #903c7a, #af3d73, #cd3f63, #e84545)",
           }}
         >
-          <Box mx="auto" maw="40%">
-            <Title order={1} c="white" fz={42}>
+          <Box mx="auto" maw={600}>
+            <Title
+              order={1}
+              c="white"
+              fz={{
+                base: 36,
+                xs: 42,
+              }}
+            >
               Join JSON Crack&apos;s Affiliate Program
             </Title>
-            <Text c="gray.3" mt={32} fz={20}>
+            <Text
+              c="gray.3"
+              mt={32}
+              fz={{
+                base: 16,
+                xs: 20,
+              }}
+            >
               Do you own a website, popular social media account, blog or YouTube channel? Promote
               JSON Crack with our affiliate program and earn commissions.
             </Text>
@@ -70,7 +84,7 @@ const Affiliate = () => {
             </Link>
             <Image
               pos="absolute"
-              bottom={0}
+              bottom={-1}
               left={0}
               src="./assets/steps-divider-round.svg"
               width="100%"
@@ -82,10 +96,25 @@ const Affiliate = () => {
           </Box>
         </Container>
         <Container size="lg">
-          <Title fz={40} order={2} mt={100} mb={40}>
+          <Title
+            fz={{
+              base: 32,
+              xs: 38,
+            }}
+            order={2}
+            mt={100}
+            mb={40}
+          >
             How it works
           </Title>
-          <SimpleGrid cols={3} spacing="xl">
+          <SimpleGrid
+            cols={{
+              base: 1,
+              xs: 2,
+              sm: 3,
+            }}
+            spacing="xl"
+          >
             <Box>
               <ThemeIcon radius="xl" size="lg" fw="bold" fz="lg" color="orange">
                 1
@@ -125,10 +154,24 @@ const Affiliate = () => {
         </Container>
         <Container fluid bg="yellow.5" my={120} py={40}>
           <Container size="lg">
-            <Title fz={40} order={2} mb={40}>
+            <Title
+              fz={{
+                base: 32,
+                xs: 38,
+              }}
+              order={2}
+              mb={40}
+            >
               FAQ
             </Title>
-            <SimpleGrid cols={4} spacing="xl">
+            <SimpleGrid
+              cols={{
+                base: 1,
+                xs: 2,
+                md: 4,
+              }}
+              spacing="xl"
+            >
               <Box>
                 <Title c="black" order={3} mt={16} fw="500">
                   How long does the cookie last?
@@ -177,15 +220,26 @@ const Affiliate = () => {
           </Container>
         </Container>
         <Container size="lg">
-          <Paper p={80} radius="lg" bg="dark" withBorder>
-            <Title maw="80%" fw={400} mx="auto" ta="center" c="white" fz={40} order={2}>
+          <Paper p={60} radius="lg" bg="dark" withBorder>
+            <Title
+              maw={800}
+              fw={400}
+              mx="auto"
+              ta="center"
+              c="white"
+              fz={{
+                base: 28,
+                xs: 40,
+              }}
+              order={2}
+            >
               Join our affiliate program for free and start monetize your traffic!
             </Title>
             <Center mt={40}>
               <Link href={AFFILIATE_SINGUP_URL} target="_blank" rel="noopener">
                 <Button
                   mx="auto"
-                  size="lg"
+                  size="xl"
                   radius="xl"
                   color="orange"
                   rightSection={<MdChevronRight size={30} />}
