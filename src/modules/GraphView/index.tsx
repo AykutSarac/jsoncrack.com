@@ -136,7 +136,7 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
   );
 };
 
-const SUPPORTED_LIMIT = 600;
+const SUPPORTED_LIMIT = 400;
 
 export const GraphView = ({ isWidget = false }: GraphProps) => {
   const setVisible = useModal(state => state.setVisible);
