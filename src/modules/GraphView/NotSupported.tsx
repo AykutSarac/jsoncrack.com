@@ -1,10 +1,9 @@
 import React from "react";
+import Link from "next/link";
 import { Button, Title } from "@mantine/core";
 import styled from "styled-components";
 import { MdChevronRight } from "react-icons/md";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
-import { gaEvent } from "src/lib/utils/gaEvent";
-import useModal from "src/store/useModal";
 
 const StyledNotSupported = styled.div`
   position: relative;
@@ -156,13 +155,11 @@ const StyledContent = styled.div`
 `;
 
 export const NotSupported = () => {
-  const setVisible = useModal(state => state.setVisible);
-
   return (
     <StyledNotSupported>
       <StyledContent>
         <Title mb="lg" style={{ pointerEvents: "none" }}>
-          <JSONCrackLogo fontSize="4rem" />
+          <JSONCrackLogo fontSize="4rem" style={{ color: "black" }} />
         </Title>
         <StyledInfo>
           Upgrade to premium for larger data size support. The free version is incapable of handling
@@ -170,10 +167,9 @@ export const NotSupported = () => {
         </StyledInfo>
 
         <Button
-          onClick={() => {
-            gaEvent("Premium View", "click upgrade premium");
-            setVisible("upgrade")(true);
-          }}
+          component={Link}
+          href="/premium"
+          target="_blank"
           mt="lg"
           size="lg"
           fw="bolder"

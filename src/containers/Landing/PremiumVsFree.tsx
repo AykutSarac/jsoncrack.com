@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { Title, Overlay, Image, Container, Flex, Box, List, Button } from "@mantine/core";
 import styled from "styled-components";
 import { ReactCompareSlider, ReactCompareSliderHandle } from "react-compare-slider";
@@ -68,17 +69,17 @@ export const PremiumVsFree = () => {
             <List.Item>Beautiful UI and very smooth navigation</List.Item>
           </List>
           <Button
+            component={Link}
+            href="/premium"
             display="block"
             w="fit-content"
             miw={200}
             variant="filled"
             color="orange"
             mt="md"
-            size="md"
-            component="a"
-            href="/#preview"
+            size="lg"
           >
-            See preview!
+            See all features
           </Button>
         </Box>
 

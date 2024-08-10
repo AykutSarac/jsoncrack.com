@@ -1,5 +1,6 @@
 import React from "react";
 import { Manrope } from "next/font/google";
+import Link from "next/link";
 import { Stack, Flex, Badge, Button, Text } from "@mantine/core";
 import styled from "styled-components";
 import { IoSparkles } from "react-icons/io5";
@@ -165,6 +166,20 @@ export const HeroSection = () => {
               mt="lg"
             >
               Start using free
+            </Button>
+            <Button
+              component={Link}
+              color="dark"
+              prefetch={false}
+              href="/premium"
+              size="lg"
+              radius="sm"
+              fw={500}
+              fz="md"
+              mt="lg"
+              leftSection={<IoSparkles />}
+            >
+              Explore Premium
             </Button>
           </Flex>
           <Text c="gray.6" size="xs" mt="-10">
