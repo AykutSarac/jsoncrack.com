@@ -116,7 +116,7 @@ export const PricingCards = () => {
         </Box>
         <StyledPaper>
           <Flex justify="space-between">
-            <Stack gap="0">
+            <Stack gap="0" w="100%">
               <Flex align="center">
                 <Text fw={500} size="xl" c="black">
                   Premium
@@ -144,9 +144,14 @@ export const PricingCards = () => {
                   / mo
                 </Text>
               </Flex>
-              <Text fz="xs" c="gray.7">
-                billed {isMonthly ? "monthly" : "annually"}
-              </Text>
+              <Flex justify="space-between">
+                <Text fz="xs" c="gray.7">
+                  billed {isMonthly ? "monthly" : "annually"}
+                </Text>
+                <Anchor component={Link} href="/premium" ml="sm" fz="xs" td="underline" c="dimmed">
+                  see all features
+                </Anchor>
+              </Flex>
             </Stack>
           </Flex>
           <Button
@@ -163,9 +168,9 @@ export const PricingCards = () => {
           >
             Get Started
           </Button>
-          <Anchor component={Link} href="/premium" mt="xs" fz="xs" td="underline" c="dimmed">
-            Click here to see all features
-          </Anchor>
+          <Text mt="xs" fz="xs" c="dimmed">
+            Full-featured version of the editor with unlimited access.
+          </Text>
           <Flex direction="column" justify="space-between">
             <List
               spacing="sm"

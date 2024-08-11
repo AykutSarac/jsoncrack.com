@@ -156,7 +156,7 @@ export const HeroSection = () => {
             </Button>
             <Button
               component={Link}
-              variant="light"
+              variant="outline"
               color="orange"
               prefetch={false}
               href="/premium"

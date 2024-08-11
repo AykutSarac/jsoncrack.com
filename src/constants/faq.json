@@ -4,6 +4,10 @@
     "content": "JSON Crack is a versatile online tool designed to visualize and analyze various data formats, including JSON, YAML, CSV, XML and more. It transforms complex data into intuitive graphs and tree views, making it ideal for developers, data analysts, and anyone working with structured data."
   },
   {
+    "title": "Is JSON Crack free?",
+    "content": "JSON Crack offers a free forever plan with open-source access. For advanced features and increased usage limits, you can upgrade to a premium plan."
+  },
+  {
     "title": "Is my data secure?",
     "content": "Absolutely! JSON Crack prioritizes your data privacy. When you paste or import your data into the editor, it's processed only on your browser to create the visualization without going into our servers. Your data remains completely private and is never stored anywhere unless you choose to upload it manually."
   },
@@ -14,10 +18,6 @@
   {
     "title": "Can I edit JSON data directly in graphs?",
     "content": "Yes, as part of the premium plan, you can edit JSON data directly in the editor. This feature allows you to make changes to your data and visualize the results in real-time."
-  },
-  {
-    "title": "Is JSON Crack free?",
-    "content": "JSON Crack offers a free forever plan with open-source access. For advanced features and increased usage limits, you can upgrade to a premium plan."
   },
   {
     "title": "What kind of data formats are supported?",
