@@ -19,7 +19,7 @@ interface LovedByProps {
 
 const StyledFeaturedItem = styled.a`
   display: flex;
-  gap: 8px;
+  gap: 6px;
   align-items: center;
   white-space: nowrap;
   filter: grayscale(1) contrast(0.2);
@@ -38,7 +38,7 @@ const Featured = ({ stars }: LovedByProps) => {
         target="_blank"
         rel="noreferrer"
       >
-        <FaGithub color="black" size={30} />
+        <FaGithub color="black" size={28} />
         <Text fz="md" fw={600} c="gray.8">
           <CountUp startVal={0} end={stars} enableScrollSpy scrollSpyOnce scrollSpyDelay={200} />{" "}
           Stars
@@ -49,7 +49,7 @@ const Featured = ({ stars }: LovedByProps) => {
         target="_blank"
         rel="noreferrer"
       >
-        <FaHackerNews color="#FF6600" size={30} />
+        <FaHackerNews color="#FF6600" size={28} />
         <Text fz="md" fw={600} c="gray.8">
           Hacker News
         </Text>
@@ -59,7 +59,7 @@ const Featured = ({ stars }: LovedByProps) => {
         target="_blank"
         rel="noreferrer"
       >
-        <FaProductHunt color="#DA552F" size={30} />
+        <FaProductHunt color="#DA552F" size={28} />
         <Text fz="md" fw={600} c="gray.8">
           Product Hunt
         </Text>

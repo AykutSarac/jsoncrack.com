@@ -68,8 +68,9 @@ const StyledHeroTitle = styled.h1`
   display: inline;
   color: #272727;
   width: fit-content;
-  line-height: 1.12;
-  letter-spacing: -0.02em;
+  line-height: 1.17;
+  word-spacing: 0.1em;
+  letter-spacing: -0.01em;
   max-width: 30rem;
   font-family: ${manrope.style.fontFamily};
 
@@ -140,7 +141,7 @@ export const HeroSection = () => {
               TOML
             </Badge>
           </Flex>
-          <Flex gap="md" wrap="wrap" justify="center">
+          <Flex gap="lg" wrap="wrap" justify="center">
             <Button
               component="a"
               color="orange"
