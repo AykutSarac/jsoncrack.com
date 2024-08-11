@@ -8,7 +8,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 const StyledImageWrapper = styled.div`
   flex: 2;
   width: 100%;
-  filter: drop-shadow(0px -4px 10px rgba(70, 70, 70, 0.25));
+  filter: drop-shadow(0px 0px 30px rgba(236, 236, 236, 0.2));
 `;
 
 export const PremiumVsFree = () => {
