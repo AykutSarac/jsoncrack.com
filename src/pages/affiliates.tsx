@@ -23,7 +23,7 @@ const Affiliate = () => {
   return (
     <>
       <Head>
-        <title>JSON Crack Affiliate Program</title>
+        <title>Affiliate Program - JSON Crack</title>
         <link rel="canonical" href="https://jsoncrack.com/affiliates" />
         <meta
           name="description"

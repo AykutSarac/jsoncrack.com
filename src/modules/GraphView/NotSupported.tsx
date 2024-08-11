@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import { Button, Title } from "@mantine/core";
 import styled from "styled-components";
 import { MdChevronRight } from "react-icons/md";
@@ -167,7 +166,7 @@ export const NotSupported = () => {
         </StyledInfo>
 
         <Button
-          component={Link}
+          component="a"
           href="/premium"
           target="_blank"
           mt="lg"

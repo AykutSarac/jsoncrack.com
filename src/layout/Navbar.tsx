@@ -48,7 +48,7 @@ export const Navbar = () => {
   return (
     <StyledNavbarWrapper className="navbar">
       <Alert variant="filled" color="orange.4" fw={500} ta="center" p="6" mt="-1rem">
-        <Link href="/#buyonce">
+        <Link href="/#pricing">
           <ThemeIcon size="sm" variant="transparent" color="black" mr={2}>
             <FaGift size="12" />
           </ThemeIcon>
@@ -63,19 +63,6 @@ export const Navbar = () => {
         <Left>
           <JSONCrackLogo />
           <Button
-            component={Link}
-            prefetch={false}
-            href="/#pricing"
-            variant="subtle"
-            color="black"
-            radius="sm"
-            size="sm"
-            ml={50}
-            fw={500}
-          >
-            Pricing
-          </Button>
-          <Button
             component="a"
             href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode"
             target="_blank"
@@ -84,9 +71,35 @@ export const Navbar = () => {
             radius="sm"
             size="sm"
             fw={500}
+            ml={50}
           >
             VS Code
           </Button>
+          <Button
+            component={Link}
+            prefetch={false}
+            href="/premium"
+            variant="subtle"
+            color="black"
+            radius="sm"
+            size="sm"
+            fw={500}
+          >
+            Premium
+          </Button>
+          <Button
+            component={Link}
+            prefetch={false}
+            href="/#pricing"
+            variant="subtle"
+            color="black"
+            radius="sm"
+            size="sm"
+            fw={500}
+          >
+            Pricing
+          </Button>
+
           <Button
             component={Link}
             prefetch={false}
@@ -121,7 +134,7 @@ export const Navbar = () => {
             visibleFrom="sm"
             size="md"
           >
-            Sign in
+            Log in
           </Button>
           <Button
             component="a"

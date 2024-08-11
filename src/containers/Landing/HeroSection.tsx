@@ -3,8 +3,7 @@ import { Manrope } from "next/font/google";
 import Link from "next/link";
 import { Stack, Flex, Badge, Button, Text } from "@mantine/core";
 import styled from "styled-components";
-import { IoSparkles } from "react-icons/io5";
-import { MdChevronRight } from "react-icons/md";
+import { FaArrowRightLong } from "react-icons/fa6";
 
 const manrope = Manrope({
   subsets: ["latin-ext"],
@@ -119,18 +118,6 @@ export const HeroSection = () => {
     <StyledHeroSection>
       <StyledHeroSectionBody>
         <Stack flex="1" miw={250} mx="auto" align="center">
-          <Badge
-            size="lg"
-            fw={500}
-            lts={0.5}
-            variant="light"
-            color="red"
-            leftSection={<IoSparkles />}
-            tt="none"
-            visibleFrom="xs"
-          >
-            Start in 30 seconds — no registration, no payment.
-          </Badge>
           <StyledHeroTitle>Visualize JSON into interactive graphs</StyledHeroTitle>
           <StyledHeroText>
             The best JSON viewer tool to <strong>visualize</strong>, <strong>format</strong> and{" "}
@@ -159,27 +146,26 @@ export const HeroSection = () => {
               color="orange"
               href="/#pricing"
               size="lg"
-              radius="sm"
-              fw={500}
+              radius="xl"
+              px="xl"
               fz="md"
-              rightSection={<MdChevronRight size={30} />}
+              rightSection={<FaArrowRightLong />}
               mt="lg"
             >
-              Start using free
+              Start for free
             </Button>
             <Button
               component={Link}
-              color="dark"
+              variant="light"
+              color="orange"
               prefetch={false}
               href="/premium"
               size="lg"
-              radius="sm"
-              fw={500}
+              radius="xl"
               fz="md"
               mt="lg"
-              leftSection={<IoSparkles />}
             >
-              Explore Premium
+              Get Premium
             </Button>
           </Flex>
           <Text c="gray.6" size="xs" mt="-10">
