@@ -63,7 +63,7 @@ export const PremiumPreview = () => {
           }}
           justify="center"
         >
-          <Stack>
+          <Stack visibleFrom="sm">
             <SegmentedControl
               data={features}
               value={selectedFeature}
@@ -73,10 +73,9 @@ export const PremiumPreview = () => {
               bg="transparent"
               color="dark"
               size="lg"
-              visibleFrom="sm"
               styles={{
                 control: {
-                  background: "rgba(168, 168, 168, 0.2)",
+                  background: "rgba(141, 127, 174, 0.15)",
                   borderRadius: "4px",
                 },
                 root: {

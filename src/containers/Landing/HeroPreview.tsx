@@ -6,7 +6,7 @@ export const HeroPreview = () => {
     <Container component="section" id="preview" fluid mx="lg">
       <Image
         src="./assets/preview/free.webp"
-        maw={1200}
+        maw={1036}
         mx="auto"
         alt="JSON Crack editor preview"
         style={{

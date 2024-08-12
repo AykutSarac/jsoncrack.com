@@ -43,7 +43,7 @@ const StyledRadioCard = styled(Radio.Card)`
   background: white;
 
   &[data-checked] {
-    border-color: #535353;
+    border-color: #120f43;
   }
 
   &:hover:not([data-checked]) {
@@ -54,6 +54,20 @@ const StyledRadioCard = styled(Radio.Card)`
   @media only screen and (max-width: 600px) {
     min-width: unset;
     max-width: 100%;
+  }
+`;
+
+const StyledFeatureCard = styled(Paper)<any>`
+  background: rgba(255, 170, 234, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.11);
+  transition: 0.2s;
+
+  &:hover {
+    background: rgba(255, 170, 234, 0.15);
   }
 `;
 
@@ -159,7 +173,7 @@ const Premium = () => {
           fluid
           style={{
             background:
-              "linear-gradient(165deg, #000000, #010101, #080808, #171717, #272727, #383838, #4a4a4a, #5d5d5d)",
+              "linear-gradient(15deg, #120f43, #0d0e3e, #0b0f39, #0a1034, #08102f, #071029, #051024, #040f1e)",
           }}
         >
           <Box mx="auto" maw={600}>
@@ -171,7 +185,7 @@ const Premium = () => {
                 xs: 40,
               }}
             >
-              Take your data to the next level.
+              JSON Crack - Premium
             </Title>
             <Text
               c="gray.3"
@@ -193,7 +207,7 @@ const Premium = () => {
               size="lg"
               rightSection={<MdChevronRight size={30} />}
             >
-              Get it now
+              Upgrade now
             </Button>
             <Image
               pos="absolute"
@@ -209,7 +223,14 @@ const Premium = () => {
           </Box>
         </Container>
         <PremiumPreview />
-        <Container component="section" id="features" fluid bg="dark" my={120} py={40}>
+        <Container
+          component="section"
+          id="features"
+          fluid
+          bg="radial-gradient(58.11% 44.54% at 51.59% -9.61%, rgb(180, 176, 254) 0%, rgb(54, 50, 133) 22.92%, rgb(17, 13, 91) 42.71%, rgb(5, 3, 39) 88.54%)"
+          my={120}
+          py={40}
+        >
           <Container size="xl">
             <Title
               fz={{
@@ -233,7 +254,7 @@ const Premium = () => {
               spacing="xl"
             >
               {features.map((feature, index) => (
-                <Paper key={index} bg="gray.8" p="lg" radius="md">
+                <StyledFeatureCard p="lg" radius="md" key={index}>
                   <Flex gap="sm" align="center" justify="center" direction="column">
                     <ThemeIcon radius="xl" size="xl" variant="light" color={feature.color}>
                       {feature.icon}
@@ -243,7 +264,7 @@ const Premium = () => {
                     </Title>
                     <Text c="gray.3">{feature.description}</Text>
                   </Flex>
-                </Paper>
+                </StyledFeatureCard>
               ))}
             </SimpleGrid>
           </Container>
@@ -254,7 +275,7 @@ const Premium = () => {
             fw={500}
             mx="auto"
             ta="center"
-            c="dark"
+            c="#120F43"
             fz={{
               base: 28,
               xs: 40,
@@ -324,7 +345,7 @@ const Premium = () => {
               component="a"
               href={getUpgradeLink()}
               target="_blank"
-              color="dark"
+              color="#120F43"
               fullWidth
               mt="xl"
               size="xl"

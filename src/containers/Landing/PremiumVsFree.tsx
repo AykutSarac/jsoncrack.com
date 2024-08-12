@@ -58,7 +58,7 @@ export const PremiumVsFree = () => {
           }}
         >
           <Box flex="1.3">
-            <List mt="md" fz="lg" visibleFrom="xs" c="gray.3">
+            <List my="md" fz="lg" visibleFrom="xs" c="gray.3">
               <List.Item>Refined user interface</List.Item>
               <List.Item>Supports larger data (~4 MB)</List.Item>
               <List.Item>Customizable color options</List.Item>
@@ -74,9 +74,7 @@ export const PremiumVsFree = () => {
               display="block"
               w="fit-content"
               miw={200}
-              variant="filled"
               color="orange"
-              mt="lg"
               size="lg"
               rightSection={<FaArrowRightLong />}
               radius="xl"

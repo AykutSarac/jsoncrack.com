@@ -8,15 +8,6 @@ interface LovedByProps {
   stars: number;
 }
 
-// interface TweetCardProps {
-//   username: string;
-//   handle: string;
-//   profileImage: string;
-//   tweet: string;
-//   tweetId: string;
-//   verified?: "company" | "individual";
-// }
-
 const StyledFeaturedItem = styled.a`
   display: flex;
   gap: 6px;
@@ -32,7 +23,7 @@ const StyledFeaturedItem = styled.a`
 
 const Featured = ({ stars }: LovedByProps) => {
   return (
-    <Flex align="center" justify="center" gap="lg" mb="lg" wrap="wrap">
+    <Flex align="center" justify="center" gap="lg" wrap="wrap">
       <StyledFeaturedItem
         href="https://github.com/AykutSarac/jsoncrack.com"
         target="_blank"
@@ -68,6 +59,23 @@ const Featured = ({ stars }: LovedByProps) => {
   );
 };
 
+export const LovedBy = ({ stars }: LovedByProps) => {
+  return (
+    <Container pos="relative" mx="auto" p={30} fluid>
+      <Featured stars={stars} />
+    </Container>
+  );
+};
+
+// interface TweetCardProps {
+//   username: string;
+//   handle: string;
+//   profileImage: string;
+//   tweet: string;
+//   tweetId: string;
+//   verified?: "company" | "individual";
+// }
+//
 // const TweetCard = ({
 //   profileImage,
 //   handle,
@@ -107,11 +115,3 @@ const Featured = ({ stars }: LovedByProps) => {
 //     </Paper>
 //   );
 // };
-
-export const LovedBy = ({ stars }: LovedByProps) => {
-  return (
-    <Container pos="relative" mx="auto" p={30} fluid>
-      <Featured stars={stars} />
-    </Container>
-  );
-};

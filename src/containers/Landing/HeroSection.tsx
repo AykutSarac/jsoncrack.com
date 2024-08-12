@@ -1,11 +1,12 @@
 import React from "react";
-import { Manrope } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import Link from "next/link";
-import { Stack, Flex, Badge, Button, Text } from "@mantine/core";
+import { Stack, Flex, Badge, Button } from "@mantine/core";
 import styled from "styled-components";
-import { FaArrowRightLong } from "react-icons/fa6";
+import { FaChevronRight } from "react-icons/fa6";
+import { LovedBy } from "./LovedBy";
 
-const manrope = Manrope({
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin-ext"],
 });
 
@@ -17,25 +18,12 @@ const StyledHeroSection = styled.main`
     content: "";
     width: 100%;
     height: 100%;
+    background-size: 40px 40px;
+    background-image: linear-gradient(to right, #f6f6f6 1px, transparent 1px),
+      linear-gradient(to bottom, #f6f6f6 1px, transparent 1px);
     image-rendering: pixelated;
-    -webkit-mask-image: linear-gradient(to bottom, transparent, 20%, white, 80%, transparent);
-    mask-image: linear-gradient(to bottom, transparent, 20%, white, 80%, transparent);
-    --line-color-1: #f5f5f5;
-    --line-color-2: #f8f8f8;
-    background-image: linear-gradient(var(--line-color-1) 1.5px, transparent 1.5px),
-      linear-gradient(90deg, var(--line-color-1) 1.5px, transparent 1.5px),
-      linear-gradient(var(--line-color-2) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line-color-2) 1px, transparent 1px);
-    background-position:
-      -1.5px -1.5px,
-      -1.5px -1.5px,
-      -1px -1px,
-      -1px -1px;
-    background-size:
-      100px 100px,
-      100px 100px,
-      20px 20px,
-      20px 20px;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, 0%, white, 98%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, 0%, white, 98%, transparent);
   }
 
   @media only screen and (max-width: 1240px) {
@@ -57,30 +45,28 @@ const StyledHeroSectionBody = styled.div`
 
   @media only screen and (max-width: 768px) {
     padding: 6em 16px;
-    margin-top: 10vh;
+    padding-top: 10vh;
   }
 `;
 
 const StyledHeroTitle = styled.h1`
   position: relative;
-  font-size: 2.2rem;
-  font-weight: 800;
+  font-size: 2.3rem;
+  font-weight: 700;
   display: inline;
-  color: #272727;
+  color: #120f43;
   width: fit-content;
-  line-height: 1.17;
-  word-spacing: 0.1em;
-  letter-spacing: -0.01em;
+  line-height: 1.15;
   max-width: 30rem;
-  font-family: ${manrope.style.fontFamily};
+  font-family: ${plusJakartaSans.style.fontFamily};
 
   @media only screen and (min-width: 576px) {
-    font-size: 3.2rem;
+    font-size: 3.4rem;
     max-width: 34rem;
   }
 
   @media only screen and (min-width: 992px) {
-    font-size: 3.6rem;
+    font-size: 3.8rem;
     max-width: 40rem;
   }
 
@@ -91,87 +77,119 @@ const StyledHeroTitle = styled.h1`
 `;
 
 const StyledHeroText = styled.p`
-  font-size: 1rem;
-  color: #626262;
-  font-weight: 500;
+  font-size: 14px;
+  color: #4a5568;
+  font-weight: 400;
   max-width: 75%;
   margin-top: 1rem;
   text-align: center;
 
   strong {
-    font-weight: 500;
-    color: #be7d1c;
+    font-weight: 400;
+    color: #115fe6;
   }
 
   @media only screen and (min-width: 576px) {
-    font-size: 1.15rem;
+    font-size: 18px;
     max-width: 80%;
   }
 
   @media only screen and (min-width: 1400px) {
-    font-size: 1.3rem;
+    font-size: 18px;
     max-width: 60%;
   }
 `;
 
-export const HeroSection = () => {
+export const HeroSection = ({ stars }: { stars: number }) => {
   return (
     <StyledHeroSection>
       <StyledHeroSectionBody>
         <Stack flex="1" miw={250} mx="auto" align="center">
+          <Link href="/#features">
+            <Badge
+              fw="600"
+              tt="none"
+              variant="outline"
+              c="gray.7"
+              color="gray.3"
+              bg="gray.0"
+              size="lg"
+              rightSection={<FaChevronRight />}
+              visibleFrom="xs"
+            >
+              Supports: JSON, CSV, XML, YAML, TOML
+            </Badge>
+            <Badge
+              fw="600"
+              tt="none"
+              variant="outline"
+              c="gray.7"
+              color="gray.3"
+              bg="gray.0"
+              size="md"
+              rightSection={<FaChevronRight />}
+              hiddenFrom="xs"
+            >
+              Supports: JSON, CSV, XML, YAML, TOML
+            </Badge>
+          </Link>
           <StyledHeroTitle>Visualize JSON into interactive graphs</StyledHeroTitle>
           <StyledHeroText>
             The best JSON viewer tool to <strong>visualize</strong>, <strong>format</strong> and{" "}
             <strong>modify</strong>.
           </StyledHeroText>
-          <Flex gap="md">
-            <Badge size="sm" color="dark" autoContrast radius="sm" variant="light">
-              JSON
-            </Badge>
-            <Badge size="sm" color="dark" autoContrast radius="sm" variant="light">
-              YAML
-            </Badge>
-            <Badge size="sm" color="dark" autoContrast radius="sm" variant="light">
-              CSV
-            </Badge>
-            <Badge size="sm" color="dark" autoContrast radius="sm" variant="light">
-              XML
-            </Badge>
-            <Badge size="sm" color="dark" autoContrast radius="sm" variant="light">
-              TOML
-            </Badge>
-          </Flex>
-          <Flex gap="lg" wrap="wrap" justify="center">
+
+          <Flex gap="xs" wrap="wrap" justify="center" hiddenFrom="xs">
             <Button
               component="a"
-              color="orange"
+              color="indigo"
               href="/#pricing"
-              size="lg"
-              radius="xl"
-              px="xl"
-              fz="md"
-              rightSection={<FaArrowRightLong />}
-              mt="lg"
+              size="md"
+              radius="md"
+              rightSection={<FaChevronRight />}
+              fw="500"
             >
               Start for free
             </Button>
             <Button
               component={Link}
-              variant="outline"
-              color="orange"
+              variant="default"
+              prefetch={false}
+              href="/premium"
+              size="md"
+              radius="md"
+              fw="500"
+              rightSection={<FaChevronRight />}
+            >
+              Premium
+            </Button>
+          </Flex>
+          <Flex gap="lg" wrap="wrap" justify="center" visibleFrom="xs">
+            <Button
+              component="a"
+              color="indigo"
+              href="/#pricing"
+              size="lg"
+              radius="md"
+              rightSection={<FaChevronRight />}
+              fw="500"
+            >
+              Start for free
+            </Button>
+            <Button
+              component={Link}
+              variant="default"
               prefetch={false}
               href="/premium"
               size="lg"
-              radius="xl"
-              fz="md"
-              mt="lg"
+              radius="md"
+              fw="500"
+              rightSection={<FaChevronRight />}
             >
-              Get Premium
+              Premium
             </Button>
           </Flex>
-          <Text c="gray.6" size="xs" mt="-10">
-            No registration needed.
-          </Text>
+          <LovedBy stars={stars} />
         </Stack>
       </StyledHeroSectionBody>
     </StyledHeroSection>

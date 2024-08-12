@@ -84,7 +84,15 @@ export const Features = () => {
     <Container component="section" id="features" fluid my={150}>
       <Container size="xl">
         <Center>
-          <Badge variant="light" color="orange">
+          <Badge
+            fw="600"
+            tt="none"
+            variant="outline"
+            c="gray.7"
+            color="gray.3"
+            bg="gray.0"
+            size="lg"
+          >
             Features
           </Badge>
         </Center>

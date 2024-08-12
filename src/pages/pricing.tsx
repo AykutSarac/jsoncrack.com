@@ -78,35 +78,29 @@ export const PricingCards = () => {
         mx="auto"
       >
         <Box w="100%">
-          <StyledPaper
-            withBorder
-            p="sm"
-            w="100%"
-            style={{ borderColor: "orange" }}
-            visibleFrom="sm"
-          >
-            <Flex gap="xs" align="end">
-              <Stack gap="xs">
+          <StyledPaper withBorder p="sm" w="100%" visibleFrom="sm">
+            <Flex gap="xs" align="end" justify="space-between">
+              <Stack gap="5">
                 <Text fz="md" fw={500}>
                   Buy once,
-                  <Text ml={4} component="span" inherit c="orange">
+                  <Text ml={4} component="span" inherit c="brightBlue">
                     use forever
                   </Text>
                   !
                 </Text>
                 <Text fz="sm" maw={400}>
-                  Gain lifetime access to JSON Crack, enjoy all the advantages of our Premium plan
-                  with this one-time deal.
+                  Lifetime access. One-time payment. Free updates.
                 </Text>
               </Stack>
               <Button
                 component="a"
                 href={purchaseLinks.ltd}
                 target="_blank"
-                fw={400}
+                fw={500}
                 fz="sm"
                 size="md"
-                color="orange"
+                variant="light"
+                color="indigo"
                 rightSection={<FaArrowRightLong />}
               >
                 Get Lifetime Access for ${PRICING.LTD}
@@ -126,9 +120,9 @@ export const PricingCards = () => {
                     fw={600}
                     size="md"
                     variant="light"
-                    c="orange"
+                    c="brightBlue"
                     radius="sm"
-                    color="orange"
+                    color="brightBlue"
                     ml="sm"
                   >
                     SAVE {PRICING.getAnnualSave()}%
@@ -156,7 +150,7 @@ export const PricingCards = () => {
           </Flex>
           <Button
             component="a"
-            color="orange"
+            color="brightBlue"
             onClick={() => gaEvent("Pricing", "click upgrade premium")}
             href={isMonthly ? purchaseLinks.monthly : purchaseLinks.annual}
             target="_blank"
@@ -178,7 +172,7 @@ export const PricingCards = () => {
               mt="xs"
               c="black"
               center
-              icon={<FaCheck size="18" color="#E8580C" />}
+              icon={<FaCheck size="18" color="#1866db" />}
             >
               <List.Item>
                 <Tooltip
@@ -295,7 +289,7 @@ export const PricingCards = () => {
               mt="lg"
               c="black"
               center
-              icon={<FaCheck size="18" color="#E8580C" />}
+              icon={<FaCheck size="18" color="#1866db" />}
             >
               <List.Item>
                 <Tooltip

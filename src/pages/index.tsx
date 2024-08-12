@@ -7,7 +7,6 @@ import { FAQ } from "src/containers/Landing/FAQ";
 import { Features } from "src/containers/Landing/Features";
 import { HeroPreview } from "src/containers/Landing/HeroPreview";
 import { HeroSection } from "src/containers/Landing/HeroSection";
-import { LovedBy } from "src/containers/Landing/LovedBy";
 import { PremiumVsFree } from "src/containers/Landing/PremiumVsFree";
 import { Pricing } from "src/containers/Landing/Pricing";
 import Layout from "src/layout/Layout";
@@ -27,8 +26,7 @@ export const HomePage = ({ stars }: InferGetStaticPropsType<typeof getStaticProp
           key="product-jsonld"
         />
       </Head>
-      <HeroSection />
-      <LovedBy stars={stars} />
+      <HeroSection stars={stars} />
       <HeroPreview />
       <Features />
       <PremiumVsFree />
