@@ -88,9 +88,9 @@ export const Features = () => {
             fw="600"
             tt="none"
             variant="outline"
-            c="gray.7"
-            color="gray.3"
-            bg="gray.0"
+            c="blue.7"
+            color="blue.3"
+            bg="blue.0"
             size="lg"
           >
             Features
