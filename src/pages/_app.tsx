@@ -1,22 +1,17 @@
 import React from "react";
 import type { AppProps } from "next/app";
-import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { createTheme } from "@mantine/core";
+import { MantineProvider, createTheme } from "@mantine/core";
 import "@mantine/core/styles.css";
 import "@mantine/code-highlight/styles.css";
 import { ThemeProvider } from "styled-components";
 import ReactGA from "react-ga4";
+import { Toaster } from "react-hot-toast";
 import GlobalStyle from "src/constants/globalStyle";
 import { lightTheme } from "src/constants/theme";
-import { Loading } from "src/layout/Loading";
 import { supabase } from "src/lib/api/supabase";
 import useUser from "src/store/useUser";
-
-const MantineProvider = dynamic(() => import("@mantine/core").then(c => c.MantineProvider), {
-  ssr: false,
-});
 
 const theme = createTheme({
   autoContrast: true,
@@ -50,8 +45,6 @@ const theme = createTheme({
   },
 });
 
-const Toaster = dynamic(() => import("react-hot-toast").then(c => c.Toaster));
-
 const isDevelopment = process.env.NODE_ENV === "development";
 const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID as string;
 
@@ -84,28 +77,27 @@ function JsonCrack({ Component, pageProps }: AppProps) {
       <Head>
         <title>JSON Crack | Transform your data into interactive graphs</title>
       </Head>
-      <ThemeProvider theme={lightTheme}>
-        <Toaster
-          position="bottom-right"
-          containerStyle={{
-            bottom: 34,
-            right: 8,
-            fontSize: 14,
-          }}
-          toastOptions={{
-            style: {
-              background: "#4D4D4D",
-              color: "#B9BBBE",
-              borderRadius: 4,
-            },
-          }}
-        />
-        <GlobalStyle />
-        <MantineProvider defaultColorScheme="light" theme={theme}>
-          <Loading />
+      <MantineProvider defaultColorScheme="light" theme={theme}>
+        <ThemeProvider theme={lightTheme}>
+          <Toaster
+            position="bottom-right"
+            containerStyle={{
+              bottom: 34,
+              right: 8,
+              fontSize: 14,
+            }}
+            toastOptions={{
+              style: {
+                background: "#4D4D4D",
+                color: "#B9BBBE",
+                borderRadius: 4,
+              },
+            }}
+          />
+          <GlobalStyle />
           <Component {...pageProps} />
-        </MantineProvider>
-      </ThemeProvider>
+        </ThemeProvider>
+      </MantineProvider>
     </>
   );
 }
