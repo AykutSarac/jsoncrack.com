@@ -115,14 +115,22 @@ export const Navbar = () => {
             variant="default"
             component="a"
             href="https://app.jsoncrack.com/sign-in"
-            radius="sm"
+            radius="xl"
             visibleFrom="sm"
             size="md"
           >
             Log in
           </Button>
-          <Button component="a" color="dark" href="/editor" radius="sm" visibleFrom="sm" size="md">
-            Editor
+          <Button
+            component="a"
+            color="orange"
+            href="/#pricing
+            "
+            radius="xl"
+            visibleFrom="sm"
+            size="md"
+          >
+            Start free
           </Button>
         </Right>
       </StyledNavbar>

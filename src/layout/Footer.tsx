@@ -29,8 +29,8 @@ export const Footer = () => {
             >
               VS Code
             </Anchor>
-            <Anchor component={Link} prefetch={false} fz="sm" c="gray.5" href="/pricing">
-              Pricing
+            <Anchor component={Link} prefetch={false} fz="sm" c="gray.5" href="/premium">
+              Premium
             </Anchor>
             <Anchor
               href="https://github.com/AykutSarac/jsoncrack.com"

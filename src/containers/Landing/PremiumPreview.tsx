@@ -1,5 +1,15 @@
 import React from "react";
-import { AspectRatio, Container, Flex, Paper, SegmentedControl, Stack, Title } from "@mantine/core";
+import {
+  Button,
+  AspectRatio,
+  Container,
+  Flex,
+  Paper,
+  SegmentedControl,
+  Stack,
+  Title,
+  Divider,
+} from "@mantine/core";
 
 const features = [
   {
@@ -74,6 +84,19 @@ export const PremiumPreview = () => {
                 },
               }}
             />
+            <Divider my="xs" />
+            <Button
+              component="a"
+              href="#features"
+              variant="light"
+              color="gray"
+              fw={500}
+              radius="sm"
+              size="lg"
+              fullWidth
+            >
+              Built for everyone.
+            </Button>
           </Stack>
           <Stack w="100%">
             <Paper
