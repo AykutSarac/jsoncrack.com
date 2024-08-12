@@ -3,7 +3,7 @@ import type { AppProps } from "next/app";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { MantineProvider, createTheme } from "@mantine/core";
+import { createTheme } from "@mantine/core";
 import "@mantine/core/styles.css";
 import "@mantine/code-highlight/styles.css";
 import { ThemeProvider } from "styled-components";
@@ -13,6 +13,10 @@ import { lightTheme } from "src/constants/theme";
 import { Loading } from "src/layout/Loading";
 import { supabase } from "src/lib/api/supabase";
 import useUser from "src/store/useUser";
+
+const MantineProvider = dynamic(() => import("@mantine/core").then(c => c.MantineProvider), {
+  ssr: false,
+});
 
 const theme = createTheme({
   autoContrast: true,
