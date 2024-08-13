@@ -111,24 +111,20 @@ export const Features = () => {
         >
           Explore Your Data Visually
         </Title>
-        <Text
+        <Title
+          order={3}
+          fw={500}
           c="gray.7"
-          fz={{
-            sm: 14,
-            md: 16,
-          }}
           px="lg"
-          w={{
-            sm: "60%",
-            md: "40%",
-          }}
           mx="auto"
           ta="center"
           mb={50}
+          fz={{ base: 16, sm: 18 }}
+          w={{ base: "100%", xs: "80%", sm: "60%", md: "40%" }}
         >
           All in one tool for JSON, YAML, CSV, XML, and TOML. Formatter, validator, visualizer, and
           editor.
-        </Text>
+        </Title>
 
         <SimpleGrid
           cols={{

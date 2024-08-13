@@ -76,7 +76,7 @@ const StyledHeroTitle = styled.h1`
   }
 `;
 
-const StyledHeroText = styled.p`
+const StyledHeroText = styled.h2`
   font-size: 14px;
   color: #4a5568;
   font-weight: 400;
