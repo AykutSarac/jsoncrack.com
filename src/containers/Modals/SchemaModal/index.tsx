@@ -72,7 +72,12 @@ export const SchemaModal = ({ opened, onClose }: ModalProps) => {
     <Modal title="JSON Schema" size="lg" opened={opened} onClose={onClose} centered>
       <Stack py="sm">
         <Text fz="sm">Any validation failures are shown at the bottom toolbar of pane.</Text>
-        <Anchor fz="sm" target="_blank" href="https://niem.github.io/json/sample-schema/">
+        <Anchor
+          fz="sm"
+          target="_blank"
+          href="https://niem.github.io/json/sample-schema/"
+          rel="noreferrer"
+        >
           View Examples <VscLinkExternal />
         </Anchor>
         <Editor
