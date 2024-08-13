@@ -3,6 +3,7 @@ import { Button, Title } from "@mantine/core";
 import styled from "styled-components";
 import { MdChevronRight } from "react-icons/md";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
+import useModal from "src/store/useModal";
 
 const StyledNotSupported = styled.div`
   position: relative;
@@ -154,11 +155,13 @@ const StyledContent = styled.div`
 `;
 
 export const NotSupported = () => {
+  const setVisible = useModal(state => state.setVisible);
+
   return (
     <StyledNotSupported>
       <StyledContent>
         <Title mb="lg" style={{ pointerEvents: "none" }}>
-          <JSONCrackLogo fontSize="4rem" style={{ color: "black" }} />
+          <JSONCrackLogo fontSize="4rem" style={{ color: "gray" }} />
         </Title>
         <StyledInfo>
           Upgrade to premium for larger data size support. The free version is incapable of handling
@@ -166,15 +169,13 @@ export const NotSupported = () => {
         </StyledInfo>
 
         <Button
-          component="a"
-          href="/premium"
-          target="_blank"
           mt="lg"
           size="lg"
           fw="bolder"
           color="green"
           radius="md"
           rightSection={<MdChevronRight size="24" />}
+          onClick={() => setVisible("upgrade")(true)}
         >
           Upgrade Premium
         </Button>

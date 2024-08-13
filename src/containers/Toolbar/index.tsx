@@ -1,10 +1,10 @@
 import React from "react";
-import { Text, Flex, Group, Indicator, Select } from "@mantine/core";
-import { useSessionStorage } from "@mantine/hooks";
+import { Text, Flex, Group, Select, Indicator } from "@mantine/core";
+import { useLocalStorage } from "@mantine/hooks";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
-import { AiFillGift } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
+import { MdChevronRight } from "react-icons/md";
 import { SearchInput } from "src/containers/Toolbar/SearchInput";
 import { FileFormat } from "src/enums/file.enum";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
@@ -38,7 +38,7 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
   const setVisible = useModal(state => state.setVisible);
   const setFormat = useFile(state => state.setFormat);
   const format = useFile(state => state.format);
-  const [seenPremium, setSeenPremium] = useSessionStorage({
+  const [seenPremium, setSeenPremium] = useLocalStorage({
     key: "seenPremium",
     defaultValue: false,
   });
@@ -81,32 +81,20 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
       )}
       <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
         {!isWidget && (
-          <Styles.StyledToolElement
-            onClick={() => {
-              setSeenPremium(true);
-              setVisible("upgrade")(true);
-              gaEvent("Toolbar", "click upgrade premium");
-            }}
-          >
-            <Indicator
-              size={5}
-              color="green"
-              position="top-start"
-              processing
-              disabled={seenPremium}
+          <Indicator color="blue" size="6" offset={6} processing disabled={seenPremium}>
+            <Styles.StyledToolElement
+              onClick={() => {
+                setSeenPremium(true);
+                window.open("https://jsoncrack.com/premium", "_blank");
+                gaEvent("Toolbar", "click upgrade premium");
+              }}
             >
-              <Text
-                display="flex"
-                c="teal"
-                fz="xs"
-                fw={600}
-                style={{ textAlign: "center", gap: 4 }}
-              >
-                <AiFillGift size="18" />
-                Try Premium
+              <Text fw={800} fz="xs">
+                Upgrade
               </Text>
-            </Indicator>
-          </Styles.StyledToolElement>
+              <MdChevronRight size="16" />
+            </Styles.StyledToolElement>
+          </Indicator>
         )}
 
         <SearchInput />

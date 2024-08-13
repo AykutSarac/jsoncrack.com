@@ -1,6 +1,5 @@
 import React from "react";
-import { LoadingOverlay, Dialog, Group, Button, Text } from "@mantine/core";
-import { useSessionStorage } from "@mantine/hooks";
+import { LoadingOverlay } from "@mantine/core";
 import styled from "styled-components";
 import debounce from "lodash.debounce";
 import { Space } from "react-zoomable-ui";
@@ -11,7 +10,6 @@ import useToggleHide from "src/hooks/useToggleHide";
 import { CustomNode } from "src/modules/GraphView/CustomNode";
 import useGraph from "src/modules/GraphView/stores/useGraph";
 import useConfig from "src/store/useConfig";
-import useModal from "src/store/useModal";
 import { CustomEdge } from "./CustomEdge";
 import { NotSupported } from "./NotSupported";
 
@@ -139,18 +137,12 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
 const SUPPORTED_LIMIT = 400;
 
 export const GraphView = ({ isWidget = false }: GraphProps) => {
-  const setVisible = useModal(state => state.setVisible);
   const setViewPort = useGraph(state => state.setViewPort);
   const viewPort = useGraph(state => state.viewPort);
   const aboveSupportedLimit = useGraph(state => state.nodes.length > SUPPORTED_LIMIT);
   const loading = useGraph(state => state.loading);
   const gesturesEnabled = useConfig(state => state.gesturesEnabled);
   const rulersEnabled = useConfig(state => state.rulersEnabled);
-  const [isDialogClosed, setDialogClosed] = useSessionStorage({
-    key: "graph-size-dialog",
-    defaultValue: false,
-    getInitialValueInEffect: false,
-  });
 
   const callback = React.useCallback(() => {
     const canvas = document.querySelector(".jsoncrack-canvas") as HTMLDivElement | null;
@@ -198,37 +190,6 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
         >
           <GraphCanvas isWidget={isWidget} />
         </Space>
-        {!isWidget && (
-          <Dialog
-            opened={!isDialogClosed}
-            size="lg"
-            radius="md"
-            withBorder
-            position={{
-              right: 15,
-              bottom: 40,
-            }}
-            onClose={() => setDialogClosed(true)}
-          >
-            <Text size="sm" fw={500}>
-              Need way more power over your data? Explore Premium Editor.
-            </Text>
-            <Group justify="right" mt="sm">
-              <Button variant="default" onClick={() => setDialogClosed(true)}>
-                Close
-              </Button>
-              <Button
-                color="green"
-                onClick={() => {
-                  setVisible("upgrade")(true);
-                  setDialogClosed(true);
-                }}
-              >
-                Explore
-              </Button>
-            </Group>
-          </Dialog>
-        )}
       </StyledEditorWrapper>
     </>
   );

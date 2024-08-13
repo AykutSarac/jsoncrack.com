@@ -21,7 +21,9 @@ export const StyledTools = styled.div`
 `;
 
 export const StyledToolElement = styled.button<{ $hide?: boolean }>`
-  display: ${({ $hide }) => ($hide ? "none" : "grid")};
+  display: ${({ $hide }) => ($hide ? "none" : "flex")};
+  align-items: center;
+  gap: 4px;
   place-content: center;
   font-size: 12px;
   background: none;
