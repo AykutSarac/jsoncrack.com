@@ -52,6 +52,7 @@ export const PremiumPreview = () => {
           order={2}
           mt={100}
           mb={60}
+          c="dark"
         >
           Discover the features
         </Title>
@@ -70,16 +71,22 @@ export const PremiumPreview = () => {
               onChange={setSelectedFeature}
               orientation="vertical"
               withItemsBorders={false}
-              bg="transparent"
-              color="dark"
               size="lg"
               styles={{
                 control: {
-                  background: "rgba(141, 127, 174, 0.15)",
                   borderRadius: "4px",
+                  background: "#181818",
+                  mixBlendMode: "difference",
                 },
                 root: {
                   gap: "24px",
+                  background: "transparent",
+                },
+                indicator: {
+                  background: "#120F43",
+                },
+                label: {
+                  color: "white",
                 },
               }}
             />
@@ -89,6 +96,7 @@ export const PremiumPreview = () => {
               href="#features"
               variant="light"
               color="gray"
+              c="black"
               fw={500}
               radius="sm"
               size="lg"

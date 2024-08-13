@@ -4,7 +4,7 @@ import { useLocalStorage } from "@mantine/hooks";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
-import { MdChevronRight } from "react-icons/md";
+import { MdStars } from "react-icons/md";
 import { SearchInput } from "src/containers/Toolbar/SearchInput";
 import { FileFormat } from "src/enums/file.enum";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
@@ -89,10 +89,10 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
                 gaEvent("Toolbar", "click upgrade premium");
               }}
             >
-              <Text fw={800} fz="xs">
+              <MdStars color="#2e50a7" size="16" />
+              <Text c="#2e50a7" fw={800} fz="xs">
                 Upgrade
               </Text>
-              <MdChevronRight size="16" />
             </Styles.StyledToolElement>
           </Indicator>
         )}

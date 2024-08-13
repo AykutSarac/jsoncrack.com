@@ -42,33 +42,40 @@ const StyledPaper = styled(Paper)<PaperProps & any>`
   padding: 1.5em;
   width: 350px;
   border-radius: 8px;
-  border: 2px solid #e9e9e9;
+  border: 2px solid #e2e2e2;
   background: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 `;
 
 export const PricingCards = () => {
   const [isMonthly, setIsMonthly] = React.useState(true);
 
   return (
-    <Stack gap="0" align="center" maw="720px" mx="auto">
+    <Stack gap="0" align="center" maw="730px" mx="auto">
       <Center my="lg">
         <SegmentedControl
-          bg="gray.1"
+          bg="gray.3"
           color="white"
           value={isMonthly ? "Monthly" : "Annual"}
           onChange={v => setIsMonthly(v === "Monthly")}
-          size="md"
-          data={["Monthly", "Annual"]}
-          w={200}
-          radius="md"
+          size="sm"
+          data={[
+            {
+              label: "Pay monthly",
+              value: "Monthly",
+            },
+            {
+              label: `Pay yearly (save ${PRICING.getAnnualSave()}%)`,
+              value: "Annual",
+            },
+          ]}
+          radius="xl"
           styles={{ label: { color: "black" } }}
         />
       </Center>
       <Flex
-        gap="6"
+        gap="sm"
         wrap="wrap"
-        justify="center"
+        justify="space-between"
         w="fit-content"
         maw="100%"
         p={{
@@ -77,37 +84,6 @@ export const PricingCards = () => {
         }}
         mx="auto"
       >
-        <Box w="100%">
-          <StyledPaper withBorder p="sm" w="100%" visibleFrom="sm">
-            <Flex gap="xs" align="end" justify="space-between">
-              <Stack gap="5">
-                <Text fz="md" fw={500}>
-                  Buy once,
-                  <Text ml={4} component="span" inherit c="brightBlue">
-                    use forever
-                  </Text>
-                  !
-                </Text>
-                <Text fz="sm" maw={400}>
-                  Lifetime access. One-time payment. Free updates.
-                </Text>
-              </Stack>
-              <Button
-                component="a"
-                href={purchaseLinks.ltd}
-                target="_blank"
-                fw={500}
-                fz="sm"
-                size="md"
-                variant="light"
-                color="indigo"
-                rightSection={<FaArrowRightLong />}
-              >
-                Get Lifetime Access for ${PRICING.LTD}
-              </Button>
-            </Flex>
-          </StyledPaper>
-        </Box>
         <StyledPaper>
           <Flex justify="space-between">
             <Stack gap="0" w="100%">
@@ -375,6 +351,36 @@ export const PricingCards = () => {
             </List>
           </Flex>
         </StyledPaper>
+        <Box w="100%">
+          <StyledPaper withBorder p="xs" w="100%" visibleFrom="sm">
+            <Flex gap="xs" align="end" justify="space-between">
+              <Stack gap="5">
+                <Text c="dark" fz="md" fw={500}>
+                  Buy once,
+                  <Text ml={4} component="span" inherit c="brightBlue">
+                    use forever
+                  </Text>
+                  !
+                </Text>
+                <Text c="gray.8" fz="sm" maw={400}>
+                  Lifetime access. One-time payment. Free updates.
+                </Text>
+              </Stack>
+              <Button
+                component="a"
+                href={purchaseLinks.ltd}
+                target="_blank"
+                fw={500}
+                fz="sm"
+                size="md"
+                color="indigo"
+                rightSection={<FaArrowRightLong />}
+              >
+                Get Lifetime Access for ${PRICING.LTD}
+              </Button>
+            </Flex>
+          </StyledPaper>
+        </Box>
       </Flex>
     </Stack>
   );
