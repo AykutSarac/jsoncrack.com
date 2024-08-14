@@ -50,7 +50,7 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
         <Group gap="xs" justify="left" w="100%" style={{ flexWrap: "nowrap" }}>
           <Styles.StyledToolElement title="JSON Crack">
             <Flex gap="xs" align="center" justify="center">
-              <JSONCrackLogo fontSize="1.2em" />
+              <JSONCrackLogo fontSize="0.8rem" hideLogo />
             </Flex>
           </Styles.StyledToolElement>
 
@@ -85,12 +85,12 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
             <Styles.StyledToolElement
               onClick={() => {
                 setSeenPremium(true);
-                window.open("https://jsoncrack.com/premium", "_blank");
+                setVisible("upgrade")(true);
                 gaEvent("Toolbar", "click upgrade premium");
               }}
             >
-              <MdStars color="#2e50a7" size="16" />
-              <Text c="#2e50a7" fw={800} fz="xs">
+              <MdStars color="#1aa853" size="16" />
+              <Text c="#1aa853" fw={800} fz="xs">
                 Upgrade
               </Text>
             </Styles.StyledToolElement>

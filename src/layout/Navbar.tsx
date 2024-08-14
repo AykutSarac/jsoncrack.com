@@ -28,6 +28,9 @@ const StyledNavbar = styled.nav`
 `;
 
 const Left = styled.div`
+  display: flex;
+  gap: 16px;
+  align-items: center;
   width: 100%;
 
   @media only screen and (max-width: 768px) {
@@ -57,7 +60,7 @@ export const Navbar = () => {
             radius="sm"
             size="sm"
             fw={500}
-            ml={50}
+            ml="sm"
           >
             VS Code
           </Button>

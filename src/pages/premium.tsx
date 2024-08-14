@@ -176,51 +176,61 @@ const Premium = () => {
               "linear-gradient(15deg, #120f43, #0d0e3e, #0b0f39, #0a1034, #08102f, #071029, #051024, #040f1e)",
           }}
         >
-          <Box mx="auto" maw={600}>
-            <Title
-              order={1}
-              c="white"
-              fz={{
-                base: 38,
-                xs: 40,
-              }}
-            >
-              JSON Crack - Premium
-            </Title>
-            <Text
-              c="gray.3"
-              mt={32}
-              fz={{
-                base: 16,
-                xs: 20,
-              }}
-            >
-              Rebuilt from the ground up — now faster, more powerful, and more visually stunning.
-            </Text>
-            <Button
-              component="a"
-              href="#pricing"
-              mt="lg"
-              variant="white"
-              color="gray"
-              radius="md"
-              size="lg"
-              rightSection={<MdChevronRight size={30} />}
-            >
-              Upgrade now
-            </Button>
+          <Flex px="xl" justify="center" gap={60}>
+            <Box maw={600}>
+              <Title
+                order={1}
+                c="white"
+                fz={{
+                  base: 38,
+                  xs: 40,
+                }}
+              >
+                Premium
+              </Title>
+              <Text
+                c="gray.3"
+                mt={32}
+                fz={{
+                  base: 16,
+                  xs: 20,
+                }}
+              >
+                Faster, more powerful, and more visually stunning.
+              </Text>
+              <Button
+                component="a"
+                href="#pricing"
+                mt="lg"
+                variant="white"
+                color="gray"
+                radius="md"
+                size="lg"
+                rightSection={<MdChevronRight size={30} />}
+              >
+                Upgrade now
+              </Button>
+              <Image
+                pos="absolute"
+                bottom={-1}
+                left={0}
+                src="./assets/premium-divider.svg"
+                width="100%"
+                alt="divider"
+                style={{
+                  transform: "scaleY(-1) scaleX(-1)",
+                }}
+              />
+            </Box>
             <Image
-              pos="absolute"
-              bottom={-1}
-              left={0}
-              src="./assets/premium-divider.svg"
-              width="100%"
-              alt="divider"
-              style={{
-                transform: "scaleY(-1) scaleX(-1)",
-              }}
+              src="./assets/logo.svg"
+              alt="hero"
+              w="300"
+              h="200"
+              opacity={0.02}
+              visibleFrom="sm"
             />
-          </Box>
+          </Flex>
         </Container>
         <PremiumPreview />
         <Container

@@ -161,7 +161,7 @@ export const NotSupported = () => {
     <StyledNotSupported>
       <StyledContent>
         <Title mb="lg" style={{ pointerEvents: "none" }}>
-          <JSONCrackLogo fontSize="4rem" style={{ color: "gray" }} />
+          <JSONCrackLogo fontSize="4rem" style={{ color: "gray" }} hideLogo />
         </Title>
         <StyledInfo>
           Upgrade to premium for larger data size support. The free version is incapable of handling
