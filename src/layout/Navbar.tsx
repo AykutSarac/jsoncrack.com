@@ -29,7 +29,6 @@ const StyledNavbar = styled.nav`
 
 const Left = styled.div`
   display: flex;
-  gap: 16px;
   align-items: center;
   width: 100%;
 
