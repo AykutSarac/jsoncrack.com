@@ -81,7 +81,7 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
       )}
       <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
         {!isWidget && (
-          <Indicator color="blue" size="6" offset={6} processing disabled={seenPremium}>
+          <Indicator color="red" size="6" offset={6} processing disabled={seenPremium}>
             <Styles.StyledToolElement
               onClick={() => {
                 setSeenPremium(true);
