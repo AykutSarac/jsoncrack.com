@@ -21,6 +21,7 @@ const modalComponents: ModalComponent[] = [
   { key: "review", component: Modals.ReviewModal },
   { key: "jq", component: Modals.JQModal },
   { key: "type", component: Modals.TypeModal },
+  { key: "jpath", component: Modals.JPathModal },
 ];
 
 const ModalController = () => {

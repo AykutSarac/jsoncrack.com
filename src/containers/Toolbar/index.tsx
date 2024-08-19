@@ -1,10 +1,10 @@
 import React from "react";
-import { Text, Flex, Group, Select, Indicator } from "@mantine/core";
+import { Text, Flex, Group, Select, Indicator, ThemeIcon } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
+import { FaGift } from "react-icons/fa6";
 import { FiDownload } from "react-icons/fi";
-import { MdStars } from "react-icons/md";
 import { SearchInput } from "src/containers/Toolbar/SearchInput";
 import { FileFormat } from "src/enums/file.enum";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
@@ -89,9 +89,11 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
                 gaEvent("Toolbar", "click upgrade premium");
               }}
             >
-              <MdStars color="#1aa853" size="16" />
-              <Text c="#1aa853" fw={800} fz="xs">
-                Upgrade
+              <ThemeIcon size="xs" variant="transparent" color="red">
+                <FaGift size="12" />
+              </ThemeIcon>
+              <Text c="red" fw={600} fz="xs">
+                Limited Offer
               </Text>
             </Styles.StyledToolElement>
           </Indicator>

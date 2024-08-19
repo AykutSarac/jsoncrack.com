@@ -65,6 +65,9 @@ importers:
       jsonc-parser:
         specifier: ^3.3.1
         version: 3.3.1
+      jsonpath-plus:
+        specifier: ^9.0.0
+        version: 9.0.0
       jsonwebtoken:
         specifier: ^9.0.2
         version: 9.0.2
@@ -344,6 +347,18 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
+
+  '@jsep-plugin/assignment@1.2.1':
+    resolution: {integrity: sha512-gaHqbubTi29aZpVbBlECRpmdia+L5/lh2BwtIJTmtxdbecEyyX/ejAOg7eQDGNvGOUmPY7Z2Yxdy9ioyH/VJeA==}
+    engines: {node: '>= 10.16.0'}
+    peerDependencies:
+      jsep: ^0.4.0||^1.0.0
+
+  '@jsep-plugin/regex@1.0.3':
+    resolution: {integrity: sha512-XfZgry4DwEZvSFtS/6Y+R48D7qJYJK6R9/yJFyUFHCIUMEEHuJ4X95TDgJp5QkmzfLYvapMPzskV5HpIDrREug==}
+    engines: {node: '>= 10.16.0'}
+    peerDependencies:
+      jsep: ^0.4.0||^1.0.0
 
   '@juggle/resize-observer@3.4.0':
     resolution: {integrity: sha512-dfLbk+PwWvFzSxwk3n5ySL0hfBog779o8h68wK/7/APo/7cgyWp5jcXockbxdk5kFRkbeXWm4Fbi9FrdN381sA==}
@@ -1760,6 +1775,10 @@ packages:
     resolution: {integrity: sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==}
     hasBin: true
 
+  jsep@1.3.9:
+    resolution: {integrity: sha512-i1rBX5N7VPl0eYb6+mHNp52sEuaS2Wi8CDYx1X5sn9naevL78+265XJqy1qENEk7mRKwS06NHpUqiBwR7qeodw==}
+    engines: {node: '>= 10.16.0'}
+
   jsesc@2.5.2:
     resolution: {integrity: sha512-OYu7XEzjkCQ3C5Ps3QIZsQfNpqoJyZZA99wd9aWd05NCtC5pWOkShK2mkL6HXQR6/Cy2lbNdPlZBpuQHXE63gA==}
     engines: {node: '>=4'}
@@ -1799,6 +1818,11 @@ packages:
   jsonpath-plus@7.2.0:
     resolution: {integrity: sha512-zBfiUPM5nD0YZSBT/o/fbCUlCcepMIdP0CJZxM1+KgA4f2T206f6VAg9e7mX35+KlMaIc5qXW34f3BnwJ3w+RA==}
     engines: {node: '>=12.0.0'}
+
+  jsonpath-plus@9.0.0:
+    resolution: {integrity: sha512-bqE77VIDStrOTV/czspZhTn+o27Xx9ZJRGVkdVShEtPoqsIx5yALv3lWVU6y+PqYvWPJNWE7ORCQheQkEe0DDA==}
+    engines: {node: '>=14.0.0'}
+    hasBin: true
 
   jsonwebtoken@9.0.2:
     resolution: {integrity: sha512-PRp66vJ865SSqOlgqS8hujT5U4AOgMfhrwYIuIhfKaoSCZcirrmASQr8CX7cUg+RMih+hgznrjp99o+W4pJLHQ==}
@@ -2996,6 +3020,14 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
+
+  '@jsep-plugin/assignment@1.2.1(jsep@1.3.9)':
+    dependencies:
+      jsep: 1.3.9
+
+  '@jsep-plugin/regex@1.0.3(jsep@1.3.9)':
+    dependencies:
+      jsep: 1.3.9
 
   '@juggle/resize-observer@3.4.0': {}
 
@@ -4655,6 +4687,8 @@ snapshots:
     dependencies:
       argparse: 2.0.1
 
+  jsep@1.3.9: {}
+
   jsesc@2.5.2: {}
 
   json-2-csv@5.5.4:
@@ -4688,6 +4722,12 @@ snapshots:
   jsonc-parser@3.3.1: {}
 
   jsonpath-plus@7.2.0: {}
+
+  jsonpath-plus@9.0.0:
+    dependencies:
+      '@jsep-plugin/assignment': 1.2.1(jsep@1.3.9)
+      '@jsep-plugin/regex': 1.0.3(jsep@1.3.9)
+      jsep: 1.3.9
 
   jsonwebtoken@9.0.2:
     dependencies:

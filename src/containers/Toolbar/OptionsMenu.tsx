@@ -2,11 +2,14 @@ import React from "react";
 import { Menu, Text, Flex } from "@mantine/core";
 import { BsCheck2 } from "react-icons/bs";
 import { MdSettings } from "react-icons/md";
+import { VscLock } from "react-icons/vsc";
 import { gaEvent } from "src/lib/utils/gaEvent";
 import useConfig from "src/store/useConfig";
+import useModal from "src/store/useModal";
 import * as Styles from "./styles";
 
 export const OptionsMenu = () => {
+  const setVisible = useModal(state => state.setVisible);
   const toggleGestures = useConfig(state => state.toggleGestures);
   const toggleChildrenCount = useConfig(state => state.toggleChildrenCount);
   const toggleDarkMode = useConfig(state => state.toggleDarkMode);
@@ -84,6 +87,16 @@ export const OptionsMenu = () => {
           }}
         >
           <Text size="xs">Dark Mode</Text>
+        </Menu.Item>
+        <Menu.Item
+          closeMenuOnClick
+          leftSection={<VscLock />}
+          onClick={() => {
+            setVisible("upgrade")(true);
+            gaEvent("Options Menu", "toggle dark mode", darkmodeEnabled ? "on" : "off");
+          }}
+        >
+          <Text size="xs">Customize Graph Colors</Text>
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>

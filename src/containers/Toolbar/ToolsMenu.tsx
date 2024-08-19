@@ -4,7 +4,8 @@ import { JSONSchemaFaker } from "json-schema-faker";
 import toast from "react-hot-toast";
 import { CgChevronDown } from "react-icons/cg";
 import { FaRandom } from "react-icons/fa";
-import { MdCompare } from "react-icons/md";
+import { FaWandMagicSparkles } from "react-icons/fa6";
+import { MdCompare, MdFilterListAlt } from "react-icons/md";
 import { SiJsonwebtokens } from "react-icons/si";
 import { VscSearchFuzzy, VscJson, VscGroupByRefType, VscLock } from "react-icons/vsc";
 import { gaEvent } from "src/lib/utils/gaEvent";
@@ -74,17 +75,27 @@ export const ToolsMenu = () => {
         >
           JSON Schema
         </Menu.Item>
+        <Menu.Item
+          fz={12}
+          leftSection={<MdFilterListAlt />}
+          onClick={() => {
+            setVisible("jpath")(true);
+            gaEvent("Tools Menu", "open", "JSON Path");
+          }}
+        >
+          JSON Path
+        </Menu.Item>
         <Menu.Divider />
         <Menu.Item
           fz={12}
-          leftSection={<MdCompare />}
+          leftSection={<FaWandMagicSparkles />}
           rightSection={<VscLock />}
           onClick={() => {
             setVisible("upgrade")(true);
-            gaEvent("Tools Menu", "open", "Compare Data");
+            gaEvent("Tools Menu", "open", "AI Filter");
           }}
         >
-          Compare Data
+          AI-Powered Filter
         </Menu.Item>
         <Menu.Item
           fz={12}
@@ -108,6 +119,17 @@ export const ToolsMenu = () => {
         </Menu.Item>
         <Menu.Item fz={12} leftSection={<FaRandom />} onClick={randomizeData}>
           Randomize Data
+        </Menu.Item>
+        <Menu.Item
+          fz={12}
+          leftSection={<MdCompare />}
+          rightSection={<VscLock />}
+          onClick={() => {
+            setVisible("upgrade")(true);
+            gaEvent("Tools Menu", "open", "Compare Data");
+          }}
+        >
+          Compare Data
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>

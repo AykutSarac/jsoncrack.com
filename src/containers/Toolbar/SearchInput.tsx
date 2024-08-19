@@ -16,6 +16,8 @@ export const SearchInput = () => {
       value={searchValue}
       onChange={e => setValue(e.currentTarget.value)}
       placeholder="Search Node"
+      autoComplete="off"
+      autoCorrect="off"
       onKeyDown={getHotkeyHandler([["Enter", skip]])}
       leftSection={<AiOutlineSearch />}
       rightSection={

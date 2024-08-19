@@ -4,7 +4,6 @@ import {
   Text,
   Flex,
   Divider,
-  Paper,
   List,
   Drawer,
   Stack,
@@ -12,10 +11,11 @@ import {
   Badge,
   Button,
   Group,
+  Anchor,
 } from "@mantine/core";
 import styled from "styled-components";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
-import { MdOutlineTimer } from "react-icons/md";
+import { MdChevronRight, MdOutlineTimer } from "react-icons/md";
 import { gaEvent } from "src/lib/utils/gaEvent";
 import { PRICING, purchaseLinks } from "src/pages/pricing";
 import useUser from "src/store/useUser";
@@ -27,15 +27,13 @@ const StyledRadioCard = styled(Radio.Card)`
   transition: 0.2s;
 
   &[data-checked] {
-    border-color: #2d2d2d;
+    border-color: #2cb200;
+    background: #f9fff7;
   }
 
-  &[data-checked]:hover {
-    background: #f3f3f3;
-  }
-
-  &:hover {
-    border-color: #7f7f7f;
+  &:hover:not([data-checked]) {
+    border-color: #d5d5d5;
+    background: #fafafa;
   }
 `;
 
@@ -67,103 +65,114 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
       position="bottom"
       radius="lg"
       styles={{
-        body: { background: "white" },
-        header: { background: "white" },
+        body: { background: "#ffffff" },
+        header: { background: "#ffffff" },
+        content: { background: "#ffffff" },
       }}
     >
-      <Paper
-        bg="white"
-        miw={600}
-        p={30}
-        radius="lg"
-        mx="auto"
-        w="fit-content"
-        style={{
-          border: "2px solid #e2e2e2",
-        }}
-      >
-        <Flex gap="3vw" justify="space-between">
+      <Flex mx="auto" w="fit-content" miw={600} gap="3vw" justify="space-between">
+        <Stack>
+          <Text c="black" fz="h2" fw={600}>
+            Upgrade
+          </Text>
+          <Divider fz="md" labelPosition="left" label="Included features" color="gray.4" />
+          <List
+            spacing="xs"
+            c="gray.7"
+            icon={<IoMdCheckmarkCircleOutline size="24" color="#16a34a" />}
+          >
+            <List.Item>Larger data support up to 4 MB</List.Item>
+            <List.Item>Compare data differences on graph</List.Item>
+            <List.Item>AI-powered data filter</List.Item>
+            <List.Item>Customizable graph colors</List.Item>
+            <List.Item>Edit data directly on graph</List.Item>
+            <List.Item>Tabs for multiple documents</List.Item>
+            <List.Item>
+              <Anchor c="inherit" td="underline" href="/premium#preview" target="_blank">
+                ..see all features
+              </Anchor>
+            </List.Item>
+          </List>
+        </Stack>
+        <Radio.Group value={plan} onChange={setPlan}>
           <Stack>
-            <Text c="black" fz="h2" fw={600}>
-              Upgrade
-            </Text>
-            <Divider fz="md" labelPosition="left" label="Included features" color="gray.4" />
-            <List
-              spacing="xs"
-              c="gray.7"
-              icon={<IoMdCheckmarkCircleOutline size="24" color="#16a34a" />}
-            >
-              <List.Item>Larger data support up to 4 MB</List.Item>
-              <List.Item>Compare data differences on graph</List.Item>
-              <List.Item>AI-powered data filter</List.Item>
-              <List.Item>Customizable graph colors</List.Item>
-              <List.Item>Edit data directly on graph</List.Item>
-              <List.Item>Tabs for multiple documents</List.Item>
-            </List>
+            <StyledRadioCard value="monthly" radius="lg" px="xl" py="md">
+              <Group align="center" justify="space-between">
+                <Flex align="center" gap="xs">
+                  <Text fz="xl" c="gray.7" fw={600}>
+                    Monthly
+                  </Text>
+                </Flex>
+                <Flex fw={500} align="baseline" fz="sm" c="gray.5">
+                  <Text fw={600} fz="xl" c="gray.7" mr="2">
+                    ${PRICING.MONTHLY}
+                  </Text>
+                  <Text inherit mr="2">
+                    /
+                  </Text>
+                  month
+                </Flex>
+              </Group>
+            </StyledRadioCard>
+            <StyledRadioCard value="annual" radius="lg" px="xl" py="md">
+              <Group align="center" justify="space-between">
+                <Flex align="center" gap="xs">
+                  <Text fz="xl" c="gray.7" fw={600}>
+                    Yearly
+                  </Text>
+                </Flex>
+                <Flex fw={500} align="baseline" fz="sm" c="gray.5">
+                  <Text fw={600} fz="xl" c="gray.7" mr="2">
+                    ${PRICING.ANNUAL * 12}
+                  </Text>
+                  <Text inherit mr="2">
+                    /
+                  </Text>
+                  year
+                </Flex>
+              </Group>
+            </StyledRadioCard>
+            <StyledRadioCard value="ltd" radius="lg" px="xl" py="md">
+              <Group align="center" justify="space-between">
+                <Flex align="center" gap="xs">
+                  <Text fz="xl" c="gray.7" fw={600}>
+                    Lifetime
+                  </Text>
+                  <Badge
+                    variant="light"
+                    size="md"
+                    radius="lg"
+                    color="#f00"
+                    leftSection={<MdOutlineTimer size="12" />}
+                  >
+                    Limited
+                  </Badge>
+                </Flex>
+                <Flex fw={500} align="baseline" fz="sm" c="gray.5">
+                  <Text fw={600} fz="xl" c="gray.7" mr="2">
+                    ${PRICING.LTD}
+                  </Text>
+                  <Text inherit mr="2">
+                    /
+                  </Text>
+                  lifetime
+                </Flex>
+              </Group>
+            </StyledRadioCard>
           </Stack>
-          <Radio.Group value={plan} onChange={setPlan}>
-            <Stack>
-              <StyledRadioCard value="monthly" radius="lg" px="xl" py="md">
-                <Group align="center" justify="space-between">
-                  <Flex align="center" gap="xs">
-                    <Text fz="xl" c="gray.7" fw={600}>
-                      Monthly
-                    </Text>
-                  </Flex>
-                  <Flex fw={500} align="baseline" fz="sm" c="gray.5">
-                    <Text fw={600} fz="xl" c="gray.7">
-                      ${PRICING.MONTHLY}
-                    </Text>
-                    /month
-                  </Flex>
-                </Group>
-              </StyledRadioCard>
-              <StyledRadioCard value="annual" radius="lg" px="xl" py="md">
-                <Group align="center" justify="space-between">
-                  <Flex align="center" gap="xs">
-                    <Text fz="xl" c="gray.7" fw={600}>
-                      Yearly
-                    </Text>
-                  </Flex>
-                  <Flex fw={500} align="baseline" fz="sm" c="gray.5">
-                    <Text fw={600} fz="xl" c="gray.7">
-                      ${PRICING.ANNUAL * 12}
-                    </Text>
-                    /year
-                  </Flex>
-                </Group>
-              </StyledRadioCard>
-              <StyledRadioCard value="ltd" radius="lg" px="xl" py="md">
-                <Group align="center" justify="space-between">
-                  <Flex align="center" gap="xs">
-                    <Text fz="xl" c="gray.7" fw={600}>
-                      Lifetime
-                    </Text>
-                    <Badge
-                      variant="light"
-                      size="sm"
-                      radius="lg"
-                      color="red"
-                      leftSection={<MdOutlineTimer size="12" />}
-                    >
-                      Limited
-                    </Badge>
-                  </Flex>
-                  <Flex fw={500} align="baseline" fz="sm" c="gray.5">
-                    <Text fw={600} fz="xl" c="gray.7">
-                      ${PRICING.LTD}
-                    </Text>
-                    /lifetime
-                  </Flex>
-                </Group>
-              </StyledRadioCard>
-            </Stack>
-            <Button color="dark" fullWidth mt="xl" size="xl" radius="md" onClick={handleUpgrade}>
-              Upgrade
-            </Button>
-          </Radio.Group>
-        </Flex>
-      </Paper>
+          <Button
+            color="green"
+            fullWidth
+            mt="xl"
+            size="xl"
+            radius="md"
+            onClick={handleUpgrade}
+            rightSection={<MdChevronRight size="24" />}
+          >
+            Upgrade
+          </Button>
+        </Radio.Group>
+      </Flex>
     </Drawer>
   );
 };

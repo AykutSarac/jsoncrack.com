@@ -270,7 +270,7 @@ export const CloudModal = ({ opened, onClose }: ModalProps) => {
               <RingProgress
                 size={20}
                 roundCaps
-                thickness={3}
+                thickness={2}
                 sections={[
                   {
                     value: (data.length * 100) / TOTAL_QUOTA,
@@ -278,11 +278,9 @@ export const CloudModal = ({ opened, onClose }: ModalProps) => {
                   },
                 ]}
               />
-              <div>
-                <Text fw={700} size="xs">
-                  {data.length} / {TOTAL_QUOTA}
-                </Text>
-              </div>
+              <Text fw={700} size="xs">
+                {data.length} / {TOTAL_QUOTA}
+              </Text>
             </Flex>
           </Flex>
         )}

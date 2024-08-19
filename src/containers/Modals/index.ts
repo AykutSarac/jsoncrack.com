@@ -12,6 +12,7 @@ export { SchemaModal } from "./SchemaModal";
 export { ReviewModal } from "./ReviewModal";
 export { JQModal } from "./JQModal";
 export { TypeModal } from "./TypeModal";
+export { JPathModal } from "./JPathModal";
 
 type Modal =
   | "clear"
@@ -27,6 +28,7 @@ type Modal =
   | "schema"
   | "review"
   | "jq"
-  | "type";
+  | "type"
+  | "jpath";
 
 export type { Modal };
