@@ -14,7 +14,7 @@ const monaSans = localFont({
 const StyledLogoWrapper = styled.div`
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   color: white;
   mix-blend-mode: difference;
 `;

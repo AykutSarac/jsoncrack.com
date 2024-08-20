@@ -1,7 +1,7 @@
 import React from "react";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import Link from "next/link";
-import { Stack, Flex, Badge, Button } from "@mantine/core";
+import { Stack, Flex, Text, Button } from "@mantine/core";
 import styled from "styled-components";
 import { FaChevronRight } from "react-icons/fa6";
 
@@ -104,34 +104,6 @@ export const HeroSection = () => {
     <StyledHeroSection>
       <StyledHeroSectionBody>
         <Stack flex="1" miw={250} mx="auto" align="center">
-          <Link href="/#features">
-            <Badge
-              fw="600"
-              tt="none"
-              variant="outline"
-              c="gray.7"
-              color="gray.3"
-              bg="gray.0"
-              size="lg"
-              rightSection={<FaChevronRight />}
-              visibleFrom="xs"
-            >
-              Supports: JSON, CSV, XML, YAML, TOML
-            </Badge>
-            <Badge
-              fw="600"
-              tt="none"
-              variant="outline"
-              c="gray.7"
-              color="gray.3"
-              bg="gray.0"
-              size="md"
-              rightSection={<FaChevronRight />}
-              hiddenFrom="xs"
-            >
-              Supports: JSON, CSV, XML, YAML, TOML
-            </Badge>
-          </Link>
           <StyledHeroTitle>Visualize JSON into interactive graphs</StyledHeroTitle>
           <StyledHeroText>
             The best JSON viewer tool to <strong>visualize</strong>, <strong>format</strong> and{" "}
@@ -186,6 +158,9 @@ export const HeroSection = () => {
               Premium
             </Button>
           </Flex>
+          <Text ta="center" size="xs" c="gray">
+            Supports JSON, CSV, XML, YAML, TOML
+          </Text>
         </Stack>
       </StyledHeroSectionBody>
     </StyledHeroSection>
