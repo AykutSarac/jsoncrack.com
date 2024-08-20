@@ -48,8 +48,8 @@ export const JSONCrackLogo = ({ fontSize = "1.2rem", hideText, hideLogo, ...prop
         {!hideLogo && (
           <Image
             src="/assets/logo.svg"
-            width={parseFloat(fontSize) * 16}
-            height={parseFloat(fontSize) * 16}
+            width={parseFloat(fontSize) * 18}
+            height={parseFloat(fontSize) * 18}
             alt="logo"
             mb="2"
           />

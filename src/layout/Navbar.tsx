@@ -7,7 +7,6 @@ import { JSONCrackLogo } from "./JsonCrackLogo";
 const StyledNavbarWrapper = styled.div`
   z-index: 3;
   transition: background 0.2s ease-in-out;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 `;
 
 const StyledNavbar = styled.nav`
@@ -17,7 +16,7 @@ const StyledNavbar = styled.nav`
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 12px 24px;
+  padding: 16px 24px;
   background: white;
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);

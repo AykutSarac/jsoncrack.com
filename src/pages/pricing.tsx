@@ -39,7 +39,7 @@ const StyledPaper = styled(Paper)<PaperProps & any>`
   padding: 1em;
   width: 320px;
   border-radius: 8px;
-  border: 2px solid #efefef;
+  border: 2px solid #dbdbdb;
   background: #fcfcfc;
 `;
 
@@ -85,7 +85,7 @@ export const PricingCards = () => {
         <StyledPaper>
           <Flex justify="space-between">
             <Stack gap="0">
-              <Text fw={500} size="lg" c="black">
+              <Text fw={500} size="md" c="black">
                 Free
               </Text>
               <Text fz={36} fw={600} c="black">
