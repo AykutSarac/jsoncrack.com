@@ -83,8 +83,8 @@ const Affiliate = () => {
             </Text>
             <Link href={AFFILIATE_SINGUP_URL} target="_blank" rel="noopener">
               <Button
+                variant="default"
                 mt="lg"
-                color="orange"
                 radius="md"
                 size="lg"
                 rightSection={<MdChevronRight size={30} />}

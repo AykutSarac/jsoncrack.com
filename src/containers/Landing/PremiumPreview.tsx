@@ -97,7 +97,6 @@ export const PremiumPreview = () => {
               variant="light"
               color="gray"
               c="black"
-              fw={500}
               radius="sm"
               size="lg"
               fullWidth

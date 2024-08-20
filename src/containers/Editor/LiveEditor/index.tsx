@@ -47,7 +47,6 @@ const LiveEditor = () => {
     <StyledLiveEditor onContextMenuCapture={e => e.preventDefault()}>
       <ButtonGroup className="tab-group">
         <Button
-          fw={500}
           c="gray"
           miw={80}
           size="xs"

@@ -1,8 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import { Title, Overlay, Image, Container, Flex, Box, List, Button, Paper } from "@mantine/core";
+import { Title, Image, Container, Flex, Box, List, Button, Paper } from "@mantine/core";
 import styled from "styled-components";
-import { ReactCompareSlider, ReactCompareSliderHandle } from "react-compare-slider";
 import { FaArrowRightLong } from "react-icons/fa6";
 
 const StyledImageWrapper = styled.div`
@@ -12,22 +11,6 @@ const StyledImageWrapper = styled.div`
 `;
 
 export const PremiumVsFree = () => {
-  const [labelOpacity, setLabelOpacity] = React.useState(1);
-  const labelStyle = {
-    fontSize: "1rem",
-    position: "absolute" as any,
-    padding: "6px 12px",
-    margin: "0 -6px",
-    color: "white",
-    opacity: labelOpacity,
-    borderRadius: ".25rem",
-    border: "1px solid white",
-    backdropFilter: "blur(0.25rem) saturate(180%) contrast(80%) brightness(120%)",
-    WebkitBackdropFilter: "blur(0.25rem) saturate(180%) contrast(80%) brightness(120%)",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-    transition: "opacity 0.25s ease-in-out",
-  };
-
   return (
     <Container size="lg" id="premium" component="section" my={120}>
       <Paper radius="lg" bg="dark" p="xl">
@@ -78,7 +61,6 @@ export const PremiumVsFree = () => {
               size="lg"
               rightSection={<FaArrowRightLong />}
               radius="xl"
-              fw={500}
               fz="md"
             >
               See all features
@@ -86,53 +68,20 @@ export const PremiumVsFree = () => {
           </Box>
 
           <StyledImageWrapper>
-            <ReactCompareSlider
-              onPointerDown={() => setLabelOpacity(0)}
-              onPointerUp={() => setLabelOpacity(1)}
-              style={{
-                borderRadius: 10,
-                overflow: "hidden",
-                border: "1px solid #c1c1c1",
-                outline: "1px solid #c1c1c1",
-                outlineOffset: "6px",
-              }}
-              itemOne={<Image loading="lazy" src="./assets/preview/1.webp" alt="Pro" />}
-              itemTwo={
-                <>
-                  <Overlay color="#000" backgroundOpacity={0.1} />
-                  <Image loading="lazy" src="./assets/preview/free.webp" alt="Free" />
-                </>
-              }
-              handle={
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    height: "100%",
-                  }}
-                >
-                  <ReactCompareSliderHandle />
-                  <div
-                    style={{
-                      ...labelStyle,
-                      translate: "-100% 0",
-                      left: 0,
-                    }}
-                  >
-                    Premium
-                  </div>
-                  <div
-                    style={{
-                      ...labelStyle,
-                      translate: "100% 0",
-                      right: 0,
-                    }}
-                  >
-                    Free
-                  </div>
-                </div>
-              }
-            />
+            <Link href="/premium#features" prefetch={false}>
+              <Image
+                loading="lazy"
+                src="./assets/preview/1.webp"
+                alt="Pro"
+                style={{
+                  borderRadius: 10,
+                  overflow: "hidden",
+                  border: "1px solid #c1c1c1",
+                  outline: "1px solid #c1c1c1",
+                  outlineOffset: "6px",
+                }}
+              />
+            </Link>
           </StyledImageWrapper>
         </Flex>
       </Paper>

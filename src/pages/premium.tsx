@@ -307,7 +307,9 @@ const Premium = () => {
                     <Text fw={600} fz="xl" c="gray.7">
                       ${PRICING.MONTHLY}
                     </Text>
-                    /month
+                    <Text fw={500} fz="sm" c="gray.5" ml="2">
+                      / month
+                    </Text>
                   </Flex>
                 </Group>
               </StyledRadioCard>
@@ -322,7 +324,9 @@ const Premium = () => {
                     <Text fw={600} fz="xl" c="gray.7">
                       ${PRICING.ANNUAL * 12}
                     </Text>
-                    /year
+                    <Text fw={500} fz="sm" c="gray.5" ml="2">
+                      / year
+                    </Text>
                   </Flex>
                 </Group>
               </StyledRadioCard>
@@ -346,7 +350,9 @@ const Premium = () => {
                     <Text fw={600} fz="xl" c="gray.7">
                       ${PRICING.LTD}
                     </Text>
-                    /lifetime
+                    <Text fw={500} fz="sm" c="gray.5" ml="2">
+                      / lifetime
+                    </Text>
                   </Flex>
                 </Group>
               </StyledRadioCard>

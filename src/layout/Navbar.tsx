@@ -58,22 +58,9 @@ export const Navbar = () => {
             color="black"
             radius="sm"
             size="sm"
-            fw={500}
             ml="sm"
           >
             VS Code
-          </Button>
-          <Button
-            component={Link}
-            prefetch={false}
-            href="/premium"
-            variant="subtle"
-            color="black"
-            radius="sm"
-            size="sm"
-            fw={500}
-          >
-            Premium
           </Button>
           <Button
             component={Link}
@@ -83,34 +70,19 @@ export const Navbar = () => {
             color="black"
             radius="sm"
             size="sm"
-            fw={500}
           >
             Pricing
           </Button>
-
           <Button
             component={Link}
             prefetch={false}
-            href="/docs"
+            href="/affiliates"
             variant="subtle"
             color="black"
             radius="sm"
             size="sm"
-            fw={500}
           >
-            Docs
-          </Button>
-          <Button
-            component={Link}
-            prefetch={false}
-            href="/#faq"
-            variant="subtle"
-            color="black"
-            radius="sm"
-            size="sm"
-            fw={500}
-          >
-            FAQ
+            Affiliate
           </Button>
         </Left>
         <Right>

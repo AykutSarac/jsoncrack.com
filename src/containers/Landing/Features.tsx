@@ -135,12 +135,12 @@ export const Features = () => {
           spacing="xl"
         >
           {features.map((feature, index) => (
-            <Paper key={index} bg="gray.1" p="lg" radius="md">
+            <Paper key={index} bg="gray.0" p="lg" radius="md">
               <Flex gap="sm" align="center" justify="center" direction="column">
                 <ThemeIcon radius="xl" size="xl" variant="light" color={feature.color}>
                   {feature.icon}
                 </ThemeIcon>
-                <Title ta="center" c="gray.9" order={3}>
+                <Title fw={500} ta="center" c="gray.9" order={3}>
                   {feature.title}
                 </Title>
                 <Text fz="sm" c="gray.8">
