@@ -67,7 +67,6 @@ export const Navbar = () => {
             color="gray"
             size="md"
             radius="md"
-            fw={600}
           >
             Pricing
           </Button>
@@ -79,14 +78,12 @@ export const Navbar = () => {
             color="gray"
             size="md"
             radius="md"
-            fw={600}
           >
             VS Code
           </Button>
           <Button
             component={Link}
             prefetch={false}
-            fw={600}
             href="/affiliates"
             variant="subtle"
             color="gray"
@@ -105,19 +102,18 @@ export const Navbar = () => {
             visibleFrom="sm"
             size="md"
             radius="md"
-            fw={600}
           >
             Log in
           </Button>
           <Button
             radius="md"
             component="a"
-            color="indigo"
+            color="#202842"
             href="/editor"
             visibleFrom="sm"
             size="md"
           >
-            Editor
+            Free editor
           </Button>
         </Right>
       </StyledNavbar>

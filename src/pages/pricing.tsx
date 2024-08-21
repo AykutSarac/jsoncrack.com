@@ -257,6 +257,12 @@ export const PricingCards = () => {
           </Flex>
         </StyledPaper>
       </Box>
+      <Flex pt="sm" c="dimmed" justify="center" align="center" gap={4}>
+        <AiOutlineInfoCircle />
+        <Text size="sm">
+          Payment email must be matching with the account registered to the JSON Crack.
+        </Text>
+      </Flex>
     </Stack>
   );
 };
@@ -270,12 +276,6 @@ const Pricing = () => {
       </Head>
       <Layout>
         <PricingCards />
-        <Flex pt="sm" c="dimmed" justify="center" align="center" gap={4}>
-          <AiOutlineInfoCircle />
-          <Text size="sm">
-            Payment email must be matching with the account registered to the JSON Crack.
-          </Text>
-        </Flex>
       </Layout>
     </>
   );

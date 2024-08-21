@@ -83,7 +83,7 @@ export const PremiumPreview = () => {
                   background: "transparent",
                 },
                 indicator: {
-                  background: "#120F43",
+                  background: "#000000",
                 },
                 label: {
                   color: "white",

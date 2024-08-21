@@ -81,7 +81,7 @@ interface FeatureItem {
 const features: FeatureItem[] = [
   {
     title: "Larger Data",
-    description: "From 300KB to ~4MB upgraded data size.",
+    description: "From 300 KB to 4 MB upgraded data size.",
     icon: (
       <Text fz="sm" fw="500">
         4 MB
@@ -168,19 +168,21 @@ const Premium = () => {
       <Layout>
         <Container
           pos="relative"
-          pt={100}
-          pb={220}
+          pt={60}
+          pb={180}
           fluid
           style={{
-            background:
-              "linear-gradient(15deg, #120f43, #0d0e3e, #0b0f39, #0a1034, #08102f, #071029, #051024, #040f1e)",
+            backgroundColor: "#1a0027",
+            backgroundImage: "url(./assets/mesh.webp)",
+            backgroundAttachment: "fixed",
+            backgroundSize: "cover",
           }}
         >
           <Flex px="xl" justify="center" gap={60}>
             <Box maw={600}>
               <Title
                 order={1}
-                c="white"
+                c="gray.1"
                 fz={{
                   base: 38,
                   xs: 40,
@@ -189,21 +191,21 @@ const Premium = () => {
                 Premium
               </Title>
               <Text
-                c="gray.3"
+                c="gray.2"
                 mt={32}
                 fz={{
-                  base: 16,
-                  xs: 20,
+                  base: 14,
+                  xs: 18,
                 }}
               >
-                Faster, more powerful, and more visually stunning.
+                Redesigned for a smoother, faster, and more powerful experience. New features save
+                time and effort.
               </Text>
               <Button
                 component="a"
                 href="#pricing"
                 mt="lg"
-                variant="white"
-                color="gray"
+                color="gray.2"
                 radius="md"
                 size="lg"
                 rightSection={<MdChevronRight size={30} />}
@@ -227,7 +229,7 @@ const Premium = () => {
               alt="hero"
               w="300"
               h="200"
-              opacity={0.02}
+              opacity={0.01}
               visibleFrom="sm"
             />
           </Flex>
@@ -237,7 +239,12 @@ const Premium = () => {
           component="section"
           id="features"
           fluid
-          bg="radial-gradient(58.11% 44.54% at 51.59% -9.61%, rgb(180, 176, 254) 0%, rgb(54, 50, 133) 22.92%, rgb(17, 13, 91) 42.71%, rgb(5, 3, 39) 88.54%)"
+          style={{
+            backgroundColor: "#1a0027",
+            backgroundImage: "url(./assets/mesh.webp)",
+            backgroundAttachment: "fixed",
+            backgroundSize: "cover",
+          }}
           my={120}
           py={40}
         >
@@ -248,11 +255,11 @@ const Premium = () => {
                 xs: 36,
               }}
               order={2}
-              c="white"
+              c="gray.4"
             >
               Built for everyone.
             </Title>
-            <Text c="gray.3" fz="xl" mb={40}>
+            <Text c="gray.6" fz="xl" mb={40}>
               Zero technical knowledge required.
             </Text>
             <SimpleGrid
@@ -269,10 +276,10 @@ const Premium = () => {
                     <ThemeIcon radius="xl" size="xl" variant="light" color={feature.color}>
                       {feature.icon}
                     </ThemeIcon>
-                    <Title ta="center" c="white" order={3}>
+                    <Title ta="center" c="gray.4" order={3}>
                       {feature.title}
                     </Title>
-                    <Text c="gray.3">{feature.description}</Text>
+                    <Text c="gray.5">{feature.description}</Text>
                   </Flex>
                 </StyledFeatureCard>
               ))}
@@ -361,7 +368,7 @@ const Premium = () => {
               component="a"
               href={getUpgradeLink()}
               target="_blank"
-              color="#120F43"
+              color="#2a0f43"
               fullWidth
               mt="xl"
               size="xl"
