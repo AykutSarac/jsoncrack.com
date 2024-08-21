@@ -299,7 +299,7 @@ const Premium = () => {
             }}
             order={2}
           >
-            Keep your expectations high.
+            Unlock the benefits now.
           </Title>
           <Radio.Group maw={600} mx="auto" mt="xl" value={plan} onChange={setPlan}>
             <Stack>
