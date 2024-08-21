@@ -158,7 +158,7 @@ export const HeroSection = () => {
               Explore Premium
             </Button>
           </Flex>
-          <Text ta="center" size="xs" c="gray">
+          <Text ta="center" size="xs" c="dimmed">
             Supports JSON, CSV, XML, YAML, TOML
           </Text>
         </Stack>

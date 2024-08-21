@@ -89,11 +89,11 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
                 gaEvent("Toolbar", "click upgrade premium");
               }}
             >
-              <ThemeIcon size="xs" variant="transparent" color="red">
+              <ThemeIcon size="xs" variant="transparent" color="bright">
                 <FaGift size="12" />
               </ThemeIcon>
-              <Text c="red" fw={600} fz="xs">
-                Limited Offer
+              <Text c="bright" fw={600} fz="xs">
+                Premium
               </Text>
             </Styles.StyledToolElement>
           </Indicator>

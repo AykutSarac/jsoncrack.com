@@ -39,7 +39,7 @@ const StyledRadioCard = styled(Radio.Card)`
 
 export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
   const user = useUser(state => state.user);
-  const [plan, setPlan] = React.useState("ltd");
+  const [plan, setPlan] = React.useState("annual");
 
   const handleUpgrade = () => {
     const link = new URL(purchaseLinks[plan]);
@@ -82,10 +82,10 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
             icon={<IoMdCheckmarkCircleOutline size="24" color="#16a34a" />}
           >
             <List.Item>Larger data support up to 4 MB</List.Item>
-            <List.Item>Compare data differences on graph</List.Item>
+            <List.Item>Edit data directly on visualizations</List.Item>
+            <List.Item>Compare data differences on graphs</List.Item>
             <List.Item>AI-powered data filter</List.Item>
             <List.Item>Customizable graph colors</List.Item>
-            <List.Item>Edit data directly on graph</List.Item>
             <List.Item>Tabs for multiple documents</List.Item>
             <List.Item>
               <Anchor c="inherit" td="underline" href="/premium#preview" target="_blank">
@@ -132,33 +132,35 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
                 </Flex>
               </Group>
             </StyledRadioCard>
-            <StyledRadioCard value="ltd" radius="lg" px="xl" py="md">
-              <Group align="center" justify="space-between">
-                <Flex align="center" gap="xs">
-                  <Text fz="xl" c="gray.7" fw={600}>
-                    Lifetime
-                  </Text>
-                  <Badge
-                    variant="light"
-                    size="md"
-                    radius="lg"
-                    color="#f00"
-                    leftSection={<MdOutlineTimer size="12" />}
-                  >
-                    Limited
-                  </Badge>
-                </Flex>
-                <Flex fw={500} align="baseline" fz="sm" c="gray.5">
-                  <Text fw={600} fz="xl" c="gray.7" mr="2">
-                    ${PRICING.LTD}
-                  </Text>
-                  <Text inherit mr="2">
-                    /
-                  </Text>
-                  lifetime
-                </Flex>
-              </Group>
-            </StyledRadioCard>
+            {PRICING.LTD && (
+              <StyledRadioCard value="ltd" radius="lg" px="xl" py="md">
+                <Group align="center" justify="space-between">
+                  <Flex align="center" gap="xs">
+                    <Text fz="xl" c="gray.7" fw={600}>
+                      Lifetime
+                    </Text>
+                    <Badge
+                      variant="light"
+                      size="md"
+                      radius="lg"
+                      color="#f00"
+                      leftSection={<MdOutlineTimer size="12" />}
+                    >
+                      Limited
+                    </Badge>
+                  </Flex>
+                  <Flex fw={500} align="baseline" fz="sm" c="gray.5">
+                    <Text fw={600} fz="xl" c="gray.7" mr="2">
+                      ${PRICING.LTD}
+                    </Text>
+                    <Text inherit mr="2">
+                      /
+                    </Text>
+                    lifetime
+                  </Flex>
+                </Group>
+              </StyledRadioCard>
+            )}
           </Stack>
           <Button
             color="green"

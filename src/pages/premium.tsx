@@ -138,7 +138,7 @@ const features: FeatureItem[] = [
 ];
 
 const Premium = () => {
-  const [plan, setPlan] = React.useState("monthly");
+  const [plan, setPlan] = React.useState("annual");
 
   const getUpgradeLink = () => {
     const link = new URL(purchaseLinks[plan]);
@@ -337,32 +337,34 @@ const Premium = () => {
                   </Flex>
                 </Group>
               </StyledRadioCard>
-              <StyledRadioCard value="ltd" radius="lg" px="xl" py="md">
-                <Group align="center" justify="space-between">
-                  <Flex align="center" gap="xs">
-                    <Text fz="xl" c="gray.7" fw={600}>
-                      Lifetime
-                    </Text>
-                    <Badge
-                      variant="light"
-                      size="sm"
-                      radius="lg"
-                      color="red"
-                      leftSection={<MdOutlineTimer size="12" />}
-                    >
-                      Limited
-                    </Badge>
-                  </Flex>
-                  <Flex fw={500} align="baseline" fz="sm" c="gray.5">
-                    <Text fw={600} fz="xl" c="gray.7">
-                      ${PRICING.LTD}
-                    </Text>
-                    <Text fw={500} fz="sm" c="gray.5" ml="2">
-                      / lifetime
-                    </Text>
-                  </Flex>
-                </Group>
-              </StyledRadioCard>
+              {PRICING.LTD && (
+                <StyledRadioCard value="ltd" radius="lg" px="xl" py="md">
+                  <Group align="center" justify="space-between">
+                    <Flex align="center" gap="xs">
+                      <Text fz="xl" c="gray.7" fw={600}>
+                        Lifetime
+                      </Text>
+                      <Badge
+                        variant="light"
+                        size="sm"
+                        radius="lg"
+                        color="red"
+                        leftSection={<MdOutlineTimer size="12" />}
+                      >
+                        Limited
+                      </Badge>
+                    </Flex>
+                    <Flex fw={500} align="baseline" fz="sm" c="gray.5">
+                      <Text fw={600} fz="xl" c="gray.7">
+                        ${PRICING.LTD}
+                      </Text>
+                      <Text fw={500} fz="sm" c="gray.5" ml="2">
+                        / lifetime
+                      </Text>
+                    </Flex>
+                  </Group>
+                </StyledRadioCard>
+              )}
             </Stack>
             <Button
               component="a"
@@ -378,7 +380,7 @@ const Premium = () => {
               Upgrade
             </Button>
           </Radio.Group>
-          <Flex pt="sm" c="dimmed" justify="center" align="center" gap={4}>
+          <Flex mt="sm" c="dimmed" justify="center" align="center" gap={4}>
             <AiOutlineInfoCircle />
             <Text size="xs">
               Payment email must be matching with the account registered to the JSON Crack.

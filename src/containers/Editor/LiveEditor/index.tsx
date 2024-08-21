@@ -1,13 +1,9 @@
 import React from "react";
-import { Button, ButtonGroup } from "@mantine/core";
 import styled from "styled-components";
-import { MdAdd } from "react-icons/md";
-import { VscLock } from "react-icons/vsc";
 import { ViewMode } from "src/enums/viewMode.enum";
 import { GraphView } from "src/modules/GraphView";
 import { TreeView } from "src/modules/TreeView";
 import useConfig from "src/store/useConfig";
-import useModal from "src/store/useModal";
 
 const StyledLiveEditor = styled.div`
   position: relative;
@@ -41,25 +37,8 @@ const View = () => {
 };
 
 const LiveEditor = () => {
-  const setVisible = useModal(state => state.setVisible);
-
   return (
     <StyledLiveEditor onContextMenuCapture={e => e.preventDefault()}>
-      <ButtonGroup className="tab-group">
-        <Button
-          c="gray"
-          miw={80}
-          size="xs"
-          variant="default"
-          rightSection={<VscLock />}
-          onClick={() => setVisible("upgrade")(true)}
-        >
-          Tab 1
-        </Button>
-        <Button size="xs" variant="default" onClick={() => setVisible("upgrade")(true)}>
-          <MdAdd />
-        </Button>
-      </ButtonGroup>
       <View />
     </StyledLiveEditor>
   );
