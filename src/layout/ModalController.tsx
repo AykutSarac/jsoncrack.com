@@ -8,7 +8,6 @@ type ModalComponent = { key: Modal; component: React.FC<ModalProps> };
 
 const modalComponents: ModalComponent[] = [
   { key: "import", component: Modals.ImportModal },
-  { key: "clear", component: Modals.ClearModal },
   { key: "download", component: Modals.DownloadModal },
   { key: "cloud", component: Modals.CloudModal },
   { key: "account", component: Modals.AccountModal },

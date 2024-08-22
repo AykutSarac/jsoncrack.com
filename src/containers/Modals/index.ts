@@ -15,7 +15,6 @@ export { TypeModal } from "./TypeModal";
 export { JPathModal } from "./JPathModal";
 
 type Modal =
-  | "clear"
   | "cloud"
   | "download"
   | "import"

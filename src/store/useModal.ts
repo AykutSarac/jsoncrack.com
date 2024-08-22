@@ -11,7 +11,6 @@ interface ModalActions {
 }
 
 const initialStates: ModalState = {
-  clear: false,
   cloud: false,
   download: false,
   import: false,
