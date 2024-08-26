@@ -1,9 +1,7 @@
 import React from "react";
-import { Text, Flex, Group, Select, Indicator, ThemeIcon } from "@mantine/core";
-import { useLocalStorage } from "@mantine/hooks";
+import { Text, Flex, Group, Select } from "@mantine/core";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
-import { FaGift } from "react-icons/fa6";
 import { FiDownload } from "react-icons/fi";
 import { SearchInput } from "src/containers/Toolbar/SearchInput";
 import { FileFormat } from "src/enums/file.enum";
@@ -11,6 +9,7 @@ import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
 import { gaEvent } from "src/lib/utils/gaEvent";
 import useFile from "src/store/useFile";
 import useModal from "src/store/useModal";
+import useUser from "src/store/useUser";
 import { AccountMenu } from "./AccountMenu";
 import { FileMenu } from "./FileMenu";
 import { Logo } from "./Logo";
@@ -38,10 +37,7 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
   const setVisible = useModal(state => state.setVisible);
   const setFormat = useFile(state => state.setFormat);
   const format = useFile(state => state.format);
-  const [seenPremium, setSeenPremium] = useLocalStorage({
-    key: "seenPremium",
-    defaultValue: false,
-  });
+  const isAuthenticated = useUser(state => state.isAuthenticated);
 
   return (
     <Styles.StyledTools>
@@ -74,29 +70,25 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
           <FileMenu />
           <ViewMenu />
           <ToolsMenu />
-          <Styles.StyledToolElement title="Cloud" onClick={() => setVisible("cloud")(true)}>
-            Cloud
-          </Styles.StyledToolElement>
+          {isAuthenticated && (
+            <Styles.StyledToolElement title="Cloud" onClick={() => setVisible("cloud")(true)}>
+              Cloud
+            </Styles.StyledToolElement>
+          )}
         </Group>
       )}
       <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
         {!isWidget && (
-          <Indicator color="red" size="6" offset={6} processing disabled={seenPremium}>
-            <Styles.StyledToolElement
-              onClick={() => {
-                setSeenPremium(true);
-                setVisible("upgrade")(true);
-                gaEvent("Toolbar", "click upgrade premium");
-              }}
-            >
-              <ThemeIcon size="xs" variant="transparent" color="bright">
-                <FaGift size="12" />
-              </ThemeIcon>
-              <Text c="bright" fw={600} fz="xs">
-                Premium
-              </Text>
-            </Styles.StyledToolElement>
-          </Indicator>
+          <Styles.StyledToolElement
+            onClick={() => {
+              setVisible("upgrade")(true);
+              gaEvent("Toolbar", "click upgrade premium");
+            }}
+          >
+            <Text c="bright" fw={600} fz="xs">
+              Upgrade Editor
+            </Text>
+          </Styles.StyledToolElement>
         )}
 
         <SearchInput />

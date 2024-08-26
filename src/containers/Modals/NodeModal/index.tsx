@@ -26,7 +26,7 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
     <Modal title="Node Content" size="auto" opened={opened} onClose={onClose} centered>
       <Stack py="sm" gap="sm">
         <Stack gap="xs">
-          <Text fz="sm" fw={700}>
+          <Text fz="xs" fw={500}>
             Content
           </Text>
           <ScrollArea.Autosize mah={250} maw={600}>
@@ -42,7 +42,7 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
         >
           Edit
         </Button>
-        <Text fz="sm" fw={700}>
+        <Text fz="xs" fw={500}>
           JSON Path
         </Text>
         <ScrollArea.Autosize maw={600}>

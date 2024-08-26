@@ -13,6 +13,7 @@ export { ReviewModal } from "./ReviewModal";
 export { JQModal } from "./JQModal";
 export { TypeModal } from "./TypeModal";
 export { JPathModal } from "./JPathModal";
+export { NoticeModal } from "./NoticeModal";
 
 type Modal =
   | "cloud"
@@ -28,6 +29,7 @@ type Modal =
   | "review"
   | "jq"
   | "type"
-  | "jpath";
+  | "jpath"
+  | "notice";
 
 export type { Modal };

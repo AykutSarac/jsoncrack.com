@@ -2,7 +2,6 @@ import React from "react";
 import { useRouter } from "next/router";
 import type { ModalProps, DefaultMantineColor } from "@mantine/core";
 import {
-  Modal,
   Text,
   ScrollArea,
   Table,
@@ -11,28 +10,29 @@ import {
   Paper,
   Flex,
   Button,
-  Group,
-  Stack,
   RingProgress,
   Drawer,
   LoadingOverlay,
   Menu,
   TextInput,
+  Alert,
 } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import toast from "react-hot-toast";
-import { BiSearch, BiSolidFolderOpen, BiText } from "react-icons/bi";
+import { BiSearch } from "react-icons/bi";
 import { FaTrash } from "react-icons/fa";
+import { LuDownload } from "react-icons/lu";
 import { SlOptionsVertical } from "react-icons/sl";
-import { VscAdd } from "react-icons/vsc";
+import { VscAdd, VscWarning } from "react-icons/vsc";
 import type { FileFormat } from "src/enums/file.enum";
 import { gaEvent } from "src/lib/utils/gaEvent";
 import { documentSvc } from "src/services/document.service";
 import type { File } from "src/store/useFile";
 import useFile from "src/store/useFile";
+import useModal from "src/store/useModal";
 
 dayjs.extend(relativeTime);
 
@@ -44,62 +44,11 @@ const colorByFormat: Record<FileFormat, DefaultMantineColor> = {
   csv: "grape",
 };
 
-interface UpdateNameModalProps {
-  file: File | null;
-  onClose: () => void;
-  refetch: () => void;
-}
-
-const UpdateNameModal = ({ file, onClose, refetch }: UpdateNameModalProps) => {
-  const [name, setName] = React.useState("");
-
-  React.useEffect(() => {
-    if (file?.name) setName(file.name);
-  }, [file?.name]);
-
-  const onSubmit = async () => {
-    try {
-      if (!file) return;
-
-      toast.loading("Updating document...", { id: "update-document" });
-      await documentSvc.update(file.id, { name });
-
-      refetch();
-      setName("");
-      toast.dismiss("update-document");
-    } catch (error) {
-      toast.error("An error occurred while updating the document!", { id: "update-document" });
-    } finally {
-      onClose();
-    }
-  };
-
-  return (
-    <Modal title="Update document name" opened={!!file} onClose={onClose} centered zIndex={202}>
-      <Stack>
-        <TextInput
-          value={name}
-          placeholder="File name"
-          onChange={e => setName(e.currentTarget.value)}
-          autoFocus
-          data-autofocus
-        />
-        <Group justify="right">
-          <Button variant="default" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button onClick={onSubmit}>Update</Button>
-        </Group>
-      </Stack>
-    </Modal>
-  );
-};
-
 const TOTAL_QUOTA = 25;
 
 export const CloudModal = ({ opened, onClose }: ModalProps) => {
+  const setVisible = useModal(state => state.setVisible);
   const setFile = useFile(state => state.setFile);
-  const [currentFile, setCurrentFile] = React.useState<File | null>(null);
   const [searchValue, setSearchValue] = React.useState("");
   const [debouncedSearchValue] = useDebouncedValue(searchValue, 1000);
   const { isReady, replace } = useRouter();
@@ -136,6 +85,31 @@ export const CloudModal = ({ opened, onClose }: ModalProps) => {
     },
     [onClose, setFile]
   );
+
+  const downloadFile = React.useCallback(async (id: string) => {
+    try {
+      // it will fetch the file first, then download it with corresponsing format
+      const { data, error } = await documentSvc.getById(id);
+      if (error) throw new Error(error.message);
+
+      const blob = new Blob([data[0].content], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `${data[0].name}.${data[0].format}`;
+      a.click();
+      URL.revokeObjectURL(url);
+
+      gaEvent("Cloud Modal", "download file");
+
+      return true;
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      }
+      return false;
+    }
+  }, []);
 
   const onDeleteClick = React.useCallback(
     async (file: File) => {
@@ -181,7 +155,7 @@ export const CloudModal = ({ opened, onClose }: ModalProps) => {
           <Table.Td>{dayjs(element.updated_at).format("DD MMM YYYY")}</Table.Td>
           <Table.Td onClick={e => e.stopPropagation()}>
             <Flex gap="xs">
-              <Menu width={150} position="bottom" withArrow shadow="md">
+              <Menu position="bottom" withArrow shadow="md">
                 <Menu.Target>
                   <ActionIcon variant="subtle" color="gray">
                     <SlOptionsVertical />
@@ -190,20 +164,14 @@ export const CloudModal = ({ opened, onClose }: ModalProps) => {
                 <Menu.Dropdown>
                   <Menu.Item
                     fz="xs"
-                    onClick={() => openFile(element.id)}
-                    leftSection={<BiSolidFolderOpen />}
+                    onClick={() => downloadFile(element.id)}
+                    leftSection={<LuDownload />}
                   >
-                    Open
-                  </Menu.Item>
-                  <Menu.Item
-                    fz="xs"
-                    leftSection={<BiText />}
-                    onClick={() => setCurrentFile(element)}
-                  >
-                    Rename File
+                    Download
                   </Menu.Item>
                   <Menu.Divider />
                   <Menu.Item
+                    c="red"
                     fz="xs"
                     onClick={() => onDeleteClick(element)}
                     leftSection={<FaTrash />}
@@ -216,7 +184,7 @@ export const CloudModal = ({ opened, onClose }: ModalProps) => {
           </Table.Td>
         </Table.Tr>
       )),
-    [data, onDeleteClick, openFile]
+    [data, downloadFile, onDeleteClick, openFile]
   );
 
   return (
@@ -229,7 +197,14 @@ export const CloudModal = ({ opened, onClose }: ModalProps) => {
       pos="relative"
       position="right"
     >
-      <Text fz="xs" pb="lg">
+      <Alert color="red" icon={<VscWarning />}>
+        Cloud storage will be terminated on <b>1 October 2024</b>. Please download your data before
+        the deadline.
+        <Button color="red" variant="light" mt="sm" onClick={() => setVisible("notice")(true)}>
+          Read More
+        </Button>
+      </Alert>
+      <Text fz="xs" py="lg">
         The Cloud Save feature is primarily designed for convenient access and is not advisable for
         storing sensitive data.
       </Text>
@@ -242,7 +217,7 @@ export const CloudModal = ({ opened, onClose }: ModalProps) => {
           placeholder="Search"
           leftSection={<BiSearch />}
         />
-        <ScrollArea h="calc(100vh - 220px)" offsetScrollbars>
+        <ScrollArea h="calc(100vh - 345px)" offsetScrollbars>
           <LoadingOverlay visible={isLoading} />
           <Table fz="xs" verticalSpacing="xs" highlightOnHover>
             <Table.Thead>
@@ -285,7 +260,6 @@ export const CloudModal = ({ opened, onClose }: ModalProps) => {
           </Flex>
         )}
       </Paper>
-      <UpdateNameModal file={currentFile} onClose={() => setCurrentFile(null)} refetch={refetch} />
     </Drawer>
   );
 };

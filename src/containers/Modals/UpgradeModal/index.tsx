@@ -61,7 +61,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
       size="md"
       opened={opened}
       onClose={onClose}
-      zIndex={202}
+      zIndex={1001}
       position="bottom"
       radius="lg"
       styles={{
