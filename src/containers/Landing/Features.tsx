@@ -25,7 +25,7 @@ interface FeatureItem {
 
 const features: FeatureItem[] = [
   {
-    title: "Visualize",
+    title: "Visualizer",
     description:
       "Transform your data into interactive graphs or trees as you type. Supports JSON, YAML, CSV, XML, and TOML.",
     icon: <FaBolt size={20} />,
@@ -47,7 +47,7 @@ const features: FeatureItem[] = [
   },
   {
     title: "Generate Code",
-    description: "Generate TypeScript interface, Golang structs and more.",
+    description: "Generate TypeScript interface, Golang structs, JSON Schema and more.",
     icon: <MdOutlineGeneratingTokens size={20} />,
     color: "grape",
   },
@@ -65,9 +65,9 @@ const features: FeatureItem[] = [
     color: "teal.5",
   },
   {
-    title: "Download & Share",
+    title: "Download Image",
     description:
-      "Export image of the graph, store your files in the cloud, and share them with others.",
+      "Export image of the graph as PNG, JPEG, or SVG. Share your data visualization with others.",
     icon: <IoImages size={20} />,
     color: "blue.4",
   },

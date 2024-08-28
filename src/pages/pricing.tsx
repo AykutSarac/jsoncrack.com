@@ -102,15 +102,16 @@ export const PricingCards = () => {
           </Flex>
           <Button
             component="a"
-            href="https://app.jsoncrack.com/sign-up"
+            href="/editor"
             target="_blank"
+            variant="outline"
             size="md"
             radius="xl"
             color="#202842"
             fullWidth
             my="lg"
           >
-            Sign Up
+            Start free
           </Button>
           <Flex direction="column" justify="space-between">
             <List

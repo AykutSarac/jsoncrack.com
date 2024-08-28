@@ -82,15 +82,15 @@ export const Navbar = () => {
             VS Code
           </Button>
           <Button
-            component={Link}
-            prefetch={false}
-            href="/affiliates"
+            component="a"
+            href="https://github.com/AykutSarac/jsoncrack.com"
+            target="_blank"
             variant="subtle"
             color="dark"
             size="md"
             radius="md"
           >
-            Affiliates
+            Open Source
           </Button>
         </Center>
         <Right>
