@@ -48,7 +48,7 @@ export const PremiumVsFree = () => {
             </Text>
             <Button
               component={Link}
-              href="/premium"
+              href="/#pricing"
               prefetch={false}
               display="block"
               w="fit-content"
@@ -66,7 +66,7 @@ export const PremiumVsFree = () => {
           </Box>
 
           <StyledImageWrapper>
-            <Link href="/premium#features" prefetch={false}>
+            <Link href="/#pricing" prefetch={false}>
               <Image
                 loading="lazy"
                 src="./assets/preview/1.webp"

@@ -1,9 +1,9 @@
 import React from "react";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import Link from "next/link";
-import { Stack, Flex, Text, Button } from "@mantine/core";
+import { Stack, Flex, Text, Button, Badge } from "@mantine/core";
 import styled from "styled-components";
-import { FaChevronRight } from "react-icons/fa6";
+import { FaChevronRight, FaFire } from "react-icons/fa6";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin-ext"],
@@ -104,6 +104,18 @@ export const HeroSection = () => {
     <StyledHeroSection>
       <StyledHeroSectionBody>
         <Stack flex="1" miw={250} mx="auto" align="center">
+          <Link href="https://todiagram.com?ref=jsoncrack.com">
+            <Badge
+              fw={600}
+              size="lg"
+              variant="outline"
+              color="red.5"
+              leftSection={<FaFire />}
+              tt="unset"
+            >
+              NEW: Now faster & more powerful — ToDiagram.com
+            </Badge>
+          </Link>
           <StyledHeroTitle>Visualize JSON into interactive graphs</StyledHeroTitle>
           <StyledHeroText>
             The best JSON viewer tool to <strong>visualize</strong>, <strong>format</strong> and{" "}
@@ -122,17 +134,6 @@ export const HeroSection = () => {
             >
               Go to Editor
             </Button>
-            <Button
-              component={Link}
-              variant="default"
-              prefetch={false}
-              href="/premium"
-              size="md"
-              radius="md"
-              fw="500"
-            >
-              Explore Premium
-            </Button>
           </Flex>
           <Flex gap="lg" wrap="wrap" justify="center" visibleFrom="xs">
             <Button
@@ -145,17 +146,6 @@ export const HeroSection = () => {
               fw="500"
             >
               Go to Editor
-            </Button>
-            <Button
-              component={Link}
-              variant="default"
-              prefetch={false}
-              href="/premium"
-              size="lg"
-              radius="md"
-              fw="500"
-            >
-              Explore Premium
             </Button>
           </Flex>
           <Text ta="center" size="xs" c="dimmed">

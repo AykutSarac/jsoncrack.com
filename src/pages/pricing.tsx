@@ -1,6 +1,5 @@
 import React from "react";
 import Head from "next/head";
-import Link from "next/link";
 import {
   Flex,
   Stack,
@@ -174,9 +173,6 @@ export const PricingCards = () => {
                 <Text fz="xs" c="gray.6">
                   billed {isMonthly ? "monthly" : "yearly"}
                 </Text>
-                <Anchor component={Link} href="/premium" ml="sm" fz="xs" td="underline" c="gray.5">
-                  see all features
-                </Anchor>
               </Flex>
             </Stack>
           </Flex>

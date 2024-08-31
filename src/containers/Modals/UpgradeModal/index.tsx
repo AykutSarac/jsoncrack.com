@@ -88,7 +88,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
             <List.Item>Customizable graph colors</List.Item>
             <List.Item>Tabs for multiple documents</List.Item>
             <List.Item>
-              <Anchor c="inherit" td="underline" href="/premium#preview" target="_blank">
+              <Anchor c="inherit" td="underline" href="/#pricing" target="_blank">
                 ..see all features
               </Anchor>
             </List.Item>
