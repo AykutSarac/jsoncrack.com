@@ -29,8 +29,8 @@ const SignUp = () => {
         For advanced features, please visit{" "}
         <Anchor td="underline" href="https://todiagram.com" inherit>
           ToDiagram
-        </Anchor>{" "}
-        or you can continue to use JSON Crack without an account.
+        </Anchor>
+        , or you can continue using JSON Crack without an account.
       </Text>
       <Center my="md">
         <Link href="/editor" prefetch={false} passHref>
