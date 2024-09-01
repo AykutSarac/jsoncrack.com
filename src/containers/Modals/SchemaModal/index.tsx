@@ -2,11 +2,11 @@ import React from "react";
 import type { ModalProps } from "@mantine/core";
 import { Stack, Modal, Button, Text, Anchor, Divider, Menu, Group } from "@mantine/core";
 import Editor from "@monaco-editor/react";
+import { event as gaEvent } from "nextjs-google-analytics";
 import { toast } from "react-hot-toast";
 import { FaChevronDown } from "react-icons/fa";
 import { VscLinkExternal } from "react-icons/vsc";
 import { FileFormat } from "src/enums/file.enum";
-import { gaEvent } from "src/lib/utils/gaEvent";
 import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
 
@@ -39,7 +39,7 @@ export const SchemaModal = ({ opened, onClose }: ModalProps) => {
       const parsedSchema = JSON.parse(schema);
       setJsonSchema(parsedSchema);
 
-      gaEvent("Schema Modal", "apply");
+      gaEvent("apply_json_schema");
       toast.success("Applied schema!");
       onClose();
     } catch (error) {
@@ -60,7 +60,7 @@ export const SchemaModal = ({ opened, onClose }: ModalProps) => {
       const data = JSONSchemaFaker.generate(JSON.parse(schema));
       setContents({ contents: JSON.stringify(data, null, 2), format: FileFormat.JSON });
 
-      gaEvent("Schema Modal", "generate mock data");
+      gaEvent("generate_schema_mock_data");
       onClose();
     } catch (error) {
       console.error(error);

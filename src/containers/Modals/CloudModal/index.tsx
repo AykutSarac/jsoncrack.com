@@ -21,6 +21,7 @@ import { useDebouncedValue } from "@mantine/hooks";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { event as gaEvent } from "nextjs-google-analytics";
 import toast from "react-hot-toast";
 import { BiSearch } from "react-icons/bi";
 import { FaTrash } from "react-icons/fa";
@@ -28,7 +29,6 @@ import { LuDownload } from "react-icons/lu";
 import { SlOptionsVertical } from "react-icons/sl";
 import { VscAdd, VscWarning } from "react-icons/vsc";
 import type { FileFormat } from "src/enums/file.enum";
-import { gaEvent } from "src/lib/utils/gaEvent";
 import { documentSvc } from "src/services/document.service";
 import type { File } from "src/store/useFile";
 import useFile from "src/store/useFile";
@@ -76,7 +76,7 @@ export const CloudModal = ({ opened, onClose }: ModalProps) => {
         if (error) throw new Error(error.message);
 
         if (data[0]) setFile(data[0]);
-        gaEvent("Cloud Modal", "open file");
+        gaEvent("open_cloud_file");
       } catch (error) {
         if (error instanceof Error) toast.error(error.message);
       } finally {
@@ -100,7 +100,7 @@ export const CloudModal = ({ opened, onClose }: ModalProps) => {
       a.click();
       URL.revokeObjectURL(url);
 
-      gaEvent("Cloud Modal", "download file");
+      gaEvent("download_cloud_file");
 
       return true;
     } catch (error) {
@@ -121,7 +121,7 @@ export const CloudModal = ({ opened, onClose }: ModalProps) => {
 
         await refetch();
         toast.success(`Deleted ${file.name}!`, { id: "delete-file" });
-        gaEvent("Cloud Modal", "delete file");
+        gaEvent("delete_cloud_file");
       } catch (error) {
         if (error instanceof Error) {
           toast.error(error.message, { id: "delete-file" });

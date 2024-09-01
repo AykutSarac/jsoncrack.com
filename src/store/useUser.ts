@@ -1,8 +1,8 @@
 import type { Session, User } from "@supabase/supabase-js";
+import { event as gaEvent } from "nextjs-google-analytics";
 import toast from "react-hot-toast";
 import { create } from "zustand";
 import { supabase } from "src/lib/api/supabase";
-import { gaEvent } from "src/lib/utils/gaEvent";
 
 interface UserActions {
   logout: () => void;
@@ -22,7 +22,7 @@ const initialStates: UserStates = {
 const useUser = create<UserStates & UserActions>()(set => ({
   ...initialStates,
   setSession: async session => {
-    gaEvent("engagement", "login");
+    gaEvent("login");
     set({ user: session.user, isAuthenticated: true });
   },
   logout: async () => {
@@ -34,7 +34,7 @@ const useUser = create<UserStates & UserActions>()(set => ({
       return;
     }
 
-    gaEvent("engagement", "logout");
+    gaEvent("logout");
     set(initialStates);
     toast.success("Logged out.", { id: "logout" });
   },

@@ -1,12 +1,11 @@
 import React from "react";
 import type { AppProps } from "next/app";
-import { useRouter } from "next/router";
 import { createTheme, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 import "@mantine/code-highlight/styles.css";
 import { ThemeProvider } from "styled-components";
 import { NextSeo } from "next-seo";
-import ReactGA from "react-ga4";
+import { GoogleAnalytics } from "nextjs-google-analytics";
 import { Toaster } from "react-hot-toast";
 import GlobalStyle from "src/constants/globalStyle";
 import { SEO } from "src/constants/seo";
@@ -53,13 +52,9 @@ const theme = createTheme({
   },
 });
 
-const isDevelopment = process.env.NODE_ENV === "development";
-const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID as string;
-
-ReactGA.initialize(GA_TRACKING_ID, { testMode: isDevelopment });
+const IS_PROD = process.env.NODE_ENV === "production";
 
 function JsonCrack({ Component, pageProps }: AppProps) {
-  const router = useRouter();
   const setSession = useUser(state => state.setSession);
 
   React.useEffect(() => {
@@ -67,18 +62,6 @@ function JsonCrack({ Component, pageProps }: AppProps) {
       if (session) setSession(session);
     });
   }, [setSession]);
-
-  React.useEffect(() => {
-    const handleRouteChange = (page: string) => {
-      ReactGA.send({ hitType: "pageview", page });
-    };
-
-    router.events.on("routeChangeComplete", handleRouteChange);
-
-    return () => {
-      router.events.off("routeChangeComplete", handleRouteChange);
-    };
-  }, [router.events]);
 
   return (
     <>
@@ -101,6 +84,7 @@ function JsonCrack({ Component, pageProps }: AppProps) {
             }}
           />
           <GlobalStyle />
+          {IS_PROD && <GoogleAnalytics trackPageViews />}
           <Component {...pageProps} />
         </ThemeProvider>
       </MantineProvider>

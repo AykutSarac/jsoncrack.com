@@ -2,9 +2,9 @@ import React from "react";
 import type { ModalProps } from "@mantine/core";
 import { Stack, Modal, Button, Text, Anchor, Group, TextInput } from "@mantine/core";
 import { JSONPath } from "jsonpath-plus";
+import { event as gaEvent } from "nextjs-google-analytics";
 import toast from "react-hot-toast";
 import { VscLinkExternal } from "react-icons/vsc";
-import { gaEvent } from "src/lib/utils/gaEvent";
 import useFile from "src/store/useFile";
 import useJson from "src/store/useJson";
 
@@ -19,7 +19,7 @@ export const JPathModal = ({ opened, onClose }: ModalProps) => {
       const result = JSONPath({ path: query, json: JSON.parse(json) });
 
       setContents({ contents: JSON.stringify(result, null, 2) });
-      gaEvent("JSON Path Modal", "evaluate JSON Path");
+      gaEvent("run_json_path");
       onClose();
     } catch (error) {
       if (error instanceof Error) toast.error(error.message);

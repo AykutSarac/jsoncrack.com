@@ -18,7 +18,6 @@ import { AiOutlineInfoCircle } from "react-icons/ai";
 import { FaArrowRightLong, FaCircleCheck } from "react-icons/fa6";
 import { SEO } from "src/constants/seo";
 import Layout from "src/layout/Layout";
-import { gaEvent } from "src/lib/utils/gaEvent";
 
 export const PRICING = {
   MONTHLY: 7,
@@ -182,7 +181,6 @@ export const PricingCards = () => {
             variant="white"
             fw={600}
             color="#202842"
-            onClick={() => gaEvent("Pricing", "click upgrade premium")}
             href={isMonthly ? purchaseLinks.monthly : purchaseLinks.annual}
             target="_blank"
             size="md"

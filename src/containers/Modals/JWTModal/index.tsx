@@ -2,7 +2,7 @@ import React from "react";
 import type { ModalProps } from "@mantine/core";
 import { Modal, Button, Textarea, Divider, Group } from "@mantine/core";
 import { decode } from "jsonwebtoken";
-import { gaEvent } from "src/lib/utils/gaEvent";
+import { event as gaEvent } from "nextjs-google-analytics";
 import useFile from "src/store/useFile";
 
 export const JWTModal = ({ opened, onClose }: ModalProps) => {
@@ -14,7 +14,7 @@ export const JWTModal = ({ opened, onClose }: ModalProps) => {
     const json = decode(token);
     setContents({ contents: JSON.stringify(json, null, 2) });
 
-    gaEvent("JWT Modal", "resolve");
+    gaEvent("resolve_jwt");
     setToken("");
     onClose();
   };

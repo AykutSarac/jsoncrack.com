@@ -1,6 +1,7 @@
 import React from "react";
 import { Menu, Flex } from "@mantine/core";
 import { JSONSchemaFaker } from "json-schema-faker";
+import { event as gaEvent } from "nextjs-google-analytics";
 import toast from "react-hot-toast";
 import { CgChevronDown } from "react-icons/cg";
 import { FaRandom } from "react-icons/fa";
@@ -8,7 +9,6 @@ import { FaWandMagicSparkles } from "react-icons/fa6";
 import { MdCompare, MdFilterListAlt } from "react-icons/md";
 import { SiJsonwebtokens } from "react-icons/si";
 import { VscSearchFuzzy, VscJson, VscGroupByRefType, VscLock } from "react-icons/vsc";
-import { gaEvent } from "src/lib/utils/gaEvent";
 import { jsonToContent } from "src/lib/utils/jsonAdapter";
 import useFile from "src/store/useFile";
 import useJson from "src/store/useJson";
@@ -38,7 +38,7 @@ export const ToolsMenu = () => {
       const contents = await jsonToContent(JSON.stringify(randomJson, null, 2), getFormat());
       setContents({ contents });
 
-      gaEvent("Tools Menu", "generate mock data");
+      gaEvent("randomize_data");
     } catch (error) {
       console.error(error);
       toast.error("Failed to generate mock data");
@@ -48,7 +48,7 @@ export const ToolsMenu = () => {
   return (
     <Menu shadow="md" withArrow>
       <Menu.Target>
-        <Styles.StyledToolElement onClick={() => gaEvent("Tools Menu", "toggle menu")}>
+        <Styles.StyledToolElement onClick={() => gaEvent("show_tools_menu")}>
           <Flex align="center" gap={3}>
             Tools <CgChevronDown />
           </Flex>
@@ -60,7 +60,7 @@ export const ToolsMenu = () => {
           leftSection={<VscSearchFuzzy />}
           onClick={() => {
             setVisible("jq")(true);
-            gaEvent("Tools Menu", "open", "JSON Query");
+            gaEvent("open_jq_modal");
           }}
         >
           JSON Query (jq)
@@ -70,7 +70,7 @@ export const ToolsMenu = () => {
           leftSection={<VscJson />}
           onClick={() => {
             setVisible("schema")(true);
-            gaEvent("Tools Menu", "open", "JSON Schema");
+            gaEvent("open_schema_modal");
           }}
         >
           JSON Schema
@@ -80,7 +80,7 @@ export const ToolsMenu = () => {
           leftSection={<MdFilterListAlt />}
           onClick={() => {
             setVisible("jpath")(true);
-            gaEvent("Tools Menu", "open", "JSON Path");
+            gaEvent("open_json_path_modal");
           }}
         >
           JSON Path
@@ -92,7 +92,7 @@ export const ToolsMenu = () => {
           rightSection={<VscLock />}
           onClick={() => {
             setVisible("upgrade")(true);
-            gaEvent("Tools Menu", "open", "AI Filter");
+            gaEvent("open_ai_filter_modal");
           }}
         >
           AI-Powered Filter
@@ -102,7 +102,7 @@ export const ToolsMenu = () => {
           leftSection={<SiJsonwebtokens />}
           onClick={() => {
             setVisible("jwt")(true);
-            gaEvent("Tools Menu", "open", "Decode JWT");
+            gaEvent("open_jwt_modal");
           }}
         >
           Decode JWT
@@ -112,7 +112,7 @@ export const ToolsMenu = () => {
           leftSection={<VscGroupByRefType />}
           onClick={() => {
             setVisible("type")(true);
-            gaEvent("Tools Menu", "open", "Generate Type");
+            gaEvent("open_type_modal");
           }}
         >
           Generate Type
@@ -126,7 +126,7 @@ export const ToolsMenu = () => {
           rightSection={<VscLock />}
           onClick={() => {
             setVisible("upgrade")(true);
-            gaEvent("Tools Menu", "open", "Compare Data");
+            gaEvent("open_compare_data_modal");
           }}
         >
           Compare Data

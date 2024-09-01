@@ -1,8 +1,8 @@
 import React from "react";
 import { Menu, Flex, Input, Text } from "@mantine/core";
 import { getHotkeyHandler, useHotkeys } from "@mantine/hooks";
+import { event as gaEvent } from "nextjs-google-analytics";
 import { CgChevronDown } from "react-icons/cg";
-import { gaEvent } from "src/lib/utils/gaEvent";
 import useGraph from "src/modules/GraphView/stores/useGraph";
 import * as Styles from "./styles";
 
@@ -27,7 +27,7 @@ export const ZoomMenu = () => {
   return (
     <Menu shadow="md" trigger="click" closeOnItemClick={false} withArrow>
       <Menu.Target>
-        <Styles.StyledToolElement onClick={() => gaEvent("Zoom Menu", "open menu")}>
+        <Styles.StyledToolElement onClick={() => gaEvent("show_zoom_menu")}>
           <Flex gap={4} align="center">
             {Math.round(zoomFactor * 100)}%
             <CgChevronDown />
@@ -49,7 +49,7 @@ export const ZoomMenu = () => {
           rightSection="+"
           onClick={() => {
             zoomIn();
-            gaEvent("Zoom Menu", "zoom in");
+            gaEvent("zoom_in");
           }}
         >
           <Text size="xs">Zoom in</Text>
@@ -58,7 +58,7 @@ export const ZoomMenu = () => {
           rightSection="-"
           onClick={() => {
             zoomOut();
-            gaEvent("Zoom Menu", "zoom out");
+            gaEvent("zoom_out");
           }}
         >
           <Text size="xs">Zoom out</Text>
@@ -67,7 +67,7 @@ export const ZoomMenu = () => {
           rightSection="⇧ 1"
           onClick={() => {
             centerView();
-            gaEvent("Zoom Menu", "center view");
+            gaEvent("center_view");
           }}
         >
           <Text size="xs">Zoom to fit</Text>
@@ -75,7 +75,7 @@ export const ZoomMenu = () => {
         <Menu.Item
           onClick={() => {
             setZoomFactor(50 / 100);
-            gaEvent("Zoom Menu", "zoom to 50%");
+            gaEvent("zoom_50%");
           }}
         >
           <Text size="xs">Zoom to %50</Text>
@@ -84,7 +84,7 @@ export const ZoomMenu = () => {
           rightSection="⇧ 0"
           onClick={() => {
             setZoomFactor(100 / 100);
-            gaEvent("Zoom Menu", "zoom to 100%");
+            gaEvent("zoom_100%");
           }}
         >
           <Text size="xs">Zoom to %100</Text>
@@ -92,7 +92,7 @@ export const ZoomMenu = () => {
         <Menu.Item
           onClick={() => {
             setZoomFactor(200 / 100);
-            gaEvent("Zoom Menu", "zoom to 200%");
+            gaEvent("zoom_200%");
           }}
         >
           <Text size="xs">Zoom to %200</Text>
