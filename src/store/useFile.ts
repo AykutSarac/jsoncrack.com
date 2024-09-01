@@ -1,4 +1,5 @@
 import debounce from "lodash.debounce";
+import { event as gaEvent } from "nextjs-google-analytics";
 import { toast } from "react-hot-toast";
 import { create } from "zustand";
 import { defaultJson } from "src/constants/data";
@@ -79,6 +80,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
   setFile: fileData => {
     set({ fileData, format: fileData.format || FileFormat.JSON });
     get().setContents({ contents: fileData.content, hasChanges: false });
+    gaEvent("set_content", { label: fileData.format });
   },
   getContents: () => get().contents,
   getFormat: () => get().format,
