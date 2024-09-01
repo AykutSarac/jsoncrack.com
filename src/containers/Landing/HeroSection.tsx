@@ -1,7 +1,7 @@
 import React from "react";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import Link from "next/link";
-import { Stack, Flex, Text, Button, Badge } from "@mantine/core";
+import { Stack, Flex, Button, Badge } from "@mantine/core";
 import styled from "styled-components";
 import { FaChevronRight, FaFire } from "react-icons/fa6";
 
@@ -148,9 +148,6 @@ export const HeroSection = () => {
               Go to Editor
             </Button>
           </Flex>
-          <Text ta="center" size="xs" c="dimmed">
-            Supports JSON, CSV, XML, YAML, TOML
-          </Text>
         </Stack>
       </StyledHeroSectionBody>
     </StyledHeroSection>

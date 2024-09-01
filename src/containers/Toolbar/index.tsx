@@ -1,12 +1,11 @@
 import React from "react";
-import { Text, Flex, Group, Select } from "@mantine/core";
+import { Text, Flex, Group, Select, Image } from "@mantine/core";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
 import { SearchInput } from "src/containers/Toolbar/SearchInput";
 import { FileFormat } from "src/enums/file.enum";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
-import { gaEvent } from "src/lib/utils/gaEvent";
 import useFile from "src/store/useFile";
 import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
@@ -80,14 +79,14 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
       <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
         {!isWidget && (
           <Styles.StyledToolElement
-            onClick={() => {
-              setVisible("upgrade")(true);
-              gaEvent("Toolbar", "click upgrade premium");
-            }}
+            onClick={() => window.open("https://todiagram.com?ref=jsoncrack.com")}
           >
-            <Text c="bright" fw={600} fz="xs">
-              Upgrade Editor
-            </Text>
+            <Flex align="center" gap="4">
+              <Image src="https://todiagram.com/logo.svg" alt="ToDiagram" width={14} height={14} />
+              <Text c="bright" fw={600} fz="xs">
+                ToDiagram
+              </Text>
+            </Flex>
           </Styles.StyledToolElement>
         )}
 

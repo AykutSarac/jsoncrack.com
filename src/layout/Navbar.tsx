@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import { Button } from "@mantine/core";
 import styled from "styled-components";
 import { JSONCrackLogo } from "./JsonCrackLogo";
@@ -60,15 +59,14 @@ export const Navbar = () => {
         </Left>
         <Center>
           <Button
-            component={Link}
-            prefetch={false}
-            href="/#pricing"
+            component="a"
+            href="https://todiagram.com"
             variant="subtle"
             color="black"
             size="md"
             radius="md"
           >
-            Pricing
+            Upgrade
           </Button>
           <Button
             component="a"
@@ -113,7 +111,7 @@ export const Navbar = () => {
             visibleFrom="sm"
             size="md"
           >
-            Free editor
+            Editor
           </Button>
         </Right>
       </StyledNavbar>
