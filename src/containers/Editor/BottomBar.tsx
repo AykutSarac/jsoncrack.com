@@ -1,5 +1,4 @@
 import React from "react";
-import Head from "next/head";
 import { Flex, Popover, Text } from "@mantine/core";
 import styled from "styled-components";
 import { AiOutlineLink, AiOutlineLock, AiOutlineUnlock } from "react-icons/ai";
@@ -106,15 +105,11 @@ export const BottomBar = () => {
 
   React.useEffect(() => {
     setIsPrivate(data?.private ?? true);
+    if (data?.name) window.document.title = `${data.name} | JSON Crack`;
   }, [data]);
 
   return (
     <StyledBottomBar>
-      {data?.name && (
-        <Head>
-          <title>{data.name} | JSON Crack</title>
-        </Head>
-      )}
       <StyledLeft>
         <StyledBottomBarItem onClick={toggleEditor}>
           <BiSolidDockLeft />

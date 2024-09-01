@@ -1,6 +1,3 @@
-export const metaDescription =
-  "JSON Crack Editor is a tool for visualizing into graphs, analyzing, editing, formatting, querying, transforming and validating JSON, CSV, YAML, XML, and more.";
-
 export const images = Object.freeze([
   {
     id: 1,

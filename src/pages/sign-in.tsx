@@ -1,31 +1,34 @@
-import React from "react";
-import Head from "next/head";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import type { PaperProps } from "@mantine/core";
 import {
   TextInput,
   PasswordInput,
-  Paper,
   Button,
-  Divider,
   Anchor,
   Stack,
   Center,
   Text,
+  FocusTrap,
+  Alert,
+  Box,
+  Flex,
 } from "@mantine/core";
-import { toast } from "react-hot-toast";
-import { AiOutlineGithub, AiOutlineGoogle } from "react-icons/ai";
-import Layout from "src/layout/Layout";
+import { NextSeo } from "next-seo";
+import { AiOutlineGithub } from "react-icons/ai";
+import { FcGoogle } from "react-icons/fc";
+import { MdErrorOutline } from "react-icons/md";
+import { SEO } from "src/constants/seo";
+import { AuthLayout } from "src/containers/AuthLayout";
 import { supabase } from "src/lib/api/supabase";
-import { isIframe } from "src/lib/utils/widget";
 import useUser from "src/store/useUser";
 
-export function AuthenticationForm(props: PaperProps) {
+export function AuthenticationForm() {
   const { push } = useRouter();
   const setSession = useUser(state => state.setSession);
   const isAuthenticated = useUser(state => state.isAuthenticated);
-  const [sessionLoading, setSessionLoading] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+  const [loading, setLoading] = React.useState(false);
   const [userData, setUserData] = React.useState({
     name: "",
     email: "",
@@ -34,7 +37,7 @@ export function AuthenticationForm(props: PaperProps) {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSessionLoading(true);
+    setLoading(true);
 
     const { data, error } = await supabase.auth.signInWithPassword({
       email: userData.email,
@@ -42,148 +45,153 @@ export function AuthenticationForm(props: PaperProps) {
     });
 
     if (error) {
-      setSessionLoading(false);
-      return toast.error(error.message);
+      setLoading(false);
+      return setErrorMessage("Incorrect email or password.");
     }
 
-    await setSession(data.session);
+    setSession(data.session);
     push("/editor");
-    setSessionLoading(false);
   };
 
   const handleLoginClick = async (provider: "github" | "google") => {
-    setSessionLoading(true);
     await supabase.auth.signInWithOAuth({
       provider,
-      options: { redirectTo: `${window.location.origin}/editor` },
+      options: { redirectTo: `${window.location.origin}/oauth` },
     });
-    setSessionLoading(false);
   };
 
   if (isAuthenticated) {
     return (
-      <Paper p="lg" maw={400} style={{ textAlign: "center" }}>
+      <Box mt="lg">
         <Text fz="sm" c="dark">
           You are already signed in. Click the button below to go to the editor.
         </Text>
         <Link href="/editor">
-          <Button mt="lg" color="dark" size="lg">
-            GO TO EDITOR
+          <Button mt="lg" color="dark" size="md" radius="md" fullWidth>
+            Go to Editor
           </Button>
         </Link>
-      </Paper>
+      </Box>
     );
   }
 
   return (
-    <Paper {...props} style={{ textAlign: "left" }}>
-      <form onSubmit={onSubmit}>
-        <Stack>
-          <TextInput
-            name="email"
-            required
-            label="Email"
-            placeholder="hello@jsoncrack.com"
-            value={userData.email}
-            onChange={event => setUserData(d => ({ ...d, email: event.target.value }))}
-            radius="sm"
-            style={{ color: "black" }}
-          />
+    <Box>
+      {errorMessage && (
+        <Alert
+          onClose={() => setErrorMessage(null)}
+          color="red"
+          py="xs"
+          mb="lg"
+          icon={<MdErrorOutline color="red" />}
+          withCloseButton
+        >
+          <Text fz="sm" c="red">
+            {errorMessage}
+          </Text>
+        </Alert>
+      )}
+      <FocusTrap>
+        <form onSubmit={onSubmit}>
+          <Stack>
+            <TextInput
+              name="email"
+              type="email"
+              required
+              label="Email"
+              placeholder="hello@jsoncrack.com"
+              value={userData.email}
+              onChange={event => setUserData(d => ({ ...d, email: event.target.value }))}
+              radius="sm"
+              style={{ color: "black" }}
+              withAsterisk={false}
+            />
 
-          <PasswordInput
-            name="password"
-            required
-            label="Password"
-            placeholder="∗∗∗∗∗∗∗∗∗∗∗"
-            value={userData.password}
-            onChange={event => setUserData(d => ({ ...d, password: event.target.value }))}
-            radius="sm"
-            style={{ color: "black" }}
-          />
+            <PasswordInput
+              name="password"
+              required
+              label="Password"
+              placeholder="∗∗∗∗∗∗∗∗∗∗∗"
+              value={userData.password}
+              onChange={event => setUserData(d => ({ ...d, password: event.target.value }))}
+              radius="sm"
+              style={{ color: "black" }}
+              withAsterisk={false}
+            />
 
-          <Button color="dark" type="submit" radius="sm" loading={sessionLoading}>
-            Sign in
-          </Button>
-
-          <Stack gap="sm" mx="auto" align="center">
-            <Anchor component={Link} href="/forgot-password" c="dark" size="xs">
-              Forgot your password?
+            <Anchor
+              component={Link}
+              prefetch={false}
+              href="/forgot-password"
+              c="dimmed"
+              size="xs"
+              ta="right"
+              mt="-sm"
+            >
+              Forgot password?
             </Anchor>
+            <Button color="dark" type="submit" radius="sm" loading={loading}>
+              Sign in
+            </Button>
           </Stack>
-        </Stack>
-      </form>
+        </form>
+      </FocusTrap>
 
-      <Divider my="lg" />
-
-      <Stack mb="md" mt="md">
+      <Flex mt="lg" gap="sm">
         <Button
           radius="sm"
-          leftSection={<AiOutlineGoogle size="20" />}
+          fullWidth
+          leftSection={<FcGoogle size="20" />}
           onClick={() => handleLoginClick("google")}
-          color="red"
-          variant="outline"
+          variant="default"
+          disabled={loading}
         >
-          Sign in with Google
+          Google
         </Button>
         <Button
           radius="sm"
           leftSection={<AiOutlineGithub size="20" />}
           onClick={() => handleLoginClick("github")}
-          color="dark"
-          variant="outline"
+          variant="default"
+          fullWidth
+          disabled={loading}
         >
-          Sign in with GitHub
+          GitHub
         </Button>
-      </Stack>
-    </Paper>
+      </Flex>
+    </Box>
   );
 }
 
 const SignIn = () => {
-  const { isReady, push, query } = useRouter();
-  const hasSession = useUser(state => !!state.user);
-  const setSession = useUser(state => state.setSession);
-  const isPasswordReset = query?.type === "recovery" && !query?.error;
+  const { push, query, pathname } = useRouter();
 
-  React.useEffect(() => {
-    if (isIframe()) {
-      push("/");
-      return;
-    }
-
-    if (!isReady) return;
-
-    if (query?.access_token && query?.refresh_token) {
-      (async () => {
-        const refresh_token = query.refresh_token as string;
-        const access_token = query.access_token as string;
-        const { data, error } = await supabase.auth.setSession({ refresh_token, access_token });
-
-        if (error) return toast.error(error.message);
-        if (data.session) setSession(data.session);
-      })();
-    }
-
-    if (hasSession && !isPasswordReset) push("/editor");
-  }, [isReady, hasSession, push, isPasswordReset, query, setSession]);
-
-  if (!isReady) return null;
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data, error }) => {
+      if (error) return console.error(error);
+      if (!data.session) return;
+      push("/editor");
+    });
+  }, [pathname, push, query.code]);
 
   return (
-    <Layout>
-      <Head>
-        <title>Sign In - JSON Crack</title>
-        <link rel="canonical" href="https://app.jsoncrack.com/sign-in" />
-      </Head>
-      <Paper mt={100} mx="auto" maw={400} p="lg" withBorder>
-        <AuthenticationForm />
-      </Paper>
-      <Center my="xl">
-        <Anchor component={Link} href="/sign-up" c="gray.5" fw="bold">
+    <AuthLayout>
+      <NextSeo
+        {...SEO}
+        title="Sign In - JSON Crack"
+        description="Sign in to your JSON Crack account to create and edit diagrams with ease."
+        canonical="https://jsoncrack.com/sign-in"
+      />
+      <AuthenticationForm />
+      <Center mt={80}>
+        <Anchor component={Link} prefetch={false} href="/sign-up" c="dark" fz="sm">
           Don&apos;t have an account?
+          <Text component="span" fz="sm" c="blue" ml={4}>
+            Sign up
+          </Text>
         </Anchor>
       </Center>
-    </Layout>
+    </AuthLayout>
   );
 };
 

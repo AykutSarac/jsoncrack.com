@@ -1,5 +1,4 @@
 import React from "react";
-import Head from "next/head";
 import {
   Flex,
   Stack,
@@ -14,8 +13,10 @@ import {
   Box,
 } from "@mantine/core";
 import styled from "styled-components";
+import { NextSeo } from "next-seo";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { FaArrowRightLong, FaCircleCheck } from "react-icons/fa6";
+import { SEO } from "src/constants/seo";
 import Layout from "src/layout/Layout";
 import { gaEvent } from "src/lib/utils/gaEvent";
 
@@ -278,10 +279,12 @@ export const PricingCards = () => {
 const Pricing = () => {
   return (
     <>
-      <Head>
-        <title>Pricing - JSON Crack</title>
-        <link rel="canonical" href="https://jsoncrack.com/pricing" />
-      </Head>
+      <NextSeo
+        {...SEO}
+        title="Pricing - JSON Crack"
+        description="Upgrade to JSON Crack Premium for more features and better performance."
+        canonical="https://jsoncrack.com/pricing"
+      />
       <Layout>
         <PricingCards />
       </Layout>

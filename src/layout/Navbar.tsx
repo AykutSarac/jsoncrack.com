@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { Button } from "@mantine/core";
 import styled from "styled-components";
 import { JSONCrackLogo } from "./JsonCrackLogo";
@@ -95,8 +96,8 @@ export const Navbar = () => {
           <Button
             variant="subtle"
             color="black"
-            component="a"
-            href="https://app.jsoncrack.com/sign-in"
+            component={Link}
+            href="/sign-in"
             visibleFrom="sm"
             size="md"
             radius="md"

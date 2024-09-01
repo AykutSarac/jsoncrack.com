@@ -1,16 +1,31 @@
 import React from "react";
-import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { Button, Group, Paper, Stack, TextInput, Text, Anchor, PasswordInput } from "@mantine/core";
-import { toast } from "react-hot-toast";
-import Layout from "src/layout/Layout";
+import {
+  Button,
+  Group,
+  Stack,
+  TextInput,
+  Text,
+  Anchor,
+  PasswordInput,
+  Title,
+  FocusTrap,
+  Alert,
+} from "@mantine/core";
+import { NextSeo } from "next-seo";
+import { MdErrorOutline } from "react-icons/md";
+import { SEO } from "src/constants/seo";
+import { AuthLayout } from "src/containers/AuthLayout";
 import { supabase } from "src/lib/api/supabase";
 
 function ResetPassword() {
+  const { push } = useRouter();
   const [loading, setLoading] = React.useState(false);
   const [password, setPassword] = React.useState("");
   const [password2, setPassword2] = React.useState("");
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+  const [success, setSuccess] = React.useState(false);
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
@@ -22,21 +37,42 @@ function ResetPassword() {
       const { error } = await supabase.auth.updateUser({ password });
       if (error) throw new Error(error.message);
 
-      toast.success("Successfully updated password!");
-      setTimeout(() => window.location.assign("/sign-in"), 2000);
+      setSuccess(true);
+      push("/sign-in");
     } catch (error) {
-      if (error instanceof Error) toast.error(error.message);
+      if (error instanceof Error) setErrorMessage(error.message);
     } finally {
       setLoading(false);
     }
   };
 
-  return (
-    <Paper mx="auto" mt={70} maw={400} p="lg" withBorder>
-      <Text size="lg" w={500} mb="lg">
-        Create New Password
+  if (success) {
+    return (
+      <Text>
+        Password updated successfully.{" "}
+        <Anchor component={Link} href="/sign-in">
+          Sign in
+        </Anchor>
       </Text>
+    );
+  }
 
+  return (
+    <FocusTrap>
+      {errorMessage && (
+        <Alert
+          onClose={() => setErrorMessage(null)}
+          color="red"
+          py="xs"
+          mb="lg"
+          icon={<MdErrorOutline color="red" />}
+          withCloseButton
+        >
+          <Text fz="sm" c="red">
+            {errorMessage}
+          </Text>
+        </Alert>
+      )}
       <form onSubmit={onSubmit}>
         <Stack>
           <PasswordInput
@@ -48,13 +84,16 @@ function ResetPassword() {
             radius="sm"
             placeholder="∗∗∗∗∗∗∗∗∗∗∗"
             style={{ color: "black" }}
+            autoComplete="new-password"
+            data-autofocus
           />
           <PasswordInput
             name="password"
             value={password2}
             onChange={e => setPassword2(e.target.value)}
             required
-            label="Validate Password"
+            label="Confirm Password"
+            autoComplete="new-password"
             radius="sm"
             placeholder="∗∗∗∗∗∗∗∗∗∗∗"
             style={{ color: "black" }}
@@ -67,7 +106,15 @@ function ResetPassword() {
           </Button>
         </Group>
       </form>
-    </Paper>
+      <Stack mt="lg" align="center">
+        <Anchor component={Link} prefetch={false} href="/sign-up" c="dark" fz="sm">
+          Don&apos;t have an account?
+          <Text component="span" fz="sm" c="blue" ml={4}>
+            Sign up
+          </Text>
+        </Anchor>
+      </Stack>
+    </FocusTrap>
   );
 }
 
@@ -76,6 +123,7 @@ const ForgotPassword = () => {
   const [loading, setLoading] = React.useState(false);
   const [email, setEmail] = React.useState("");
   const [success, setSuccess] = React.useState(false);
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
   const isPasswordReset = query?.type === "recovery" && !query?.error;
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -83,12 +131,14 @@ const ForgotPassword = () => {
       e.preventDefault();
       setLoading(true);
 
-      const { error } = await supabase.auth.resetPasswordForEmail(email);
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/forgot-password`,
+      });
       if (error) throw new Error(error.message);
 
       setSuccess(true);
     } catch (error) {
-      if (error instanceof Error) toast.error(error.message);
+      if (error instanceof Error) setErrorMessage(error.message);
       console.error(error);
     } finally {
       setLoading(false);
@@ -96,24 +146,45 @@ const ForgotPassword = () => {
   };
 
   return (
-    <Layout>
-      <Head>
-        <title>Reset Password - JSON Crack</title>
-        <link rel="canonical" href="https://app.jsoncrack.com/forgot-password" />
-        <meta name="robots" content="noindex,nofollow" />
-      </Head>
+    <AuthLayout>
+      <NextSeo
+        {...SEO}
+        title="Reset Password - JSON Crack"
+        noindex
+        nofollow
+        canonical="https://jsoncrack.com/forgot-password"
+      />
+      <Title c="dark.4" order={2} fz="xl" mb={25} fw={600}>
+        {isPasswordReset ? "Create New Password" : "Forgot Password"}
+      </Title>
       {isPasswordReset ? (
         <ResetPassword />
       ) : (
-        <Paper mx="auto" mt={100} maw={400} p="lg" withBorder>
-          <Text size="lg" w={500} c="dark">
-            Reset Password
-          </Text>
-          <Paper pt="lg">
-            {success ? (
+        <>
+          {success ? (
+            <>
               <Text>We&apos;ve sent an email to you, please check your inbox.</Text>
-            ) : (
-              <form onSubmit={onSubmit}>
+              <Button component={Link} href="/sign-in" color="dark" radius="sm" mt="lg" fullWidth>
+                Back to Login
+              </Button>
+            </>
+          ) : (
+            <form onSubmit={onSubmit}>
+              {errorMessage && (
+                <Alert
+                  onClose={() => setErrorMessage(null)}
+                  color="red"
+                  py="xs"
+                  mb="lg"
+                  icon={<MdErrorOutline color="red" />}
+                  withCloseButton
+                >
+                  <Text fz="sm" c="red">
+                    {errorMessage}
+                  </Text>
+                </Alert>
+              )}
+              <FocusTrap>
                 <Stack>
                   <TextInput
                     name="email"
@@ -125,25 +196,29 @@ const ForgotPassword = () => {
                     placeholder="hello@jsoncrack.com"
                     radius="sm"
                     style={{ color: "black" }}
+                    data-autofocus
                   />
                 </Stack>
+              </FocusTrap>
 
-                <Group justify="apart" mt="xl">
-                  <Button color="dark" type="submit" radius="sm" loading={loading} fullWidth>
-                    Reset Password
-                  </Button>
-                </Group>
-                <Stack mt="lg" align="center">
-                  <Anchor component={Link} href="/sign-in" c="dark" size="xs">
-                    Don&apos;t have an account? Sign Up
-                  </Anchor>
-                </Stack>
-              </form>
-            )}
-          </Paper>
-        </Paper>
+              <Group justify="apart" mt="md">
+                <Button color="dark" type="submit" radius="sm" loading={loading} fullWidth>
+                  Reset Password
+                </Button>
+              </Group>
+            </form>
+          )}
+          <Stack mt="lg" align="center">
+            <Anchor component={Link} prefetch={false} href="/sign-up" c="dark" fz="sm">
+              Don&apos;t have an account?
+              <Text component="span" fz="sm" c="blue" ml={4}>
+                Sign up
+              </Text>
+            </Anchor>
+          </Stack>
+        </>
       )}
-    </Layout>
+    </AuthLayout>
   );
 };
 

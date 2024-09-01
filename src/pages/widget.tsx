@@ -1,9 +1,9 @@
 import React from "react";
 import dynamic from "next/dynamic";
-import Head from "next/head";
 import { useRouter } from "next/router";
 import { useMantineColorScheme } from "@mantine/core";
 import { ThemeProvider } from "styled-components";
+import { NextSeo } from "next-seo";
 import toast from "react-hot-toast";
 import { darkTheme, lightTheme } from "src/constants/theme";
 import { Toolbar } from "src/containers/Toolbar";
@@ -68,9 +68,7 @@ const WidgetPage = () => {
 
   return (
     <>
-      <Head>
-        <meta name="robots" content="noindex,nofollow" />
-      </Head>
+      <NextSeo noindex nofollow />
       <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
         <Toolbar isWidget />
         <GraphView isWidget />

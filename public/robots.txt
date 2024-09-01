@@ -3,6 +3,6 @@ Allow: /
 
 User-agent: *
 Disallow: /forgot-password
-Disallow: /sign-in
-Disallow: /sign-up
 Disallow: /widget
+
+Sitemap: https://jsoncrack.com/sitemap.txt

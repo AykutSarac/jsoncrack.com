@@ -1,14 +1,10 @@
 import React from "react";
 import type { ModalProps } from "@mantine/core";
-import { Modal, Group, Button, Avatar, Text, Divider, Paper, Badge } from "@mantine/core";
-import { IoRocketSharp } from "react-icons/io5";
-import { gaEvent } from "src/lib/utils/gaEvent";
-import useModal from "src/store/useModal";
+import { Modal, Group, Button, Avatar, Text, Divider, Paper, Badge, Anchor } from "@mantine/core";
 import useUser from "src/store/useUser";
 
 export const AccountModal = ({ opened, onClose }: ModalProps) => {
   const user = useUser(state => state.user);
-  const setVisible = useModal(state => state.setVisible);
   const logout = useUser(state => state.logout);
 
   const username =
@@ -47,20 +43,17 @@ export const AccountModal = ({ opened, onClose }: ModalProps) => {
           </div>
         </Group>
       </Paper>
-
-      <Divider py="xs" />
+      <Text fz="xs" c="dimmed">
+        If you&apos;re already a premium user, please login at{" "}
+        <Anchor inherit href="https://todiagram.com" target="_blank">
+          ToDiagram
+        </Anchor>
+        .
+      </Text>
+      <Divider my="xs" />
       <Group justify="right">
         <Button
-          variant="default"
-          leftSection={<IoRocketSharp />}
-          onClick={() => {
-            setVisible("upgrade")(true);
-            gaEvent("Account Modal", "click upgrade premium");
-          }}
-        >
-          Upgrade to Premium
-        </Button>
-        <Button
+          variant="light"
           color="red"
           onClick={() => {
             logout();

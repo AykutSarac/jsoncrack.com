@@ -1,9 +1,8 @@
 import React from "react";
-import { Button, Title } from "@mantine/core";
+import Link from "next/link";
+import { Button, Flex, Title, Image } from "@mantine/core";
 import styled from "styled-components";
 import { MdChevronRight } from "react-icons/md";
-import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
-import useModal from "src/store/useModal";
 
 const StyledNotSupported = styled.div`
   position: relative;
@@ -134,9 +133,9 @@ const StyledNotSupported = styled.div`
 `;
 
 const StyledInfo = styled.p`
-  width: 60%;
+  max-width: 500px;
   font-weight: 600;
-  font-size: 20px;
+  font-size: 26px;
   text-align: center;
   color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
 `;
@@ -155,30 +154,31 @@ const StyledContent = styled.div`
 `;
 
 export const NotSupported = () => {
-  const setVisible = useModal(state => state.setVisible);
-
   return (
     <StyledNotSupported>
       <StyledContent>
-        <Title mb="lg" style={{ pointerEvents: "none" }}>
-          <JSONCrackLogo fontSize="4rem" style={{ color: "gray" }} hideLogo />
-        </Title>
+        <Flex align="center" justify="center" gap="16" mb="lg">
+          <Image src="https://todiagram.com/logo.svg" alt="ToDiagram" w="48" h="48" />
+          <Title fz="48" style={{ pointerEvents: "none", mixBlendMode: "difference" }}>
+            ToDiagram
+          </Title>
+        </Flex>
         <StyledInfo>
-          Upgrade to premium for larger data size support. The free version is incapable of handling
-          data of this size!
+          Use ToDiagram for larger data size, faster performance, and more features.
         </StyledInfo>
-
-        <Button
-          mt="lg"
-          size="lg"
-          fw="bolder"
-          color="green"
-          radius="md"
-          rightSection={<MdChevronRight size="24" />}
-          onClick={() => setVisible("upgrade")(true)}
-        >
-          Upgrade Premium
-        </Button>
+        <Link href="https://todiagram.com" target="_blank" passHref>
+          <Button
+            mt="lg"
+            size="lg"
+            fw="bolder"
+            color="#FE634E"
+            autoContrast
+            radius="md"
+            rightSection={<MdChevronRight size="24" />}
+          >
+            Go to ToDiagram
+          </Button>
+        </Link>
       </StyledContent>
 
       <div className="glowing">

@@ -91,10 +91,7 @@ export const OptionsMenu = () => {
         <Menu.Item
           closeMenuOnClick
           leftSection={<VscLock />}
-          onClick={() => {
-            setVisible("upgrade")(true);
-            gaEvent("Options Menu", "toggle dark mode", darkmodeEnabled ? "on" : "off");
-          }}
+          onClick={() => setVisible("upgrade")(true)}
         >
           <Text size="xs">Customize Graph Colors</Text>
         </Menu.Item>

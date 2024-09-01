@@ -1,5 +1,8 @@
 https://jsoncrack.com
 https://jsoncrack.com/pricing
+https://jsoncrack.com/sign-in
+https://jsoncrack.com/sign-up
+https://jsoncrack.com/oauth
 https://jsoncrack.com/forgot-password
 https://jsoncrack.com/editor
 https://jsoncrack.com/docs

@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import type { ModalProps } from "@mantine/core";
 import { Modal, Stack, Button } from "@mantine/core";
 
@@ -8,8 +9,9 @@ export const LoginModal = ({ opened, onClose }: ModalProps) => {
       <Stack py="sm">
         <Button
           variant="default"
-          component="a"
-          href="https://app.jsoncrack.com/sign-in"
+          component={Link}
+          prefetch={false}
+          href="/sign-in"
           rel="noreferrer"
           size="md"
           fullWidth
