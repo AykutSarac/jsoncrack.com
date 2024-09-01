@@ -6,7 +6,6 @@ import { Features } from "src/containers/Landing/Features";
 import { HeroPreview } from "src/containers/Landing/HeroPreview";
 import { HeroSection } from "src/containers/Landing/HeroSection";
 import { PremiumVsFree } from "src/containers/Landing/PremiumVsFree";
-import { Pricing } from "src/containers/Landing/Pricing";
 import Layout from "src/layout/Layout";
 
 export const HomePage = () => {
@@ -26,7 +25,6 @@ export const HomePage = () => {
       <HeroPreview />
       <Features />
       <PremiumVsFree />
-      <Pricing />
       <FAQ />
     </Layout>
   );

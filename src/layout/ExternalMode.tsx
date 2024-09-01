@@ -81,7 +81,7 @@ const ExternalMode = () => {
           <Button
             onClick={closeModal}
             component="a"
-            href="https://jsoncrack.com/pricing"
+            href="https://jsoncrack.com"
             target="_blank"
             variant="outline"
             color="red"
