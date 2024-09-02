@@ -5,7 +5,7 @@
   },
   {
     "title": "Is JSON Crack free?",
-    "content": "JSON Crack offers a free forever plan with open-source access. For advanced features and increased usage limits, you can upgrade to a premium plan."
+    "content": "Yes, JSON Crack is a free-forever open source proect. For upgraded editor you may use ToDiagram.com"
   },
   {
     "title": "Is my data secure?",
@@ -16,28 +16,16 @@
     "content": "Yes, JSON Crack offers robust data conversion capabilities. You can easily convert JSON to YAML, XML to JSON, CSV to JSON and other popular formats."
   },
   {
-    "title": "Can I edit JSON data directly in graphs?",
-    "content": "Yes, as part of the premium plan, you can edit JSON data directly in the editor. This feature allows you to make changes to your data and visualize the results in real-time."
-  },
-  {
     "title": "What kind of data formats are supported?",
     "content": "A wide range of data formats are supported including JSON, YAML, XML, CSV, and TOML."
   },
   {
-    "title": "Can I customize the graph colors?",
-    "content": "Yes, you can customize the colors of the graph to match your brand or personal preferences as part of the premium plan."
-  },
-  {
     "title": "What size of data can I visualize?",
-    "content": "You can visualize data up to 300 KB in size with the free plan and up to 4 MB with premium plan. It might vary depending on the complexity of the data and your hardware."
+    "content": "It supports approximately 300 KB. It might vary depending on the complexity of the data and your hardware."
   },
   {
     "title": "Can I export the generated graphs?",
     "content": "Yes, you can export the generated graphs as PNG, JPEG, or SVG files."
-  },
-  {
-    "title": "I purchased a premium plan, how do I access it?",
-    "content": "After purchasing a premium plan, you should sign up with the email you used during the purchase or log in with the same email. The premium features will be automatically unlocked for you."
   },
   {
     "title": "How to use VS Code extension?",

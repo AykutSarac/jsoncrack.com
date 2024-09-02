@@ -5,7 +5,7 @@ import { FAQ } from "src/containers/Landing/FAQ";
 import { Features } from "src/containers/Landing/Features";
 import { HeroPreview } from "src/containers/Landing/HeroPreview";
 import { HeroSection } from "src/containers/Landing/HeroSection";
-import { PremiumVsFree } from "src/containers/Landing/PremiumVsFree";
+import { SeePremium } from "src/containers/Landing/SeePremium";
 import Layout from "src/layout/Layout";
 
 export const HomePage = () => {
@@ -24,7 +24,7 @@ export const HomePage = () => {
       <HeroSection />
       <HeroPreview />
       <Features />
-      <PremiumVsFree />
+      <SeePremium />
       <FAQ />
     </Layout>
   );

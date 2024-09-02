@@ -9,7 +9,7 @@ const StyledImageWrapper = styled.div`
   padding-top: 30px;
 `;
 
-export const PremiumVsFree = () => {
+export const SeePremium = () => {
   return (
     <Center mx="lg" my={120}>
       <Paper

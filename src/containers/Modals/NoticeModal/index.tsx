@@ -1,6 +1,6 @@
 import React from "react";
 import type { ModalProps } from "@mantine/core";
-import { Button, Center, Divider, Group, Modal, Text } from "@mantine/core";
+import { Anchor, Button, Center, Divider, Group, Modal, Text } from "@mantine/core";
 import { useLocalStorage } from "@mantine/hooks";
 import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
@@ -56,8 +56,11 @@ export const NoticeModal = (props: ModalProps) => {
         </Text>
         <br />
         To ensure you don&apos;t lose any important data, please download your data before the
-        deadline. If you wish to continue using these features, we recommend upgrading to our
-        premium plan, which will allow you to retain full access to these services and more.
+        deadline. If you wish to continue using these features, we recommend upgrading to{" "}
+        <Anchor href="https://todiagram.com" target="_blank">
+          ToDiagram
+        </Anchor>
+        , which will allow you to retain full access to these services and more.
         <br />
         <br />
         Thank you for your understanding and continued support.
