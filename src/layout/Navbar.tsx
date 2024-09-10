@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Button } from "@mantine/core";
+import { Button, Flex, Image, Stack } from "@mantine/core";
 import styled from "styled-components";
 import { JSONCrackLogo } from "./JsonCrackLogo";
 
@@ -43,7 +43,6 @@ const Center = styled.div`
   gap: 6px;
   align-items: center;
   white-space: nowrap;
-  width: 100%;
   justify-content: center;
 
   @media only screen and (max-width: 768px) {
@@ -56,7 +55,13 @@ export const Navbar = () => {
     <StyledNavbarWrapper className="navbar">
       <StyledNavbar>
         <Left>
-          <JSONCrackLogo fontSize="1.2rem" />
+          <Stack gap="0">
+            <JSONCrackLogo fontSize="1.2rem" />
+            <Flex justify="right" align="center" gap="4" fz="8" fw="500" c="black">
+              from
+              <Image src="/assets/todiagram_logo.png" alt="Todiagram Logo" w={60} />
+            </Flex>
+          </Stack>
         </Left>
         <Center>
           <Button
