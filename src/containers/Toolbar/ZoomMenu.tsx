@@ -3,8 +3,8 @@ import { Menu, Flex, Input, Text } from "@mantine/core";
 import { getHotkeyHandler, useHotkeys } from "@mantine/hooks";
 import { event as gaEvent } from "nextjs-google-analytics";
 import { CgChevronDown } from "react-icons/cg";
-import useGraph from "src/modules/GraphView/stores/useGraph";
-import * as Styles from "./styles";
+import useGraph from "src/containers/Editor/components/views/GraphView/stores/useGraph";
+import { StyledToolElement } from "./styles";
 
 export const ZoomMenu = () => {
   const zoomIn = useGraph(state => state.zoomIn);
@@ -27,12 +27,12 @@ export const ZoomMenu = () => {
   return (
     <Menu shadow="md" trigger="click" closeOnItemClick={false} withArrow>
       <Menu.Target>
-        <Styles.StyledToolElement onClick={() => gaEvent("show_zoom_menu")}>
+        <StyledToolElement onClick={() => gaEvent("show_zoom_menu")}>
           <Flex gap={4} align="center">
             {Math.round(zoomFactor * 100)}%
             <CgChevronDown />
           </Flex>
-        </Styles.StyledToolElement>
+        </StyledToolElement>
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Item>

@@ -29,7 +29,7 @@ import { LuDownload } from "react-icons/lu";
 import { SlOptionsVertical } from "react-icons/sl";
 import { VscAdd, VscWarning } from "react-icons/vsc";
 import type { FileFormat } from "src/enums/file.enum";
-import { documentSvc } from "src/services/document.service";
+import { documentSvc } from "src/lib/api/document.service";
 import type { File } from "src/store/useFile";
 import useFile from "src/store/useFile";
 import useModal from "src/store/useModal";
@@ -152,7 +152,9 @@ export const CloudModal = ({ opened, onClose }: ModalProps) => {
             </Badge>
           </Table.Td>
           <Table.Td>{element.name}</Table.Td>
-          <Table.Td>{dayjs(element.updated_at).format("DD MMM YYYY")}</Table.Td>
+          <Table.Td fz="10" c="dimmed" title={dayjs(element.updated_at).format("DD MMM, YYYY")}>
+            {dayjs(element.updated_at).fromNow()}
+          </Table.Td>
           <Table.Td onClick={e => e.stopPropagation()}>
             <Flex gap="xs">
               <Menu position="bottom" withArrow shadow="md">
@@ -219,14 +221,7 @@ export const CloudModal = ({ opened, onClose }: ModalProps) => {
         />
         <ScrollArea h="calc(100vh - 345px)" offsetScrollbars>
           <LoadingOverlay visible={isLoading} />
-          <Table fz="xs" verticalSpacing="xs" highlightOnHover>
-            <Table.Thead>
-              <Table.Tr>
-                <Table.Th>Format</Table.Th>
-                <Table.Th>Name</Table.Th>
-                <Table.Th>Last opened date</Table.Th>
-              </Table.Tr>
-            </Table.Thead>
+          <Table fz="xs" verticalSpacing="4" highlightOnHover>
             <Table.Tbody>{rows}</Table.Tbody>
           </Table>
         </ScrollArea>

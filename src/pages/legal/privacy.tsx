@@ -2,8 +2,8 @@ import React from "react";
 import { Box, Container, Paper, Stack, Text, Title } from "@mantine/core";
 import { NextSeo } from "next-seo";
 import { SEO } from "src/constants/seo";
+import privacy from "src/data/privacy.json";
 import Layout from "src/layout/Layout";
-import privacy from "../../constants/privacy.json";
 
 const Privacy = () => {
   return (

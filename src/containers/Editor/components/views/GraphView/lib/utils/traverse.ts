@@ -1,6 +1,9 @@
 import type { Node, NodeType } from "jsonc-parser";
-import type { Graph, States } from "src/modules/GraphView/lib/jsonParser";
-import { calculateNodeSize } from "src/modules/GraphView/lib/utils/calculateNodeSize";
+import type {
+  Graph,
+  States,
+} from "src/containers/Editor/components/views/GraphView/lib/jsonParser";
+import { calculateNodeSize } from "src/containers/Editor/components/views/GraphView/lib/utils/calculateNodeSize";
 import { addEdgeToGraph } from "./addEdgeToGraph";
 import { addNodeToGraph } from "./addNodeToGraph";
 

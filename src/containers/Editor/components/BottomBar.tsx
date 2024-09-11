@@ -1,8 +1,9 @@
 import React from "react";
+import Link from "next/link";
 import { Flex, Popover, Text } from "@mantine/core";
 import styled from "styled-components";
 import { event as gaEvent } from "nextjs-google-analytics";
-import { AiOutlineLink, AiOutlineLock, AiOutlineUnlock } from "react-icons/ai";
+import { AiOutlineLock, AiOutlineUnlock } from "react-icons/ai";
 import { BiSolidDockLeft } from "react-icons/bi";
 import {
   VscCheck,
@@ -13,7 +14,7 @@ import {
   VscSync,
   VscSyncIgnored,
 } from "react-icons/vsc";
-import useGraph from "src/modules/GraphView/stores/useGraph";
+import useGraph from "src/containers/Editor/components/views/GraphView/stores/useGraph";
 import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
 import useModal from "src/store/useModal";
@@ -114,7 +115,6 @@ export const BottomBar = () => {
         <StyledBottomBarItem onClick={toggleEditor}>
           <BiSolidDockLeft />
         </StyledBottomBarItem>
-
         {fileName && (
           <StyledBottomBarItem onClick={() => setVisible("cloud")(true)}>
             <VscSourceControl />
@@ -149,12 +149,6 @@ export const BottomBar = () => {
             {isPrivate ? "Private" : "Public"}
           </StyledBottomBarItem>
         )}
-        {isAuthenticated && (
-          <StyledBottomBarItem onClick={() => setVisible("notice")(true)}>
-            <AiOutlineLink />
-            Share
-          </StyledBottomBarItem>
-        )}
         <StyledBottomBarItem
           onClick={() => {
             toggleLiveTransform(!liveTransformEnabled);
@@ -174,10 +168,12 @@ export const BottomBar = () => {
 
       <StyledRight>
         <StyledBottomBarItem>Nodes: {nodeCount}</StyledBottomBarItem>
-        <StyledBottomBarItem onClick={() => setVisible("review")(true)}>
-          <VscFeedback />
-          Feedback
-        </StyledBottomBarItem>
+        <Link href="https://github.com/AykutSarac/jsoncrack.com/discussions" target="_blank">
+          <StyledBottomBarItem>
+            <VscFeedback />
+            Feedback
+          </StyledBottomBarItem>
+        </Link>
       </StyledRight>
     </StyledBottomBar>
   );

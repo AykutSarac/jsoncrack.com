@@ -16,7 +16,7 @@ import {
 import { NextSeo } from "next-seo";
 import { MdErrorOutline } from "react-icons/md";
 import { SEO } from "src/constants/seo";
-import { AuthLayout } from "src/containers/AuthLayout";
+import { AuthLayout } from "src/layout/AuthLayout";
 import { supabase } from "src/lib/api/supabase";
 
 function ResetPassword() {

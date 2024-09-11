@@ -1,7 +1,7 @@
 import React from "react";
 import type { NodeProps } from "reaflow";
 import { Node } from "reaflow";
-import useGraph from "src/modules/GraphView/stores/useGraph";
+import useGraph from "src/containers/Editor/components/views/GraphView/stores/useGraph";
 import useModal from "src/store/useModal";
 import type { NodeData } from "src/types/graph";
 import { ObjectNode } from "./ObjectNode";

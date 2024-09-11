@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { Anchor, Button, Center, Text } from "@mantine/core";
 import { NextSeo } from "next-seo";
 import { SEO } from "src/constants/seo";
-import { AuthLayout } from "src/containers/AuthLayout";
+import { AuthLayout } from "src/layout/AuthLayout";
 import { supabase } from "src/lib/api/supabase";
 
 const SignUp = () => {

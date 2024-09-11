@@ -40,5 +40,3 @@ npm-debug.log*
 **/public/fallback-*.js
 # Sentry Auth Token
 .sentryclirc
-
-/src/migration

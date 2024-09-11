@@ -2,8 +2,8 @@ import React from "react";
 import { Box, Container, Paper, Stack, Text, Title } from "@mantine/core";
 import { NextSeo } from "next-seo";
 import { SEO } from "src/constants/seo";
+import terms from "src/data/terms.json";
 import Layout from "src/layout/Layout";
-import terms from "../../constants/terms.json";
 
 const Terms = () => {
   return (

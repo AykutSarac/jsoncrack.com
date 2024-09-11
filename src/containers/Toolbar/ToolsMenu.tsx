@@ -13,7 +13,7 @@ import { jsonToContent } from "src/lib/utils/jsonAdapter";
 import useFile from "src/store/useFile";
 import useJson from "src/store/useJson";
 import useModal from "src/store/useModal";
-import * as Styles from "./styles";
+import { StyledToolElement } from "./styles";
 
 export const ToolsMenu = () => {
   const setVisible = useModal(state => state.setVisible);
@@ -48,11 +48,11 @@ export const ToolsMenu = () => {
   return (
     <Menu shadow="md" withArrow>
       <Menu.Target>
-        <Styles.StyledToolElement onClick={() => gaEvent("show_tools_menu")}>
+        <StyledToolElement onClick={() => gaEvent("show_tools_menu")}>
           <Flex align="center" gap={3}>
             Tools <CgChevronDown />
           </Flex>
-        </Styles.StyledToolElement>
+        </StyledToolElement>
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Item

@@ -3,8 +3,8 @@ import dynamic from "next/dynamic";
 import styled from "styled-components";
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
-import useGraph from "src/modules/GraphView/stores/useGraph";
-import { FullscreenDropzone } from "./FullscreenDropzone";
+import useGraph from "src/containers/Editor/components/views/GraphView/stores/useGraph";
+import { FullscreenDropzone } from "./components/FullscreenDropzone";
 
 export const StyledEditor = styled(Allotment)`
   position: relative !important;
@@ -17,11 +17,11 @@ export const StyledEditor = styled(Allotment)`
   }
 `;
 
-const TextEditor = dynamic(() => import("src/containers/Editor/TextEditor"), {
+const TextEditor = dynamic(() => import("src/containers/Editor/components/TextEditor"), {
   ssr: false,
 });
 
-const LiveEditor = dynamic(() => import("src/containers/Editor/LiveEditor"), {
+const LiveEditor = dynamic(() => import("src/containers/Editor/components/LiveEditor"), {
   ssr: false,
 });
 

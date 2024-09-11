@@ -1,23 +1,36 @@
 import React from "react";
 import { Menu, Flex, Text, SegmentedControl } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
+import styled from "styled-components";
 import { event as gaEvent } from "nextjs-google-analytics";
 import toast from "react-hot-toast";
 import { CgChevronDown } from "react-icons/cg";
+import { TiFlowMerge } from "react-icons/ti";
 import { VscExpandAll, VscCollapseAll, VscTarget } from "react-icons/vsc";
+import useGraph from "src/containers/Editor/components/views/GraphView/stores/useGraph";
 import { ViewMode } from "src/enums/viewMode.enum";
 import useToggleHide from "src/hooks/useToggleHide";
-import { getNextDirection } from "src/lib/utils/getNextDirection";
-import useGraph from "src/modules/GraphView/stores/useGraph";
 import useConfig from "src/store/useConfig";
-import * as Styles from "./styles";
+import type { LayoutDirection } from "src/types/graph";
+import { StyledToolElement } from "./styles";
 
-function rotateLayout(direction: "LEFT" | "RIGHT" | "DOWN" | "UP") {
+const StyledFlowIcon = styled(TiFlowMerge)<{ rotate: number }>`
+  transform: rotate(${({ rotate }) => `${rotate}deg`});
+`;
+
+const getNextDirection = (direction: LayoutDirection) => {
+  if (direction === "RIGHT") return "DOWN";
+  if (direction === "DOWN") return "LEFT";
+  if (direction === "LEFT") return "UP";
+  return "RIGHT";
+};
+
+const rotateLayout = (direction: LayoutDirection) => {
   if (direction === "LEFT") return 90;
   if (direction === "UP") return 180;
   if (direction === "RIGHT") return 270;
   return 360;
-}
+};
 
 export const ViewMenu = () => {
   const { validateHiddenNodes } = useToggleHide();
@@ -65,11 +78,11 @@ export const ViewMenu = () => {
   return (
     <Menu shadow="md" closeOnItemClick={false} withArrow>
       <Menu.Target>
-        <Styles.StyledToolElement onClick={() => gaEvent("show_view_menu")}>
+        <StyledToolElement onClick={() => gaEvent("show_view_menu")}>
           <Flex align="center" gap={3}>
             View <CgChevronDown />
           </Flex>
-        </Styles.StyledToolElement>
+        </StyledToolElement>
       </Menu.Target>
       <Menu.Dropdown>
         <SegmentedControl
@@ -95,7 +108,7 @@ export const ViewMenu = () => {
                 toggleDirection();
                 gaEvent("rotate_layout", { label: direction });
               }}
-              leftSection={<Styles.StyledFlowIcon rotate={rotateLayout(direction || "RIGHT")} />}
+              leftSection={<StyledFlowIcon rotate={rotateLayout(direction || "RIGHT")} />}
               rightSection={
                 <Text ml="md" fz={10} c="dimmed">
                   {coreKey} Shift D

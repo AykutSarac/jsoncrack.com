@@ -1,6 +1,6 @@
 import React from "react";
 import { Container, Title, Accordion } from "@mantine/core";
-import Questions from "src/constants/faq.json";
+import Questions from "src/data/faq.json";
 
 export const FAQ = () => {
   return (

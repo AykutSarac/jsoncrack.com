@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, Flex, Group, Select, Image } from "@mantine/core";
+import styled from "styled-components";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
@@ -16,7 +17,26 @@ import { OptionsMenu } from "./OptionsMenu";
 import { ToolsMenu } from "./ToolsMenu";
 import { ViewMenu } from "./ViewMenu";
 import { ZoomMenu } from "./ZoomMenu";
-import * as Styles from "./styles";
+import { StyledToolElement } from "./styles";
+
+const StyledTools = styled.div`
+  position: relative;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 4px;
+  justify-content: space-between;
+  height: 40px;
+  padding: 4px 8px;
+  background: ${({ theme }) => theme.TOOLBAR_BG};
+  color: ${({ theme }) => theme.SILVER};
+  z-index: 36;
+  border-bottom: 1px solid ${({ theme }) => theme.SILVER_DARK};
+
+  @media only screen and (max-width: 320px) {
+    display: none;
+  }
+`;
 
 function fullscreenBrowser() {
   if (!document.fullscreenElement) {
@@ -39,15 +59,15 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
   const isAuthenticated = useUser(state => state.isAuthenticated);
 
   return (
-    <Styles.StyledTools>
+    <StyledTools>
       {isWidget && <Logo />}
       {!isWidget && (
         <Group gap="xs" justify="left" w="100%" style={{ flexWrap: "nowrap" }}>
-          <Styles.StyledToolElement title="JSON Crack">
+          <StyledToolElement title="JSON Crack">
             <Flex gap="xs" align="center" justify="center">
               <JSONCrackLogo fontSize="0.8rem" hideLogo />
             </Flex>
-          </Styles.StyledToolElement>
+          </StyledToolElement>
 
           <Select
             defaultValue="json"
@@ -70,48 +90,39 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
           <ViewMenu />
           <ToolsMenu />
           {isAuthenticated && (
-            <Styles.StyledToolElement title="Cloud" onClick={() => setVisible("cloud")(true)}>
+            <StyledToolElement title="Cloud" onClick={() => setVisible("cloud")(true)}>
               Cloud
-            </Styles.StyledToolElement>
+            </StyledToolElement>
           )}
         </Group>
       )}
       <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
         {!isWidget && (
-          <Styles.StyledToolElement
-            onClick={() => window.open("https://todiagram.com?ref=jsoncrack.com")}
-          >
+          <StyledToolElement onClick={() => window.open("https://todiagram.com?ref=jsoncrack.com")}>
             <Flex align="center" gap="4">
               <Image src="https://todiagram.com/logo.svg" alt="ToDiagram" width={14} height={14} />
               <Text c="bright" fw={600} fz="xs">
                 ToDiagram
               </Text>
             </Flex>
-          </Styles.StyledToolElement>
+          </StyledToolElement>
         )}
 
         <SearchInput />
         {!isWidget && (
           <>
-            <Styles.StyledToolElement
-              title="Save as Image"
-              onClick={() => setVisible("download")(true)}
-            >
+            <StyledToolElement title="Save as Image" onClick={() => setVisible("download")(true)}>
               <FiDownload size="18" />
-            </Styles.StyledToolElement>
+            </StyledToolElement>
             <ZoomMenu />
             <AccountMenu />
             <OptionsMenu />
-            <Styles.StyledToolElement
-              title="Fullscreen"
-              $hide={isWidget}
-              onClick={fullscreenBrowser}
-            >
+            <StyledToolElement title="Fullscreen" $hide={isWidget} onClick={fullscreenBrowser}>
               <AiOutlineFullscreen size="18" />
-            </Styles.StyledToolElement>
+            </StyledToolElement>
           </>
         )}
       </Group>
-    </Styles.StyledTools>
+    </StyledTools>
   );
 };

@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { GraphView } from "src/containers/Editor/components/views/GraphView";
+import { TreeView } from "src/containers/Editor/components/views/TreeView";
 import { ViewMode } from "src/enums/viewMode.enum";
-import { GraphView } from "src/modules/GraphView";
-import { TreeView } from "src/modules/TreeView";
 import useConfig from "src/store/useConfig";
 
 const StyledLiveEditor = styled.div`

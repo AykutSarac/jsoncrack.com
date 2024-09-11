@@ -9,7 +9,7 @@ import { NextSeo } from "next-seo";
 import { SEO } from "src/constants/seo";
 import { darkTheme, lightTheme } from "src/constants/theme";
 import { Editor } from "src/containers/Editor";
-import { BottomBar } from "src/containers/Editor/BottomBar";
+import { BottomBar } from "src/containers/Editor/components/BottomBar";
 import { Toolbar } from "src/containers/Toolbar";
 import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";

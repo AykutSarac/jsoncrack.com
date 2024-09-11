@@ -6,23 +6,27 @@ import { ThemeProvider } from "styled-components";
 import { NextSeo } from "next-seo";
 import toast from "react-hot-toast";
 import { darkTheme, lightTheme } from "src/constants/theme";
+import useGraph from "src/containers/Editor/components/views/GraphView/stores/useGraph";
 import { Toolbar } from "src/containers/Toolbar";
-import useGraph from "src/modules/GraphView/stores/useGraph";
 import useFile from "src/store/useFile";
+import type { LayoutDirection } from "src/types/graph";
 
 interface EmbedMessage {
   data: {
     json?: string;
     options?: {
       theme?: "light" | "dark";
-      direction?: "LEFT" | "RIGHT" | "DOWN" | "UP";
+      direction?: LayoutDirection;
     };
   };
 }
 
-const GraphView = dynamic(() => import("src/modules/GraphView").then(c => c.GraphView), {
-  ssr: false,
-});
+const GraphView = dynamic(
+  () => import("src/containers/Editor/components/views/GraphView").then(c => c.GraphView),
+  {
+    ssr: false,
+  }
+);
 
 const WidgetPage = () => {
   const { query, push, isReady } = useRouter();

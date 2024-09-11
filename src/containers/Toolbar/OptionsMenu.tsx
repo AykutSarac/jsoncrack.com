@@ -6,7 +6,7 @@ import { MdSettings } from "react-icons/md";
 import { VscLock } from "react-icons/vsc";
 import useConfig from "src/store/useConfig";
 import useModal from "src/store/useModal";
-import * as Styles from "./styles";
+import { StyledToolElement } from "./styles";
 
 export const OptionsMenu = () => {
   const setVisible = useModal(state => state.setVisible);
@@ -27,11 +27,11 @@ export const OptionsMenu = () => {
   return (
     <Menu shadow="md" trigger="click" closeOnItemClick={false} withArrow>
       <Menu.Target>
-        <Styles.StyledToolElement>
+        <StyledToolElement>
           <Flex gap={4}>
             <MdSettings size="18" />
           </Flex>
-        </Styles.StyledToolElement>
+        </StyledToolElement>
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Item

@@ -4,7 +4,7 @@ import { Menu, Avatar, Text } from "@mantine/core";
 import { VscSignIn, VscFeedback, VscSignOut } from "react-icons/vsc";
 import useModal from "src/store/useModal";
 import useUser from "src/store/useUser";
-import * as Styles from "./styles";
+import { StyledToolElement } from "./styles";
 
 export const AccountMenu = () => {
   const user = useUser(state => state.user?.user_metadata);
@@ -16,11 +16,11 @@ export const AccountMenu = () => {
   return (
     <Menu shadow="md" trigger="click" closeOnItemClick={false} withArrow>
       <Menu.Target>
-        <Styles.StyledToolElement>
+        <StyledToolElement>
           <Avatar color={user ? "teal" : "indigo"} variant="filled" size={20} radius="xl">
             {user && "JC"}
           </Avatar>
-        </Styles.StyledToolElement>
+        </StyledToolElement>
       </Menu.Target>
       <Menu.Dropdown>
         {user ? (
@@ -41,13 +41,11 @@ export const AccountMenu = () => {
         {user && (
           <>
             <Menu.Divider />
-            <Menu.Item
-              leftSection={<VscFeedback />}
-              onClick={() => setVisible("review")(true)}
-              closeMenuOnClick
-            >
-              <Text size="xs">Feedback</Text>
-            </Menu.Item>
+            <Link href="https://github.com/AykutSarac/jsoncrack.com/discussions" target="_blank">
+              <Menu.Item leftSection={<VscFeedback />} closeMenuOnClick>
+                <Text size="xs">Feedback</Text>
+              </Menu.Item>
+            </Link>
             <Menu.Item leftSection={<VscSignOut />} onClick={() => logout()} closeMenuOnClick>
               <Text size="xs">Log out</Text>
             </Menu.Item>

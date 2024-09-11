@@ -2,14 +2,51 @@ import debounce from "lodash.debounce";
 import { event as gaEvent } from "nextjs-google-analytics";
 import { toast } from "react-hot-toast";
 import { create } from "zustand";
-import { defaultJson } from "src/constants/data";
 import { FileFormat } from "src/enums/file.enum";
+import { documentSvc } from "src/lib/api/document.service";
+import { isIframe } from "src/lib/utils/helpers";
 import { contentToJson, jsonToContent } from "src/lib/utils/jsonAdapter";
-import { isIframe } from "src/lib/utils/widget";
-import { documentSvc } from "src/services/document.service";
-import useGraph from "../modules/GraphView/stores/useGraph";
+import useGraph from "../containers/Editor/components/views/GraphView/stores/useGraph";
 import useConfig from "./useConfig";
 import useJson from "./useJson";
+
+const defaultJson = JSON.stringify(
+  {
+    squadName: "Super hero squad",
+    homeTown: "Metro City",
+    formed: 2016,
+    secretBase: "Super tower",
+    active: true,
+    members: [
+      {
+        name: "Molecule Man",
+        age: 29,
+        secretIdentity: "Dan Jukes",
+        powers: ["Radiation resistance", "Turning tiny", "Radiation blast"],
+      },
+      {
+        name: "Madame Uppercut",
+        age: 39,
+        secretIdentity: "Jane Wilson",
+        powers: ["Million tonne punch", "Damage resistance", "Superhuman reflexes"],
+      },
+      {
+        name: "Eternal Flame",
+        age: 1000000,
+        secretIdentity: "Unknown",
+        powers: [
+          "Immortality",
+          "Heat Immunity",
+          "Inferno",
+          "Teleportation",
+          "Interdimensional travel",
+        ],
+      },
+    ],
+  },
+  null,
+  2
+);
 
 type SetContents = {
   contents?: string;

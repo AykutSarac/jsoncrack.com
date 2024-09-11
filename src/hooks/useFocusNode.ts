@@ -1,8 +1,8 @@
 import React from "react";
 import { useDebouncedValue } from "@mantine/hooks";
 import { event as gaEvent } from "nextjs-google-analytics";
+import useGraph from "src/containers/Editor/components/views/GraphView/stores/useGraph";
 import { searchQuery, cleanupHighlight, highlightMatchedNodes } from "src/lib/utils/search";
-import useGraph from "src/modules/GraphView/stores/useGraph";
 
 export const useFocusNode = () => {
   const viewPort = useGraph(state => state.viewPort);

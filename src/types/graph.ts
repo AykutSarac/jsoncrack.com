@@ -19,3 +19,5 @@ export interface EdgeData {
   from: string;
   to: string;
 }
+
+export type LayoutDirection = "LEFT" | "RIGHT" | "DOWN" | "UP";

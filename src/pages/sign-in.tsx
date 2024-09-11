@@ -19,7 +19,7 @@ import { AiOutlineGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { MdErrorOutline } from "react-icons/md";
 import { SEO } from "src/constants/seo";
-import { AuthLayout } from "src/containers/AuthLayout";
+import { AuthLayout } from "src/layout/AuthLayout";
 import { supabase } from "src/lib/api/supabase";
 import useUser from "src/store/useUser";
 

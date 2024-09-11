@@ -2,8 +2,14 @@
   "name": "json-crack",
   "private": true,
   "version": "0.0.0",
-  "author": "https://github.com/AykutSarac",
+  "author": {
+    "name": "JSON Crack",
+    "email": "contact@jsoncrack.com"
+  },
   "homepage": "https://jsoncrack.com",
+  "bugs": {
+		"url": "https://github.com/AykutSarac/jsoncrack.com/issues"
+	},
   "scripts": {
     "dev": "next dev",
     "build": "next build",
