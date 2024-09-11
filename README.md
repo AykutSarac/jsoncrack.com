@@ -1,10 +1,10 @@
 <!-- PROJECT LOGO -->
 <p align="center">
   <a href="https://github.com/AykutSarac/jsoncrack.com">
-   <img src="./public/assets/jsoncrack.png" height="300" alt="Logo">
+   <img src="./public/assets/logo.svg" height="50" alt="Logo">
   </a>
 
-  <h3 align="center">JSON Crack (formerly JSON Visio)</h3>
+  <h1 align="center">JSON Crack</h1>
 
   <p align="center">
     The open-source JSON Editor.
@@ -12,6 +12,8 @@
     <a href="https://jsoncrack.com"><strong>Learn more »</strong></a>
     <br />
     <br />
+    <a href="https://todiagram.com">ToDiagram</a>
+    ·
     <a href="https://discord.gg/yVyTtCRueq">Discord</a>
     ·
     <a href="https://jsoncrack.com">Website</a>
@@ -28,7 +30,7 @@
 
 <img width="100%" alt="booking-screen" src="./public/assets/compare/free.webp">
 
-# Visualize JSON into interactive graphs
+## Visualize JSON into interactive graphs
 
 JSON Crack is a free, open-source data visualization app capable of visualizing data formats such as JSON, YAML, XML, CSV and more, into interactive graphs. With its intuitive and user-friendly interface, JSON Crack makes it easy to explore, analyze, and understand even the most complex data structures. Whether you're a developer working on a large-scale project or a data enthusiast looking to uncover hidden insights, JSON Crack has the tools and features you need to unlock the full potential of your data.
 
