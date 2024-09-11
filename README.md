@@ -26,9 +26,9 @@
 
 ## About the Project
 
-<img width="100%" alt="booking-screen" src="./public/assets/preview.png">
+<img width="100%" alt="booking-screen" src="./public/assets/compare/free.webp">
 
-# More Than a JSON Editor
+# Visualize JSON into interactive graphs
 
 JSON Crack is a free, open-source data visualization app capable of visualizing data formats such as JSON, YAML, XML, CSV and more, into interactive graphs. With its intuitive and user-friendly interface, JSON Crack makes it easy to explore, analyze, and understand even the most complex data structures. Whether you're a developer working on a large-scale project or a data enthusiast looking to uncover hidden insights, JSON Crack has the tools and features you need to unlock the full potential of your data.
 
@@ -57,10 +57,10 @@ JSON Crack is a free, open-source data visualization app capable of visualizing 
 ### Built With
 
 - [Next.js](https://nextjs.org/?ref=jsoncrack.com)
-- [Reaflow](https://reaflow.dev/?ref=jsoncrack.com)
 - [React.js](https://reactjs.org/?ref=jsoncrack.com)
-- [Tailwind CSS](https://mantine.dev/?ref=jsoncrack.com)
 - [Supabase](https://supabase.com/?ref=jsoncrack.com)
+- [Reaflow](https://reaflow.dev/?ref=jsoncrack.com)
+- [Monaco Editor](https://github.com/suren-atoyan/monaco-react)
 
 ## Stay Up-to-Date
 
@@ -152,4 +152,4 @@ We have a list of [help wanted](https://github.com/AykutSarac/jsoncrack.com/issu
 
 ## License
 
-Distributed under the [AGPLv3 License](https://github.com/AykutSarac/jsoncrack.com/blob/main/LICENSE). See `LICENSE` for more information.
+See `LICENSE` for more information.
