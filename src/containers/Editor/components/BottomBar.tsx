@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Flex, Popover, Text } from "@mantine/core";
 import styled from "styled-components";
 import { event as gaEvent } from "nextjs-google-analytics";
-import { AiOutlineLock, AiOutlineUnlock } from "react-icons/ai";
 import { BiSolidDockLeft } from "react-icons/bi";
 import {
   VscCheck,
@@ -18,7 +17,6 @@ import useGraph from "src/containers/Editor/components/views/GraphView/stores/us
 import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
 import useModal from "src/store/useModal";
-import useUser from "src/store/useUser";
 
 const StyledBottomBar = styled.div`
   position: relative;
@@ -85,7 +83,6 @@ const StyledBottomBarItem = styled.button<{ $bg?: string }>`
 
 export const BottomBar = () => {
   const data = useFile(state => state.fileData);
-  const user = useUser(state => state.user);
   const toggleLiveTransform = useConfig(state => state.toggleLiveTransform);
   const liveTransformEnabled = useConfig(state => state.liveTransformEnabled);
   const error = useFile(state => state.error);
@@ -94,10 +91,8 @@ export const BottomBar = () => {
   const fileName = useFile(state => state.fileData?.name);
   const toggleFullscreen = useGraph(state => state.toggleFullscreen);
   const fullscreen = useGraph(state => state.fullscreen);
-  const isAuthenticated = useUser(state => state.isAuthenticated);
 
   const setVisible = useModal(state => state.setVisible);
-  const [isPrivate, setIsPrivate] = React.useState(false);
 
   const toggleEditor = () => {
     toggleFullscreen(!fullscreen);
@@ -105,7 +100,6 @@ export const BottomBar = () => {
   };
 
   React.useEffect(() => {
-    setIsPrivate(data?.private ?? true);
     if (data?.name) window.document.title = `${data.name} | JSON Crack`;
   }, [data]);
 
@@ -143,12 +137,6 @@ export const BottomBar = () => {
             </Flex>
           )}
         </StyledBottomBarItem>
-        {isAuthenticated && data?.owner_email === user?.email && (
-          <StyledBottomBarItem onClick={() => setVisible("notice")(true)}>
-            {isPrivate ? <AiOutlineLock /> : <AiOutlineUnlock />}
-            {isPrivate ? "Private" : "Public"}
-          </StyledBottomBarItem>
-        )}
         <StyledBottomBarItem
           onClick={() => {
             toggleLiveTransform(!liveTransformEnabled);
