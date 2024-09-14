@@ -34,15 +34,14 @@
 
 JSON Crack is a free, open-source data visualization app capable of visualizing data formats such as JSON, YAML, XML, CSV and more, into interactive graphs. With its intuitive and user-friendly interface, JSON Crack makes it easy to explore, analyze, and understand even the most complex data structures. Whether you're a developer working on a large-scale project or a data enthusiast looking to uncover hidden insights, JSON Crack has the tools and features you need to unlock the full potential of your data.
 
-- Dark mode.
-- Graph & Tree view modes.
-- Transform & filter data with AI.
-- Export to PNG, SVG, JPEG & clipboard.
-- Zoom and panning support with touch gestures.
-- Supports data formats like JSON, YAML, CSV, XML, TOML...
-- JQ, JSON Schema, Decode JWT, Generate Types and interfaces.
-- Wide range of tools - search graph, json path, validate, save to cloud...
-- Embeddable iframe widgets.
+- **Visualizer/Viewer**: Transform your data into interactive graphs or trees as you type in dark & light modes. Supports JSON, YAML, CSV, XML, and TOML.
+- **Convert**: Convert JSON to CSV, YAML to JSON, XML to JSON, and more. Our JSON converter supports multiple formats for easy data exchange.
+- **Format & Validate**: Format and beautify your JSON data to make it more readable. Validate JSON, YAML, and CSV.
+- **Generate Code**: Generate TypeScript interface, Golang structs, JSON Schema and more.
+- **JSON Schema**: Generate JSON Schema, create mock data, and validate JSON Schema from various data formats like JSON, YAML, XML, and CSV.
+- **Advanced JSON Tools**: Decode JWT, randomize data, execute jq (JSON Query), json path commands.
+- **Download Image**: Export image of the graph as PNG, JPEG, or SVG. Share your data visualization with others.
+- **Secure**: Your data is never stored on our servers. Everything happens on your device.
 
 ## Recognition
 
