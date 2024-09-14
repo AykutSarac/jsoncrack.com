@@ -1,7 +1,7 @@
 import React from "react";
 import { LoadingOverlay } from "@mantine/core";
 import styled from "styled-components";
-import Editor, { loader, useMonaco } from "@monaco-editor/react";
+import Editor, { type EditorProps, loader, useMonaco } from "@monaco-editor/react";
 import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
 
@@ -11,12 +11,13 @@ loader.config({
   },
 });
 
-const editorOptions = {
+const editorOptions: EditorProps["options"] = {
   formatOnPaste: true,
   formatOnType: true,
   minimap: {
     enabled: false,
   },
+  scrollBeyondLastLine: false,
 };
 
 const TextEditor = () => {

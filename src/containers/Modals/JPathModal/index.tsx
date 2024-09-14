@@ -28,7 +28,7 @@ export const JPathModal = ({ opened, onClose }: ModalProps) => {
 
   return (
     <Modal title="JSON Path" size="lg" opened={opened} onClose={onClose} centered>
-      <Stack py="sm">
+      <Stack>
         <Text fz="sm">
           JsonPath expressions always refer to a JSON structure in the same way as XPath expression
           are used in combination with an XML document. The &quot;root member object&quot; in
@@ -48,7 +48,7 @@ export const JPathModal = ({ opened, onClose }: ModalProps) => {
           placeholder="Enter JSON Path..."
           data-autofocus
         />
-        <Group justify="right" mt="sm">
+        <Group justify="right">
           <Button onClick={evaluteJsonPath} disabled={!query.length}>
             Run
           </Button>

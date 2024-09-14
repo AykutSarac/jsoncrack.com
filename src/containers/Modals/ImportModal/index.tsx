@@ -1,6 +1,6 @@
 import React from "react";
 import type { ModalProps } from "@mantine/core";
-import { Modal, Group, Button, TextInput, Stack, Divider, Paper, Text } from "@mantine/core";
+import { Modal, Group, Button, TextInput, Stack, Paper, Text } from "@mantine/core";
 import { Dropzone } from "@mantine/dropzone";
 import { event as gaEvent } from "nextjs-google-analytics";
 import toast from "react-hot-toast";
@@ -93,7 +93,6 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
           </Dropzone>
         </Paper>
       </Stack>
-      <Divider my="xs" />
       <Group justify="right">
         <Button onClick={handleImportFile} disabled={!(file || url)}>
           Import

@@ -20,7 +20,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
       centered
     >
       <Divider mb="xs" fz="md" labelPosition="left" label="Included features" color="dimmed" />
-      <List spacing="xs" c="gray" icon={<IoMdCheckmarkCircleOutline size="24" color="#16a34a" />}>
+      <List spacing="6" c="gray" icon={<IoMdCheckmarkCircleOutline size="24" color="#16a34a" />}>
         <List.Item>Larger data support up to 4 MB</List.Item>
         <List.Item>Edit data directly on visualizations</List.Item>
         <List.Item>Compare data differences on graphs</List.Item>
@@ -34,7 +34,8 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
           color="green"
           fullWidth
           mt="md"
-          size="lg"
+          size="md"
+          fw={500}
           radius="md"
           rightSection={<MdChevronRight size="24" />}
         >

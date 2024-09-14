@@ -1,6 +1,6 @@
 import React from "react";
 import type { ModalProps } from "@mantine/core";
-import { Stack, Modal, Button, Text, Anchor, Divider, Menu, Group } from "@mantine/core";
+import { Stack, Modal, Button, Text, Anchor, Menu, Group, Paper } from "@mantine/core";
 import Editor from "@monaco-editor/react";
 import { event as gaEvent } from "nextjs-google-analytics";
 import { toast } from "react-hot-toast";
@@ -70,7 +70,7 @@ export const SchemaModal = ({ opened, onClose }: ModalProps) => {
 
   return (
     <Modal title="JSON Schema" size="lg" opened={opened} onClose={onClose} centered>
-      <Stack py="sm">
+      <Stack>
         <Text fz="sm">Any validation failures are shown at the bottom toolbar of pane.</Text>
         <Anchor
           fz="sm"
@@ -80,23 +80,25 @@ export const SchemaModal = ({ opened, onClose }: ModalProps) => {
         >
           View Examples <VscLinkExternal />
         </Anchor>
-        <Editor
-          value={schema ?? ""}
-          theme={darkmodeEnabled}
-          onChange={e => setSchema(e!)}
-          height={300}
-          language="json"
-          options={{
-            formatOnPaste: true,
-            formatOnType: true,
-            minimap: {
-              enabled: false,
-            },
-          }}
-        />
-        <Divider my="xs" />
+        <Paper withBorder radius="sm" style={{ overflow: "hidden" }}>
+          <Editor
+            value={schema ?? ""}
+            theme={darkmodeEnabled}
+            onChange={e => setSchema(e!)}
+            height={300}
+            language="json"
+            options={{
+              formatOnPaste: true,
+              formatOnType: true,
+              scrollBeyondLastLine: false,
+              minimap: {
+                enabled: false,
+              },
+            }}
+          />
+        </Paper>
         <Group p="0" justify="right">
-          <Button variant="subtle" onClick={onClear} disabled={!schema}>
+          <Button variant="subtle" color="gray" onClick={onClear} disabled={!schema}>
             Clear
           </Button>
           <Button.Group>
