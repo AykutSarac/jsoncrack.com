@@ -69,7 +69,7 @@ jobs:
         run: pnpm next build
 
       - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: build-files
           path: ./out/_next/static/chunks
