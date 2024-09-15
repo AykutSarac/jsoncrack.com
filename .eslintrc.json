@@ -25,5 +25,5 @@
   },
   "extends": ["next/core-web-vitals", "prettier", "plugin:@typescript-eslint/recommended"],
   "plugins": ["prettier", "unused-imports"],
-  "ignorePatterns": ["src/enums"]
+  "ignorePatterns": ["src/enums", "next.config.js"]
 }
