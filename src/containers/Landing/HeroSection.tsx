@@ -36,7 +36,7 @@ const StyledHeroSectionBody = styled.div`
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  padding: 6rem 10% 8rem;
+  padding: 6rem 10% 4rem;
   overflow: hidden;
   text-align: center;
   gap: 60px;
@@ -112,6 +112,18 @@ export const HeroSection = () => {
               color="red.5"
               leftSection={<FaFire />}
               tt="unset"
+              visibleFrom="xs"
+            >
+              NEW: Now faster & more powerful — ToDiagram.com
+            </Badge>
+            <Badge
+              fw={600}
+              size="sm"
+              variant="outline"
+              color="red.5"
+              leftSection={<FaFire />}
+              tt="unset"
+              hiddenFrom="xs"
             >
               NEW: Now faster & more powerful — ToDiagram.com
             </Badge>
@@ -125,7 +137,7 @@ export const HeroSection = () => {
           <Flex gap="xs" wrap="wrap" justify="center" hiddenFrom="xs">
             <Button
               component="a"
-              color="indigo"
+              color="#202842"
               href="/editor"
               size="md"
               radius="md"
