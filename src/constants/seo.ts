@@ -15,6 +15,10 @@ export const SEO: NextSeoProps = {
       },
     ],
   },
+  twitter: {
+    handle: "@jsoncrack",
+    cardType: "summary_large_image",
+  },
   additionalLinkTags: [
     {
       rel: "manifest",
