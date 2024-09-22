@@ -91,6 +91,7 @@ export const LovedBy = ({ stars }: LovedByProps) => {
             <Image
               src="https://todiagram.com/logo.svg"
               alt="Todiagram Logo"
+              w={14}
               h={14}
               style={{ filter: "brightness(0) saturate(100%) invert(100%)" }}
             />
