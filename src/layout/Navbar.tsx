@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { Button, Flex, Image, Stack } from "@mantine/core";
+import { Button } from "@mantine/core";
 import styled from "styled-components";
 import { JSONCrackLogo } from "./JsonCrackLogo";
 
@@ -55,13 +55,7 @@ export const Navbar = () => {
     <StyledNavbarWrapper className="navbar">
       <StyledNavbar>
         <Left>
-          <Stack gap="0">
-            <JSONCrackLogo fontSize="1.2rem" />
-            <Flex justify="right" align="center" gap="4" fz="8" fw="500" c="black">
-              from
-              <Image src="/assets/todiagram_logo.png" alt="Todiagram Logo" w={60} />
-            </Flex>
-          </Stack>
+          <JSONCrackLogo fontSize="1.2rem" />
         </Left>
         <Center>
           <Button
