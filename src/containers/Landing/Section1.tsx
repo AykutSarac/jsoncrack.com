@@ -117,7 +117,7 @@ export const Section1 = () => {
           </Link>
         </Stack>
         <StyledDottedContainer>
-          <Image className="jc" src="/assets/jsoncrack.svg" alt="json crack" />
+          <Image className="jc" src="/assets/jsoncrack.svg" alt="json crack" loading="lazy" />
           <JsonInput
             w={273}
             rows={12}
