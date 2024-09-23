@@ -1,9 +1,10 @@
 import React from "react";
-import { Text, Flex, Group, Select, Image } from "@mantine/core";
+import { Text, Flex, Group, Select } from "@mantine/core";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
+import { LuCrown } from "react-icons/lu";
 import { SearchInput } from "src/containers/Toolbar/SearchInput";
 import { FileFormat } from "src/enums/file.enum";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
@@ -98,11 +99,11 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
       )}
       <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
         {!isWidget && (
-          <StyledToolElement onClick={() => window.open("https://todiagram.com?ref=jsoncrack.com")}>
-            <Flex align="center" gap="4">
-              <Image src="https://todiagram.com/logo.svg" alt="ToDiagram" width={14} height={14} />
+          <StyledToolElement onClick={() => setVisible("upgrade")(true)} $highlight>
+            <Flex align="center" gap="6">
+              <LuCrown size="16" />
               <Text c="bright" fw={600} fz="xs">
-                ToDiagram
+                Try Pro for 7 days
               </Text>
             </Flex>
           </StyledToolElement>

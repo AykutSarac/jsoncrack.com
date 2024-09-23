@@ -1,12 +1,13 @@
 import styled from "styled-components";
 
-export const StyledToolElement = styled.button<{ $hide?: boolean }>`
+export const StyledToolElement = styled.button<{ $hide?: boolean; $highlight?: boolean }>`
   display: ${({ $hide }) => ($hide ? "none" : "flex")};
   align-items: center;
   gap: 4px;
   place-content: center;
   font-size: 12px;
-  background: none;
+  background: ${({ $highlight }) =>
+    $highlight ? "linear-gradient(rgba(0, 0, 0, 0.1) 0 0)" : "none"};
   color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
   padding: 6px;
   border-radius: 3px;
