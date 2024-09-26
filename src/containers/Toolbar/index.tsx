@@ -103,7 +103,7 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
             <Flex align="center" gap="6">
               <LuCrown size="16" />
               <Text c="bright" fw={600} fz="xs">
-                Try Pro for 7 days
+                Unlock advanced features
               </Text>
             </Flex>
           </StyledToolElement>

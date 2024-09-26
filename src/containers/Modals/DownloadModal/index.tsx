@@ -136,9 +136,9 @@ export const DownloadModal = ({ opened, onClose }: ModalProps) => {
         onChange={e => setExtension(e as Extensions)}
         fullWidth
         data={[
-          { label: "SVG", value: Extensions.SVG },
           { label: "PNG", value: Extensions.PNG },
           { label: "JPEG", value: Extensions.JPEG },
+          { label: "SVG", value: Extensions.SVG },
         ]}
         mb="lg"
       />
