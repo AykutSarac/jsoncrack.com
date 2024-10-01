@@ -153,4 +153,4 @@ We have a list of [help wanted](https://github.com/AykutSarac/jsoncrack.com/issu
 
 ## License
 
-See `LICENSE` for more information.
+See  [`LICENSE`](/LICENSE) for more information.
