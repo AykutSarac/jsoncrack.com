@@ -10,7 +10,6 @@ import { FileFormat } from "src/enums/file.enum";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
 import useFile from "src/store/useFile";
 import useModal from "src/store/useModal";
-import useUser from "src/store/useUser";
 import { AccountMenu } from "./AccountMenu";
 import { FileMenu } from "./FileMenu";
 import { Logo } from "./Logo";
@@ -57,7 +56,6 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
   const setVisible = useModal(state => state.setVisible);
   const setFormat = useFile(state => state.setFormat);
   const format = useFile(state => state.format);
-  const isAuthenticated = useUser(state => state.isAuthenticated);
 
   return (
     <StyledTools>
@@ -90,11 +88,6 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
           <FileMenu />
           <ViewMenu />
           <ToolsMenu />
-          {isAuthenticated && (
-            <StyledToolElement title="Cloud" onClick={() => setVisible("cloud")(true)}>
-              Cloud
-            </StyledToolElement>
-          )}
         </Group>
       )}
       <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>

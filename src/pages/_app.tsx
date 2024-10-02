@@ -10,8 +10,6 @@ import { Toaster } from "react-hot-toast";
 import GlobalStyle from "src/constants/globalStyle";
 import { SEO } from "src/constants/seo";
 import { lightTheme } from "src/constants/theme";
-import { supabase } from "src/lib/api/supabase";
-import useUser from "src/store/useUser";
 
 const theme = createTheme({
   autoContrast: true,
@@ -55,14 +53,6 @@ const theme = createTheme({
 const IS_PROD = process.env.NODE_ENV === "production";
 
 function JsonCrack({ Component, pageProps }: AppProps) {
-  const setSession = useUser(state => state.setSession);
-
-  React.useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) setSession(session);
-    });
-  }, [setSession]);
-
   return (
     <>
       <NextSeo {...SEO} />

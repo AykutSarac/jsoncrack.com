@@ -82,27 +82,6 @@ const Docs = () => {
         </Paper>
         <Paper bg="white" c="black" p="md" radius="md" withBorder>
           <Title mb="sm" order={3} c="dark">
-            # Embed Saved JSON
-          </Title>
-          <StyledContentBody>
-            <Text>
-              Just like fetching from URL above, you can embed saved public json by adding the json
-              id to &quot;json&quot; query{" "}
-              <StyledHighlight>?json=639b65c5a82efc29a24b2de2</StyledHighlight>
-            </Text>
-            <StyledFrame
-              title="Untitled"
-              src="https://codepen.io/AykutSarac/embed/vYaORgM?default-tab=html%2Cresult"
-              loading="lazy"
-            >
-              See the Pen <a href="https://codepen.io/AykutSarac/pen/vYaORgM">Untitled</a> by Aykut
-              Saraç (<a href="https://codepen.io/AykutSarac">@AykutSarac</a>) on{" "}
-              <a href="https://codepen.io">CodePen</a>.
-            </StyledFrame>
-          </StyledContentBody>
-        </Paper>
-        <Paper bg="white" c="black" p="md" radius="md" withBorder>
-          <Title mb="sm" order={3} c="dark">
             # Communicating with API
           </Title>
           <Title order={4}>◼︎ Post Message to Embed</Title>

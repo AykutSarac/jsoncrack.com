@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { CgChevronDown } from "react-icons/cg";
 import { FaRandom } from "react-icons/fa";
 import { FaWandMagicSparkles } from "react-icons/fa6";
+import { LuGlobe } from "react-icons/lu";
 import { MdCompare, MdFilterListAlt } from "react-icons/md";
 import { SiJsonwebtokens } from "react-icons/si";
 import { VscSearchFuzzy, VscJson, VscGroupByRefType, VscLock } from "react-icons/vsc";
@@ -88,17 +89,6 @@ export const ToolsMenu = () => {
         <Menu.Divider />
         <Menu.Item
           fz={12}
-          leftSection={<FaWandMagicSparkles />}
-          rightSection={<VscLock />}
-          onClick={() => {
-            setVisible("upgrade")(true);
-            gaEvent("open_ai_filter_modal");
-          }}
-        >
-          AI-Powered Filter
-        </Menu.Item>
-        <Menu.Item
-          fz={12}
           leftSection={<SiJsonwebtokens />}
           onClick={() => {
             setVisible("jwt")(true);
@@ -119,6 +109,28 @@ export const ToolsMenu = () => {
         </Menu.Item>
         <Menu.Item fz={12} leftSection={<FaRandom />} onClick={randomizeData}>
           Randomize Data
+        </Menu.Item>
+        <Menu.Item
+          fz={12}
+          leftSection={<LuGlobe />}
+          rightSection={<VscLock />}
+          onClick={() => {
+            setVisible("upgrade")(true);
+            gaEvent("rest_client_modal");
+          }}
+        >
+          REST Client
+        </Menu.Item>
+        <Menu.Item
+          fz={12}
+          leftSection={<FaWandMagicSparkles />}
+          rightSection={<VscLock />}
+          onClick={() => {
+            setVisible("upgrade")(true);
+            gaEvent("open_ai_filter_modal");
+          }}
+        >
+          AI-Powered Filter
         </Menu.Item>
         <Menu.Item
           fz={12}

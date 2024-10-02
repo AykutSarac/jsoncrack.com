@@ -9,17 +9,13 @@ type ModalComponent = { key: Modal; component: React.FC<ModalProps> };
 const modalComponents: ModalComponent[] = [
   { key: "import", component: Modals.ImportModal },
   { key: "download", component: Modals.DownloadModal },
-  { key: "cloud", component: Modals.CloudModal },
-  { key: "account", component: Modals.AccountModal },
   { key: "upgrade", component: Modals.UpgradeModal },
-  { key: "login", component: Modals.LoginModal },
   { key: "jwt", component: Modals.JWTModal },
   { key: "node", component: Modals.NodeModal },
   { key: "schema", component: Modals.SchemaModal },
   { key: "jq", component: Modals.JQModal },
   { key: "type", component: Modals.TypeModal },
   { key: "jpath", component: Modals.JPathModal },
-  { key: "notice", component: Modals.NoticeModal },
 ];
 
 const ModalController = () => {

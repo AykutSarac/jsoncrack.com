@@ -3,7 +3,6 @@ import { event as gaEvent } from "nextjs-google-analytics";
 import { toast } from "react-hot-toast";
 import { create } from "zustand";
 import { FileFormat } from "src/enums/file.enum";
-import { documentSvc } from "src/lib/api/document.service";
 import { isIframe } from "src/lib/utils/helpers";
 import { contentToJson, jsonToContent } from "src/lib/utils/jsonAdapter";
 import useGraph from "../containers/Editor/components/views/GraphView/stores/useGraph";
@@ -64,7 +63,6 @@ interface JsonActions {
   setError: (error: string | null) => void;
   setHasChanges: (hasChanges: boolean) => void;
   setContents: (data: SetContents) => void;
-  fetchFile: (fileId: string) => void;
   fetchUrl: (url: string) => void;
   setFormat: (format: FileFormat) => void;
   clear: () => void;
@@ -182,7 +180,6 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
   checkEditorSession: (url, widget) => {
     if (url && typeof url === "string") {
       if (isURL(url)) return get().fetchUrl(url);
-      return get().fetchFile(url);
     }
 
     let contents = defaultJson;
@@ -192,18 +189,6 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
 
     if (format) set({ format });
     get().setContents({ contents, hasChanges: false });
-  },
-  fetchFile: async id => {
-    try {
-      const { data, error } = await documentSvc.getById(id);
-      if (error) throw error;
-
-      if (data?.length) get().setFile(data[0]);
-      if (data?.length === 0) throw new Error("Document not found");
-    } catch (error: any) {
-      if (error?.message) toast.error(error?.message);
-      get().setContents({ contents: defaultJson, hasChanges: false });
-    }
   },
 }));
 

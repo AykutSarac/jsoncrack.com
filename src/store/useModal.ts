@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import type { Modal } from "src/containers/Modals";
-import useUser from "./useUser";
 
 type ModalState = {
   [key in Modal]: boolean;
@@ -11,34 +10,20 @@ interface ModalActions {
 }
 
 const initialStates: ModalState = {
-  cloud: false,
   download: false,
   import: false,
-  account: false,
   node: false,
-  login: false,
   upgrade: false,
   jwt: false,
   schema: false,
   jq: false,
   type: false,
   jpath: false,
-  notice: false,
 };
-
-const authModals: Modal[] = ["cloud", "account"];
 
 const useModal = create<ModalState & ModalActions>()(set => ({
   ...initialStates,
-  setVisible: modal => visible => {
-    const user = useUser.getState();
-
-    if (authModals.includes(modal) && !user.isAuthenticated) {
-      return set({ login: true });
-    }
-
-    set({ [modal]: visible });
-  },
+  setVisible: modal => visible => set({ [modal]: visible }),
 }));
 
 export default useModal;

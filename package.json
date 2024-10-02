@@ -8,8 +8,8 @@
   },
   "homepage": "https://jsoncrack.com",
   "bugs": {
-		"url": "https://github.com/AykutSarac/jsoncrack.com/issues"
-	},
+    "url": "https://github.com/AykutSarac/jsoncrack.com/issues"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -25,7 +25,6 @@
     "@mantine/hooks": "^7.11.2",
     "@monaco-editor/react": "^4.6.0",
     "@sentry/nextjs": "^7.118.0",
-    "@supabase/supabase-js": "^2.44.4",
     "@tanstack/react-query": "^4.36.1",
     "allotment": "^1.20.2",
     "axios": "^1.7.2",

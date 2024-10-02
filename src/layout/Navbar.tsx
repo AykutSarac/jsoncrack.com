@@ -60,16 +60,6 @@ export const Navbar = () => {
         <Center>
           <Button
             component="a"
-            href="https://todiagram.com"
-            variant="subtle"
-            color="black"
-            size="md"
-            radius="md"
-          >
-            Upgrade
-          </Button>
-          <Button
-            component="a"
             href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode"
             target="_blank"
             variant="subtle"
@@ -90,18 +80,28 @@ export const Navbar = () => {
           >
             Open Source
           </Button>
-        </Center>
-        <Right>
           <Button
             variant="subtle"
             color="black"
             component={Link}
-            href="/sign-in"
+            href="/docs"
             visibleFrom="sm"
             size="md"
             radius="md"
           >
-            Log in
+            Docs
+          </Button>
+        </Center>
+        <Right>
+          <Button
+            component="a"
+            href="https://todiagram.com"
+            variant="subtle"
+            color="black"
+            size="md"
+            radius="md"
+          >
+            Upgrade
           </Button>
           <Button
             radius="md"

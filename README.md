@@ -59,7 +59,6 @@ JSON Crack is a free, open-source data visualization app capable of visualizing 
 
 - [Next.js](https://nextjs.org/?ref=jsoncrack.com)
 - [React.js](https://reactjs.org/?ref=jsoncrack.com)
-- [Supabase](https://supabase.com/?ref=jsoncrack.com)
 - [Reaflow](https://reaflow.dev/?ref=jsoncrack.com)
 - [Monaco Editor](https://github.com/suren-atoyan/monaco-react)
 

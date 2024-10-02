@@ -9,14 +9,12 @@ import {
   VscError,
   VscFeedback,
   VscRunAll,
-  VscSourceControl,
   VscSync,
   VscSyncIgnored,
 } from "react-icons/vsc";
 import useGraph from "src/containers/Editor/components/views/GraphView/stores/useGraph";
 import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
-import useModal from "src/store/useModal";
 
 const StyledBottomBar = styled.div`
   position: relative;
@@ -88,11 +86,8 @@ export const BottomBar = () => {
   const error = useFile(state => state.error);
   const setContents = useFile(state => state.setContents);
   const nodeCount = useGraph(state => state.nodes.length);
-  const fileName = useFile(state => state.fileData?.name);
   const toggleFullscreen = useGraph(state => state.toggleFullscreen);
   const fullscreen = useGraph(state => state.fullscreen);
-
-  const setVisible = useModal(state => state.setVisible);
 
   const toggleEditor = () => {
     toggleFullscreen(!fullscreen);
@@ -109,12 +104,6 @@ export const BottomBar = () => {
         <StyledBottomBarItem onClick={toggleEditor}>
           <BiSolidDockLeft />
         </StyledBottomBarItem>
-        {fileName && (
-          <StyledBottomBarItem onClick={() => setVisible("cloud")(true)}>
-            <VscSourceControl />
-            {fileName}
-          </StyledBottomBarItem>
-        )}
         <StyledBottomBarItem>
           {error ? (
             <Popover width="auto" shadow="md" position="top" withArrow>
