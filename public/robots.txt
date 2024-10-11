@@ -1,7 +1,7 @@
 User-agent: *
+
 Allow: /
 
-User-agent: *
-Disallow: /widget
+Disallow: /editor?json=*
 
 Sitemap: https://jsoncrack.com/sitemap.txt
