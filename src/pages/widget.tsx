@@ -72,7 +72,7 @@ const WidgetPage = () => {
 
   return (
     <>
-      <NextSeo noindex nofollow />
+      <NextSeo noindex />
       <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
         <Toolbar isWidget />
         <GraphView isWidget />
