@@ -38,6 +38,7 @@ export const JPathModal = ({ opened, onClose }: ModalProps) => {
             fz="sm"
             target="_blank"
             href="https://docs.oracle.com/cd/E60058_01/PDF/8.0.8.x/8.0.8.0.0/PMF_HTML/JsonPath_Expressions.htm"
+            rel="noopener noreferrer"
           >
             Read documentation. <VscLinkExternal />
           </Anchor>

@@ -26,6 +26,7 @@ export const Footer = () => {
               fz="sm"
               c="gray.5"
               href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode"
+              rel="noopener"
             >
               VS Code
             </Anchor>
@@ -34,6 +35,7 @@ export const Footer = () => {
               fz="sm"
               c="gray.5"
               target="_blank"
+              rel="noopener"
             >
               Open Source
             </Anchor>
@@ -58,12 +60,13 @@ export const Footer = () => {
                 aria-label="LinkedIn"
                 href="https://www.linkedin.com/company/jsoncrack"
                 fz="sm"
+                rel="noopener"
               >
                 <ThemeIcon variant="transparent" color="gray.5">
                   <FaLinkedin size={20} />
                 </ThemeIcon>
               </Anchor>
-              <Anchor aria-label="X" fz="sm" href="https://x.com/jsoncrack">
+              <Anchor aria-label="X" fz="sm" href="https://x.com/jsoncrack" rel="noopener">
                 <ThemeIcon variant="transparent" color="gray.5">
                   <FaXTwitter size={20} />
                 </ThemeIcon>
@@ -72,12 +75,18 @@ export const Footer = () => {
                 aria-label="GitHub"
                 href="https://github.com/AykutSarac/jsoncrack.com"
                 fz="sm"
+                rel="noopener"
               >
                 <ThemeIcon variant="transparent" color="gray.5">
                   <FaGithub size={20} />
                 </ThemeIcon>
               </Anchor>
-              <Anchor aria-label="Discord" fz="sm" href="https://discord.com/invite/yVyTtCRueq">
+              <Anchor
+                aria-label="Discord"
+                fz="sm"
+                href="https://discord.com/invite/yVyTtCRueq"
+                rel="noopener"
+              >
                 <ThemeIcon variant="transparent" color="gray.5">
                   <FaDiscord size={20} />
                 </ThemeIcon>

@@ -27,7 +27,7 @@ const Featured = ({ stars }: LovedByProps) => {
       <StyledFeaturedItem
         href="https://github.com/AykutSarac/jsoncrack.com"
         target="_blank"
-        rel="noreferrer"
+        rel="noopener"
       >
         <FaGithub color="black" size={28} />
         <Text fz="md" fw={600} c="gray.8">
@@ -38,7 +38,7 @@ const Featured = ({ stars }: LovedByProps) => {
       <StyledFeaturedItem
         href="https://news.ycombinator.com/item?id=32626873"
         target="_blank"
-        rel="noreferrer"
+        rel="noopener"
       >
         <FaHackerNews color="#FF6600" size={28} />
         <Text fz="md" fw={600} c="gray.8">
@@ -48,7 +48,7 @@ const Featured = ({ stars }: LovedByProps) => {
       <StyledFeaturedItem
         href="https://www.producthunt.com/products/JSON-Crack"
         target="_blank"
-        rel="noreferrer"
+        rel="noopener"
       >
         <FaProductHunt color="#DA552F" size={28} />
         <Text fz="md" fw={600} c="gray.8">
@@ -68,9 +68,9 @@ export const LovedBy = ({ stars }: LovedByProps) => {
           component="a"
           href="https://twitter.com/intent/post?text=Looking%20to%20understand%20or%20explore%20some%20JSON%3F%20Just%20paste%20or%20upload%20to%20visualize%20it%20as%20a%20graph%20with%20https%3A%2F%2Fjsoncrack.com%20%F0%9F%98%8D%20"
           target="_blank"
-          rel="noreferrer"
           color="black"
           leftSection={<FaXTwitter />}
+          rel="noopener"
         >
           Share on X
         </Button>
@@ -80,6 +80,7 @@ export const LovedBy = ({ stars }: LovedByProps) => {
           target="_blank"
           color="#0077B5"
           leftSection={<FaLinkedin />}
+          rel="noopener"
         >
           Share on LinkedIn
         </Button>

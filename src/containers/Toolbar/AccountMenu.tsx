@@ -20,6 +20,7 @@ export const AccountMenu = () => {
           href="https://todiagram.com/sign-up?utm_source=signup&utm_medium=app&utm_content=toolbar"
           target="_blank"
           leftSection={<VscSignIn />}
+          rel="noopener"
         >
           <Text size="xs">Sign up</Text>
         </Menu.Item>

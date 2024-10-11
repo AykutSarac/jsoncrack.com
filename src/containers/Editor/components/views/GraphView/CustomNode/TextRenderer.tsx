@@ -20,7 +20,7 @@ const isURL = (word: string) => {
 const Linkify = (text: string) => {
   const addMarkup = (word: string) => {
     return isURL(word)
-      ? `<a onclick="event.stopPropagation()" href="${word}" style="text-decoration: underline; pointer-events: all;" target="_blank" rel="noreferrer">${word}</a>`
+      ? `<a onclick="event.stopPropagation()" href="${word}" style="text-decoration: underline; pointer-events: all;" target="_blank" rel="noopener noreferrer">${word}</a>`
       : word;
   };
 

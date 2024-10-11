@@ -76,7 +76,7 @@ export const SchemaModal = ({ opened, onClose }: ModalProps) => {
           fz="sm"
           target="_blank"
           href="https://niem.github.io/json/sample-schema/"
-          rel="noreferrer"
+          rel="noopener noreferrer"
         >
           View Examples <VscLinkExternal />
         </Anchor>

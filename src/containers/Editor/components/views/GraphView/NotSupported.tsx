@@ -166,7 +166,7 @@ export const NotSupported = () => {
         <StyledInfo>
           Use ToDiagram for larger data size, faster performance, and more features.
         </StyledInfo>
-        <Link href="https://todiagram.com" target="_blank" passHref>
+        <Link href="https://todiagram.com" target="_blank" passHref rel="noopener">
           <Button
             mt="lg"
             size="lg"

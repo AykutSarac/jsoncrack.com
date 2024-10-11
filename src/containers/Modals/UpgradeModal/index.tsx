@@ -58,7 +58,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
             <List.Item>Tabs for multiple documents</List.Item>
             <List.Item>...faster, and more</List.Item>
           </List>
-          <Link href="https://todiagram.com" target="_blank" passHref>
+          <Link href="https://todiagram.com" target="_blank" passHref rel="noopener">
             <Button
               color="green"
               fullWidth

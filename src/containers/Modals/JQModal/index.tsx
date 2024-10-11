@@ -19,7 +19,7 @@ export const JQModal = ({ opened, onClose }: ModalProps) => {
             fz="sm"
             target="_blank"
             href="https://jqlang.github.io/jq/manual/"
-            rel="noreferrer"
+            rel="noopener noreferrer"
           >
             Read documentation. <VscLinkExternal />
           </Anchor>

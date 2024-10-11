@@ -64,6 +64,7 @@ export const SeePremium = () => {
               mt="xl"
               rightSection={<FaArrowRightLong />}
               radius="xl"
+              rel="noopener"
             >
               See more
             </Button>

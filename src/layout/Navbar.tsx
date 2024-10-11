@@ -66,6 +66,7 @@ export const Navbar = () => {
             color="black"
             size="md"
             radius="md"
+            rel="noopener"
           >
             VS Code
           </Button>
@@ -77,6 +78,7 @@ export const Navbar = () => {
             color="black"
             size="md"
             radius="md"
+            rel="noopener"
           >
             Open Source
           </Button>
@@ -100,6 +102,7 @@ export const Navbar = () => {
             color="black"
             size="md"
             radius="md"
+            rel="noopener"
           >
             Upgrade
           </Button>
