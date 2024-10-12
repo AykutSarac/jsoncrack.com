@@ -107,7 +107,13 @@ export const HeroSection = () => {
           <Link href="https://todiagram.com?ref=jsoncrack.com" rel="noopener">
             <Flex justify="center" fz="sm" c="gray.8" gap="8" align="center">
               built by
-              <Image src="/assets/todiagram_logo.png" alt="Todiagram Logo" h={14} loading="eager" />
+              <Image
+                src="/assets/todiagram_logo.png"
+                alt="Todiagram Logo"
+                h={14}
+                w="fit-content"
+                loading="eager"
+              />
             </Flex>
           </Link>
           <StyledHeroTitle>Visualize JSON into interactive graphs</StyledHeroTitle>

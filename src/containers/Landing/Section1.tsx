@@ -75,7 +75,7 @@ const StyledDottedContainer = styled.div`
 
 export const Section1 = () => {
   return (
-    <Container size="xl" my="120">
+    <Container size="xl" py="80">
       <Flex justify="center" align="center">
         <Stack maw={634}>
           <Title

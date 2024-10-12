@@ -3,7 +3,7 @@ import { Container, Image } from "@mantine/core";
 
 export const HeroPreview = () => {
   return (
-    <Container component="section" id="preview" fluid mx="lg">
+    <Container component="section" id="preview" fluid py="20" mx="lg">
       <Image
         src="./assets/preview/free.webp"
         loading="eager"

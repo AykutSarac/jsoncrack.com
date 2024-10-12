@@ -61,7 +61,7 @@ const Featured = ({ stars }: LovedByProps) => {
 
 export const LovedBy = ({ stars }: LovedByProps) => {
   return (
-    <Container pos="relative" mx="auto" p={30} fluid>
+    <Container pos="relative" mx="auto" py={80}>
       <Featured stars={stars} />
       <Flex wrap="wrap" justify="center" gap="md" mt="md">
         <Button

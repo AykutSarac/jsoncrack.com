@@ -4,7 +4,7 @@ import Questions from "src/data/faq.json";
 
 export const FAQ = () => {
   return (
-    <Container id="faq" component="section" mt={150}>
+    <Container id="faq" component="section" py={80}>
       <Title
         c="black"
         order={2}

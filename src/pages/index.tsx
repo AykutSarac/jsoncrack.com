@@ -27,10 +27,10 @@ export const HomePage = (props: InferGetStaticPropsType<typeof getStaticProps>) 
       <HeroSection />
       <HeroPreview />
       <Section1 />
-      <Features />
       <SeePremium />
-      <LovedBy stars={props.stars} />
+      <Features />
       <FAQ />
+      <LovedBy stars={props.stars} />
     </Layout>
   );
 };

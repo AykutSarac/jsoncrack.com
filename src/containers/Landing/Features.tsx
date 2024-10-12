@@ -81,7 +81,7 @@ const features: FeatureItem[] = [
 
 export const Features = () => {
   return (
-    <Container component="section" id="features" fluid my={150}>
+    <Container component="section" id="features" fluid py={80}>
       <Container size="xl">
         <Center>
           <Badge
