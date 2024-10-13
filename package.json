@@ -41,7 +41,7 @@
     "jsonwebtoken": "^9.0.2",
     "jxon": "2.0.0-beta.5",
     "lodash.debounce": "^4.0.8",
-    "next": "14.2.3",
+    "next": "14.2.10",
     "next-seo": "^6.5.0",
     "nextjs-google-analytics": "^2.3.7",
     "react": "^18.3.1",
