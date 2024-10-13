@@ -118,8 +118,8 @@ export const HeroSection = () => {
           </Link>
           <StyledHeroTitle>Visualize JSON into interactive graphs</StyledHeroTitle>
           <StyledHeroText>
-            The best JSON viewer tool to <strong>visualize</strong>, <strong>format</strong> and{" "}
-            <strong>modify</strong>.
+            The best online JSON viewer tool to <strong>visualize</strong>, <strong>format</strong>{" "}
+            and <strong>explore</strong>.
           </StyledHeroText>
 
           <Flex gap="xs" wrap="wrap" justify="center" hiddenFrom="xs">

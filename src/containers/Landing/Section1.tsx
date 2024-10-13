@@ -88,7 +88,7 @@ export const Section1 = () => {
             maw={500}
             order={2}
           >
-            Understand complex data quickly
+            Don&apos;t waste time with JSON formatters
           </Title>
           <Text my="md" c="gray.6" fz={16} maw={510}>
             The days of getting lost in lines of code are over. JSON Crack gives you the most
@@ -104,9 +104,9 @@ export const Section1 = () => {
             icon={<LuBadgeCheck size="20" />}
           >
             <SimpleGrid w="fit-content" cols={2}>
+              <List.Item>Clear, concise data presentation</List.Item>
               <List.Item>Fast decision-making</List.Item>
               <List.Item>Grasp patterns and relationships faster</List.Item>
-              <List.Item>Clear, concise data presentation</List.Item>
               <List.Item>Share insights with teams easier</List.Item>
             </SimpleGrid>
           </List>
