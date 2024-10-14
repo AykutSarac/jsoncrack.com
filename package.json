@@ -37,7 +37,7 @@
     "json-schema-faker": "^0.5.6",
     "json_typegen_wasm": "^0.7.0",
     "jsonc-parser": "^3.3.1",
-    "jsonpath-plus": "^9.0.0",
+    "jsonpath-plus": "^10.0.0",
     "jsonwebtoken": "^9.0.2",
     "jxon": "2.0.0-beta.5",
     "lodash.debounce": "^4.0.8",
