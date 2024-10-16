@@ -57,6 +57,8 @@ const StyledHeroTitle = styled.h1`
   width: fit-content;
   line-height: 1.15;
   max-width: 30rem;
+  letter-spacing: -0.75px;
+  word-spacing: 6px;
   font-family: ${plusJakartaSans.style.fontFamily};
 
   @media only screen and (min-width: 576px) {
