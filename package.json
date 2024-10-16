@@ -15,7 +15,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "tsc --project tsconfig.json && eslint src && prettier --check src",
-    "lint:fix": "eslint --fix src & prettier --write src",
+    "lint:fix": "eslint --fix src && prettier --write src",
     "analyze": "ANALYZE=true npm run build"
   },
   "dependencies": {
