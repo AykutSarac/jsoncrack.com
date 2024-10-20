@@ -30,5 +30,9 @@
   {
     "title": "How to use VS Code extension?",
     "content": "You can use the VS Code extension to visualize JSON data directly in your editor. Install the extension from the VS Code marketplace and follow the instructions at extension's page."
+  },
+  {
+    "title": "I've previously subscribed to premium plan, where did it go?",
+    "content": "We have moved the premium features to ToDiagram.com. You can use the same credentials to access the premium features or manage your subscription."
   }
 ]
