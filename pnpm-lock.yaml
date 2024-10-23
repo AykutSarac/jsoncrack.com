@@ -47,6 +47,9 @@ importers:
       jq-web:
         specifier: ^0.5.1
         version: 0.5.1
+      js-cookie:
+        specifier: ^3.0.5
+        version: 3.0.5
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -135,6 +138,9 @@ importers:
       '@trivago/prettier-plugin-sort-imports':
         specifier: ^4.3.0
         version: 4.3.0(prettier@3.3.3)
+      '@types/js-cookie':
+        specifier: ^3.0.6
+        version: 3.0.6
       '@types/js-yaml':
         specifier: ^4.0.9
         version: 4.0.9
@@ -662,6 +668,9 @@ packages:
 
   '@types/estree@1.0.5':
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
+
+  '@types/js-cookie@3.0.6':
+    resolution: {integrity: sha512-wkw9yd1kEXOPnvEeEV1Go1MmxtBJL0RR79aOTAApecWFVu7w0NNXNqhcWgvw2YgZDYadliXkl14pa3WXw5jlCQ==}
 
   '@types/js-yaml@4.0.9':
     resolution: {integrity: sha512-k4MGaQl5TGo/iipqb2UDG2UwjXziSWkh0uysQelTlJpX1qGlpUZYm8PnO4DxG1qBomtJUdYJ6qR6xdIah10JLg==}
@@ -1737,6 +1746,10 @@ packages:
   jq-web@0.5.1:
     resolution: {integrity: sha512-3Fa3E6g3U1O1j46ljy0EM10yRr4txzILga8J7bqOG8F89gZ6Lilz82WG9z6TItWpYEO0YGa4W8yFGj+NMM1xqQ==}
 
+  js-cookie@3.0.5:
+    resolution: {integrity: sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw==}
+    engines: {node: '>=14'}
+
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
@@ -2800,7 +2813,7 @@ snapshots:
 
   '@babel/generator@7.17.7':
     dependencies:
-      '@babel/types': 7.17.0
+      '@babel/types': 7.24.9
       jsesc: 2.5.2
       source-map: 0.5.7
 
@@ -2841,7 +2854,7 @@ snapshots:
 
   '@babel/parser@7.24.8':
     dependencies:
-      '@babel/types': 7.17.0
+      '@babel/types': 7.24.9
 
   '@babel/runtime@7.24.8':
     dependencies:
@@ -3330,6 +3343,8 @@ snapshots:
   '@types/base16@1.0.5': {}
 
   '@types/estree@1.0.5': {}
+
+  '@types/js-cookie@3.0.6': {}
 
   '@types/js-yaml@4.0.9': {}
 
@@ -4598,6 +4613,8 @@ snapshots:
   javascript-natural-sort@0.7.1: {}
 
   jq-web@0.5.1: {}
+
+  js-cookie@3.0.5: {}
 
   js-tokens@4.0.0: {}
 
