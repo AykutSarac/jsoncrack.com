@@ -1,14 +1,7 @@
-# Ignore node modules as they will be installed in the Dockerfile
-node_modules/
-
-# Ignore local configuration and cache files
-.cache/
-.config/
-.DS_Store
-
-# Ignore logs
-*.log
-
-# Ignore test and development files
-*.md
-*.test.js
+Dockerfile
+.dockerignore
+node_modules
+npm-debug.log
+README.md
+.next
+.git
