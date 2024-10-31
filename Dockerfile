@@ -1,20 +1,22 @@
-# Builder
-FROM node:18-alpine as builder
-# Reference :: https://pnpm.io/docker
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
-WORKDIR /src
+FROM node:lts-alpine AS base
 
-# Cache dependencies first
+# Stage 1: Install dependencies
+FROM base AS deps
+WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
-RUN pnpm install
+RUN corepack enable pnpm && pnpm install --frozen-lockfile
 
-# Copy other files and build
-COPY . /src/
-RUN pnpm build
+# Stage 2: Build the application
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+RUN corepack enable pnpm && pnpm run build
 
-# App
-FROM nginxinc/nginx-unprivileged
-COPY --chown=nginx:nginx --from=builder /src/out /app
-COPY default.conf /etc/nginx/conf.d/default.conf
+# Stage 3: Production image
+FROM nginx:stable AS production
+WORKDIR /app
+COPY --from=builder /app/out /app
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
