@@ -32,9 +32,10 @@ const Linkify = (text: string) => {
 
 interface TextRendererProps {
   children: string;
+  fieldColors?: Record<string, string>;
 }
 
-export const TextRenderer = ({ children }: TextRendererProps) => {
+export const TextRenderer = ({ children, fieldColors = {} }: TextRendererProps) => {
   const text = children?.replaceAll('"', "");
 
   if (isURL(text)) return Linkify(text);
@@ -47,7 +48,9 @@ export const TextRenderer = ({ children }: TextRendererProps) => {
       </StyledRow>
     );
   }
-  return <>{children}</>;
+
+  const color = fieldColors[text];
+  return <span style={{ color }}>{children}</span>;
 };
 
 function isColorFormat(colorString: string) {

@@ -26,6 +26,10 @@ function getTextColor({ $value, $type, $parent, theme }: TextColorFn) {
   return theme.NODE_COLORS.NODE_VALUE;
 }
 
+function getDynamicTextColor(fieldColors: Record<string, string>, key: string): string | undefined {
+  return fieldColors[key];
+}
+
 export const StyledLinkItUrl = styled(LinkItUrl)`
   text-decoration: underline;
   pointer-events: all;

@@ -12,6 +12,7 @@ export interface CustomNodeProps {
   x: number;
   y: number;
   hasCollapse?: boolean;
+  fieldColors?: Record<string, string>;
 }
 
 const rootProps = {
@@ -46,7 +47,15 @@ const CustomNodeWrapper = (nodeProps: NodeProps<NodeData["data"]>) => {
           return <ObjectNode node={node as NodeData} x={x} y={y} />;
         }
 
-        return <TextNode node={node as NodeData} hasCollapse={!!data?.childrenCount} x={x} y={y} />;
+        return (
+          <TextNode
+            node={node as NodeData}
+            hasCollapse={!!data?.childrenCount}
+            x={x}
+            y={y}
+            fieldColors={nodeProps.properties.fieldColors}
+          />
+        );
       }}
     </Node>
   );

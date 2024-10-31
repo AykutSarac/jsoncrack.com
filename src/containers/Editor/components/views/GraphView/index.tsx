@@ -86,6 +86,21 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
   const edges = useGraph(state => state.edges);
   const [paneWidth, setPaneWidth] = React.useState(2000);
   const [paneHeight, setPaneHeight] = React.useState(2000);
+  const [fieldColors, setFieldColors] = React.useState<Record<string, string>>({});
+
+  React.useEffect(() => {
+    const fetchFieldColors = async () => {
+      try {
+        const response = await fetch("/api/fieldColors");
+        const data = await response.json();
+        setFieldColors(data);
+      } catch (error) {
+        console.error("Failed to fetch field colors:", error);
+      }
+    };
+
+    fetchFieldColors();
+  }, []);
 
   const onLayoutChange = React.useCallback(
     (layout: ElkRoot) => {
@@ -112,7 +127,7 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
     <Canvas
       className="jsoncrack-canvas"
       onLayoutChange={onLayoutChange}
-      node={p => <CustomNode {...p} />}
+      node={p => <CustomNode {...p} fieldColors={fieldColors} />}
       edge={p => <CustomEdge {...p} />}
       nodes={nodes}
       edges={edges}
