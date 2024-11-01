@@ -13,8 +13,8 @@ export const Footer = () => {
       <Flex justify="space-between">
         <Stack gap={4} visibleFrom="sm">
           <JSONCrackLogo />
-          <Anchor href="mailto:contact@jsoncrack.com" fz="xs" c="dimmed">
-            contact@jsoncrack.com
+          <Anchor href="mailto:contact@todiagram.com" fz="xs" c="dimmed">
+            contact@todiagram.com
           </Anchor>
         </Stack>
         <Flex gap={60} visibleFrom="sm">
