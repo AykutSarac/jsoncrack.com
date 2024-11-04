@@ -88,27 +88,32 @@ export const Section1 = () => {
             maw={500}
             order={2}
           >
-            Don&apos;t waste time with JSON formatters
+            Don't waste time with JSON formatters
           </Title>
           <Text my="md" c="gray.6" fz={16} maw={510}>
             The days of getting lost in lines of code are over. JSON Crack gives you the most
             optimal view of your data so you can make insights faster than ever.
           </Text>
           <List
+            component="ul"
             fz={{
               base: 16,
               xs: 18,
             }}
             fw={500}
-            component={SimpleGrid}
             icon={<LuBadgeCheck size="20" />}
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(2, 1fr)",
+              gap: "1rem",
+              listStyleType: "none",
+              padding: 0,
+            }}
           >
-            <SimpleGrid w="fit-content" cols={2}>
-              <List.Item>Clear, concise data presentation</List.Item>
-              <List.Item>Fast decision-making</List.Item>
-              <List.Item>Grasp patterns and relationships faster</List.Item>
-              <List.Item>Share insights with teams easier</List.Item>
-            </SimpleGrid>
+            <List.Item>Clear, concise data presentation</List.Item>
+            <List.Item>Fast decision-making</List.Item>
+            <List.Item>Grasp patterns and relationships faster</List.Item>
+            <List.Item>Share insights with teams easier</List.Item>
           </List>
           <Link href="/editor" prefetch={false}>
             <Button color="#202842" size="lg" radius="md" w="fit-content" mt="sm">
@@ -119,6 +124,7 @@ export const Section1 = () => {
         <StyledDottedContainer>
           <Image className="jc" src="/assets/jsoncrack.svg" alt="json crack" loading="lazy" />
           <JsonInput
+            aria-label="JSON data"
             w={273}
             rows={12}
             className="jcode"
