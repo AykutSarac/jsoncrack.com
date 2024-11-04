@@ -88,7 +88,7 @@ export const Section1 = () => {
             maw={500}
             order={2}
           >
-            Don't waste time with JSON formatters
+            Don&apos;t waste time with JSON formatters
           </Title>
           <Text my="md" c="gray.6" fz={16} maw={510}>
             The days of getting lost in lines of code are over. JSON Crack gives you the most
