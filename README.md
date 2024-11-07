@@ -124,7 +124,7 @@ docker compose build
 # Run locally with `docker-compose`
 docker compose up
 
-# Go to http://localhost:8080
+# Go to http://localhost:8888
 ```
 
 <!-- LICENSE -->
