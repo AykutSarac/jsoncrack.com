@@ -32,16 +32,16 @@
 
 ## Visualize JSON into interactive graphs
 
-JSON Crack is a free, open-source data visualization app capable of visualizing data formats such as JSON, YAML, XML, CSV and more, into interactive graphs. With its intuitive and user-friendly interface, JSON Crack makes it easy to explore, analyze, and understand even the most complex data structures. Whether you're a developer working on a large-scale project or a data enthusiast looking to uncover hidden insights, JSON Crack has the tools and features you need to unlock the full potential of your data.
+JSON Crack is a tool for visualizing JSON data in a structured, interactive graphs, making it easier to explore, format, and validate JSON. It offers features like converting JSON to other formats (CSV, YAML), generating JSON Schema, executing queries, and exporting visualizations as images. Designed for both readability and usability.
 
-- **Visualizer/Viewer**: Transform your data into interactive graphs or trees as you type in dark & light modes. Supports JSON, YAML, CSV, XML, and TOML.
-- **Convert**: Convert JSON to CSV, YAML to JSON, XML to JSON, and more. Our JSON converter supports multiple formats for easy data exchange.
-- **Format & Validate**: Format and beautify your JSON data to make it more readable. Validate JSON, YAML, and CSV.
-- **Generate Code**: Generate TypeScript interface, Golang structs, JSON Schema and more.
-- **JSON Schema**: Generate JSON Schema, create mock data, and validate JSON Schema from various data formats like JSON, YAML, XML, and CSV.
-- **Advanced JSON Tools**: Decode JWT, randomize data, execute jq (JSON Query), json path commands.
-- **Download Image**: Export image of the graph as PNG, JPEG, or SVG. Share your data visualization with others.
-- **Secure**: Your data is never stored on our servers. Everything happens on your device.
+* **Visualizer**: Instantly convert JSON, YAML, CSV, XML, and TOML into interactive graphs or trees in dark or light mode.
+* **Convert**: Seamlessly transform data formats, like JSON to CSV or XML to JSON, for easy sharing.
+* **Format & Validate**: Beautify and validate JSON, YAML, and CSV for clear and accurate data.
+* **Code Generation**: Generate TypeScript interfaces, Golang structs, and JSON Schema.
+* **JSON Schema**: Create JSON Schema, mock data, and validate various data formats.
+* **Advanced Tools**: Decode JWT, randomize data, and run jq or JSON path queries.
+* **Export Image**: Download your visualization as PNG, JPEG, or SVG.
+* **Privacy**: All data processing is local; nothing is stored on our servers.
 
 ## Recognition
 
@@ -86,7 +86,7 @@ Here is what you need to be able to run JSON Crack.
 
 ### Setup
 
-1. Clone the repo into a public GitHub repository (or fork https://github.com/AykutSarac/jsoncrack.com/fork). If you plan to distribute the code, read the `LICENSE` for additional details.
+1. Clone the repo into a public GitHub repository (or fork https://github.com/AykutSarac/jsoncrack.com/fork). If you plan to distribute the code, read the [`LICENSE`](/LICENSE) for additional details.
 
    ```sh
    git clone https://github.com/AykutSarac/jsoncrack.com.git
@@ -119,37 +119,16 @@ If you want to run JSON Crack locally:
 
 ```console
 # Build a Docker image with:
-docker build -t jsoncrack .
-
-# Run locally with `docker run`
-docker run -p 8888:8080 jsoncrack
+docker compose build
 
 # Run locally with `docker-compose`
-docker-compose up -d
+docker compose up
 
-# Go to http://localhost:8888
+# Go to http://localhost:8080
 ```
-
-<!-- CONTRIBUTING -->
-
-## Contributing
-
-Please see our [contributing guide](/CONTRIBUTING.md).
-
-### Good First Issues
-
-We have a list of [help wanted](https://github.com/AykutSarac/jsoncrack.com/issues?q=is:issue+is:open+label:%22%F0%9F%99%8B%F0%9F%8F%BB%E2%80%8D%E2%99%82%EF%B8%8Fhelp+wanted%22) that contain small features and bugs which have a relatively limited scope. This is a great place to get started, gain experience, and get familiar with our contribution process.
-
-<!-- CONTRIBUTORS -->
-
-### Contributors
-
-<a href="https://github.com/AykutSarac/jsoncrack.com/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=AykutSarac/jsoncrack.com" />
-</a>
 
 <!-- LICENSE -->
 
 ## License
 
-See  [`LICENSE`](/LICENSE) for more information.
+See [`LICENSE`](/LICENSE) for more information.
