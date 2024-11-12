@@ -6,7 +6,7 @@ import { AiOutlineFullscreen } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
 import { LuCrown } from "react-icons/lu";
 import { SearchInput } from "src/containers/Toolbar/SearchInput";
-import { FileFormat } from "src/enums/file.enum";
+import { type FileFormat, formats } from "src/enums/file.enum";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
 import useFile from "src/store/useFile";
 import useModal from "src/store/useModal";
@@ -75,13 +75,7 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
             onChange={e => setFormat(e as FileFormat)}
             miw={80}
             w={120}
-            data={[
-              { value: FileFormat.JSON, label: "JSON" },
-              { value: FileFormat.YAML, label: "YAML" },
-              { value: FileFormat.XML, label: "XML" },
-              { value: FileFormat.TOML, label: "TOML" },
-              { value: FileFormat.CSV, label: "CSV" },
-            ]}
+            data={formats}
             allowDeselect={false}
           />
 
