@@ -4,4 +4,4 @@ Allow: /
 
 Disallow: /editor?json=*
 
-Sitemap: https://jsoncrack.com/sitemap.txt
+Sitemap: https://jsoncrack.com/sitemap.xml
