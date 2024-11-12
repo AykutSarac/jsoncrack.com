@@ -87,6 +87,7 @@ export const Section1 = () => {
             }}
             maw={500}
             order={2}
+            c="gray.9"
           >
             Don&apos;t waste time with JSON formatters
           </Title>
@@ -101,6 +102,7 @@ export const Section1 = () => {
             }}
             fw={500}
             component={SimpleGrid}
+            c="gray.8"
             icon={<LuBadgeCheck size="20" />}
           >
             <SimpleGrid w="fit-content" cols={2}>
