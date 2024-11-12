@@ -28,7 +28,7 @@
 
 ## About the Project
 
-<img width="100%" alt="booking-screen" src="./public/assets/compare/free.webp">
+<img width="100%" alt="booking-screen" src="./public/assets/editor.webp">
 
 ## Visualize JSON into interactive graphs
 

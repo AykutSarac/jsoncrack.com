@@ -5,7 +5,7 @@ export const HeroPreview = () => {
   return (
     <Container component="section" id="preview" fluid py="20" mx="lg">
       <Image
-        src="./assets/preview/free.webp"
+        src="./assets/editor.webp"
         loading="eager"
         maw={1036}
         mx="auto"
