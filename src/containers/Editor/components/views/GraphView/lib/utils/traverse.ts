@@ -5,7 +5,7 @@ import type {
   States,
 } from "src/containers/Editor/components/views/GraphView/lib/jsonParser";
 // import { calculateNodeSize } from "src/containers/Editor/components/views/GraphView/lib/utils/calculateNodeSize";
-import { addEdgeToGraph } from "./addEdgeToGraph";
+// import { addEdgeToGraph } from "./addEdgeToGraph";
 import { addNodeToGraph } from "./addNodeToGraph";
 
 // type PrimitiveOrNullType = "boolean" | "string" | "number" | "null";
@@ -241,21 +241,49 @@ type Traverse = {
 //   }
 // }
 
-export const traverse = ({ objectToTraverse, states, myParentId }: Traverse) => {
-  const graph = states.graph;
-  const { type, children, value } = objectToTraverse;
-  console.log(String(value));
-  console.log(children);
-  const currentId = addNodeToGraph({ graph, text: String(value), type });
-  if (myParentId) {
-    addEdgeToGraph(graph, myParentId, currentId);
-  }
+const dataToString = (data: any) => {
+  const text = Array.isArray(data) ? Object.fromEntries(data) : data;
+  const replacer = (_: string, v: string) => {
+    if (typeof v === "string") return v.replaceAll('"', "");
+    return v;
+  };
 
-  // if (children) {
-  //   children.forEach(child => {
-  //     traverse({ states, objectToTraverse: child, myParentId: currentId });
-  //   });
+  return JSON.stringify(text, replacer, 2);
+};
+
+export const traverse = ({ objectToTraverse, states }: Traverse) => {
+  const graph = states.graph;
+  const { type, children } = objectToTraverse;
+  // const { children } = objectToTraverse;
+
+  // const currentId = addNodeToGraph({ graph, text: String(value), type });
+  // if (myParentId) {
+  //   addEdgeToGraph(graph, myParentId, currentId);
   // }
+
+  let nodeText = "{";
+  if (children) {
+    for (let i = 0; i < children.length; i++) {
+      const child = children[i];
+      if (child.children) {
+        console.log(child.children[0]);
+        console.log(child.children[1]);
+        if (child.children[1].type === "object") {
+          console.log("Parse Object");
+        } else if (child.children[1].type === "array") {
+          console.log("Parse Array");
+        } else {
+          nodeText = nodeText.concat(
+            child.children[0].value + " : " + String(child.children[1].value) + ", "
+          );
+        }
+      }
+    }
+    nodeText = nodeText.slice(0, -2);
+  }
+  nodeText = nodeText.concat("}");
+  console.log(dataToString(nodeText));
+  addNodeToGraph({ graph, text: nodeText, type });
 
   // if (!children) {
   //   handleNoChildren(value, states, graph, myParentId, parentType, nextType);
