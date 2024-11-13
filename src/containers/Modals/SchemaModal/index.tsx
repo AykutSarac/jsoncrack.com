@@ -13,6 +13,7 @@ import useFile from "src/store/useFile";
 export const SchemaModal = ({ opened, onClose }: ModalProps) => {
   const setContents = useFile(state => state.setContents);
   const setJsonSchema = useFile(state => state.setJsonSchema);
+  const darkmodeEnabled = useConfig(state => (state.darkmodeEnabled ? "vs-dark" : "light"));
   const [schema, setSchema] = React.useState(
     JSON.stringify(
       {
@@ -32,7 +33,6 @@ export const SchemaModal = ({ opened, onClose }: ModalProps) => {
       2
     )
   );
-  const darkmodeEnabled = useConfig(state => (state.darkmodeEnabled ? "vs-dark" : "light"));
 
   const onApply = () => {
     try {
