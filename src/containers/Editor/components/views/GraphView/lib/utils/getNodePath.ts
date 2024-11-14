@@ -38,7 +38,9 @@ export function getNodePath(nodes: NodeData[], edges: EdgeData[], nodeId: string
 
     if (!curNode) break;
     if (curNode.data?.type === "array") {
-      resolvedPath += `.${curNode.text}`;
+      if (curNode.text != "") {
+        resolvedPath += `.${curNode.text}`;
+      }
 
       if (i !== path.length - 1) {
         const toNodeId = path[i + 1];
