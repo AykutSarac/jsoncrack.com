@@ -38,7 +38,7 @@ export function getNodePath(nodes: NodeData[], edges: EdgeData[], nodeId: string
 
     if (!curNode) break;
     if (curNode.data?.type === "array") {
-      if (curNode.text != "") {
+      if (curNode.text !== "") {
         resolvedPath += `.${curNode.text}`;
       }
 
@@ -51,7 +51,9 @@ export function getNodePath(nodes: NodeData[], edges: EdgeData[], nodeId: string
     }
 
     if (curNode.data?.type === "object") {
-      resolvedPath += `.${curNode.text}`;
+      if (curNode.text !== "") {
+        resolvedPath += `.${curNode.text}`;
+      }
     }
   }
 
