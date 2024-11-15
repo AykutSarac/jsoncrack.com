@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Button, Container, Flex, Paper, Title, Text } from "@mantine/core";
-import { Editor } from "@monaco-editor/react";
+import { Editor, type OnMount } from "@monaco-editor/react";
 import { JSONSchemaFaker } from "json-schema-faker";
 import { LuCheck, LuXCircle } from "react-icons/lu";
 import { editorOptions } from "src/containers/ConverterLayout/options";
@@ -10,7 +10,7 @@ import { generateType } from "src/lib/utils/generateType";
 import { jsonToContent } from "src/lib/utils/jsonAdapter";
 
 const JSONSchemaTool = () => {
-  const monacoRef = React.useRef<any>(null);
+  const monacoRef = React.useRef<Parameters<OnMount>[1] | null>(null);
   const [jsonError, setJsonError] = React.useState(false);
   const [jsonSchemaError, setJsonSchemaError] = React.useState(false);
   const [json, setJson] = React.useState("");
