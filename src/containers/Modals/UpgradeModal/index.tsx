@@ -110,7 +110,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
             >
               Open ToDiagram Editor
             </Button>
-            <Button size="md" variant="subtle" color="gray" radius="md">
+            <Button size="md" variant="subtle" color="gray" radius="md" onClick={onClose}>
               Maybe later
             </Button>
           </Stack>
