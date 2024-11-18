@@ -31,9 +31,9 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
       <Flex w="100%" direction="row" justify="space-between">
         <Image
           w="100%"
-          maw="320"
+          maw="400"
           h="auto"
-          src="/diagrams.png"
+          src="/diagram.png"
           alt="ToDiagram"
           fit="cover"
           visibleFrom="md"
