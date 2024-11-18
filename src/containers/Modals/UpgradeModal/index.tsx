@@ -1,106 +1,120 @@
 import React from "react";
 import type { ModalProps } from "@mantine/core";
-import { Text, List, Button, Modal, Flex, Box, ThemeIcon, Image, Paper } from "@mantine/core";
-import styled from "styled-components";
-import { IoMdCheckmarkCircleOutline } from "react-icons/io";
-import { MdChevronRight } from "react-icons/md";
-
-const StyledPaper = styled(Paper)<any>`
-  --bg-color: ${({ theme }) => theme.GRID_BG_COLOR};
-  --line-color-1: ${({ theme }) => theme.GRID_COLOR_PRIMARY};
-  --line-color-2: ${({ theme }) => theme.GRID_COLOR_SECONDARY};
-
-  background-color: var(--bg-color);
-  background-image: linear-gradient(var(--line-color-1) 1.5px, transparent 1.5px),
-    linear-gradient(90deg, var(--line-color-1) 1.5px, transparent 1.5px),
-    linear-gradient(var(--line-color-2) 1px, transparent 1px),
-    linear-gradient(90deg, var(--line-color-2) 1px, transparent 1px);
-  background-position:
-    -1.5px -1.5px,
-    -1.5px -1.5px,
-    -1px -1px,
-    -1px -1px;
-  background-size:
-    100px 100px,
-    100px 100px,
-    20px 20px,
-    20px 20px;
-
-  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.1);
-  align-self: center;
-`;
+import {
+  Text,
+  List,
+  Button,
+  Modal,
+  Flex,
+  Box,
+  Image,
+  Stack,
+  Title,
+  CloseButton,
+  ThemeIcon,
+} from "@mantine/core";
+import { LuCrown, LuPuzzle, LuTrendingUp } from "react-icons/lu";
 
 export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
   return (
     <Modal
-      title={
-        <Flex align="center" gap="8">
-          <ThemeIcon variant="transparent">
-            <Image src="https://todiagram.com/logo.svg" alt="ToDiagram" width={20} height={20} />
-          </ThemeIcon>
-          <Text fz="24" fw={600}>
-            Get more with ToDiagram
-          </Text>
-        </Flex>
-      }
-      size="1000"
+      size="auto"
       opened={opened}
       onClose={onClose}
       zIndex={1001}
       centered
       radius="lg"
+      withCloseButton={false}
+      styles={{ body: { padding: 0 } }}
+      overlayProps={{ blur: 1 }}
     >
-      <Flex align="start">
-        <Box px="lg" pb="lg">
-          <Text fz="sm" mb="md">
-            More productivity. More power. Our most-requested features are now available on a
-            refined platform.
-          </Text>
-          <Text fz="md" fw={500} mb="sm">
-            Here&apos;s what you get with ToDiagram:
-          </Text>
-          <List spacing="6" fz="md" icon={<IoMdCheckmarkCircleOutline size="24" color="#16a34a" />}>
-            <List.Item>Load up to 4 MB data</List.Item>
-            <List.Item>Edit data on diagrams</List.Item>
-            <List.Item>Compare data</List.Item>
-            <List.Item>AI-Powered filter</List.Item>
-            <List.Item>Customizable theme</List.Item>
-            <List.Item>Editor tabs</List.Item>
-            <List.Item>5X Faster loading</List.Item>
-            <List.Item>Store 200 Documents</List.Item>
-          </List>
-          <Text fz="md" my="sm">
-            <Text component="span" inherit fw={500}>
-              Cancel anytime.
-            </Text>{" "}
-            Pay monthly or annually.
-          </Text>
-          <Button
-            component="a"
-            href="https://todiagram.com?utm_source=app&utm_medium=upgrade_modal"
-            target="_blank"
-            rel="noopener"
-            color="green"
-            fullWidth
-            mt="md"
-            size="md"
-            fw={500}
-            radius="md"
-            rightSection={<MdChevronRight size="24" />}
-          >
-            Get Started
-          </Button>
+      <Flex w="100%" direction="row" justify="space-between">
+        <Image
+          w="100%"
+          maw="320"
+          h="auto"
+          src="/diagrams.png"
+          alt="ToDiagram"
+          fit="cover"
+          visibleFrom="md"
+          style={{ borderRight: "1px solid #f0f0f0" }}
+        />
+        <Box maw="550" w="100%">
+          <Flex p="20" justify="end">
+            <CloseButton onClick={onClose} />
+          </Flex>
+          <Stack gap="24" px="40" pb="20">
+            <Title c="bright" fw="500" fz="24">
+              Upgrade to unlock all features
+            </Title>
+            <Title c="gray" order={2} fw="500" fz="16">
+              Here&apos;s a peak at what you get with ToDiagram:
+            </Title>
+            <Flex gap="20">
+              <ThemeIcon color="green" variant="light" size="xl" radius="xl">
+                <LuCrown size="20" />
+              </ThemeIcon>
+              <Stack gap="4">
+                <Title c="gray" order={3} fw="500" fz="16">
+                  Accurate & beautiful diagrams
+                </Title>
+                <Text fz="14" c="dimmed">
+                  New diagram structure helps you to understand the data, modify from diagrams,
+                  customize colors, preview images.
+                </Text>
+              </Stack>
+            </Flex>
+            <Flex gap="20">
+              <ThemeIcon color="green" variant="light" size="xl" radius="xl">
+                <LuTrendingUp size="20" />
+              </ThemeIcon>
+              <Stack gap="4">
+                <Title c="gray" order={3} fw="500" fz="16">
+                  Larger file support, faster performance
+                </Title>
+                <Text fz="14" c="dimmed">
+                  Load up to 4MB without performance issues, open multiple documents, and save work
+                  faster.
+                </Text>
+              </Stack>
+            </Flex>
+            <Flex gap="20">
+              <ThemeIcon color="green" variant="light" size="xl" radius="xl">
+                <LuPuzzle size="20" />
+              </ThemeIcon>
+              <Stack gap="4">
+                <Title c="gray" order={3} fw="500" fz="16">
+                  The tools you need to succeed
+                </Title>
+                <Text fz="14" c="dimmed">
+                  Compare data on diagrams, use AI-powered filters, and more. Get the tools you need
+                  to succeed in your work.
+                </Text>
+              </Stack>
+            </Flex>
+            <Title c="bright" mb="-14" order={2} fw="500" fz="16">
+              Ready to upgrade?
+            </Title>
+            <List fz="14">
+              <List.Item>Cancel anytime. No risk, no hassle.</List.Item>
+              <List.Item>7-day money back guarantee.</List.Item>
+            </List>
+            <Button
+              component="a"
+              href="https://todiagram.com/sign-up?utm_source=jsoncrack&utm_medium=upgrade_modal"
+              target="_blank"
+              mb="-16"
+              color="green"
+              size="md"
+              radius="md"
+            >
+              Open ToDiagram Editor
+            </Button>
+            <Button size="md" variant="subtle" color="gray" radius="md">
+              Maybe later
+            </Button>
+          </Stack>
         </Box>
-        <StyledPaper ml="md" withBorder p="16">
-          <Image
-            miw="420"
-            mih="420"
-            mah="500"
-            src="/assets/todiagram_img.webp"
-            alt="ToDiagram"
-            fit="contain"
-          />
-        </StyledPaper>
       </Flex>
     </Modal>
   );
