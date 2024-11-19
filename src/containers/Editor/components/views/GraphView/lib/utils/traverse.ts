@@ -70,9 +70,9 @@ export const traverse = ({ objectToTraverse, states, myParentId }: Traverse) => 
     for (let i = 0; i < children.length; i++) {
       const child = children[i];
       if (child.children) {
-        // If the child is not an object or array it is a property
-        // record it into the nodeText
-        // Otherwise, push it onto the nodes to be traversed
+        // If the child is not an object or array, it is a property;
+        // record it into the nodeText.
+        // Otherwise, push it onto the nodes to be traversed.
         if (child.children[1].type !== "object" && child.children[1].type !== "array") {
           nodeText.push([child.children[0].value, child.children[1].value]);
         } else {
