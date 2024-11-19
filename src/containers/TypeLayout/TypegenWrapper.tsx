@@ -21,6 +21,9 @@ export const TypegenWrapper = ({ from, to }: ConverterPagesProps) => {
   const [originalContent, setOriginalContent] = React.useState("");
   const [convertedContent, setConvertedContent] = React.useState("");
 
+  const fromLabel = formats.find(({ value }) => value === from)?.label;
+  const toLabel = typeOptions.find(({ value }) => value === to)?.label;
+
   useEffect(() => {
     if (!originalContent.length) return;
 
@@ -40,20 +43,20 @@ export const TypegenWrapper = ({ from, to }: ConverterPagesProps) => {
     <Layout>
       <NextSeo
         {...SEO}
-        title={`${formats.find(({ value }) => value === from)?.label} to ${typeOptions.find(({ value }) => value === to)?.label} | ToDiagram`}
-        canonical={`https://todiagram.com/converter/${from}-to-${to}`}
+        title={`${fromLabel} to ${toLabel} | JSON Crack`}
+        canonical={`https://jsoncrack.com/converter/${from}-to-${to}`}
+        description={`Instantly generate ${toLabel} from ${fromLabel} using this free online tool. Paste your ${fromLabel} and get the generated ${toLabel} instantly.`}
       />
       <Container mt="xl" size="lg">
         <Title c="black">
-          {formats.find(({ value }) => value === from)?.label} to{" "}
-          {typeOptions.find(({ value }) => value === to)?.label} Converter
+          {fromLabel} to {toLabel} Converter
         </Title>
         <PageLinks />
         <Flex pt="lg" gap="40">
           <Paper mah="600px" withBorder flex="1" style={{ overflow: "hidden" }}>
             <Box p="xs" bg="gray">
               <Flex justify="space-between" align="center">
-                <Text c="gray.3">{formats.find(({ value }) => value === from)?.label}</Text>
+                <Text c="gray.3">{fromLabel}</Text>
                 {contentHasError && !!originalContent ? (
                   <LuXCircle color="red" />
                 ) : (
@@ -71,7 +74,7 @@ export const TypegenWrapper = ({ from, to }: ConverterPagesProps) => {
           </Paper>
           <Paper mah="600px" withBorder flex="1" style={{ overflow: "hidden" }}>
             <Box p="xs" bg="gray">
-              <Text c="gray.3">{typeOptions.find(({ value }) => value === to)?.label}</Text>
+              <Text c="gray.3">{toLabel}</Text>
             </Box>
             <Editor
               value={convertedContent}

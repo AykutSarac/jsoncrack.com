@@ -23,6 +23,9 @@ export const ToolPage = ({ from, to }: ToolPageProps) => {
   const [scrollPosition, setScrollPosition] = React.useState(0);
   const [editorHeight, setEditorHeight] = React.useState(0);
 
+  const fromLabel = formats.find(({ value }) => value === from)?.label;
+  const toLabel = formats.find(({ value }) => value === to)?.label;
+
   useEffect(() => {
     if (!originalContent.length) return;
 
@@ -50,20 +53,20 @@ export const ToolPage = ({ from, to }: ToolPageProps) => {
     <Layout>
       <NextSeo
         {...SEO}
-        title={`${formats.find(({ value }) => value === from)?.label} to ${formats.find(({ value }) => value === to)?.label} | ToDiagram`}
-        canonical={`https://todiagram.com/converter/${from}-to-${to}`}
+        title={`${fromLabel} to ${toLabel} | JSON Crack`}
+        canonical={`https://jsoncrack.com/converter/${from}-to-${to}`}
+        description={`Convert ${fromLabel} to ${toLabel} using this free online tool. Upload your ${fromLabel} file and get the converted ${fromLabel} file instantly.`}
       />
       <Container mt="xl" size="lg">
         <Title c="black">
-          {formats.find(({ value }) => value === from)?.label} to{" "}
-          {formats.find(({ value }) => value === to)?.label} Converter
+          {fromLabel} to {toLabel} Converter
         </Title>
         <PageLinks />
         <Flex pt="lg" gap="40">
           <Paper mah="600px" withBorder flex="1" style={{ overflow: "hidden" }}>
             <Box p="xs" bg="gray">
               <Flex justify="space-between" align="center">
-                <Text c="gray.3">{formats.find(({ value }) => value === from)?.label}</Text>
+                <Text c="gray.3">{fromLabel}</Text>
                 {contentHasError && !!originalContent ? (
                   <LuXCircle color="red" />
                 ) : (
@@ -90,7 +93,7 @@ export const ToolPage = ({ from, to }: ToolPageProps) => {
           </Paper>
           <Paper mah="600px" withBorder flex="1" style={{ overflow: "hidden" }}>
             <Box p="xs" bg="gray">
-              <Text c="gray.3">{formats.find(({ value }) => value === to)?.label}</Text>
+              <Text c="gray.3">{toLabel}</Text>
             </Box>
             <Editor
               value={convertedContent}
