@@ -115,13 +115,13 @@ export const Navbar = () => {
                   </Text>
                 </Stack>
               </StyledMenuItem>
-              <StyledMenuItem component={Link} prefetch={false} href="/type/json-to-rust-serde">
+              <StyledMenuItem component={Link} prefetch={false} href="/type/json-to-rust">
                 <Stack gap="2">
                   <Text c="black" size="sm" fw={600}>
                     Generate Types
                   </Text>
                   <Text size="xs" c="gray.6" lineClamp={2}>
-                    Generate TypeScript types, Golang structs, Rust serde, and more.
+                    Generate TypeScript types, Golang structs, Rust, and more.
                   </Text>
                 </Stack>
               </StyledMenuItem>
