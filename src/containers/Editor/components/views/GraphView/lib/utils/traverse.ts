@@ -16,23 +16,23 @@ const traverseArray = (states: States, array: Node, parentId: string) => {
   // Unpack input args
   const graph = states.graph;
 
-  // Check that the array has children
+  // Check that the array has children.
   if (array.children) {
-    // Records the number of child elements the array will have
+    // Records the number of child elements the array will have.
     const parentNode = graph.nodes.at(Number(parentId) - 1);
     if (parentNode) {
       parentNode.data.childrenCount = array.children.length;
     }
 
-    // Begin looping over each array element processing accordingly
+    // Begin looping over each array element processing accordingly.
     for (let i = 0; i < array.children.length; i++) {
       const child = array.children[i];
 
-      // Set up the node text
+      // Set up the node text.
       // For an array of complex type (object/array), we need
       // to construct dummy nodes that handle either nested arrays
-      // or multiple nodes within an object
-      // For simple types, we can just read in the child object's value
+      // or multiple nodes within an object.
+      // For simple types, we can just read in the child object's value.
       let nodeText = "";
       if (child.value !== undefined) {
         nodeText = String(child.value);
@@ -61,7 +61,7 @@ export const traverse = ({ objectToTraverse, states, myParentId }: Traverse) => 
   const graph = states.graph;
   const { children } = objectToTraverse;
 
-  // Setup initial step conditions
+  // Set up initial step conditions.
   let nodeId = "";
   const nodeText: [string, string][] = [];
   const childQueue: Node[] = [];
@@ -89,7 +89,7 @@ export const traverse = ({ objectToTraverse, states, myParentId }: Traverse) => 
     addEdgeToGraph(graph, myParentId, nodeId);
   }
 
-  // Record the number of child objects the node will have
+  // Record the number of child objects the node will have.
   if (myParentId) {
     const node = graph.nodes.at(Number(myParentId) - 1);
     if (node) {
