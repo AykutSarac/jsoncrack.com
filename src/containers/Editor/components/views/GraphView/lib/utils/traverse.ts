@@ -46,7 +46,7 @@ const traverseArray = (states: States, array: Node, parentId: string) => {
       addEdgeToGraph(graph, parentId, nodeId);
 
       // Call the appropriate traversal function
-      // Or end if there are no more nested elements
+      // or end if there are no more nested elements.
       if (child.type === "array") {
         traverseArray(states, array.children[i], nodeId);
       } else if (child.type === "object") {
