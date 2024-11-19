@@ -82,8 +82,8 @@ export const traverse = ({ objectToTraverse, states, myParentId }: Traverse) => 
     }
   }
 
-  // If we have parent and we have record some number of properties
-  // add that them as a node in the graph
+  // If we have parent and we have recorded some number of properties,
+  // add each as a node in the graph.
   if (myParentId && nodeText.length !== 0) {
     nodeId = addNodeToGraph({ graph, text: nodeText });
     addEdgeToGraph(graph, myParentId, nodeId);
