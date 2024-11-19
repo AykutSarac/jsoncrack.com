@@ -66,7 +66,7 @@ export const traverse = ({ objectToTraverse, states, myParentId }: Traverse) => 
   const nodeText: [string, string][] = [];
   const childQueue: Node[] = [];
   if (children) {
-    // Loop over the children of the json node
+    // Loop over the children of the JSON node
     for (let i = 0; i < children.length; i++) {
       const child = children[i];
       if (child.children) {
