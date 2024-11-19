@@ -100,7 +100,7 @@ export const traverse = ({ objectToTraverse, states, myParentId }: Traverse) => 
     }
   }
 
-  // Iterate over the child queue processing each child accordingly
+  // Iterate over the child queue, processing each child accordingly.
   childQueue.forEach(child => {
     if (child.children) {
       const brotherNodeId = addNodeToGraph({
