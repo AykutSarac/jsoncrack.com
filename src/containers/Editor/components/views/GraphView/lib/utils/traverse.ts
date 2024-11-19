@@ -28,11 +28,11 @@ const traverseArray = (states: States, array: Node, parentId: string) => {
     for (let i = 0; i < array.children.length; i++) {
       const child = array.children[i];
 
-      // Setup the node text
-      // For an array of complex type (object/array) we need
+      // Set up the node text
+      // For an array of complex type (object/array), we need
       // to construct dummy nodes that handle either nested arrays
       // or multiple nodes within an object
-      // For simple types we can just read in the child objects value
+      // For simple types, we can just read in the child object's value
       let nodeText = "";
       if (child.value !== undefined) {
         nodeText = String(child.value);
