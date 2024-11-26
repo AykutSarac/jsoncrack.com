@@ -8,7 +8,7 @@ type Traverse = {
   states: States;
   objectToTraverse: Node;
   parentType?: string;
-  myParentId?: string;
+  myParentId: string;
   nextType?: string;
 };
 
@@ -59,31 +59,36 @@ const traverseArray = (states: States, array: Node, parentId: string) => {
 export const traverse = ({ objectToTraverse, states, myParentId }: Traverse) => {
   // Unpack input arguments
   const graph = states.graph;
-  const { children } = objectToTraverse;
+  const { children, type } = objectToTraverse;
 
   // Set up initial step conditions.
   let nodeId = "";
   const nodeText: [string, string][] = [];
   const childQueue: Node[] = [];
   if (children) {
-    // Loop over the children of the JSON node
-    for (let i = 0; i < children.length; i++) {
-      const child = children[i];
-      if (child.children) {
-        // If the child is not an object or array, it is a property;
-        // record it into the nodeText.
-        // Otherwise, push it onto the nodes to be traversed.
-        if (child.children[1].type !== "object" && child.children[1].type !== "array") {
-          nodeText.push([child.children[0].value, child.children[1].value]);
-        } else {
-          childQueue.push(child);
+    if (type === "object") {
+      // Loop over the children of the JSON node
+      for (let i = 0; i < children.length; i++) {
+        const child = children[i];
+        if (child.children) {
+          // If the child of our child is not an array or object, it is a property;
+          // record it into the nodeText.
+          // Otherwise, push it onto the nodes to be traversed.
+          if (child.children[1].type !== "object" && child.children[1].type !== "array") {
+            nodeText.push([child.children[0].value, child.children[1].value]);
+          } else {
+            childQueue.push(child);
+          }
         }
-      }
+      } 
+    }
+    else if (type === "array") {
+      traverseArray(states, objectToTraverse, myParentId);
     }
   }
 
   // If we have parent and we have recorded some number of properties,
-  // add each as a node in the graph.
+  // add the recorded properties as a node in the graph.
   if (myParentId && nodeText.length !== 0) {
     nodeId = addNodeToGraph({ graph, text: nodeText });
     addEdgeToGraph(graph, myParentId, nodeId);
