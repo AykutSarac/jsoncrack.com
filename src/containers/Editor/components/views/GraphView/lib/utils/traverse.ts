@@ -18,7 +18,7 @@ const traverseArray = (states: States, array: Node, parentId: string) => {
 
   // Check that the array has children.
   if (array.children) {
-    // Records the number of child elements the array will have.
+    // Record the number of child elements the array will have.
     const parentNode = graph.nodes.at(Number(parentId) - 1);
     if (parentNode) {
       parentNode.data.childrenCount = array.children.length;
