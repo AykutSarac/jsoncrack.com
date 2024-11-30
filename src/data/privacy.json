@@ -78,7 +78,7 @@
     "• if we believe disclosure is necessary or appropriate to protect the rights, property, or safety of the Company, our customers, or others."
   ],
   "Security of Data": [
-    "The security of your data is important to us but remember that no method of transmission over the Internet or method of electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your Personal Data, we cannot guarantee its absolute security."
+    "All data processing and operations are done entirely on the client side. No data is sent to or stored on our servers. Your data remains private on your device."
   ],
   "Service Providers": [
     "We may employ third party companies and individuals to facilitate our Service (“Service Providers”), provide Service on our behalf, perform Service-related services or assist us in analyzing how our Service is used.",
@@ -86,7 +86,7 @@
   ],
   "Analytics": [
     "We may use third-party Service Providers to monitor and analyze the use of our Service.",
-    "We use Google Analytics as a third-party tracking service, but we don’t use it to track you individually or collect personal user information. We use Google Analytics to collect information about how our website performs and how our users, in general, navigate through and use jsoncrack.com. This helps us evaluate our users use of jsoncrack.com, compile statistical reports on activity, and improve our content and website performance",
+    "We use Google Analytics as a third-party tracking service, but we don't use it to track you individually or collect personal user information. We use Google Analytics to collect information about how our website performs and how our users, in general, navigate through and use jsoncrack.com. This helps us evaluate our users use of jsoncrack.com, compile statistical reports on activity, and improve our content and website performance",
     "Google Analytics gathers certain simple, non-personally identifying information over time, browser type, internet service provider, referring and exit pages, timestamp, and similar data about your use of jsoncrack.com. We do not link this information to any of your personal information such as your username. We do not collect IP addresses through Google Analytics.",
     "Google provides further information about its own privacy practices and offers a browser add-on to opt out of Google Analytics tracking here: https://support.google.com/analytics/answer/4597324?hl=en"
   ],

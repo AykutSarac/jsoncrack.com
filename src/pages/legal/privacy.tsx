@@ -20,7 +20,7 @@ const Privacy = () => {
             Privacy Policy
           </Title>
           <Text c="gray.6" ta="center">
-            Last updated: May 21, 2024
+            Last updated: Nov 30, 2024
           </Text>
 
           <Stack mt={50} my="lg">
