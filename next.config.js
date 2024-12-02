@@ -10,13 +10,20 @@ const config = {
   output: "export",
   reactStrictMode: false,
   productionBrowserSourceMaps: true,
+  experimental: {
+    optimizePackageImports: ["reaflow"],
+  },
   compiler: {
     styledComponents: true,
   },
-  webpack: config => {
+  webpack: (config, { isServer }) => {
     config.resolve.fallback = { fs: false };
     config.output.webassemblyModuleFilename = "static/wasm/[modulehash].wasm";
-    config.experiments = { asyncWebAssembly: true };
+    config.experiments = { asyncWebAssembly: true, layers: true };
+
+    if (!isServer) {
+      config.output.environment = { ...config.output.environment, asyncFunction: true };
+    }
 
     return config;
   },
