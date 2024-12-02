@@ -10,6 +10,7 @@ import {
   ThemeIcon,
   AspectRatio,
   Paper,
+  CloseButton,
 } from "@mantine/core";
 import { LuCrown, LuTrendingUp } from "react-icons/lu";
 
@@ -27,9 +28,12 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
       overlayProps={{ blur: 1 }}
     >
       <Stack gap="24" px="40" py="20">
-        <Title c="bright" fw="500" fz="24">
-          Upgrade to unlock all features
-        </Title>
+        <Flex justify="space-between">
+          <Title c="bright" fw="500" fz="24">
+            Upgrade to unlock all features
+          </Title>
+          <CloseButton onClick={onClose} />
+        </Flex>
         <Flex gap="20">
           <ThemeIcon color="green" variant="light" size="xl" radius="xl">
             <LuCrown size="20" />
