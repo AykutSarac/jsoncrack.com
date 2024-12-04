@@ -5,10 +5,10 @@ import Editor, { type EditorProps, useMonaco, loader } from "@monaco-editor/reac
 import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
 
-let monaco_url = "./monaco-editor/node_modules/monaco-editor/min/vs"
+let monaco_url = "./monaco-editor/node_modules/monaco-editor/min/vs";
 
 if (window.navigator.onLine) {
-  monaco_url = "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs"
+  monaco_url = "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs";
 }
 
 loader.config({
