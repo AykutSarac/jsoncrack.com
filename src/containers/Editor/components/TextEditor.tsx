@@ -1,15 +1,17 @@
 import React from "react";
 import { LoadingOverlay } from "@mantine/core";
 import styled from "styled-components";
-import Editor, { type EditorProps, loader, useMonaco } from "@monaco-editor/react";
+import Editor, { type EditorProps, useMonaco, loader } from "@monaco-editor/react";
 import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
 
+
 loader.config({
   paths: {
-    vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs",
+    vs: "node_modules/.pnpm/monaco-editor@0.50.0/node_modules/monaco-editor/min/vs",
   },
 });
+
 
 const editorOptions: EditorProps["options"] = {
   formatOnPaste: true,
