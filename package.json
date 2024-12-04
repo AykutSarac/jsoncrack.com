@@ -79,6 +79,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-unused-imports": "^3.2.0",
+    "monaco-editor": "^0.34.0",
     "prettier": "^3.3.3",
     "ts-node": "^10.9.2",
     "typescript": "5.3.3"

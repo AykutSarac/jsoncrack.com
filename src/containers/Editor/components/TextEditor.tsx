@@ -8,7 +8,7 @@ import useFile from "src/store/useFile";
 
 loader.config({
   paths: {
-    vs: "node_modules/.pnpm/monaco-editor@0.50.0/node_modules/monaco-editor/min/vs",
+    vs: './monaco-editor/node_modules/monaco-editor/min/vs',
   },
 });
 
