@@ -1,13 +1,19 @@
 import React from "react";
 import { LoadingOverlay } from "@mantine/core";
 import styled from "styled-components";
-import Editor, { type EditorProps, loader, useMonaco } from "@monaco-editor/react";
+import Editor, { type EditorProps, useMonaco, loader } from "@monaco-editor/react";
 import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
 
+let monaco_url = "./monaco-editor/node_modules/monaco-editor/min/vs";
+
+if (window.navigator.onLine) {
+  monaco_url = "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs";
+}
+
 loader.config({
   paths: {
-    vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs",
+    vs: monaco_url,
   },
 });
 
