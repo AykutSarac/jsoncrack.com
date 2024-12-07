@@ -5,7 +5,7 @@ import { create } from "zustand";
 import { FileFormat } from "src/enums/file.enum";
 import { isIframe } from "src/lib/utils/helpers";
 import { contentToJson, jsonToContent } from "src/lib/utils/jsonAdapter";
-import useGraph from "../containers/Editor/components/views/GraphView/stores/useGraph";
+import useGraph from "../features/editor/views/GraphView/stores/useGraph";
 import useConfig from "./useConfig";
 import useJson from "./useJson";
 

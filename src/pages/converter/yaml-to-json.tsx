@@ -1,6 +1,6 @@
 import React from "react";
-import { ToolPage } from "src/containers/ConverterLayout/ToolPage";
 import { FileFormat } from "src/enums/file.enum";
+import { ToolPage } from "src/layout/ConverterLayout/ToolPage";
 
 const Page = () => {
   return <ToolPage from={FileFormat.YAML} to={FileFormat.JSON} />;

@@ -3,9 +3,9 @@ import { Box, Button, Container, Flex, Paper, Title, Text } from "@mantine/core"
 import { Editor, type OnMount } from "@monaco-editor/react";
 import { JSONSchemaFaker } from "json-schema-faker";
 import { LuCheck, LuXCircle } from "react-icons/lu";
-import { editorOptions } from "src/containers/ConverterLayout/options";
 import { FileFormat, TypeLanguage } from "src/enums/file.enum";
-import Layout from "src/layout/Layout";
+import { editorOptions } from "src/layout/ConverterLayout/options";
+import Layout from "src/layout/PageLayout";
 import { generateType } from "src/lib/utils/generateType";
 import { jsonToContent } from "src/lib/utils/jsonAdapter";
 

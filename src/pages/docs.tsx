@@ -4,7 +4,7 @@ import { CodeHighlight } from "@mantine/code-highlight";
 import styled from "styled-components";
 import { NextSeo } from "next-seo";
 import { SEO } from "src/constants/seo";
-import Layout from "src/layout/Layout";
+import Layout from "src/layout/PageLayout";
 
 const StyledFrame = styled.iframe`
   border: none;

@@ -6,8 +6,8 @@ import { ThemeProvider } from "styled-components";
 import { NextSeo } from "next-seo";
 import toast from "react-hot-toast";
 import { darkTheme, lightTheme } from "src/constants/theme";
-import useGraph from "src/containers/Editor/components/views/GraphView/stores/useGraph";
-import { Toolbar } from "src/containers/Toolbar";
+import { Toolbar } from "src/features/editor/Toolbar";
+import useGraph from "src/features/editor/views/GraphView/stores/useGraph";
 import useFile from "src/store/useFile";
 import type { LayoutDirection } from "src/types/graph";
 
@@ -22,7 +22,7 @@ interface EmbedMessage {
 }
 
 const GraphView = dynamic(
-  () => import("src/containers/Editor/components/views/GraphView").then(c => c.GraphView),
+  () => import("src/features/editor/views/GraphView").then(c => c.GraphView),
   {
     ssr: false,
   }

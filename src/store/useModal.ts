@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { Modal } from "src/containers/Modals";
+import type { Modal } from "src/features/modals";
 
 type ModalState = {
   [key in Modal]: boolean;

@@ -3,7 +3,7 @@ import { Box, Container, Paper, Stack, Text, Title } from "@mantine/core";
 import { NextSeo } from "next-seo";
 import { SEO } from "src/constants/seo";
 import privacy from "src/data/privacy.json";
-import Layout from "src/layout/Layout";
+import Layout from "src/layout/PageLayout";
 
 const Privacy = () => {
   return (
