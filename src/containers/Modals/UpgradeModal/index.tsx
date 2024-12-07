@@ -100,7 +100,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
           size="md"
           radius="md"
         >
-          Upgrade to ToDiagram
+          Try premium for free
         </Button>
         <Button size="md" variant="subtle" color="gray" radius="md" onClick={onClose}>
           Maybe later

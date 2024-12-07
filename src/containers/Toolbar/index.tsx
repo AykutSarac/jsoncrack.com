@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Flex, Group, Select } from "@mantine/core";
+import { Flex, Group, Select, Button } from "@mantine/core";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
@@ -86,14 +86,16 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
       )}
       <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
         {!isWidget && (
-          <StyledToolElement onClick={() => setVisible("upgrade")(true)} $highlight>
-            <Flex align="center" gap="6">
-              <LuCrown size="16" />
-              <Text c="bright" fw={600} fz="xs">
-                Unlock advanced features
-              </Text>
-            </Flex>
-          </StyledToolElement>
+          <Button
+            color="gray"
+            variant="light"
+            size="compact-sm"
+            fz="12"
+            onClick={() => setVisible("upgrade")(true)}
+            leftSection={<LuCrown />}
+          >
+            Try premium for free
+          </Button>
         )}
 
         <SearchInput />
