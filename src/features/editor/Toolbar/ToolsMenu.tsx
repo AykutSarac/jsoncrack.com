@@ -60,7 +60,7 @@ export const ToolsMenu = () => {
           fz={12}
           leftSection={<VscSearchFuzzy />}
           onClick={() => {
-            setVisible("jq")(true);
+            setVisible("JQModal", true);
             gaEvent("open_jq_modal");
           }}
         >
@@ -70,7 +70,7 @@ export const ToolsMenu = () => {
           fz={12}
           leftSection={<VscJson />}
           onClick={() => {
-            setVisible("schema")(true);
+            setVisible("SchemaModal", true);
             gaEvent("open_schema_modal");
           }}
         >
@@ -80,7 +80,7 @@ export const ToolsMenu = () => {
           fz={12}
           leftSection={<MdFilterListAlt />}
           onClick={() => {
-            setVisible("jpath")(true);
+            setVisible("JPathModal", true);
             gaEvent("open_json_path_modal");
           }}
         >
@@ -91,7 +91,7 @@ export const ToolsMenu = () => {
           fz={12}
           leftSection={<SiJsonwebtokens />}
           onClick={() => {
-            setVisible("jwt")(true);
+            setVisible("JWTModal", true);
             gaEvent("open_jwt_modal");
           }}
         >
@@ -101,7 +101,7 @@ export const ToolsMenu = () => {
           fz={12}
           leftSection={<VscGroupByRefType />}
           onClick={() => {
-            setVisible("type")(true);
+            setVisible("TypeModal", true);
             gaEvent("open_type_modal");
           }}
         >
@@ -115,7 +115,7 @@ export const ToolsMenu = () => {
           leftSection={<LuGlobe />}
           rightSection={<VscLock />}
           onClick={() => {
-            setVisible("upgrade")(true);
+            setVisible("UpgradeModal", true);
             gaEvent("rest_client_modal");
           }}
         >
@@ -126,7 +126,7 @@ export const ToolsMenu = () => {
           leftSection={<FaWandMagicSparkles />}
           rightSection={<VscLock />}
           onClick={() => {
-            setVisible("upgrade")(true);
+            setVisible("UpgradeModal", true);
             gaEvent("open_ai_filter_modal");
           }}
         >
@@ -137,7 +137,7 @@ export const ToolsMenu = () => {
           leftSection={<MdCompare />}
           rightSection={<VscLock />}
           onClick={() => {
-            setVisible("upgrade")(true);
+            setVisible("UpgradeModal", true);
             gaEvent("open_compare_data_modal");
           }}
         >

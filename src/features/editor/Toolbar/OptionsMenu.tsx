@@ -91,7 +91,7 @@ export const OptionsMenu = () => {
         <Menu.Item
           closeMenuOnClick
           leftSection={<VscLock />}
-          onClick={() => setVisible("upgrade")(true)}
+          onClick={() => setVisible("UpgradeModal", true)}
         >
           <Text size="xs">Customize Graph Colors</Text>
         </Menu.Item>

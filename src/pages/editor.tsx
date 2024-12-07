@@ -17,7 +17,7 @@ import useGraph from "src/features/editor/views/GraphView/stores/useGraph";
 import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
 
-const ModalController = dynamic(() => import("src/features/editor/ModalController"));
+const ModalController = dynamic(() => import("src/features/modals/ModalController"));
 const ExternalMode = dynamic(() => import("src/features/editor/ExternalMode"));
 
 const queryClient = new QueryClient({

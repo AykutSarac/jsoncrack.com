@@ -1,29 +1,20 @@
 import { create } from "zustand";
-import type { Modal } from "src/features/modals";
-
-type ModalState = {
-  [key in Modal]: boolean;
-};
+import { type Modal, modalComponents } from "src/features/modals/ModalController";
 
 interface ModalActions {
-  setVisible: (modal: Modal) => (visible: boolean) => void;
+  setVisible: (name: Modal, open: boolean) => void;
 }
 
-const initialStates: ModalState = {
-  download: false,
-  import: false,
-  node: false,
-  upgrade: false,
-  jwt: false,
-  schema: false,
-  jq: false,
-  type: false,
-  jpath: false,
-};
+type ModalState = Record<Modal, boolean>;
+
+const initialStates: ModalState = modalComponents.reduce(
+  (acc, { key }) => ({ ...acc, [key]: false }),
+  {} as ModalState
+);
 
 const useModal = create<ModalState & ModalActions>()(set => ({
   ...initialStates,
-  setVisible: modal => visible => set({ [modal]: visible }),
+  setVisible: (name, open) => set({ [name]: open }),
 }));
 
 export default useModal;

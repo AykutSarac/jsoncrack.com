@@ -90,7 +90,7 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
             size="compact-sm"
             fz="12"
             fw="600"
-            onClick={() => setVisible("upgrade")(true)}
+            onClick={() => setVisible("UpgradeModal", true)}
             leftSection={<LuCrown />}
             mr="6"
           >
@@ -100,7 +100,10 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
         <SearchInput />
         {!isWidget && (
           <>
-            <StyledToolElement title="Save as Image" onClick={() => setVisible("download")(true)}>
+            <StyledToolElement
+              title="Save as Image"
+              onClick={() => setVisible("DownloadModal", true)}
+            >
               <FiDownload size="18" />
             </StyledToolElement>
             <ZoomMenu />

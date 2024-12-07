@@ -35,7 +35,7 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
         </Stack>
         <Button
           onClick={() => {
-            setVisible("upgrade")(true);
+            setVisible("UpgradeModal", true);
             gaEvent("click_node_edit");
           }}
           rightSection={<VscLock strokeWidth={0.5} />}

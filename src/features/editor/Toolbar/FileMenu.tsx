@@ -33,7 +33,7 @@ export const FileMenu = () => {
         </StyledToolElement>
       </Menu.Target>
       <Menu.Dropdown>
-        <Menu.Item fz={12} onClick={() => setVisible("import")(true)}>
+        <Menu.Item fz={12} onClick={() => setVisible("ImportModal", true)}>
           Import
         </Menu.Item>
         <Menu.Item fz={12} onClick={handleSave}>
