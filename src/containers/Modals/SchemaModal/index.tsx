@@ -89,6 +89,7 @@ export const SchemaModal = ({ opened, onClose }: ModalProps) => {
             language="json"
             options={{
               formatOnPaste: true,
+              tabSize: 2,
               formatOnType: true,
               scrollBeyondLastLine: false,
               minimap: {

@@ -1,18 +1,19 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { LoadingOverlay } from "@mantine/core";
 import styled from "styled-components";
-import Editor, { type EditorProps, loader, useMonaco } from "@monaco-editor/react";
+import Editor, { type EditorProps, loader, type OnMount, useMonaco } from "@monaco-editor/react";
 import useConfig from "src/store/useConfig";
 import useFile from "src/store/useFile";
 
 loader.config({
   paths: {
-    vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.34.0/min/vs",
+    vs: "https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.52.0/min/vs",
   },
 });
 
 const editorOptions: EditorProps["options"] = {
   formatOnPaste: true,
+  tabSize: 2,
   formatOnType: true,
   minimap: { enabled: false },
   scrollBeyondLastLine: false,
@@ -63,6 +64,12 @@ const TextEditor = () => {
     };
   }, [getHasChanges]);
 
+  const handleMount: OnMount = useCallback(editor => {
+    editor.onDidPaste(() => {
+      editor.getAction("editor.action.formatDocument")?.run();
+    });
+  }, []);
+
   return (
     <StyledEditorWrapper>
       <StyledWrapper>
@@ -72,6 +79,7 @@ const TextEditor = () => {
           theme={theme}
           value={contents}
           options={editorOptions}
+          onMount={handleMount}
           onValidate={errors => setError(errors[0]?.message)}
           onChange={contents => setContents({ contents, skipUpdate: true })}
           loading={<LoadingOverlay visible />}

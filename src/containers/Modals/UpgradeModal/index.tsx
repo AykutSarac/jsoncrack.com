@@ -84,7 +84,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
               loop
               preload="auto"
               playsInline
-              poster="https://todiagram.com/videos/diagrams.webp"
+              poster="https://todiagram.com/images/meta/design-tokens.webp"
               style={{ display: "block" }}
             >
               <source src="https://todiagram.com/videos/diagrams.mp4" type="video/mp4" />
