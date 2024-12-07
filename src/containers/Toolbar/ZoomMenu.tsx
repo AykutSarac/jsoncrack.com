@@ -28,7 +28,7 @@ export const ZoomMenu = () => {
     <Menu shadow="md" trigger="click" closeOnItemClick={false} withArrow>
       <Menu.Target>
         <StyledToolElement onClick={() => gaEvent("show_zoom_menu")}>
-          <Flex gap={4} align="center">
+          <Flex gap={4} align="center" justify="center" miw="50">
             {Math.round(zoomFactor * 100)}%
             <CgChevronDown />
           </Flex>

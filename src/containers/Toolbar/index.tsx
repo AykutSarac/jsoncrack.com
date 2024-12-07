@@ -10,7 +10,6 @@ import { type FileFormat, formats } from "src/enums/file.enum";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
 import useFile from "src/store/useFile";
 import useModal from "src/store/useModal";
-import { AccountMenu } from "./AccountMenu";
 import { FileMenu } from "./FileMenu";
 import { Logo } from "./Logo";
 import { OptionsMenu } from "./OptionsMenu";
@@ -84,20 +83,20 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
           <ToolsMenu />
         </Group>
       )}
-      <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
+      <Group gap="6" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
         {!isWidget && (
           <Button
-            color="gray"
-            variant="light"
+            color="green"
             size="compact-sm"
             fz="12"
+            fw="600"
             onClick={() => setVisible("upgrade")(true)}
             leftSection={<LuCrown />}
+            mr="6"
           >
             Try premium for free
           </Button>
         )}
-
         <SearchInput />
         {!isWidget && (
           <>
@@ -105,7 +104,6 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
               <FiDownload size="18" />
             </StyledToolElement>
             <ZoomMenu />
-            <AccountMenu />
             <OptionsMenu />
             <StyledToolElement title="Fullscreen" $hide={isWidget} onClick={fullscreenBrowser}>
               <AiOutlineFullscreen size="18" />
