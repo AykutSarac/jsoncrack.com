@@ -54,7 +54,9 @@ export function parser(jsonStr: string): Graph {
       throw new Error("Invalid document");
     }
 
-    traverse({ states, objectToTraverse: parsedJsonTree });
+    console.log(parsedJsonTree);
+    const rootId = addNodeToGraph({ graph: states.graph, text: "Root", type: "object" });
+    traverse({ states, objectToTraverse: parsedJsonTree, myParentId: rootId });
 
     const { notHaveParent, graph } = states;
 
