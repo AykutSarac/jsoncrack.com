@@ -16,6 +16,7 @@ const editorOptions: EditorProps["options"] = {
   tabSize: 2,
   formatOnType: true,
   minimap: { enabled: false },
+  stickyScroll: { enabled: false },
   scrollBeyondLastLine: false,
 };
 

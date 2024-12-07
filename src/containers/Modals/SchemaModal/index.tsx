@@ -92,9 +92,8 @@ export const SchemaModal = ({ opened, onClose }: ModalProps) => {
               tabSize: 2,
               formatOnType: true,
               scrollBeyondLastLine: false,
-              minimap: {
-                enabled: false,
-              },
+              stickyScroll: { enabled: false },
+              minimap: { enabled: false },
             }}
           />
         </Paper>
