@@ -18,6 +18,7 @@ const editorOptions: EditorProps["options"] = {
   minimap: { enabled: false },
   stickyScroll: { enabled: false },
   scrollBeyondLastLine: false,
+  placeholder: "Start typing...",
 };
 
 const TextEditor = () => {
