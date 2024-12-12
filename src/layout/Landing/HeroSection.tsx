@@ -136,6 +136,18 @@ export const HeroSection = () => {
             >
               Go to Editor
             </Button>
+            <Button
+              component="a"
+              color="#202842"
+              href="https://todiagram.com/editor?utm_source=jsoncrack.com&utm_medium=cta&utm_campaign=hero"
+              target="_blank"
+              size="md"
+              variant="light"
+              radius="md"
+              fw="500"
+            >
+              Try Premium for Free
+            </Button>
           </Flex>
           <Flex gap="lg" wrap="wrap" justify="center" visibleFrom="xs">
             <Button
@@ -148,6 +160,18 @@ export const HeroSection = () => {
               fw="500"
             >
               Go to Editor
+            </Button>
+            <Button
+              component="a"
+              color="#202842"
+              href="https://todiagram.com/editor?utm_source=jsoncrack.com&utm_medium=cta&utm_campaign=hero"
+              target="_blank"
+              size="lg"
+              variant="light"
+              radius="md"
+              fw="500"
+            >
+              Try Premium for Free
             </Button>
           </Flex>
         </Stack>

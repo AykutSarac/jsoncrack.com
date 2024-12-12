@@ -10,15 +10,13 @@ import {
   ThemeIcon,
   CloseButton,
   FocusTrap,
-  Image,
-  Divider,
 } from "@mantine/core";
 import { LuCrown, LuTrendingUp } from "react-icons/lu";
 
 export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
   return (
     <Modal
-      size="800"
+      size="430"
       opened={opened}
       onClose={onClose}
       zIndex={1001}
@@ -26,12 +24,10 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
       radius="lg"
       withCloseButton={false}
       styles={{ body: { padding: 0 } }}
-      overlayProps={{ blur: 1 }}
+      overlayProps={{ blur: 2 }}
     >
       <FocusTrap.InitialFocus />
       <Flex>
-        <Image src="./assets/todiagram_img.webp" alt="todiagram" w="350" fit="contain" px="lg" />
-        <Divider orientation="vertical" />
         <Stack gap="24" px="40" py="20">
           <Flex justify="space-between">
             <Title c="bright" fw="500" fz="24">
@@ -45,11 +41,10 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
             </ThemeIcon>
             <Stack gap="4">
               <Title c="gray" order={3} fw="500" fz="16">
-                Accurate & beautiful diagrams
+                New diagram structure
               </Title>
               <Text fz="14" c="dimmed">
-                New diagram structure helps you to understand the data, modify from diagrams,
-                customize colors, preview images.
+                50% less size, faster & customizable!
               </Text>
             </Stack>
           </Flex>
@@ -59,11 +54,10 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
             </ThemeIcon>
             <Stack gap="4">
               <Title c="gray" order={3} fw="500" fz="16">
-                Larger file support, faster performance
+                Powerful
               </Title>
               <Text fz="14" c="dimmed">
-                Load up to 4MB without performance issues, open multiple documents, and save work
-                faster.
+                Modify data, preview images, inspect nodes, and more!
               </Text>
             </Stack>
           </Flex>
@@ -77,7 +71,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
             radius="md"
             leftSection={<LuCrown />}
           >
-            Try premium for free
+            Try premium for free, no registration
           </Button>
           <Button size="md" variant="subtle" color="gray" radius="md" onClick={onClose}>
             Maybe later

@@ -3,7 +3,6 @@ import type { ModalProps } from "@mantine/core";
 import { Modal, Stack, Text, ScrollArea, Button } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
 import { event as gaEvent } from "nextjs-google-analytics";
-import { VscLock } from "react-icons/vsc";
 import useGraph from "src/features/editor/views/GraphView/stores/useGraph";
 import useModal from "src/store/useModal";
 
@@ -38,7 +37,6 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
             setVisible("UpgradeModal", true);
             gaEvent("click_node_edit");
           }}
-          rightSection={<VscLock strokeWidth={0.5} />}
         >
           Edit
         </Button>
