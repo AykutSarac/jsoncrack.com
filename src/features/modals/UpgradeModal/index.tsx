@@ -10,15 +10,26 @@ import {
   ThemeIcon,
   CloseButton,
   FocusTrap,
+  Image,
+  Divider,
 } from "@mantine/core";
+import Cookie from "js-cookie";
 import { LuCrown, LuTrendingUp } from "react-icons/lu";
+import useConfig from "src/store/useConfig";
 
 export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
+  const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
+
+  const handleCloseModal = () => {
+    Cookie.set("upgrade_shown", "true", { expires: 3 });
+    onClose();
+  };
+
   return (
     <Modal
-      size="430"
+      size="700"
       opened={opened}
-      onClose={onClose}
+      onClose={handleCloseModal}
       zIndex={1001}
       centered
       radius="lg"
@@ -28,12 +39,20 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
     >
       <FocusTrap.InitialFocus />
       <Flex>
+        <Image
+          src={`/assets/hp-${darkmodeEnabled ? "dark" : "light"}.png`}
+          alt="diagram"
+          maw={300}
+          height="auto"
+          style={{ objectPosition: "left" }}
+        />
+        <Divider orientation="vertical" />
         <Stack gap="24" px="40" py="20">
           <Flex justify="space-between">
             <Title c="bright" fw="500" fz="24">
               Upgrade to unlock all features
             </Title>
-            <CloseButton onClick={onClose} />
+            <CloseButton onClick={handleCloseModal} />
           </Flex>
           <Flex gap="20">
             <ThemeIcon color="violet" variant="light" size="xl" radius="xl">
@@ -41,10 +60,10 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
             </ThemeIcon>
             <Stack gap="4">
               <Title c="gray" order={3} fw="500" fz="16">
-                New diagram structure
+                Load up to 4 MBs
               </Title>
               <Text fz="14" c="dimmed">
-                50% less size, faster & customizable!
+                We made it easy to visualize, format, and explore JSON data, faster than ever.
               </Text>
             </Stack>
           </Flex>
@@ -54,7 +73,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
             </ThemeIcon>
             <Stack gap="4">
               <Title c="gray" order={3} fw="500" fz="16">
-                Powerful
+                Powerful, colorful editor
               </Title>
               <Text fz="14" c="dimmed">
                 Modify data, preview images, inspect nodes, and more!
@@ -73,7 +92,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
           >
             Try premium for free, no registration
           </Button>
-          <Button size="md" variant="subtle" color="gray" radius="md" onClick={onClose}>
+          <Button size="md" variant="subtle" color="gray" radius="md" onClick={handleCloseModal}>
             Maybe later
           </Button>
         </Stack>
