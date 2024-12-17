@@ -86,11 +86,12 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
       <Group gap="6" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
         {!isWidget && (
           <Button
+            component="a"
+            href="https://todiagram.com/editor?utm_source=jsoncrack&utm_medium=toolbar"
             color="green"
             size="compact-sm"
             fz="12"
             fw="600"
-            onClick={() => setVisible("UpgradeModal", true)}
             leftSection={<LuCrown />}
             mr="6"
           >
