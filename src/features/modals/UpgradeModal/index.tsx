@@ -60,7 +60,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
             </ThemeIcon>
             <Stack gap="4">
               <Title c="gray" order={3} fw="500" fz="16">
-                Load up to 4 MBs
+                Load larger files
               </Title>
               <Text fz="14" c="dimmed">
                 We made it easy to visualize, format, and explore JSON data, faster than ever.

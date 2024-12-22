@@ -42,7 +42,7 @@ export const FullscreenDropzone = () => {
             Upload to JSON Crack
           </Text>
           <Text fz="lg" c="dimmed" mt="sm">
-            (Max file size: 4 MB)
+            (Max file size: 300 KB)
           </Text>
         </Dropzone.Accept>
         <Dropzone.Reject>
