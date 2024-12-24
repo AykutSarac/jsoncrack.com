@@ -1,20 +1,21 @@
 import React from "react";
 import type { ModalProps } from "@mantine/core";
 import {
-  Text,
   Button,
   Modal,
   Flex,
   Stack,
   Title,
-  ThemeIcon,
   CloseButton,
   FocusTrap,
   Image,
   Divider,
+  List,
+  ThemeIcon,
+  Anchor,
 } from "@mantine/core";
 import Cookie from "js-cookie";
-import { LuCrown, LuTrendingUp } from "react-icons/lu";
+import { LuCheckCircle } from "react-icons/lu";
 import useConfig from "src/store/useConfig";
 
 export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
@@ -47,53 +48,57 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
           style={{ objectPosition: "left" }}
         />
         <Divider orientation="vertical" />
-        <Stack gap="24" px="40" py="20">
-          <Flex justify="space-between">
+        <Stack gap="24" px="40" py="20" w="100%">
+          <Flex justify="space-between" mr="-20">
             <Title c="bright" fw="500" fz="24">
-              Upgrade to unlock all features
+              Try the new editor!
             </Title>
             <CloseButton onClick={handleCloseModal} />
           </Flex>
-          <Flex gap="20">
-            <ThemeIcon color="violet" variant="light" size="xl" radius="xl">
-              <LuCrown size="20" />
-            </ThemeIcon>
-            <Stack gap="4">
-              <Title c="gray" order={3} fw="500" fz="16">
-                Load larger files
-              </Title>
-              <Text fz="14" c="dimmed">
-                We made it easy to visualize, format, and explore JSON data, faster than ever.
-              </Text>
-            </Stack>
-          </Flex>
-          <Flex gap="20">
-            <ThemeIcon color="violet" variant="light" size="xl" radius="xl">
-              <LuTrendingUp size="20" />
-            </ThemeIcon>
-            <Stack gap="4">
-              <Title c="gray" order={3} fw="500" fz="16">
-                Powerful, colorful editor
-              </Title>
-              <Text fz="14" c="dimmed">
-                Modify data, preview images, inspect nodes, and more!
-              </Text>
-            </Stack>
-          </Flex>
+          <List
+            spacing="4"
+            icon={
+              <ThemeIcon variant="transparent" radius="xl" size="sm" color="green">
+                <LuCheckCircle size="16" />
+              </ThemeIcon>
+            }
+          >
+            <List.Item>Large data support</List.Item>
+            <List.Item>Custom themes</List.Item>
+            <List.Item>Cloud Storage</List.Item>
+            <List.Item>Compare Data</List.Item>
+            <List.Item>AI-Filter</List.Item>
+            <List.Item>API Integration</List.Item>
+            <List.Item>
+              <Anchor
+                href="https://chromewebstore.google.com/detail/todiagram/gpcnkpjdmgihedngamkhendifclghjhn"
+                target="_blank"
+                rel="noopener"
+                c="inherit"
+                td="underline"
+              >
+                Chrome Extension
+              </Anchor>
+            </List.Item>
+          </List>
           <Button
             component="a"
             href="https://todiagram.com/editor?utm_source=jsoncrack&utm_medium=upgrade_modal"
             target="_blank"
-            mb="-16"
-            color="violet"
+            color="green"
             size="md"
             radius="md"
-            leftSection={<LuCrown />}
+            fullWidth
+            leftSection={
+              <Image
+                src="https://todiagram.com/logo.svg"
+                alt="logo"
+                w={20}
+                style={{ filter: "grayscale(1) brightness(0) invert(1)" }}
+              />
+            }
           >
-            Try premium for free, no registration
-          </Button>
-          <Button size="md" variant="subtle" color="gray" radius="md" onClick={handleCloseModal}>
-            Maybe later
+            Open Editor
           </Button>
         </Stack>
       </Flex>

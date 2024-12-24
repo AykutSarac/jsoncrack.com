@@ -88,6 +88,7 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
           <Button
             component="a"
             href="https://todiagram.com/editor?utm_source=jsoncrack&utm_medium=toolbar"
+            target="_blank"
             color="green"
             size="compact-sm"
             fz="12"
@@ -95,7 +96,7 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
             leftSection={<LuCrown />}
             mr="6"
           >
-            Try premium for free
+            Unlock Pro Features
           </Button>
         )}
         <SearchInput />
