@@ -46,10 +46,11 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
         </Button>
         <Button
           component="a"
-          href="https://todiagram.com/editor?utm_source=jsoncrack&utm_medium=upgrade_modal"
+          href="https://todiagram.com/?utm_source=jsoncrack&utm_medium=upgrade_modal"
           target="_blank"
-          color="red"
+          color="green"
           size="md"
+          onClick={handleCloseModal}
           leftSection={
             <Image
               src="https://todiagram.com/logo.svg"

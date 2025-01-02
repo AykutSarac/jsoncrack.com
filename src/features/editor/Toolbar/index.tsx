@@ -4,7 +4,6 @@ import styled from "styled-components";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import { FiDownload } from "react-icons/fi";
-import { LuCrown } from "react-icons/lu";
 import { type FileFormat, formats } from "src/enums/file.enum";
 import { SearchInput } from "src/features/editor/Toolbar/SearchInput";
 import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
@@ -87,16 +86,16 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
         {!isWidget && (
           <Button
             component="a"
-            href="https://todiagram.com/editor?utm_source=jsoncrack&utm_medium=toolbar"
+            href="https://todiagram.com/?utm_source=jsoncrack&utm_medium=toolbar"
             target="_blank"
-            color="green"
+            variant="light"
+            color="gray"
             size="compact-sm"
             fz="12"
             fw="600"
-            leftSection={<LuCrown />}
             mr="6"
           >
-            Unlock Pro Features
+            JSON Crack v2.0 🔥
           </Button>
         )}
         <SearchInput />
