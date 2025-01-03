@@ -8,7 +8,8 @@ import { HeroPreview } from "src/layout/Landing/HeroPreview";
 import { HeroSection } from "src/layout/Landing/HeroSection";
 import { LovedBy } from "src/layout/Landing/LovedBy";
 import { Section1 } from "src/layout/Landing/Section1";
-import { SeePremium } from "src/layout/Landing/SeePremium";
+import { Section2 } from "src/layout/Landing/Section2";
+import { Section3 } from "src/layout/Landing/Section3";
 import Layout from "src/layout/PageLayout";
 
 export const HomePage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
@@ -18,10 +19,11 @@ export const HomePage = (props: InferGetStaticPropsType<typeof getStaticProps>) 
       <HeroSection />
       <HeroPreview />
       <Section1 />
+      <Section2 />
+      <Section3 />
       <Features />
-      <FAQ />
       <LovedBy stars={props.stars} />
-      <SeePremium />
+      <FAQ />
     </Layout>
   );
 };

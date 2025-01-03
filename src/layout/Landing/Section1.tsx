@@ -1,42 +1,20 @@
 import React from "react";
-import Link from "next/link";
-import {
-  Button,
-  Container,
-  Flex,
-  Image,
-  JsonInput,
-  List,
-  SimpleGrid,
-  Stack,
-  Text,
-  Title,
-} from "@mantine/core";
+import { Container, Image, SimpleGrid, Stack, Text, Title } from "@mantine/core";
 import styled from "styled-components";
-import { LuBadgeCheck } from "react-icons/lu";
 
-const StyledDottedContainer = styled.div`
+const StyledImageWrapper = styled.div`
   position: relative;
-  background-color: #f3f3f3;
-  background-image: radial-gradient(#e0e0e0 3px, transparent 0);
-  background-size: 40px 40px;
-  border: 1px solid #e0e0e0;
 
-  width: 100%;
-  min-width: 300px;
-  max-width: 500px;
-  border-radius: 15px;
-  height: 460px;
-
-  .jc {
+  &::after {
+    content: "";
     position: absolute;
+    width: 100%;
+    height: 100%;
     top: 0;
     left: 0;
     padding: 12px;
     border-radius: 15px;
-    transform: translate(-80px, 10%);
-    border: 1px solid #000;
-    box-shadow: 0px 4px 0px 0px #000;
+    border: 1px solid #e0e0e0;
     background: #f3f3f3;
     --line-color-1: #e3e3e3;
     --line-color-2: #e5e5e5;
@@ -56,111 +34,113 @@ const StyledDottedContainer = styled.div`
       20px 20px;
   }
 
-  .jcode {
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: translate(80%, 80%);
-    width: 273px;
-    border-radius: 15px;
-    border: 1px solid #000;
-    box-shadow: 0px 4px 0px 0px #000;
-    overflow: hidden;
-  }
-
-  @media only screen and (max-width: 1085px) {
-    display: none;
+  img {
+    z-index: 1;
   }
 `;
 
 export const Section1 = () => {
   return (
     <Container size="xl" py="80">
-      <Flex justify="center" align="center">
-        <Stack maw={634}>
-          <Title
-            lh="1.1"
-            fz={{
-              base: 26,
-              xs: 32,
-              sm: 42,
-            }}
-            maw={500}
-            order={2}
-            c="gray.9"
-          >
-            Don&apos;t waste time with JSON formatters
+      <Title
+        lh="1.1"
+        fz={{
+          base: 26,
+          xs: 46,
+          sm: 52,
+        }}
+        maw="16ch"
+        ta="center"
+        order={2}
+        c="gray.9"
+        mx="auto"
+        mb="15"
+      >
+        Make working with JSON easy
+      </Title>
+      <Title
+        order={3}
+        fw={400}
+        c="gray.7"
+        px="lg"
+        mx="auto"
+        ta="center"
+        mb={50}
+        fz={{ base: 16, sm: 18 }}
+        w={{ base: "100%", md: "600" }}
+      >
+        JSON Crack eliminates the chaos of raw, messy data, making the complex appear simple and
+        easy to understand.
+      </Title>
+      <SimpleGrid
+        cols={{
+          base: 1,
+          sm: 3,
+        }}
+      >
+        <Stack
+          p="lg"
+          m="lg"
+          maw="360"
+          mx="auto"
+          style={{
+            borderRadius: "17px",
+            border: "1px solid #e0e0e0",
+          }}
+        >
+          <StyledImageWrapper>
+            <Image src="/assets/step1-visual.png" pos="relative" w="100%" alt="upload" />
+          </StyledImageWrapper>
+          <Title ta="center" order={3}>
+            Upload your data
           </Title>
-          <Text my="md" c="gray.6" fz={16} maw={510}>
-            The days of getting lost in lines of code are over. JSON Crack gives you the most
-            optimal view of your data so you can make insights faster than ever.
+          <Text ta="center" c="gray.7">
+            Upload your JSON file, URL, or type your data directly into our easy-to-use text editor.
           </Text>
-          <List
-            fz={{
-              base: 16,
-              xs: 18,
-            }}
-            fw={500}
-            component={SimpleGrid}
-            c="gray.8"
-            icon={<LuBadgeCheck size="20" />}
-          >
-            <SimpleGrid w="fit-content" cols={2}>
-              <List.Item>Clear, concise data presentation</List.Item>
-              <List.Item>Fast decision-making</List.Item>
-              <List.Item>Grasp patterns and relationships faster</List.Item>
-              <List.Item>Share insights with teams easier</List.Item>
-            </SimpleGrid>
-          </List>
-          <Link href="/editor" prefetch={false}>
-            <Button color="#202842" size="lg" radius="md" w="fit-content" mt="sm">
-              Use for free
-            </Button>
-          </Link>
         </Stack>
-        <StyledDottedContainer>
-          <Image className="jc" src="/assets/jsoncrack.svg" alt="json crack" loading="lazy" />
-          <JsonInput
-            w={273}
-            rows={12}
-            className="jcode"
-            styles={{
-              input: {
-                border: "none",
-                fontSize: 12,
-              },
-            }}
-            value={JSON.stringify(
-              {
-                squadName: "Super hero squad",
-                homeTown: "Metro City",
-                formed: 2016,
-                secretBase: "Super tower",
-                active: true,
-                members: [
-                  {
-                    name: "Molecule Man",
-                    age: 29,
-                    secretIdentity: "Dan Jukes",
-                  },
-                  {
-                    name: "Madame Uppercut",
-                    age: 39,
-                    secretIdentity: "Jane Wilson",
-                  },
-                  {
-                    name: "Eternal Flame",
-                    age: 1000000,
-                    secretIdentity: "Unknown",
-                  },
-                ],
-              },
-              null,
-              2
-            )}
-          />
-        </StyledDottedContainer>
-      </Flex>
+        <Stack
+          p="lg"
+          m="lg"
+          maw="360"
+          mx="auto"
+          style={{
+            borderRadius: "17px",
+            border: "1px solid #e0e0e0",
+          }}
+        >
+          <StyledImageWrapper>
+            <Image src="/assets/step2-visual.png" pos="relative" w="100%" alt="visualize" />
+          </StyledImageWrapper>
+          <Title ta="center" order={3}>
+            Visualize your JSON
+          </Title>
+          <Text ta="center" c="gray.7">
+            Your data will automatically be turned into a visual tree graph so you can quickly
+            understand your data at a glance.
+          </Text>
+        </Stack>
+        <Stack
+          p="lg"
+          m="lg"
+          maw="360"
+          mx="auto"
+          style={{
+            borderRadius: "17px",
+            border: "1px solid #e0e0e0",
+          }}
+        >
+          <StyledImageWrapper>
+            <Image src="/assets/step3-visual.png" pos="relative" w="100%" alt="export image" />
+          </StyledImageWrapper>
+          <Title ta="center" order={3}>
+            Export to image
+          </Title>
+          <Text ta="center" c="gray.7">
+            Once you&apos;re satisfied, you can export an image of your graph as PNG, JPEG, or SVG
+            and share with others.
+          </Text>
+        </Stack>
+      </SimpleGrid>
     </Container>
   );
 };

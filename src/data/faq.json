@@ -1,7 +1,11 @@
 [
   {
     "title": "What is JSON Crack and what does it do?",
-    "content": "JSON Crack is a versatile online tool designed to visualize and analyze various data formats, including JSON, YAML, CSV, XML and more. It transforms complex data into intuitive graphs and tree views, making it ideal for developers, data analysts, and anyone working with structured data."
+    "content": "JSON Crack is an online JSON viewer tool designed to visualize and analyze various data formats, including JSON, YAML, CSV, XML and more. It transforms complex data into intuitive graphs and tree views, making it ideal for developers, data analysts, and anyone working with structured data."
+  },
+  {
+    "title": "How is it different than traditional JSON viewers?",
+    "content": "While traditional JSON Viewers and JSON formatters only allow you to work with raw data on text editors, JSON Crack offers a unique visual representation of your data, making it easier to understand and analyze complex data structures. It provides a tree view and graph view to help you visualize your data in different ways."
   },
   {
     "title": "Is JSON Crack free?",

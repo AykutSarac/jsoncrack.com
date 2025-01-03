@@ -25,36 +25,36 @@ interface FeatureItem {
 
 const features: FeatureItem[] = [
   {
-    title: "Visualizer",
+    title: "JSON Visualizer",
     description:
       "Transform your data into interactive graphs or trees as you type. Supports JSON, YAML, CSV, XML, and TOML.",
     icon: <FaBolt size={20} />,
     color: "yellow",
   },
   {
-    title: "Convert",
+    title: "Convert Data",
     description:
       "Convert JSON to CSV, YAML to JSON, XML to JSON, and more. Our JSON converter supports multiple formats for easy data exchange.",
     icon: <TbTransformFilled size={20} />,
     color: "orange",
   },
   {
-    title: "Format & Validate",
+    title: "JSON Formatter and JSON Validator",
     description:
       "Format and beautify your JSON data to make it more readable. Validate JSON, YAML, and CSV.",
     icon: <MdOutlineFormatIndentIncrease size={20} />,
     color: "green",
   },
   {
-    title: "Generate Code",
-    description: "Generate TypeScript interface, Golang structs, JSON Schema and more.",
+    title: "Generate Code/Types",
+    description: "Generate TypeScript interface, Golang structs, Rust serde, JSON Schema and more.",
     icon: <MdOutlineGeneratingTokens size={20} />,
     color: "grape",
   },
   {
-    title: "JSON Schema",
+    title: "JSON Schema Generator",
     description:
-      "Generate JSON Schema, create mock data, and validate JSON Schema from various data formats like JSON, YAML, XML, and CSV.",
+      "Validate JSON Schema, create mock data, and generate JSON Schema from various data formats like JSON, YAML, XML, and CSV.",
     icon: <VscJson size={20} />,
     color: "cyan",
   },
@@ -65,9 +65,9 @@ const features: FeatureItem[] = [
     color: "teal.5",
   },
   {
-    title: "Download Image",
+    title: "Export Image",
     description:
-      "Export image of the graph as PNG, JPEG, or SVG. Share your data visualization with others.",
+      "Export image of the graphs as PNG, JPEG, or SVG. Share your data visualization with others.",
     icon: <IoImages size={20} />,
     color: "blue.4",
   },
@@ -122,8 +122,7 @@ export const Features = () => {
           fz={{ base: 16, sm: 18 }}
           w={{ base: "100%", xs: "80%", sm: "60%", md: "40%" }}
         >
-          All in one tool for JSON, YAML, CSV, XML, and TOML. Formatter, validator, visualizer, and
-          editor.
+          All in one tool for JSON, YAML, CSV, XML, and TOML.
         </Title>
 
         <SimpleGrid
