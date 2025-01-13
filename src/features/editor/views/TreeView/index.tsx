@@ -10,22 +10,20 @@ export const TreeView = () => {
   const json = useJson(state => state.json);
 
   return (
-    <>
-      <JSONTree
-        hideRoot
-        data={JSON.parse(json)}
-        valueRenderer={(valueAsString, value) => <Value {...{ valueAsString, value }} />}
-        labelRenderer={(keyPath, nodeType) => <Label {...{ keyPath, nodeType }} />}
-        theme={{
-          extend: {
-            overflow: "scroll",
-            height: "100%",
-            scheme: "monokai",
-            author: "wimer hazenberg (http://www.monokai.nl)",
-            base00: theme.GRID_BG_COLOR,
-          },
-        }}
-      />
-    </>
+    <JSONTree
+      hideRoot
+      data={JSON.parse(json)}
+      valueRenderer={(valueAsString, value) => <Value {...{ valueAsString, value }} />}
+      labelRenderer={(keyPath, nodeType) => <Label {...{ keyPath, nodeType }} />}
+      theme={{
+        extend: {
+          overflow: "scroll",
+          height: "100%",
+          scheme: "monokai",
+          author: "wimer hazenberg (http://www.monokai.nl)",
+          base00: theme.GRID_BG_COLOR,
+        },
+      }}
+    />
   );
 };
