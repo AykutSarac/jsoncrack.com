@@ -98,7 +98,7 @@ Here is what you need to be able to run JSON Crack.
    cd jsoncrack.com
    ```
 
-3. Install packages with yarn
+3. Install packages
 
    ```sh
    pnpm install
