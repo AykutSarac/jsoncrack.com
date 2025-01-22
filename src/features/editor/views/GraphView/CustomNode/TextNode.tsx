@@ -17,7 +17,7 @@ const StyledExpand = styled.button`
   color: ${({ theme }) => theme.TEXT_NORMAL};
   background: rgba(0, 0, 0, 0.1);
   height: 100%;
-  width: 40px;
+  width: 36px;
   border-left: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
 
   &:hover {
@@ -25,12 +25,15 @@ const StyledExpand = styled.button`
   }
 `;
 
-const StyledTextNodeWrapper = styled.span<{ $hasCollapse: boolean }>`
+const StyledTextNodeWrapper = styled.span<{ $hasCollapse: boolean; $isParent: boolean }>`
   display: flex;
-  justify-content: ${({ $hasCollapse }) => ($hasCollapse ? "space-between" : "center")};
+  justify-content: ${({ $hasCollapse, $isParent }) =>
+    $hasCollapse ? "space-between" : $isParent ? "center" : "flex-start"};
   align-items: center;
   height: 100%;
   width: 100%;
+  overflow: hidden;
+  padding: ${({ $hasCollapse }) => ($hasCollapse ? "0" : "0 10px")};
 `;
 
 const StyledImageWrapper = styled.div`
@@ -81,14 +84,14 @@ const Node = ({ node, x, y, hasCollapse = false }: CustomNodeProps) => {
           data-y={y}
           data-key={JSON.stringify(text)}
           $hasCollapse={isParent && collapseButtonVisible}
+          $isParent={isParent}
         >
           <Styled.StyledKey $value={value} $parent={isParent} $type={type}>
             <TextRenderer>{value}</TextRenderer>
           </Styled.StyledKey>
           {isParent && childrenCount > 0 && childrenCountVisible && (
-            <Styled.StyledChildrenCount>({childrenCount})</Styled.StyledChildrenCount>
+            <Styled.StyledChildrenCount>[{childrenCount}]</Styled.StyledChildrenCount>
           )}
-
           {isParent && hasCollapse && collapseButtonVisible && (
             <StyledExpand aria-label="Expand" onClick={handleExpand}>
               {isExpanded ? <MdLinkOff size={18} /> : <MdLink size={18} />}

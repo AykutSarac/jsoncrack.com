@@ -1,5 +1,5 @@
 import React from "react";
-import { LoadingOverlay } from "@mantine/core";
+import { LoadingOverlay, useComputedColorScheme } from "@mantine/core";
 import styled from "styled-components";
 import debounce from "lodash.debounce";
 import { Space } from "react-zoomable-ui";
@@ -83,6 +83,7 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
   const centerView = useGraph(state => state.centerView);
   const direction = useGraph(state => state.direction);
   const nodes = useGraph(state => state.nodes);
+  const colorScheme = useComputedColorScheme();
   const edges = useGraph(state => state.edges);
   const [paneWidth, setPaneWidth] = React.useState(2000);
   const [paneHeight, setPaneHeight] = React.useState(2000);
@@ -116,13 +117,14 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
       edge={p => <CustomEdge {...p} />}
       nodes={nodes}
       edges={edges}
+      arrow={null}
       maxHeight={paneHeight}
       maxWidth={paneWidth}
       height={paneHeight}
       width={paneWidth}
       direction={direction}
       layoutOptions={layoutOptions}
-      key={direction}
+      key={[direction, colorScheme].join("-")}
       pannable={false}
       zoomable={false}
       animated={false}

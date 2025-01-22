@@ -1,4 +1,5 @@
 import React from "react";
+import { NODE_DIMENSIONS } from "src/constants/graph";
 import type { CustomNodeProps } from "src/features/editor/views/GraphView/CustomNode";
 import { TextRenderer } from "./TextRenderer";
 import * as Styled from "./styles";
@@ -17,8 +18,10 @@ const Row = ({ val, x, y, index }: RowProps) => {
   const rowKey = JSON.stringify(val[0]).replaceAll('"', "");
   const rowValue = JSON.stringify(val[1]);
 
+  const rowPosition = index * NODE_DIMENSIONS.ROW_HEIGHT;
+
   return (
-    <Styled.StyledRow $value={rowValue} data-key={key} data-x={x} data-y={y + index * 17.8}>
+    <Styled.StyledRow $value={rowValue} data-key={key} data-x={x} data-y={y + rowPosition}>
       <Styled.StyledKey $type="object">{rowKey}: </Styled.StyledKey>
       <TextRenderer>{rowValue}</TextRenderer>
     </Styled.StyledRow>

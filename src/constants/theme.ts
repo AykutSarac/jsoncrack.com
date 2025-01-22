@@ -47,6 +47,7 @@ const nodeColors = {
       PARENT_ARR: "#FC9A40",
       PARENT_OBJ: "#59b8ff",
       CHILD_COUNT: "white",
+      DIVIDER: "#383838",
     },
   },
   light: {
@@ -63,6 +64,7 @@ const nodeColors = {
       PARENT_ARR: "#FF6B00",
       PARENT_OBJ: "#761CEA",
       CHILD_COUNT: "#535353",
+      DIVIDER: "#e6e6e6",
     },
   },
 };
@@ -89,9 +91,9 @@ export const darkTheme = {
   MODAL_BACKGROUND: "#36393E",
   TEXT_NORMAL: "#dcddde",
   TEXT_POSITIVE: "hsl(139,calc(var(--saturation-factor, 1)*51.6%),52.2%)",
-  GRID_BG_COLOR: "#1E1E1E",
-  GRID_COLOR_PRIMARY: "#272626",
-  GRID_COLOR_SECONDARY: "#232323",
+  GRID_BG_COLOR: "#141414",
+  GRID_COLOR_PRIMARY: "#1c1b1b",
+  GRID_COLOR_SECONDARY: "#191919",
 };
 
 export const lightTheme = {
@@ -116,9 +118,9 @@ export const lightTheme = {
   MODAL_BACKGROUND: "#FFFFFF",
   TEXT_NORMAL: "#2e3338",
   TEXT_POSITIVE: "#008736",
-  GRID_BG_COLOR: "#f3f3f3",
-  GRID_COLOR_PRIMARY: "#E0E0E0",
-  GRID_COLOR_SECONDARY: "#E4E4E4",
+  GRID_BG_COLOR: "#f7f7f7",
+  GRID_COLOR_PRIMARY: "#ebe8e8",
+  GRID_COLOR_SECONDARY: "#f2eeee",
 };
 
 const themeDs = {
