@@ -41,6 +41,12 @@ const CustomNodeWrapper = (nodeProps: NodeProps<NodeData["data"]>) => {
       onClick={handleNodeClick as any}
       animated={false}
       label={null as any}
+      onEnter={ev => {
+        ev.currentTarget.style.stroke = "#3B82F6";
+      }}
+      onLeave={ev => {
+        ev.currentTarget.style.stroke = colorScheme === "dark" ? "#424242" : "#BCBEC0";
+      }}
       style={{
         fill: colorScheme === "dark" ? "#292929" : "#ffffff",
         stroke: colorScheme === "dark" ? "#424242" : "#BCBEC0",
