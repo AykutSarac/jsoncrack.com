@@ -1,6 +1,6 @@
 import React from "react";
 import { Menu, Flex, Text, SegmentedControl } from "@mantine/core";
-import { useHotkeys } from "@mantine/hooks";
+import { useHotkeys, useSessionStorage } from "@mantine/hooks";
 import styled from "styled-components";
 import { event as gaEvent } from "nextjs-google-analytics";
 import toast from "react-hot-toast";
@@ -10,7 +10,6 @@ import { VscExpandAll, VscCollapseAll, VscTarget } from "react-icons/vsc";
 import { ViewMode } from "src/enums/viewMode.enum";
 import useGraph from "src/features/editor/views/GraphView/stores/useGraph";
 import useToggleHide from "src/hooks/useToggleHide";
-import useConfig from "src/store/useConfig";
 import type { LayoutDirection } from "src/types/graph";
 import { StyledToolElement } from "./styles";
 
@@ -41,8 +40,10 @@ export const ViewMenu = () => {
   const collapseGraph = useGraph(state => state.collapseGraph);
   const focusFirstNode = useGraph(state => state.focusFirstNode);
   const graphCollapsed = useGraph(state => state.graphCollapsed);
-  const viewMode = useConfig(state => state.viewMode);
-  const setViewMode = useConfig(state => state.setViewMode);
+  const [viewMode, setViewMode] = useSessionStorage({
+    key: "viewMode",
+    defaultValue: ViewMode.Graph,
+  });
 
   const toggleDirection = () => {
     const nextDirection = getNextDirection(direction || "RIGHT");

@@ -1,17 +1,15 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { ViewMode } from "src/enums/viewMode.enum";
 import useGraph from "../features/editor/views/GraphView/stores/useGraph";
 
 const initialStates = {
-  darkmodeEnabled: false,
+  darkmodeEnabled: true,
   collapseButtonVisible: true,
   childrenCountVisible: true,
   imagePreviewEnabled: true,
   liveTransformEnabled: true,
   gesturesEnabled: false,
   rulersEnabled: true,
-  viewMode: ViewMode.Graph,
 };
 
 export interface ConfigActions {
@@ -22,7 +20,6 @@ export interface ConfigActions {
   toggleLiveTransform: (value: boolean) => void;
   toggleGestures: (value: boolean) => void;
   toggleRulers: (value: boolean) => void;
-  setViewMode: (value: ViewMode) => void;
 }
 
 const useConfig = create(
@@ -39,7 +36,6 @@ const useConfig = create(
         set({ imagePreviewEnabled });
         useGraph.getState().setGraph();
       },
-      setViewMode: viewMode => set({ viewMode }),
     }),
     {
       name: "config",

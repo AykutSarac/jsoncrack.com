@@ -1,9 +1,9 @@
 import React from "react";
+import { useSessionStorage } from "@mantine/hooks";
 import styled from "styled-components";
 import { ViewMode } from "src/enums/viewMode.enum";
 import { GraphView } from "src/features/editor/views/GraphView";
 import { TreeView } from "src/features/editor/views/TreeView";
-import useConfig from "src/store/useConfig";
 
 const StyledLiveEditor = styled.div`
   position: relative;
@@ -29,7 +29,10 @@ const StyledLiveEditor = styled.div`
 `;
 
 const View = () => {
-  const viewMode = useConfig(state => state.viewMode);
+  const [viewMode] = useSessionStorage({
+    key: "viewMode",
+    defaultValue: ViewMode.Graph,
+  });
 
   if (viewMode === ViewMode.Graph) return <GraphView />;
   if (viewMode === ViewMode.Tree) return <TreeView />;
