@@ -1,8 +1,10 @@
 import React from "react";
+import Link from "next/link";
 import { Flex, Group, Select, Button } from "@mantine/core";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
+import { FaGithub } from "react-icons/fa6";
 import { FiDownload } from "react-icons/fi";
 import { type FileFormat, formats } from "src/enums/file.enum";
 import { SearchInput } from "src/features/editor/Toolbar/SearchInput";
@@ -108,6 +110,11 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
               <FiDownload size="18" />
             </StyledToolElement>
             <ZoomMenu />
+            <Link href="https://github.com/AykutSarac/jsoncrack.com" rel="noopener" target="_blank">
+              <StyledToolElement title="GitHub">
+                <FaGithub size="18" />
+              </StyledToolElement>
+            </Link>
             <OptionsMenu />
             <StyledToolElement title="Fullscreen" $hide={isWidget} onClick={fullscreenBrowser}>
               <AiOutlineFullscreen size="18" />
