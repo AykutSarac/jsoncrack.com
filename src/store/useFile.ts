@@ -50,7 +50,7 @@ const defaultJson = JSON.stringify(
       twitter: "https://x.com/jsoncrack",
       linkedin: "https://www.linkedin.com/company/todiagram",
     },
-    images: ["http://localhost:3000/assets/logo.svg"],
+    images: ["https://jsoncrack.com/assets/logo.svg"],
   },
   null,
   2
