@@ -1,8 +1,8 @@
 import React from "react";
 import Link from "next/link";
-import { Button, Flex, Title, Image } from "@mantine/core";
+import { Button, Text } from "@mantine/core";
 import styled from "styled-components";
-import { MdChevronRight } from "react-icons/md";
+import { UpgradeContent } from "src/features/modals/UpgradeModal";
 
 const StyledNotSupported = styled.div`
   position: relative;
@@ -12,12 +12,7 @@ const StyledNotSupported = styled.div`
   justify-content: center;
   width: 100%;
   height: 100%;
-  background: ${({ theme }) => theme.BACKGROUND_TERTIARY};
   overflow: hidden;
-
-  img {
-    filter: drop-shadow(2px 2px 1px black);
-  }
 
   .glowing {
     position: relative;
@@ -132,14 +127,6 @@ const StyledNotSupported = styled.div`
   }
 `;
 
-const StyledInfo = styled.p`
-  max-width: 500px;
-  font-weight: 600;
-  font-size: 26px;
-  text-align: center;
-  color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
-`;
-
 const StyledContent = styled.div`
   position: absolute;
   left: 0;
@@ -157,26 +144,19 @@ export const NotSupported = () => {
   return (
     <StyledNotSupported>
       <StyledContent>
-        <Flex align="center" justify="center" gap="16" mb="lg">
-          <Image src="https://todiagram.com/logo.svg" alt="ToDiagram" w="48" h="48" />
-          <Title fz="48" style={{ pointerEvents: "none", mixBlendMode: "difference" }}>
-            ToDiagram
-          </Title>
-        </Flex>
-        <StyledInfo>
-          Use ToDiagram for larger data size, faster performance, and more features.
-        </StyledInfo>
-        <Link href="https://todiagram.com" target="_blank" passHref rel="noopener">
-          <Button
-            mt="lg"
-            size="lg"
-            fw="bolder"
-            color="#FE634E"
-            autoContrast
-            radius="md"
-            rightSection={<MdChevronRight size="24" />}
-          >
-            Go to ToDiagram
+        <UpgradeContent direction="column-reverse" />
+        <Text c="dimmed" maw="400" my="lg" ta="center">
+          JSON Crack is unable to support data of this size. Please try our new editor for better
+          performance.
+        </Text>
+        <Link
+          rel="noopener"
+          href="https://todiagram.com?utm_source=jsoncrack&utm_medium=data_limit"
+          target="_blank"
+          passHref
+        >
+          <Button size="lg" color="green" radius="xl">
+            Try New Editor &rarr;
           </Button>
         </Link>
       </StyledContent>

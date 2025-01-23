@@ -87,15 +87,13 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
       <Group gap="6" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
         {!isWidget && (
           <Button
-            component="a"
-            href="https://todiagram.com/?utm_source=jsoncrack&utm_medium=toolbar"
-            target="_blank"
             variant="light"
             color="gray"
             size="compact-sm"
             fz="12"
             fw="600"
             mr="6"
+            onClick={() => setVisible("UpgradeModal", true)}
           >
             JSON Crack v2.0 🔥
           </Button>
