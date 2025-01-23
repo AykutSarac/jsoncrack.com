@@ -106,7 +106,7 @@ export const HeroSection = () => {
     <StyledHeroSection>
       <StyledHeroSectionBody>
         <Stack flex="1" miw={250} mx="auto" align="center">
-          <Link href="https://todiagram.com?ref=jsoncrack.com" rel="noopener">
+          <Link href="https://todiagram.com?utm_source=jsoncrack&utm_medium=hero" rel="noopener">
             <Flex justify="center" fz="sm" c="gray.8" gap="8" align="center">
               built by
               <Image

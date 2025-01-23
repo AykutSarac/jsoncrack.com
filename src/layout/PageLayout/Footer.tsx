@@ -39,7 +39,12 @@ export const Footer = () => {
             >
               Open Source
             </Anchor>
-            <Anchor href="https://todiagram.com" fz="sm" c="gray.5" rel="noopener">
+            <Anchor
+              href="https://todiagram.com?utm_source=jsoncrack&utm_medium=footer"
+              fz="sm"
+              c="gray.5"
+              rel="noopener"
+            >
               ToDiagram
             </Anchor>
           </Stack>

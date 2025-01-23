@@ -144,7 +144,7 @@ export const Navbar = () => {
         <Right>
           <Button
             component="a"
-            href="https://todiagram.com"
+            href="https://todiagram.com?utm_source=jsoncrack&utm_medium=navbar"
             variant="subtle"
             color="black"
             size="md"

@@ -108,7 +108,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
           Maybe later
         </Button>
         <Link
-          href="https://todiagram.com/?utm_source=app&utm_medium=upgrade_modal"
+          href="https://todiagram.com/?utm_source=jsoncrack&utm_medium=upgrade_modal"
           rel="noopener"
           target="_blank"
         >
