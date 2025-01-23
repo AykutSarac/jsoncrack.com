@@ -16,7 +16,7 @@ const defaultJson = JSON.stringify(
     launched: 2022,
     openSource: true,
     stars: 34633,
-    alternative: {
+    upgrade: {
       appName: "ToDiagram",
       detail: "New powerful JSON editor.",
       website: "https://todiagram.com",
@@ -27,28 +27,24 @@ const defaultJson = JSON.stringify(
       {
         title: "Launch",
         year: 2022,
-        detail: "Released the first version.",
       },
       {
         title: "10K Stars",
         date: 2022,
-        detail: "Achieved 10,000 stars on GitHub.",
       },
       {
         title: "20K Stars",
         date: 2023,
-        detail: "Achieved 20,000 stars on GitHub.",
       },
       {
         title: "30K Stars",
         date: 2024,
-        detail: "Achieved 30,000 stars on GitHub.",
       },
     ],
     social: {
       github: "https://github.com/AykutSarac/jsoncrack.com",
       twitter: "https://x.com/jsoncrack",
-      linkedin: "https://www.linkedin.com/company/todiagram",
+      linkedin: "https://linkedin.com/company/todiagram",
     },
     images: ["https://jsoncrack.com/assets/logo.svg"],
   },
