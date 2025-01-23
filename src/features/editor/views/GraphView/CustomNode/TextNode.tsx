@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 import { MdLink, MdLinkOff } from "react-icons/md";
 import type { CustomNodeProps } from "src/features/editor/views/GraphView/CustomNode";
@@ -72,6 +72,12 @@ const Node = ({ node, x, y, hasCollapse = false }: CustomNodeProps) => {
     validateHiddenNodes();
   };
 
+  const childrenCountText = useMemo(() => {
+    if (type === "object") return `{${childrenCount}}`;
+    if (type === "array") return `[${childrenCount}]`;
+    return "";
+  }, [childrenCount, type]);
+
   return (
     <Styled.StyledForeignObject width={width} height={height} x={0} y={0}>
       {isImage ? (
@@ -90,7 +96,7 @@ const Node = ({ node, x, y, hasCollapse = false }: CustomNodeProps) => {
             <TextRenderer>{value}</TextRenderer>
           </Styled.StyledKey>
           {isParent && childrenCount > 0 && childrenCountVisible && (
-            <Styled.StyledChildrenCount>[{childrenCount}]</Styled.StyledChildrenCount>
+            <Styled.StyledChildrenCount>{childrenCountText}</Styled.StyledChildrenCount>
           )}
           {isParent && hasCollapse && collapseButtonVisible && (
             <StyledExpand aria-label="Expand" onClick={handleExpand}>

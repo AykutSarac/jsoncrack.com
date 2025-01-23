@@ -7,7 +7,7 @@ type Size = { width: number; height: number };
 export const isContentImage = (value: Text) => {
   if (typeof value !== "string") return false;
 
-  const isImageURL = /(https?:\/\/.*\.(?:png|jpg|gif))/i.test(value);
+  const isImageURL = /(https?:\/\/.*\.(?:png|jpg|gif|svg))/i.test(value);
   const isBase64 = value.startsWith("data:image/") && value.includes("base64");
 
   return isImageURL || isBase64;
