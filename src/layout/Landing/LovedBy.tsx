@@ -90,7 +90,7 @@ export const LovedBy = ({ stars }: LovedByProps) => {
           color="#fe5e49"
           leftSection={
             <Image
-              src="https://todiagram.com/logo.svg"
+              src="https://todiagram.com/192.png"
               loading="lazy"
               alt="Todiagram Logo"
               w={14}

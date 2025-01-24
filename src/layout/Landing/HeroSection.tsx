@@ -1,7 +1,6 @@
 import React from "react";
 import { Plus_Jakarta_Sans } from "next/font/google";
-import Link from "next/link";
-import { Stack, Flex, Button, Image } from "@mantine/core";
+import { Stack, Flex, Button } from "@mantine/core";
 import styled from "styled-components";
 import { FaChevronRight } from "react-icons/fa6";
 
@@ -106,18 +105,6 @@ export const HeroSection = () => {
     <StyledHeroSection>
       <StyledHeroSectionBody>
         <Stack flex="1" miw={250} mx="auto" align="center">
-          <Link href="https://todiagram.com?utm_source=jsoncrack&utm_medium=hero" rel="noopener">
-            <Flex justify="center" fz="sm" c="gray.8" gap="8" align="center">
-              built by
-              <Image
-                src="/assets/todiagram_logo.png"
-                alt="Todiagram Logo"
-                h={14}
-                w="fit-content"
-                loading="eager"
-              />
-            </Flex>
-          </Link>
           <StyledHeroTitle>Visualize JSON into interactive graphs</StyledHeroTitle>
           <StyledHeroText>
             The best online JSON viewer to <strong>visualize</strong>, <strong>format</strong> and{" "}
@@ -133,6 +120,7 @@ export const HeroSection = () => {
               radius="md"
               rightSection={<FaChevronRight />}
               fw="500"
+              mt="lg"
             >
               Go to Editor
             </Button>
@@ -146,6 +134,7 @@ export const HeroSection = () => {
               radius="md"
               rightSection={<FaChevronRight />}
               fw="500"
+              mt="lg"
             >
               Go to Editor
             </Button>

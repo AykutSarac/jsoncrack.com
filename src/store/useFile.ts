@@ -46,7 +46,7 @@ const defaultJson = JSON.stringify(
       twitter: "https://x.com/jsoncrack",
       linkedin: "https://linkedin.com/company/todiagram",
     },
-    images: ["https://jsoncrack.com/assets/logo.svg"],
+    images: ["https://jsoncrack.com/assets/192.png"],
   },
   null,
   2

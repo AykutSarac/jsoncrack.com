@@ -124,7 +124,7 @@ export const Section2 = () => {
           </Button>
         </Stack>
         <StyledDottedContainer>
-          <Image className="jc" src="/assets/jsoncrack.svg" alt="json crack" loading="lazy" />
+          <Image className="jc" src="/assets/diagram.svg" alt="diagram" loading="lazy" />
           <JsonInput
             w={273}
             rows={12}

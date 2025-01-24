@@ -15,8 +15,6 @@ const StyledLogoWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
-  color: white;
-  mix-blend-mode: difference;
 `;
 
 const StyledTitle = styled.span<{ fontSize: string }>`
@@ -27,6 +25,8 @@ const StyledTitle = styled.span<{ fontSize: string }>`
   white-space: nowrap;
   z-index: 10;
   vertical-align: middle;
+  color: white;
+  mix-blend-mode: difference;
 `;
 
 interface LogoProps extends React.ComponentPropsWithoutRef<"div"> {
@@ -47,11 +47,12 @@ export const JSONCrackLogo = ({ fontSize = "1.2rem", hideText, hideLogo, ...prop
       <StyledLogoWrapper>
         {!hideLogo && (
           <Image
-            src="/assets/logo.svg"
+            src="/assets/192.png"
             loading="eager"
             width={parseFloat(fontSize) * 18}
             height={parseFloat(fontSize) * 18}
             alt="logo"
+            radius={4}
             mb="2"
           />
         )}
