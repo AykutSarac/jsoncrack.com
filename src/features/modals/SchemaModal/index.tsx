@@ -6,9 +6,9 @@ import { event as gaEvent } from "nextjs-google-analytics";
 import { toast } from "react-hot-toast";
 import { FaChevronDown } from "react-icons/fa";
 import { VscLinkExternal } from "react-icons/vsc";
-import { FileFormat } from "src/enums/file.enum";
-import useConfig from "src/store/useConfig";
-import useFile from "src/store/useFile";
+import { FileFormat } from "../../../enums/file.enum";
+import useConfig from "../../../store/useConfig";
+import useFile from "../../../store/useFile";
 
 export const SchemaModal = ({ opened, onClose }: ModalProps) => {
   const setContents = useFile(state => state.setContents);

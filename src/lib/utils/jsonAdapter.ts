@@ -1,4 +1,4 @@
-import { FileFormat } from "src/enums/file.enum";
+import { FileFormat } from "../../enums/file.enum";
 
 const keyExists = (obj: object, key: string) => {
   if (!obj || (typeof obj !== "object" && !Array.isArray(obj))) {

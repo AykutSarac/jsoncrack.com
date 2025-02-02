@@ -3,12 +3,12 @@ import { Box, Container, Flex, Paper, Text, Title } from "@mantine/core";
 import { Editor } from "@monaco-editor/react";
 import { NextSeo } from "next-seo";
 import { LuCheck, LuCircleX } from "react-icons/lu";
-import { SEO } from "src/constants/seo";
-import { type FileFormat, formats } from "src/enums/file.enum";
-import { PageLinks } from "src/layout/ConverterLayout/PageLinks";
-import { editorOptions } from "src/layout/ConverterLayout/options";
-import Layout from "src/layout/PageLayout";
-import { contentToJson, jsonToContent } from "src/lib/utils/jsonAdapter";
+import { SEO } from "../../constants/seo";
+import { type FileFormat, formats } from "../../enums/file.enum";
+import { contentToJson, jsonToContent } from "../../lib/utils/jsonAdapter";
+import Layout from "../PageLayout";
+import { PageLinks } from "./PageLinks";
+import { editorOptions } from "./options";
 
 interface ToolPageProps {
   from: FileFormat;

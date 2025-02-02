@@ -1,11 +1,11 @@
 import React, { useMemo } from "react";
 import styled from "styled-components";
 import { MdLink, MdLinkOff } from "react-icons/md";
-import type { CustomNodeProps } from "src/features/editor/views/GraphView/CustomNode";
-import { isContentImage } from "src/features/editor/views/GraphView/lib/utils/calculateNodeSize";
-import useGraph from "src/features/editor/views/GraphView/stores/useGraph";
-import useToggleHide from "src/hooks/useToggleHide";
-import useConfig from "src/store/useConfig";
+import type { CustomNodeProps } from ".";
+import useToggleHide from "../../../../../hooks/useToggleHide";
+import useConfig from "../../../../../store/useConfig";
+import { isContentImage } from "../lib/utils/calculateNodeSize";
+import useGraph from "../stores/useGraph";
 import { TextRenderer } from "./TextRenderer";
 import * as Styled from "./styles";
 

@@ -1,8 +1,8 @@
 import type { Node, NodeType } from "jsonc-parser";
-import type { Graph, States } from "src/features/editor/views/GraphView/lib/jsonParser";
-import { calculateNodeSize } from "src/features/editor/views/GraphView/lib/utils/calculateNodeSize";
+import type { States, Graph } from "../jsonParser";
 import { addEdgeToGraph } from "./addEdgeToGraph";
 import { addNodeToGraph } from "./addNodeToGraph";
+import { calculateNodeSize } from "./calculateNodeSize";
 
 type PrimitiveOrNullType = "boolean" | "string" | "number" | "null";
 

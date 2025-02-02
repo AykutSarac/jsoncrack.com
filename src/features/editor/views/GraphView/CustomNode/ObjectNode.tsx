@@ -1,6 +1,6 @@
 import React from "react";
-import { NODE_DIMENSIONS } from "src/constants/graph";
-import type { CustomNodeProps } from "src/features/editor/views/GraphView/CustomNode";
+import type { CustomNodeProps } from ".";
+import { NODE_DIMENSIONS } from "../../../../../constants/graph";
 import { TextRenderer } from "./TextRenderer";
 import * as Styled from "./styles";
 

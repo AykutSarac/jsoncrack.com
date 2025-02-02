@@ -12,9 +12,9 @@ import {
   VscSync,
   VscSyncIgnored,
 } from "react-icons/vsc";
-import useGraph from "src/features/editor/views/GraphView/stores/useGraph";
-import useConfig from "src/store/useConfig";
-import useFile from "src/store/useFile";
+import useConfig from "../../store/useConfig";
+import useFile from "../../store/useFile";
+import useGraph from "./views/GraphView/stores/useGraph";
 
 const StyledBottomBar = styled.div`
   position: relative;

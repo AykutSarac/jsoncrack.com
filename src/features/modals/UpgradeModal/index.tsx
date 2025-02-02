@@ -16,8 +16,8 @@ import {
 } from "@mantine/core";
 import Cookie from "js-cookie";
 import { LuCheck } from "react-icons/lu";
-import { Logo } from "src/features/editor/Toolbar/Logo";
-import useConfig from "src/store/useConfig";
+import useConfig from "../../../store/useConfig";
+import { Logo } from "../../editor/Toolbar/Logo";
 
 export const UpgradeContent = (props: FlexProps) => {
   const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);

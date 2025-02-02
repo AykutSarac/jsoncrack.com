@@ -3,7 +3,7 @@ import type { ModalProps } from "@mantine/core";
 import { Modal, Button, Textarea, Group } from "@mantine/core";
 import { decode } from "jsonwebtoken";
 import { event as gaEvent } from "nextjs-google-analytics";
-import useFile from "src/store/useFile";
+import useFile from "../../../store/useFile";
 
 export const JWTModal = ({ opened, onClose }: ModalProps) => {
   const setContents = useFile(state => state.setContents);

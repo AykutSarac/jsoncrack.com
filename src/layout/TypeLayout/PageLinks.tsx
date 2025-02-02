@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Anchor, Button, Flex, List, SimpleGrid, Stack } from "@mantine/core";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { formats, TypeLanguage, typeOptions } from "src/enums/file.enum";
+import { formats, TypeLanguage, typeOptions } from "../../enums/file.enum";
 
 type MappedCombinations = {
   [language: string]: string[]; // Maps each language to an array of programming languages

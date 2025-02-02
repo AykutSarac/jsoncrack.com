@@ -1,4 +1,4 @@
-import type { NodeData, EdgeData } from "src/types/graph";
+import type { NodeData, EdgeData } from "../../../../../../types/graph";
 
 export const getChildrenEdges = (nodes: NodeData[], edges: EdgeData[]): EdgeData[] => {
   const nodeIds = nodes.map(node => node.id);

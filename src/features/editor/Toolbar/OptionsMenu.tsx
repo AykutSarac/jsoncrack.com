@@ -3,7 +3,7 @@ import { Menu, Text, Flex } from "@mantine/core";
 import { event as gaEvent } from "nextjs-google-analytics";
 import { BsCheck2 } from "react-icons/bs";
 import { MdSettings } from "react-icons/md";
-import useConfig from "src/store/useConfig";
+import useConfig from "../../../store/useConfig";
 import { StyledToolElement } from "./styles";
 
 export const OptionsMenu = () => {

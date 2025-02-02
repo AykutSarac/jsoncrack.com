@@ -1,4 +1,4 @@
-import { type FileFormat, TypeLanguage } from "src/enums/file.enum";
+import { type FileFormat, TypeLanguage } from "../../enums/file.enum";
 import { contentToJson } from "./jsonAdapter";
 
 export const generateType = async (input: string, format: FileFormat, output: TypeLanguage) => {
@@ -7,7 +7,7 @@ export const generateType = async (input: string, format: FileFormat, output: Ty
     const jsonString = JSON.stringify(inputToJson);
 
     if (output === TypeLanguage.Go) {
-      const json2go = await import("src/lib/utils/json2go.js");
+      const json2go = await import("../../lib/utils/json2go.js");
       const gofmt = await import("gofmt.js");
       const types = json2go.default(jsonString);
 

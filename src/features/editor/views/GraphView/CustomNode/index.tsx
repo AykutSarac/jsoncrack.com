@@ -2,9 +2,9 @@ import React from "react";
 import { useComputedColorScheme } from "@mantine/core";
 import type { NodeProps } from "reaflow";
 import { Node } from "reaflow";
-import useGraph from "src/features/editor/views/GraphView/stores/useGraph";
-import useModal from "src/store/useModal";
-import type { NodeData } from "src/types/graph";
+import useModal from "../../../../../store/useModal";
+import type { NodeData } from "../../../../../types/graph";
+import useGraph from "../stores/useGraph";
 import { ObjectNode } from "./ObjectNode";
 import { TextNode } from "./TextNode";
 

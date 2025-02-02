@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { type Modal, modalComponents } from "src/features/modals/ModalController";
+import { type Modal, modalComponents } from "../features/modals/ModalController";
 
 interface ModalActions {
   setVisible: (name: Modal, open: boolean) => void;

@@ -3,8 +3,8 @@ import { Group, Paper, Stack, Text, Title } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
 import styled from "styled-components";
 import { NextSeo } from "next-seo";
-import { SEO } from "src/constants/seo";
-import Layout from "src/layout/PageLayout";
+import { SEO } from "../constants/seo";
+import Layout from "../layout/PageLayout";
 
 const StyledFrame = styled.iframe`
   border: none;

@@ -5,8 +5,8 @@ import { Dropzone } from "@mantine/dropzone";
 import { event as gaEvent } from "nextjs-google-analytics";
 import toast from "react-hot-toast";
 import { AiOutlineUpload } from "react-icons/ai";
-import type { FileFormat } from "src/enums/file.enum";
-import useFile from "src/store/useFile";
+import type { FileFormat } from "../../../enums/file.enum";
+import useFile from "../../../store/useFile";
 
 export const ImportModal = ({ opened, onClose }: ModalProps) => {
   const [url, setURL] = React.useState("");

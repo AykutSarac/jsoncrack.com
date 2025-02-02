@@ -5,8 +5,8 @@ import { JSONPath } from "jsonpath-plus";
 import { event as gaEvent } from "nextjs-google-analytics";
 import toast from "react-hot-toast";
 import { VscLinkExternal } from "react-icons/vsc";
-import useFile from "src/store/useFile";
-import useJson from "src/store/useJson";
+import useFile from "../../../store/useFile";
+import useJson from "../../../store/useJson";
 
 export const JPathModal = ({ opened, onClose }: ModalProps) => {
   const getJson = useJson(state => state.getJson);

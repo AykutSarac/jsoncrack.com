@@ -3,7 +3,7 @@ import type { ModalProps } from "@mantine/core";
 import { Stack, Modal, Select, ScrollArea } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
 import { event as gaEvent } from "nextjs-google-analytics";
-import useJson from "src/store/useJson";
+import useJson from "../../../store/useJson";
 
 enum Language {
   TypeScript = "typescript",
@@ -74,7 +74,7 @@ export const TypeModal = ({ opened, onClose }: ModalProps) => {
     if (opened) {
       try {
         if (selectedType === Language.Go) {
-          import("src/lib/utils/json2go").then(jtg => {
+          import("../../../lib/utils/json2go").then(jtg => {
             import("gofmt.js").then(gofmt => {
               const types = jtg.default(getJson());
               setType(gofmt.default(types.go));

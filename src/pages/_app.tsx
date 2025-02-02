@@ -7,9 +7,9 @@ import { ThemeProvider } from "styled-components";
 import { NextSeo, SoftwareAppJsonLd } from "next-seo";
 import { GoogleAnalytics } from "nextjs-google-analytics";
 import { Toaster } from "react-hot-toast";
-import GlobalStyle from "src/constants/globalStyle";
-import { SEO } from "src/constants/seo";
-import { lightTheme } from "src/constants/theme";
+import GlobalStyle from "../constants/globalStyle";
+import { SEO } from "../constants/seo";
+import { lightTheme } from "../constants/theme";
 
 const theme = createTheme({
   autoContrast: true,

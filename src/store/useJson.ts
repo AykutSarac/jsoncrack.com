@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import useGraph from "src/features/editor/views/GraphView/stores/useGraph";
+import useGraph from "../features/editor/views/GraphView/stores/useGraph";
 
 interface JsonActions {
   setJson: (json: string) => void;

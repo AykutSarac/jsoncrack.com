@@ -1,7 +1,7 @@
 import React from "react";
 import { Inter } from "next/font/google";
 import styled, { ThemeProvider } from "styled-components";
-import { lightTheme } from "src/constants/theme";
+import { lightTheme } from "../../constants/theme";
 import { Footer } from "./Footer";
 import { Navbar } from "./Navbar";
 

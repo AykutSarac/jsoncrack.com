@@ -1,6 +1,6 @@
 import toast from "react-hot-toast";
-import useFile from "src/store/useFile";
-import useJson from "src/store/useJson";
+import useFile from "../store/useFile";
+import useJson from "../store/useJson";
 
 const useJsonQuery = () => {
   const getJson = useJson(state => state.getJson);

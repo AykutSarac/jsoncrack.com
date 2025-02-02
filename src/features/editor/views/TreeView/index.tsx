@@ -1,7 +1,7 @@
 import React from "react";
 import { useTheme } from "styled-components";
 import { JSONTree } from "react-json-tree";
-import useJson from "src/store/useJson";
+import useJson from "../../../../store/useJson";
 import { Label } from "./Label";
 import { Value } from "./Value";
 

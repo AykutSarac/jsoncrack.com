@@ -2,8 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { Button, Stack, Text, Title } from "@mantine/core";
 import { NextSeo } from "next-seo";
-import { SEO } from "src/constants/seo";
-import Layout from "src/layout/PageLayout";
+import { SEO } from "../constants/seo";
+import Layout from "../layout/PageLayout";
 
 const NotFound = () => {
   return (

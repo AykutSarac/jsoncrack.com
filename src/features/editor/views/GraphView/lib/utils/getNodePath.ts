@@ -1,4 +1,4 @@
-import type { NodeData, EdgeData } from "src/types/graph";
+import type { NodeData, EdgeData } from "../../../../../../types/graph";
 
 export function getNodePath(nodes: NodeData[], edges: EdgeData[], nodeId: string) {
   // eslint-disable-next-line @typescript-eslint/no-var-requires

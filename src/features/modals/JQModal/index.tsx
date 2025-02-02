@@ -2,7 +2,7 @@ import React from "react";
 import type { ModalProps } from "@mantine/core";
 import { Stack, Modal, Button, Text, Anchor, Group, TextInput } from "@mantine/core";
 import { VscLinkExternal } from "react-icons/vsc";
-import useJsonQuery from "src/hooks/useJsonQuery";
+import useJsonQuery from "../../../hooks/useJsonQuery";
 
 export const JQModal = ({ opened, onClose }: ModalProps) => {
   const { updateJson } = useJsonQuery();

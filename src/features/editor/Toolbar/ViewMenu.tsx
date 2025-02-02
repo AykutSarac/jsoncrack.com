@@ -7,10 +7,10 @@ import toast from "react-hot-toast";
 import { CgChevronDown } from "react-icons/cg";
 import { TiFlowMerge } from "react-icons/ti";
 import { VscExpandAll, VscCollapseAll, VscTarget } from "react-icons/vsc";
-import { ViewMode } from "src/enums/viewMode.enum";
-import useGraph from "src/features/editor/views/GraphView/stores/useGraph";
-import useToggleHide from "src/hooks/useToggleHide";
-import type { LayoutDirection } from "src/types/graph";
+import { ViewMode } from "../../../enums/viewMode.enum";
+import useToggleHide from "../../../hooks/useToggleHide";
+import type { LayoutDirection } from "../../../types/graph";
+import useGraph from "../views/GraphView/stores/useGraph";
 import { StyledToolElement } from "./styles";
 
 const StyledFlowIcon = styled(TiFlowMerge)<{ rotate: number }>`

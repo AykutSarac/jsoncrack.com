@@ -1,5 +1,5 @@
 import React from "react";
-import { JSONCrackLogo } from "src/layout/JsonCrackLogo";
+import { JSONCrackLogo } from "../../../layout/JsonCrackLogo";
 import { StyledToolElement } from "./styles";
 
 export const Logo = () => {

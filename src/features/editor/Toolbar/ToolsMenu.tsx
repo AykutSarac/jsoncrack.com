@@ -8,10 +8,10 @@ import { FaRandom } from "react-icons/fa";
 import { MdFilterListAlt } from "react-icons/md";
 import { SiJsonwebtokens } from "react-icons/si";
 import { VscSearchFuzzy, VscJson, VscGroupByRefType } from "react-icons/vsc";
-import { jsonToContent } from "src/lib/utils/jsonAdapter";
-import useFile from "src/store/useFile";
-import useJson from "src/store/useJson";
-import useModal from "src/store/useModal";
+import { jsonToContent } from "../../../lib/utils/jsonAdapter";
+import useFile from "../../../store/useFile";
+import useJson from "../../../store/useJson";
+import useModal from "../../../store/useModal";
 import { StyledToolElement } from "./styles";
 
 export const ToolsMenu = () => {

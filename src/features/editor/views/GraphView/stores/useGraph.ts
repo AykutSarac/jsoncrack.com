@@ -1,11 +1,11 @@
 import type { ViewPort } from "react-zoomable-ui/dist/ViewPort";
 import type { CanvasDirection } from "reaflow/dist/layout/elkLayout";
 import { create } from "zustand";
-import { parser } from "src/features/editor/views/GraphView/lib/jsonParser";
-import { getChildrenEdges } from "src/features/editor/views/GraphView/lib/utils/getChildrenEdges";
-import { getOutgoers } from "src/features/editor/views/GraphView/lib/utils/getOutgoers";
-import useJson from "src/store/useJson";
-import type { NodeData, EdgeData } from "src/types/graph";
+import useJson from "../../../../../store/useJson";
+import type { EdgeData, NodeData } from "../../../../../types/graph";
+import { parser } from "../lib/jsonParser";
+import { getChildrenEdges } from "../lib/utils/getChildrenEdges";
+import { getOutgoers } from "../lib/utils/getOutgoers";
 
 export interface Graph {
   viewPort: ViewPort | null;

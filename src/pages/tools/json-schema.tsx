@@ -4,12 +4,12 @@ import { Editor, type OnMount } from "@monaco-editor/react";
 import { JSONSchemaFaker } from "json-schema-faker";
 import { NextSeo } from "next-seo";
 import { LuCheck, LuCircleX } from "react-icons/lu";
-import { SEO } from "src/constants/seo";
-import { FileFormat, TypeLanguage } from "src/enums/file.enum";
-import { editorOptions } from "src/layout/ConverterLayout/options";
-import Layout from "src/layout/PageLayout";
-import { generateType } from "src/lib/utils/generateType";
-import { jsonToContent } from "src/lib/utils/jsonAdapter";
+import { SEO } from "../../constants/seo";
+import { FileFormat, TypeLanguage } from "../../enums/file.enum";
+import { editorOptions } from "../../layout/ConverterLayout/options";
+import Layout from "../../layout/PageLayout";
+import { generateType } from "../../lib/utils/generateType";
+import { jsonToContent } from "../../lib/utils/jsonAdapter";
 
 const JSONSchemaTool = () => {
   const monacoRef = React.useRef<Parameters<OnMount>[1] | null>(null);

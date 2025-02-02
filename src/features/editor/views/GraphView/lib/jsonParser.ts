@@ -1,5 +1,5 @@
 import { parseTree } from "jsonc-parser";
-import type { EdgeData, NodeData } from "src/types/graph";
+import type { EdgeData, NodeData } from "../../../../../types/graph";
 import { addEdgeToGraph } from "./utils/addEdgeToGraph";
 import { addNodeToGraph } from "./utils/addNodeToGraph";
 import { getNodePath } from "./utils/getNodePath";

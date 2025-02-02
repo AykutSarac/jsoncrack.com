@@ -1,7 +1,7 @@
 import type { DefaultTheme } from "styled-components";
 import styled from "styled-components";
 import { LinkItUrl } from "react-linkify-it";
-import { NODE_DIMENSIONS } from "src/constants/graph";
+import { NODE_DIMENSIONS } from "../../../../../constants/graph";
 
 type TextColorFn = {
   theme: DefaultTheme;

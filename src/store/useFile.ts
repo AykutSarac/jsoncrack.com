@@ -2,10 +2,10 @@ import debounce from "lodash.debounce";
 import { event as gaEvent } from "nextjs-google-analytics";
 import { toast } from "react-hot-toast";
 import { create } from "zustand";
-import { FileFormat } from "src/enums/file.enum";
-import { isIframe } from "src/lib/utils/helpers";
-import { contentToJson, jsonToContent } from "src/lib/utils/jsonAdapter";
+import { FileFormat } from "../enums/file.enum";
 import useGraph from "../features/editor/views/GraphView/stores/useGraph";
+import { isIframe } from "../lib/utils/helpers";
+import { contentToJson, jsonToContent } from "../lib/utils/jsonAdapter";
 import useConfig from "./useConfig";
 import useJson from "./useJson";
 

@@ -1,7 +1,7 @@
 import React from "react";
 import type { DefaultTheme } from "styled-components";
 import { useTheme } from "styled-components";
-import { TextRenderer } from "src/features/editor/views/GraphView/CustomNode/TextRenderer";
+import { TextRenderer } from "../GraphView/CustomNode/TextRenderer";
 
 type TextColorFn = {
   theme: DefaultTheme;

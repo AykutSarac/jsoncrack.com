@@ -1,5 +1,5 @@
-import { NODE_DIMENSIONS } from "src/constants/graph";
-import useConfig from "src/store/useConfig";
+import { NODE_DIMENSIONS } from "../../../../../../constants/graph";
+import useConfig from "../../../../../../store/useConfig";
 
 type Text = string | [string, string][];
 type Size = { width: number; height: number };

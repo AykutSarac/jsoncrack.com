@@ -6,12 +6,12 @@ import { Space } from "react-zoomable-ui";
 import { Canvas } from "reaflow";
 import type { ElkRoot } from "reaflow/dist/layout/useLayout";
 import { useLongPress } from "use-long-press";
-import { CustomNode } from "src/features/editor/views/GraphView/CustomNode";
-import useGraph from "src/features/editor/views/GraphView/stores/useGraph";
-import useToggleHide from "src/hooks/useToggleHide";
-import useConfig from "src/store/useConfig";
+import useToggleHide from "../../../../hooks/useToggleHide";
+import useConfig from "../../../../store/useConfig";
 import { CustomEdge } from "./CustomEdge";
+import { CustomNode } from "./CustomNode";
 import { NotSupported } from "./NotSupported";
+import useGraph from "./stores/useGraph";
 
 const StyledEditorWrapper = styled.div<{ $widget: boolean; $showRulers: boolean }>`
   position: absolute;

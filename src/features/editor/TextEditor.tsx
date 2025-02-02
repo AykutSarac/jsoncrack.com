@@ -2,8 +2,8 @@ import React, { useCallback } from "react";
 import { LoadingOverlay } from "@mantine/core";
 import styled from "styled-components";
 import Editor, { type EditorProps, loader, type OnMount, useMonaco } from "@monaco-editor/react";
-import useConfig from "src/store/useConfig";
-import useFile from "src/store/useFile";
+import useConfig from "../../store/useConfig";
+import useFile from "../../store/useFile";
 
 loader.config({
   paths: {
