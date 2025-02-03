@@ -120,8 +120,8 @@ importers:
         specifier: ^0.11.0
         version: 0.11.0(react@18.3.1)
       reaflow:
-        specifier: 5.2.11
-        version: 5.2.11(@emotion/is-prop-valid@1.2.2)(@types/react@18.2.51)(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 5.3.4
+        version: 5.3.4(@emotion/is-prop-valid@1.2.2)(@types/react@18.2.51)(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       styled-components:
         specifier: ^6.1.12
         version: 6.1.12(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -268,14 +268,8 @@ packages:
     resolution: {integrity: sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==}
     engines: {node: '>=10.0.0'}
 
-  '@emotion/is-prop-valid@0.8.8':
-    resolution: {integrity: sha512-u5WtneEAr5IDG2Wv65yhunPSMLIpuKsbuOktRojfrEiEvRyC85LgPMZI63cr7NUqT8ZIGdSVg8ZKGxIug4lXcA==}
-
   '@emotion/is-prop-valid@1.2.2':
     resolution: {integrity: sha512-uNsoYd37AFmaCdXlg6EYD1KaPOaRWRByMCYzbKUX4+hhMfrxdVSelShywL4JVaAeM/eHUOSprYBQls+/neX3pw==}
-
-  '@emotion/memoize@0.7.4':
-    resolution: {integrity: sha512-Ja/Vfqe3HpuzRsG1oBtWTHk2PGZ7GR+2Vz5iYGelAw8dx32K0y7PjVuxK6z1nMpZOqAFsRUPCkK1YjJ56qJlgw==}
 
   '@emotion/memoize@0.8.1':
     resolution: {integrity: sha512-W2P2c/VRW1/1tLox0mVUalvnWXxavmv/Oum2aPsRcoDJuob75FC3Y8FbpfLwUegRcxINtGUMPq0tFCvYNTBXNA==}
@@ -1061,8 +1055,8 @@ packages:
   csstype@3.1.3:
     resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
 
-  ctrl-keys@1.0.3:
-    resolution: {integrity: sha512-Kcb05/xUNra57fxpsLOflECWYbjQEQ9ZuQEthB3cgESN5zMLJ364twA9h2kqz8n06RnTY/+rKWM3UbkOWKeEJg==}
+  ctrl-keys@1.0.6:
+    resolution: {integrity: sha512-fENSKrbIfvX83uHxruP3S/9GizirvgT66vHhgKHOCTVHK+22Xpud/vttg5c5IifRl+6Gom/GjE+ZSXJKf0DMTA==}
     engines: {node: '>=10'}
 
   d3-path@3.1.0:
@@ -1472,19 +1466,8 @@ packages:
   format-util@1.0.5:
     resolution: {integrity: sha512-varLbTj0e0yVyRpqQhuWV+8hlePAgaoFRhNFj50BNjEIrw1/DphHSObtqwskVCPWNgzwPoQrZAbfa/SBiicNeg==}
 
-  framer-motion@10.18.0:
-    resolution: {integrity: sha512-oGlDh1Q1XqYPksuTD/usb0I70hq95OUzmL9+6Zd+Hs4XV0oaISBa/UUMSjYiq6m8EUF32132mOJ8xVZS+I0S6w==}
-    peerDependencies:
-      react: ^18.0.0
-      react-dom: ^18.0.0
-    peerDependenciesMeta:
-      react:
-        optional: true
-      react-dom:
-        optional: true
-
-  framer-motion@11.15.0:
-    resolution: {integrity: sha512-MLk8IvZntxOMg7lDBLw2qgTHHv664bYoYmnFTmE0Gm/FW67aOJk0WM3ctMcG+Xhcv+vh5uyyXwxvxhSeJzSe+w==}
+  framer-motion@11.18.2:
+    resolution: {integrity: sha512-5F5Och7wrvtLVElIpclDT0CBzMVg3dL22B64aZwHtsIY8RB4mXICLrkajK4G9R+ieSAGcgrLeae2SeUTg2pr6w==}
     peerDependencies:
       '@emotion/is-prop-valid': '*'
       react: ^18.0.0 || ^19.0.0
@@ -2048,14 +2031,25 @@ packages:
   monaco-editor@0.52.2:
     resolution: {integrity: sha512-GEQWEZmfkOGLdd3XK8ryrfWz3AIP8YymVXiPHEdewrUq7mh0qrKrfHLNCXcbB6sTnMLnOZ3ztSiKcciFUkIJwQ==}
 
-  motion-dom@11.14.3:
-    resolution: {integrity: sha512-lW+D2wBy5vxLJi6aCP0xyxTxlTfiu+b+zcpVbGVFUxotwThqhdpPRSmX8xztAgtZMPMeU0WGVn/k1w4I+TbPqA==}
+  motion-dom@11.18.1:
+    resolution: {integrity: sha512-g76KvA001z+atjfxczdRtw/RXOM3OMSdd1f4DL77qCTF/+avrRJiawSG4yDibEQ215sr9kpinSlX2pCTJ9zbhw==}
 
-  motion-utils@11.14.3:
-    resolution: {integrity: sha512-Xg+8xnqIJTpr0L/cidfTTBFkvRw26ZtGGuIhA94J9PQ2p4mEa06Xx7QVYZH0BP+EpMSaDlu+q0I0mmvwADPsaQ==}
+  motion-utils@11.18.1:
+    resolution: {integrity: sha512-49Kt+HKjtbJKLtgO/LKj9Ld+6vw9BjH5d9sc40R/kVyH8GLAXgT42M2NnuPcJNuA3s9ZfZBUcwIgpmZWGEE+hA==}
 
-  mousetrap@1.6.5:
-    resolution: {integrity: sha512-QNo4kEepaIBwiT8CDhP98umTetp+JNfQYBWvC1pc6/OAibuXtRcxZ58Qz8skvEHYvURne/7R8T5VoOI7rDsEUA==}
+  motion@11.18.2:
+    resolution: {integrity: sha512-JLjvFDuFr42NFtcVoMAyC2sEjnpA8xpy6qWPyzQvCloznAyQ8FIXioxWfHiLtgYhoVpfUqSWpn1h9++skj9+Wg==}
+    peerDependencies:
+      '@emotion/is-prop-valid': '*'
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      '@emotion/is-prop-valid':
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
 
   mrmime@2.0.0:
     resolution: {integrity: sha512-eu38+hdgojoyq63s+yTpN4XMBdt5l8HhMhc4VKLO9KM5caLIBvUm4thi7fFaxyTmCKeNnXZ5pAlBwCUnhA09uw==}
@@ -2273,8 +2267,8 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
-  reablocks@7.13.4:
-    resolution: {integrity: sha512-JG51o52NLBLHZSz+PCzES3dIrW6gTlQ7f+mEUaGRiX1VFF6TVgOEjEBQg6YvR3+q8sxuzT/t7aQPiveNmUjG4g==}
+  reablocks@8.7.6:
+    resolution: {integrity: sha512-vHYqpJ83+eswsbUe4P2MopBbLm28vlq7JtVBmXRLBWeYVldvwg0phjnqZQVMkZPUiJo+DMlhKqbQiTxbyvUeBA==}
     peerDependencies:
       react: '>=16'
       react-dom: '>=16'
@@ -2406,14 +2400,14 @@ packages:
     resolution: {integrity: sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==}
     engines: {node: '>=0.10.0'}
 
-  reaflow@5.2.11:
-    resolution: {integrity: sha512-bTNm+EVSWglOMGyupCaM2SFu71OfcgcKnPKOrVS29lmIg4h3D7AQ5r8cUjEff11kE+u74KmSybUxDAJ8K3Y/Ig==}
+  reaflow@5.3.4:
+    resolution: {integrity: sha512-bFokpkCvrTvYuXsCbJnr9lQIvtGii136vjEKZMda61MVlrfAQi3lb312riAde+LsEKlQeU2gtqw2aAjRU9YY4w==}
     peerDependencies:
       react: '>=16'
       react-dom: '>=16'
 
-  reakeys@1.3.1:
-    resolution: {integrity: sha512-k75rJxIiNtA9B6a9ijgj3n7CJKhdY9hctFzac5IBnMKEzk5RpwHtOZON1xqP9fQQAscpa922lbkUMW8q94M0fg==}
+  reakeys@2.0.5:
+    resolution: {integrity: sha512-vLzYVYZHyPcYcsVnnYLZXwLlI0fHtR4vWIgomXQ+7Gn0XLwmlaMa/+Uqv29vn6YM9MCu31EPia2tvZRfllFImQ==}
     peerDependencies:
       react: '>=16'
       react-dom: '>=16'
@@ -3002,17 +2996,9 @@ snapshots:
 
   '@discoveryjs/json-ext@0.5.7': {}
 
-  '@emotion/is-prop-valid@0.8.8':
-    dependencies:
-      '@emotion/memoize': 0.7.4
-    optional: true
-
   '@emotion/is-prop-valid@1.2.2':
     dependencies:
       '@emotion/memoize': 0.8.1
-
-  '@emotion/memoize@0.7.4':
-    optional: true
 
   '@emotion/memoize@0.8.1': {}
 
@@ -3888,7 +3874,7 @@ snapshots:
 
   csstype@3.1.3: {}
 
-  ctrl-keys@1.0.3: {}
+  ctrl-keys@1.0.6: {}
 
   d3-path@3.1.0: {}
 
@@ -4440,18 +4426,10 @@ snapshots:
 
   format-util@1.0.5: {}
 
-  framer-motion@10.18.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  framer-motion@11.18.2(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      tslib: 2.6.3
-    optionalDependencies:
-      '@emotion/is-prop-valid': 0.8.8
-      react: 18.3.1
-      react-dom: 18.3.1(react@18.3.1)
-
-  framer-motion@11.15.0(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
-    dependencies:
-      motion-dom: 11.14.3
-      motion-utils: 11.14.3
+      motion-dom: 11.18.1
+      motion-utils: 11.18.1
       tslib: 2.6.3
     optionalDependencies:
       '@emotion/is-prop-valid': 1.2.2
@@ -4988,11 +4966,20 @@ snapshots:
 
   monaco-editor@0.52.2: {}
 
-  motion-dom@11.14.3: {}
+  motion-dom@11.18.1:
+    dependencies:
+      motion-utils: 11.18.1
 
-  motion-utils@11.14.3: {}
+  motion-utils@11.18.1: {}
 
-  mousetrap@1.6.5: {}
+  motion@11.18.2(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      framer-motion: 11.18.2(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      tslib: 2.6.3
+    optionalDependencies:
+      '@emotion/is-prop-valid': 1.2.2
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   mrmime@2.0.0: {}
 
@@ -5193,7 +5180,7 @@ snapshots:
 
   queue-microtask@1.2.3: {}
 
-  reablocks@7.13.4(@types/react@18.2.51)(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  reablocks@8.7.6(@emotion/is-prop-valid@1.2.2)(@types/react@18.2.51)(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@floating-ui/react': 0.26.20(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@marko19907/string-to-color': 1.0.0
@@ -5203,13 +5190,13 @@ snapshots:
       classnames: 2.5.1
       coverup: 0.1.1
       create-global-state-hook: 0.0.2
-      ctrl-keys: 1.0.3
+      ctrl-keys: 1.0.6
       date-fns: 3.6.0
       ellipsize: 0.5.1
       focus-trap-react: 10.3.1(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      framer-motion: 10.18.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       fuse.js: 6.6.2
       human-format: 1.2.1
+      motion: 11.18.2(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       name-initials: 0.1.3
       pluralize: 8.0.0
       react: 18.3.1
@@ -5219,6 +5206,7 @@ snapshots:
       react-textarea-autosize: 8.5.3(@types/react@18.2.51)(react@18.3.1)
       tailwind-merge: 2.6.0
     transitivePeerDependencies:
+      - '@emotion/is-prop-valid'
       - '@types/react'
       - prop-types
 
@@ -5356,7 +5344,7 @@ snapshots:
     dependencies:
       loose-envify: 1.4.0
 
-  reaflow@5.2.11(@emotion/is-prop-valid@1.2.2)(@types/react@18.2.51)(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  reaflow@5.3.4(@emotion/is-prop-valid@1.2.2)(@types/react@18.2.51)(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@juggle/resize-observer': 3.4.0
       calculate-size: 1.1.1
@@ -5364,26 +5352,26 @@ snapshots:
       d3-shape: 3.2.0
       elkjs: 0.8.2
       ellipsize: 0.2.0
-      framer-motion: 11.15.0(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       kld-affine: 2.1.1
       kld-intersections: 0.7.0
+      motion: 11.18.2(@emotion/is-prop-valid@1.2.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       p-cancelable: 3.0.0
-      reablocks: 7.13.4(@types/react@18.2.51)(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      reablocks: 8.7.6(@emotion/is-prop-valid@1.2.2)(@types/react@18.2.51)(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
       react-cool-dimensions: 2.0.7(react@18.3.1)
       react-dom: 18.3.1(react@18.3.1)
       react-fast-compare: 3.2.2
       react-use-gesture: 8.0.1(react@18.3.1)
-      reakeys: 1.3.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      reakeys: 2.0.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       undoo: 0.5.0
     transitivePeerDependencies:
       - '@emotion/is-prop-valid'
       - '@types/react'
       - prop-types
 
-  reakeys@1.3.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  reakeys@2.0.5(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      mousetrap: 1.6.5
+      ctrl-keys: 1.0.6
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 

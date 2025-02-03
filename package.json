@@ -57,7 +57,7 @@
     "react-linkify-it": "^1.0.8",
     "react-text-transition": "^3.1.0",
     "react-zoomable-ui": "^0.11.0",
-    "reaflow": "5.2.11",
+    "reaflow": "5.3.4",
     "styled-components": "^6.1.12",
     "toml": "^3.0.0",
     "use-long-press": "^3.2.0",
