@@ -13,7 +13,7 @@
   },
   {
     "title": "Is my data secure?",
-    "content": "Absolutely! JSON Crack prioritizes your data privacy. When you paste or import your data into the editor, it's processed only on your browser to create the visualization without going into our servers. Your data remains completely private and is never stored anywhere unless you choose to upload it manually."
+    "content": "Yes. When you paste or import your data into the editor, it's processed only on your browser to create the visualization without going into our servers."
   },
   {
     "title": "Can I convert JSON to other formats using JSON Crack?",
