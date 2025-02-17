@@ -1,0 +1,19 @@
+{
+  "trailingComma": "es5",
+  "singleQuote": false,
+  "semi": true,
+  "printWidth": 100,
+  "arrowParens": "avoid",
+  "importOrder": [
+    "^(react/(.*)$)|^(react$)",
+    "^(next/(.*)$)|^(next$)",
+    "^@mantine/core",
+    "^@mantine",
+    "styled",
+    "<THIRD_PARTY_MODULES>",
+    "^src/(.*)$",
+    "^[./]"
+  ],
+  "importOrderParserPlugins": ["typescript", "jsx", "decorators-legacy"],
+  "plugins": ["@trivago/prettier-plugin-sort-imports"]
+}

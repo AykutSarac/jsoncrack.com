@@ -1,0 +1,10 @@
+<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <filter id="shadow" x="0" y="0" width="150%" height="150%">
+            <feOffset result="offOut" in="SourceAlpha" dx="1" dy="1" />
+            <feGaussianBlur result="blurOut" in="offOut" stdDeviation="1" />
+            <feBlend in="SourceGraphic" in2="blurOut" mode="normal" />
+        </filter>
+    </defs>
+    <path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19841L11.7841 12.3673H5.65376Z" fill="#000000" stroke="#E2E2E2" stroke-width="1" filter="url(#shadow)" />
+</svg>

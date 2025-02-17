@@ -1,0 +1,28 @@
+version: 2
+updates:
+  # Enable version updates for Node.js dependencies
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    allow:
+      - dependency-type: "all"
+    groups:
+      all:
+        patterns:
+          - "*"
+    ignore:
+      - dependency-name: "eslint"
+        versions: ">= 9"
+
+  # Enable version updates for rust
+  - package-ecosystem: "cargo"
+    directory: "/src-tauri"
+    schedule:
+      interval: "weekly"
+    allow:
+      - dependency-type: "all"
+    groups:
+      all:
+        patterns:
+          - "*"
