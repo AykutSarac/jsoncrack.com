@@ -1,0 +1,60 @@
+{
+  "name": "tauri-nextjs-template",
+  "version": "0.1.0",
+  "private": true,
+  "author": {
+    "name": "Your Name Here",
+    "email": "your-email-here@example.com"
+  },
+  "scripts": {
+    "next-start": "cross-env BROWSER=none next dev",
+    "next-build": "next build",
+    "tauri": "tauri",
+    "build": "tauri build",
+    "dev": "tauri dev",
+    "lint": "next lint && biome check src/"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^1.6.0",
+    "clsx": "^2.1.1",
+    "next": "^14.2.11",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.1",
+    "@tauri-apps/cli": "^1.6.2",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.5.0",
+    "@testing-library/react": "^16.0.1",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/jest": "^29.5.13",
+    "@types/node": "^22.5.5",
+    "@types/react": "^18.3.6",
+    "@types/react-dom": "^18.3.0",
+    "@typescript-eslint/eslint-plugin": "^8.5.0",
+    "@typescript-eslint/parser": "^8.5.0",
+    "autoprefixer": "^10.4.20",
+    "cross-env": "^7.0.3",
+    "cssnano": "^7.0.6",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.11",
+    "postcss": "^8.4.47",
+    "postcss-import": "^16.1.0",
+    "postcss-nesting": "^13.0.0",
+    "tailwindcss": "^3.4.11",
+    "typescript": "^5.6.2"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
