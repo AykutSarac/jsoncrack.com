@@ -7,7 +7,7 @@
     "distDir": "../out"
   },
   "package": {
-    "productName": "tauri-nextjs-template",
+    "productName": "json-crack-desktop",
     "version": "0.1.0"
   },
   "tauri": {
@@ -29,7 +29,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.tauri.dev",
+      "identifier": "com.jsoncrack.app",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
@@ -57,7 +57,7 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "Tauri NextJS App",
+        "title": "JSON Crack",
         "width": 1280,
         "height": 800
       }
