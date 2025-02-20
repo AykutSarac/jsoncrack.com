@@ -151,12 +151,12 @@ export const NotSupported = () => {
         </Text>
         <Link
           rel="noopener"
-          href="https://todiagram.com?utm_source=jsoncrack&utm_medium=data_limit"
+          href="https://todiagram.com/editor?utm_source=jsoncrack&utm_medium=data_limit"
           target="_blank"
           passHref
         >
-          <Button size="lg" color="green" radius="xl">
-            Try New Editor &rarr;
+          <Button size="lg" color="indigo" radius="xl">
+            Open New Editor &rarr;
           </Button>
         </Link>
       </StyledContent>

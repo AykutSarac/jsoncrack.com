@@ -83,7 +83,9 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
       <Group gap="6" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
         {!isWidget && (
           <Button
-            variant="default"
+            variant="gradient"
+            gradient={{ from: "teal", to: "blue", deg: 45 }}
+            autoContrast
             size="compact-sm"
             fz="12"
             fw="600"

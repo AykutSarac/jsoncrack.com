@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Container, Flex, Text, Image } from "@mantine/core";
+import { Button, Container, Flex, Text } from "@mantine/core";
 import styled from "styled-components";
 import CountUp from "react-countup";
 import { FaGithub, FaHackerNews, FaLinkedin, FaProductHunt, FaXTwitter } from "react-icons/fa6";
@@ -83,23 +83,6 @@ export const LovedBy = ({ stars }: LovedByProps) => {
           rel="noopener"
         >
           Share on LinkedIn
-        </Button>
-        <Button
-          component="a"
-          href="https://todiagram.com?utm_source=jsoncrack&utm_medium=loved_by"
-          color="#fe5e49"
-          leftSection={
-            <Image
-              src="https://todiagram.com/192.png"
-              loading="lazy"
-              alt="Todiagram Logo"
-              w={14}
-              h={14}
-              style={{ filter: "brightness(0) saturate(100%) invert(100%)" }}
-            />
-          }
-        >
-          ToDiagram
         </Button>
       </Flex>
     </Container>

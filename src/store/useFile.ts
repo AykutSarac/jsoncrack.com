@@ -11,42 +11,40 @@ import useJson from "./useJson";
 
 const defaultJson = JSON.stringify(
   {
-    appName: "JSON Crack",
-    author: "Aykut Saraç",
-    launched: 2022,
-    openSource: true,
-    stars: 34633,
-    upgrade: {
-      appName: "ToDiagram",
-      detail: "New powerful JSON editor.",
-      website: "https://todiagram.com",
-      brandColor: "#fe5e49",
-      paid: true,
+    orderId: "A12345",
+    customer: {
+      name: "Jane Doe",
+      email: "jane.doe@example.com",
+      address: {
+        street: "123 Main St",
+        city: "New York",
+        state: "NY",
+        zipCode: "10001",
+      },
+      isMember: true,
     },
-    milestones: [
+    products: [
       {
-        title: "Launch",
-        year: 2022,
+        productId: "P001",
+        name: "Wireless Mouse",
+        quantity: 2,
+        price: 25.5,
+        image: "https://example.com/wireless-mouse.jpg",
+        color: "#3498db",
       },
       {
-        title: "10K Stars",
-        date: 2022,
-      },
-      {
-        title: "20K Stars",
-        date: 2023,
-      },
-      {
-        title: "30K Stars",
-        date: 2024,
+        productId: "P002",
+        name: "Keyboard",
+        quantity: 1,
+        price: 45,
+        image: "https://example.com/keyboard.jpg",
+        color: "#2ecc71",
       },
     ],
-    social: {
-      github: "https://github.com/AykutSarac/jsoncrack.com",
-      twitter: "https://x.com/jsoncrack",
-      linkedin: "https://linkedin.com/company/todiagram",
-    },
-    images: ["https://jsoncrack.com/assets/192.png"],
+    orderDate: "2025-01-02T10:15:30Z",
+    status: "Processing",
+    isPaid: false,
+    totalAmount: 96,
   },
   null,
   2

@@ -94,7 +94,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
       withCloseButton={false}
       closeOnClickOutside={false}
       title={
-        <Flex align="center" gap="sm">
+        <Flex align="center" gap="4">
           <Logo />
           <Text fz="lg" fw="600">
             Upgrade to New Editor
@@ -108,12 +108,12 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
           Maybe later
         </Button>
         <Link
-          href="https://todiagram.com/?utm_source=jsoncrack&utm_medium=upgrade_modal"
+          href="https://todiagram.com/editor?utm_source=jsoncrack&utm_medium=upgrade_modal"
           rel="noopener"
           target="_blank"
         >
           <Button onClick={handleCloseModal} color="gray" variant="outline">
-            Try for Free &rarr;
+            Open Editor &rarr;
           </Button>
         </Link>
       </Group>
