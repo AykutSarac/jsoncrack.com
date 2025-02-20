@@ -9,6 +9,7 @@ export const SearchInput = () => {
 
   return (
     <TextInput
+      variant="unstyled"
       type="search"
       size="xs"
       id="search-node"
@@ -29,6 +30,7 @@ export const SearchInput = () => {
           </Flex>
         )
       }
+      style={{ borderBottom: "1px solid gray" }}
     />
   );
 };

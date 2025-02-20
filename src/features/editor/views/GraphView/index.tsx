@@ -11,6 +11,8 @@ import useConfig from "../../../../store/useConfig";
 import { CustomEdge } from "./CustomEdge";
 import { CustomNode } from "./CustomNode";
 import { NotSupported } from "./NotSupported";
+import { OptionsMenu } from "./OptionsMenu";
+import { ZoomControl } from "./ZoomControl";
 import useGraph from "./stores/useGraph";
 
 const StyledEditorWrapper = styled.div<{ $widget: boolean; $showRulers: boolean }>`
@@ -174,6 +176,8 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
   return (
     <>
       <LoadingOverlay visible={loading} />
+      <OptionsMenu isWidget={isWidget} />
+      <ZoomControl />
       <StyledEditorWrapper
         $widget={isWidget}
         onContextMenu={e => e.preventDefault()}

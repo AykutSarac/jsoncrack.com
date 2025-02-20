@@ -5,18 +5,14 @@ import styled from "styled-components";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import { FaGithub } from "react-icons/fa6";
-import { FiDownload } from "react-icons/fi";
 import { type FileFormat, formats } from "../../../enums/file.enum";
 import { JSONCrackLogo } from "../../../layout/JsonCrackLogo";
 import useFile from "../../../store/useFile";
 import useModal from "../../../store/useModal";
 import { FileMenu } from "./FileMenu";
 import { Logo } from "./Logo";
-import { OptionsMenu } from "./OptionsMenu";
-import { SearchInput } from "./SearchInput";
 import { ToolsMenu } from "./ToolsMenu";
 import { ViewMenu } from "./ViewMenu";
-import { ZoomMenu } from "./ZoomMenu";
 import { StyledToolElement } from "./styles";
 
 const StyledTools = styled.div`
@@ -87,37 +83,26 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
       <Group gap="6" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
         {!isWidget && (
           <Button
-            variant="light"
-            color="gray"
+            variant="default"
             size="compact-sm"
             fz="12"
             fw="600"
-            mr="6"
             onClick={() => setVisible("UpgradeModal", true)}
           >
             JSON Crack v2.0 🔥
           </Button>
         )}
-        <SearchInput />
         {!isWidget && (
-          <>
-            <StyledToolElement
-              title="Save as Image"
-              onClick={() => setVisible("DownloadModal", true)}
-            >
-              <FiDownload size="18" />
+          <Link href="https://github.com/AykutSarac/jsoncrack.com" rel="noopener" target="_blank">
+            <StyledToolElement title="GitHub">
+              <FaGithub size="18" />
             </StyledToolElement>
-            <ZoomMenu />
-            <Link href="https://github.com/AykutSarac/jsoncrack.com" rel="noopener" target="_blank">
-              <StyledToolElement title="GitHub">
-                <FaGithub size="18" />
-              </StyledToolElement>
-            </Link>
-            <OptionsMenu />
-            <StyledToolElement title="Fullscreen" $hide={isWidget} onClick={fullscreenBrowser}>
-              <AiOutlineFullscreen size="18" />
-            </StyledToolElement>
-          </>
+          </Link>
+        )}
+        {!isWidget && (
+          <StyledToolElement title="Fullscreen" $hide={isWidget} onClick={fullscreenBrowser}>
+            <AiOutlineFullscreen size="18" />
+          </StyledToolElement>
         )}
       </Group>
     </StyledTools>
