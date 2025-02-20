@@ -14,13 +14,10 @@ copies or substantial portions of the Software.
 
 The Software is provided under the terms of the MIT License with the following restrictions:
 
-1.	**No Redistribution** – You may not sell, sublicense, or otherwise redistribute the components of this Software as part of any product, tool, or service that competes with JSON Crack or provides similar functionality without explicit permission.
-
-2.	**No Competing Products** – You may not use the Software to create a tool, service, or platform that directly competes with JSON Crack or utilizes its components without explicit permission.
-
-3.	**Commercial Use Restriction** – You are not allowed to use the source code for any commercial project or product without explicit permission.
-
-4.	**Allowed General Use** – You are permitted to modify and run the Software in internal business tools, personal projects, or applications deployed within your organization in a private environment.
+1. **No Redistribution** – You may not sell, sublicense, or otherwise redistribute the components of this Software as part of any product, tool, or service that competes with JSON Crack or provides similar functionality without explicit permission.
+2. **No Competing Products** – You may not use the Software to create a tool, service, or platform that directly competes with JSON Crack or utilizes its components without explicit permission.
+3. **Commercial Use Restriction** – You are not allowed to use the source code for any commercial project or product without explicit permission.
+4. **Allowed General Use** – You are permitted to modify and run the Software in internal business tools, personal projects, or applications deployed within your organization in a private environment.
 
 ## No Warranty
 
