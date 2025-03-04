@@ -84,14 +84,14 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
         {!isWidget && (
           <Button
             variant="gradient"
-            gradient={{ from: "teal", to: "blue", deg: 45 }}
+            gradient={{ from: "purple", to: "violet", deg: 45 }}
             autoContrast
             size="compact-sm"
             fz="12"
             fw="600"
             onClick={() => setVisible("UpgradeModal", true)}
           >
-            JSON Crack v2.0 🔥
+            🔥 JSON Crack v2.0
           </Button>
         )}
         {!isWidget && (

@@ -24,8 +24,9 @@ export const UpgradeContent = (props: FlexProps) => {
 
   return (
     <Flex direction="column" gap="0" {...props}>
-      <Flex gap="xl">
+      <Flex gap="sm">
         <List
+          center
           icon={
             <ThemeIcon color="green" variant="transparent">
               <LuCheck />
@@ -33,24 +34,26 @@ export const UpgradeContent = (props: FlexProps) => {
           }
         >
           <List.Item>Load larger datasets (100x more)</List.Item>
-          <List.Item>See parent-child relationships</List.Item>
           <List.Item>Modify data from diagrams</List.Item>
+          <List.Item>Clean and fast layout</List.Item>
         </List>
         <List
+          center
           icon={
             <ThemeIcon color="green" variant="transparent">
               <LuCheck />
             </ThemeIcon>
           }
         >
-          <List.Item>Customization options</List.Item>
-          <List.Item>Improved UI & Tools</List.Item>
+          <List.Item>Customize colors</List.Item>
+          <List.Item>Improved UI & More tools</List.Item>
           <List.Item>
             <Anchor
               href="https://chromewebstore.google.com/detail/todiagram/gpcnkpjdmgihedngamkhendifclghjhn"
               rel="noopener"
               target="_blank"
               inherit
+              c="teal"
             >
               Chrome Extension
             </Anchor>
@@ -97,7 +100,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
         <Flex align="center" gap="4">
           <Logo />
           <Text fz="lg" fw="600">
-            Upgrade to New Editor
+            JSON Crack 2.0 - Professional Edition
           </Text>
         </Flex>
       }
@@ -112,8 +115,8 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
           rel="noopener"
           target="_blank"
         >
-          <Button onClick={handleCloseModal} color="gray" variant="outline">
-            Open Editor &rarr;
+          <Button onClick={handleCloseModal} color="teal">
+            Try Now &rarr;
           </Button>
         </Link>
       </Group>
