@@ -1,5 +1,6 @@
 import React from "react";
 import type { AppProps } from "next/app";
+import { useRouter } from "next/router";
 import { createTheme, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
 import "@mantine/code-highlight/styles.css";
@@ -10,6 +11,7 @@ import { Toaster } from "react-hot-toast";
 import GlobalStyle from "../constants/globalStyle";
 import { SEO } from "../constants/seo";
 import { lightTheme } from "../constants/theme";
+import { smartColorSchemeManager } from "../lib/utils/mantineColorScheme";
 
 const theme = createTheme({
   autoContrast: true,
@@ -53,6 +55,15 @@ const theme = createTheme({
 const IS_PROD = process.env.NODE_ENV === "production";
 
 function JsonCrack({ Component, pageProps }: AppProps) {
+  const { pathname } = useRouter();
+
+  // Create a single smart manager that handles pathname logic internally
+  const colorSchemeManager = smartColorSchemeManager({
+    key: "editor-color-scheme",
+    getPathname: () => pathname,
+    dynamicPaths: ["/editor"], // Only editor paths use dynamic theme
+  });
+
   return (
     <>
       <NextSeo {...SEO} />
@@ -66,7 +77,11 @@ function JsonCrack({ Component, pageProps }: AppProps) {
         applicationCategory="DeveloperApplication"
         aggregateRating={{ ratingValue: "4.9", ratingCount: "19" }}
       />
-      <MantineProvider defaultColorScheme="light" theme={theme}>
+      <MantineProvider
+        colorSchemeManager={colorSchemeManager}
+        defaultColorScheme="light"
+        theme={theme}
+      >
         <ThemeProvider theme={lightTheme}>
           <Toaster
             position="bottom-right"
