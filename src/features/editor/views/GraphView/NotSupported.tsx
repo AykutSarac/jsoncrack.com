@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Button, Text } from "@mantine/core";
 import styled from "styled-components";
+import { LuZap } from "react-icons/lu";
 import { UpgradeContent } from "../../../modals/UpgradeModal";
 
 const StyledNotSupported = styled.div`
@@ -146,8 +147,8 @@ export const NotSupported = () => {
       <StyledContent>
         <UpgradeContent direction="column-reverse" />
         <Text c="dimmed" maw="400" my="lg" ta="center">
-          JSON Crack is unable to support data of this size. Please try our new editor for better
-          performance.
+          JSON Crack is unable to support data of this size. <br />
+          Try the new editor for better performance.
         </Text>
         <Link
           rel="noopener"
@@ -155,8 +156,8 @@ export const NotSupported = () => {
           target="_blank"
           passHref
         >
-          <Button size="lg" color="indigo" radius="xl">
-            Open New Editor &rarr;
+          <Button size="lg" color="teal" leftSection={<LuZap />} radius="xl">
+            Try new editor &rarr;
           </Button>
         </Link>
       </StyledContent>

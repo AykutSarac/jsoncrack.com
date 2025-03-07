@@ -13,40 +13,46 @@ import {
   Anchor,
   Image,
   Box,
+  CloseButton,
 } from "@mantine/core";
 import Cookie from "js-cookie";
-import { LuCheck } from "react-icons/lu";
+import { LuCheck, LuZap } from "react-icons/lu";
 import useConfig from "../../../store/useConfig";
-import { Logo } from "../../editor/Toolbar/Logo";
 
 export const UpgradeContent = (props: FlexProps) => {
   const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
 
   return (
     <Flex direction="column" gap="0" {...props}>
-      <Flex gap="sm">
+      <Flex justify="center" gap="60" px="sm">
         <List
           center
+          c="bright"
+          fz="lg"
+          spacing="xs"
           icon={
             <ThemeIcon color="green" variant="transparent">
-              <LuCheck />
+              <LuCheck size="18" />
             </ThemeIcon>
           }
         >
-          <List.Item>Load larger datasets (100x more)</List.Item>
-          <List.Item>Modify data from diagrams</List.Item>
-          <List.Item>Clean and fast layout</List.Item>
+          <List.Item>No size limit</List.Item>
+          <List.Item>Editable diagrams</List.Item>
+          <List.Item>Fast and optimized</List.Item>
         </List>
         <List
           center
+          c="bright"
+          fz="lg"
+          spacing="xs"
           icon={
             <ThemeIcon color="green" variant="transparent">
-              <LuCheck />
+              <LuCheck size="18" />
             </ThemeIcon>
           }
         >
-          <List.Item>Customize colors</List.Item>
-          <List.Item>Improved UI & More tools</List.Item>
+          <List.Item>Custom themes</List.Item>
+          <List.Item>Modern UI</List.Item>
           <List.Item>
             <Anchor
               href="https://chromewebstore.google.com/detail/todiagram/gpcnkpjdmgihedngamkhendifclghjhn"
@@ -87,7 +93,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
 
   return (
     <Modal
-      size="auto"
+      size="lg"
       opened={opened}
       onClose={handleCloseModal}
       zIndex={1001}
@@ -96,18 +102,24 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
       overlayProps={{ blur: 2 }}
       withCloseButton={false}
       closeOnClickOutside={false}
-      title={
-        <Flex align="center" gap="4">
-          <Logo />
-          <Text fz="lg" fw="600">
-            JSON Crack 2.0 - Professional Edition
-          </Text>
-        </Flex>
-      }
     >
-      <UpgradeContent />
-      <Group justify="space-between">
-        <Button onClick={handleCloseModal} color="gray" variant="subtle">
+      <Flex justify="center" align="center" gap="xs">
+        <Image
+          ml="auto"
+          pl="28"
+          src="https://todiagram.com/logo-64x64.png"
+          alt="todiagram"
+          width={30}
+          height={30}
+        />
+        <Text fz="24" fw="600" c="bright">
+          Try JSON Crack 2.0
+        </Text>
+        <CloseButton ml="auto" onClick={handleCloseModal} />
+      </Flex>
+      <UpgradeContent direction="column-reverse" />
+      <Group justify="center" gap="lg" mt="xl">
+        <Button size="md" onClick={handleCloseModal} color="gray" variant="light">
           Maybe later
         </Button>
         <Link
@@ -115,8 +127,8 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
           rel="noopener"
           target="_blank"
         >
-          <Button onClick={handleCloseModal} color="teal">
-            Try Now &rarr;
+          <Button size="md" onClick={handleCloseModal} leftSection={<LuZap />} color="teal">
+            Try for free &rarr;
           </Button>
         </Link>
       </Group>
