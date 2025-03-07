@@ -11,7 +11,6 @@ import useToggleHide from "../../../../hooks/useToggleHide";
 import useConfig from "../../../../store/useConfig";
 import useModal from "../../../../store/useModal";
 import type { LayoutDirection } from "../../../../types/graph";
-import { SearchInput } from "../../Toolbar/SearchInput";
 import useGraph from "./stores/useGraph";
 
 const StyledFlowIcon = styled(TiFlowMerge)<{ rotate: number }>`
@@ -32,7 +31,7 @@ const rotateLayout = (direction: LayoutDirection) => {
   return 360;
 };
 
-export const OptionsMenu = ({ isWidget = false }) => {
+export const OptionsMenu = () => {
   const toggleGestures = useConfig(state => state.toggleGestures);
   const toggleChildrenCount = useConfig(state => state.toggleChildrenCount);
   const toggleRulers = useConfig(state => state.toggleRulers);
@@ -91,15 +90,15 @@ export const OptionsMenu = ({ isWidget = false }) => {
       align="center"
       style={{
         position: "absolute",
-        bottom: "10px",
+        top: "10px",
         left: "10px",
         zIndex: 100,
       }}
     >
       <Menu withArrow>
         <Menu.Target>
-          <ActionIcon variant="light" color="gray">
-            <LuMenu />
+          <ActionIcon aria-label="actions" size="lg" color="gray" variant="light">
+            <LuMenu size="18" />
           </ActionIcon>
         </Menu.Target>
         <Menu.Dropdown>
@@ -212,7 +211,6 @@ export const OptionsMenu = ({ isWidget = false }) => {
           </Menu>
         </Menu.Dropdown>
       </Menu>
-      {!isWidget && <SearchInput />}
     </Flex>
   );
 };

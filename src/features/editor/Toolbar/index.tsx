@@ -10,7 +10,6 @@ import { JSONCrackLogo } from "../../../layout/JsonCrackLogo";
 import useFile from "../../../store/useFile";
 import useModal from "../../../store/useModal";
 import { FileMenu } from "./FileMenu";
-import { Logo } from "./Logo";
 import { ToolsMenu } from "./ToolsMenu";
 import { ViewMenu } from "./ViewMenu";
 import { StyledToolElement } from "./styles";
@@ -55,7 +54,13 @@ export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
 
   return (
     <StyledTools>
-      {isWidget && <Logo />}
+      {isWidget && (
+        <StyledToolElement title="JSON Crack">
+          <Flex gap="xs" align="center" justify="center">
+            <JSONCrackLogo fontSize="0.8rem" hideLogo />
+          </Flex>
+        </StyledToolElement>
+      )}
       {!isWidget && (
         <Group gap="xs" justify="left" w="100%" style={{ flexWrap: "nowrap" }}>
           <StyledToolElement title="JSON Crack">

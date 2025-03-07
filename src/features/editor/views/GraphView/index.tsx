@@ -8,6 +8,7 @@ import type { ElkRoot } from "reaflow/dist/layout/useLayout";
 import { useLongPress } from "use-long-press";
 import useToggleHide from "../../../../hooks/useToggleHide";
 import useConfig from "../../../../store/useConfig";
+import { SearchInput } from "../../Toolbar/SearchInput";
 import { CustomEdge } from "./CustomEdge";
 import { CustomNode } from "./CustomNode";
 import { NotSupported } from "./NotSupported";
@@ -176,7 +177,8 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
   return (
     <>
       <LoadingOverlay visible={loading} />
-      <OptionsMenu isWidget={isWidget} />
+      {!isWidget && <OptionsMenu />}
+      {!isWidget && <SearchInput />}
       <ZoomControl />
       <StyledEditorWrapper
         $widget={isWidget}

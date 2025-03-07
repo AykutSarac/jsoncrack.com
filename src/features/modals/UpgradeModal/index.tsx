@@ -14,6 +14,7 @@ import {
   Image,
   Box,
   CloseButton,
+  FocusTrap,
 } from "@mantine/core";
 import Cookie from "js-cookie";
 import { LuCheck, LuZap } from "react-icons/lu";
@@ -103,6 +104,7 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
       withCloseButton={false}
       closeOnClickOutside={false}
     >
+      <FocusTrap.InitialFocus />
       <Flex justify="center" align="center" gap="xs">
         <Image
           ml="auto"
