@@ -114,7 +114,7 @@ export const HeroSection = ({ stars = 0 }) => {
               rightSection={
                 <Flex ml="sm" c="dimmed" align="center" gap="4">
                   <FaStar />
-                  {stars}
+                  {stars.toLocaleString("en-US")}
                 </Flex>
               }
             >
