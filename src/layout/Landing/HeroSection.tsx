@@ -1,11 +1,13 @@
 import React from "react";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Oxygen } from "next/font/google";
+import Link from "next/link";
 import { Stack, Flex, Button } from "@mantine/core";
 import styled from "styled-components";
-import { FaChevronRight } from "react-icons/fa6";
+import { FaChevronRight, FaGithub, FaStar } from "react-icons/fa6";
 
-const plusJakartaSans = Plus_Jakarta_Sans({
+const oxygen = Oxygen({
   subsets: ["latin-ext"],
+  weight: ["700"],
 });
 
 const StyledHeroSection = styled.main`
@@ -56,9 +58,7 @@ const StyledHeroTitle = styled.h1`
   width: fit-content;
   line-height: 1.15;
   max-width: 30rem;
-  letter-spacing: -0.75px;
-  word-spacing: 6px;
-  font-family: ${plusJakartaSans.style.fontFamily};
+  font-family: ${oxygen.style.fontFamily};
 
   @media only screen and (min-width: 576px) {
     font-size: 3.4rem;
@@ -100,11 +100,28 @@ const StyledHeroText = styled.h2`
   }
 `;
 
-export const HeroSection = () => {
+export const HeroSection = ({ stars = 0 }) => {
   return (
     <StyledHeroSection>
       <StyledHeroSectionBody>
         <Stack flex="1" miw={250} mx="auto" align="center">
+          <Link href="https://github.com/AykutSarac/jsoncrack.com" target="_blank" rel="noopener">
+            <Button
+              variant="default"
+              radius="xl"
+              ta="left"
+              leftSection={<FaGithub size="18" />}
+              rightSection={
+                <Flex ml="sm" c="dimmed" align="center" gap="4">
+                  <FaStar />
+                  {stars}
+                </Flex>
+              }
+            >
+              GitHub
+            </Button>
+          </Link>
+
           <StyledHeroTitle>Visualize JSON into interactive graphs</StyledHeroTitle>
           <StyledHeroText>
             The best online JSON viewer to <strong>visualize</strong>, <strong>format</strong> and{" "}
@@ -120,7 +137,7 @@ export const HeroSection = () => {
               radius="md"
               rightSection={<FaChevronRight />}
               fw="500"
-              mt="lg"
+              mt="sm"
             >
               Go to Editor
             </Button>
@@ -130,11 +147,10 @@ export const HeroSection = () => {
               component="a"
               color="#202842"
               href="/editor"
-              size="lg"
+              size="xl"
               radius="md"
               rightSection={<FaChevronRight />}
-              fw="500"
-              mt="lg"
+              mt="sm"
             >
               Go to Editor
             </Button>
