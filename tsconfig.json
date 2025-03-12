@@ -15,7 +15,8 @@
     "jsx": "preserve",
     "incremental": true,
     "noImplicitAny": false,
-    "typeRoots": ["types"]
+    "typeRoots": ["./types", "./node_modules/@types"],
+    "types": ["jest", "node"]
   },
   "include": ["src", "next-env.d.ts",],
   "exclude": ["node_modules"]
