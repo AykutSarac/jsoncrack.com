@@ -56,7 +56,6 @@ export const Toolbar = () => {
             <JSONCrackLogo fontSize="0.8rem" hideLogo />
           </Flex>
         </StyledToolElement>
-
         <Select
           defaultValue="json"
           size="xs"
@@ -71,19 +70,19 @@ export const Toolbar = () => {
         <FileMenu />
         <ViewMenu />
         <ToolsMenu />
-      </Group>
-      <Group gap="6" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
         <Button
-          variant="gradient"
-          gradient={{ from: "purple", to: "violet", deg: 45 }}
+          color="teal"
           autoContrast
           size="compact-sm"
           fz="12"
           fw="600"
           onClick={() => setVisible("UpgradeModal", true)}
+          leftSection={"⚡️"}
         >
-          🔥 JSON Crack v2.0
+          Try New Editor
         </Button>
+      </Group>
+      <Group gap="6" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
         <Link href="https://github.com/AykutSarac/jsoncrack.com" rel="noopener" target="_blank">
           <StyledToolElement title="GitHub">
             <FaGithub size="18" />

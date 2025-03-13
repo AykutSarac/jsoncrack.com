@@ -1,9 +1,7 @@
 import React from "react";
 import type { ModalProps } from "@mantine/core";
-import { Modal, Stack, Text, ScrollArea, Button } from "@mantine/core";
+import { Modal, Stack, Text, ScrollArea } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
-import { event as gaEvent } from "nextjs-google-analytics";
-import { useModal } from "../../../store/useModal";
 import useGraph from "../../editor/views/GraphView/stores/useGraph";
 
 const dataToString = (data: any) => {
@@ -17,7 +15,6 @@ const dataToString = (data: any) => {
 };
 
 export const NodeModal = ({ opened, onClose }: ModalProps) => {
-  const setVisible = useModal(state => state.setVisible);
   const nodeData = useGraph(state => dataToString(state.selectedNode?.text));
   const path = useGraph(state => state.selectedNode?.path || "");
 
@@ -32,14 +29,6 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
             <CodeHighlight code={nodeData} miw={350} maw={600} language="json" withCopyButton />
           </ScrollArea.Autosize>
         </Stack>
-        <Button
-          onClick={() => {
-            setVisible("UpgradeModal", true);
-            gaEvent("click_node_edit");
-          }}
-        >
-          Edit
-        </Button>
         <Text fz="xs" fw={500}>
           JSON Path
         </Text>
