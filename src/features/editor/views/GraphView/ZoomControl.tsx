@@ -3,9 +3,10 @@ import { ActionIcon, Flex } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
 import { event as gaEvent } from "nextjs-google-analytics";
 import { LuFocus, LuMaximize, LuMinus, LuPlus } from "react-icons/lu";
+import { SearchInput } from "../../Toolbar/SearchInput";
 import useGraph from "./stores/useGraph";
 
-export const ZoomControl = () => {
+export const ZoomControl = ({ isWidget = false }) => {
   const zoomIn = useGraph(state => state.zoomIn);
   const zoomOut = useGraph(state => state.zoomOut);
   const centerView = useGraph(state => state.centerView);
@@ -27,7 +28,7 @@ export const ZoomControl = () => {
       style={{
         position: "absolute",
         bottom: "10px",
-        right: "10px",
+        left: "10px",
         alignItems: "start",
         zIndex: 100,
       }}
@@ -78,6 +79,7 @@ export const ZoomControl = () => {
           <LuPlus />
         </ActionIcon>
       </ActionIcon.Group>
+      {!isWidget && <SearchInput />}
     </Flex>
   );
 };

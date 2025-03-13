@@ -49,7 +49,7 @@ export const StyledForeignObject = styled.foreignObject<{ $isObject?: boolean }>
   }
 
   .highlight {
-    background: rgba(255, 214, 0, 0.3);
+    background: rgba(255, 214, 0, 0.15);
   }
 
   .renderVisible {
@@ -94,6 +94,10 @@ export const StyledRow = styled.span<{ $value: string }>`
 
   &:last-of-type {
     border-bottom: none;
+  }
+
+  .searched & {
+    border-bottom: 1px solid ${({ theme }) => theme.TEXT_POSITIVE};
   }
 `;
 

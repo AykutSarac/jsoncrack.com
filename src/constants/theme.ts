@@ -17,21 +17,6 @@ const fixedColors = {
   TEXT_DANGER: "#db662e",
 };
 
-const promptInputColors = {
-  dark: {
-    PROMPT_BG: "#072719",
-    PROMPT_PLACEHOLDER_COLOR: "#15593A",
-    PROMPT_TEXT_COLOR: "#3DCF8E",
-    PROMPT_BORDER_COLOR: "#0C3924",
-  },
-  light: {
-    PROMPT_BG: "#d3ede1",
-    PROMPT_PLACEHOLDER_COLOR: "#77c2a1",
-    PROMPT_TEXT_COLOR: "#289b67",
-    PROMPT_BORDER_COLOR: "#8ad7b3",
-  },
-};
-
 const nodeColors = {
   dark: {
     NODE_COLORS: {
@@ -72,7 +57,6 @@ const nodeColors = {
 export const darkTheme = {
   ...fixedColors,
   ...nodeColors.dark,
-  ...promptInputColors.dark,
   BLACK_SECONDARY: "#23272A",
   SILVER_DARK: "#4D4D4D",
   NODE_KEY: "#FAA81A",
@@ -99,7 +83,6 @@ export const darkTheme = {
 export const lightTheme = {
   ...fixedColors,
   ...nodeColors.light,
-  ...promptInputColors.light,
   BLACK_SECONDARY: "#F2F2F2",
   SILVER_DARK: "#CCCCCC",
   NODE_KEY: "#DC3790",
