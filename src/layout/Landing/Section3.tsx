@@ -31,7 +31,8 @@ const StyledDottedContainer = styled.div`
     background: #f3f3f3;
     --line-color-1: #e3e3e3;
     --line-color-2: #e5e5e5;
-    background-image: linear-gradient(var(--line-color-1) 1.5px, transparent 1.5px),
+    background-image:
+      linear-gradient(var(--line-color-1) 1.5px, transparent 1.5px),
       linear-gradient(90deg, var(--line-color-1) 1.5px, transparent 1.5px),
       linear-gradient(var(--line-color-2) 1px, transparent 1px),
       linear-gradient(90deg, var(--line-color-2) 1px, transparent 1px);
