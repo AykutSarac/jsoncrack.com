@@ -8,7 +8,7 @@ import { FaGithub } from "react-icons/fa6";
 import { type FileFormat, formats } from "../../../enums/file.enum";
 import { JSONCrackLogo } from "../../../layout/JsonCrackLogo";
 import useFile from "../../../store/useFile";
-import useModal from "../../../store/useModal";
+import { useModal } from "../../../store/useModal";
 import { FileMenu } from "./FileMenu";
 import { ToolsMenu } from "./ToolsMenu";
 import { ViewMenu } from "./ViewMenu";
@@ -43,74 +43,55 @@ function fullscreenBrowser() {
   }
 }
 
-interface ToolbarProps {
-  isWidget?: boolean;
-}
-
-export const Toolbar = ({ isWidget = false }: ToolbarProps) => {
+export const Toolbar = () => {
   const setVisible = useModal(state => state.setVisible);
   const setFormat = useFile(state => state.setFormat);
   const format = useFile(state => state.format);
 
   return (
     <StyledTools>
-      {isWidget && (
+      <Group gap="xs" justify="left" w="100%" style={{ flexWrap: "nowrap" }}>
         <StyledToolElement title="JSON Crack">
           <Flex gap="xs" align="center" justify="center">
             <JSONCrackLogo fontSize="0.8rem" hideLogo />
           </Flex>
         </StyledToolElement>
-      )}
-      {!isWidget && (
-        <Group gap="xs" justify="left" w="100%" style={{ flexWrap: "nowrap" }}>
-          <StyledToolElement title="JSON Crack">
-            <Flex gap="xs" align="center" justify="center">
-              <JSONCrackLogo fontSize="0.8rem" hideLogo />
-            </Flex>
-          </StyledToolElement>
 
-          <Select
-            defaultValue="json"
-            size="xs"
-            value={format}
-            onChange={e => setFormat(e as FileFormat)}
-            miw={80}
-            w={120}
-            data={formats}
-            allowDeselect={false}
-          />
+        <Select
+          defaultValue="json"
+          size="xs"
+          value={format}
+          onChange={e => setFormat(e as FileFormat)}
+          miw={80}
+          w={120}
+          data={formats}
+          allowDeselect={false}
+        />
 
-          <FileMenu />
-          <ViewMenu />
-          <ToolsMenu />
-        </Group>
-      )}
+        <FileMenu />
+        <ViewMenu />
+        <ToolsMenu />
+      </Group>
       <Group gap="6" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
-        {!isWidget && (
-          <Button
-            variant="gradient"
-            gradient={{ from: "purple", to: "violet", deg: 45 }}
-            autoContrast
-            size="compact-sm"
-            fz="12"
-            fw="600"
-            onClick={() => setVisible("UpgradeModal", true)}
-          >
-            🔥 JSON Crack v2.0
-          </Button>
-        )}
-        {!isWidget && (
-          <Link href="https://github.com/AykutSarac/jsoncrack.com" rel="noopener" target="_blank">
-            <StyledToolElement title="GitHub">
-              <FaGithub size="18" />
-            </StyledToolElement>
-          </Link>
-        )}
-        {!isWidget && (
-          <StyledToolElement title="Fullscreen" $hide={isWidget} onClick={fullscreenBrowser}>
-            <AiOutlineFullscreen size="18" />
+        <Button
+          variant="gradient"
+          gradient={{ from: "purple", to: "violet", deg: 45 }}
+          autoContrast
+          size="compact-sm"
+          fz="12"
+          fw="600"
+          onClick={() => setVisible("UpgradeModal", true)}
+        >
+          🔥 JSON Crack v2.0
+        </Button>
+        <Link href="https://github.com/AykutSarac/jsoncrack.com" rel="noopener" target="_blank">
+          <StyledToolElement title="GitHub">
+            <FaGithub size="18" />
           </StyledToolElement>
-        )}
+        </Link>
+        <StyledToolElement title="Fullscreen" onClick={fullscreenBrowser}>
+          <AiOutlineFullscreen size="18" />
+        </StyledToolElement>
       </Group>
     </StyledTools>
   );

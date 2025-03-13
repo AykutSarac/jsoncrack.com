@@ -3,7 +3,7 @@ import type { ModalProps } from "@mantine/core";
 import { Modal, Stack, Text, ScrollArea, Button } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
 import { event as gaEvent } from "nextjs-google-analytics";
-import useModal from "../../../store/useModal";
+import { useModal } from "../../../store/useModal";
 import useGraph from "../../editor/views/GraphView/stores/useGraph";
 
 const dataToString = (data: any) => {

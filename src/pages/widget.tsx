@@ -6,7 +6,6 @@ import { ThemeProvider } from "styled-components";
 import { NextSeo } from "next-seo";
 import toast from "react-hot-toast";
 import { darkTheme, lightTheme } from "../constants/theme";
-import { Toolbar } from "../features/editor/Toolbar";
 import useGraph from "../features/editor/views/GraphView/stores/useGraph";
 import useFile from "../store/useFile";
 import type { LayoutDirection } from "../types/graph";
@@ -20,6 +19,10 @@ interface EmbedMessage {
     };
   };
 }
+
+const ModalController = dynamic(() => import("../features/modals/ModalController"), {
+  ssr: false,
+});
 
 const GraphView = dynamic(
   () => import("../features/editor/views/GraphView").then(c => c.GraphView),
@@ -71,13 +74,11 @@ const WidgetPage = () => {
   }, [setColorScheme, theme]);
 
   return (
-    <>
-      <NextSeo noindex />
-      <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
-        <Toolbar isWidget />
-        <GraphView isWidget />
-      </ThemeProvider>
-    </>
+    <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
+      <NextSeo noindex nofollow />
+      <ModalController />
+      <GraphView isWidget />
+    </ThemeProvider>
   );
 };
 

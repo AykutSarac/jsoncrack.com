@@ -19,7 +19,7 @@ import useGraph from "./stores/useGraph";
 const StyledEditorWrapper = styled.div<{ $widget: boolean; $showRulers: boolean }>`
   position: absolute;
   width: 100%;
-  height: ${({ $widget }) => ($widget ? "calc(100vh - 40px)" : "calc(100vh - 67px)")};
+  height: ${({ $widget }) => ($widget ? "100vh" : "calc(100vh - 67px)")};
 
   --bg-color: ${({ theme }) => theme.GRID_BG_COLOR};
   --line-color-1: ${({ theme }) => theme.GRID_COLOR_PRIMARY};
@@ -60,10 +60,6 @@ const StyledEditorWrapper = styled.div<{ $widget: boolean; $showRulers: boolean 
 
   rect {
     fill: ${({ theme }) => theme.BACKGROUND_NODE};
-  }
-
-  @media only screen and (max-width: 768px) {
-    height: ${({ $widget }) => ($widget ? "calc(100vh - 40px)" : "100vh")};
   }
 
   @media only screen and (max-width: 320px) {

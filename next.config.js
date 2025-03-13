@@ -10,9 +10,6 @@ const config = {
   output: "export",
   reactStrictMode: false,
   productionBrowserSourceMaps: true,
-  experimental: {
-    optimizePackageImports: ["reaflow"],
-  },
   compiler: {
     styledComponents: true,
   },

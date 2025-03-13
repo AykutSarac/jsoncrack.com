@@ -9,7 +9,7 @@ import { TiFlowMerge } from "react-icons/ti";
 import { VscExpandAll, VscCollapseAll } from "react-icons/vsc";
 import useToggleHide from "../../../../hooks/useToggleHide";
 import useConfig from "../../../../store/useConfig";
-import useModal from "../../../../store/useModal";
+import { useModal } from "../../../../store/useModal";
 import type { LayoutDirection } from "../../../../types/graph";
 import useGraph from "./stores/useGraph";
 

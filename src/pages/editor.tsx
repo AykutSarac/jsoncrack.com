@@ -17,7 +17,7 @@ import { Toolbar } from "../features/editor/Toolbar";
 import useGraph from "../features/editor/views/GraphView/stores/useGraph";
 import useConfig from "../store/useConfig";
 import useFile from "../store/useFile";
-import useModal from "../store/useModal";
+import { useModal } from "../store/useModal";
 
 const ModalController = dynamic(() => import("../features/modals/ModalController"));
 const ExternalMode = dynamic(() => import("../features/editor/ExternalMode"));

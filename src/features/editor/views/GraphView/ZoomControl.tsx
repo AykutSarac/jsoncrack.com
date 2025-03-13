@@ -32,27 +32,33 @@ export const ZoomControl = () => {
         zIndex: 100,
       }}
     >
-      <ActionIcon
-        variant="default"
-        onClick={() => {
-          focusFirstNode();
-          gaEvent("focus_first_node");
-        }}
-      >
-        <LuFocus />
-      </ActionIcon>
-      <ActionIcon
-        variant="default"
-        onClick={() => {
-          centerView();
-          gaEvent("center_view");
-        }}
-      >
-        <LuMaximize />
-      </ActionIcon>
       <ActionIcon.Group borderWidth={0}>
         <ActionIcon
-          variant="default"
+          size="lg"
+          variant="light"
+          color="gray"
+          onClick={() => {
+            focusFirstNode();
+            gaEvent("focus_first_node");
+          }}
+        >
+          <LuFocus />
+        </ActionIcon>
+        <ActionIcon
+          size="lg"
+          variant="light"
+          color="gray"
+          onClick={() => {
+            centerView();
+            gaEvent("center_view");
+          }}
+        >
+          <LuMaximize />
+        </ActionIcon>
+        <ActionIcon
+          size="lg"
+          variant="light"
+          color="gray"
           onClick={() => {
             zoomOut();
             gaEvent("zoom_out");
@@ -61,7 +67,9 @@ export const ZoomControl = () => {
           <LuMinus />
         </ActionIcon>
         <ActionIcon
-          variant="default"
+          size="lg"
+          variant="light"
+          color="gray"
           onClick={() => {
             zoomIn();
             gaEvent("zoom_in");

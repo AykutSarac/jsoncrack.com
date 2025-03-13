@@ -1,20 +1,20 @@
-import { create } from "zustand";
-import { type Modal, modalComponents } from "../features/modals/ModalController";
+import { createWithEqualityFn as create } from "zustand/traditional";
+import { type ModalName, modals } from "../features/modals/modalTypes";
 
 interface ModalActions {
-  setVisible: (name: Modal, open: boolean) => void;
+  setVisible: (name: ModalName, open: boolean) => void;
 }
 
-type ModalState = Record<Modal, boolean>;
+type ModalState = Record<ModalName, boolean>;
 
-const initialStates: ModalState = modalComponents.reduce(
-  (acc, { key }) => ({ ...acc, [key]: false }),
-  {} as ModalState
-);
+const initialStates: ModalState = modals.reduce((acc, modal) => {
+  acc[modal] = false;
+  return acc;
+}, {} as ModalState);
 
-const useModal = create<ModalState & ModalActions>()(set => ({
+export const useModal = create<ModalState & ModalActions>()(set => ({
   ...initialStates,
-  setVisible: (name, open) => set({ [name]: open }),
+  setVisible: (name, open) => {
+    set({ [name]: open });
+  },
 }));
-
-export default useModal;

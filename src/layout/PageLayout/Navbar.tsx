@@ -80,6 +80,17 @@ export const Navbar = () => {
             VS Code
           </Button>
           <Button
+            component={Link}
+            prefetch={false}
+            href="/docs"
+            variant="subtle"
+            color="black"
+            size="md"
+            radius="md"
+          >
+            Embed
+          </Button>
+          <Button
             component="a"
             href="https://github.com/AykutSarac/jsoncrack.com"
             target="_blank"

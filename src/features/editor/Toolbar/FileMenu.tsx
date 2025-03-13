@@ -3,7 +3,7 @@ import { Flex, Menu } from "@mantine/core";
 import { event as gaEvent } from "nextjs-google-analytics";
 import { CgChevronDown } from "react-icons/cg";
 import useFile from "../../../store/useFile";
-import useModal from "../../../store/useModal";
+import { useModal } from "../../../store/useModal";
 import { StyledToolElement } from "./styles";
 
 export const FileMenu = () => {

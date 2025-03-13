@@ -11,7 +11,7 @@ import { VscSearchFuzzy, VscJson, VscGroupByRefType } from "react-icons/vsc";
 import { jsonToContent } from "../../../lib/utils/jsonAdapter";
 import useFile from "../../../store/useFile";
 import useJson from "../../../store/useJson";
-import useModal from "../../../store/useModal";
+import { useModal } from "../../../store/useModal";
 import { StyledToolElement } from "./styles";
 
 export const ToolsMenu = () => {

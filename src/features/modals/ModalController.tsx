@@ -1,36 +1,18 @@
 import React from "react";
-import type { ModalProps } from "@mantine/core";
-import * as ModalComponents from "../../features/modals";
-import useModal from "../../store/useModal";
+import * as ModalComponents from ".";
+import { useModal } from "../../store/useModal";
+import { modals, type ModalName } from "./modalTypes";
 
-const modalNames = Object.keys(ModalComponents);
-const modals = Object.freeze(modalNames) as Extract<keyof typeof ModalComponents, string>[];
+const Modal = ({ modalKey }: { modalKey: ModalName }) => {
+  const opened = useModal(state => state[modalKey]);
+  const setVisible = useModal(state => state.setVisible);
+  const ModalComponent = ModalComponents[modalKey];
 
-export type Modal = (typeof modals)[number];
-type ModalComponent = {
-  key: Modal;
-  component: React.FC<ModalProps & any>;
+  return <ModalComponent opened={opened} onClose={() => setVisible(modalKey, false)} />;
 };
 
-export const modalComponents: ModalComponent[] = modals.map(modal => ({
-  key: modal,
-  component: ModalComponents[modal],
-}));
-
 const ModalController = () => {
-  const setVisible = useModal(state => state.setVisible);
-  const modalStates = useModal(state => modalComponents.map(modal => state[modal.key]));
-
-  return (
-    <>
-      {modalComponents.map(({ key, component }, index) => {
-        const ModalComponent = component;
-        const opened = modalStates[index];
-
-        return <ModalComponent key={key} opened={opened} onClose={() => setVisible(key, false)} />;
-      })}
-    </>
-  );
+  return modals.map(modal => <Modal key={modal} modalKey={modal} />);
 };
 
 export default ModalController;
