@@ -4,7 +4,7 @@ import { Flex, Group, Select, Button } from "@mantine/core";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
-import { FaGithub } from "react-icons/fa6";
+import { FaBolt, FaGithub } from "react-icons/fa6";
 import { type FileFormat, formats } from "../../../enums/file.enum";
 import { JSONCrackLogo } from "../../../layout/JsonCrackLogo";
 import useFile from "../../../store/useFile";
@@ -71,18 +71,19 @@ export const Toolbar = () => {
         <ViewMenu />
         <ToolsMenu />
         <Button
-          color="teal"
           autoContrast
+          variant="outline"
+          color="gray"
           size="compact-sm"
           fz="12"
           fw="600"
           onClick={() => setVisible("UpgradeModal", true)}
-          leftSection={"⚡️"}
+          leftSection={<FaBolt />}
         >
-          Try New Editor
+          JSON Crack v2.0
         </Button>
       </Group>
-      <Group gap="6" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
+      <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
         <Link href="https://github.com/AykutSarac/jsoncrack.com" rel="noopener" target="_blank">
           <StyledToolElement title="GitHub">
             <FaGithub size="18" />
