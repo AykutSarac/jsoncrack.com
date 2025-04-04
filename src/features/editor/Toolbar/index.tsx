@@ -72,8 +72,7 @@ export const Toolbar = () => {
         <ToolsMenu />
         <Button
           autoContrast
-          variant="outline"
-          color="gray"
+          color="green"
           size="compact-sm"
           fz="12"
           fw="600"

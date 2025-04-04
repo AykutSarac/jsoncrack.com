@@ -76,7 +76,7 @@ const EditorPage = () => {
   useEffect(() => {
     // const isUpgradeShown = Cookie.get("upgrade_shown");
     // if (!isUpgradeShown) {
-    setTimeout(() => setVisible("UpgradeModal", true), 3_000);
+    setTimeout(() => setVisible("UpgradeModal", true), 1_000);
     // }
   }, [setVisible]);
 
