@@ -8,7 +8,6 @@ import { FaBolt, FaGithub } from "react-icons/fa6";
 import { type FileFormat, formats } from "../../../enums/file.enum";
 import { JSONCrackLogo } from "../../../layout/JsonCrackLogo";
 import useFile from "../../../store/useFile";
-import { useModal } from "../../../store/useModal";
 import { FileMenu } from "./FileMenu";
 import { ToolsMenu } from "./ToolsMenu";
 import { ViewMenu } from "./ViewMenu";
@@ -44,7 +43,6 @@ function fullscreenBrowser() {
 }
 
 export const Toolbar = () => {
-  const setVisible = useModal(state => state.setVisible);
   const setFormat = useFile(state => state.setFormat);
   const format = useFile(state => state.format);
 
@@ -71,12 +69,15 @@ export const Toolbar = () => {
         <ViewMenu />
         <ToolsMenu />
         <Button
+          component={Link}
+          href="https://todiagram.com/editor?utm_source=jsoncrack&utm_medium=toolbar"
+          target="_blank"
+          rel="noopener"
           autoContrast
           color="green"
           size="compact-sm"
           fz="12"
           fw="600"
-          onClick={() => setVisible("UpgradeModal", true)}
           leftSection={<FaBolt />}
         >
           JSON Crack v2.0
