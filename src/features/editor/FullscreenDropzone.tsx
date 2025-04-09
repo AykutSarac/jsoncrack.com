@@ -11,7 +11,6 @@ export const FullscreenDropzone = () => {
 
   return (
     <Dropzone.FullScreen
-      maxSize={300 * 1024}
       maxFiles={1}
       accept={[
         "application/json",
