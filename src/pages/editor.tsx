@@ -7,7 +7,7 @@ import styled, { ThemeProvider } from "styled-components";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
-import Cookie from "js-cookie";
+// import Cookie from "js-cookie";
 import { NextSeo } from "next-seo";
 import { SEO } from "../constants/seo";
 import { darkTheme, lightTheme } from "../constants/theme";
@@ -74,10 +74,10 @@ const EditorPage = () => {
   const setVisible = useModal(state => state.setVisible);
 
   useEffect(() => {
-    const isUpgradeShown = Cookie.get("upgrade_shown");
-    if (!isUpgradeShown) {
-      setTimeout(() => setVisible("UpgradeModal", true), 30_000);
-    }
+    // const isUpgradeShown = Cookie.get("upgrade_shown");
+    // if (!isUpgradeShown) {
+    setTimeout(() => setVisible("UpgradeModal", true), 1_000);
+    // }
   }, [setVisible]);
 
   useEffect(() => {

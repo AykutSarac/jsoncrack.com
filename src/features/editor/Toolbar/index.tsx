@@ -4,11 +4,10 @@ import { Flex, Group, Select, Button } from "@mantine/core";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
-import { FaGithub } from "react-icons/fa6";
+import { FaBolt, FaGithub } from "react-icons/fa6";
 import { type FileFormat, formats } from "../../../enums/file.enum";
 import { JSONCrackLogo } from "../../../layout/JsonCrackLogo";
 import useFile from "../../../store/useFile";
-import { useModal } from "../../../store/useModal";
 import { FileMenu } from "./FileMenu";
 import { ToolsMenu } from "./ToolsMenu";
 import { ViewMenu } from "./ViewMenu";
@@ -44,7 +43,6 @@ function fullscreenBrowser() {
 }
 
 export const Toolbar = () => {
-  const setVisible = useModal(state => state.setVisible);
   const setFormat = useFile(state => state.setFormat);
   const format = useFile(state => state.format);
 
@@ -71,18 +69,21 @@ export const Toolbar = () => {
         <ViewMenu />
         <ToolsMenu />
         <Button
-          color="teal"
+          component={Link}
+          href="https://todiagram.com/editor?utm_source=jsoncrack&utm_medium=toolbar"
+          target="_blank"
+          rel="noopener"
           autoContrast
+          color="green"
           size="compact-sm"
           fz="12"
           fw="600"
-          onClick={() => setVisible("UpgradeModal", true)}
-          leftSection={"⚡️"}
+          leftSection={<FaBolt />}
         >
-          Try New Editor
+          JSON Crack v2.0
         </Button>
       </Group>
-      <Group gap="6" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
+      <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
         <Link href="https://github.com/AykutSarac/jsoncrack.com" rel="noopener" target="_blank">
           <StyledToolElement title="GitHub">
             <FaGithub size="18" />
