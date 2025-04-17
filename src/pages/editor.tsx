@@ -17,7 +17,6 @@ import { Toolbar } from "../features/editor/Toolbar";
 import useGraph from "../features/editor/views/GraphView/stores/useGraph";
 import useConfig from "../store/useConfig";
 import useFile from "../store/useFile";
-import { useModal } from "../store/useModal";
 
 const ModalController = dynamic(() => import("../features/modals/ModalController"));
 const ExternalMode = dynamic(() => import("../features/editor/ExternalMode"));
@@ -71,14 +70,6 @@ const EditorPage = () => {
   const checkEditorSession = useFile(state => state.checkEditorSession);
   const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
   const fullscreen = useGraph(state => state.fullscreen);
-  const setVisible = useModal(state => state.setVisible);
-
-  useEffect(() => {
-    // const isUpgradeShown = Cookie.get("upgrade_shown");
-    // if (!isUpgradeShown) {
-    setTimeout(() => setVisible("UpgradeModal", true), 1_000);
-    // }
-  }, [setVisible]);
 
   useEffect(() => {
     if (isReady) checkEditorSession(query?.json);
