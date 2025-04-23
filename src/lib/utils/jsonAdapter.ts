@@ -1,75 +1,104 @@
+import type { ParseError } from "jsonc-parser";
 import { FileFormat } from "../../enums/file.enum";
 
-const keyExists = (obj: object, key: string) => {
-  if (!obj || (typeof obj !== "object" && !Array.isArray(obj))) {
-    return false;
-  } else if (obj.hasOwnProperty(key)) {
-    return obj[key];
-  } else if (Array.isArray(obj)) {
-    for (let i = 0; i < obj.length; i++) {
-      const result = keyExists(obj[i], key);
+export const contentToJson = (value: string, format = FileFormat.JSON): Promise<object> => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      if (!value) return resolve({});
 
-      if (result) {
-        return result;
+      if (format === FileFormat.JSON) {
+        const { parse } = await import("jsonc-parser");
+        const errors: ParseError[] = [];
+        const result = parse(value, errors);
+        if (errors.length > 0) JSON.parse(value);
+        return resolve(result);
       }
-    }
-  } else {
-    for (const k in obj) {
-      const result = keyExists(obj[k], key);
 
-      if (result) {
-        return result;
+      if (format === FileFormat.YAML) {
+        const { load } = await import("js-yaml");
+        return resolve(load(value) as object);
       }
+
+      if (format === FileFormat.XML) {
+        const { XMLParser } = await import("fast-xml-parser");
+        const parser = new XMLParser({
+          attributeNamePrefix: "$",
+          ignoreAttributes: false,
+          allowBooleanAttributes: true,
+          parseAttributeValue: true,
+          trimValues: true,
+          parseTagValue: true,
+        });
+        return resolve(parser.parse(value));
+      }
+
+      if (format === FileFormat.CSV) {
+        const { csv2json } = await import("json-2-csv");
+        const result = csv2json(value, {
+          trimFieldValues: true,
+          trimHeaderFields: true,
+          wrapBooleans: true,
+          excelBOM: true,
+        });
+        return resolve(result);
+      }
+
+      return resolve({});
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : "Failed to parse content";
+      return reject(errorMessage);
     }
-  }
-
-  return false;
+  });
 };
 
-const contentToJson = async (value: string, format = FileFormat.JSON): Promise<object> => {
-  try {
-    const { load } = await import("js-yaml");
-    const { csv2json } = await import("json-2-csv");
-    const { parse } = await import("jsonc-parser");
-    const jxon = await import("jxon");
-    const toml = await import("toml");
+export const jsonToContent = async (json: string, format: FileFormat): Promise<string> => {
+  return new Promise(async resolve => {
+    try {
+      if (!json) return resolve("");
 
-    let json: object = {};
+      if (format === FileFormat.JSON) {
+        const parsedJson = JSON.parse(json);
+        return resolve(JSON.stringify(parsedJson, null, 2));
+      }
 
-    if (format === FileFormat.JSON) json = parse(value);
-    if (format === FileFormat.YAML) json = load(value) as object;
-    if (format === FileFormat.XML) json = jxon.stringToJs(value);
-    if (format === FileFormat.TOML) json = toml.parse(value);
-    if (format === FileFormat.CSV) json = await csv2json(value);
-    if (format === FileFormat.XML && keyExists(json, "parsererror")) throw Error("Unknown error!");
+      if (format === FileFormat.YAML) {
+        const { dump } = await import("js-yaml");
+        const { parse } = await import("jsonc-parser");
+        return resolve(dump(parse(json)));
+      }
 
-    if (!json) throw Error("Invalid JSON!");
+      if (format === FileFormat.XML) {
+        const { XMLBuilder } = await import("fast-xml-parser");
+        const builder = new XMLBuilder({
+          format: true,
+          attributeNamePrefix: "$",
+          ignoreAttributes: false,
+        });
 
-    return Promise.resolve(json);
-  } catch (error: any) {
-    throw error;
-  }
+        return resolve(builder.build(JSON.parse(json)));
+      }
+
+      if (format === FileFormat.CSV) {
+        const { json2csv } = await import("json-2-csv");
+        const parsedJson = JSON.parse(json);
+
+        const data = Array.isArray(parsedJson) ? parsedJson : [parsedJson];
+        return resolve(
+          json2csv(data, {
+            expandArrayObjects: true,
+            expandNestedObjects: true,
+            excelBOM: true,
+            wrapBooleans: true,
+            trimFieldValues: true,
+            trimHeaderFields: true,
+          })
+        );
+      }
+
+      return resolve(json);
+    } catch (error) {
+      console.error(json, error);
+      return resolve(json);
+    }
+  });
 };
-
-const jsonToContent = async (json: string, format: FileFormat): Promise<string> => {
-  try {
-    const { dump } = await import("js-yaml");
-    const { json2csv } = await import("json-2-csv");
-    const { parse } = await import("jsonc-parser");
-
-    let contents = json;
-
-    if (!json) return json;
-    if (format === FileFormat.JSON) contents = json;
-    if (format === FileFormat.YAML) contents = dump(parse(json));
-    if (format === FileFormat.XML) contents = dump(parse(json));
-    if (format === FileFormat.TOML) contents = dump(parse(json));
-    if (format === FileFormat.CSV) contents = await json2csv(parse(json));
-
-    return Promise.resolve(contents);
-  } catch (error: any) {
-    throw error;
-  }
-};
-
-export { contentToJson, jsonToContent };

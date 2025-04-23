@@ -30,6 +30,7 @@
     "allotment": "^1.20.3",
     "axios": "^1.8.3",
     "dayjs": "^1.11.13",
+    "fast-xml-parser": "^5.2.1",
     "gofmt.js": "^0.0.2",
     "html-to-image": "^1.11.13",
     "jq-web": "^0.5.1",

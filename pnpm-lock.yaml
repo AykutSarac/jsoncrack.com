@@ -38,6 +38,9 @@ importers:
       dayjs:
         specifier: ^1.11.13
         version: 1.11.13
+      fast-xml-parser:
+        specifier: ^5.2.1
+        version: 5.2.1
       gofmt.js:
         specifier: ^0.0.2
         version: 0.0.2
@@ -1467,6 +1470,10 @@ packages:
   fast-levenshtein@2.0.6:
     resolution: {integrity: sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==}
 
+  fast-xml-parser@5.2.1:
+    resolution: {integrity: sha512-Kqq/ewnRACQ20e0BlQ5KqHRYWRBp7yv+jttK4Yj2yY+2ldgCoxJkrP1NHUhjypsJ+eQXlGJ/jebM3wa60s1rbQ==}
+    hasBin: true
+
   fastq@1.17.1:
     resolution: {integrity: sha512-sRVD3lWVIXWg6By68ZN7vho9a1pQcN/WBFaAAsDDFzlJjvoGx0P8z7V1t72grFJfJhu3YPZBuu25f7Kaw2jN1w==}
 
@@ -2715,6 +2722,9 @@ packages:
   strip-json-comments@3.1.1:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
+
+  strnum@2.0.5:
+    resolution: {integrity: sha512-YAT3K/sgpCUxhxNMrrdhtod3jckkpYwH6JAuwmUdXZsmzH1wUyzTMrrK2wYCEEqlKwrWDd35NeuUkbBy/1iK+Q==}
 
   styled-components@6.1.15:
     resolution: {integrity: sha512-PpOTEztW87Ua2xbmLa7yssjNyUF9vE7wdldRfn1I2E6RTkqknkBYpj771OxM/xrvRGinLy2oysa7GOd7NcZZIA==}
@@ -4584,6 +4594,10 @@ snapshots:
 
   fast-levenshtein@2.0.6: {}
 
+  fast-xml-parser@5.2.1:
+    dependencies:
+      strnum: 2.0.5
+
   fastq@1.17.1:
     dependencies:
       reusify: 1.0.4
@@ -5848,6 +5862,8 @@ snapshots:
   strip-bom@3.0.0: {}
 
   strip-json-comments@3.1.1: {}
+
+  strnum@2.0.5: {}
 
   styled-components@6.1.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:

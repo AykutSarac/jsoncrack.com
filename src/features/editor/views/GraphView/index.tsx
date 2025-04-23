@@ -1,5 +1,6 @@
 import React from "react";
 import { LoadingOverlay, useComputedColorScheme } from "@mantine/core";
+import { useDebouncedValue } from "@mantine/hooks";
 import styled from "styled-components";
 import debounce from "lodash.debounce";
 import { Space } from "react-zoomable-ui";
@@ -144,6 +145,7 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
   const loading = useGraph(state => state.loading);
   const gesturesEnabled = useConfig(state => state.gesturesEnabled);
   const rulersEnabled = useConfig(state => state.rulersEnabled);
+  const [debouncedLoading] = useDebouncedValue(loading, 300);
 
   const callback = React.useCallback(() => {
     const canvas = document.querySelector(".jsoncrack-canvas") as HTMLDivElement | null;
@@ -172,7 +174,7 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
 
   return (
     <>
-      <LoadingOverlay visible={loading} />
+      <LoadingOverlay visible={debouncedLoading} />
       {!isWidget && <OptionsMenu />}
       {!isWidget && <SecureInfo />}
       <ZoomControl isWidget={isWidget} />
