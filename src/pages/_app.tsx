@@ -52,8 +52,6 @@ const theme = createTheme({
   },
 });
 
-const IS_PROD = process.env.NODE_ENV === "production";
-
 function JsonCrack({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter();
 
@@ -99,7 +97,7 @@ function JsonCrack({ Component, pageProps }: AppProps) {
             }}
           />
           <GlobalStyle />
-          {IS_PROD && <GoogleAnalytics trackPageViews />}
+          {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && <GoogleAnalytics trackPageViews />}
           <Component {...pageProps} />
         </ThemeProvider>
       </MantineProvider>
