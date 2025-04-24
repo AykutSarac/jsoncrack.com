@@ -68,7 +68,7 @@ jobs:
       - name: Build with Next.js
         run: pnpm next build
         env:
-          NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ vars.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
+          NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ env.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
 
       - name: Upload Build Artifacts
         uses: actions/upload-artifact@v4
