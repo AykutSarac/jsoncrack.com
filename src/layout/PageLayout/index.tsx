@@ -12,6 +12,13 @@ const inter = Inter({
 const StyledLayoutWrapper = styled.div`
   background: #fff;
   font-family: ${inter.style.fontFamily};
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+`;
+
+const ContentWrapper = styled.div`
+  flex: 1;
 `;
 
 const PageLayout = ({ children }: React.PropsWithChildren) => {
@@ -19,7 +26,7 @@ const PageLayout = ({ children }: React.PropsWithChildren) => {
     <ThemeProvider theme={lightTheme}>
       <StyledLayoutWrapper>
         <Navbar />
-        {children}
+        <ContentWrapper>{children}</ContentWrapper>
         <Footer />
       </StyledLayoutWrapper>
     </ThemeProvider>
