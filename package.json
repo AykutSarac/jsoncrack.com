@@ -6,6 +6,7 @@
     "name": "Aykut Saraç",
     "email": "aykutsarac0@gmail.com"
   },
+  "license": "Apache-2.0",
   "homepage": "https://jsoncrack.com",
   "bugs": {
     "url": "https://github.com/AykutSarac/jsoncrack.com/issues"
