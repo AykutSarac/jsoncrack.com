@@ -177,7 +177,7 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
       <LoadingOverlay visible={debouncedLoading} />
       {!isWidget && <OptionsMenu />}
       {!isWidget && <SecureInfo />}
-      <ZoomControl isWidget={isWidget} />
+      <ZoomControl />
       <StyledEditorWrapper
         $widget={isWidget}
         onContextMenu={e => e.preventDefault()}

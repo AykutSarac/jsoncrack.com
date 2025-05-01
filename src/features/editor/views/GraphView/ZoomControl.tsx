@@ -6,7 +6,7 @@ import { LuFocus, LuMaximize, LuMinus, LuPlus } from "react-icons/lu";
 import { SearchInput } from "../../Toolbar/SearchInput";
 import useGraph from "./stores/useGraph";
 
-export const ZoomControl = ({ isWidget = false }) => {
+export const ZoomControl = () => {
   const zoomIn = useGraph(state => state.zoomIn);
   const zoomOut = useGraph(state => state.zoomOut);
   const centerView = useGraph(state => state.centerView);
@@ -79,7 +79,7 @@ export const ZoomControl = ({ isWidget = false }) => {
           <LuPlus />
         </ActionIcon>
       </ActionIcon.Group>
-      {!isWidget && <SearchInput />}
+      <SearchInput />
     </Flex>
   );
 };
