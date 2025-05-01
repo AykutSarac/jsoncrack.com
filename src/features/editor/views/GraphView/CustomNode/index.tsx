@@ -50,7 +50,7 @@ const CustomNodeWrapper = (nodeProps: NodeProps<NodeData["data"]>) => {
       style={{
         fill: colorScheme === "dark" ? "#292929" : "#ffffff",
         stroke: colorScheme === "dark" ? "#424242" : "#BCBEC0",
-        strokeWidth: 1.5,
+        strokeWidth: 1,
       }}
     >
       {({ node, x, y }) => {

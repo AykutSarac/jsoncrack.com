@@ -79,7 +79,13 @@ const Node = ({ node, x, y, hasCollapse = false }: CustomNodeProps) => {
   }, [childrenCount, type]);
 
   return (
-    <Styled.StyledForeignObject width={width} height={height} x={0} y={0}>
+    <Styled.StyledForeignObject
+      data-id={`node-${node.id}`}
+      width={width}
+      height={height}
+      x={0}
+      y={0}
+    >
       {isImage ? (
         <StyledImageWrapper>
           <StyledImage src={text as string} width="70" height="70" loading="lazy" />

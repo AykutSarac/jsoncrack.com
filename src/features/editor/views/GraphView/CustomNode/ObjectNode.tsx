@@ -29,7 +29,14 @@ const Row = ({ val, x, y, index }: RowProps) => {
 };
 
 const Node = ({ node, x, y }: CustomNodeProps) => (
-  <Styled.StyledForeignObject width={node.width} height={node.height} x={0} y={0} $isObject>
+  <Styled.StyledForeignObject
+    data-id={`node-${node.id}`}
+    width={node.width}
+    height={node.height}
+    x={0}
+    y={0}
+    $isObject
+  >
     {(node.text as Value[]).map((val, idx) => (
       <Row val={val} index={idx} x={x} y={y} key={idx} />
     ))}
