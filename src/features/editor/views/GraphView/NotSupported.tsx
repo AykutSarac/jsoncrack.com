@@ -1,171 +1,101 @@
 import React from "react";
-import Link from "next/link";
-import { Button, Text } from "@mantine/core";
-import styled from "styled-components";
-import { UpgradeContent } from "../../../modals/UpgradeModal";
+import { Anchor, Button, Image, Overlay, Stack, Text } from "@mantine/core";
+import styled, { keyframes } from "styled-components";
+import useConfig from "../../../../store/useConfig";
+import { useModal } from "../../../../store/useModal";
 
-const StyledNotSupported = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-
-  .glowing {
-    position: relative;
-    min-width: 700px;
-    height: 550px;
-    margin: -150px;
-    transform-origin: right;
-    animation: colorChange 5s linear infinite;
+const shineEffect = keyframes`
+  0% {
+    transform: translateX(-120%) rotate(25deg);
+    opacity: 0.5;
   }
-
-  .glowing:nth-child(even) {
-    transform-origin: left;
+  5% {
+    opacity: 0.5;
+    transform: translateX(-80%) rotate(25deg);
   }
-
-  @keyframes colorChange {
-    0% {
-      filter: hue-rotate(0deg);
-      transform: rotate(0deg);
-    }
-    100% {
-      filter: hue-rotate(360deg);
-      transform: rotate(360deg);
-    }
+  70% {
+    transform: translateX(80%) rotate(25deg);
+    opacity: 0.5;
   }
-
-  .glowing span {
-    --i: 1;
-    position: absolute;
-    top: calc(80px * var(--i));
-    left: calc(80px * var(--i));
-    bottom: calc(80px * var(--i));
-    right: calc(80px * var(--i));
+  80% {
+    transform: translateX(120%) rotate(25deg);
+    opacity: 0;
   }
-
-  .glowing span::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: -8px;
-    width: 15px;
-    height: 15px;
-    background: #f00;
-    border-radius: 50%;
-  }
-
-  .glowing span:nth-child(3n + 1)::before {
-    background: rgba(134, 255, 0, 1);
-    box-shadow:
-      0 0 20px rgba(134, 255, 0, 1),
-      0 0 40px rgba(134, 255, 0, 1),
-      0 0 60px rgba(134, 255, 0, 1),
-      0 0 80px rgba(134, 255, 0, 1),
-      0 0 0 8px rgba(134, 255, 0, 0.1);
-  }
-
-  .glowing span:nth-child(3n + 2)::before {
-    background: rgba(255, 214, 0, 1);
-    box-shadow:
-      0 0 20px rgba(255, 214, 0, 1),
-      0 0 40px rgba(255, 214, 0, 1),
-      0 0 60px rgba(255, 214, 0, 1),
-      0 0 80px rgba(255, 214, 0, 1),
-      0 0 0 8px rgba(255, 214, 0, 0.1);
-  }
-
-  .glowing span:nth-child(3n + 3)::before {
-    background: rgba(0, 226, 255, 1);
-    box-shadow:
-      0 0 20px rgba(0, 226, 255, 1),
-      0 0 40px rgba(0, 226, 255, 1),
-      0 0 60px rgba(0, 226, 255, 1),
-      0 0 80px rgba(0, 226, 255, 1),
-      0 0 0 8px rgba(0, 226, 255, 0.1);
-  }
-
-  .glowing span:nth-child(3n + 1) {
-    animation: animate 10s alternate infinite;
-  }
-
-  .glowing span:nth-child(3n + 2) {
-    animation: animate-reverse 3s alternate infinite;
-  }
-
-  .glowing span:nth-child(3n + 3) {
-    animation: animate 8s alternate infinite;
-  }
-
-  @keyframes animate {
-    0% {
-      transform: rotate(180deg);
-    }
-    50% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-
-  @keyframes animate-reverse {
-    0% {
-      transform: rotate(360deg);
-    }
-
-    50% {
-      transform: rotate(180deg);
-    }
-
-    100% {
-      transform: rotate(0deg);
-    }
+  100% {
+    transform: translateX(120%) rotate(25deg);
+    opacity: 0;
   }
 `;
 
-const StyledContent = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
+const ShiningButton = styled.div`
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  border-radius: 0.5rem;
+  z-index: 10;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0) 35%,
+      rgba(255, 255, 255, 0.5) 50%,
+      rgba(255, 255, 255, 0) 65%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: translateX(-120%) rotate(25deg);
+    z-index: 20;
+    pointer-events: none;
+    animation: ${shineEffect} 4s ease-out infinite;
+    transition: transform 0.2s ease-out;
+  }
 `;
 
 export const NotSupported = () => {
-  return (
-    <StyledNotSupported>
-      <StyledContent>
-        <UpgradeContent direction="column-reverse" maw="550" />
-        <Text c="dimmed" maw="400" my="lg" ta="center">
-          JSON Crack is unable to support data of this size. <br />
-          Try the new editor for better performance.
-        </Text>
-        <Link
-          rel="noopener"
-          href="https://todiagram.com/editor?utm_source=jsoncrack&utm_medium=data_limit"
-          target="_blank"
-          passHref
-        >
-          <Button size="lg" color="teal" radius="xl">
-            Upgrade now
-          </Button>
-        </Link>
-      </StyledContent>
+  const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
+  const setVisible = useModal(state => state.setVisible);
 
-      <div className="glowing">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-    </StyledNotSupported>
+  return (
+    <Overlay
+      backgroundOpacity={0.8}
+      color={darkmodeEnabled ? "gray" : "rgb(226, 240, 243)"}
+      blur="1.5"
+      center
+    >
+      <Stack maw="60%" align="center" justify="center" gap="sm">
+        <Image src="https://todiagram.com/logo.svg" alt="Unsupported" w={72} h={72} />
+        <Text fz="48" fw={600} c="bright">
+          Time to upgrade!
+        </Text>
+        <Text ta="center" size="lg" fw={500} c="gray" maw="600">
+          This diagram is too large and not supported at JSON Crack.
+          <br />
+          Try{" "}
+          <Anchor inherit c="teal" fw="500" onClick={() => setVisible("UpgradeModal", true)}>
+            ToDiagram
+          </Anchor>{" "}
+          for larger diagrams and more features.
+        </Text>
+        <ShiningButton style={{ marginTop: "16px", position: "relative" }}>
+          <Button
+            component="a"
+            href="https://todiagram.com/editor?utm_source=jsoncrack&utm_medium=data_limit"
+            rel="noopener"
+            size="lg"
+            w="200"
+            target="_blank"
+            color="teal"
+          >
+            Try now &rarr;
+          </Button>
+        </ShiningButton>
+      </Stack>
+    </Overlay>
   );
 };

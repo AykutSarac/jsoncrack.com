@@ -1,5 +1,5 @@
 import React from "react";
-import { LoadingOverlay, useComputedColorScheme } from "@mantine/core";
+import { Box, LoadingOverlay, useComputedColorScheme } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import styled from "styled-components";
 import debounce from "lodash.debounce";
@@ -168,12 +168,9 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
     setViewPort(viewPort!);
   }, 300);
 
-  if (aboveSupportedLimit) {
-    return <NotSupported />;
-  }
-
   return (
-    <>
+    <Box pos="relative" h="100%" w="100%">
+      {!aboveSupportedLimit && <NotSupported />}
       <LoadingOverlay visible={debouncedLoading} />
       {!isWidget && <OptionsMenu />}
       {!isWidget && <SecureInfo />}
@@ -197,6 +194,6 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
           <GraphCanvas isWidget={isWidget} />
         </Space>
       </StyledEditorWrapper>
-    </>
+    </Box>
   );
 };

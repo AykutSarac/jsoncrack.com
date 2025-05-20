@@ -137,7 +137,7 @@ const StyledFeatureItem = styled.div`
     --gradient-1: 0.1;
     --gradient-2: 0.15;
     --gradient-3: 0.15;
-    border-color: rgba(130, 174, 255, 0.567);
+    border-color: rgba(130, 255, 203, 0.567);
   }
 
   &:hover {
@@ -157,7 +157,7 @@ const FeatureCard = (props: {
   return (
     <StyledFeatureItem className={props.selected ? "selected" : ""} onClick={props.onClick}>
       <Flex gap="md" align="flex-start">
-        <ThemeIcon variant="light" color="grape" radius="xl" size="36">
+        <ThemeIcon variant="light" color="teal" radius="xl" size="36">
           {props.icon}
         </ThemeIcon>
         <Stack gap="4">
@@ -165,7 +165,7 @@ const FeatureCard = (props: {
             <Text fz="md" fw="600" c="bright">
               {props.title}
             </Text>
-            <ThemeIcon variant="transparent" color="grape">
+            <ThemeIcon variant="transparent" color="teal">
               {props.selected ? <LuCheck size={20} /> : null}
             </ThemeIcon>
           </Flex>
@@ -262,10 +262,8 @@ export const UpgradeModal = ({ opened, onClose }: ModalProps) => {
               target="_blank"
               radius="lg"
               size="lg"
-              c="black"
+              color="teal"
               autoContrast
-              variant="gradient"
-              gradient={{ from: "#FF75B7", to: "#FED761" }}
               leftSection={<FaPlay />}
               fullWidth
               fw="600"
