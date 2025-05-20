@@ -1,6 +1,7 @@
 import type { ViewPort } from "react-zoomable-ui/dist/ViewPort";
 import type { CanvasDirection } from "reaflow/dist/layout/elkLayout";
 import { create } from "zustand";
+import { SUPPORTED_LIMIT } from "../../../../../constants/graph";
 import useJson from "../../../../../store/useJson";
 import type { EdgeData, NodeData } from "../../../../../types/graph";
 import { parser } from "../lib/jsonParser";
@@ -21,6 +22,7 @@ export interface Graph {
   collapsedParents: string[];
   selectedNode: NodeData | null;
   path: string;
+  aboveSupportedLimit: boolean;
 }
 
 const initialStates: Graph = {
@@ -37,6 +39,7 @@ const initialStates: Graph = {
   collapsedParents: [],
   selectedNode: null,
   path: "",
+  aboveSupportedLimit: false,
 };
 
 interface GraphActions {
@@ -75,9 +78,24 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
     const { nodes, edges } = parser(data ?? useJson.getState().json);
 
     if (get().collapseAll) {
-      set({ nodes, edges, ...options });
+      if (nodes.length > SUPPORTED_LIMIT) {
+        return set({ aboveSupportedLimit: true, ...options, loading: false });
+      }
+
+      set({ nodes, edges, aboveSupportedLimit: false, ...options });
       get().collapseGraph();
     } else {
+      if (nodes.length > SUPPORTED_LIMIT) {
+        return set({
+          aboveSupportedLimit: true,
+          collapsedParents: [],
+          collapsedNodes: [],
+          collapsedEdges: [],
+          ...options,
+          loading: false,
+        });
+      }
+
       set({
         nodes,
         edges,
@@ -85,6 +103,7 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
         collapsedNodes: [],
         collapsedEdges: [],
         graphCollapsed: false,
+        aboveSupportedLimit: false,
         ...options,
       });
     }
