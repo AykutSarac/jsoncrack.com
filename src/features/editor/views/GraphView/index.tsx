@@ -170,7 +170,7 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
 
   return (
     <Box pos="relative" h="100%" w="100%">
-      {!aboveSupportedLimit && <NotSupported />}
+      {aboveSupportedLimit && <NotSupported />}
       <LoadingOverlay visible={debouncedLoading} />
       {!isWidget && <OptionsMenu />}
       {!isWidget && <SecureInfo />}
