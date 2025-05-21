@@ -10,6 +10,20 @@ const StyledRow = styled.span`
   vertical-align: middle;
 `;
 
+export function displayValue(val: any) {
+  if (typeof val === "string") {
+    // Remove wrapping quotes if present
+    const unquoted = val.replace(/^"(.*)"$/, "$1");
+    // If the unquoted value is a number, display as number (no quotes)
+    if (/^-?\d+(\.\d+)?$/.test(unquoted)) {
+      return unquoted;
+    }
+    // Otherwise, display as string with quotes
+    return `"${unquoted}"`;
+  }
+  return val;
+}
+
 const isURL = (word: string) => {
   const urlPattern =
     /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/gm;
@@ -47,7 +61,7 @@ export const TextRenderer = ({ children }: TextRendererProps) => {
       </StyledRow>
     );
   }
-  return <>{children}</>;
+  return <span>{displayValue(children)}</span>;
 };
 
 function isColorFormat(colorString: string) {

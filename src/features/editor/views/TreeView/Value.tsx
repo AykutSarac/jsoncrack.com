@@ -1,7 +1,8 @@
 import React from "react";
 import type { DefaultTheme } from "styled-components";
 import { useTheme } from "styled-components";
-import { TextRenderer } from "../GraphView/CustomNode/TextRenderer";
+import { displayValue } from '../GraphView/CustomNode/TextRenderer';
+
 
 type TextColorFn = {
   theme: DefaultTheme;
@@ -36,7 +37,7 @@ export const Value = (props: ValueProps) => {
         }),
       }}
     >
-      <TextRenderer>{JSON.stringify(value)}</TextRenderer>
+      {displayValue(value)}
     </span>
   );
 };
