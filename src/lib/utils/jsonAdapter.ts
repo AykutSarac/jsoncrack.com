@@ -1,16 +1,15 @@
 import type { ParseError } from "jsonc-parser";
 import { FileFormat } from "../../enums/file.enum";
 
-// ...existing code...
+// Removes unused capture groups from the regex replacement function
 function quoteLargeNumbers(input: string): string {
   // Matches numbers with 16+ digits after : or - (YAML key or array), not already in quotes
   // Also matches numbers in arrays and negative numbers
   return input.replace(
     /((:\s*|- )(-?\d{16,}))(?!\s*["\d])/g,
-    (match, p1, p2, p3) => p1.replace(p3, `"${p3}"`)
+    (_match, p1, _p2, p3) => p1.replace(p3, `"${p3}"`)
   );
 }
-// ...existing code...
 
 export const contentToJson = (value: string, format = FileFormat.JSON): Promise<object> => {
   return new Promise(async (resolve, reject) => {

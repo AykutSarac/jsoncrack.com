@@ -10,7 +10,7 @@ const StyledRow = styled.span`
   vertical-align: middle;
 `;
 
-export function displayValue(val: any) {
+function displayValue(val: any) {
   if (typeof val === "string") {
     // Remove wrapping quotes if present
     const unquoted = val.replace(/^"(.*)"$/, "$1");
