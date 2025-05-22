@@ -33,7 +33,7 @@
     "dayjs": "^1.11.13",
     "fast-xml-parser": "^5.2.1",
     "gofmt.js": "^0.0.2",
-    "html-to-image": "^1.11.13",
+    "html-to-image": "1.11.11",
     "jq-web": "^0.5.1",
     "js-cookie": "^3.0.5",
     "js-yaml": "^4.1.0",
