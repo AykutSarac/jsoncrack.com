@@ -1,22 +1,35 @@
 import type { ParseError } from "jsonc-parser";
 import { FileFormat } from "../../enums/file.enum";
 
+// Removes unused capture groups from the regex replacement function
+function quoteLargeNumbers(input: string): string {
+  // Matches numbers with 16+ digits after : or - (YAML key or array), not already in quotes
+  // Also matches numbers in arrays and negative numbers
+  return input.replace(
+    /((:\s*|- )(-?\d{16,}))(?!\s*["\d])/g,
+    (_match, p1, _p2, p3) => p1.replace(p3, `"${p3}"`)
+  );
+}
+
 export const contentToJson = (value: string, format = FileFormat.JSON): Promise<object> => {
   return new Promise(async (resolve, reject) => {
     try {
       if (!value) return resolve({});
 
+      // Preprocess value for all formats
+      const safeValue = quoteLargeNumbers(value);
+
       if (format === FileFormat.JSON) {
         const { parse } = await import("jsonc-parser");
         const errors: ParseError[] = [];
-        const result = parse(value, errors);
-        if (errors.length > 0) JSON.parse(value);
+        const result = parse(safeValue, errors);
+        if (errors.length > 0) JSON.parse(safeValue);
         return resolve(result);
       }
 
       if (format === FileFormat.YAML) {
         const { load } = await import("js-yaml");
-        return resolve(load(value) as object);
+        return resolve(load(safeValue) as object);
       }
 
       if (format === FileFormat.XML) {
@@ -29,12 +42,12 @@ export const contentToJson = (value: string, format = FileFormat.JSON): Promise<
           trimValues: true,
           parseTagValue: true,
         });
-        return resolve(parser.parse(value));
+        return resolve(parser.parse(safeValue));
       }
 
       if (format === FileFormat.CSV) {
         const { csv2json } = await import("json-2-csv");
-        const result = csv2json(value, {
+        const result = csv2json(safeValue, {
           trimFieldValues: true,
           trimHeaderFields: true,
           wrapBooleans: true,

@@ -3,6 +3,7 @@ import type { DefaultTheme } from "styled-components";
 import { useTheme } from "styled-components";
 import { TextRenderer } from "../GraphView/CustomNode/TextRenderer";
 
+
 type TextColorFn = {
   theme: DefaultTheme;
   $value?: string | unknown;
@@ -36,7 +37,7 @@ export const Value = (props: ValueProps) => {
         }),
       }}
     >
-      <TextRenderer>{JSON.stringify(value)}</TextRenderer>
+        <TextRenderer>{JSON.stringify(value)}</TextRenderer>
     </span>
   );
 };
