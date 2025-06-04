@@ -8,7 +8,7 @@ interface JsonActions {
 }
 
 const initialStates = {
-  json: "",
+  json: "{}",
   loading: true,
 };
 
