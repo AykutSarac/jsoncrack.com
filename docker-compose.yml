@@ -2,6 +2,8 @@ services:
   jsoncrack:
     image: jsoncrack
     container_name: jsoncrack
+    restart: on-failure
+    user: nginx
     build: 
       context: .
       dockerfile: Dockerfile

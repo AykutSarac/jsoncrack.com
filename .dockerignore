@@ -5,3 +5,9 @@ npm-debug.log
 README.md
 .next
 .git
+docker-compose.yml
+.github
+LICENSE.md
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+.gitignore
