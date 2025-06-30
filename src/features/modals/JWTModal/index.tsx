@@ -22,7 +22,7 @@ export const JWTModal = ({ opened, onClose }: ModalProps) => {
   return (
     <Modal title="Decode JSON Web Token" opened={opened} onClose={onClose} centered>
       <Textarea
-        placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6Ikhlcm93YW5kIiwidXJsIjoiaHR0cHM6Ly9oZXJvd2FuZC5jb20iLCJpYXQiOjE1MTYyMzkwMjJ9.Tmm3Miq6KWCF_QRn3iERhhXThJzv4LQPKYwBhYUld88"
+        placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
         value={token}
         onChange={e => setToken(e.target.value)}
         autosize
