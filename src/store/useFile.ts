@@ -98,15 +98,17 @@ const isURL = (value: string) => {
   );
 };
 
-const debouncedUpdateJson = debounce((value: unknown) => {
-  useGraph.getState().setLoading(true);
-  useJson.getState().setJson(JSON.stringify(value, null, 2));
+const debouncedUpdateJson = debounce((value: unknown, hasError: boolean) => {
+  if (!hasError) {
+    useGraph.getState().setLoading(true);
+    useJson.getState().setJson(JSON.stringify(value, null, 2));
+  }
 }, 800);
 
 const useFile = create<FileStates & JsonActions>()((set, get) => ({
   ...initialStates,
   clear: () => {
-    set({ contents: "" });
+    set({ contents: "", error: null, hasChanges: false });
     useJson.getState().clear();
   },
   setJsonSchema: jsonSchema => set({ jsonSchema }),
@@ -136,12 +138,14 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
     try {
       set({
         ...(contents && { contents }),
-        error: null,
+        error: null, // Clear any previous errors when new content is set
         hasChanges,
         format: format ?? get().format,
       });
 
       const isFetchURL = window.location.href.includes("?");
+
+      // Try to parse the JSON to validate it
       const json = await contentToJson(get().contents, get().format);
 
       if (!useConfig.getState().liveTransformEnabled && skipUpdate) return;
@@ -152,10 +156,24 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
         set({ hasChanges: true });
       }
 
-      debouncedUpdateJson(json);
+      // Only update JSON if there's no error
+      debouncedUpdateJson(json, false);
     } catch (error: any) {
-      if (error?.mark?.snippet) return set({ error: error.mark.snippet });
-      if (error?.message) set({ error: error.message });
+      // Handle validation errors properly
+      let errorMessage = "Invalid format";
+
+      if (error?.mark?.snippet) {
+        errorMessage = error.mark.snippet;
+      } else if (error?.message) {
+        errorMessage = error.message;
+      } else if (typeof error === "string") {
+        errorMessage = error;
+      }
+
+      set({ error: errorMessage });
+
+      // Don't update JSON when there's an error, and stop loading states
+      debouncedUpdateJson({}, true);
       useJson.setState({ loading: false });
       useGraph.setState({ loading: false });
     }

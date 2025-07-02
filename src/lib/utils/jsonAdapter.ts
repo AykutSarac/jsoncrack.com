@@ -10,7 +10,18 @@ export const contentToJson = (value: string, format = FileFormat.JSON): Promise<
         const { parse } = await import("jsonc-parser");
         const errors: ParseError[] = [];
         const result = parse(value, errors);
-        if (errors.length > 0) JSON.parse(value);
+
+        // If there are parsing errors from jsonc-parser, fall back to strict JSON.parse
+        if (errors.length > 0) {
+          try {
+            const strictResult = JSON.parse(value);
+            return resolve(strictResult);
+          } catch (jsonError) {
+            // If both parsers fail, reject with the JSON error which is more standard
+            return reject(jsonError);
+          }
+        }
+
         return resolve(result);
       }
 

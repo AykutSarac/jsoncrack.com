@@ -72,6 +72,28 @@ const TextEditor = () => {
     });
   }, []);
 
+  const handleValidate = useCallback(
+    (errors: any[]) => {
+      // Let Monaco handle syntax highlighting errors, but don't interfere with our validation
+      // Monaco errors are mainly for syntax highlighting and basic JSON structure
+      const monacoError = errors[0]?.message;
+      if (monacoError && !useFile.getState().error) {
+        // Only set Monaco errors if we don't have custom validation errors
+        setError(monacoError);
+      }
+    },
+    [setError]
+  );
+
+  const handleChange = useCallback(
+    (newContents: string | undefined) => {
+      if (newContents !== undefined) {
+        setContents({ contents: newContents, skipUpdate: true });
+      }
+    },
+    [setContents]
+  );
+
   return (
     <StyledEditorWrapper>
       <StyledWrapper>
@@ -82,8 +104,8 @@ const TextEditor = () => {
           value={contents}
           options={editorOptions}
           onMount={handleMount}
-          onValidate={errors => setError(errors[0]?.message)}
-          onChange={contents => setContents({ contents, skipUpdate: true })}
+          onValidate={handleValidate}
+          onChange={handleChange}
           loading={<LoadingOverlay visible />}
         />
       </StyledWrapper>
