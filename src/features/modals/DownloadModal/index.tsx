@@ -83,7 +83,7 @@ export const DownloadModal = ({ opened, onClose }: ModalProps) => {
 
       if (!blob) return;
 
-      navigator.clipboard?.write([
+      await navigator.clipboard?.write([
         new ClipboardItem({
           [blob.type]: blob,
         }),
