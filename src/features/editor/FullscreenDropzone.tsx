@@ -21,10 +21,15 @@ export const FullscreenDropzone = () => {
       ]}
       onReject={files => toast.error(`Unable to load file ${files[0].file.name}`)}
       onDrop={async e => {
-        const fileContent = await e[0].text();
-        let fileExtension = e[0].name.split(".").pop() as FileFormat | undefined;
-        if (!fileExtension) fileExtension = FileFormat.JSON;
-        setContents({ contents: fileContent, format: fileExtension, hasChanges: false });
+        try {
+          const fileContent = await e[0].text();
+          let fileExtension = e[0].name.split(".").pop() as FileFormat | undefined;
+          if (!fileExtension) fileExtension = FileFormat.JSON;
+          setContents({ contents: fileContent, format: fileExtension, hasChanges: false });
+        } catch (err) {
+          toast.error("An error occurred while reading the file.");
+          console.error(err);
+        }
       }}
     >
       <Group
