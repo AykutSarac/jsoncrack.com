@@ -82,7 +82,7 @@ const TextEditor = () => {
           value={contents}
           options={editorOptions}
           onMount={handleMount}
-          onValidate={errors => setError(errors[0]?.message)}
+          onValidate={errors => setError(errors[0]?.message || "")}
           onChange={contents => setContents({ contents, skipUpdate: true })}
           loading={<LoadingOverlay visible />}
         />
