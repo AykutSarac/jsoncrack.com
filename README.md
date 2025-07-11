@@ -127,6 +127,20 @@ docker compose up
 # Go to http://localhost:8888
 ```
 
+### Prebuilt Docker Image
+
+A prebuilt Docker image of JSON Crack is available on GitHub Container Registry. You can pull and run the image using the following commands:
+
+```console
+# Pull the prebuilt Docker image
+docker pull ghcr.io/aykutsarac/jsoncrack:latest
+
+# Run the Docker container
+docker run -p 8888:8080 ghcr.io/aykutsarac/jsoncrack:latest
+
+# Go to http://localhost:8888
+```
+
 <!-- LICENSE -->
 
 ## License
