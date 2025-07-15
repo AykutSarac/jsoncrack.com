@@ -18,7 +18,9 @@
     "start": "next start",
     "lint": "tsc --project tsconfig.json && eslint src && prettier --check src",
     "lint:fix": "eslint --fix src & prettier --write src",
-    "analyze": "ANALYZE=true npm run build"
+    "analyze": "ANALYZE=true npm run build",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "dependencies": {
     "@mantine/code-highlight": "^7.17.7",
@@ -37,9 +39,9 @@
     "jq-web": "^0.5.1",
     "js-cookie": "^3.0.5",
     "js-yaml": "^4.1.0",
+    "json_typegen_wasm": "^0.7.0",
     "json-2-csv": "^5.5.9",
     "json-schema-faker": "^0.5.9",
-    "json_typegen_wasm": "^0.7.0",
     "jsonc-parser": "^3.3.1",
     "jsonpath-plus": "^10.3.0",
     "jsonwebtoken": "^9.0.2",
@@ -74,6 +76,7 @@
     "@types/react": "18.2.51",
     "@types/react-dom": "^18.3.7",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "cypress": "^14.5.1",
     "eslint": "8.56.0",
     "eslint-config-next": "14.2.28",
     "eslint-config-prettier": "^9.1.0",
