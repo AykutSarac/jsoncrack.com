@@ -25,6 +25,7 @@ const CustomNodeWrapper = (nodeProps: NodeProps<NodeData["data"]>) => {
   const setSelectedNode = useGraph(state => state.setSelectedNode);
   const setVisible = useModal(state => state.setVisible);
   const colorScheme = useComputedColorScheme();
+  const nodeContent = nodeProps.properties.text;
 
   const handleNodeClick = React.useCallback(
     (_: React.MouseEvent<SVGGElement, MouseEvent>, data: NodeData) => {
