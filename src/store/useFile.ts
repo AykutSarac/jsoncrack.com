@@ -11,35 +11,38 @@ import useJson from "./useJson";
 
 const defaultJson = JSON.stringify(
   {
-    fruits: [
+    orderId: "A12345",
+    customer: {
+      name: "Jane Doe",
+      email: "jane.doe@example.com",
+      address: {
+        street: "123 Main St",
+        city: "New York",
+        state: "NY",
+        zipCode: "10001",
+      },
+      isMember: true,
+    },
+    products: [
       {
-        name: "Apple",
-        color: "Red",
-        nutrients: {
-          calories: 52,
-          fiber: "2.4g",
-          vitaminC: "4.6mg",
-        },
+        productId: "P001",
+        name: "Wireless Mouse",
+        quantity: 2,
+        price: 25.5,
+        color: "#3498db",
       },
       {
-        name: "Banana",
-        color: "Yellow",
-        nutrients: {
-          calories: 89,
-          fiber: "2.6g",
-          potassium: "358mg",
-        },
-      },
-      {
-        name: "Orange",
-        color: "Orange",
-        nutrients: {
-          calories: 47,
-          fiber: "2.4g",
-          vitaminC: "53.2mg",
-        },
+        productId: "P002",
+        name: "Keyboard",
+        quantity: 1,
+        price: 45,
+        color: "#2ecc71",
       },
     ],
+    orderDate: "2025-01-02T10:15:30Z",
+    status: "Processing",
+    isPaid: false,
+    totalAmount: 96,
   },
   null,
   2
@@ -101,7 +104,7 @@ const isURL = (value: string) => {
 const debouncedUpdateJson = debounce((value: unknown) => {
   useGraph.getState().setLoading(true);
   useJson.getState().setJson(JSON.stringify(value, null, 2));
-}, 800);
+}, 400);
 
 const useFile = create<FileStates & JsonActions>()((set, get) => ({
   ...initialStates,

@@ -127,6 +127,10 @@ docker compose up
 # Go to http://localhost:8888
 ```
 
+## Configuration
+
+The supported node limit can be changed by editing the `NEXT_PUBLIC_NODE_LIMIT` value in the `.env` file at the project root.
+
 <!-- LICENSE -->
 
 ## License

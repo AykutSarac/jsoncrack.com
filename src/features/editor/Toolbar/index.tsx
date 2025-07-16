@@ -84,7 +84,7 @@ export const Toolbar = () => {
           fw="600"
           leftSection={<FaFireFlameCurved />}
         >
-          NEW! JSON Crack v2.0
+          JSON Crack v2.0 | ToDiagram
         </Button>
         <Link href="https://github.com/AykutSarac/jsoncrack.com" rel="noopener" target="_blank">
           <StyledToolElement title="GitHub">

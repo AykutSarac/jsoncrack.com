@@ -7,13 +7,16 @@ import useGraph from "../stores/useGraph";
 const CustomEdgeWrapper = (props: EdgeProps) => {
   const colorScheme = useComputedColorScheme();
   const viewPort = useGraph(state => state.viewPort);
-  const targetNodeId = props.id.split("-")[props.id.split("-").length - 1];
+  const edges = useGraph(state => state.edges);
   const [hovered, setHovered] = React.useState(false);
 
   const handeClick = () => {
-    const targetNode = document.querySelector(`[data-id="node-${targetNodeId}"]`) as HTMLElement;
-    if (targetNode && targetNode.parentElement) {
-      viewPort?.camera.centerFitElementIntoView(targetNode.parentElement, {
+    const targetNodeId = edges.find(edge => edge.id === props.properties?.id)?.to;
+    const targetNodeDom = document.querySelector(
+      `[data-id$="node-${targetNodeId}"]`
+    ) as HTMLElement;
+    if (targetNodeDom && targetNodeDom.parentElement) {
+      viewPort?.camera.centerFitElementIntoView(targetNodeDom.parentElement, {
         elementExtraMarginForZoom: 150,
       });
     }

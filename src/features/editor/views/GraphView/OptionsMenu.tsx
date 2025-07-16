@@ -6,8 +6,6 @@ import { event as gaEvent } from "nextjs-google-analytics";
 import { BsCheck2 } from "react-icons/bs";
 import { LuChevronRight, LuImageDown, LuMenu } from "react-icons/lu";
 import { TiFlowMerge } from "react-icons/ti";
-import { VscExpandAll, VscCollapseAll } from "react-icons/vsc";
-import useToggleHide from "../../../../hooks/useToggleHide";
 import useConfig from "../../../../store/useConfig";
 import { useModal } from "../../../../store/useModal";
 import type { LayoutDirection } from "../../../../types/graph";
@@ -33,21 +31,15 @@ const rotateLayout = (direction: LayoutDirection) => {
 
 export const OptionsMenu = () => {
   const toggleGestures = useConfig(state => state.toggleGestures);
-  const toggleChildrenCount = useConfig(state => state.toggleChildrenCount);
   const toggleRulers = useConfig(state => state.toggleRulers);
   const toggleCollapseButton = useConfig(state => state.toggleCollapseButton);
   const toggleImagePreview = useConfig(state => state.toggleImagePreview);
   const gesturesEnabled = useConfig(state => state.gesturesEnabled);
-  const childrenCountVisible = useConfig(state => state.childrenCountVisible);
   const rulersEnabled = useConfig(state => state.rulersEnabled);
   const collapseButtonVisible = useConfig(state => state.collapseButtonVisible);
   const imagePreviewEnabled = useConfig(state => state.imagePreviewEnabled);
-  const { validateHiddenNodes } = useToggleHide();
   const setDirection = useGraph(state => state.setDirection);
   const direction = useGraph(state => state.direction);
-  const expandGraph = useGraph(state => state.expandGraph);
-  const collapseGraph = useGraph(state => state.collapseGraph);
-  const graphCollapsed = useGraph(state => state.graphCollapsed);
   const setVisible = useModal(state => state.setVisible);
   const [coreKey, setCoreKey] = React.useState("CTRL");
 
@@ -56,17 +48,9 @@ export const OptionsMenu = () => {
     if (setDirection) setDirection(nextDirection);
   };
 
-  const toggleExpandCollapseGraph = () => {
-    if (graphCollapsed) expandGraph();
-    else collapseGraph();
-
-    validateHiddenNodes();
-  };
-
   useHotkeys(
     [
       ["mod+shift+d", toggleDirection],
-      ["mod+shift+c", toggleExpandCollapseGraph],
       [
         "mod+f",
         () => {
@@ -129,21 +113,6 @@ export const OptionsMenu = () => {
           >
             Rotate Layout
           </Menu.Item>
-          <Menu.Item
-            fz={12}
-            onClick={() => {
-              toggleExpandCollapseGraph();
-              gaEvent("expand_collapse_graph", { label: graphCollapsed ? "expand" : "collapse" });
-            }}
-            leftSection={graphCollapsed ? <VscExpandAll /> : <VscCollapseAll />}
-            rightSection={
-              <Text ml="md" fz={10} c="dimmed">
-                {coreKey} Shift C
-              </Text>
-            }
-          >
-            {graphCollapsed ? "Expand" : "Collapse"} Graph
-          </Menu.Item>
           <Menu.Divider />
           <Menu position="right" trigger="hover" offset={0}>
             <Menu.Target>
@@ -177,15 +146,6 @@ export const OptionsMenu = () => {
                 }}
               >
                 <Text size="xs">Trackpad Gestures</Text>
-              </Menu.Item>
-              <Menu.Item
-                leftSection={<BsCheck2 opacity={childrenCountVisible ? 100 : 0} />}
-                onClick={() => {
-                  toggleChildrenCount(!childrenCountVisible);
-                  gaEvent("toggle_children_count", { label: childrenCountVisible ? "on" : "off" });
-                }}
-              >
-                <Text size="xs">Item Count</Text>
               </Menu.Item>
               <Menu.Item
                 leftSection={<BsCheck2 opacity={imagePreviewEnabled ? 100 : 0} />}
