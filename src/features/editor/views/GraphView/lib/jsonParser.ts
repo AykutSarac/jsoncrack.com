@@ -198,7 +198,5 @@ export const parser = (json: string): Graph => {
   }
 
   traverse(jsonTree);
-
-  console.log({ nodes, edges });
   return { nodes, edges };
 };
