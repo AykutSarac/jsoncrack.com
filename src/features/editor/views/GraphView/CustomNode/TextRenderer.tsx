@@ -1,3 +1,4 @@
+import DOMPurify from "dompurify";
 import React from "react";
 import { ColorSwatch } from "@mantine/core";
 import styled from "styled-components";
@@ -27,7 +28,7 @@ const Linkify = (text: string) => {
   const words = text.split(" ");
   const formatedWords = words.map(w => addMarkup(w));
   const html = formatedWords.join(" ");
-  return <span dangerouslySetInnerHTML={{ __html: html }} />;
+  return <span dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(text) }} />;
 };
 
 interface TextRendererProps {
