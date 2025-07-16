@@ -1,5 +1,5 @@
 import React from "react";
-import { ActionIcon, Flex } from "@mantine/core";
+import { ActionIcon, Flex, Tooltip, Text } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
 import { event as gaEvent } from "nextjs-google-analytics";
 import { LuFocus, LuMaximize, LuMinus, LuPlus } from "react-icons/lu";
@@ -35,28 +35,52 @@ export const ZoomControl = () => {
       }}
     >
       <ActionIcon.Group borderWidth={0}>
-        <ActionIcon
-          size="lg"
-          variant="light"
-          color="gray"
-          onClick={() => {
-            focusFirstNode();
-            gaEvent("focus_first_node");
-          }}
+        <Tooltip
+          label={
+            <Flex fz="xs" gap="md">
+              <Text fz="xs">Center first item</Text>
+              <Text fz="xs" c="dimmed">
+                ⇧ 2
+              </Text>
+            </Flex>
+          }
+          withArrow
         >
-          <LuFocus />
-        </ActionIcon>
-        <ActionIcon
-          size="lg"
-          variant="light"
-          color="gray"
-          onClick={() => {
-            centerView();
-            gaEvent("center_view");
-          }}
+          <ActionIcon
+            size="lg"
+            variant="light"
+            color="gray"
+            onClick={() => {
+              focusFirstNode();
+              gaEvent("focus_first_node");
+            }}
+          >
+            <LuFocus />
+          </ActionIcon>
+        </Tooltip>
+        <Tooltip
+          label={
+            <Flex fz="xs" gap="md">
+              <Text fz="xs">Fit to center</Text>
+              <Text fz="xs" c="dimmed">
+                ⇧ 1
+              </Text>
+            </Flex>
+          }
+          withArrow
         >
-          <LuMaximize />
-        </ActionIcon>
+          <ActionIcon
+            size="lg"
+            variant="light"
+            color="gray"
+            onClick={() => {
+              centerView();
+              gaEvent("center_view");
+            }}
+          >
+            <LuMaximize />
+          </ActionIcon>
+        </Tooltip>
         <ActionIcon
           size="lg"
           variant="light"

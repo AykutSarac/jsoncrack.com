@@ -32,11 +32,9 @@ const rotateLayout = (direction: LayoutDirection) => {
 export const OptionsMenu = () => {
   const toggleGestures = useConfig(state => state.toggleGestures);
   const toggleRulers = useConfig(state => state.toggleRulers);
-  const toggleCollapseButton = useConfig(state => state.toggleCollapseButton);
   const toggleImagePreview = useConfig(state => state.toggleImagePreview);
   const gesturesEnabled = useConfig(state => state.gesturesEnabled);
   const rulersEnabled = useConfig(state => state.rulersEnabled);
-  const collapseButtonVisible = useConfig(state => state.collapseButtonVisible);
   const imagePreviewEnabled = useConfig(state => state.imagePreviewEnabled);
   const setDirection = useGraph(state => state.setDirection);
   const direction = useGraph(state => state.direction);
@@ -155,17 +153,6 @@ export const OptionsMenu = () => {
                 }}
               >
                 <Text size="xs">Image Link Preview</Text>
-              </Menu.Item>
-              <Menu.Item
-                leftSection={<BsCheck2 opacity={collapseButtonVisible ? 100 : 0} />}
-                onClick={() => {
-                  toggleCollapseButton(!collapseButtonVisible);
-                  gaEvent("toggle_expand_collapse", {
-                    label: collapseButtonVisible ? "on" : "off",
-                  });
-                }}
-              >
-                <Text size="xs">Show Expand/Collapse</Text>
               </Menu.Item>
             </Menu.Dropdown>
           </Menu>

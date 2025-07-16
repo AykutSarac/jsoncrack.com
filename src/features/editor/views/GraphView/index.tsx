@@ -19,7 +19,7 @@ import useGraph from "./stores/useGraph";
 const StyledEditorWrapper = styled.div<{ $widget: boolean; $showRulers: boolean }>`
   position: absolute;
   width: 100%;
-  height: ${({ $widget }) => ($widget ? "100vh" : "calc(100vh - 67px)")};
+  height: ${({ $widget }) => ($widget ? "100vh" : "calc(100vh - 40px)")};
 
   --bg-color: ${({ theme }) => theme.GRID_BG_COLOR};
   --line-color-1: ${({ theme }) => theme.GRID_COLOR_PRIMARY};
@@ -56,6 +56,10 @@ const StyledEditorWrapper = styled.div<{ $widget: boolean; $showRulers: boolean 
   .dragging,
   .dragging button {
     pointer-events: none;
+  }
+
+  text {
+    fill: ${({ theme }) => theme.INTERACTIVE_NORMAL} !important;
   }
 
   rect {

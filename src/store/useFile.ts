@@ -2,6 +2,7 @@ import debounce from "lodash.debounce";
 import { event as gaEvent } from "nextjs-google-analytics";
 import { toast } from "react-hot-toast";
 import { create } from "zustand";
+import exampleJson from "../data/example.json";
 import { FileFormat } from "../enums/file.enum";
 import useGraph from "../features/editor/views/GraphView/stores/useGraph";
 import { isIframe } from "../lib/utils/helpers";
@@ -9,44 +10,7 @@ import { contentToJson, jsonToContent } from "../lib/utils/jsonAdapter";
 import useConfig from "./useConfig";
 import useJson from "./useJson";
 
-const defaultJson = JSON.stringify(
-  {
-    orderId: "A12345",
-    customer: {
-      name: "Jane Doe",
-      email: "jane.doe@example.com",
-      address: {
-        street: "123 Main St",
-        city: "New York",
-        state: "NY",
-        zipCode: "10001",
-      },
-      isMember: true,
-    },
-    products: [
-      {
-        productId: "P001",
-        name: "Wireless Mouse",
-        quantity: 2,
-        price: 25.5,
-        color: "#3498db",
-      },
-      {
-        productId: "P002",
-        name: "Keyboard",
-        quantity: 1,
-        price: 45,
-        color: "#2ecc71",
-      },
-    ],
-    orderDate: "2025-01-02T10:15:30Z",
-    status: "Processing",
-    isPaid: false,
-    totalAmount: 96,
-  },
-  null,
-  2
-);
+const defaultJson = JSON.stringify(exampleJson, null, 2);
 
 type SetContents = {
   contents?: string;

@@ -1,0 +1,43 @@
+{
+  "fruits": [
+    {
+      "name": "Apple",
+      "color": "#FF0000",
+      "details": {
+        "type": "Pome",
+        "season": "Fall"
+      },
+      "nutrients": {
+        "calories": 52,
+        "fiber": "2.4g",
+        "vitaminC": "4.6mg"
+      }
+    },
+    {
+      "name": "Banana",
+      "color": "#FFFF00",
+      "details": {
+        "type": "Berry",
+        "season": "Year-round"
+      },
+      "nutrients": {
+        "calories": 89,
+        "fiber": "2.6g",
+        "potassium": "358mg"
+      }
+    },
+    {
+      "name": "Orange",
+      "color": "#FFA500",
+      "details": {
+        "type": "Citrus",
+        "season": "Winter"
+      },
+      "nutrients": {
+        "calories": 47,
+        "fiber": "2.4g",
+        "vitaminC": "53.2mg"
+      }
+    }
+  ]
+}

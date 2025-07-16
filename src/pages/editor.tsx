@@ -31,7 +31,7 @@ const queryClient = new QueryClient({
 });
 
 export const StyledPageWrapper = styled.div`
-  height: calc(100vh - 27px);
+  height: 100vh;
   width: 100%;
 
   @media only screen and (max-width: 320px) {
@@ -49,11 +49,18 @@ export const StyledEditor = styled(Allotment)`
   position: relative !important;
   display: flex;
   background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
-  height: calc(100vh - 67px);
+  height: calc(100vh - 40px);
 
   @media only screen and (max-width: 320px) {
     height: 100vh;
   }
+`;
+
+const StyledTextEditor = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
 `;
 
 const TextEditor = dynamic(() => import("../features/editor/TextEditor"), {
@@ -102,7 +109,10 @@ const EditorPage = () => {
                     maxSize={800}
                     visible={!fullscreen}
                   >
-                    <TextEditor />
+                    <StyledTextEditor>
+                      <TextEditor />
+                      <BottomBar />
+                    </StyledTextEditor>
                   </Allotment.Pane>
                   <Allotment.Pane minSize={0}>
                     <LiveEditor />
@@ -111,7 +121,6 @@ const EditorPage = () => {
                 <FullscreenDropzone />
               </StyledEditorWrapper>
             </StyledPageWrapper>
-            <BottomBar />
           </StyledEditorWrapper>
         </QueryClientProvider>
       </ThemeProvider>

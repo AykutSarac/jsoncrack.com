@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) JSON Crack
+ * This source code is licensed under the Apache 2.0 license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 import { parseTree, getNodePath, type Node } from "jsonc-parser";
 import type { EdgeData, NodeData, NodeRow } from "../../../../../types/graph";
 import { calculateNodeSize } from "./utils/calculateNodeSize";

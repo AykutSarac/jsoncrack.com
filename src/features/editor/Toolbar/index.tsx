@@ -1,13 +1,13 @@
 import React from "react";
 import Link from "next/link";
-import { Flex, Group, Select, Button } from "@mantine/core";
+import { Flex, Group, Button } from "@mantine/core";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
-import { FaFireFlameCurved, FaGithub } from "react-icons/fa6";
-import { type FileFormat, formats } from "../../../enums/file.enum";
+import { FaCrown, FaGithub } from "react-icons/fa6";
+import { LuLink } from "react-icons/lu";
 import { JSONCrackLogo } from "../../../layout/JsonCrackLogo";
-import useFile from "../../../store/useFile";
+import { useModal } from "../../../store/useModal";
 import { FileMenu } from "./FileMenu";
 import { ToolsMenu } from "./ToolsMenu";
 import { ViewMenu } from "./ViewMenu";
@@ -43,8 +43,7 @@ function fullscreenBrowser() {
 }
 
 export const Toolbar = () => {
-  const setFormat = useFile(state => state.setFormat);
-  const format = useFile(state => state.format);
+  const setVisible = useModal(state => state.setVisible);
 
   return (
     <StyledTools>
@@ -54,37 +53,35 @@ export const Toolbar = () => {
             <JSONCrackLogo fontSize="0.8rem" hideLogo />
           </Flex>
         </StyledToolElement>
-        <Select
-          defaultValue="json"
-          size="xs"
-          value={format}
-          onChange={e => setFormat(e as FileFormat)}
-          miw={80}
-          w={120}
-          data={formats}
-          allowDeselect={false}
-        />
-
         <FileMenu />
         <ViewMenu />
         <ToolsMenu />
-      </Group>
-      <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
         <Button
           component={Link}
           href="https://todiagram.com/editor?utm_source=jsoncrack&utm_medium=toolbar"
           target="_blank"
           rel="noopener"
           autoContrast
-          color="green"
-          variant="outline"
-          c="bright"
-          size="compact-sm"
+          color="yellow"
+          variant="light"
+          size="compact-xs"
           fz="12"
           fw="600"
-          leftSection={<FaFireFlameCurved />}
+          leftSection={<FaCrown />}
         >
-          JSON Crack v2.0 | ToDiagram
+          Try Pro
+        </Button>
+      </Group>
+      <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
+        <Button
+          color="gray"
+          fz="12"
+          leftSection={<LuLink />}
+          size="compact-sm"
+          variant="default"
+          onClick={() => setVisible("UpgradeModal", true)}
+        >
+          Share
         </Button>
         <Link href="https://github.com/AykutSarac/jsoncrack.com" rel="noopener" target="_blank">
           <StyledToolElement title="GitHub">
