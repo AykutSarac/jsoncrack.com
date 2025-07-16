@@ -2,6 +2,7 @@ import debounce from "lodash.debounce";
 import { event as gaEvent } from "nextjs-google-analytics";
 import { toast } from "react-hot-toast";
 import { create } from "zustand";
+import exampleJson from "../data/example.json";
 import { FileFormat } from "../enums/file.enum";
 import useGraph from "../features/editor/views/GraphView/stores/useGraph";
 import { isIframe } from "../lib/utils/helpers";
@@ -9,41 +10,7 @@ import { contentToJson, jsonToContent } from "../lib/utils/jsonAdapter";
 import useConfig from "./useConfig";
 import useJson from "./useJson";
 
-const defaultJson = JSON.stringify(
-  {
-    fruits: [
-      {
-        name: "Apple",
-        color: "Red",
-        nutrients: {
-          calories: 52,
-          fiber: "2.4g",
-          vitaminC: "4.6mg",
-        },
-      },
-      {
-        name: "Banana",
-        color: "Yellow",
-        nutrients: {
-          calories: 89,
-          fiber: "2.6g",
-          potassium: "358mg",
-        },
-      },
-      {
-        name: "Orange",
-        color: "Orange",
-        nutrients: {
-          calories: 47,
-          fiber: "2.4g",
-          vitaminC: "53.2mg",
-        },
-      },
-    ],
-  },
-  null,
-  2
-);
+const defaultJson = JSON.stringify(exampleJson, null, 2);
 
 type SetContents = {
   contents?: string;
@@ -101,7 +68,7 @@ const isURL = (value: string) => {
 const debouncedUpdateJson = debounce((value: unknown) => {
   useGraph.getState().setLoading(true);
   useJson.getState().setJson(JSON.stringify(value, null, 2));
-}, 800);
+}, 400);
 
 const useFile = create<FileStates & JsonActions>()((set, get) => ({
   ...initialStates,

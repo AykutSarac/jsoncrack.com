@@ -7,7 +7,6 @@ import { Space } from "react-zoomable-ui";
 import { Canvas } from "reaflow";
 import type { ElkRoot } from "reaflow/dist/layout/useLayout";
 import { useLongPress } from "use-long-press";
-import useToggleHide from "../../../../hooks/useToggleHide";
 import useConfig from "../../../../store/useConfig";
 import { CustomEdge } from "./CustomEdge";
 import { CustomNode } from "./CustomNode";
@@ -20,7 +19,7 @@ import useGraph from "./stores/useGraph";
 const StyledEditorWrapper = styled.div<{ $widget: boolean; $showRulers: boolean }>`
   position: absolute;
   width: 100%;
-  height: ${({ $widget }) => ($widget ? "100vh" : "calc(100vh - 67px)")};
+  height: ${({ $widget }) => ($widget ? "100vh" : "calc(100vh - 40px)")};
 
   --bg-color: ${({ theme }) => theme.GRID_BG_COLOR};
   --line-color-1: ${({ theme }) => theme.GRID_COLOR_PRIMARY};
@@ -59,6 +58,10 @@ const StyledEditorWrapper = styled.div<{ $widget: boolean; $showRulers: boolean 
     pointer-events: none;
   }
 
+  text {
+    fill: ${({ theme }) => theme.INTERACTIVE_NORMAL} !important;
+  }
+
   rect {
     fill: ${({ theme }) => theme.BACKGROUND_NODE};
   }
@@ -78,13 +81,12 @@ interface GraphProps {
 }
 
 const GraphCanvas = ({ isWidget }: GraphProps) => {
-  const { validateHiddenNodes } = useToggleHide();
   const setLoading = useGraph(state => state.setLoading);
   const centerView = useGraph(state => state.centerView);
   const direction = useGraph(state => state.direction);
   const nodes = useGraph(state => state.nodes);
-  const colorScheme = useComputedColorScheme();
   const edges = useGraph(state => state.edges);
+  const colorScheme = useComputedColorScheme();
   const [paneWidth, setPaneWidth] = React.useState(2000);
   const [paneHeight, setPaneHeight] = React.useState(2000);
 
@@ -98,7 +100,6 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
         setPaneHeight((layout.height as number) + 50);
 
         setTimeout(() => {
-          validateHiddenNodes();
           window.requestAnimationFrame(() => {
             if (changeRatio > 70 || isWidget) centerView();
             setLoading(false);
@@ -106,7 +107,7 @@ const GraphCanvas = ({ isWidget }: GraphProps) => {
         });
       }
     },
-    [isWidget, paneHeight, paneWidth, centerView, setLoading, validateHiddenNodes]
+    [isWidget, paneHeight, paneWidth, centerView, setLoading]
   );
 
   return (

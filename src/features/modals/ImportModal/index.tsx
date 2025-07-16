@@ -69,7 +69,6 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
           <Dropzone
             onDrop={files => setFile(files[0])}
             onReject={files => toast.error(`Unable to load file ${files[0].file.name}`)}
-            maxSize={500 * 1024}
             maxFiles={1}
             p="md"
             accept={[
@@ -83,9 +82,6 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
             <Stack justify="center" align="center" gap="sm" mih={220}>
               <AiOutlineUpload size={48} />
               <Text fw="bold">Drop here or click to upload files</Text>
-              <Text c="dimmed" fz="xs">
-                (Max 500 KB)
-              </Text>
               <Text c="dimmed" fz="sm">
                 {file?.name ?? "None"}
               </Text>

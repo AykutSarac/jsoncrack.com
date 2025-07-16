@@ -14,7 +14,7 @@ const isURL = (word: string) => {
   const urlPattern =
     /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/gm;
 
-  return word.match(urlPattern);
+  return word?.match(urlPattern);
 };
 
 const Linkify = (text: string) => {
@@ -30,24 +30,19 @@ const Linkify = (text: string) => {
   return <span dangerouslySetInnerHTML={{ __html: html }} />;
 };
 
-interface TextRendererProps {
-  children: string;
-}
+export const TextRenderer = ({ children }: React.PropsWithChildren) => {
+  if (typeof children === "string" && isURL(children)) return Linkify(children);
 
-export const TextRenderer = ({ children }: TextRendererProps) => {
-  const text = children?.replaceAll('"', "");
-
-  if (isURL(text)) return Linkify(text);
-
-  if (isColorFormat(text)) {
+  if (typeof children === "string" && isColorFormat(children)) {
     return (
       <StyledRow>
-        <ColorSwatch size={12} radius={4} mr={4} color={text} />
-        {text}
+        <ColorSwatch size={12} radius={4} mr={4} color={children} />
+        {children}
       </StyledRow>
     );
   }
-  return <>{children}</>;
+
+  return <>{`${children}`}</>;
 };
 
 function isColorFormat(colorString: string) {

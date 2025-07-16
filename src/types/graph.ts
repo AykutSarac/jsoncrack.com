@@ -1,23 +1,26 @@
-import type { NodeType } from "jsonc-parser";
+import type { JSONPath, Node } from "jsonc-parser";
+
+export interface NodeRow {
+  key: string | null;
+  value: string | number | null;
+  type: Node["type"];
+  childrenCount?: number;
+  to?: string[];
+}
 
 export interface NodeData {
   id: string;
-  text: string | [string, string][];
+  text: Array<NodeRow>;
   width: number;
   height: number;
-  path?: string;
-  data: {
-    type: NodeType;
-    isParent: boolean;
-    isEmpty: boolean;
-    childrenCount: number;
-  };
+  path?: JSONPath;
 }
 
 export interface EdgeData {
   id: string;
   from: string;
   to: string;
+  text: string | null;
 }
 
 export type LayoutDirection = "LEFT" | "RIGHT" | "DOWN" | "UP";

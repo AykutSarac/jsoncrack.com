@@ -5,14 +5,17 @@ import Editor from "@monaco-editor/react";
 import { event as gaEvent } from "nextjs-google-analytics";
 import { toast } from "react-hot-toast";
 import { FaChevronDown } from "react-icons/fa";
+import { FaCrown } from "react-icons/fa6";
 import { VscLinkExternal } from "react-icons/vsc";
 import { FileFormat } from "../../../enums/file.enum";
 import useConfig from "../../../store/useConfig";
 import useFile from "../../../store/useFile";
+import { useModal } from "../../../store/useModal";
 
 export const SchemaModal = ({ opened, onClose }: ModalProps) => {
   const setContents = useFile(state => state.setContents);
   const setJsonSchema = useFile(state => state.setJsonSchema);
+  const setVisible = useModal(state => state.setVisible);
   const darkmodeEnabled = useConfig(state => (state.darkmodeEnabled ? "vs-dark" : "light"));
   const [schema, setSchema] = React.useState(
     JSON.stringify(
@@ -113,6 +116,12 @@ export const SchemaModal = ({ opened, onClose }: ModalProps) => {
               </Menu.Target>
               <Menu.Dropdown>
                 <Menu.Item onClick={generateMockData}>Generate Mock Data</Menu.Item>
+                <Menu.Item
+                  onClick={() => setVisible("UpgradeModal", true)}
+                  rightSection={<FaCrown />}
+                >
+                  Validate on Diagrams
+                </Menu.Item>
               </Menu.Dropdown>
             </Menu>
           </Button.Group>

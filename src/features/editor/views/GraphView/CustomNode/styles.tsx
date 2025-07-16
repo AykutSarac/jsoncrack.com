@@ -6,24 +6,15 @@ import { NODE_DIMENSIONS } from "../../../../../constants/graph";
 type TextColorFn = {
   theme: DefaultTheme;
   $type?: string;
-  $value?: string;
-  $parent?: boolean;
+  $value?: string | number | null | boolean;
 };
 
-function getTextColor({ $value, $type, $parent, theme }: TextColorFn) {
-  // per type
-  if ($parent && $type === "array") return theme.NODE_COLORS.PARENT_ARR;
-  if ($parent && $type === "object") return theme.NODE_COLORS.PARENT_OBJ;
+function getTextColor({ $value, $type, theme }: TextColorFn) {
+  if ($value === null) return theme.NODE_COLORS.NULL;
   if ($type === "object") return theme.NODE_COLORS.NODE_KEY;
-  if ($type === "array") return theme.NODE_COLORS.NODE_VALUE;
-
-  // per value
-  if ($value && !Number.isNaN(+$value)) return theme.NODE_COLORS.INTEGER;
-  if ($value === "true") return theme.NODE_COLORS.BOOL.TRUE;
-  if ($value === "false") return theme.NODE_COLORS.BOOL.FALSE;
-  if ($value === "null") return theme.NODE_COLORS.NULL;
-
-  // default
+  if ($type === "number") return theme.NODE_COLORS.INTEGER;
+  if ($value === true) return theme.NODE_COLORS.BOOL.TRUE;
+  if ($value === false) return theme.NODE_COLORS.BOOL.FALSE;
   return theme.NODE_COLORS.NODE_VALUE;
 }
 
@@ -43,7 +34,7 @@ export const StyledForeignObject = styled.foreignObject<{ $isObject?: boolean }>
 
   &.searched {
     background: rgba(27, 255, 0, 0.1);
-    border: 2px solid ${({ theme }) => theme.TEXT_POSITIVE};
+    border: 1px solid ${({ theme }) => theme.TEXT_POSITIVE};
     border-radius: 2px;
     box-sizing: border-box;
   }
@@ -64,27 +55,29 @@ export const StyledForeignObject = styled.foreignObject<{ $isObject?: boolean }>
   }
 `;
 
-export const StyledKey = styled.span<{ $parent?: boolean; $type: string; $value?: string }>`
-  display: ${({ $parent }) => ($parent ? "flex" : "inline")};
+export const StyledKey = styled.span<{
+  $type: TextColorFn["$type"];
+  $value?: TextColorFn["$value"];
+}>`
+  display: inline;
   align-items: center;
-  justify-content: center; // Always center for parent nodes
+  justify-content: center;
   flex: 1;
   min-width: 0;
-  height: ${({ $parent }) => ($parent ? `${NODE_DIMENSIONS.PARENT_HEIGHT}px` : "auto")};
-  line-height: ${({ $parent }) => ($parent ? `${NODE_DIMENSIONS.PARENT_HEIGHT}px` : "inherit")};
+  height: auto;
+  line-height: inherit;
   padding: 0; // Remove padding
-  color: ${({ theme, $type, $parent = false, $value = "" }) =>
-    getTextColor({ $parent, $type, $value, theme })};
+  color: ${({ theme, $type, $value = "" }) => getTextColor({ $value, $type, theme })};
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 `;
 
-export const StyledRow = styled.span<{ $value: string }>`
+export const StyledRow = styled.span<{ $value: TextColorFn["$value"] }>`
   padding: 3px 10px;
   height: ${NODE_DIMENSIONS.ROW_HEIGHT}px;
   line-height: 18px;
-  color: ${({ theme, $value }) => getTextColor({ $value, theme })};
+  color: ${({ theme, $value }) => getTextColor({ $value, theme, $type: typeof $value })};
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
