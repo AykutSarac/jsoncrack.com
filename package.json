@@ -32,7 +32,6 @@
     "axios": "^1.9.0",
     "dayjs": "^1.11.13",
     "fast-xml-parser": "^5.2.3",
-    "gofmt.js": "^0.0.2",
     "html-to-image": "1.11.11",
     "jq-web": "^0.5.1",
     "js-cookie": "^3.0.5",

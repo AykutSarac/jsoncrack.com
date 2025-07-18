@@ -6,16 +6,8 @@ export const generateType = async (input: string, format: FileFormat, output: Ty
     const inputToJson = await contentToJson(input, format);
     const jsonString = JSON.stringify(inputToJson);
 
-    if (output === TypeLanguage.Go) {
-      const json2go = await import("../../lib/utils/json2go.js");
-      const gofmt = await import("gofmt.js");
-      const types = json2go.default(jsonString);
-
-      return gofmt.default(types.go);
-    } else {
-      const { run } = await import("json_typegen_wasm");
-      return run("Root", jsonString, JSON.stringify({ output_mode: output }));
-    }
+    const { run } = await import("json_typegen_wasm");
+    return run("Root", jsonString, JSON.stringify({ output_mode: output }));
   } catch (error) {
     console.error(error);
     return "";

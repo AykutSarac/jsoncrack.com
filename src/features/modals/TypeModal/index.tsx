@@ -73,16 +73,7 @@ export const TypeModal = ({ opened, onClose }: ModalProps) => {
   React.useEffect(() => {
     if (opened) {
       try {
-        if (selectedType === Language.Go) {
-          import("../../../lib/utils/json2go").then(jtg => {
-            import("gofmt.js").then(gofmt => {
-              const types = jtg.default(getJson());
-              setType(gofmt.default(types.go));
-            });
-          });
-        } else {
-          transformer({ value: getJson() }).then(setType);
-        }
+        transformer({ value: getJson() }).then(setType);
       } catch (error) {
         console.error(error);
       }
