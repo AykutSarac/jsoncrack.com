@@ -81,7 +81,7 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
           <Text fz="xs" fw={500}>Content</Text>
           {!isEditing ? (
             canEdit && (
-              <Button size="xs" variant="light" onClick={handleEdit}>Edit</Button>
+              <Button size="xs" variant="light" onClick={handleEdit} data-testid="edit-button">Edit</Button>
             )
           ) : (
             <Group gap="xs">

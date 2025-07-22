@@ -1,28 +1,26 @@
-const { before } = require("node:test");
-
-describe('NodeModal Edit Button Presence For All Nodes', () => {
-  before(() => {
-    // Visit the page where the node modals are present
-    cy.visit('/editor'); // Update with the actual path to your application
+describe('NodeModal Edit Button Visibility', () => {
+  beforeEach(() => {
+    cy.visit('http://localhost:3000/editor');
   });
 
-  it('checks for Edit button in every node modal', () => {
-    // Select all node triggers (update selector as needed)
-    cy.get('[data-testid^="open-node-modal"]').each(($el, index) => {
-      cy.wrap($el).click();
+  it('finds a node with an editable modal, checks Edit, Save, and Cancel', () => {
+    cy.get('g[id^="ref-"][id*="node"] rect', { timeout: 5000 }).each(($rect) => {
+      cy.wrap($rect).click();
 
       cy.get('.mantine-Modal-root').should('be.visible');
+      cy.contains('Content').should('exist');
 
-      cy.get('body').then(($body) => {
+      cy.get('body').then($body => {
         if ($body.find('button:contains("Edit")').length > 0) {
-          cy.log(`Node modal ${index + 1}: Edit button is present`);
+          cy.contains('button', 'Edit').should('exist').click();
+          cy.contains('button', 'Save').should('exist');
+          cy.contains('button', 'Cancel').should('exist').click(); // Click Cancel after Edit
+          cy.get('.m_b5489c3c > .mantine-focus-auto').click();
+          return false; // Stop after the first editable node
         } else {
-          cy.log(`Node modal ${index + 1}: Edit button is NOT present`);
+          cy.get('.m_b5489c3c > .mantine-focus-auto').click();
         }
       });
-
-      // Close the modal (update selector if you have a custom close button)
-      cy.get('.mantine-Modal-root button[aria-label="Close"]').click();
     });
   });
 });

@@ -25,7 +25,6 @@ const CustomNodeWrapper = (nodeProps: NodeProps<NodeData["data"]>) => {
   const setSelectedNode = useGraph(state => state.setSelectedNode);
   const setVisible = useModal(state => state.setVisible);
   const colorScheme = useComputedColorScheme();
-  const nodeContent = nodeProps.properties.text;
 
   const handleNodeClick = React.useCallback(
     (_: React.MouseEvent<SVGGElement, MouseEvent>, data: NodeData) => {
@@ -54,14 +53,16 @@ const CustomNodeWrapper = (nodeProps: NodeProps<NodeData["data"]>) => {
         strokeWidth: 1,
       }}
     >
-      {({ node, x, y }) => {
-        if (Array.isArray(nodeProps.properties.text)) {
-          if (data?.isEmpty) return null;
-          return <ObjectNode node={node as NodeData} x={x} y={y} />;
-        }
-
-        return <TextNode node={node as NodeData} hasCollapse={!!data?.childrenCount} x={x} y={y} />;
-      }}
+      {({ node, x, y }) => (
+        //worked when placed here with a <G>
+        <g data-testid="open-node-modal">
+          {Array.isArray(nodeProps.properties.text) ? (
+            data?.isEmpty ? null : <ObjectNode node={node as NodeData} x={x} y={y} />
+          ) : (
+            <TextNode node={node as NodeData} hasCollapse={!!data?.childrenCount} x={x} y={y} />
+          )}
+        </g>
+      )}
     </Node>
   );
 };
