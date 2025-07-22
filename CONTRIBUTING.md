@@ -14,6 +14,8 @@ JSON Crack is built with React, Reaflow for visualization, Mantine UI for compon
 * [Mantine UI](https://mantine.dev/)
 * [Zustand](https://github.com/pmndrs/zustand)
 
+If you're looking for a task to contribute, you can pick up a TODO from our project board: [Open Project Board Tasks](https://github.com/AykutSarac/jsoncrack.com/projects?query=is%3Aopen).
+
 Once you are familiar with these technologies, you can clone the JSON Crack repository by running the following command:
 
 ```bash
