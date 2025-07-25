@@ -62,6 +62,7 @@ interface GraphActions {
   centerView: () => void;
   clearGraph: () => void;
   setZoomFactor: (zoomFactor: number) => void;
+  updateNodeContent: (newContent: any, path: string) => void;
 }
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
@@ -233,6 +234,47 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
   },
   toggleFullscreen: fullscreen => set({ fullscreen }),
   setViewPort: viewPort => set({ viewPort }),
+
+  // --- EDIT NODE CONTENT ---
+  updateNodeContent: (newContent, path) => {
+    // Get the current JSON from the store
+    const jsonStore = useJson.getState();
+    let json = jsonStore.json;
+    let parsedJson = typeof json === "string" ? JSON.parse(json) : json;
+
+    // Deep clone to avoid mutation
+    let clonedJson: any;
+    if (typeof structuredClone === "function") {
+      clonedJson = structuredClone(parsedJson);
+    } else {
+      clonedJson = JSON.parse(JSON.stringify(parsedJson));
+    }
+
+    // Helper to update by path (dot/bracket notation)
+    function setByPath(obj: any, path: string, value: any) {
+      // Remove {Root} and any leading dots
+      path = path.replace(/^\{Root\}\.?/, "");
+      if (!path) return value; // If editing the root, replace the whole object
+      const parts = path
+        .replace(/\[(\w+)\]/g, '.$1')
+        .replace(/^\./, '')
+        .split('.')
+        .filter(Boolean); // Remove empty strings
+      let cur = obj;
+      for (let i = 0; i < parts.length - 1; i++) {
+        if (!(parts[i] in cur)) cur[parts[i]] = {};
+        cur = cur[parts[i]];
+      }
+      cur[parts[parts.length - 1]] = value;
+      return obj;
+    }
+
+    const updatedJson = setByPath(clonedJson, path, newContent);
+
+    // This is the key: update the JSON store exactly like the left panel does!
+    useJson.getState().setJson(JSON.stringify(updatedJson));
+    // Do NOT call setGraph directly; let the store update propagate.
+  },
 }));
 
 export default useGraph;
