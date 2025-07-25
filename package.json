@@ -64,6 +64,7 @@
     "styled-components": "^6.1.18",
     "toml": "^3.0.0",
     "use-long-press": "^3.3.0",
+    "xlsx": "^0.18.5",
     "zustand": "^4.5.7"
   },
   "devDependencies": {

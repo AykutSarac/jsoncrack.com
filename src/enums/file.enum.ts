@@ -1,9 +1,10 @@
 export enum FileFormat {
-  "JSON" = "json",
-  "YAML" = "yaml",
-  "XML" = "xml",
-  "TOML" = "toml",
-  "CSV" = "csv",
+  JSON = "json",
+  YAML = "yaml",
+  XML = "xml",
+  TOML = "toml",
+  CSV = "csv",
+  XLSX = "xlsx",
 }
 
 export const formats = [
@@ -11,6 +12,7 @@ export const formats = [
   { value: FileFormat.YAML, label: "YAML" },
   { value: FileFormat.XML, label: "XML" },
   { value: FileFormat.CSV, label: "CSV" },
+  { value: FileFormat.XLSX, label: "XLSX" },
 ];
 
 export enum TypeLanguage {
