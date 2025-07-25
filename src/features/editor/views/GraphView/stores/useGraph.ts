@@ -43,6 +43,7 @@ const initialStates: Graph = {
 };
 
 interface GraphActions {
+  updateNode: (nodeId: string, newData: Partial<NodeData>) => void;
   setGraph: (json?: string, options?: Partial<Graph>[]) => void;
   setLoading: (loading: boolean) => void;
   setDirection: (direction: CanvasDirection) => void;
@@ -65,6 +66,42 @@ interface GraphActions {
 }
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
+  updateNode: (nodeId, newData) => {
+    set(state => {
+      const originalNode = state.nodes.find(n => n.id === nodeId);
+      let updatedText: [string, string][] = Array.isArray(originalNode?.text)
+        ? (originalNode?.text as [string, string][])
+        : [];
+      if (typeof newData.text === "string") {
+        try {
+          const parsed = JSON.parse(newData.text);
+          if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+            updatedText = Object.entries(parsed);
+          } else {
+            // If not an object, fallback to previous key-value pairs
+            updatedText = Array.isArray(originalNode?.text)
+              ? (originalNode?.text as [string, string][])
+              : [];
+          }
+        } catch {
+          // fallback: keep previous key-value pairs
+          updatedText = Array.isArray(originalNode?.text)
+            ? (originalNode?.text as [string, string][])
+            : [];
+        }
+      } else if (Array.isArray(newData.text)) {
+        updatedText = newData.text as [string, string][];
+      }
+      return {
+        nodes: state.nodes.map(node =>
+          node.id === nodeId ? { ...node, ...newData, text: updatedText } : node
+        ),
+        selectedNode: state.selectedNode && state.selectedNode.id === nodeId
+          ? { ...state.selectedNode, ...newData, text: updatedText }
+          : state.selectedNode,
+      };
+    });
+  },
   ...initialStates,
   toggleCollapseAll: collapseAll => {
     set({ collapseAll });
