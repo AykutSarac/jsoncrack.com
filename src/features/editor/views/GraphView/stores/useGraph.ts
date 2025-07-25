@@ -62,6 +62,7 @@ interface GraphActions {
   centerView: () => void;
   clearGraph: () => void;
   setZoomFactor: (zoomFactor: number) => void;
+  updateNodeData: (path: string, newData: any) => void;
 }
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
@@ -233,6 +234,38 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
   },
   toggleFullscreen: fullscreen => set({ fullscreen }),
   setViewPort: viewPort => set({ viewPort }),
+  updateNodeData: (path, newData) => {
+    let json = useJson.getState().json;
+    if (typeof json === "string") {
+      json = JSON.parse(json);
+    }
+
+    // Helper to update the value at the given path by merging
+    function mergeByPath(obj: any, path: string, value: any) {
+      path = path.replace(/^\{Root\}\.?/, "");
+      const keys = path.replace(/\[(\w+)\]/g, '.$1').split('.').filter(Boolean);
+      let temp = obj;
+      for (let i = 0; i < keys.length - 1; i++) {
+        const key = keys[i];
+        if (!(key in temp) || temp[key] === undefined) {
+          const nextKey = keys[i + 1];
+          temp[key] = /^\d+$/.test(nextKey) ? [] : {};
+        }
+        temp = temp[key];
+      }
+      // Merge instead of replace
+      if (typeof temp[keys[keys.length - 1]] === "object" && typeof value === "object") {
+        temp[keys[keys.length - 1]] = { ...temp[keys[keys.length - 1]], ...value };
+      } else {
+        temp[keys[keys.length - 1]] = value;
+      }
+    }
+
+    const newJson = JSON.parse(JSON.stringify(json));
+    mergeByPath(newJson, path, newData);
+    useJson.getState().setJson(newJson);
+    get().setGraph(undefined);
+  },
 }));
 
 export default useGraph;
