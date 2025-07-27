@@ -33,39 +33,42 @@ export const contentToJson = (value: string, format = FileFormat.JSON): Promise<
       }
 
       if (format === FileFormat.CSV) {
-        try {
-          const { csv2json } = await import("json-2-csv");
-          const result = await csv2json(value, {
-            trimFieldValues: true,
-            trimHeaderFields: true,
-            wrapBooleans: true,
-            excelBOM: true,
-          });
-          return resolve(Array.isArray(result) ? result : []);
-        } catch (e) {
-          return resolve([]);
-        }
+        const { csv2json } = await import("json-2-csv");
+        const result = csv2json(value, {
+          trimFieldValues: true,
+          trimHeaderFields: true,
+          wrapBooleans: true,
+          excelBOM: true,
+        });
+        return resolve(result);
       }
-
       if (format === FileFormat.XLSX) {
-        try {
-          const { read, utils } = await import("xlsx");
-          const workbook = read(value, { type: "string" });
-          if (!workbook.SheetNames || workbook.SheetNames.length === 0) {
-            return resolve([]);
-          }
-          const sheetName = workbook.SheetNames[0];
-          const sheet = workbook.Sheets[sheetName];
-          if (!sheet) {
-            return resolve([]);
-          }
-          const jsonData = utils.sheet_to_json(sheet, { raw: false });
-          return resolve(Array.isArray(jsonData) ? jsonData : []);
-        } catch (e) {
-          return resolve([]);
-        }
-      }
+      const { read, utils } = await import("xlsx");
+      const { csv2json } = await import("json-2-csv");
 
+      // Read the XLSX content; adjust 'type' based on your input format
+      const workbook = read(value, { type: "string" }); // or 'buffer', 'binary' if needed
+      const sheetName = workbook.SheetNames[0];
+      const sheet = workbook.Sheets[sheetName];
+
+      // Convert XLSX sheet to CSV (exactly like a real CSV)
+      const csv = utils.sheet_to_csv(sheet, {
+        blankrows: false,
+        strip: true,
+      });
+
+      // Now treat it just like CSV
+      const result = csv2json(csv, {
+        trimFieldValues: true,
+        trimHeaderFields: true,
+        wrapBooleans: true,
+        excelBOM: true,
+    });
+
+  return resolve(result);
+}
+
+    
       return resolve({});
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "Failed to parse content";
@@ -97,19 +100,40 @@ export const jsonToContent = async (json: string, format: FileFormat): Promise<s
           attributeNamePrefix: "$",
           ignoreAttributes: false,
         });
-
         return resolve(builder.build(JSON.parse(json)));
       }
-      if (format === FileFormat.XLSX) {
-        try {
-          // For XLSX, just return the JSON string as is (since we can't convert JSON back to XLSX here)
-          // or you can implement XLSX export if needed
-          return resolve(json);
-        } catch (e) {
-          return resolve("[]");
-        }
+
+      if (format === FileFormat.CSV) {
+        const { json2csv } = await import("json-2-csv");
+        const parsedJson = JSON.parse(json);
+        const data = Array.isArray(parsedJson) ? parsedJson : [parsedJson];
+        return resolve(
+          json2csv(data, {
+            expandArrayObjects: true,
+            expandNestedObjects: true,
+            excelBOM: true,
+            wrapBooleans: true,
+            trimFieldValues: true,
+            trimHeaderFields: true,
+          })
+        );
       }
 
+      if (format === FileFormat.XLSX) {
+        const { utils, write } = await import("xlsx");
+        const parsedJson = JSON.parse(json);
+        const data = Array.isArray(parsedJson) ? parsedJson : [parsedJson];
+
+        const worksheet = utils.json_to_sheet(data);
+        const workbook = utils.book_new();
+        utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+        // Export to base64 for browser-safe handling
+        const xlsxOutput = write(workbook, { type: "base64", bookType: "xlsx" });
+        return resolve(xlsxOutput);
+      }
+
+  
       return resolve(json);
     } catch (error) {
       console.error(json, error);
