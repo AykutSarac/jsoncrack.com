@@ -62,6 +62,7 @@ interface GraphActions {
   centerView: () => void;
   clearGraph: () => void;
   setZoomFactor: (zoomFactor: number) => void;
+  updateNode: (path: string, newValue: any) => void;
 }
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
@@ -70,6 +71,23 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
     set({ collapseAll });
     get().collapseGraph();
   },
+
+  //user can update a node's data with this function
+  //this is used in the NodeModal to update the node's data
+  updateNode: (path, newValue) => {
+    set(state => ({
+      nodes: state.nodes.map(node =>
+        node.id === path
+          ? { ...node, data: newValue }
+          : node
+      ),
+      selectedNode:
+        state.selectedNode && state.selectedNode.id === path
+          ? { ...state.selectedNode, data: newValue }
+          : state.selectedNode
+    }));
+  },
+
   clearGraph: () => set({ nodes: [], edges: [], loading: false }),
   getCollapsedNodeIds: () => get().collapsedNodes,
   getCollapsedEdgeIds: () => get().collapsedEdges,
