@@ -59,6 +59,7 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
       setEditing(false);
       onClose();
     } catch (e) {
+      console.error("Save error:", e);
       alert("Invalid JSON format!");
     }
   };
