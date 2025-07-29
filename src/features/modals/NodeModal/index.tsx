@@ -7,12 +7,7 @@ import useFile from "../../../store/useFile";
 
 const dataToString = (data: any) => {
   const text = Array.isArray(data) ? Object.fromEntries(data) : data;
-  const replacer = (_: string, v: string) => {
-    if (typeof v === "string") return v.replaceAll('"', "");
-    return v;
-  };
-
-  return JSON.stringify(text, replacer, 2);
+  return JSON.stringify(text, null, 2); // <-- No replacer!
 };
 
 export const NodeModal = ({ opened, onClose }: ModalProps) => {
@@ -30,7 +25,7 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
     setEditing(false);
   }, [nodeData, opened]);
 
-  // TODO: Replace this with your actual update logic
+
   const setContents = useFile(state => state.setContents);
   const json = useFile(state => state.fileData);
   const handleSave = () => {
