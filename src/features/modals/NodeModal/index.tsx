@@ -22,9 +22,12 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
 
   // Optional: update editValue when nodeData changes (e.g., when opening a new node)
   React.useEffect(() => {
-    setEditValue(nodeData);
+  if (opened) {
+    const fresh = dataToString(selectedNode?.text);
+    setEditValue(fresh);
     setEditing(false);
-  }, [nodeData, opened]);
+  }
+}, [opened, selectedNode?.path]);
   const monaco = useMonaco();
   const contents = useFile(state => state.contents);
   const setContents = useFile(state => state.setContents);
@@ -56,7 +59,7 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
           obj = obj[key];
         }
         obj[pathArr[pathArr.length - 1]] = newValue;
-        setContents({ contents, skipUpdate: true })
+        setContents({ contents: JSON.stringify(updatedJson, null, 2) });
       }
 
       setEditing(false);
