@@ -51,12 +51,16 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
       } else {
         let obj = updatedJson;
         for (let i = 0; i < pathArr.length - 1; i++) {
-          if (!(pathArr[i] in obj)) {
-            throw new Error("Invalid path: " + pathArr.join("."));
+          // If the parent does not exist or is not an object, create it as an object
+          if (
+            typeof obj[pathArr[i]] !== "object" ||
+            obj[pathArr[i]] === null
+          ) {
+            obj[pathArr[i]] = {};
           }
           obj = obj[pathArr[i]];
         }
-        obj[pathArr[pathArr.length]] = newValue;
+        obj[pathArr[pathArr.length - 1]] = newValue;
         setContents({ contents: JSON.stringify(updatedJson, null, 2) });
       }
 
