@@ -83,7 +83,7 @@ const Node = ({ node, x, y, hasCollapse = false }: CustomNodeProps) => {
     return "";
   }, [childrenCount, type]);
 
-   return (
+  return (
     <Styled.StyledForeignObject
       data-id={`node-${node.id}`}
       width={width}
@@ -103,67 +103,11 @@ const Node = ({ node, x, y, hasCollapse = false }: CustomNodeProps) => {
           $hasCollapse={isParent && collapseButtonVisible}
           $isParent={isParent}
         >
-          <Popover
-            opened={popoverOpened}
-            onChange={setPopoverOpened}
-            position="right"
-            withArrow
-            shadow="md"
-          >
-            <Popover.Target>
-              <span
-                style={{ cursor: "pointer", flex: 1 }}
-                onClick={() => setPopoverOpened((o) => !o)}
-              >
-                <Styled.StyledKey $value={value} $parent={isParent} $type={type}>
-                  <TextRenderer>{value}</TextRenderer>
-                </Styled.StyledKey>
-              </span>
-            </Popover.Target>
-            <Popover.Dropdown>
-              {editing ? (
-                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                  <textarea
-                    style={{ width: 200, height: 80, fontFamily: "monospace" }}
-                    value={editValue}
-                    onChange={e => setEditValue(e.target.value)}
-                  />
-                  <div style={{ display: "flex", gap: 8 }}>
-                    <Button
-                      size="xs"
-                      onClick={() => {
-                        // Save logic: update the node's value in your store here!
-                        // Example: updateNodeText(node.id, editValue);
-                        setEditing(false);
-                        setPopoverOpened(false);
-                      }}
-                    >
-                      Save
-                    </Button>
-                    <Button
-                      size="xs"
-                      variant="default"
-                      onClick={() => {
-                        setEditValue(node.text as string);
-                        setEditing(false);
-                      }}
-                    >
-                      Cancel
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <Button
-                  size="xs"
-                  onClick={() => {
-                    setEditing(true);
-                  }}
-                >
-                  Edit
-                </Button>
-              )}
-            </Popover.Dropdown>
-          </Popover>
+          <span style={{ flex: 1 }}>
+            <Styled.StyledKey $value={value} $parent={isParent} $type={type}>
+              <TextRenderer>{value}</TextRenderer>
+            </Styled.StyledKey>
+          </span>
           {isParent && childrenCount > 0 && childrenCountVisible && (
             <Styled.StyledChildrenCount>{childrenCountText}</Styled.StyledChildrenCount>
           )}
