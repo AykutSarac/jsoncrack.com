@@ -24,6 +24,7 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
     setEditValue(nodeData);
     setEditing(false);
   }, [nodeData, opened]);
+  const contents = useFile(state => state.contents);
   const setContents = useFile(state => state.setContents);
   const json = useFile(state => state.fileData);
   const handleSave = () => {
@@ -53,7 +54,7 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
           obj = obj[key];
         }
         obj[pathArr[pathArr.length - 1]] = newValue;
-        setContents({ contents: JSON.stringify(updatedJson, null, 2), skipUpdate: true });
+        setContents({ contents, skipUpdate: true })
       }
 
       setEditing(false);
