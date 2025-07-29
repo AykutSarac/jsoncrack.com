@@ -131,9 +131,6 @@ const Node = ({ node, x, y, hasCollapse = false }: CustomNodeProps) => {
               </Button>
             </Popover.Dropdown>
           </Popover>
-          <Styled.StyledKey $value={value} $parent={isParent} $type={type}>
-            <TextRenderer>{value}</TextRenderer>
-          </Styled.StyledKey>
           {isParent && childrenCount > 0 && childrenCountVisible && (
             <Styled.StyledChildrenCount>{childrenCountText}</Styled.StyledChildrenCount>
           )}
