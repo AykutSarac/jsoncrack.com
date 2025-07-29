@@ -30,6 +30,10 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
   const json = useFile(state => state.fileData);
   const handleSave = () => {
     try {
+      if (!editValue) {
+        alert("Nothing to save!");
+        return;
+      }
       const newValue = JSON.parse(editValue);
 
       const pathArr = Array.isArray(selectedNode?.path)
