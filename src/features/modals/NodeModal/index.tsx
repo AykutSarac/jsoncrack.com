@@ -183,7 +183,7 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
             <Stack py="sm" gap="sm">
                 <Stack gap="xs">
                     <Text fz="xs" fw={500}>Content</Text>
-                    <ScrollArea.Autosize mah={250} maw={600}>
+                    <ScrollArea.Autosize mah={250} maw={200}>
                         {editMode ? (
                             <Textarea
                                 value={editedText}
