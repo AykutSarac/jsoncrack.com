@@ -56,7 +56,7 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
           }
           obj = obj[pathArr[i]];
         }
-        obj[pathArr[pathArr.length - 1]] = newValue;
+        obj[pathArr[pathArr.length]] = newValue;
         setContents({ contents: JSON.stringify(updatedJson, null, 2) });
       }
 
