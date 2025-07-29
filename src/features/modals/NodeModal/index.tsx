@@ -51,17 +51,22 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
       } else {
         let obj = updatedJson;
         for (let i = 0; i < pathArr.length - 1; i++) {
-          // If the parent does not exist or is not an object, create it as an object
-          if (
-            typeof obj[pathArr[i]] !== "object" ||
-            obj[pathArr[i]] === null
-          ) {
-            obj[pathArr[i]] = {};
+          const key = pathArr[i];
+          if (!obj[key] || typeof obj[key] !== "object") {
+            obj[key] = {}; // Ensure it's defined and an object
           }
-          obj = obj[pathArr[i]];
+          obj = obj[key];
         }
-        obj[pathArr[pathArr.length - 1]] = newValue;
-        setContents({ contents: JSON.stringify(updatedJson, null, 2) });
+
+        // Validate final obj before assignment
+        if (obj && typeof obj === "object") {
+          obj[pathArr[pathArr.length - 1]] = newValue;
+          setContents({ contents: JSON.stringify(updatedJson, null, 2) });
+        } else {
+          console.error("Cannot assign to a null object at target path.");
+          alert("Failed to save: Invalid target path in JSON.");
+          return;
+        }
       }
 
       setEditing(false);
