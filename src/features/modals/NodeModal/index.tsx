@@ -52,12 +52,14 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
         let obj = updatedJson;
         for (let i = 0; i < pathArr.length - 1; i++) {
           const key = pathArr[i];
-          // If obj is not an object (e.g., null or primitive), replace it with an object in its parent
+          // If obj is null or not an object, replace it with an object in its parent
           if (typeof obj !== "object" || obj === null) {
-            console.error("Cannot assign to a null object at target path.");
-            alert("Failed to save: Invalid target path in JSON.");
+            // This should never happen if your root is always an object,
+            // but if it does, stop and alert
+            alert("Failed to save: Invalid target path in JSON (parent is null or not an object).");
             return;
           }
+          // If the next key is missing, null, or not an object, initialize it as an object
           if (typeof obj[key] !== "object" || obj[key] === null) {
             obj[key] = {};
           }
