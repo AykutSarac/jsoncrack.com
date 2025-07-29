@@ -186,10 +186,11 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
                     <ScrollArea.Autosize mah={250} maw={600}>
                         {editMode ? (
                             <Textarea
-                                value={editedText}
-                                onChange={e => setEditedText(e.currentTarget.value)}
-                                minRows={8}
                                 autosize
+                                value={editedText}
+                                minRows={6}
+                                maxRows={12}
+                                onChange={e => setEditedText(e.currentTarget.value)}
                                 miw={350}
                                 maw={600}
                                 styles={{ input: { fontFamily: "monospace" } }}
@@ -205,10 +206,25 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
                         )}
                     </ScrollArea.Autosize>
                     {editMode ? (
-                        <Button mt="xs" onClick={handleSave}>Save</Button>
-                    ) : (
-                        <Button mt="xs" onClick={handleEdit}>Edit</Button>
-                    )}
+                        <>
+                <Button size="xs" onClick={handleSave}>
+                  Save
+                </Button>
+                <Button
+                  size="xs"
+                  variant="default"
+                  onClick={() => {
+                    setEditMode(false);
+                  }}
+                >
+                  Cancel
+                </Button>
+              </>
+            ) : (
+              <Button size="xs" onClick={() => handleEdit()}>
+                Edit
+              </Button>
+            )}
                 </Stack>
                 <Text fz="xs" fw={500}>JSON Path</Text>
                 <ScrollArea.Autosize maw={600}>
