@@ -8,6 +8,7 @@ import { isContentImage } from "../lib/utils/calculateNodeSize";
 import useGraph from "../stores/useGraph";
 import { TextRenderer } from "./TextRenderer";
 import * as Styled from "./styles";
+import { Popover, Button } from "@mantine/core";
 
 const StyledExpand = styled.button`
   pointer-events: all;
@@ -47,6 +48,7 @@ const StyledImage = styled.img`
 `;
 
 const Node = ({ node, x, y, hasCollapse = false }: CustomNodeProps) => {
+  const [popoverOpened, setPopoverOpened] = React.useState(false);
   const {
     id,
     text,
@@ -98,6 +100,37 @@ const Node = ({ node, x, y, hasCollapse = false }: CustomNodeProps) => {
           $hasCollapse={isParent && collapseButtonVisible}
           $isParent={isParent}
         >
+          <Popover
+            opened={popoverOpened}
+            onChange={setPopoverOpened}
+            position="right"
+            withArrow
+            shadow="md"
+            withinPortal
+          >
+            <Popover.Target>
+              <span
+                style={{ cursor: "pointer", flex: 1 }}
+                onClick={() => setPopoverOpened((o) => !o)}
+              >
+                <Styled.StyledKey $value={value} $parent={isParent} $type={type}>
+                  <TextRenderer>{value}</TextRenderer>
+                </Styled.StyledKey>
+              </span>
+            </Popover.Target>
+            <Popover.Dropdown>
+              <Button
+                size="xs"
+                onClick={() => {
+                  setPopoverOpened(false);
+                  // Add your edit logic here
+                  alert("Edit clicked!");
+                }}
+              >
+                Edit
+              </Button>
+            </Popover.Dropdown>
+          </Popover>
           <Styled.StyledKey $value={value} $parent={isParent} $type={type}>
             <TextRenderer>{value}</TextRenderer>
           </Styled.StyledKey>
