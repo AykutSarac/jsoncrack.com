@@ -4,6 +4,7 @@ import { Modal, Stack, Text, ScrollArea, Group } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
 import useGraph from "../../editor/views/GraphView/stores/useGraph";
 import useJson from "../../../store/useJson";
+import useFile from "../../../store/useFile";
 
 const dataToString = (data: any) => {
   const text = Array.isArray(data) ? Object.fromEntries(data) : data;
@@ -23,6 +24,7 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
   const selectedNode = useGraph(state => state.selectedNode);
   const setSelectedNode = useGraph(state => state.setSelectedNode);
   const updateNode = useGraph(state => state.updateNode);
+  const setContents = useFile(state => state.setContents);
   const [editMode, setEditMode] = React.useState(false);
   const [editValue, setEditValue] = React.useState(nodeData);
   const [originalValue, setOriginalValue] = React.useState(nodeData);
@@ -64,6 +66,34 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
                       } catch {}
                       updateNode(selectedNode.id, { text: newText });
                       setSelectedNode({ ...selectedNode, text: newText });
+                      // Update the JSON text editor as well
+                      setContents({
+                        contents: (() => {
+                          // Get the current JSON from the editor
+                          let json;
+                          try {
+                            json = JSON.parse(useFile.getState().contents);
+                          } catch {
+                            json = useFile.getState().contents;
+                          }
+                          // Traverse to the node at the path and update it
+                          if (path) {
+                            const pathArr = path.split('.').filter(Boolean);
+                            let ref = json;
+                            for (let i = 0; i < pathArr.length - 1; i++) {
+                              if (ref[pathArr[i]] === undefined) break;
+                              ref = ref[pathArr[i]];
+                            }
+                            if (ref && pathArr.length > 0) {
+                              try {
+                                ref[pathArr[pathArr.length - 1]] = newText;
+                              } catch {}
+                            }
+                          }
+                          return JSON.stringify(json, null, 2);
+                        })(),
+                        hasChanges: true
+                      });
                     }
                     setEditMode(false);
                     setOriginalValue(editValue);
