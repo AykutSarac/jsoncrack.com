@@ -106,7 +106,6 @@ const Node = ({ node, x, y, hasCollapse = false }: CustomNodeProps) => {
             position="right"
             withArrow
             shadow="md"
-            withinPortal
           >
             <Popover.Target>
               <span
