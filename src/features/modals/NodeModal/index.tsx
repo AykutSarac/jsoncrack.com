@@ -53,7 +53,7 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
           obj = obj[key];
         }
         obj[pathArr[pathArr.length - 1]] = newValue;
-        setContents({ contents: JSON.stringify(updatedJson, null, 2) });
+        setContents({ contents: JSON.stringify(updatedJson, null, 2), skipUpdate: true });
       }
 
       setEditing(false);
