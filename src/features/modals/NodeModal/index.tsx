@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import type { ModalProps } from "@mantine/core";
-import { Modal, Stack, Text, ScrollArea } from "@mantine/core";
+import { Modal, Stack, Text, ScrollArea, Button, Group, Textarea } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
 import useGraph from "../../editor/views/GraphView/stores/useGraph";
+import useFile from "../../../store/useFile";
 
 const dataToString = (data: any) => {
   const text = Array.isArray(data) ? Object.fromEntries(data) : data;
@@ -15,8 +16,59 @@ const dataToString = (data: any) => {
 };
 
 export const NodeModal = ({ opened, onClose }: ModalProps) => {
-  const nodeData = useGraph(state => dataToString(state.selectedNode?.text));
-  const path = useGraph(state => state.selectedNode?.path || "");
+  const selectedNode = useGraph(state => state.selectedNode);
+  const nodeData = dataToString(selectedNode?.text);
+  const path = selectedNode?.path || "";
+
+  // Add editing state
+  const [editing, setEditing] = useState(false);
+  const [editValue, setEditValue] = useState(nodeData);
+
+  // Optional: update editValue when nodeData changes (e.g., when opening a new node)
+  React.useEffect(() => {
+    setEditValue(nodeData);
+    setEditing(false);
+  }, [nodeData, opened]);
+
+  // TODO: Replace this with your actual update logic
+  const setContents = useFile(state => state.setContents);
+  const json = useFile(state => state.fileData);
+  const handleSave = () => {
+    try {
+    // Parse the edited value
+    const newValue = JSON.parse(editValue);
+
+    // Get the path to the node (e.g., ["person"])
+    const pathArr = Array.isArray(selectedNode?.path)
+      ? selectedNode.path
+      : (selectedNode?.path || "")
+          .replace(/^{Root}\.?/, "") // Remove {Root}.
+          .split(".")
+          .filter(Boolean);
+
+    // Deep clone the JSON to avoid mutation
+    const updatedJson = JSON.parse(JSON.stringify(json));
+    let obj = updatedJson;
+
+    // Traverse to the parent of the node to update
+    for (let i = 0; i < pathArr.length - 1; i++) {
+      obj = obj[pathArr[i]];
+    }
+    // Update the value at the path
+    obj[pathArr[pathArr.length - 1]] = newValue;
+
+    // Update the global JSON state (object)
+    setJson(updatedJson);
+
+    // Update the editor contents (string)
+    setContents({ contents: JSON.stringify(updatedJson, null, 2) });
+
+    setEditing(false);
+    onClose();
+  } catch (e) {
+    alert("Invalid JSON format!");
+  }
+  };
 
   return (
     <Modal title="Node Content" size="auto" opened={opened} onClose={onClose} centered>
@@ -26,8 +78,44 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
             Content
           </Text>
           <ScrollArea.Autosize mah={250} maw={600}>
-            <CodeHighlight code={nodeData} miw={350} maw={600} language="json" withCopyButton />
+            {editing ? (
+              <Textarea
+                autosize
+                minRows={6}
+                maxRows={12}
+                value={editValue}
+                onChange={e => setEditValue(e.currentTarget.value)}
+                styles={{ input: { fontFamily: "monospace" } }}
+                miw={350}
+                maw={600}
+              />
+            ) : (
+              <CodeHighlight code={nodeData} miw={350} maw={600} language="json" withCopyButton />
+            )}
           </ScrollArea.Autosize>
+          <Group mt="xs">
+            {editing ? (
+              <>
+                <Button size="xs" onClick={handleSave}>
+                  Save
+                </Button>
+                <Button
+                  size="xs"
+                  variant="default"
+                  onClick={() => {
+                    setEditValue(nodeData);
+                    setEditing(false);
+                  }}
+                >
+                  Cancel
+                </Button>
+              </>
+            ) : (
+              <Button size="xs" onClick={() => setEditing(true)}>
+                Edit
+              </Button>
+            )}
+          </Group>
         </Stack>
         <Text fz="xs" fw={500}>
           JSON Path
@@ -47,3 +135,7 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
     </Modal>
   );
 };
+function setJson(updatedJson: any) {
+  throw new Error("Function not implemented.");
+}
+
