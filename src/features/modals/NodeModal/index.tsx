@@ -52,8 +52,8 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
         let obj = updatedJson;
         for (let i = 0; i < pathArr.length - 1; i++) {
           const key = pathArr[i];
-          if (!obj[key] || typeof obj[key] !== "object") {
-            obj[key] = {}; // Ensure it's defined and an object
+          if (typeof obj[key] !== "object" || obj[key] === null) {
+            obj[key] = {}; // Overwrite null or non-object with an object
           }
           obj = obj[key];
         }
