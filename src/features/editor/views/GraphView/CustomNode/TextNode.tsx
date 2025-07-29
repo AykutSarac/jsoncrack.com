@@ -9,6 +9,7 @@ import useGraph from "../stores/useGraph";
 import { TextRenderer } from "./TextRenderer";
 import * as Styled from "./styles";
 import { Popover, Button } from "@mantine/core";
+import { useState } from "react";
 
 const StyledExpand = styled.button`
   pointer-events: all;
@@ -49,6 +50,8 @@ const StyledImage = styled.img`
 
 const Node = ({ node, x, y, hasCollapse = false }: CustomNodeProps) => {
   const [popoverOpened, setPopoverOpened] = React.useState(false);
+  const [editing, setEditing] = useState(false);
+  const [editValue, setEditValue] = useState(node.text as string);
   const {
     id,
     text,
@@ -80,7 +83,7 @@ const Node = ({ node, x, y, hasCollapse = false }: CustomNodeProps) => {
     return "";
   }, [childrenCount, type]);
 
-  return (
+   return (
     <Styled.StyledForeignObject
       data-id={`node-${node.id}`}
       width={width}
@@ -118,16 +121,47 @@ const Node = ({ node, x, y, hasCollapse = false }: CustomNodeProps) => {
               </span>
             </Popover.Target>
             <Popover.Dropdown>
-              <Button
-                size="xs"
-                onClick={() => {
-                  setPopoverOpened(false);
-                  // Add your edit logic here
-                  alert("Edit clicked!");
-                }}
-              >
-                Edit
-              </Button>
+              {editing ? (
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  <textarea
+                    style={{ width: 200, height: 80, fontFamily: "monospace" }}
+                    value={editValue}
+                    onChange={e => setEditValue(e.target.value)}
+                  />
+                  <div style={{ display: "flex", gap: 8 }}>
+                    <Button
+                      size="xs"
+                      onClick={() => {
+                        // Save logic: update the node's value in your store here!
+                        // Example: updateNodeText(node.id, editValue);
+                        setEditing(false);
+                        setPopoverOpened(false);
+                      }}
+                    >
+                      Save
+                    </Button>
+                    <Button
+                      size="xs"
+                      variant="default"
+                      onClick={() => {
+                        setEditValue(node.text as string);
+                        setEditing(false);
+                      }}
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                <Button
+                  size="xs"
+                  onClick={() => {
+                    setEditing(true);
+                  }}
+                >
+                  Edit
+                </Button>
+              )}
             </Popover.Dropdown>
           </Popover>
           {isParent && childrenCount > 0 && childrenCountVisible && (
