@@ -86,6 +86,7 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
           ? { ...state.selectedNode, data: newValue }
           : state.selectedNode
     }));
+    useJson.getState().updateJson(path, newValue);
   },
 
   clearGraph: () => set({ nodes: [], edges: [], loading: false }),

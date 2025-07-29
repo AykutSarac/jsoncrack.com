@@ -4,6 +4,7 @@ import { Modal, Stack, Text, ScrollArea, Button } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
 import useGraph from "../../editor/views/GraphView/stores/useGraph";
 import { Textarea, Group } from "@mantine/core";
+import useJson from "../../../store/useJson";
 
 const dataToString = (data: any) => {
   /*const text = Array.isArray(data) ? Object.fromEntries(data) : data;
@@ -49,41 +50,43 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
 
   // Save changes
   const handleSave = () => {
-    try {
+  try {
     console.log("handleSave called");
+
     if (typeof editValue !== "string") {
       console.log("editValue is not a string:", editValue);
       alert("Invalid JSON");
       return;
     }
-    console.log("editValue before parse:", editValue);
+
     const parsed = JSON.parse(editValue);
     console.log("parsed value:", parsed);
 
-    if (
-      Array.isArray(selectedNode?.text) &&
-      selectedNode.text.every((item: any) => Array.isArray(item) && item.length === 2)
-    ) {
-      if (selectedNode?.path) {
-        const asArray = Object.entries(parsed);
-        console.log("Saving as array of entries:", asArray);
-        updateNode(selectedNode.path, asArray);
-      } else {
-        console.log("No node selected for array case");
-        alert("No node selected.");
-      }
+    const id = selectedNode?.id;
+    const path = selectedNode?.path;
+
+    if (!id || !path) {
+      alert("No node selected.");
+      return;
+    }
+
+    const isEntryList =
+      Array.isArray(selectedNode?.data) &&
+      selectedNode.data.every((item: any) => Array.isArray(item) && item.length === 2);
+
+    if (isEntryList) {
+      const asArray = Object.entries(parsed);
+      console.log("Saving as entry list:", asArray);
+      updateNode(id, asArray);
+      useJson.getState().updateJson(path, asArray);
     } else {
-      if (selectedNode?.path) {
-        console.log("Saving as object:", parsed);
-        updateNode(selectedNode.path, parsed);
-      } else {
-        console.log("No node selected for object case");
-        alert("No node selected.");
-      }
+      console.log("Saving as object:", parsed);
+      updateNode(id, parsed);
+      useJson.getState().updateJson(path, parsed);
     }
 
     setIsEditing(false);
-    console.log("Save successful, exiting edit mode");
+    console.log("Save successful");
   } catch (e) {
     console.log("JSON parse error:", e);
     alert("Invalid JSON");
@@ -134,7 +137,7 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
         </Stack>
     ) : (
       <ScrollArea.Autosize mah={250} maw={600}>
-        <CodeHighlight code={nodeData} miw={350} maw={600} language="json" withCopyButton />
+        <CodeHighlight code={JSON.stringify(selectedNode?.data, null, 2)} />
       </ScrollArea.Autosize>
     )}
 
