@@ -52,8 +52,14 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
         let obj = updatedJson;
         for (let i = 0; i < pathArr.length - 1; i++) {
           const key = pathArr[i];
+          // If obj is not an object (e.g., null or primitive), replace it with an object in its parent
+          if (typeof obj !== "object" || obj === null) {
+            console.error("Cannot assign to a null object at target path.");
+            alert("Failed to save: Invalid target path in JSON.");
+            return;
+          }
           if (typeof obj[key] !== "object" || obj[key] === null) {
-            obj[key] = {}; // Overwrite null or non-object with an object
+            obj[key] = {};
           }
           obj = obj[key];
         }
