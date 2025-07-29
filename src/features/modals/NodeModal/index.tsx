@@ -4,6 +4,7 @@ import { Modal, Stack, Text, ScrollArea, Button, Group, Textarea } from "@mantin
 import { CodeHighlight } from "@mantine/code-highlight";
 import useGraph from "../../editor/views/GraphView/stores/useGraph";
 import useFile from "../../../store/useFile";
+import Editor, { type EditorProps, loader, type OnMount, useMonaco } from "@monaco-editor/react";
 
 const dataToString = (data: any) => {
   const text = Array.isArray(data) ? Object.fromEntries(data) : data;
@@ -24,6 +25,7 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
     setEditValue(nodeData);
     setEditing(false);
   }, [nodeData, opened]);
+  const monaco = useMonaco();
   const contents = useFile(state => state.contents);
   const setContents = useFile(state => state.setContents);
   const json = useFile(state => state.fileData);
