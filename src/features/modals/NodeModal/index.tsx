@@ -4,6 +4,7 @@ import { Modal, Stack, Text, ScrollArea, Button, Textarea, Group } from "@mantin
 import { CodeHighlight } from "@mantine/code-highlight";
 import useGraph from "../../editor/views/GraphView/stores/useGraph";
 import useJson from "../../../store/useJson";
+import useFile from "../../../store/useFile";
 
 
 const dataToString = (data: any) => {
@@ -17,11 +18,14 @@ const dataToString = (data: any) => {
 };
 
 export const NodeModal = ({ opened, onClose }: ModalProps) => {
-  const rawJson = useJson(state => state.rawJson);
+  const rawJson = useJson(state => state.json);
   const setJson = useJson(state => state.setJson);
-  const nodeData = useGraph(state => dataToString(state.selectedNode?.text));
   const selectedNode = useGraph(state => state.selectedNode);
   const path = useGraph(state => state.selectedNode?.path || "");
+  const setContents = useFile(state => state.setContents); //jadd
+  const setGraph = useGraph(state => state.setGraph);
+  const setSelectedNode = useGraph(state => state.setSelectedNode);
+  const nodeData = selectedNode ? dataToString(selectedNode.text) : "";
 
   const [isEditing, setIsEditing] = React.useState(false);
   const [draft, setDraft] = React.useState("");
@@ -40,8 +44,10 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
   };
 
   const handleCancel = () => {
+    if (selectedNode) {
     setDraft(dataToString(selectedNode.text));
     setIsEditing(false);
+    }
   };
 
     const handleSave = () => {
@@ -50,19 +56,15 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
       const currentJson = JSON.parse(rawJson);
       
       const updateJsonAtPath = (obj, jsonPath, value) => {
-        if (!jsonPath || jsonPath === "$") {
-          return value;
-        }
-  
+
+        const cleanPath = jsonPath.replace(/^\{Root\}\.?/, "");
         const clone = JSON.parse(JSON.stringify(obj));
-        const pathParts = jsonPath
-          .replace(/^\$\.?/, "")
-          .split(/[.\[\]]/)
-          .filter(part => part !== "" && part !== undefined);
+        const pathParts = cleanPath
+          .split(/[\.\[\]]+/)
+          .filter(Boolean);
           
         let current = clone;
         
-        // Navigate to parent
         for (let i = 0; i < pathParts.length - 1; i++) {
           const part = pathParts[i];
           if (!isNaN(Number(part))) {
@@ -82,7 +84,11 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
       };
       
       const updatedJson = updateJsonAtPath(currentJson, path, newValue);
-      setJson(JSON.stringify(updatedJson, null, 2));
+      const updatedJsonString = JSON.stringify(updatedJson, null, 2);
+      setJson(updatedJsonString);
+      setContents({ contents: updatedJsonString }); //jadd
+      setGraph(updatedJsonString);
+      setSelectedNode({ ...selectedNode, text: newValue });
       setIsEditing(false);
     } catch (error) {
       console.error("Invalid JSON format", error);
@@ -114,15 +120,22 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
                 )}
               </Group>
             </Group>
-            <ScrollArea.Autosize mah={250} maw={600}>
+            <ScrollArea.Autosize mah={350} maw={800}>
               {isEditing ? (
-                <textarea
+                <Textarea
+                  autosize
                   minRows={6}
                   value={draft}
-                  onChange={(e) => setDraft(e.target.value)}
+                  onChange={(e) => setDraft(e.currentTarget.value)}
+                  styles={{
+                    input: {
+                      fontFamily: 'Monaco, Menlo, "Ubuntu Mono", monospace',
+                      fontSize: '12px',
+                    }
+                  }}
                 />
               ) : (
-                <CodeHighlight code={nodeData} miw={350} maw={600} language="json" withCopyButton />
+                <CodeHighlight code={nodeData} miw={350} maw={800} language="json" withCopyButton />
               )}
             </ScrollArea.Autosize>
           </Stack>
