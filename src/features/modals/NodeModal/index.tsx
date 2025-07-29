@@ -30,36 +30,35 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
   const json = useFile(state => state.fileData);
   const handleSave = () => {
     try {
-    // Parse the edited value
-    const newValue = JSON.parse(editValue);
+      const newValue = JSON.parse(editValue);
 
-    // Get the path to the node (e.g., ["person"])
-    const pathArr = Array.isArray(selectedNode?.path)
-      ? selectedNode.path
-      : (selectedNode?.path || "")
-          .replace(/^{Root}\.?/, "") // Remove {Root}.
-          .split(".")
-          .filter(Boolean);
+      const pathArr = Array.isArray(selectedNode?.path)
+        ? selectedNode.path
+        : (selectedNode?.path || "")
+            .replace(/^{Root}\.?/, "")
+            .split(".")
+            .filter(Boolean);
 
-    // Deep clone the JSON to avoid mutation
-    const updatedJson = JSON.parse(JSON.stringify(json));
-    let obj = updatedJson;
+      const updatedJson = JSON.parse(JSON.stringify(json));
 
-    // Traverse to the parent of the node to update
-    for (let i = 0; i < pathArr.length - 1; i++) {
-      obj = obj[pathArr[i]];
+      if (pathArr.length === 0) {
+        // Editing the root node
+        setContents({ contents: JSON.stringify(newValue, null, 2) });
+      } else {
+        let obj = updatedJson;
+        for (let i = 0; i < pathArr.length - 1; i++) {
+          obj = obj[pathArr[i]];
+          if (!obj) throw new Error("Invalid path");
+        }
+        obj[pathArr[pathArr.length - 1]] = newValue;
+        setContents({ contents: JSON.stringify(updatedJson, null, 2) });
+      }
+
+      setEditing(false);
+      onClose();
+    } catch (e) {
+      alert("Invalid JSON format!");
     }
-    // Update the value at the path
-    obj[pathArr[pathArr.length - 1]] = newValue;
-
-    // Update the editor contents (string)
-    setContents({ contents: JSON.stringify(updatedJson, null, 2) });
-
-    setEditing(false);
-    onClose();
-  } catch (e) {
-    alert("Invalid JSON format!");
-  }
   };
 
   return (
