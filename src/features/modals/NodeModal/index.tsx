@@ -215,6 +215,7 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
                   variant="default"
                   onClick={() => {
                     setEditMode(false);
+                    setEditedText(dataToString(selectedNode.text));
                   }}
                 >
                   Cancel
