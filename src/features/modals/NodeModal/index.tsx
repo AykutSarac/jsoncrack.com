@@ -52,9 +52,6 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
     // Update the value at the path
     obj[pathArr[pathArr.length - 1]] = newValue;
 
-    // Update the global JSON state (object)
-    setJson(updatedJson);
-
     // Update the editor contents (string)
     setContents({ contents: JSON.stringify(updatedJson, null, 2) });
 
@@ -130,7 +127,4 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
     </Modal>
   );
 };
-function setJson(updatedJson: any) {
-  throw new Error("Function not implemented.");
-}
 
