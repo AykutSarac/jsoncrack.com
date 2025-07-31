@@ -22,7 +22,8 @@ const normalizeNodeData = (nodeRows: NodeData["text"]) => {
 // return json path in the format $["customer"]
 const jsonPathToString = (path?: NodeData["path"]) => {
   if (!path || path.length === 0) return "$";
-  return `$["${path.join('"]["')}"]`;
+  const segments = path.map(seg => (typeof seg === "number" ? seg : `"${seg}"`));
+  return `$[${segments.join("][")}]`;
 };
 
 export const NodeModal = ({ opened, onClose }: ModalProps) => {
