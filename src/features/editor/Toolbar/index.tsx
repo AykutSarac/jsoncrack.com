@@ -69,7 +69,7 @@ export const Toolbar = () => {
           fw="600"
           leftSection={<FaCrown />}
         >
-          Try Pro
+          Try Pro | Work with larger files
         </Button>
       </Group>
       <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
