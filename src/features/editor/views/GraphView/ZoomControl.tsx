@@ -16,8 +16,8 @@ export const ZoomControl = () => {
     [
       ["mod+[plus]", () => zoomIn, { usePhysicalKeys: true }],
       ["mod+[minus]", () => zoomOut, { usePhysicalKeys: true }],
-      ["shift+Digit1", centerView, { usePhysicalKeys: true }],
-      ["shift+Digit2", focusFirstNode, { usePhysicalKeys: true }],
+      ["shift+Digit1", focusFirstNode, { usePhysicalKeys: true }],
+      ["shift+Digit2", centerView, { usePhysicalKeys: true }],
     ],
     []
   );
@@ -40,7 +40,7 @@ export const ZoomControl = () => {
             <Flex fz="xs" gap="md">
               <Text fz="xs">Center first item</Text>
               <Text fz="xs" c="dimmed">
-                ⇧ 2
+                ⇧ 1
               </Text>
             </Flex>
           }
@@ -63,7 +63,7 @@ export const ZoomControl = () => {
             <Flex fz="xs" gap="md">
               <Text fz="xs">Fit to center</Text>
               <Text fz="xs" c="dimmed">
-                ⇧ 1
+                ⇧ 2
               </Text>
             </Flex>
           }
