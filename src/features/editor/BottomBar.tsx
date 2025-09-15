@@ -3,7 +3,6 @@ import { Flex, Menu, Popover, Text } from "@mantine/core";
 import styled from "styled-components";
 import { event as gaEvent } from "nextjs-google-analytics";
 import { BiSolidDockLeft } from "react-icons/bi";
-import { FaCrown } from "react-icons/fa6";
 import { IoMdCheckmark } from "react-icons/io";
 import { MdArrowUpward } from "react-icons/md";
 import { VscCheck, VscError, VscRunAll, VscSync, VscSyncIgnored } from "react-icons/vsc";
@@ -161,30 +160,6 @@ export const BottomBar = () => {
                 {format.label}
               </Menu.Item>
             ))}
-            <Menu.Item
-              fz={12}
-              onClick={() =>
-                window.open(
-                  "https://todiagram.com/editor?utm_source=jsoncrack&utm_medium=bottom-bar&utm_campaign=custom-diagram",
-                  "_blank"
-                )
-              }
-              rightSection={<FaCrown color="gray" />}
-            >
-              Custom
-            </Menu.Item>
-            <Menu.Item
-              fz={12}
-              onClick={() =>
-                window.open(
-                  "https://todiagram.com/editor?utm_source=jsoncrack&utm_medium=bottom-bar&utm_campaign=mermaid-diagram",
-                  "_blank"
-                )
-              }
-              rightSection={<FaCrown color="gray" />}
-            >
-              Mermaid
-            </Menu.Item>
           </Menu.Dropdown>
         </Menu>
       </StyledRight>
