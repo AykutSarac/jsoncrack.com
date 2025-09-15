@@ -22,7 +22,12 @@ const Row = ({ row, x, y, index }: RowProps) => {
   };
 
   return (
-    <Styled.StyledRow $value={row.value} data-key={row.key} data-x={x} data-y={y + rowPosition}>
+    <Styled.StyledRow
+      $value={row.value}
+      data-key={`${row.key}: ${row.value}`}
+      data-x={x}
+      data-y={y + rowPosition}
+    >
       <Styled.StyledKey $type="object">{row.key}: </Styled.StyledKey>
       <TextRenderer>{getRowText()}</TextRenderer>
     </Styled.StyledRow>
