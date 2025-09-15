@@ -76,7 +76,7 @@ export const StyledKey = styled.span<{
 export const StyledRow = styled.span<{ $value: TextColorFn["$value"] }>`
   padding: 3px 10px;
   height: ${NODE_DIMENSIONS.ROW_HEIGHT}px;
-  line-height: 18px;
+  line-height: 24px;
   color: ${({ theme, $value }) => getTextColor({ $value, theme, $type: typeof $value })};
   display: block;
   overflow: hidden;
