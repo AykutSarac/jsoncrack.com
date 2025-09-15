@@ -165,13 +165,25 @@ export const BottomBar = () => {
               fz={12}
               onClick={() =>
                 window.open(
-                  "https://todiagram.com/blog/how-to-create-custom-diagrams-in-todiagram?utm_source=jsoncrack&utm_medium=bottom-bar&utm_campaign=custom-diagram",
+                  "https://todiagram.com/editor?utm_source=jsoncrack&utm_medium=bottom-bar&utm_campaign=custom-diagram",
                   "_blank"
                 )
               }
               rightSection={<FaCrown color="gray" />}
             >
               Custom
+            </Menu.Item>
+            <Menu.Item
+              fz={12}
+              onClick={() =>
+                window.open(
+                  "https://todiagram.com/editor?utm_source=jsoncrack&utm_medium=bottom-bar&utm_campaign=mermaid-diagram",
+                  "_blank"
+                )
+              }
+              rightSection={<FaCrown color="gray" />}
+            >
+              Mermaid
             </Menu.Item>
           </Menu.Dropdown>
         </Menu>
