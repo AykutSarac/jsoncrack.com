@@ -7,13 +7,13 @@ if (process.env.NODE_ENV === "production") {
     tracesSampleRate: 0.2,
     debug: false,
     release: `${process.env.SENTRY_RELEASE || "production"}`,
-    allowUrls: ["https://jsoncrack.com/editor"],
-    replaysOnErrorSampleRate: 1.0,
-    replaysSessionSampleRate: 0.1,
+    allowUrls: [/^https:\/\/jsoncrack\.com/],
+    replaysOnErrorSampleRate: 0,
+    replaysSessionSampleRate: 0,
     integrations: [
-      new Sentry.BrowserTracing(),
-      new Sentry.Replay({
-        maskAllText: true,
+      Sentry.browserTracingIntegration(),
+      Sentry.replayIntegration({
+        maskAllText: false, // [.sentry-mask] added to the text editor
         blockAllMedia: true,
       }),
     ],

@@ -77,6 +77,8 @@ const TextEditor = () => {
     <StyledEditorWrapper>
       <StyledWrapper>
         <Editor
+          className="sentry-mask"
+          data-sentry-mask="true"
           height="100%"
           language={fileType}
           theme={theme}
