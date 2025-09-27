@@ -8,7 +8,7 @@ if (process.env.NODE_ENV === "production") {
     debug: false,
     release: `${process.env.SENTRY_RELEASE || "production"}`,
     allowUrls: [/^https:\/\/jsoncrack\.com/],
-    replaysOnErrorSampleRate: 0,
+    replaysOnErrorSampleRate: 0.5,
     replaysSessionSampleRate: 0,
     integrations: [
       Sentry.browserTracingIntegration(),
