@@ -9,6 +9,7 @@ import { VscCheck, VscError, VscRunAll, VscSync, VscSyncIgnored } from "react-ic
 import { formats } from "../../enums/file.enum";
 import useConfig from "../../store/useConfig";
 import useFile from "../../store/useFile";
+import useWatchMode from "../../store/useWatchMode";
 import useGraph from "./views/GraphView/stores/useGraph";
 
 const StyledBottomBar = styled.div`
@@ -84,6 +85,8 @@ export const BottomBar = () => {
   const fullscreen = useGraph(state => state.fullscreen);
   const setFormat = useFile(state => state.setFormat);
   const currentFormat = useFile(state => state.format);
+  const toggleWatchMode = useWatchMode(state => state.toggleWatchMode);
+  const isWatching = useWatchMode(state => state.isWatching);
 
   const toggleEditor = () => {
     toggleFullscreen(!fullscreen);
@@ -123,6 +126,7 @@ export const BottomBar = () => {
           )}
         </StyledBottomBarItem>
         <StyledBottomBarItem
+          disabled={isWatching}
           onClick={() => {
             toggleLiveTransform(!liveTransformEnabled);
             gaEvent("toggle_live_transform");
@@ -137,12 +141,18 @@ export const BottomBar = () => {
             Click to Transform
           </StyledBottomBarItem>
         )}
+        {isWatching && (
+          <StyledBottomBarItem onClick={() => toggleWatchMode(false)}>
+            <VscSyncIgnored />
+            <Text fz="xs">Stop Watching</Text>
+          </StyledBottomBarItem>
+        )}
       </StyledLeft>
 
       <StyledRight>
         <Menu offset={8}>
           <Menu.Target>
-            <StyledBottomBarItem>
+            <StyledBottomBarItem disabled={isWatching}>
               <Flex align="center" gap={2}>
                 <MdArrowUpward />
                 <Text size="xs">{currentFormat?.toUpperCase()}</Text>

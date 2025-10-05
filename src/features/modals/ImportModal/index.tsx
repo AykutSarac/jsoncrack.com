@@ -7,12 +7,14 @@ import toast from "react-hot-toast";
 import { AiOutlineUpload } from "react-icons/ai";
 import type { FileFormat } from "../../../enums/file.enum";
 import useFile from "../../../store/useFile";
+import useWatchMode from "../../../store/useWatchMode";
 
 export const ImportModal = ({ opened, onClose }: ModalProps) => {
   const [url, setURL] = React.useState("");
   const [file, setFile] = React.useState<File | null>(null);
-  const [watcher, setWatcher] = React.useState<NodeJS.Timeout | null>(null);
 
+  const toggleWatchMode = useWatchMode(state => state.toggleWatchMode);
+  const setWatcherInterval = useWatchMode(state => state.setWatcherInterval);
   const setContents = useFile(state => state.setContents);
   const setFormat = useFile(state => state.setFormat);
 
@@ -27,8 +29,7 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
         .then(res => res.json())
         .then(json => {
           setContents({ contents: JSON.stringify(json, null, 2) });
-          if (watcher) clearInterval(watcher);
-          setWatcher(null);
+          toggleWatchMode(false);
           onClose();
         })
         .catch(() => toast.error("Failed to fetch JSON!"))
@@ -41,8 +42,7 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
       console.log(file);
       file.text().then(text => {
         setContents({ contents: text });
-        if (watcher) clearInterval(watcher);
-        setWatcher(null);
+        toggleWatchMode(false);
         setFile(null);
         setURL("");
         onClose();
@@ -69,8 +69,11 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
       ],
     });
 
-    let lastModified = (await fileHandle.getFile()).lastModified;
-    if (watcher) clearInterval(watcher);
+    const file = await fileHandle.getFile();
+    let lastModified = file.lastModified;
+    const text = await file.text();
+    setContents({ contents: text });
+    toggleWatchMode(true);
     const interval = setInterval(async () => {
       const newFile = await fileHandle.getFile();
       if (newFile.lastModified !== lastModified) {
@@ -80,7 +83,7 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
         toast.success("File updated!");
       }
     }, 5_000);
-    setWatcher(interval);
+    setWatcherInterval(interval);
     setFile(null);
     setURL("");
     onClose();
@@ -91,8 +94,7 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
       title="Import File"
       opened={opened}
       onClose={() => {
-        if (watcher) clearInterval(watcher);
-        setWatcher(null);
+        toggleWatchMode(false);
         setFile(null);
         setURL("");
         onClose();
