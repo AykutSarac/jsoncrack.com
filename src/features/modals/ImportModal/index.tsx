@@ -11,6 +11,7 @@ import useFile from "../../../store/useFile";
 export const ImportModal = ({ opened, onClose }: ModalProps) => {
   const [url, setURL] = React.useState("");
   const [file, setFile] = React.useState<File | null>(null);
+  const [watcher, setWatcher] = React.useState<NodeJS.Timeout | null>(null);
 
   const setContents = useFile(state => state.setContents);
   const setFormat = useFile(state => state.setFormat);
@@ -26,6 +27,8 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
         .then(res => res.json())
         .then(json => {
           setContents({ contents: JSON.stringify(json, null, 2) });
+          if (watcher) clearInterval(watcher);
+          setWatcher(null);
           onClose();
         })
         .catch(() => toast.error("Failed to fetch JSON!"))
@@ -35,8 +38,11 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
       const format = file.name.substring(lastIndex + 1);
       setFormat(format as FileFormat);
 
+      console.log(file);
       file.text().then(text => {
         setContents({ contents: text });
+        if (watcher) clearInterval(watcher);
+        setWatcher(null);
         setFile(null);
         setURL("");
         onClose();
@@ -46,11 +52,47 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
     }
   };
 
+  const enableWatcher = async () => {
+    // El usuario debe seleccionar el archivo manualmente desde el picker
+    const [fileHandle] = await window.showOpenFilePicker({
+      types: [
+        {
+          description: "Cualquier archivo",
+          accept: {
+            "application/json": [".json"],
+            "application/x-yaml": [".yaml", ".yml"],
+            "text/csv": [".csv"],
+            "application/xml": [".xml"],
+            "application/toml": [".toml"],
+          },
+        },
+      ],
+    });
+
+    let lastModified = (await fileHandle.getFile()).lastModified;
+    if (watcher) clearInterval(watcher);
+    const interval = setInterval(async () => {
+      const newFile = await fileHandle.getFile();
+      if (newFile.lastModified !== lastModified) {
+        lastModified = newFile.lastModified;
+        const text = await newFile.text();
+        setContents({ contents: text });
+        toast.success("File updated!");
+      }
+    }, 5_000);
+    setWatcher(interval);
+    setFile(null);
+    setURL("");
+    onClose();
+  };
+
   return (
     <Modal
       title="Import File"
       opened={opened}
       onClose={() => {
+        if (watcher) clearInterval(watcher);
+        setWatcher(null);
         setFile(null);
         setURL("");
         onClose();
@@ -90,6 +132,9 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
         </Paper>
       </Stack>
       <Group justify="right">
+        <Button onClick={enableWatcher} disabled={!!(file || url)}>
+          Watcher
+        </Button>
         <Button onClick={handleImportFile} disabled={!(file || url)}>
           Import
         </Button>
