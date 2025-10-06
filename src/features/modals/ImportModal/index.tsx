@@ -82,7 +82,7 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
         setContents({ contents: text });
         toast.success("File updated!");
       }
-    }, 5_000);
+    }, 3_000);
     setWatcherInterval(interval);
     setFile(null);
     setURL("");
