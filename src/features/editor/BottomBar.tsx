@@ -135,7 +135,7 @@ export const BottomBar = () => {
           {liveTransformEnabled ? <VscSync /> : <VscSyncIgnored />}
           <Text fz="xs">Live Transform</Text>
         </StyledBottomBarItem>
-        {!liveTransformEnabled && (
+        {!liveTransformEnabled && !isWatching && (
           <StyledBottomBarItem onClick={() => setContents({})} disabled={!!error}>
             <VscRunAll />
             Click to Transform
