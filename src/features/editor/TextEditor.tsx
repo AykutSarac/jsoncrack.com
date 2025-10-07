@@ -22,7 +22,7 @@ const editorOptions: EditorProps["options"] = {
   scrollBeyondLastLine: false,
   placeholder: "Start typing...",
   readOnlyMessage: {
-    value: "While watching mode is enabled you can't edit the file",
+    value: "You can't edit the file while watching mode is enabled ",
   },
 };
 
