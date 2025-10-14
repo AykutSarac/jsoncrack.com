@@ -4,7 +4,6 @@ import styled from "styled-components";
 import Editor, { type EditorProps, loader, type OnMount, useMonaco } from "@monaco-editor/react";
 import useConfig from "../../store/useConfig";
 import useFile from "../../store/useFile";
-import { BANNER_HEIGHT } from "../Banner";
 
 loader.config({
   paths: {
@@ -105,7 +104,7 @@ const StyledEditorWrapper = styled.div`
 
 const StyledWrapper = styled.div`
   display: grid;
-  height: ${`calc(100vh - 67px - ${BANNER_HEIGHT})`};
+  height: 100%;
   grid-template-columns: 100%;
   grid-template-rows: minmax(0, 1fr);
 `;

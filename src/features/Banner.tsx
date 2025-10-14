@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Anchor, Flex, Button } from "@mantine/core";
+import { Anchor, Flex, Button, ActionIcon } from "@mantine/core";
+import { useSessionStorage } from "@mantine/hooks";
+import { MdClose } from "react-icons/md";
 
 export const BANNER_HEIGHT =
   process.env.NEXT_PUBLIC_DISABLE_EXTERNAL_MODE === "true" ? "0px" : "40px";
@@ -19,8 +21,14 @@ export const Banner = () => {
 
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(true);
+  const [dismissed, setDismissed] = useSessionStorage({
+    key: "jsoncrack_banner_dismissed",
+    defaultValue: false,
+  });
 
   useEffect(() => {
+    if (dismissed) return;
+
     let fadeTimeout: ReturnType<typeof setTimeout> | undefined;
     const intervalId = setInterval(() => {
       setVisible(false);
@@ -34,7 +42,15 @@ export const Banner = () => {
       clearInterval(intervalId);
       if (fadeTimeout) clearTimeout(fadeTimeout);
     };
-  }, []);
+  }, [dismissed]);
+
+  const handleDismiss = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDismissed(true);
+  };
+
+  if (dismissed) return null;
 
   return (
     <Anchor
@@ -42,6 +58,7 @@ export const Banner = () => {
       target="_blank"
       rel="noopener"
       underline="never"
+      style={{ position: "relative" }}
     >
       <Flex
         h={BANNER_HEIGHT}
@@ -67,6 +84,19 @@ export const Banner = () => {
         <Button size="xs" color="gray">
           Try now
         </Button>
+        <ActionIcon
+          onClick={handleDismiss}
+          size="sm"
+          variant="transparent"
+          style={{
+            position: "absolute",
+            right: "8px",
+            color: "black",
+          }}
+          aria-label="Close banner"
+        >
+          <MdClose size={18} />
+        </ActionIcon>
       </Flex>
     </Anchor>
   );
