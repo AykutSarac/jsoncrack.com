@@ -11,7 +11,7 @@ import "allotment/dist/style.css";
 import { NextSeo } from "next-seo";
 import { SEO } from "../constants/seo";
 import { darkTheme, lightTheme } from "../constants/theme";
-import { Banner, BANNER_HEIGHT } from "../features/Banner";
+import { Banner } from "../features/Banner";
 import { BottomBar } from "../features/editor/BottomBar";
 import { FullscreenDropzone } from "../features/editor/FullscreenDropzone";
 import { Toolbar } from "../features/editor/Toolbar";
@@ -32,6 +32,8 @@ const queryClient = new QueryClient({
 });
 
 export const StyledPageWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
   height: 100vh;
   width: 100%;
 
@@ -50,7 +52,6 @@ export const StyledEditor = styled(Allotment)`
   position: relative !important;
   display: flex;
   background: ${({ theme }) => theme.BACKGROUND_SECONDARY};
-  height: ${`calc(100vh - 40px - ${BANNER_HEIGHT})`};
 
   @media only screen and (max-width: 320px) {
     height: 100vh;

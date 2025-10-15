@@ -14,8 +14,8 @@ export const ZoomControl = () => {
 
   useHotkeys(
     [
-      ["mod+[plus]", () => zoomIn, { usePhysicalKeys: true }],
-      ["mod+[minus]", () => zoomOut, { usePhysicalKeys: true }],
+      ["mod+[plus]", zoomIn, { usePhysicalKeys: true }],
+      ["mod+[minus]", zoomOut, { usePhysicalKeys: true }],
       ["shift+Digit1", focusFirstNode, { usePhysicalKeys: true }],
       ["shift+Digit2", centerView, { usePhysicalKeys: true }],
     ],

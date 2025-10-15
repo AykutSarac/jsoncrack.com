@@ -8,7 +8,6 @@ import { Canvas } from "reaflow";
 import type { ElkRoot } from "reaflow/dist/layout/useLayout";
 import { useLongPress } from "use-long-press";
 import useConfig from "../../../../store/useConfig";
-import { BANNER_HEIGHT } from "../../../Banner";
 import { CustomEdge } from "./CustomEdge";
 import { CustomNode } from "./CustomNode";
 import { NotSupported } from "./NotSupported";
@@ -18,9 +17,8 @@ import { ZoomControl } from "./ZoomControl";
 import useGraph from "./stores/useGraph";
 
 const StyledEditorWrapper = styled.div<{ $widget: boolean; $showRulers: boolean }>`
-  position: absolute;
   width: 100%;
-  height: ${({ $widget }) => ($widget ? "100vh" : `calc(100vh - 40px - ${BANNER_HEIGHT})`)};
+  height: 100vh;
 
   --bg-color: ${({ theme }) => theme.GRID_BG_COLOR};
   --line-color-1: ${({ theme }) => theme.GRID_COLOR_PRIMARY};
