@@ -1,6 +1,6 @@
 import React from "react";
 import type { ModalProps } from "@mantine/core";
-import { Modal, Group, Button, TextInput, Stack, Paper, Text } from "@mantine/core";
+import { Modal, Group, Button, TextInput, Stack, Paper, Text, Tooltip } from "@mantine/core";
 import { Dropzone } from "@mantine/dropzone";
 import { event as gaEvent } from "nextjs-google-analytics";
 import toast from "react-hot-toast";
@@ -12,6 +12,11 @@ import useWatchMode from "../../../store/useWatchMode";
 export const ImportModal = ({ opened, onClose }: ModalProps) => {
   const [url, setURL] = React.useState("");
   const [file, setFile] = React.useState<File | null>(null);
+
+  const availableFilePicker = React.useMemo(() => {
+    if (typeof window === "undefined") return false;
+    return "showOpenFilePicker" in window;
+  }, []);
 
   const toggleWatchMode = useWatchMode(state => state.toggleWatchMode);
   const setWatcherInterval = useWatchMode(state => state.setWatcherInterval);
@@ -52,12 +57,13 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
     }
   };
 
-  const enableWatcher = async () => {
-    // El usuario debe seleccionar el archivo manualmente desde el picker
+  const enableWatcher = React.useCallback(async () => {
+    if (!availableFilePicker) return;
+    
     const [fileHandle] = await window.showOpenFilePicker({
       types: [
         {
-          description: "Cualquier archivo",
+          description: "Any file",
           accept: {
             "application/json": [".json"],
             "application/x-yaml": [".yaml", ".yml"],
@@ -67,11 +73,16 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
           },
         },
       ],
-    });
+    }).catch(() => []);
+
+    if (!fileHandle) return;
 
     const file = await fileHandle.getFile();
     let lastModified = file.lastModified;
     const text = await file.text();
+    const lastIndex = file.name.lastIndexOf(".");
+    const format = file.name.substring(lastIndex + 1);
+    setFormat(format as FileFormat);
     setContents({ contents: text });
     toggleWatchMode(true);
     const interval = setInterval(async () => {
@@ -87,6 +98,28 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
     setFile(null);
     setURL("");
     onClose();
+  }, [availableFilePicker, onClose, setContents, setFormat, setWatcherInterval, toggleWatchMode]);
+
+  const WatcherButton = () => {
+    if (!availableFilePicker)
+      return (
+        <Tooltip
+          label="Not suported in this browser"
+          fz="xs"
+          ta="center"
+          maw="200"
+          withArrow
+          openDelay={500}
+        >
+          <Button disabled={true}>Watcher</Button>
+        </Tooltip>
+      );
+
+    return (
+      <Button onClick={enableWatcher} disabled={!!(file || url)}>
+        Watcher
+      </Button>
+    );
   };
 
   return (
@@ -134,9 +167,7 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
         </Paper>
       </Stack>
       <Group justify="right">
-        <Button onClick={enableWatcher} disabled={!!(file || url)}>
-          Watcher
-        </Button>
+        <WatcherButton />
         <Button onClick={handleImportFile} disabled={!(file || url)}>
           Import
         </Button>
