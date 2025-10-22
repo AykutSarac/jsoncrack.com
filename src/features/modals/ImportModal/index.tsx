@@ -59,21 +59,23 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
 
   const enableWatcher = React.useCallback(async () => {
     if (!availableFilePicker) return;
-    
-    const [fileHandle] = await window.showOpenFilePicker({
-      types: [
-        {
-          description: "Any file",
-          accept: {
-            "application/json": [".json"],
-            "application/x-yaml": [".yaml", ".yml"],
-            "text/csv": [".csv"],
-            "application/xml": [".xml"],
-            "application/toml": [".toml"],
+
+    const [fileHandle] = await window
+      .showOpenFilePicker({
+        types: [
+          {
+            description: "Any file",
+            accept: {
+              "application/json": [".json"],
+              "application/x-yaml": [".yaml", ".yml"],
+              "text/csv": [".csv"],
+              "application/xml": [".xml"],
+              "application/toml": [".toml"],
+            },
           },
-        },
-      ],
-    }).catch(() => []);
+        ],
+      })
+      .catch(() => []);
 
     if (!fileHandle) return;
 
@@ -82,8 +84,7 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
     const text = await file.text();
     const lastIndex = file.name.lastIndexOf(".");
     const format = file.name.substring(lastIndex + 1);
-    setFormat(format as FileFormat);
-    setContents({ contents: text });
+    setContents({ contents: text, format: format as FileFormat });
     toggleWatchMode(true);
     const interval = setInterval(async () => {
       const newFile = await fileHandle.getFile();
@@ -98,7 +99,7 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
     setFile(null);
     setURL("");
     onClose();
-  }, [availableFilePicker, onClose, setContents, setFormat, setWatcherInterval, toggleWatchMode]);
+  }, [availableFilePicker, onClose, setContents, setWatcherInterval, toggleWatchMode]);
 
   const WatcherButton = () => {
     if (!availableFilePicker)
