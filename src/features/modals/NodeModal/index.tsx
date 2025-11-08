@@ -11,50 +11,44 @@ import { jsonToContent } from "../../../lib/utils/jsonAdapter";
 // helper: is plain object
 const isPlainObject = (v: any) => v && typeof v === "object" && !Array.isArray(v);
 
+// helper: extract primitive fields from node rows
+const getPrimitiveFields = (nodeRows: NodeData["text"]) => {
+  const obj: Record<string, any> = {};
+  nodeRows?.forEach(row => {
+    if (!row.key) return;
+    if (row.type !== "object" && row.type !== "array") {
+      const v = row.value;
+      if (typeof v === "string") {
+        const trimmed = v.trim();
+        if (/^-?\d+(\.\d+)?$/.test(trimmed)) {
+          obj[row.key] = Number(trimmed);
+        } else if (trimmed === "true" || trimmed === "false") {
+          obj[row.key] = trimmed === "true";
+        } else {
+          obj[row.key] = v;
+        }
+      } else {
+        obj[row.key] = v;
+      }
+    }
+  });
+  return obj;
+};
+
 // return object/array from node rows removing array and object fields as needed
 const normalizeNodeData = (nodeRows: NodeData["text"]) => {
   if (!nodeRows || nodeRows.length === 0) return "{}";
 
-  // if every row has a numeric key (array-like), build array
-  const allNumericKeys = nodeRows.every(row => row.key !== undefined && /^\d+$/.test(String(row.key)));
-  if (allNumericKeys) {
-    const arr: any[] = [];
-    nodeRows.forEach(row => {
-      let raw = row.value;
-      if (typeof raw === "string" && (raw.trim().startsWith("{") || raw.trim().startsWith("["))) {
-        try {
-          raw = JSON.parse(raw);
-        } catch {
-          // keep string
-        }
-      }
-      arr[Number(row.key)] = raw;
-    });
-    return JSON.stringify(arr, null, 2);
-  }
-
-  // if single, and no key, return the raw value (already stringified for objects)
+  // if single value with no key, return it directly
   if (nodeRows.length === 1 && !nodeRows[0].key) {
     return String(nodeRows[0].value);
   }
 
-  // Build an object from rows. If a row value looks like JSON, parse it.
-  const obj: Record<string, any> = {};
-  nodeRows?.forEach(row => {
-    if (!row.key) return;
-    const raw = row.value;
-    if (typeof raw === "string" && (raw.trim().startsWith("{") || raw.trim().startsWith("["))) {
-      try {
-        obj[row.key] = JSON.parse(raw);
-      } catch {
-        obj[row.key] = raw;
-      }
-    } else {
-      obj[row.key] = raw;
-    }
-  });
-
-  return JSON.stringify(obj, null, 2);
+  // For all other cases, return only primitive fields
+  const primitiveObj = getPrimitiveFields(nodeRows);
+  return Object.keys(primitiveObj).length 
+    ? JSON.stringify(primitiveObj, null, 2)
+    : "{}";
 };
 
 // return json path in the format $["customer"]
@@ -144,29 +138,8 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
       return;
     }
 
-    // Otherwise build an object of only primitive fields (non-object/non-array) so editing only changes those
-    const primitiveObj: Record<string, any> = {};
-    (nodeData?.text ?? []).forEach(row => {
-      if (!row.key) return;
-      if (row.type !== "object" && row.type !== "array") {
-        // try to parse numbers/booleans, but fall back to string
-        const v = row.value;
-        if (typeof v === "string") {
-          const trimmed = v.trim();
-          if (/^-?\d+(\.\d+)?$/.test(trimmed)) {
-            primitiveObj[row.key] = Number(trimmed);
-          } else if (trimmed === "true" || trimmed === "false") {
-            primitiveObj[row.key] = trimmed === "true";
-          } else {
-            primitiveObj[row.key] = v;
-          }
-        } else {
-          primitiveObj[row.key] = v;
-        }
-      }
-    });
-
-    // If no primitive fields found, show empty object so user knows they can't edit children here
+    // Get primitive fields (reuse the same function used in view mode)
+    const primitiveObj = getPrimitiveFields(nodeData?.text ?? []);
     setEditValue(Object.keys(primitiveObj).length ? JSON.stringify(primitiveObj, null, 2) : "{}");
     setIsEditing(true);
   };
