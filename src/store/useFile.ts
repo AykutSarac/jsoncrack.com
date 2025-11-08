@@ -10,6 +10,18 @@ import { contentToJson, jsonToContent } from "../lib/utils/jsonAdapter";
 import useConfig from "./useConfig";
 import useJson from "./useJson";
 
+import { modify, applyEdits, type JSONPath } from "jsonc-parser";
+
+/**
+ * Patch a JSON string at a JSONPath while preserving formatting/comments.
+ * Accepts any valid JSON value (number, string, boolean, null, object, array).
+ */
+export function setJsonAtPathText(source: string, path: JSONPath, value: unknown): string {
+  const edits = modify(source, path, value, {
+    formattingOptions: { insertSpaces: true, tabSize: 2 },
+  });
+  return applyEdits(source, edits);
+}
 const defaultJson = JSON.stringify(exampleJson, null, 2);
 
 type SetContents = {
@@ -20,21 +32,6 @@ type SetContents = {
 };
 
 type Query = string | string[] | undefined;
-
-interface JsonActions {
-  getContents: () => string;
-  getFormat: () => FileFormat;
-  getHasChanges: () => boolean;
-  setError: (error: string | null) => void;
-  setHasChanges: (hasChanges: boolean) => void;
-  setContents: (data: SetContents) => void;
-  fetchUrl: (url: string) => void;
-  setFormat: (format: FileFormat) => void;
-  clear: () => void;
-  setFile: (fileData: File) => void;
-  setJsonSchema: (jsonSchema: object | null) => void;
-  checkEditorSession: (url: Query, widget?: boolean) => void;
-}
 
 export type File = {
   id: string;
@@ -59,6 +56,22 @@ const initialStates = {
 
 export type FileStates = typeof initialStates;
 
+interface JsonActions {
+  getContents: () => string;
+  getFormat: () => FileFormat;
+  getHasChanges: () => boolean;
+  setError: (error: string | null) => void;
+  setHasChanges: (hasChanges: boolean) => void;
+  setContents: (data: SetContents) => void;
+  fetchUrl: (url: string) => void;
+  setFormat: (format: FileFormat) => void;
+  clear: () => void;
+  setFile: (fileData: File) => void;
+  setJsonSchema: (jsonSchema: object | null) => void;
+  checkEditorSession: (url: Query, widget?: boolean) => void;
+  applyNodeEdit: (path: JSONPath, value: unknown) => void;
+}
+
 const isURL = (value: string) => {
   return /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/gi.test(
     value
@@ -72,24 +85,29 @@ const debouncedUpdateJson = debounce((value: unknown) => {
 
 const useFile = create<FileStates & JsonActions>()((set, get) => ({
   ...initialStates,
+
   clear: () => {
     set({ contents: "" });
     useJson.getState().clear();
   },
-  setJsonSchema: jsonSchema => set({ jsonSchema }),
-  setFile: fileData => {
+
+  setJsonSchema: (jsonSchema) => set({ jsonSchema }),
+
+  setFile: (fileData) => {
     set({ fileData, format: fileData.format || FileFormat.JSON });
     get().setContents({ contents: fileData.content, hasChanges: false });
     gaEvent("set_content", { label: fileData.format });
   },
+
   getContents: () => get().contents,
   getFormat: () => get().format,
   getHasChanges: () => get().hasChanges,
-  setFormat: async format => {
+
+  setFormat: async (format) => {
     try {
       const prevFormat = get().format;
-
       set({ format });
+
       const contentJson = await contentToJson(get().contents, prevFormat);
       const jsonContent = await jsonToContent(JSON.stringify(contentJson, null, 2), format);
 
@@ -99,6 +117,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       console.warn("The content was unable to be converted, so it was cleared instead.");
     }
   },
+
   setContents: async ({ contents, hasChanges = true, skipUpdate = false, format }) => {
     try {
       set({
@@ -127,9 +146,11 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       useGraph.setState({ loading: false });
     }
   },
-  setError: error => set({ error }),
-  setHasChanges: hasChanges => set({ hasChanges }),
-  fetchUrl: async url => {
+
+  setError: (error) => set({ error }),
+  setHasChanges: (hasChanges) => set({ hasChanges }),
+
+  fetchUrl: async (url) => {
     try {
       const res = await fetch(url);
       const json = await res.json();
@@ -142,6 +163,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       toast.error("Failed to fetch document from URL!");
     }
   },
+
   checkEditorSession: (url, widget) => {
     if (url && typeof url === "string" && isURL(url)) {
       return get().fetchUrl(url);
@@ -154,6 +176,27 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
 
     if (format) set({ format });
     get().setContents({ contents, hasChanges: false });
+  },
+
+  applyNodeEdit: (path, value) => {
+    const { contents, format } = get();
+
+    if (format !== FileFormat.JSON) {
+      toast.error("Editing nodes is only supported for JSON files.");
+      return;
+    }
+    if (!path || path.length === 0) {
+      toast.error("Missing JSON path for node.");
+      return;
+    }
+
+    try {
+      const nextText = setJsonAtPathText(contents, path, value);
+      get().setContents({ contents: nextText, hasChanges: true, skipUpdate: false });
+    } catch (e: any) {
+      console.error(e);
+      toast.error("Failed to update JSON at the selected node.");
+    }
   },
 }));
 
