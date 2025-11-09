@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import type { ModalProps } from "@mantine/core";
-import { Modal, Stack, Text, ScrollArea, Flex, CloseButton } from "@mantine/core";
+import { Modal, Stack, Text, ScrollArea, Flex, CloseButton, Button, Group, Textarea } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
+import { toast } from "react-hot-toast";
+import type { Node } from "jsonc-parser";
 import type { NodeData } from "../../../types/graph";
 import useGraph from "../../editor/views/GraphView/stores/useGraph";
 
@@ -28,6 +30,46 @@ const jsonPathToString = (path?: NodeData["path"]) => {
 
 export const NodeModal = ({ opened, onClose }: ModalProps) => {
   const nodeData = useGraph(state => state.selectedNode);
+  const updateNode = useGraph(state => state.updateNode);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedContent, setEditedContent] = useState("");
+
+  const handleEdit = () => {
+    setEditedContent(normalizeNodeData(nodeData?.text ?? []));
+    setIsEditing(true);
+  };
+
+  const handleSave = async () => {
+    try {
+      const parsedContent = JSON.parse(editedContent);
+      if (nodeData) {
+        const newNodeData = {
+          ...nodeData,
+          text: Object.entries(parsedContent).map(([key, value]) => ({
+            key,
+            value: String(value),
+            type: (typeof value === 'object' 
+                    ? (Array.isArray(value) ? 'array' : 'object')
+                    : value === null ? 'null'
+                    : typeof value === 'string' ? 'string'
+                    : typeof value === 'number' ? 'number'
+                    : typeof value === 'boolean' ? 'boolean'
+                    : 'string') as Node['type']
+          }))
+        };
+        await updateNode(newNodeData);
+      }
+      setIsEditing(false);
+    } catch (error) {
+      console.error('Invalid JSON:', error);
+      toast.error('Failed to update the node');
+    }
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
+    setEditedContent("");
+  };
 
   return (
     <Modal size="auto" opened={opened} onClose={onClose} centered withCloseButton={false}>
@@ -40,14 +82,42 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
             <CloseButton onClick={onClose} />
           </Flex>
           <ScrollArea.Autosize mah={250} maw={600}>
-            <CodeHighlight
-              code={normalizeNodeData(nodeData?.text ?? [])}
-              miw={350}
-              maw={600}
-              language="json"
-              withCopyButton
-            />
+            {isEditing ? (
+              <Textarea
+                value={editedContent}
+                onChange={(event) => setEditedContent(event.currentTarget.value)}
+                minRows={4}
+                maxRows={8}
+                miw={350}
+                maw={600}
+                autosize
+              />
+            ) : (
+              <CodeHighlight
+                code={normalizeNodeData(nodeData?.text ?? [])}
+                miw={350}
+                maw={600}
+                language="json"
+                withCopyButton
+              />
+            )}
           </ScrollArea.Autosize>
+          <Group justify="flex-end">
+            {!isEditing ? (
+              <Button size="xs" onClick={handleEdit}>
+                Edit
+              </Button>
+            ) : (
+              <>
+                <Button size="xs" color="red" onClick={handleCancel}>
+                  Cancel
+                </Button>
+                <Button size="xs" color="green" onClick={handleSave}>
+                  Save
+                </Button>
+              </>
+            )}
+          </Group>
         </Stack>
         <Text fz="xs" fw={500}>
           JSON Path

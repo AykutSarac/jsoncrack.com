@@ -1,6 +1,7 @@
 import type { ViewPort } from "react-zoomable-ui/dist/ViewPort";
 import type { CanvasDirection } from "reaflow/dist/layout/elkLayout";
 import { create } from "zustand";
+import { toast } from "react-hot-toast";
 import { SUPPORTED_LIMIT } from "../../../../../constants/graph";
 import useJson from "../../../../../store/useJson";
 import type { EdgeData, NodeData } from "../../../../../types/graph";
@@ -43,6 +44,7 @@ interface GraphActions {
   centerView: () => void;
   clearGraph: () => void;
   setZoomFactor: (zoomFactor: number) => void;
+  updateNode: (updatedNode: NodeData) => Promise<void>;
 }
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
@@ -101,6 +103,65 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
   },
   toggleFullscreen: fullscreen => set({ fullscreen }),
   setViewPort: viewPort => set({ viewPort }),
+  updateNode: async updatedNode => {
+    try {
+      // Get the current JSON
+      const currentJson = JSON.parse(useJson.getState().json);
+      
+      // Update the JSON at the node's path
+      let current = currentJson;
+      const path = updatedNode.path || [];
+      
+      // Navigate to the parent object
+      for (let i = 0; i < path.length - 1; i++) {
+        current = current[path[i]];
+      }
+
+      // Update the value
+      if (path.length > 0) {
+        const lastKey = path[path.length - 1];
+        if (updatedNode.text.length === 1 && !updatedNode.text[0].key) {
+          // Single value node
+          const value = updatedNode.text[0].value;
+          // Convert string values to their proper types
+          const parsedValue = 
+            updatedNode.text[0].type === 'number' ? Number(value) :
+            updatedNode.text[0].type === 'boolean' ? value === 'true' :
+            updatedNode.text[0].type === 'null' ? null :
+            value;
+          current[lastKey] = parsedValue;
+        } else {
+          // Object node
+          const obj = {};
+          updatedNode.text.forEach(row => {
+            if (row.type !== "array" && row.type !== "object" && row.key) {
+              const value = row.value;
+              // Convert string values to their proper types
+              const parsedValue = 
+                row.type === 'number' ? Number(value) :
+                row.type === 'boolean' ? value === 'true' :
+                row.type === 'null' ? null :
+                value;
+              obj[row.key] = parsedValue;
+            }
+          });
+          current[lastKey] = obj;
+        }
+      }
+
+      // Update the store with the new JSON and trigger updates
+      const newJsonString = JSON.stringify(currentJson, null, 2);
+      useJson.getState().setJson(newJsonString);
+      
+      // Update the text editor contents
+      const useFileStore = (await import('../../../../../store/useFile')).default;
+      useFileStore.getState().setContents({ contents: newJsonString });
+
+    } catch (error) {
+      console.error('Error updating JSON:', error);
+      toast.error('Failed to update the visualization');
+    }
+  },
 }));
 
 export default useGraph;
