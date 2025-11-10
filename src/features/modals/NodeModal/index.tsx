@@ -93,11 +93,29 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
     <Modal size="auto" opened={opened} onClose={onClose} centered withCloseButton={false}>
       <Stack pb="sm" gap="sm">
         <Stack gap="xs">
+          <Flex justify="flex-end">
+            <CloseButton onClick={onClose} />
+          </Flex>
           <Flex justify="space-between" align="center">
             <Text fz="xs" fw={500}>
               Content
             </Text>
-            <CloseButton onClick={onClose} />
+            <Flex gap="xs" align="center">
+              {!editing ? (
+                <Button size="xs" variant="light" onClick={handleEdit}>
+                  Edit
+                </Button>
+              ) : (
+                <>
+                  <Button size="xs" color="green" onClick={handleSave}>
+                    Save
+                  </Button>
+                  <Button size="xs" variant="light" color="gray" onClick={handleCancel}>
+                    Cancel
+                  </Button>
+                </>
+              )}
+            </Flex>
           </Flex>
 
           {!editing ? (
@@ -120,22 +138,7 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
             />
           )}
 
-          <Flex justify="flex-end">
-            {!editing ? (
-              <Button size="xs" variant="light" onClick={handleEdit}>
-                Edit
-              </Button>
-            ) : (
-              <>
-                <Button size="xs" color="green" onClick={handleSave}>
-                  Save
-                </Button>
-                <Button size="xs" variant="outline" onClick={handleCancel}>
-                  Cancel
-                </Button>
-              </>
-            )}
-          </Flex>
+          {/* Save/Cancel are shown inline with the Content label */}
         </Stack>
 
         <Text fz="xs" fw={500}>
