@@ -6,3 +6,5 @@ export { SchemaModal } from "./SchemaModal";
 export { JQModal } from "./JQModal";
 export { TypeModal } from "./TypeModal";
 export { JPathModal } from "./JPathModal";
+
+export { EditValueModal } from "./EditValueModal";
