@@ -14,6 +14,10 @@ export interface NodeData {
   width: number;
   height: number;
   path?: JSONPath;
+  // optional UI customizations
+  color?: string;
+  // optional display override for the node's primary label
+  displayName?: string;
 }
 
 export interface EdgeData {
