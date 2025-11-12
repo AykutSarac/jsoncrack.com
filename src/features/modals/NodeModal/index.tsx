@@ -5,6 +5,7 @@ import { CodeHighlight } from "@mantine/code-highlight";
 import type { NodeData } from "../../../types/graph";
 import useGraph from "../../editor/views/GraphView/stores/useGraph";
 import useJson from "../../../store/useJson";
+import useFile from "../../../store/useFile";
 
 // return object from json removing array and object fields
 const normalizeNodeData = (nodeRows: NodeData["text"]) => {
@@ -45,7 +46,27 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
 
   const enterEditMode = () => {
     setError(null);
-    setEditedContent(normalizeNodeData(nodeData?.text ?? []));
+    try {
+      const raw = getJson();
+      const parsed = JSON.parse(raw);
+
+      const getValueAtPath = (obj: any, path: NodeData["path"] | undefined) => {
+        if (!path || path.length === 0) return obj;
+        let curr = obj;
+        for (let i = 0; i < path.length; i++) {
+          const seg = path[i] as string | number;
+          if (curr === undefined || curr === null) return undefined;
+          curr = curr[seg];
+        }
+        return curr;
+      };
+
+      const value = getValueAtPath(parsed, nodeData?.path);
+      setEditedContent(JSON.stringify(value, null, 2));
+    } catch (err) {
+      // fallback to previous behavior
+      setEditedContent(normalizeNodeData(nodeData?.text ?? []));
+    }
     setIsEditing(true);
   };
 
@@ -76,16 +97,18 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
     try {
       const newValue = JSON.parse(editedContent);
 
-      // get current app JSON
-      const raw = getJson();
-      const parsed = JSON.parse(raw);
+  // get current app JSON
+  const raw = getJson();
+  const parsed = JSON.parse(raw);
 
-      const updated = setValueAtPath(parsed, nodeData?.path, newValue);
+  const updated = setValueAtPath(parsed, nodeData?.path, newValue);
 
-      setJson(JSON.stringify(updated, null, 2));
+  // Update the editor/file contents so Export and other file-level state reflect the change
+  useFile.getState().setContents({ contents: JSON.stringify(updated, null, 2), hasChanges: true });
 
-      setIsEditing(false);
-      onClose?.();
+  // debouncedUpdateJson inside useFile will update useJson / graph; close modal
+  setIsEditing(false);
+  onClose?.();
     } catch (err: any) {
       setError(err?.message ?? String(err));
     }
