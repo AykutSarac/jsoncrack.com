@@ -65,6 +65,8 @@ export const parser = (json: string): Graph => {
       if (!child.children || !child.children[1]) return traverse(child, id);
 
       const key = child.children[0].value ?? null;
+      // ignore internal sidecar used for presentation (styles) so it doesn't become graph nodes
+      if (key === "_styles") return;
       const valueNode = child.children[1];
       const type = valueNode.type;
 

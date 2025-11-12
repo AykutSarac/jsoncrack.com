@@ -60,9 +60,14 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       });
     }
 
+    // refresh selected node reference so modal / inline UI sees latest data
+    const prevSelected = get().selectedNode;
+    const refreshedSelected = prevSelected ? nodes.find(n => n.id === prevSelected.id) ?? null : null;
+
     set({
       nodes,
       edges,
+      selectedNode: refreshedSelected,
       aboveSupportedLimit: false,
       ...options,
     });

@@ -2,6 +2,7 @@ import React from "react";
 import { useComputedColorScheme } from "@mantine/core";
 import type { NodeProps } from "reaflow";
 import { Node } from "reaflow";
+import useJson from "../../../../../store/useJson";
 import { useModal } from "../../../../../store/useModal";
 import type { NodeData } from "../../../../../types/graph";
 import useGraph from "../stores/useGraph";
@@ -41,13 +42,24 @@ const CustomNodeWrapper = (nodeProps: NodeProps<NodeData>) => {
         ev.currentTarget.style.stroke = colorScheme === "dark" ? "#424242" : "#BCBEC0";
       }}
       style={{
-        fill: colorScheme === "dark" ? "#292929" : "#ffffff",
+        fill: (() => {
+          try {
+            const json = useJson.getState().json;
+            const parsed = JSON.parse(json || "{}");
+            const styles = parsed?._styles?.[nodeProps.properties.id];
+            if (styles && styles.color) return styles.color;
+          } catch (e) {
+            // ignore
+          }
+          return colorScheme === "dark" ? "#292929" : "#ffffff";
+        })(),
         stroke: colorScheme === "dark" ? "#424242" : "#BCBEC0",
         strokeWidth: 1,
       }}
     >
       {({ node, x, y }) => {
-        const hasKey = nodeProps.properties.text[0].key;
+        // Guard against accessing text[0] when it doesn't exist
+        const hasKey = nodeProps.properties.text?.[0]?.key;
         if (!hasKey) return <TextNode node={nodeProps.properties as NodeData} x={x} y={y} />;
 
         return <ObjectNode node={node as NodeData} x={x} y={y} />;
