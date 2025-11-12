@@ -9,6 +9,7 @@ import useFile from "../../../store/useFile";
 import useNodeEdit from "../../../store/useNodeEdit";
 import { useEffect } from "react";
 import updateJsonStyles from "../../../lib/utils/json/updateJsonStyles";
+import updateJsonValue from "../../../lib/utils/json/updateJsonValue";
 import { useState } from "react";
 
 // return object from json removing array and object fields
@@ -37,6 +38,7 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
   const { open, editingNodeId, draft, start, updateDraft, reset } = useNodeEdit();
   const json = useJson(state => state.json);
   const setJson = useJson(state => state.setJson);
+  const setContents = useFile(state => state.setContents);
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
@@ -54,30 +56,32 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
               Content
             </Text>
             <Flex gap="xs" align="center">
-              <Button
-                size="xs"
-                variant="outline"
-                onClick={() => {
-                  const node = nodeData;
-                  if (!node) return;
-                  // derive initial values from node text and _styles
-                  const parsed = (() => {
-                    try {
-                      return JSON.parse(json || "{}");
-                    } catch (e) {
-                      return null;
-                    }
-                  })();
-                  const styles = parsed?._styles?.[node.id];
-                  const initialName = styles?.displayName ?? node.text?.[0]?.value ?? "";
-                  const initialColor = styles?.color ?? "#4C6EF5";
-                    // start modal-based edit and suppress the inline editor render on the graph
-                    start(node.id, { name: String(initialName), color: initialColor }, { suppressInline: true });
-                }}
-                data-testid="node-modal-edit-btn"
-              >
-                Edit
-              </Button>
+              {!(open && editingNodeId === nodeData?.id) && (
+                <Button
+                  size="xs"
+                  variant="outline"
+                  onClick={() => {
+                    const node = nodeData;
+                    if (!node) return;
+                    // derive initial values from node text and _styles
+                    const parsed = (() => {
+                      try {
+                        return JSON.parse(json || "{}");
+                      } catch (e) {
+                        return null;
+                      }
+                    })();
+                    const styles = parsed?._styles?.[node.id];
+                    const initialName = styles?.displayName ?? node.text?.[0]?.value ?? "";
+                    const initialColor = styles?.color ?? "#4C6EF5";
+                      // start modal-based edit and suppress the inline editor render on the graph
+                      start(node.id, { name: String(initialName), color: initialColor }, { suppressInline: true });
+                  }}
+                  data-testid="node-modal-edit-btn"
+                >
+                  Edit
+                </Button>
+              )}
               <CloseButton onClick={onClose} />
             </Flex>
           </Flex>
@@ -112,14 +116,59 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
                   <Button size="xs" onClick={async () => {
                     setSaving(true);
                     try {
-                      const next = updateJsonStyles(json, String(nodeData?.id ?? ""), { displayName: draft.name, color: draft.color });
+                      if (!nodeData) return;
+                      
+                      let updatedJson = json;
+                      
+                      // Determine which field to update based on node structure
+                      // Check if this is an object node with a "name" field
+                      const nameRow = nodeData.text?.find(row => row.key === "name");
+                      const firstRow = nodeData.text?.[0];
+                      const isObjectNode = firstRow?.key !== null;
+                      
+                      if (nameRow && nodeData.path) {
+                        // Object node with a "name" field - update the name field
+                        updatedJson = updateJsonValue(updatedJson, nodeData.path, draft.name, "name");
+                        // Also update the color field if it exists in the object
+                        const colorRow = nodeData.text?.find(row => row.key === "color");
+                        if (colorRow) {
+                          updatedJson = updateJsonValue(updatedJson, nodeData.path, draft.color, "color");
+                        }
+                      } else if (nodeData.path && nodeData.path.length > 0 && !isObjectNode) {
+                        // Text node (leaf value) - update the value directly at the path
+                        // Try to preserve the original type if possible
+                        let valueToSet: string | number | null = draft.name;
+                        if (firstRow?.value !== null && typeof firstRow.value === "number") {
+                          // Try to parse as number if original was a number
+                          const numValue = Number(draft.name);
+                          if (!isNaN(numValue) && draft.name.trim() !== "") {
+                            valueToSet = numValue;
+                          }
+                        } else if (firstRow?.value === null || firstRow?.value === "null") {
+                          // Handle null values
+                          if (draft.name.toLowerCase() === "null") {
+                            valueToSet = null;
+                          }
+                        }
+                        updatedJson = updateJsonValue(updatedJson, nodeData.path, valueToSet);
+                      } else if (isObjectNode && nodeData.path) {
+                        // Object node but no "name" field - try to update the first field's value
+                        // This handles cases where the user wants to edit a different field
+                        // For now, if there's no name field, we'll just update styles
+                        // (The actual field editing could be enhanced in the future)
+                      }
+                      
+                      // Also update the styles for display purposes (displayName and color)
+                      updatedJson = updateJsonStyles(updatedJson, String(nodeData.id), { displayName: draft.name, color: draft.color });
+                      
                       // update both the json store (graph pipeline) and the file editor contents so the left editor shows the change
-                      setJson(next);
-                      // directly update useFile state using setState so Monaco re-renders with new content
-                      useFile.setState({ contents: next, hasChanges: false });
+                      setJson(updatedJson);
+                      // update the file editor contents using setContents with skipUpdate to prevent triggering graph update
+                      // (since we're already updating the graph via setJson above)
+                      await setContents({ contents: updatedJson, hasChanges: false, skipUpdate: true });
                       // also persist to session storage (used on page load) so both editors/readers see the change
                       try {
-                        sessionStorage.setItem("content", next);
+                        sessionStorage.setItem("content", updatedJson);
                         sessionStorage.setItem("format", "JSON");
                       } catch (e) {
                         // session storage may not be available in some contexts; swallow

@@ -2,12 +2,12 @@ import React from "react";
 import { useComputedColorScheme } from "@mantine/core";
 import type { NodeProps } from "reaflow";
 import { Node } from "reaflow";
+import useJson from "../../../../../store/useJson";
 import { useModal } from "../../../../../store/useModal";
 import type { NodeData } from "../../../../../types/graph";
 import useGraph from "../stores/useGraph";
 import { ObjectNode } from "./ObjectNode";
 import { TextNode } from "./TextNode";
-import useJson from "../../../../../store/useJson";
 
 export interface CustomNodeProps {
   node: NodeData;
@@ -58,7 +58,8 @@ const CustomNodeWrapper = (nodeProps: NodeProps<NodeData>) => {
       }}
     >
       {({ node, x, y }) => {
-        const hasKey = nodeProps.properties.text[0].key;
+        // Guard against accessing text[0] when it doesn't exist
+        const hasKey = nodeProps.properties.text?.[0]?.key;
         if (!hasKey) return <TextNode node={nodeProps.properties as NodeData} x={x} y={y} />;
 
         return <ObjectNode node={node as NodeData} x={x} y={y} />;
