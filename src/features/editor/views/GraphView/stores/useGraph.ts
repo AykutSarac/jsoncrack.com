@@ -2,6 +2,7 @@ import type { ViewPort } from "react-zoomable-ui/dist/ViewPort";
 import type { CanvasDirection } from "reaflow/dist/layout/elkLayout";
 import { create } from "zustand";
 import { SUPPORTED_LIMIT } from "../../../../../constants/graph";
+import useFile from "../../../../../store/useFile";
 import useJson from "../../../../../store/useJson";
 import type { EdgeData, NodeData } from "../../../../../types/graph";
 import { parser } from "../lib/jsonParser";
@@ -43,6 +44,7 @@ interface GraphActions {
   centerView: () => void;
   clearGraph: () => void;
   setZoomFactor: (zoomFactor: number) => void;
+  updateNodeValue: (nodeId: string, newValue: string) => void;
 }
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
@@ -101,6 +103,64 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
   },
   toggleFullscreen: fullscreen => set({ fullscreen }),
   setViewPort: viewPort => set({ viewPort }),
+  updateNodeValue: (nodeId: string, newValue: string) => {
+    const nodes = get().nodes;
+
+    // Find the node to update
+    const nodeIndex = nodes.findIndex(n => n.id === nodeId);
+    if (nodeIndex === -1) return;
+
+    const node = nodes[nodeIndex];
+    if (!node.path || node.path.length === 0) return;
+
+    // Get the current JSON from useFile (the actual source)
+    const currentContent = useFile.getState().getContents();
+    try {
+      const jsonObj = JSON.parse(currentContent);
+
+      // Navigate to parent and the target node
+      let parent = jsonObj;
+      const path = node.path as (string | number)[];
+      
+      for (let i = 0; i < path.length - 1; i++) {
+        parent = parent[path[i]];
+      }
+
+      const lastKey = path[path.length - 1];
+      const currentNode = parent[lastKey];
+
+      // If the current node is an object with nested properties, merge the updates
+      if (typeof currentNode === "object" && currentNode !== null && !Array.isArray(currentNode)) {
+        try {
+          const editedValues = JSON.parse(newValue);
+          // Merge: keep existing nested objects/arrays, update primitive fields
+          const merged = { ...currentNode };
+          Object.keys(editedValues).forEach(key => {
+            merged[key] = editedValues[key];
+          });
+          parent[lastKey] = merged;
+        } catch {
+          // If parse fails, treat as string replacement
+          parent[lastKey] = newValue;
+        }
+      } else {
+        // For primitives or arrays, replace entirely
+        let parsedValue: any = newValue;
+        try {
+          parsedValue = JSON.parse(newValue);
+        } catch {
+          parsedValue = newValue;
+        }
+        parent[lastKey] = parsedValue;
+      }
+
+      // Update the file with the new JSON using setContents (which triggers the full sync)
+      const updatedJson = JSON.stringify(jsonObj, null, 2);
+      useFile.getState().setContents({ contents: updatedJson });
+    } catch (error) {
+      console.error("Failed to update node value:", error);
+    }
+  },
 }));
 
 export default useGraph;
