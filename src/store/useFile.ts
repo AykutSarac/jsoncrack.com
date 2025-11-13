@@ -17,6 +17,7 @@ type SetContents = {
   hasChanges?: boolean;
   skipUpdate?: boolean;
   format?: FileFormat;
+  propagateGraph?: boolean;
 };
 
 type Query = string | string[] | undefined;
@@ -99,7 +100,13 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       console.warn("The content was unable to be converted, so it was cleared instead.");
     }
   },
-  setContents: async ({ contents, hasChanges = true, skipUpdate = false, format }) => {
+  setContents: async ({
+    contents,
+    hasChanges = true,
+    skipUpdate = false,
+    format,
+    propagateGraph = true,
+  }) => {
     try {
       set({
         ...(contents && { contents }),
@@ -119,7 +126,9 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
         set({ hasChanges: true });
       }
 
-      debouncedUpdateJson(json);
+      if (propagateGraph) {
+        debouncedUpdateJson(json);
+      }
     } catch (error: any) {
       if (error?.mark?.snippet) return set({ error: error.mark.snippet });
       if (error?.message) set({ error: error.message });
