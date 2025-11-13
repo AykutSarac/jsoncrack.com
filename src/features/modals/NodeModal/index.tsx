@@ -7,6 +7,22 @@ import useJson from "../../../store/useJson";
 import type { NodeData } from "../../../types/graph";
 import useGraph from "../../editor/views/GraphView/stores/useGraph";
 
+// get the actual value from the full JSON at the given path
+const getValueAtPath = (json: string, path?: (string | number)[]): string => {
+  try {
+    const parsed = JSON.parse(json);
+    if (!path || path.length === 0) return JSON.stringify(parsed, null, 2);
+
+    let current = parsed;
+    for (const segment of path) {
+      current = current[segment];
+    }
+    return JSON.stringify(current, null, 2);
+  } catch {
+    return "{}";
+  }
+};
+
 // return object from json removing array and object fields
 const normalizeNodeData = (nodeRows: NodeData["text"]) => {
   if (!nodeRows || nodeRows.length === 0) return "{}";
@@ -43,13 +59,19 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
   // keep edited content in sync when node changes
   React.useEffect(() => {
     setEditing(false);
-    setEditedContent(normalizeNodeData(nodeData?.text ?? []));
+    // use the actual value from JSON at the path to preserve nested details
+    const fullJson = useJson.getState().json;
+    const path = nodeData?.path ?? [];
+    setEditedContent(getValueAtPath(fullJson, path));
   }, [nodeData]);
 
   const handleEdit = () => setEditing(true);
 
   const handleCancel = () => {
-    setEditedContent(normalizeNodeData(nodeData?.text ?? []));
+    // restore to the full JSON value at the path
+    const fullJson = useJson.getState().json;
+    const path = nodeData?.path ?? [];
+    setEditedContent(getValueAtPath(fullJson, path));
     setEditing(false);
   };
 
@@ -100,22 +122,20 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
             <Text fz="xs" fw={500}>
               Content
             </Text>
-            <Flex gap="xs" align="center">
-              {!editing ? (
-                <Button size="xs" variant="light" onClick={handleEdit}>
-                  Edit
+            {!editing ? (
+              <Button size="xs" variant="light" onClick={handleEdit}>
+                Edit
+              </Button>
+            ) : (
+              <Flex gap="xs" align="center">
+                <Button size="xs" color="green" onClick={handleSave}>
+                  Save
                 </Button>
-              ) : (
-                <>
-                  <Button size="xs" color="green" onClick={handleSave}>
-                    Save
-                  </Button>
-                  <Button size="xs" variant="light" color="gray" onClick={handleCancel}>
-                    Cancel
-                  </Button>
-                </>
-              )}
-            </Flex>
+                <Button size="xs" variant="light" color="gray" onClick={handleCancel}>
+                  Cancel
+                </Button>
+              </Flex>
+            )}
           </Flex>
 
           {!editing ? (
