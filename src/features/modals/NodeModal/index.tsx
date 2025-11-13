@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import type { ModalProps } from "@mantine/core";
 import { Modal, Stack, Text, ScrollArea, Flex, CloseButton } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
@@ -28,9 +28,19 @@ const jsonPathToString = (path?: NodeData["path"]) => {
 
 export const NodeModal = ({ opened, onClose }: ModalProps) => {
   const nodeData = useGraph(state => state.selectedNode);
+  const [editing, setEditing] = useState(false); // New state for editing
 
   const handleEdit = () => {
-    // Placeholder for edit functionality
+    setEditing(true); // Set editing to true
+  };
+
+  const handleSave = () => {
+    setEditing(false); // Set editing to false
+    // Add save functionality here
+  };
+
+  const handleCancel = () => {
+    setEditing(false); // Set editing to false
   };
 
   return (
@@ -52,20 +62,54 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
               withCopyButton
             />
             <Flex justify="flex-end" align="flex-end" style={{ marginTop: '10px' }}>
-              <button
-                onClick={handleEdit}
-                style={{
-                  padding: '5px 10px',
-                  borderRadius: '5px',
-                  backgroundColor: '#36393e', // Adjust color as needed
-                  color: '', // Adjust text color as needed
-                  fontSize: '1rem', // Match font size
-                  border: 'none',
-                  cursor: 'pointer'
-                }}
-              >
-                Edit
-              </button> {/* Styled Edit button */}
+              {!editing ? ( // Conditional rendering based on editing state
+                <button
+                  onClick={handleEdit}
+                  style={{
+                    padding: '5px 10px',
+                    borderRadius: '5px',
+                    backgroundColor: '#36393e', // Adjust color as needed
+                    color: '#fff', // Adjust text color as needed
+                    fontSize: '1rem', // Match font size
+                    border: 'none',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Edit
+                </button>
+              ) : (
+                <>
+                  <button
+                    onClick={handleSave}
+                    style={{
+                      padding: '5px 10px',
+                      borderRadius: '5px',
+                      backgroundColor: '#36393e', // Adjust color as needed
+                      color: '#fff', // Adjust text color as needed
+                      fontSize: '1rem', // Match font size
+                      border: 'none',
+                      cursor: 'pointer',
+                      marginRight: '5px'
+                    }}
+                  >
+                    Save
+                  </button>
+                  <button
+                    onClick={handleCancel}
+                    style={{
+                      padding: '5px 10px',
+                      borderRadius: '5px',
+                      backgroundColor: '#36393e', // Adjust color as needed
+                      color: '#fff', // Adjust text color as needed
+                      fontSize: '1rem', // Match font size
+                      border: 'none',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </>
+              )}
             </Flex>
           </ScrollArea.Autosize>
         </Stack>
