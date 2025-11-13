@@ -1,0 +1,168 @@
+# Edit Button - Quick Reference
+
+## What Changed
+
+Edit button (✎) now appears on every node with toggle functionality.
+
+## Files Changed
+
+```
+✅ Created: src/features/editor/views/GraphView/stores/useNodeEdit.ts
+✅ Modified: src/features/editor/views/GraphView/CustomNode/styles.tsx
+✅ Modified: src/features/editor/views/GraphView/CustomNode/ObjectNode.tsx
+✅ Modified: src/features/editor/views/GraphView/CustomNode/TextNode.tsx
+```
+
+## Core State Store
+
+```typescript
+import useNodeEdit from "../stores/useNodeEdit";
+
+const { isEditing, editingNodeId, toggleEdit, startEdit, stopEdit } = useNodeEdit();
+
+// isEditing: boolean - whether any node is being edited
+// editingNodeId: string | null - which node is being edited
+// toggleEdit(nodeId) - toggle edit mode for a node
+// startEdit(nodeId) - start editing
+// stopEdit() - stop editing
+```
+
+## Button Styling
+
+- **Position**: Top-right corner (absolute)
+- **Size**: 20×20px
+- **Icon**: ✎ (pencil character)
+- **Active state**: Shows with border + background
+- **Inactive state**: Semi-transparent
+- **Hover**: Full opacity with border
+
+Uses theme colors:
+- `INTERACTIVE_NORMAL` - base color
+- `BACKGROUND_MODIFIER_ACCENT` - active background
+- `INTERACTIVE_ACTIVE` - active border
+
+## Usage Pattern
+
+```typescript
+// In any component that needs to know edit state
+import useNodeEdit from "../stores/useNodeEdit";
+
+const MyComponent = () => {
+  const { isEditing, editingNodeId } = useNodeEdit();
+  
+  if (isEditing) {
+    // Show editor for editingNodeId
+  }
+};
+```
+
+## Integration Example
+
+```typescript
+import useNodeEdit from "../stores/useNodeEdit";
+import useGraph from "../stores/useGraph";
+import { useModal } from "../../../store/useModal";
+
+export const EditIntegration = () => {
+  const { editingNodeId } = useNodeEdit();
+  const selectedNode = useGraph(state => state.selectedNode);
+  const setVisible = useModal(state => state.setVisible);
+
+  React.useEffect(() => {
+    if (editingNodeId) {
+      // Open modal when edit button is clicked
+      setVisible("NodeEditModal", true);
+    }
+  }, [editingNodeId, setVisible]);
+};
+```
+
+## Event Flow
+
+```
+Click Edit Button
+    ↓
+handleEditClick(nodeId)
+    ↓
+toggleEdit(nodeId)
+    ↓
+useNodeEdit updates state
+    ↓
+Component re-renders
+    ↓
+Button shows active styling
+    ↓
+useEffect triggers (if implemented)
+    ↓
+Modal opens (or other action)
+```
+
+## Implementation in Component
+
+Both `ObjectNode.tsx` and `TextNode.tsx` follow this pattern:
+
+```typescript
+const Node = ({ node, x, y }: CustomNodeProps) => {
+  const { editingNodeId, toggleEdit } = useNodeEdit();
+  const isEditing = editingNodeId === node.id;
+
+  const handleEditClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Don't trigger node click
+    toggleEdit(node.id);
+  };
+
+  return (
+    <div style={{ position: "relative" }}>
+      {/* Node content */}
+      <StyledEditButton
+        $isActive={isEditing}
+        onClick={handleEditClick}
+      >
+        ✎
+      </StyledEditButton>
+    </div>
+  );
+};
+```
+
+## Key Properties
+
+| Property | Value | Notes |
+|----------|-------|-------|
+| Button size | 20×20px | Fixed, compact |
+| Position | top: 2px, right: 2px | Inside node corner |
+| Icon | ✎ (U+270E) | Pencil character |
+| Default opacity | 0.6 | Subtle until hover |
+| Hover opacity | 1.0 | Full visibility |
+| Transition | 0.15s ease | Smooth animations |
+| Pointer events | all | Clickable overlay |
+
+## Styling Details
+
+```typescript
+// Active state shows:
+border: 1px solid INTERACTIVE_ACTIVE (white)
+background: BACKGROUND_MODIFIER_ACCENT (semi-transparent gray)
+
+// Inactive state shows:
+border: 1px solid transparent
+background: transparent
+```
+
+## Testing Checklist
+
+- [ ] Click edit button on node → button shows as active
+- [ ] Click again → button shows as inactive
+- [ ] Button is positioned in top-right corner
+- [ ] Button doesn't prevent node click handler
+- [ ] Edit state persists when panning/zooming
+- [ ] Only one node can be editing at a time
+- [ ] Hover shows full opacity
+- [ ] Smooth transitions on state change
+
+## No Dependencies Added
+
+- Uses existing Zustand
+- Uses existing styled-components
+- No new libraries required
+- No breaking changes

@@ -1,0 +1,286 @@
+// VISUAL: Edit Button Implementation
+
+// ============================================================================
+// BEFORE: Node without edit button
+// ============================================================================
+
+┌─────────────────────────────┐
+│                             │
+│   "key": "value"            │
+│                             │
+└─────────────────────────────┘
+
+
+// ============================================================================
+// AFTER: Node with edit button
+// ============================================================================
+
+┌─────────────────────────────┐
+│ ✎                           │  ← Edit button (top-right)
+│   "key": "value"            │     Click to toggle edit state
+│                             │
+└─────────────────────────────┘
+
+
+// ============================================================================
+// BUTTON STATES
+// ============================================================================
+
+DEFAULT (inactive):
+┌─────┐
+│ ✎   │  opacity: 0.6
+└─────┘  background: transparent
+         border: transparent
+
+HOVER:
+┌─────┐
+│ ✎   │  opacity: 1.0
+└─────┘  background: rgba(...)
+         border: 1px solid gray
+
+ACTIVE (editing):
+┌─────┐
+│ ✎   │  opacity: 1.0
+└─────┘  background: rgba(79,84,92,0.48)
+         border: 1px solid #fff
+
+
+// ============================================================================
+// STATE FLOW
+// ============================================================================
+
+Initial State:
+┌────────────────────────┐
+│ useNodeEdit            │
+│ isEditing: false       │
+│ editingNodeId: null    │
+└────────────────────────┘
+         │
+         ↓
+All nodes show inactive button (✎)
+
+
+User clicks edit button on node-5:
+┌────────────────────────┐
+│ useNodeEdit            │
+│ isEditing: true        │
+│ editingNodeId: "5"     │
+└────────────────────────┘
+         │
+         ├─→ Node 5 button shows active (with background)
+         └─→ Other nodes show inactive
+
+
+User clicks again (or different node):
+┌────────────────────────┐
+│ useNodeEdit            │
+│ isEditing: false       │
+│ editingNodeId: null    │
+└────────────────────────┘
+         │
+         ↓
+All nodes show inactive button again
+
+
+// ============================================================================
+// COMPONENT STRUCTURE
+// ============================================================================
+
+CustomNode (index.tsx)
+  │
+  ├─→ ObjectNode (ObjectNode.tsx)
+  │     │
+  │     ├─ useNodeEdit() → get { editingNodeId, toggleEdit }
+  │     ├─ Check: isEditing = (editingNodeId === node.id)
+  │     │
+  │     ├─ Render:
+  │     │   <div position="relative">
+  │     │     <StyledForeignObject>
+  │     │       {/* Node content */}
+  │     │     </StyledForeignObject>
+  │     │     <StyledEditButton
+  │     │       $isActive={isEditing}
+  │     │       onClick={handleEditClick}
+  │     │     >
+  │     │       ✎
+  │     │     </StyledEditButton>
+  │     │   </div>
+  │     │
+  │     └─ handleEditClick(e)
+  │         e.stopPropagation()
+  │         toggleEdit(node.id)
+  │
+  └─→ TextNode (TextNode.tsx)
+        └─ Same structure as ObjectNode
+
+
+// ============================================================================
+// STYLING: Edit Button
+// ============================================================================
+
+StyledEditButton:
+  Position: absolute
+  Top: 2px
+  Right: 2px
+  Width: 20px
+  Height: 20px
+  Padding: 2px
+  
+  Border: 1px solid (transparent | INTERACTIVE_ACTIVE)
+  Background: transparent | BACKGROUND_MODIFIER_ACCENT
+  Color: INTERACTIVE_NORMAL
+  Border-radius: 2px
+  
+  Cursor: pointer
+  Font-size: 11px
+  Font-weight: 600
+  Display: flex
+  Align-items: center
+  Justify-content: center
+  
+  Pointer-events: all
+  Transition: all 0.15s ease
+  Opacity: 0.6 | 1.0
+  
+  Props:
+    $isActive?: boolean
+
+
+// ============================================================================
+// FILE CHANGES SUMMARY
+// ============================================================================
+
+useNodeEdit.ts (NEW)
+┌─────────────────────────────┐
+│ Zustand Store               │
+├─────────────────────────────┤
+│ State:                      │
+│ - isEditing: boolean        │
+│ - editingNodeId: string     │
+│                             │
+│ Actions:                    │
+│ - startEdit(nodeId)         │
+│ - stopEdit()                │
+│ - toggleEdit(nodeId)        │
+└─────────────────────────────┘
+
+styles.tsx (MODIFIED)
+┌─────────────────────────────┐
+│ Added:                      │
+│ StyledEditButton component  │
+│                             │
+│ Uses theme colors and       │
+│ smooth transitions          │
+└─────────────────────────────┘
+
+ObjectNode.tsx (MODIFIED)
+┌─────────────────────────────┐
+│ Added:                      │
+│ - import useNodeEdit        │
+│ - handleEditClick()         │
+│ - StyledEditButton render   │
+│ - Wrapper div positioning   │
+└─────────────────────────────┘
+
+TextNode.tsx (MODIFIED)
+┌─────────────────────────────┐
+│ Added:                      │
+│ - import useNodeEdit        │
+│ - handleEditClick()         │
+│ - StyledEditButton render   │
+│ - Wrapper div positioning   │
+└─────────────────────────────┘
+
+
+// ============================================================================
+// USAGE: Getting Edit State
+// ============================================================================
+
+In any component:
+
+import useNodeEdit from "../stores/useNodeEdit";
+
+const MyComponent = () => {
+  // Get the current edit state
+  const { isEditing, editingNodeId } = useNodeEdit();
+  
+  // Check if specific node is editing
+  const isNodeEditing = (nodeId) => editingNodeId === nodeId;
+  
+  // Toggle edit for a node
+  const { toggleEdit } = useNodeEdit();
+  toggleEdit("node-5");
+};
+
+
+// ============================================================================
+// INTEGRATION EXAMPLE: Opening Modal on Edit
+// ============================================================================
+
+import useNodeEdit from "../stores/useNodeEdit";
+import { useModal } from "../../../store/useModal";
+
+React.useEffect(() => {
+  const { editingNodeId } = useNodeEdit.getState();
+  const { setVisible } = useModal.getState();
+  
+  if (editingNodeId) {
+    setVisible("NodeEditModal", true);
+  }
+}, [editingNodeId]); // Re-run when edit state changes
+
+
+// ============================================================================
+// THEME COLORS USED
+// ============================================================================
+
+From constants/theme.ts:
+
+INTERACTIVE_NORMAL: "#b9bbbe" (light) or "#4f5660" (dark)
+  └─ Used for: button text color
+
+INTERACTIVE_ACTIVE: "#fff" (light) or "#060607" (dark)
+  └─ Used for: active state border
+
+BACKGROUND_MODIFIER_ACCENT: "rgba(79,84,92,0.48)" (light) 
+                            or "rgba(106,116,128,0.24)" (dark)
+  └─ Used for: active state background
+
+
+// ============================================================================
+// TIMELINE: Click to Edit
+// ============================================================================
+
+┌─────────────────────────────────────────────────────────┐
+│ 1. User sees node with ✎ button (faded)                │
+└─────────────────────────────────────────────────────────┘
+                        ↓ (click)
+┌─────────────────────────────────────────────────────────┐
+│ 2. handleEditClick fires                                │
+│    - e.stopPropagation()                                │
+│    - toggleEdit(node.id)                                │
+└─────────────────────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────┐
+│ 3. useNodeEdit updates state                            │
+│    - isEditing = true                                   │
+│    - editingNodeId = "node-5"                           │
+└─────────────────────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────┐
+│ 4. Component re-renders                                 │
+│    - isEditing = (editingNodeId === "5") = true         │
+│    - $isActive={true}                                   │
+└─────────────────────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────┐
+│ 5. Button styles update                                 │
+│    - opacity: 1.0                                       │
+│    - background: rgba(79,84,92,0.48)                   │
+│    - border: 1px solid #fff                            │
+└─────────────────────────────────────────────────────────┘
+                        ↓
+┌─────────────────────────────────────────────────────────┐
+│ 6. User sees button active (highlighted)                │
+│    - Can now integrate with modal to edit value         │
+└─────────────────────────────────────────────────────────┘
