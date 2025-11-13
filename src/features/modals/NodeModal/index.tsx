@@ -29,6 +29,10 @@ const jsonPathToString = (path?: NodeData["path"]) => {
 export const NodeModal = ({ opened, onClose }: ModalProps) => {
   const nodeData = useGraph(state => state.selectedNode);
 
+  const handleEdit = () => {
+    // Placeholder for edit functionality
+  };
+
   return (
     <Modal size="auto" opened={opened} onClose={onClose} centered withCloseButton={false}>
       <Stack pb="sm" gap="sm">
@@ -47,6 +51,22 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
               language="json"
               withCopyButton
             />
+            <Flex justify="flex-end" align="flex-end" style={{ marginTop: '10px' }}>
+              <button
+                onClick={handleEdit}
+                style={{
+                  padding: '5px 10px',
+                  borderRadius: '5px',
+                  backgroundColor: '#36393e', // Adjust color as needed
+                  color: '', // Adjust text color as needed
+                  fontSize: '1rem', // Match font size
+                  border: 'none',
+                  cursor: 'pointer'
+                }}
+              >
+                Edit
+              </button> {/* Styled Edit button */}
+            </Flex>
           </ScrollArea.Autosize>
         </Stack>
         <Text fz="xs" fw={500}>
