@@ -23,7 +23,7 @@ const CustomNodeWrapper = (nodeProps: NodeProps<NodeData>) => {
   const handleNodeClick = React.useCallback(
     (_: React.MouseEvent<SVGGElement, MouseEvent>, data: NodeData) => {
       if (setSelectedNode) setSelectedNode(data);
-      setVisible("NodeModal", true);
+      setVisible("EditNodeModal", true);
     },
     [setSelectedNode, setVisible]
   );
