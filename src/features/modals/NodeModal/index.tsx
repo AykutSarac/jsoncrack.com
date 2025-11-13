@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import type { ModalProps } from "@mantine/core";
 import { Modal, Stack, Text, ScrollArea, Flex, CloseButton } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
@@ -28,19 +28,29 @@ const jsonPathToString = (path?: NodeData["path"]) => {
 
 export const NodeModal = ({ opened, onClose }: ModalProps) => {
   const nodeData = useGraph(state => state.selectedNode);
-  const [editing, setEditing] = useState(false); // New state for editing
+  const [editing, setEditing] = useState(false);
+  const [editedContent, setEditedContent] = useState(normalizeNodeData(nodeData?.text ?? []));
+  const [originalContent, setOriginalContent] = useState(editedContent); // Store original content
+
+  useEffect(() => {
+    setEditedContent(normalizeNodeData(nodeData?.text ?? [])); // Reset edited content when nodeData changes
+    setOriginalContent(normalizeNodeData(nodeData?.text ?? [])); // Update original content
+    setEditing(false); // Ensure editing is false when node changes
+  }, [nodeData]);
 
   const handleEdit = () => {
-    setEditing(true); // Set editing to true
+    setEditing(true);
   };
 
   const handleSave = () => {
-    setEditing(false); // Set editing to false
+    setOriginalContent(editedContent); // Save changes
+    setEditing(false);
     // Add save functionality here
   };
 
   const handleCancel = () => {
-    setEditing(false); // Set editing to false
+    setEditedContent(originalContent); // Revert to original content
+    setEditing(false);
   };
 
   return (
@@ -54,23 +64,38 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
             <CloseButton onClick={onClose} />
           </Flex>
           <ScrollArea.Autosize mah={250} maw={600}>
-            <CodeHighlight
-              code={normalizeNodeData(nodeData?.text ?? [])}
-              miw={350}
-              maw={600}
-              language="json"
-              withCopyButton
-            />
+            {editing ? (
+              <textarea
+                value={editedContent}
+                onChange={(e) => setEditedContent(e.target.value)}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  borderRadius: '5px',
+                  border: '1px solid #ccc',
+                  padding: '5px',
+                  fontSize: '1rem',
+                }}
+              />
+            ) : (
+              <CodeHighlight
+                code={editedContent}
+                miw={350}
+                maw={600}
+                language="json"
+                withCopyButton
+              />
+            )}
             <Flex justify="flex-end" align="flex-end" style={{ marginTop: '10px' }}>
-              {!editing ? ( // Conditional rendering based on editing state
+              {!editing ? (
                 <button
                   onClick={handleEdit}
                   style={{
                     padding: '5px 10px',
                     borderRadius: '5px',
-                    backgroundColor: '#36393e', // Adjust color as needed
-                    color: '#fff', // Adjust text color as needed
-                    fontSize: '1rem', // Match font size
+                    backgroundColor: '#36393e',
+                    color: '#fff',
+                    fontSize: '1rem',
                     border: 'none',
                     cursor: 'pointer'
                   }}
@@ -84,9 +109,9 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
                     style={{
                       padding: '5px 10px',
                       borderRadius: '5px',
-                      backgroundColor: '#36393e', // Adjust color as needed
-                      color: '#fff', // Adjust text color as needed
-                      fontSize: '1rem', // Match font size
+                      backgroundColor: '#36393e',
+                      color: '#fff',
+                      fontSize: '1rem',
                       border: 'none',
                       cursor: 'pointer',
                       marginRight: '5px'
@@ -99,9 +124,9 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
                     style={{
                       padding: '5px 10px',
                       borderRadius: '5px',
-                      backgroundColor: '#36393e', // Adjust color as needed
-                      color: '#fff', // Adjust text color as needed
-                      fontSize: '1rem', // Match font size
+                      backgroundColor: '#36393e',
+                      color: '#fff',
+                      fontSize: '1rem',
                       border: 'none',
                       cursor: 'pointer'
                     }}
