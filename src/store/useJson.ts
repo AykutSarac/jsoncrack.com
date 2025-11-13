@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import useGraph from "../features/editor/views/GraphView/stores/useGraph";
+import useFile from "./useFile";
 
 interface JsonActions {
   setJson: (json: string) => void;
@@ -20,7 +21,9 @@ const useJson = create<JsonStates & JsonActions>()((set, get) => ({
   setJson: json => {
     set({ json, loading: false });
     useGraph.getState().setGraph(json);
+    useFile.getState().setContents({ contents: json, hasChanges: false }); // ← add this line
   },
+  
   clear: () => {
     set({ json: "", loading: false });
     useGraph.getState().clearGraph();
