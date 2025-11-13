@@ -31,6 +31,7 @@ export const StyledForeignObject = styled.foreignObject<{ $isObject?: boolean }>
   font-weight: 500;
   overflow: hidden;
   pointer-events: none;
+  position: relative;
 
   &.searched {
     background: rgba(27, 255, 0, 0.1);
@@ -84,6 +85,7 @@ export const StyledRow = styled.span<{ $value: TextColorFn["$value"] }>`
   white-space: nowrap;
   border-bottom: 1px solid ${({ theme }) => theme.NODE_COLORS.DIVIDER};
   box-sizing: border-box;
+  position: relative;
 
   &:last-of-type {
     border-bottom: none;
@@ -98,4 +100,12 @@ export const StyledChildrenCount = styled.span`
   color: ${({ theme }) => theme.NODE_COLORS.CHILD_COUNT};
   padding: 10px;
   margin-left: -15px;
+`;
+
+export const StyledEditButton = styled.span`
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  pointer-events: all;
+  z-index: 10;
 `;

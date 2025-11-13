@@ -1,7 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import { ActionIcon } from "@mantine/core";
+import { LuPencil } from "react-icons/lu";
 import type { CustomNodeProps } from ".";
 import useConfig from "../../../../../store/useConfig";
+import useGraph from "../stores/useGraph";
+import { useModal } from "../../../../../store/useModal";
 import { isContentImage } from "../lib/utils/calculateNodeSize";
 import { TextRenderer } from "./TextRenderer";
 import * as Styled from "./styles";
@@ -29,8 +33,17 @@ const StyledImage = styled.img`
 const Node = ({ node, x, y }: CustomNodeProps) => {
   const { text, width, height } = node;
   const imagePreviewEnabled = useConfig(state => state.imagePreviewEnabled);
+  const setSelectedNode = useGraph(state => state.setSelectedNode);
+  const setVisible = useModal(state => state.setVisible);
+  const [isHovered, setIsHovered] = React.useState(false);
   const isImage = imagePreviewEnabled && isContentImage(JSON.stringify(text[0].value));
   const value = text[0].value;
+
+  const handleEdit = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSelectedNode(node);
+    setVisible("EditNodeModal", true);
+  };
 
   return (
     <Styled.StyledForeignObject
@@ -39,22 +52,39 @@ const Node = ({ node, x, y }: CustomNodeProps) => {
       height={height}
       x={0}
       y={0}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {isImage ? (
         <StyledImageWrapper>
           <StyledImage src={JSON.stringify(text[0].value)} width="70" height="70" loading="lazy" />
         </StyledImageWrapper>
       ) : (
-        <StyledTextNodeWrapper
-          data-x={x}
-          data-y={y}
-          data-key={JSON.stringify(text)}
-          $isParent={false}
-        >
-          <Styled.StyledKey $value={value} $type={typeof text[0].value}>
-            <TextRenderer>{value}</TextRenderer>
-          </Styled.StyledKey>
-        </StyledTextNodeWrapper>
+        <>
+          <StyledTextNodeWrapper
+            data-x={x}
+            data-y={y}
+            data-key={JSON.stringify(text)}
+            $isParent={false}
+          >
+            <Styled.StyledKey $value={value} $type={typeof text[0].value}>
+              <TextRenderer>{value}</TextRenderer>
+            </Styled.StyledKey>
+          </StyledTextNodeWrapper>
+          {isHovered && (
+            <Styled.StyledEditButton>
+              <ActionIcon
+                size="xs"
+                variant="subtle"
+                color="blue"
+                onClick={handleEdit}
+                aria-label="Edit value"
+              >
+                <LuPencil size={12} />
+              </ActionIcon>
+            </Styled.StyledEditButton>
+          )}
+        </>
       )}
     </Styled.StyledForeignObject>
   );

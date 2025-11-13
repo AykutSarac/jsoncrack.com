@@ -1,9 +1,11 @@
 import React from "react";
 import type { ModalProps } from "@mantine/core";
-import { Modal, Stack, Text, ScrollArea, Flex, CloseButton } from "@mantine/core";
+import { Modal, Stack, Text, ScrollArea, Flex, CloseButton, Button, Group } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
+import { LuPencil } from "react-icons/lu";
 import type { NodeData } from "../../../types/graph";
 import useGraph from "../../editor/views/GraphView/stores/useGraph";
+import { useModal } from "../../../store/useModal";
 
 // return object from json removing array and object fields
 const normalizeNodeData = (nodeRows: NodeData["text"]) => {
@@ -28,6 +30,12 @@ const jsonPathToString = (path?: NodeData["path"]) => {
 
 export const NodeModal = ({ opened, onClose }: ModalProps) => {
   const nodeData = useGraph(state => state.selectedNode);
+  const setVisible = useModal(state => state.setVisible);
+
+  const handleEdit = () => {
+    setVisible("EditNodeModal", true);
+    onClose();
+  };
 
   return (
     <Modal size="auto" opened={opened} onClose={onClose} centered withCloseButton={false}>
@@ -63,6 +71,15 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
             withCopyButton
           />
         </ScrollArea.Autosize>
+        <Group justify="flex-end" mt="xs">
+          <Button
+            leftSection={<LuPencil size={16} />}
+            onClick={handleEdit}
+            variant="light"
+          >
+            Edit
+          </Button>
+        </Group>
       </Stack>
     </Modal>
   );
