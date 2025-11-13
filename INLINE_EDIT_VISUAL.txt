@@ -1,0 +1,433 @@
+// VISUAL: Inline Edit Component JSX
+
+// ============================================================================
+// TEXT NODE: Before Edit
+// ============================================================================
+
+┌────────────────────────────────┐
+│ ✎                              │  ← Edit button
+│   "Hello World"                │
+│                                │
+└────────────────────────────────┘
+
+
+// ============================================================================
+// TEXT NODE: During Edit (isEditing = true)
+// ============================================================================
+
+┌────────────────────────────────────────────────┐
+│ ✎                                              │  ← Edit button (active)
+│ [input: "Hello World"] [✓] [✕]                │  ← Editor replaces content
+│                                                │
+└────────────────────────────────────────────────┘
+
+
+// ============================================================================
+// OBJECT NODE: Before Edit
+// ============================================================================
+
+┌─────────────────────────────────┐
+│ ✎                               │  ← Edit button
+│   name: "John"                  │
+│   age: 30                       │
+│                                 │
+└─────────────────────────────────┘
+
+
+// ============================================================================
+// OBJECT NODE: During Edit (isEditing = true)
+// ============================================================================
+
+┌──────────────────────────────────────────────────┐
+│ ✎                                                │  ← Edit button (active)
+│   name: [input: "John"] [✓] [✕]                 │  ← First row editable
+│   age: 30                                        │  ← Other rows normal
+│                                                  │
+└──────────────────────────────────────────────────┘
+
+
+// ============================================================================
+// COMPONENT STRUCTURE
+// ============================================================================
+
+TextNode
+  ├─ When isEditing = false:
+  │  └─ StyledForeignObject
+  │     └─ StyledTextNodeWrapper
+  │        └─ StyledKey + TextRenderer
+  │
+  └─ When isEditing = true:
+     └─ StyledForeignObject
+        └─ TextEditComponent
+           ├─ StyledEditWrapper
+           ├─ StyledEditInput (flex: 1)
+           ├─ StyledEditButton2 (✓)
+           └─ StyledEditButton2 (✕)
+
+
+ObjectNode
+  └─ Node component
+     ├─ StyledForeignObject
+     │  └─ node.text.map() → Row components
+     │     └─ For each row:
+     │        ├─ When isRowEditing = false:
+     │        │  ├─ StyledKey
+     │        │  └─ TextRenderer
+     │        │
+     │        └─ When isRowEditing = true:
+     │           └─ RowEditComponent
+     │              ├─ StyledEditWrapper
+     │              ├─ StyledKey (shows key:)
+     │              ├─ StyledEditInput
+     │              ├─ StyledEditButton2 (✓)
+     │              └─ StyledEditButton2 (✕)
+     │
+     └─ StyledEditButton (pencil)
+
+
+// ============================================================================
+// TEXTEDITCOMPONENT: JSX
+// ============================================================================
+
+export const TextEditComponent = ({ node }: TextEditProps) => {
+  const { stopEdit } = useNodeEdit();
+  const { updateNodeValue } = useJson();
+  const [tempValue, setTempValue] = React.useState(
+    JSON.stringify(node.text[0].value)
+  );
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
+  // Auto-focus and select on mount
+  React.useEffect(() => {
+    inputRef.current?.focus();
+    inputRef.current?.select();
+  }, []);
+
+  const handleSave = React.useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      if (tempValue !== JSON.stringify(node.text[0].value)) {
+        updateNodeValue(node.path, tempValue);
+      }
+      stopEdit();
+    },
+    [tempValue, node, updateNodeValue, stopEdit]
+  );
+
+  const handleCancel = React.useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      stopEdit();
+    },
+    [stopEdit]
+  );
+
+  const handleKeyDown = React.useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      e.stopPropagation();
+      if (e.key === "Enter") {
+        handleSave(e as any);
+      } else if (e.key === "Escape") {
+        handleCancel(e as any);
+      }
+    },
+    [handleSave, handleCancel]
+  );
+
+  return (
+    <Styled.StyledEditWrapper onClick={(e) => e.stopPropagation()}>
+      <Styled.StyledEditInput
+        ref={inputRef}
+        type="text"
+        value={tempValue}
+        onChange={(e) => setTempValue(e.target.value)}
+        onKeyDown={handleKeyDown}
+        placeholder="Enter value"
+      />
+      <Styled.StyledEditButton2 onClick={handleSave} title="Save (Enter)">
+        ✓
+      </Styled.StyledEditButton2>
+      <Styled.StyledEditButton2 onClick={handleCancel} title="Cancel (Esc)">
+        ✕
+      </Styled.StyledEditButton2>
+    </Styled.StyledEditWrapper>
+  );
+};
+
+
+// ============================================================================
+// ROWEDITCOMPONENT: JSX
+// ============================================================================
+
+export const RowEditComponent = ({ row, nodePath }: RowEditProps) => {
+  const { stopEdit } = useNodeEdit();
+  const { updateNodeValue } = useJson();
+  const [tempValue, setTempValue] = React.useState(JSON.stringify(row.value));
+  const inputRef = React.useRef<HTMLInputElement>(null);
+
+  React.useEffect(() => {
+    inputRef.current?.focus();
+    inputRef.current?.select();
+  }, []);
+
+  const handleSave = React.useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      if (tempValue !== JSON.stringify(row.value)) {
+        updateNodeValue(nodePath, tempValue);
+      }
+      stopEdit();
+    },
+    [tempValue, row.value, nodePath, updateNodeValue, stopEdit]
+  );
+
+  const handleCancel = React.useCallback(
+    (e: React.MouseEvent) => {
+      e.stopPropagation();
+      stopEdit();
+    },
+    [stopEdit]
+  );
+
+  const handleKeyDown = React.useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      e.stopPropagation();
+      if (e.key === "Enter") {
+        handleSave(e as any);
+      } else if (e.key === "Escape") {
+        handleCancel(e as any);
+      }
+    },
+    [handleSave, handleCancel]
+  );
+
+  return (
+    <Styled.StyledEditWrapper onClick={(e) => e.stopPropagation()}>
+      {row.key && (
+        <Styled.StyledKey $type="object" style={{ marginRight: "4px" }}>
+          {row.key}:
+        </Styled.StyledKey>
+      )}
+      <Styled.StyledEditInput
+        ref={inputRef}
+        type="text"
+        value={tempValue}
+        onChange={(e) => setTempValue(e.target.value)}
+        onKeyDown={handleKeyDown}
+        placeholder="Enter value"
+        style={{ flex: 1 }}
+      />
+      <Styled.StyledEditButton2 onClick={handleSave} title="Save (Enter)">
+        ✓
+      </Styled.StyledEditButton2>
+      <Styled.StyledEditButton2 onClick={handleCancel} title="Cancel (Esc)">
+        ✕
+      </Styled.StyledEditButton2>
+    </Styled.StyledEditWrapper>
+  );
+};
+
+
+// ============================================================================
+// TEXTNODE: Conditional Render
+// ============================================================================
+
+const Node = ({ node, x, y }: CustomNodeProps) => {
+  const isEditing = editingNodeId === node.id;
+
+  return (
+    <Styled.StyledForeignObject>
+      {isImage ? (
+        <StyledImageWrapper>
+          <StyledImage src={...} />
+        </StyledImageWrapper>
+      ) : isEditing ? (  // ← Key conditional
+        <TextEditComponent node={node} />  // ← Replace with editor
+      ) : (
+        <StyledTextNodeWrapper>
+          <Styled.StyledKey $value={value} $type={typeof value}>
+            <TextRenderer>{value}</TextRenderer>
+          </Styled.StyledKey>
+        </StyledTextNodeWrapper>
+      )}
+    </Styled.StyledForeignObject>
+  );
+};
+
+
+// ============================================================================
+// OBJECTNODE: Conditional Render Per Row
+// ============================================================================
+
+const Row = ({ 
+  row, 
+  x, 
+  y, 
+  index, 
+  nodeId,
+  nodePath,
+  isEditing 
+}: RowProps) => {
+  const { editingNodeId } = useNodeEdit();
+  const isRowEditing = isEditing && editingNodeId === nodeId;
+
+  return (
+    <Styled.StyledRow>
+      {isRowEditing ? (  // ← Key conditional
+        <RowEditComponent row={row} nodePath={nodePath} />  // ← Replace with editor
+      ) : (
+        <>
+          <Styled.StyledKey $type="object">{row.key}: </Styled.StyledKey>
+          <TextRenderer>{getRowText()}</TextRenderer>
+        </>
+      )}
+    </Styled.StyledRow>
+  );
+};
+
+
+// ============================================================================
+// STYLED COMPONENTS
+// ============================================================================
+
+export const StyledEditWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  height: 100%;
+  padding: 0 8px;
+  box-sizing: border-box;
+`;
+
+export const StyledEditInput = styled.input`
+  flex: 1;
+  min-width: 0;
+  height: 20px;
+  padding: 2px 4px;
+  border: 1px solid ${({ theme }) => theme.INTERACTIVE_ACTIVE};
+  background: ${({ theme }) => theme.BACKGROUND_NODE};
+  color: ${({ theme }) => theme.NODE_COLORS.TEXT};
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 500;
+  border-radius: 2px;
+  outline: none;
+
+  &:focus {
+    border-color: ${({ theme }) => theme.INTERACTIVE_ACTIVE};
+    box-shadow: 0 0 0 2px ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
+  }
+`;
+
+export const StyledEditButton2 = styled.button`
+  padding: 2px 6px;
+  height: 20px;
+  border: 1px solid ${({ theme }) => theme.INTERACTIVE_NORMAL};
+  background: ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
+  color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: 2px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.1s ease;
+  pointer-events: all;
+
+  &:hover {
+    background: ${({ theme }) => theme.INTERACTIVE_ACTIVE};
+    color: ${({ theme }) => theme.BACKGROUND_NODE};
+  }
+
+  &:active {
+    opacity: 0.8;
+  }
+`;
+
+
+// ============================================================================
+// STATE AND FLOW
+// ============================================================================
+
+[Initial State]
+  editingNodeId = null
+  isEditing = false
+  Normal view shown
+
+         ↓ User clicks ✎
+
+[Edit Mode]
+  editingNodeId = "node-5"
+  isEditing = true (for that node)
+  ↓
+  isEditing conditional renders editor
+  ↓
+  Input auto-focuses
+  Input text auto-selected
+
+         ↓ User types
+
+[Temporary State]
+  tempValue = "new value"
+  Node.text[0].value = old value (unchanged)
+
+         ↓ User presses Enter or clicks ✓
+
+[Save]
+  updateNodeValue(path, tempValue)
+  ↓
+  updateJsonByPath() updates JSON
+  ↓
+  useGraph.setGraph() re-parses
+  ↓
+  stopEdit()
+  editingNodeId = null
+
+         ↓
+
+[Back to Normal]
+  isEditing = false
+  Editor hidden
+  New value displayed
+
+         ↓ User can click ✎ again to edit
+
+
+// ============================================================================
+// KEY IMPLEMENTATION DETAILS
+// ============================================================================
+
+1. Conditional Rendering:
+   - isEditing ? <TextEditComponent /> : <NormalView />
+   - Simple ternary operator decides which to show
+
+2. State Management:
+   - tempValue in component state (not saved)
+   - node.text[0].value in app state (from JSON)
+   - editingNodeId in useNodeEdit store
+
+3. Event Isolation:
+   - e.stopPropagation() on all handlers
+   - Prevents clicks from reaching parent graph
+
+4. Auto-focus:
+   - useEffect on mount
+   - inputRef.current?.focus()
+   - inputRef.current?.select()
+
+5. Keyboard Handling:
+   - Enter: save
+   - Escape: cancel
+   - All other keys: modify tempValue
+
+6. Type Conversion:
+   - parseValueInput() handles conversion
+   - "123" → 123, "true" → true, etc.
+   - JSON.stringify() on display
+   - JSON.stringify() for comparison
+
+7. Styling:
+   - Uses theme colors
+   - Respects dark/light mode
+   - Monospace font matches content
+   - Smooth transitions
