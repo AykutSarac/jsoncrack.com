@@ -2,7 +2,6 @@ import React from "react";
 import { Anchor, Button, Image, Overlay, Stack, Text } from "@mantine/core";
 import styled, { keyframes } from "styled-components";
 import useConfig from "../../../../store/useConfig";
-import { useModal } from "../../../../store/useModal";
 
 const shineEffect = keyframes`
   0% {
@@ -59,7 +58,6 @@ const ShiningButton = styled.div`
 
 export const NotSupported = () => {
   const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
-  const setVisible = useModal(state => state.setVisible);
 
   return (
     <Overlay
@@ -77,7 +75,14 @@ export const NotSupported = () => {
           This diagram is too large and not supported at JSON Crack.
           <br />
           Try{" "}
-          <Anchor inherit c="teal" fw="500" onClick={() => setVisible("UpgradeModal", true)}>
+          <Anchor
+            inherit
+            c="teal"
+            fw="500"
+            href="https://todiagram.com/editor?utm_source=jsoncrack&utm_medium=data_limit"
+            target="_blank"
+            rel="noopener"
+          >
             ToDiagram
           </Anchor>{" "}
           for larger diagrams and more features.

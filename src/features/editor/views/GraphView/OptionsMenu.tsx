@@ -143,7 +143,7 @@ export const OptionsMenu = () => {
                   gaEvent("toggle_gestures", { label: gesturesEnabled ? "on" : "off" });
                 }}
               >
-                <Text size="xs">Trackpad Gestures</Text>
+                <Text size="xs">Zoom on Scroll</Text>
               </Menu.Item>
               <Menu.Item
                 leftSection={<BsCheck2 opacity={imagePreviewEnabled ? 100 : 0} />}

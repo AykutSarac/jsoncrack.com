@@ -140,7 +140,12 @@ const ExternalMode = () => {
           GitHub
         </Anchor>
         <Text c="dimmed">•</Text>
-        <Anchor href="https://todiagram.com" rel="noopener" target="_blank" fz="sm">
+        <Anchor
+          href="https://todiagram.com?utm_source=jsoncrack&utm_medium=external-mode"
+          rel="noopener"
+          target="_blank"
+          fz="sm"
+        >
           ToDiagram
         </Anchor>
         <Text c="dimmed">•</Text>
