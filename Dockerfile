@@ -1,4 +1,5 @@
 FROM node:24.10.0-alpine AS base
+RUN npm install -g pnpm@10.10.0
 
 # Stage 1: Install dependencies
 FROM base AS deps
