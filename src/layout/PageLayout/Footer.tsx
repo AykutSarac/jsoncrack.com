@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import { Anchor, Container, Divider, Flex, Stack, Text, ThemeIcon } from "@mantine/core";
-import dayjs from "dayjs";
 import { FaDiscord, FaGithub, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { JSONCrackLogo } from "../JsonCrackLogo";
@@ -105,7 +104,7 @@ export const Footer = () => {
       </Flex>
       <Flex gap="xl">
         <Text fz="sm" c="dimmed">
-          © {dayjs().get("year")} JSON Crack
+          © {new Date().getFullYear()} JSON Crack
         </Text>
         <Anchor component={Link} prefetch={false} fz="sm" c="dimmed" href="/legal/terms">
           <Text fz="sm" c="dimmed">
