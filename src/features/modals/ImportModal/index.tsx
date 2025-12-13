@@ -1,6 +1,6 @@
 import React from "react";
 import type { ModalProps } from "@mantine/core";
-import { Modal, Group, Button, TextInput, Stack, Paper, Text } from "@mantine/core";
+import { Modal, Group, Button, TextInput, Stack, Paper, Text, Select } from "@mantine/core";
 import { Dropzone } from "@mantine/dropzone";
 import { event as gaEvent } from "nextjs-google-analytics";
 import toast from "react-hot-toast";
@@ -11,6 +11,14 @@ import useFile from "../../../store/useFile";
 export const ImportModal = ({ opened, onClose }: ModalProps) => {
   const [url, setURL] = React.useState("");
   const [file, setFile] = React.useState<File | null>(null);
+  const [encoding, setEncoding] = React.useState("utf-8");
+
+  const encodingOptions = [
+    { value: "utf-8", label: "UTF-8 (default)" },
+    { value: "utf-16le", label: "UTF-16 LE" },
+    { value: "utf-16be", label: "UTF-16 BE" },
+    { value: "iso-8859-1", label: "ISO-8859-1 (Latin-1)" },
+  ];
 
   const setContents = useFile(state => state.setContents);
   const setFormat = useFile(state => state.setFormat);
@@ -35,12 +43,19 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
       const format = file.name.substring(lastIndex + 1);
       setFormat(format as FileFormat);
 
-      file.text().then(text => {
-        setContents({ contents: text });
-        setFile(null);
-        setURL("");
-        onClose();
-      });
+      file
+        .arrayBuffer()
+        .then(buffer => {
+          const decoder = new TextDecoder(encoding);
+          const text = decoder.decode(buffer);
+          setContents({ contents: text });
+          setFile(null);
+          setURL("");
+          onClose();
+        })
+        .catch(() => {
+          toast.error(`Failed to decode file using ${encoding}`);
+        });
 
       gaEvent("import_file", { label: format });
     }
@@ -88,6 +103,12 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
             </Stack>
           </Dropzone>
         </Paper>
+        <Select
+          label="File Encoding"
+          data={encodingOptions}
+          value={encoding}
+          onChange={value => value && setEncoding(value)}
+        />
       </Stack>
       <Group justify="right">
         <Button onClick={handleImportFile} disabled={!(file || url)}>
