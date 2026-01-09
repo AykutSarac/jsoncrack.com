@@ -18,6 +18,10 @@ export const FileMenu = () => {
     a.href = window.URL.createObjectURL(file);
 
     let n = prompt("Please enter your file name :");
+    if (n === null) {
+      console.log("User cancelled saving the file.");
+      return;
+    }
     a.download = `${n}.${getFormat()}`;
     a.click();
 
