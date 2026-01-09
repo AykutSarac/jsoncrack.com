@@ -16,7 +16,9 @@ export const FileMenu = () => {
     const file = new Blob([getContents()], { type: "text/plain" });
 
     a.href = window.URL.createObjectURL(file);
-    a.download = `jsoncrack.${getFormat()}`;
+
+    let n = prompt("Please enter your file name :");
+    a.download = `${n}.${getFormat()}`;
     a.click();
 
     gaEvent("save_file", { label: getFormat() });
