@@ -6,6 +6,19 @@ import useJson from "../../../../../store/useJson";
 import type { EdgeData, NodeData } from "../../../../../types/graph";
 import { parser } from "../lib/jsonParser";
 
+// helper: convert a plain object into NodeData["text"] rows
+const objectToNodeRows = (obj: any): NodeData["text"] => {
+  if (obj == null) return [];
+  // primitives / arrays become a single value row
+  if (typeof obj !== "object" || Array.isArray(obj)) {
+    return [{ key: undefined, value: obj, type: Array.isArray(obj) ? "array" : typeof obj } as any];
+  }
+  return Object.entries(obj).map(([key, value]) => {
+    const type = Array.isArray(value) ? "array" : (value !== null && typeof value === "object" ? "object" : typeof value);
+    return { key, value, type } as any;
+  });
+};
+
 export interface Graph {
   viewPort: ViewPort | null;
   direction: CanvasDirection;
@@ -43,6 +56,7 @@ interface GraphActions {
   centerView: () => void;
   clearGraph: () => void;
   setZoomFactor: (zoomFactor: number) => void;
+  
 }
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
@@ -70,6 +84,25 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
   setDirection: (direction = "RIGHT") => {
     set({ direction });
     setTimeout(() => get().centerView(), 200);
+  },
+  updateNode: (id, content) => {
+    const rows = objectToNodeRows(content);
+    set(state => {
+      const nodes = state.nodes.map(n => (n.id === id ? { ...n, text: rows } : n));
+      const selectedNode = state.selectedNode && state.selectedNode.id === id ? nodes.find(n => n.id === id) ?? null : state.selectedNode;
+      return { nodes, selectedNode };
+    });
+  },
+
+  // update currently selected node's content
+  updateSelectedNodeContent: content => {
+    const selected = get().selectedNode;
+    if (!selected) return;
+    const rows = objectToNodeRows(content);
+    set(state => {
+      const nodes = state.nodes.map(n => (n.id === selected.id ? { ...n, text: rows } : n));
+      return { nodes, selectedNode: nodes.find(n => n.id === selected.id) ?? null };
+    });
   },
   setLoading: loading => set({ loading }),
   focusFirstNode: () => {
