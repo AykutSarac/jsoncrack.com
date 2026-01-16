@@ -30,7 +30,8 @@ const Node = ({ node, x, y }: CustomNodeProps) => {
   const { text, width, height } = node;
   const imagePreviewEnabled = useConfig(state => state.imagePreviewEnabled);
   const isImage = imagePreviewEnabled && isContentImage(JSON.stringify(text[0].value));
-  const value = text[0].value;
+  // allow overriding the primary displayed value with node.displayName
+  const value = (node as any).displayName ?? text[0].value;
 
   return (
     <Styled.StyledForeignObject
@@ -61,7 +62,13 @@ const Node = ({ node, x, y }: CustomNodeProps) => {
 };
 
 function propsAreEqual(prev: CustomNodeProps, next: CustomNodeProps) {
-  return prev.node.text === next.node.text && prev.node.width === next.node.width;
+  // re-render when text, width, or display customization changes
+  return (
+    prev.node.text === next.node.text &&
+    prev.node.width === next.node.width &&
+    (prev.node as any).displayName === (next.node as any).displayName &&
+    (prev.node as any).color === (next.node as any).color
+  );
 }
 
 export const TextNode = React.memo(Node, propsAreEqual);

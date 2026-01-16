@@ -41,7 +41,8 @@ const CustomNodeWrapper = (nodeProps: NodeProps<NodeData>) => {
         ev.currentTarget.style.stroke = colorScheme === "dark" ? "#424242" : "#BCBEC0";
       }}
       style={{
-        fill: colorScheme === "dark" ? "#292929" : "#ffffff",
+        // allow per-node color override
+        fill: (nodeProps.properties as NodeData).color ?? (colorScheme === "dark" ? "#292929" : "#ffffff"),
         stroke: colorScheme === "dark" ? "#424242" : "#BCBEC0",
         strokeWidth: 1,
       }}
