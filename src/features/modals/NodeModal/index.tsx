@@ -1,9 +1,11 @@
 import React from "react";
 import type { ModalProps } from "@mantine/core";
-import { Modal, Stack, Text, ScrollArea, Flex, CloseButton } from "@mantine/core";
+import { Modal, Stack, Text, ScrollArea, Flex, CloseButton, Button } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
 import type { NodeData } from "../../../types/graph";
 import useGraph from "../../editor/views/GraphView/stores/useGraph";
+import Link from "next/link";
+import EditorModal from "../EditorModal";
 
 // return object from json removing array and object fields
 const normalizeNodeData = (nodeRows: NodeData["text"]) => {
@@ -28,8 +30,10 @@ const jsonPathToString = (path?: NodeData["path"]) => {
 
 export const NodeModal = ({ opened, onClose }: ModalProps) => {
   const nodeData = useGraph(state => state.selectedNode);
+  const [editOpen, setEditOpen] = React.useState(false);
 
   return (
+    <>
     <Modal size="auto" opened={opened} onClose={onClose} centered withCloseButton={false}>
       <Stack pb="sm" gap="sm">
         <Stack gap="xs">
@@ -37,7 +41,16 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
             <Text fz="xs" fw={500}>
               Content
             </Text>
+            <Flex gap="xs" align ="center">
+            <Button 
+            fz="xs" 
+            fw={500} 
+            c = "white" 
+            bg = "blue" 
+            onClick={() => setEditOpen(true)}>
+              Edit</Button>
             <CloseButton onClick={onClose} />
+            </Flex>
           </Flex>
           <ScrollArea.Autosize mah={250} maw={600}>
             <CodeHighlight
@@ -65,5 +78,7 @@ export const NodeModal = ({ opened, onClose }: ModalProps) => {
         </ScrollArea.Autosize>
       </Stack>
     </Modal>
+    <EditorModal opened={editOpen} onClose={() => setEditOpen(false)} />
+      </>
   );
 };
