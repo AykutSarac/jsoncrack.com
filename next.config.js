@@ -1,4 +1,3 @@
-const { withSentryConfig } = require("@sentry/nextjs");
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
@@ -28,24 +27,6 @@ const config = {
 
 const configExport = () => {
   if (process.env.ANALYZE === "true") return withBundleAnalyzer(config);
-
-  if (process.env.GITHUB_REPOSITORY === "AykutSarac/jsoncrack.com") {
-    return withSentryConfig(
-      config,
-      {
-        silent: true,
-        org: "aykut-sarac",
-        project: "json-crack",
-      },
-      {
-        widenClientFileUpload: true,
-        hideSourceMaps: true,
-        disableLogger: true,
-        disableServerWebpackPlugin: true,
-      }
-    );
-  }
-
   return config;
 };
 

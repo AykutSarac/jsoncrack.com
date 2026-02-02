@@ -81,41 +81,6 @@ jobs:
         with:
           path: './out'
 
-
-  # Sentry job
-  sentry: 
-    needs: build
-    runs-on: ubuntu-latest
-    env:
-      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-      SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-      SENTRY_RELEASE: ${{ github.sha }}
-      SENTRY_SOURCEMAP_PATH: "./"
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/download-artifact@v4.1.7
-        with:
-          name: build-files
-      - name: Download sentry-cli
-        run: curl -sL https://sentry.io/get-cli/ | SENTRY_CLI_VERSION="2.20.0" sh
-      - name: Create Release
-        run: sentry-cli releases new $SENTRY_RELEASE
-      - name: Inject Debug IDs to source files
-        run: sentry-cli sourcemaps inject $SENTRY_SOURCEMAP_PATH
-      - name: Upload Source Files
-        run: sentry-cli sourcemaps upload --validate -r=$SENTRY_RELEASE $SENTRY_SOURCEMAP_PATH
-      - name: Set Release Commits
-        run: sentry-cli releases set-commits $SENTRY_RELEASE --auto
-      - name: Deploy to Sentry
-        run: sentry-cli releases deploys $SENTRY_RELEASE new -e production
-      - name: Finalize Sentry Release
-        run: sentry-cli releases finalize $SENTRY_RELEASE
-          
-
   # Deployment job
   deploy:
     environment:

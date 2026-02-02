@@ -26,7 +26,6 @@
     "@mantine/dropzone": "^7.17.8",
     "@mantine/hooks": "^7.17.8",
     "@monaco-editor/react": "^4.7.0",
-    "@sentry/nextjs": "^7.120.4",
     "allotment": "^1.20.5",
     "fast-xml-parser": "5.2.3",
     "gofmt.js": "0.0.2",
@@ -74,6 +73,14 @@
   },
   "engines": {
     "node": ">=24.x"
+  },
+  "pnpm": {
+    "overrides": {
+      "glob@>=10.2.0 <10.5.0": ">=10.5.0"
+    },
+    "onlyBuiltDependencies": [
+      "sharp"
+    ]
   },
   "packageManager": "pnpm@10.10.0"
 }
