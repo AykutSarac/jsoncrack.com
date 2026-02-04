@@ -7,6 +7,8 @@ settings:
 overrides:
   '@types/react': 19.2.11
   '@types/react-dom': 19.2.3
+  html-to-image: 1.11.11
+  jq-web: 0.5.1
 
 importers:
 
