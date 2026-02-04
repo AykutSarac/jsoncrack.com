@@ -12,7 +12,13 @@ const config = {
   compiler: {
     styledComponents: true,
   },
-  turbopack: {},
+  turbopack: {
+    resolveAlias: {
+      fs: {
+        browser: "./src/shims/empty.ts",
+      },
+    },
+  },
   webpack: (config, { isServer }) => {
     config.resolve.fallback = { fs: false };
     config.output.webassemblyModuleFilename = "static/wasm/[modulehash].wasm";
