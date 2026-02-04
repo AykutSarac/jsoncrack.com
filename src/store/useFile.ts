@@ -94,7 +94,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
       const jsonContent = await jsonToContent(JSON.stringify(contentJson, null, 2), format);
 
       get().setContents({ contents: jsonContent });
-    } catch (error) {
+    } catch {
       get().clear();
       console.warn("The content was unable to be converted, so it was cleared instead.");
     }
@@ -137,7 +137,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
 
       get().setContents({ contents: jsonStr });
       return useJson.setState({ json: jsonStr, loading: false });
-    } catch (error) {
+    } catch {
       get().clear();
       toast.error("Failed to fetch document from URL!");
     }

@@ -1,6 +1,6 @@
-import type { NextSeoProps } from "next-seo";
+import type { DefaultSeoProps } from "next-seo/pages";
 
-export const SEO: NextSeoProps = {
+export const SEO: DefaultSeoProps = {
   title: "JSON Crack | Online JSON Viewer - Transform your data into interactive graphs",
   description:
     "JSON Crack Editor is a tool for visualizing into graphs, analyzing, editing, formatting, querying, transforming and validating JSON, CSV, YAML, XML, and more.",

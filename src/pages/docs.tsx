@@ -1,8 +1,9 @@
 import React from "react";
+import Head from "next/head";
 import { Group, Paper, Stack, Text, Title } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
 import styled from "styled-components";
-import { NextSeo } from "next-seo";
+import { generateNextSeo } from "next-seo/pages";
 import { SEO } from "../constants/seo";
 import Layout from "../layout/PageLayout";
 
@@ -38,12 +39,14 @@ const StyledHighlight = styled.span<{ $link?: boolean; $alert?: boolean }>`
 const Docs = () => {
   return (
     <Layout>
-      <NextSeo
-        {...SEO}
-        title="Documentation - JSON Crack"
-        description="Integrate JSON Crack widgets into your website."
-        canonical="https://jsoncrack.com/docs"
-      />
+      <Head>
+        {generateNextSeo({
+          ...SEO,
+          title: "Documentation - JSON Crack",
+          description: "Integrate JSON Crack widgets into your website.",
+          canonical: "https://jsoncrack.com/docs",
+        })}
+      </Head>
       <Stack mx="auto" maw="90%">
         <Group mb="lg" mt={40}>
           <Title order={1} c="dark">

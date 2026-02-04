@@ -1,6 +1,7 @@
 import React from "react";
 import type { InferGetStaticPropsType, GetStaticProps } from "next";
-import { NextSeo } from "next-seo";
+import Head from "next/head";
+import { generateNextSeo } from "next-seo/pages";
 import { SEO } from "../constants/seo";
 import { FAQ } from "../layout/Landing/FAQ";
 import { Features } from "../layout/Landing/Features";
@@ -14,7 +15,7 @@ import Layout from "../layout/PageLayout";
 export const HomePage = (props: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <Layout>
-      <NextSeo {...SEO} canonical="https://jsoncrack.com" />
+      <Head>{generateNextSeo({ ...SEO, canonical: "https://jsoncrack.com" })}</Head>
       <HeroSection stars={props.stars} />
       <HeroPreview />
       <Section1 />
@@ -38,7 +39,7 @@ export const getStaticProps = (async () => {
         stars: data?.stargazers_count || 0,
       },
     };
-  } catch (error) {
+  } catch {
     return {
       props: {
         stars: 0,

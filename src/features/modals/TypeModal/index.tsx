@@ -106,8 +106,8 @@ export const TypeModal = ({ opened, onClose }: ModalProps) => {
             language={editorLanguage}
             copyLabel="Copy to clipboard"
             copiedLabel="Copied to clipboard"
+            radius={6}
             code={type}
-            styles={{ root: { borderRadius: 6 } }}
           />
         </ScrollArea.Autosize>
       </Stack>

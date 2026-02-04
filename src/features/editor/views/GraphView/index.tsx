@@ -5,7 +5,7 @@ import styled from "styled-components";
 import debounce from "lodash.debounce";
 import { Space } from "react-zoomable-ui";
 import { Canvas } from "reaflow";
-import type { ElkRoot } from "reaflow/dist/layout/useLayout";
+import type { ElkRoot } from "reaflow";
 import { useLongPress } from "use-long-press";
 import useConfig from "../../../../store/useConfig";
 import { CustomEdge } from "./CustomEdge";
@@ -73,6 +73,7 @@ const StyledEditorWrapper = styled.div<{ $widget: boolean; $showRulers: boolean 
 const layoutOptions = {
   "elk.layered.compaction.postCompaction.strategy": "EDGE_LENGTH",
   "elk.layered.nodePlacement.strategy": "NETWORK_SIMPLEX",
+  "elk.spacing.edgeLabel": "15",
 };
 
 interface GraphProps {

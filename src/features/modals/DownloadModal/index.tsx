@@ -62,6 +62,10 @@ function downloadURI(uri: string, name: string) {
   document.body.removeChild(link);
 }
 
+const getExportElement = () =>
+  (document.querySelector(".jsoncrack-canvas") as HTMLElement | null) ??
+  (document.querySelector("svg[id*='ref']") as HTMLElement | null);
+
 export const DownloadModal = ({ opened, onClose }: ModalProps) => {
   const [extension, setExtension] = React.useState(Extensions.PNG);
   const [fileDetails, setFileDetails] = React.useState({
@@ -74,12 +78,18 @@ export const DownloadModal = ({ opened, onClose }: ModalProps) => {
     try {
       toast.loading("Copying to clipboard...", { id: "toastClipboard" });
 
-      const imageElement = document.querySelector("svg[id*='ref']") as HTMLElement;
-
-      const blob = await toBlob(imageElement, {
+      const imageElement = getExportElement();
+      if (!imageElement) {
+        toast.error("Canvas not found.");
+        return;
+      }
+      const imageOptions = {
         quality: fileDetails.quality,
         backgroundColor: fileDetails.backgroundColor,
-      });
+        skipFonts: true,
+      };
+
+      const blob = await toBlob(imageElement, imageOptions);
 
       if (!blob) return;
 
@@ -109,16 +119,22 @@ export const DownloadModal = ({ opened, onClose }: ModalProps) => {
     try {
       toast.loading("Downloading...", { id: "toastDownload" });
 
-      const imageElement = document.querySelector("svg[id*='ref']") as HTMLElement;
-
-      const dataURI = await getDownloadFormat(extension)(imageElement, {
+      const imageElement = getExportElement();
+      if (!imageElement) {
+        toast.error("Canvas not found.");
+        return;
+      }
+      const imageOptions = {
         quality: fileDetails.quality,
         backgroundColor: fileDetails.backgroundColor,
-      });
+        skipFonts: true,
+      };
+
+      const dataURI = await getDownloadFormat(extension)(imageElement, imageOptions);
 
       downloadURI(dataURI, `${fileDetails.filename}.${extension}`);
       gaEvent("download_img", { label: extension });
-    } catch (error) {
+    } catch {
       toast.error("Failed to download image!");
     } finally {
       toast.dismiss("toastDownload");

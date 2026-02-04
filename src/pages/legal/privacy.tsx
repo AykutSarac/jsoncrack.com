@@ -1,6 +1,7 @@
 import React from "react";
+import Head from "next/head";
 import { Box, Container, Paper, Stack, Text, Title } from "@mantine/core";
-import { NextSeo } from "next-seo";
+import { generateNextSeo } from "next-seo/pages";
 import { SEO } from "../../constants/seo";
 import privacy from "../../data/privacy.json";
 import Layout from "../../layout/PageLayout";
@@ -8,12 +9,14 @@ import Layout from "../../layout/PageLayout";
 const Privacy = () => {
   return (
     <Layout>
-      <NextSeo
-        {...SEO}
-        title="Privacy Policy - JSON Crack"
-        description="JSON Crack Privacy Policy"
-        canonical="https://jsoncrack.com/legal/privacy"
-      />
+      <Head>
+        {generateNextSeo({
+          ...SEO,
+          title: "Privacy Policy - JSON Crack",
+          description: "JSON Crack Privacy Policy",
+          canonical: "https://jsoncrack.com/legal/privacy",
+        })}
+      </Head>
       <Container my={50} size="md" pb="lg">
         <Paper bg="transparent">
           <Title ta="center" c="gray.8">
