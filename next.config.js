@@ -15,7 +15,7 @@ const config = {
   turbopack: {
     resolveAlias: {
       fs: {
-        browser: "./src/shims/empty.ts",
+        browser: "./shims/empty.ts",
       },
     },
   },
