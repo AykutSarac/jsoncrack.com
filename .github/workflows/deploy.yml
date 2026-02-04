@@ -28,25 +28,14 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "24.10.0"
+          cache: pnpm
+          cache-dependency-path: pnpm-lock.yaml
 
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
           version: 10.10.0
           run_install: false
-
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      - uses: actions/cache@v4
-        name: Setup pnpm cache
-        with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -92,4 +81,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
