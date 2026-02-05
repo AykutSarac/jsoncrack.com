@@ -62,6 +62,7 @@
     "@types/node": "^25.2.0",
     "@types/react": "19.2.11",
     "@types/react-dom": "19.2.3",
+    "@eslint/eslintrc": "^3.2.0",
     "@typescript-eslint/eslint-plugin": "^8.54.0",
     "eslint": "^9.39.2",
     "eslint-config-next": "16.1.6",
