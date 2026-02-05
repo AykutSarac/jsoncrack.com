@@ -114,6 +114,12 @@ importers:
         specifier: ^5.0.11
         version: 5.0.11(@types/react@19.2.11)(react@19.2.4)(use-sync-external-store@1.6.0(react@19.2.4))
     devDependencies:
+      '@eslint/eslintrc':
+        specifier: ^3.2.0
+        version: 3.3.3
+      '@eslint/js':
+        specifier: ^9.39.2
+        version: 9.39.2
       '@next/bundle-analyzer':
         specifier: 16.1.6
         version: 16.1.6

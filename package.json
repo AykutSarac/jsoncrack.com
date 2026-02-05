@@ -56,6 +56,8 @@
     "zustand": "^5.0.11"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.39.2",
     "@next/bundle-analyzer": "16.1.6",
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
     "@types/js-yaml": "^4.0.9",
