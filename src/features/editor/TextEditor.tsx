@@ -12,7 +12,6 @@ loader.config({
 });
 
 const editorOptions: EditorProps["options"] = {
-  formatOnPaste: true,
   tabSize: 2,
   formatOnType: true,
   minimap: { enabled: false },
