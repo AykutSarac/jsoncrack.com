@@ -21,7 +21,6 @@ export const ToolsMenu = () => {
       </Menu.Target>
       <Menu.Dropdown>
         <Menu.Item
-          fz={12}
           leftSection={<VscSearchFuzzy />}
           onClick={() => {
             setVisible("JQModal", true);
@@ -31,7 +30,6 @@ export const ToolsMenu = () => {
           JSON Query (jq)
         </Menu.Item>
         <Menu.Item
-          fz={12}
           leftSection={<MdFilterListAlt />}
           onClick={() => {
             setVisible("JPathModal", true);
@@ -41,7 +39,6 @@ export const ToolsMenu = () => {
           JSON Path
         </Menu.Item>
         <Menu.Item
-          fz={12}
           leftSection={<VscJson />}
           onClick={() => {
             setVisible("SchemaModal", true);
@@ -52,7 +49,6 @@ export const ToolsMenu = () => {
         </Menu.Item>
         <Menu.Divider />
         <Menu.Item
-          fz={12}
           leftSection={<VscGroupByRefType />}
           onClick={() => {
             setVisible("TypeModal", true);

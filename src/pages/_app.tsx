@@ -1,17 +1,32 @@
 import React from "react";
 import type { AppProps } from "next/app";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { createTheme, MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
+import { CodeHighlightAdapterProvider, createShikiAdapter } from "@mantine/code-highlight";
 import "@mantine/code-highlight/styles.css";
 import { ThemeProvider } from "styled-components";
-import { NextSeo, SoftwareAppJsonLd } from "next-seo";
+import { SoftwareApplicationJsonLd } from "next-seo";
+import { generateDefaultSeo } from "next-seo/pages";
 import { GoogleAnalytics } from "nextjs-google-analytics";
 import { Toaster } from "react-hot-toast";
 import GlobalStyle from "../constants/globalStyle";
 import { SEO } from "../constants/seo";
 import { lightTheme } from "../constants/theme";
 import { smartColorSchemeManager } from "../lib/utils/mantineColorScheme";
+
+async function loadShiki() {
+  const { createHighlighter } = await import("shiki");
+  const shiki = await createHighlighter({
+    langs: ["typescript", "json", "go", "kotlin", "rust"],
+    themes: [],
+  });
+
+  return shiki;
+}
+
+const shikiAdapter = createShikiAdapter(loadShiki);
 
 const theme = createTheme({
   autoContrast: true,
@@ -64,42 +79,42 @@ function JsonCrack({ Component, pageProps }: AppProps) {
 
   return (
     <>
-      <NextSeo {...SEO} />
-      <SoftwareAppJsonLd
+      <Head>{generateDefaultSeo(SEO)}</Head>
+      <SoftwareApplicationJsonLd
         name="JSON Crack"
-        price="0"
-        priceCurrency="USD"
         type="SoftwareApplication"
         operatingSystem="Browser"
-        keywords="json, json viewer, json visualizer, json formatter, json editor, json parser, json to tree view, json to diagram, json graph, json beautifier, json validator, json to csv, json to yaml, json minifier, json schema, json data transformer, json api, online json viewer, online json formatter, online json editor, json tool"
         applicationCategory="DeveloperApplication"
-        aggregateRating={{ ratingValue: "4.9", ratingCount: "19" }}
+        aggregateRating={{ ratingValue: 4.9, ratingCount: 19 }}
+        datePublished="2022-17-02"
       />
       <MantineProvider
         colorSchemeManager={colorSchemeManager}
         defaultColorScheme="light"
         theme={theme}
       >
-        <ThemeProvider theme={lightTheme}>
-          <Toaster
-            position="bottom-right"
-            containerStyle={{
-              bottom: 34,
-              right: 8,
-              fontSize: 14,
-            }}
-            toastOptions={{
-              style: {
-                background: "#4D4D4D",
-                color: "#B9BBBE",
-                borderRadius: 4,
-              },
-            }}
-          />
-          <GlobalStyle />
-          {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && <GoogleAnalytics trackPageViews />}
-          <Component {...pageProps} />
-        </ThemeProvider>
+        <CodeHighlightAdapterProvider adapter={shikiAdapter}>
+          <ThemeProvider theme={lightTheme}>
+            <Toaster
+              position="bottom-right"
+              containerStyle={{
+                bottom: 34,
+                right: 8,
+                fontSize: 14,
+              }}
+              toastOptions={{
+                style: {
+                  background: "#4D4D4D",
+                  color: "#B9BBBE",
+                  borderRadius: 4,
+                },
+              }}
+            />
+            <GlobalStyle />
+            {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && <GoogleAnalytics trackPageViews />}
+            <Component {...pageProps} />
+          </ThemeProvider>
+        </CodeHighlightAdapterProvider>
       </MantineProvider>
     </>
   );

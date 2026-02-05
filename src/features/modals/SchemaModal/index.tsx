@@ -39,7 +39,7 @@ export const SchemaModal = ({ opened, onClose }: ModalProps) => {
       gaEvent("apply_json_schema");
       toast.success("Applied schema!");
       onClose();
-    } catch (error) {
+    } catch {
       toast.error("Invalid Schema");
     }
   };

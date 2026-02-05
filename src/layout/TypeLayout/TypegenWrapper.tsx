@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from "react";
+import Head from "next/head";
 import { Box, Container, Flex, Paper, Title, Text } from "@mantine/core";
 import { Editor } from "@monaco-editor/react";
-import { NextSeo } from "next-seo";
+import { generateNextSeo } from "next-seo/pages";
 import { LuCheck, LuCircleX } from "react-icons/lu";
 import { SEO } from "../../constants/seo";
 import { type FileFormat, formats, type TypeLanguage, typeOptions } from "../../enums/file.enum";
@@ -32,7 +33,7 @@ export const TypegenWrapper = ({ from, to }: ConverterPagesProps) => {
         const type = await generateType(originalContent, from, to);
         setConvertedContent(type);
         setContentHasError(false);
-      } catch (_e) {
+      } catch {
         setContentHasError(true);
         setConvertedContent("");
       }
@@ -41,12 +42,14 @@ export const TypegenWrapper = ({ from, to }: ConverterPagesProps) => {
 
   return (
     <Layout>
-      <NextSeo
-        {...SEO}
-        title={`${fromLabel} to ${toLabel} | JSON Crack`}
-        canonical={`https://jsoncrack.com/converter/${from}-to-${to}`}
-        description={`Instantly generate ${toLabel} from ${fromLabel} using this free online tool. Paste your ${fromLabel} and get the generated ${toLabel} instantly.`}
-      />
+      <Head>
+        {generateNextSeo({
+          ...SEO,
+          title: `${fromLabel} to ${toLabel} | JSON Crack`,
+          canonical: `https://jsoncrack.com/converter/${from}-to-${to}`,
+          description: `Instantly generate ${toLabel} from ${fromLabel} using this free online tool. Paste your ${fromLabel} and get the generated ${toLabel} instantly.`,
+        })}
+      </Head>
       <Container mt="xl" size="lg">
         <Title c="black">
           {fromLabel} to {toLabel} Converter

@@ -1,8 +1,9 @@
 import React from "react";
+import Head from "next/head";
 import { Box, Button, Container, Flex, Paper, Title, Text } from "@mantine/core";
 import { Editor, type OnMount } from "@monaco-editor/react";
 import { JSONSchemaFaker } from "json-schema-faker";
-import { NextSeo } from "next-seo";
+import { generateNextSeo } from "next-seo/pages";
 import { LuCheck, LuCircleX } from "react-icons/lu";
 import { SEO } from "../../constants/seo";
 import { FileFormat, TypeLanguage } from "../../enums/file.enum";
@@ -48,12 +49,15 @@ const JSONSchemaTool = () => {
 
   return (
     <Layout>
-      <NextSeo
-        {...SEO}
-        title="JSON Schema Validator & Generator"
-        description="Use our JSON Schema Validator & Generator tool to easily validate and generate JSON schemas, and generate data from JSON schemas. Simply input your JSON data, generate the corresponding schema, and validate your data with ease."
-        canonical="https://jsoncrack.com/tools/json-schema"
-      />
+      <Head>
+        {generateNextSeo({
+          ...SEO,
+          title: "JSON Schema Validator & Generator",
+          description:
+            "Use our JSON Schema Validator & Generator tool to easily validate and generate JSON schemas, and generate data from JSON schemas. Simply input your JSON data, generate the corresponding schema, and validate your data with ease.",
+          canonical: "https://jsoncrack.com/tools/json-schema",
+        })}
+      </Head>
       <Container mt="xl" size="xl">
         <Title c="black">JSON Schema Validator & Generator</Title>
         <Flex pt="lg" gap="lg">
