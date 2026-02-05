@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import localFont from "next/font/local";
 import Link from "next/link";
 import { Image } from "@mantine/core";
@@ -36,14 +36,16 @@ interface LogoProps extends React.ComponentPropsWithoutRef<"div"> {
 }
 
 export const JSONCrackLogo = ({ fontSize = "1.2rem", hideText, hideLogo, ...props }: LogoProps) => {
-  const [isIframe, setIsIframe] = React.useState(false);
+  const handleLogoClick = React.useCallback((event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (typeof window === "undefined") return;
+    if (!window.location.href.includes("widget")) return;
 
-  useEffect(() => {
-    setIsIframe(window !== undefined && window.location.href.includes("widget"));
+    event.preventDefault();
+    window.open("/", "_blank", "noopener,noreferrer");
   }, []);
 
   return (
-    <Link href="/" prefetch={false} target={isIframe ? "_blank" : "_self"}>
+    <Link href="/" prefetch={false} target="_self" onClick={handleLogoClick}>
       <StyledLogoWrapper>
         {!hideLogo && (
           <Image

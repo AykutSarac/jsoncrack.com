@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 import dynamic from "next/dynamic";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useMantineColorScheme } from "@mantine/core";
 import "@mantine/dropzone/styles.css";
 import styled, { ThemeProvider } from "styled-components";
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
-import { NextSeo } from "next-seo";
+import { generateNextSeo } from "next-seo/pages";
 import { SEO } from "../constants/seo";
 import { darkTheme, lightTheme } from "../constants/theme";
 import { Banner } from "../features/Banner";
@@ -79,12 +80,15 @@ const EditorPage = () => {
 
   return (
     <>
-      <NextSeo
-        {...SEO}
-        title="Editor | JSON Crack"
-        description="JSON Crack Editor is a tool for visualizing into graphs, analyzing, editing, formatting, querying, transforming and validating JSON, CSV, YAML, XML, and more."
-        canonical="https://jsoncrack.com/editor"
-      />
+      <Head>
+        {generateNextSeo({
+          ...SEO,
+          title: "Editor | JSON Crack",
+          description:
+            "JSON Crack Editor is a tool for visualizing into graphs, analyzing, editing, formatting, querying, transforming and validating JSON, CSV, YAML, XML, and more.",
+          canonical: "https://jsoncrack.com/editor",
+        })}
+      </Head>
       <ThemeProvider theme={darkmodeEnabled ? darkTheme : lightTheme}>
         <ExternalMode />
         <ModalController />

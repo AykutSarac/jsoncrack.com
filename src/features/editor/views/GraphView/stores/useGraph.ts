@@ -1,5 +1,5 @@
-import type { ViewPort } from "react-zoomable-ui/dist/ViewPort";
-import type { CanvasDirection } from "reaflow/dist/layout/elkLayout";
+import type { ViewPort } from "react-zoomable-ui";
+import type { CanvasDirection } from "reaflow";
 import { create } from "zustand";
 import { SUPPORTED_LIMIT } from "../../../../../constants/graph";
 import useJson from "../../../../../store/useJson";

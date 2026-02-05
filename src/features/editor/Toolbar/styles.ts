@@ -5,7 +5,7 @@ export const StyledToolElement = styled.button<{ $hide?: boolean; $highlight?: b
   align-items: center;
   gap: 4px;
   place-content: center;
-  font-size: 12px;
+  font-size: 14px;
   background: ${({ $highlight }) =>
     $highlight ? "linear-gradient(rgba(0, 0, 0, 0.1) 0 0)" : "none"};
   color: ${({ theme }) => theme.INTERACTIVE_NORMAL};

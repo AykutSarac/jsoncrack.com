@@ -1,9 +1,10 @@
 import React from "react";
 import dynamic from "next/dynamic";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useMantineColorScheme } from "@mantine/core";
 import { ThemeProvider } from "styled-components";
-import { NextSeo } from "next-seo";
+import { generateNextSeo } from "next-seo/pages";
 import toast from "react-hot-toast";
 import { darkTheme, lightTheme } from "../constants/theme";
 import useGraph from "../features/editor/views/GraphView/stores/useGraph";
@@ -75,7 +76,7 @@ const WidgetPage = () => {
 
   return (
     <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
-      <NextSeo noindex nofollow />
+      <Head>{generateNextSeo({ noindex: true, nofollow: true })}</Head>
       <ModalController />
       <GraphView isWidget />
     </ThemeProvider>
