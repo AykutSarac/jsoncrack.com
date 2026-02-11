@@ -4,7 +4,7 @@ import { create } from "zustand";
 import { SUPPORTED_LIMIT } from "../../../../../constants/graph";
 import useJson from "../../../../../store/useJson";
 import type { EdgeData, NodeData } from "../../../../../types/graph";
-import { parser } from "../lib/jsonParser";
+import { getLineNumberFromPath, parser } from "../lib/jsonParser";
 
 export interface Graph {
   viewPort: ViewPort | null;
@@ -48,7 +48,19 @@ interface GraphActions {
 const useGraph = create<Graph & GraphActions>((set, get) => ({
   ...initialStates,
   clearGraph: () => set({ nodes: [], edges: [], loading: false }),
-  setSelectedNode: nodeData => set({ selectedNode: nodeData }),
+  setSelectedNode: nodeData => {
+    set({ selectedNode: nodeData });
+
+    if (nodeData.path && nodeData.path.length > 0) {
+      const line = getLineNumberFromPath(useJson.getState().json, nodeData.path);
+      set({
+        selectedNode: {
+          ...nodeData,
+          lineNumber: line ?? 1,
+        },
+      });
+    }
+  },
   setGraph: (data, options) => {
     const { nodes, edges } = parser(data ?? useJson.getState().json);
 

@@ -14,6 +14,7 @@ export interface NodeData {
   width: number;
   height: number;
   path?: JSONPath;
+  lineNumber: number;
 }
 
 export interface EdgeData {
