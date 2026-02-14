@@ -336,6 +336,11 @@ export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
       "--node-divider": themeTokens.NODE_COLORS.DIVIDER,
       "--text-positive": themeTokens.TEXT_POSITIVE,
       "--background-modifier-accent": themeTokens.BACKGROUND_MODIFIER_ACCENT,
+      "--spinner-track":
+        theme === "dark" ? "rgba(255, 255, 255, 0.3)" : "rgba(17, 24, 39, 0.2)",
+      "--spinner-head": theme === "dark" ? "#FFFFFF" : "#111827",
+      "--overlay-bg":
+        theme === "dark" ? "rgba(0, 0, 0, 0.2)" : "rgba(255, 255, 255, 0.38)",
       ...style,
     } as React.CSSProperties;
 

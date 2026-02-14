@@ -52,14 +52,20 @@
   align-items: center;
   justify-content: center;
   pointer-events: none;
+  background: radial-gradient(
+    circle at center,
+    var(--overlay-bg) 0 44px,
+    transparent 96px
+  );
 }
 
 .spinner {
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
   border-radius: 9999px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top-color: #ffffff;
+  border: 3px solid var(--spinner-track);
+  border-top-color: var(--spinner-head);
+  border-right-color: var(--spinner-head);
   animation: spin 0.9s linear infinite;
 }
 
