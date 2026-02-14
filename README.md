@@ -63,7 +63,7 @@ JSON Crack is a tool for visualizing JSON data in a structured, interactive grap
 ## Contributing
 
 - Found a bug or missing feature? Open an issue on [GitHub Issues](https://github.com/AykutSarac/jsoncrack.com/issues).
-- Want to contribute code or docs? Start with our [contribution guide](./apps/www/CONTRIBUTING.md).
+- Want to contribute code or docs? Start with our [contribution guide](./CONTRIBUTING.md).
 
 ## Sponsors & Support
 
