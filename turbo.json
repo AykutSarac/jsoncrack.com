@@ -15,7 +15,8 @@
       "persistent": true
     },
     "lint": {
-      "outputs": ["tsconfig.tsbuildinfo"]
+      "dependsOn": ["^build"],
+      "outputs": []
     },
     "lint:fix": {
       "cache": false
