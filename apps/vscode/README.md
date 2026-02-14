@@ -1,23 +1,51 @@
-  <img src="https://github.com/AykutSarac/jsoncrack-vscode/assets/47941171/23b26537-7c4a-4029-af78-456dea0d0b04" width="300" alt="JSON Crack" />
-  
-<hr />
+# JSON Crack VS Code Extension
 
-JSON Crack is a powerful and innovative VS Code extension designed to revolutionize the way you interact with JSON data. Seamlessly bridging the gap between data and visualization, this extension empowers developers, data analysts, and enthusiasts to effortlessly transform complex JSON datasets into informative and visually appealing graphs.
-This is an extension brought by [jsoncrack.com](https://jsoncrack.com).
+Development guide for `apps/vscode` inside this monorepo.
 
-## How to use?
+## Prerequisites
 
-1. Install the JSON Crack extension from the [VS Code marketplace](https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode).
-2. Open a JSON file.
-3. Click on the JSON Crack icon (![icon](https://github.com/AykutSarac/jsoncrack-vscode/assets/47941171/c72ad25a-3b3e-40a5-b551-4a113794795c)) in the menubar.
-4. Watch as your JSON data transforms into insightful graphs.
+- Node.js `>=24`
+- pnpm `>=10`
 
-<img width="600" alt="image" src="https://github.com/AykutSarac/jsoncrack-vscode/assets/47941171/06715ac1-2403-402f-b3fa-3d91e1c9196a">
+## Install
 
-## Contributing
+From repository root:
 
-1. Run `pnpm install`
-2. Run `pnpm build`
-3. Press **F5** to debug
+```sh
+pnpm install
+```
 
-For every change at codebase you should re-do the steps **2 and 3**.
+## Run and Build
+
+From repository root:
+
+```sh
+# one-time production build for extension + webview
+pnpm build:vscode
+
+# watch mode (rebuild on change)
+pnpm dev:vscode
+
+# lint
+pnpm lint:vscode
+```
+
+## Debug (F5 from Root Workspace)
+
+1. Open the repository root in VS Code.
+2. Press `F5`.
+3. Select `Run VSCode Extension (apps/vscode)` if prompted.
+4. In the Extension Development Host window, open a `.json` file and run:
+   `JSON Crack: Enable JSON Crack visualization`.
+
+For live iteration, keep `pnpm dev:vscode` running in a terminal while debugging.
+
+## Packaging
+
+From repository root:
+
+```sh
+pnpm --filter vscode package
+```
+
+This generates the extension bundle under `apps/vscode/build`.
