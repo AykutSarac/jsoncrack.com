@@ -1,18 +1,18 @@
-# @jsoncrack/react-canvas
+# jsoncrack
 
 Reusable JSONCrack graph canvas as a React component.
 
 ## Install
 
 ```bash
-npm install @jsoncrack/react-canvas
+npm install jsoncrack
 ```
 
 ## Usage
 
 ```tsx
 import React from "react";
-import { JsonCrack } from "@jsoncrack/react-canvas";
+import { JsonCrack } from "jsoncrack";
 
 export default function App() {
   return (

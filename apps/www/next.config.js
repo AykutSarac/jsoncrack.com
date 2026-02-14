@@ -7,7 +7,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
  */
 const config = {
   output: "export",
-  transpilePackages: ["@jsoncrack/react-canvas"],
+  transpilePackages: ["jsoncrack"],
   reactStrictMode: false,
   productionBrowserSourceMaps: true,
   compiler: {

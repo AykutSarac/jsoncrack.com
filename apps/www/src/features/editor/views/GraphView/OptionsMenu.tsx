@@ -2,7 +2,7 @@ import React from "react";
 import { ActionIcon, Button, Flex, Menu, Text } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
 import styled from "styled-components";
-import type { LayoutDirection } from "@jsoncrack/react-canvas";
+import type { LayoutDirection } from "jsoncrack";
 import { event as gaEvent } from "nextjs-google-analytics";
 import { BsCheck2 } from "react-icons/bs";
 import { LuChevronRight, LuImageDown, LuMenu } from "react-icons/lu";

@@ -1,4 +1,4 @@
-import type { LayoutDirection, NodeData } from "@jsoncrack/react-canvas";
+import type { LayoutDirection, NodeData } from "jsoncrack";
 import type { ViewPort } from "react-zoomable-ui";
 import { create } from "zustand";
 

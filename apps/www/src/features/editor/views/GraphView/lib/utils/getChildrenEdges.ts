@@ -1,4 +1,4 @@
-import type { EdgeData, NodeData } from "@jsoncrack/react-canvas";
+import type { EdgeData, NodeData } from "jsoncrack";
 
 export const getChildrenEdges = (nodes: NodeData[], edges: EdgeData[]): EdgeData[] => {
   const nodeIds = nodes.map(node => node.id);

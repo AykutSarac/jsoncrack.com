@@ -20,7 +20,7 @@ importers:
 
   apps/www:
     dependencies:
-      '@jsoncrack/react-canvas':
+      'jsoncrack':
         specifier: workspace:*
         version: link:../../packages/react-jsoncrack
       '@mantine/code-highlight':

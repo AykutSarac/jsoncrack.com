@@ -1,6 +1,7 @@
 {
   "name": "jsoncrack-monorepo",
   "private": true,
+  "license": "Apache-2.0",
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",

@@ -1,5 +1,5 @@
 {
-  "name": "json-crack",
+  "name": "www",
   "private": true,
   "version": "0.0.0",
   "author": {
@@ -21,7 +21,7 @@
     "analyze": "ANALYZE=true npm run build"
   },
   "dependencies": {
-    "@jsoncrack/react-canvas": "workspace:*",
+    "jsoncrack": "workspace:*",
     "@mantine/code-highlight": "^8.3.14",
     "@mantine/core": "^8.3.14",
     "@mantine/dropzone": "^8.3.14",

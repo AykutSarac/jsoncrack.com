@@ -1,4 +1,4 @@
-import type { EdgeData, NodeData } from "@jsoncrack/react-canvas";
+import type { EdgeData, NodeData } from "jsoncrack";
 
 type Outgoers = [NodeData[], string[]];
 

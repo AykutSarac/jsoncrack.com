@@ -1,5 +1,5 @@
 {
-  "name": "@jsoncrack/react-canvas",
+  "name": "jsoncrack",
   "version": "0.1.0",
   "description": "Reusable JSON Crack canvas as a React component",
   "license": "Apache-2.0",

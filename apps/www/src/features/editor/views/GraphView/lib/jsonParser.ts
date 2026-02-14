@@ -3,8 +3,8 @@
  * This source code is licensed under the Apache 2.0 license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import type { EdgeData, NodeData, NodeRow } from "@jsoncrack/react-canvas";
 import { parseTree, getNodePath, type Node } from "jsonc-parser";
+import type { EdgeData, NodeData, NodeRow } from "jsoncrack";
 import { calculateNodeSize } from "./utils/calculateNodeSize";
 
 export type Graph = {
