@@ -12,10 +12,14 @@
   },
   "scripts": {
     "dev": "turbo run dev",
+    "dev:vscode": "turbo run watch-build --filter=vscode",
     "build": "turbo run build",
+    "build:vscode": "turbo run build --filter=vscode",
     "start": "turbo run start",
     "lint": "turbo run lint",
+    "lint:vscode": "turbo run lint --filter=vscode",
     "lint:fix": "turbo run lint:fix",
+    "lint:fix:vscode": "turbo run lint:fix --filter=vscode",
     "analyze": "turbo run analyze",
     "clean": "turbo run clean"
   },

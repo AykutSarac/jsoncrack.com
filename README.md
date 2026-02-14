@@ -45,6 +45,10 @@ pnpm --filter www build
 # Canvas package only
 pnpm --filter jsoncrack build
 pnpm --filter jsoncrack lint
+
+# VS Code extension app only
+pnpm --filter vscode build
+pnpm --filter vscode lint
 ```
 
 ## Docker (Web App)

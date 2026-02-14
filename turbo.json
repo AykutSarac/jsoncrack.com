@@ -3,7 +3,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**", "out/**"]
+      "outputs": [".next/**", "!.next/cache/**", "dist/**", "out/**", "build/**"]
     },
     "dev": {
       "dependsOn": ["^build"],
@@ -23,10 +23,14 @@
     },
     "analyze": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", "out/**"]
+      "outputs": [".next/**", "!.next/cache/**", "out/**", "build/**"]
     },
     "clean": {
       "cache": false
+    },
+    "watch-build": {
+      "cache": false,
+      "persistent": true
     }
   }
 }

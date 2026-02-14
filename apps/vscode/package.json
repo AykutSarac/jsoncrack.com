@@ -1,0 +1,148 @@
+{
+  "name": "vscode",
+  "version": "3.0.0",
+  "displayName": "JSON Crack",
+  "description": "Seamlessly visualize your JSON data instantly into graphs.",
+  "publisher": "AykutSarac",
+  "author": {
+    "email": "aykutsarac0@gmail.com",
+    "name": "Aykut Saraç"
+  },
+  "homepage": "https://jsoncrack.com",
+  "icon": "assets/jsoncrack.png",
+  "galleryBanner": {
+    "color": "#202225",
+    "theme": "dark"
+  },
+  "categories": [
+    "Visualization"
+  ],
+  "keywords": [
+    "json",
+    "visualizer",
+    "jsoncrack",
+    "data",
+    "yaml",
+    "livepreview"
+  ],
+  "activationEvents": [
+    "workspaceContains:**/*.{json}"
+  ],
+  "main": "./build/ext-src/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "jsoncrack-vscode.start",
+        "title": "Enable JSON Crack visualization",
+        "category": "menubar",
+        "icon": {
+          "light": "./assets/icon-light.svg",
+          "dark": "./assets/icon-dark.svg"
+        }
+      },
+      {
+        "command": "jsoncrack-vscode.start.specific",
+        "title": "Enable JSON Crack visualization for specific file",
+        "category": "menubar"
+      },
+      {
+        "command": "jsoncrack-vscode.start.selected",
+        "title": "Open with JSON Crack",
+        "category": "Navigation"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "jsoncrack-vscode.start.selected",
+          "when": "editorHasSelection",
+          "group": "navigation"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "jsoncrack-vscode.start",
+          "when": "never"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "jsoncrack-vscode.start",
+          "when": "resourceExtname == .json || editorLangId == json",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "pnpm run build",
+    "dev": "react-scripts start",
+    "start": "react-scripts start",
+    "compile": "webpack --mode development",
+    "watch": "webpack --mode development --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "analyze": "ANALYZE=true pnpm run build",
+    "lint": "eslint src ext-src && prettier --check src ext-src",
+    "lint:fix": "eslint --fix src ext-src && prettier --write src ext-src",
+    "build": "node ./scripts/build-non-split.js && tsc -p tsconfig.extension.json",
+    "clean": "rm -rf build",
+    "watch-build": "nodemon --watch src --watch ext-src --watch scripts --ext js,tsx,ts --exec \"pnpm run build\"",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@mantine/code-highlight": "^7.16.2",
+    "@mantine/core": "^7.16.2",
+    "@mantine/hooks": "^7.16.2",
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "@types/node": "16.x",
+    "@types/react": "^18.0.20",
+    "@types/react-dom": "^18.0.6",
+    "@types/vscode": "^1.86.0",
+    "@types/webpack-env": "^1.18.5",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
+    "eslint": "^8.20.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-unused-imports": "^4.1.4",
+    "nodemon": "^2.0.20",
+    "prettier": "^3.3.3",
+    "react-scripts": "^5.0.1",
+    "rewire": "^7.0.0",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.6.3",
+    "vsce": "^2.15.0",
+    "webpack": "^5.95.0",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "jsoncrack": "workspace:*",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AykutSarac/jsoncrack-vscode"
+  },
+  "bugs": {
+    "url": "https://github.com/AykutSarac/jsoncrack-vscode/issues"
+  },
+  "engines": {
+    "node": ">=18.x",
+    "vscode": "^1.86.0"
+  },
+  "packageManager": "pnpm@10.20.0"
+}

@@ -1,0 +1,10 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+  "files.exclude": {
+    "build": false
+  },
+  "search.exclude": {
+    "build": true
+  },
+  "typescript.tsc.autoDetect": "off"
+}
