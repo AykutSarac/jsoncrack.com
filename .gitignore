@@ -5,6 +5,7 @@
 
 # Package manager
 node_modules/
+.npm-cache/
 .pnpm-store/
 .pnp*
 npm-debug.log*
