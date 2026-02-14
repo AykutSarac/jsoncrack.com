@@ -44,7 +44,7 @@ const CustomEdgeBase = ({
     if (!queryRoot) return;
 
     const targetNodeDom = queryRoot.querySelector(
-      `[data-id$="node-${targetNodeId}"]`
+      `[data-id$="node-${targetNodeId}"]`,
     ) as HTMLElement | null;
 
     if (targetNodeDom?.parentElement) {

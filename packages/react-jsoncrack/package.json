@@ -19,8 +19,8 @@
   "scripts": {
     "build": "pnpm exec tsc -p tsconfig.build.json && node ./scripts/copy-css.mjs",
     "clean": "rm -rf dist",
-    "lint": "pnpm --dir ../.. exec tsc -p packages/react-jsoncrack/tsconfig.build.json --noEmit && pnpm --dir ../.. exec eslint packages/react-jsoncrack/src && pnpm --dir ../.. exec prettier --check packages/react-jsoncrack/src",
-    "lint:fix": "pnpm --dir ../.. exec eslint --fix packages/react-jsoncrack/src && pnpm --dir ../.. exec prettier --write packages/react-jsoncrack/src"
+    "lint": "pnpm --dir ../.. exec tsc -p packages/react-jsoncrack/tsconfig.build.json --noEmit && pnpm --dir ../../apps/www exec prettier --check ../../packages/react-jsoncrack/src",
+    "lint:fix": "pnpm --dir ../../apps/www exec prettier --write ../../packages/react-jsoncrack/src"
   },
   "peerDependencies": {
     "react": ">=18",

@@ -1,4 +1,9 @@
-import { getNodePath, parseTree, type Node, type ParseError } from "jsonc-parser";
+import {
+  getNodePath,
+  parseTree,
+  type Node,
+  type ParseError,
+} from "jsonc-parser";
 import type { EdgeData, GraphData, NodeData, NodeRow } from "./types";
 import { calculateNodeSize } from "./utils/calculateNodeSize";
 
@@ -10,7 +15,10 @@ export interface ParseGraphResult extends GraphData {
   errors: ParseError[];
 }
 
-export const parseGraph = (json: string, options: ParseGraphOptions = {}): ParseGraphResult => {
+export const parseGraph = (
+  json: string,
+  options: ParseGraphOptions = {},
+): ParseGraphResult => {
   const parseErrors: ParseError[] = [];
   const jsonTree = parseTree(json, parseErrors);
 
@@ -47,7 +55,7 @@ export const parseGraph = (json: string, options: ParseGraphOptions = {}): Parse
       const { width, height } = calculateNodeSize(
         `[${node.children?.length ?? "0"} items]`,
         false,
-        options.imagePreviewEnabled ?? true
+        options.imagePreviewEnabled ?? true,
       );
 
       nodes.push({
@@ -65,14 +73,14 @@ export const parseGraph = (json: string, options: ParseGraphOptions = {}): Parse
         path: [],
       });
 
-      node.children?.forEach(child => {
+      node.children?.forEach((child) => {
         traverse(child, id);
       });
 
       return id;
     }
 
-    node.children?.forEach(child => {
+    node.children?.forEach((child) => {
       if (!child.children || !child.children[1]) {
         traverse(child, id);
         return;
@@ -85,7 +93,7 @@ export const parseGraph = (json: string, options: ParseGraphOptions = {}): Parse
       if (type === "array") {
         const targetIds: string[] = [];
 
-        valueNode.children?.forEach(arrayChild => {
+        valueNode.children?.forEach((arrayChild) => {
           const arrayChildId = traverse(arrayChild, undefined);
           if (arrayChildId) targetIds.push(arrayChildId);
         });
@@ -98,7 +106,7 @@ export const parseGraph = (json: string, options: ParseGraphOptions = {}): Parse
           childrenCount: valueNode.children?.length,
         });
 
-        targetIds.forEach(targetId => {
+        targetIds.forEach((targetId) => {
           edges.push({
             id: String(edgeId++),
             from: id,
@@ -134,7 +142,11 @@ export const parseGraph = (json: string, options: ParseGraphOptions = {}): Parse
       }
     });
 
-    if (node.parent?.type === "array" && node.type === "object" && node.children?.length === 0) {
+    if (
+      node.parent?.type === "array" &&
+      node.type === "object" &&
+      node.children?.length === 0
+    ) {
       text.push({
         key: null,
         value: "{0 keys}",
@@ -173,7 +185,7 @@ export const parseGraph = (json: string, options: ParseGraphOptions = {}): Parse
       const { width, height } = calculateNodeSize(
         node.value as string | number,
         false,
-        options.imagePreviewEnabled ?? true
+        options.imagePreviewEnabled ?? true,
       );
 
       nodes.push({
@@ -193,12 +205,14 @@ export const parseGraph = (json: string, options: ParseGraphOptions = {}): Parse
     } else {
       let displayText: string | [string, string][] = "";
 
-      if (text.some(row => row.key !== null)) {
-        displayText = text.map(row => {
+      if (text.some((row) => row.key !== null)) {
+        displayText = text.map((row) => {
           const keyStr = row.key === null ? "" : row.key;
 
-          if (row.type === "object") return [keyStr, `{${row.childrenCount ?? 0} keys}`];
-          if (row.type === "array") return [keyStr, `[${row.childrenCount ?? 0} items]`];
+          if (row.type === "object")
+            return [keyStr, `{${row.childrenCount ?? 0} keys}`];
+          if (row.type === "array")
+            return [keyStr, `[${row.childrenCount ?? 0} items]`];
           if (row.value === null) return [keyStr, "null"];
 
           return [keyStr, `${row.value}`];
@@ -210,7 +224,7 @@ export const parseGraph = (json: string, options: ParseGraphOptions = {}): Parse
       const { width, height } = calculateNodeSize(
         displayText,
         false,
-        options.imagePreviewEnabled ?? true
+        options.imagePreviewEnabled ?? true,
       );
 
       nodes.push({

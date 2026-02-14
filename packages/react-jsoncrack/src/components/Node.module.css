@@ -2,8 +2,8 @@
   text-align: center;
   color: var(--node-text);
   font-family:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
-    monospace;
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
   font-size: 12px;
   font-weight: 500;
   overflow: hidden;

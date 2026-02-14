@@ -31,7 +31,9 @@ const Row = ({ row, x, y, index }: RowProps) => {
   return (
     <span
       className={styles.row}
-      style={{ color: getTextColor({ value: row.value, type: typeof row.value }) }}
+      style={{
+        color: getTextColor({ value: row.value, type: typeof row.value }),
+      }}
       data-key={`${row.key}: ${row.value}`}
       data-x={x}
       data-y={y + rowPosition}
@@ -74,7 +76,10 @@ const areRowTargetsEqual = (prevTargets?: string[], nextTargets?: string[]) => {
   return true;
 };
 
-const areRowsEqual = (prevRows: NodeData["text"], nextRows: NodeData["text"]) => {
+const areRowsEqual = (
+  prevRows: NodeData["text"],
+  nextRows: NodeData["text"],
+) => {
   if (prevRows === nextRows) return true;
   if (prevRows.length !== nextRows.length) return false;
 
