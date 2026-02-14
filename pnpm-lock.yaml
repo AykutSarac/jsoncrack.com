@@ -22,7 +22,7 @@ importers:
     dependencies:
       'jsoncrack':
         specifier: workspace:*
-        version: link:../../packages/react-jsoncrack
+        version: link:../../packages/jsoncrack
       '@mantine/code-highlight':
         specifier: ^8.3.14
         version: 8.3.14(@mantine/core@8.3.14(@mantine/hooks@8.3.14(react@19.2.4))(@types/react@19.2.11)(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(@mantine/hooks@8.3.14(react@19.2.4))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -178,7 +178,7 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
-  packages/react-jsoncrack:
+  packages/jsoncrack:
     dependencies:
       jsonc-parser:
         specifier: ^3.3.1

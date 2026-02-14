@@ -64,5 +64,5 @@ Use `ref` to call viewport actions:
 ## Build
 
 ```bash
-pnpm exec tsc -p packages/react-jsoncrack/tsconfig.build.json
+pnpm exec tsc -p packages/jsoncrack/tsconfig.build.json
 ```

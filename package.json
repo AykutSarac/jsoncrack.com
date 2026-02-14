@@ -2,6 +2,14 @@
   "name": "jsoncrack-monorepo",
   "private": true,
   "license": "Apache-2.0",
+  "homepage": "https://jsoncrack.com",
+  "author": {
+    "name": "Aykut Saraç",
+    "email": "aykutsarac0@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/AykutSarac/jsoncrack.com/issues"
+  },
   "scripts": {
     "dev": "turbo run dev",
     "build": "turbo run build",
