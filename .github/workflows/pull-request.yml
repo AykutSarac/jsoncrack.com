@@ -20,7 +20,7 @@ jobs:
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
-          version: 10.10.0
+          version: 10.20.0
           run_install: false
 
       - name: Get pnpm store directory
@@ -36,22 +36,23 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Restore Next.js cache
-        uses: actions/cache@v4
+      - name: Restore Turbo and Next.js cache
+        uses: actions/cache@v5
         with:
           path: |
-            .next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+            .turbo
+            apps/www/.next/cache
+          key: ${{ runner.os }}-turbo-next-${{ hashFiles('pnpm-lock.yaml', 'turbo.json') }}-${{ hashFiles('apps/www/**.[jt]s', 'apps/www/**.[jt]sx', 'packages/**.[jt]s', 'packages/**.[jt]sx') }}
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
+            ${{ runner.os }}-turbo-next-${{ hashFiles('pnpm-lock.yaml', 'turbo.json') }}-
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Lint
-        run: pnpm run lint
+        run: pnpm turbo run lint
 
       - name: Build
-        run: pnpm run build
+        run: pnpm turbo run build
 
         

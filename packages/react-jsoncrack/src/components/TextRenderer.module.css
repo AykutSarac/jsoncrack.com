@@ -1,0 +1,20 @@
+.row {
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  gap: 4px;
+  vertical-align: middle;
+}
+
+.colorPreview {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  display: inline-block;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.link {
+  text-decoration: underline;
+  pointer-events: all;
+}

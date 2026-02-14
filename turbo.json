@@ -1,0 +1,31 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**", "out/**"]
+    },
+    "dev": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "persistent": true
+    },
+    "start": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "outputs": ["tsconfig.tsbuildinfo"]
+    },
+    "lint:fix": {
+      "cache": false
+    },
+    "analyze": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**", "out/**"]
+    },
+    "clean": {
+      "cache": false
+    }
+  }
+}
