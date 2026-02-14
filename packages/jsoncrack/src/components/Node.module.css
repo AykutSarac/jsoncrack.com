@@ -1,0 +1,72 @@
+.foreignObject {
+  text-align: center;
+  color: var(--node-text);
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  font-size: 12px;
+  font-weight: 500;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.objectForeignObject {
+  text-align: left;
+}
+
+.key {
+  display: inline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row {
+  padding: 3px 10px;
+  height: 30px;
+  line-height: 24px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-bottom: 1px solid var(--node-divider);
+  box-sizing: border-box;
+}
+
+.row:last-of-type {
+  border-bottom: none;
+}
+
+.textNodeWrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  padding: 0 10px;
+}
+
+.imageWrapper {
+  padding: 5px;
+}
+
+.image {
+  border-radius: 2px;
+  object-fit: contain;
+}
+
+.foreignObject:global(.searched) {
+  background: rgba(27, 255, 0, 0.1);
+  border: 1px solid var(--text-positive);
+  border-radius: 2px;
+  box-sizing: border-box;
+}
+
+.foreignObject :global(.highlight) {
+  background: rgba(255, 214, 0, 0.15);
+}
+
+.foreignObject:global(.searched) .row {
+  border-bottom: 1px solid var(--text-positive);
+}

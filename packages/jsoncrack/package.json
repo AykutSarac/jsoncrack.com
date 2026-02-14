@@ -1,0 +1,39 @@
+{
+  "name": "jsoncrack",
+  "version": "1.0.0",
+  "description": "Reusable JSON Crack canvas as a React component",
+  "license": "Apache-2.0",
+  "author": "Aykut Saraç",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "pnpm exec tsc -p tsconfig.build.json && node ./scripts/copy-css.mjs",
+    "clean": "rm -rf dist",
+    "lint": "pnpm --dir ../.. exec tsc -p packages/jsoncrack/tsconfig.build.json --noEmit && pnpm --dir ../../apps/www exec prettier --check ../../packages/jsoncrack/src",
+    "lint:fix": "pnpm --dir ../../apps/www exec prettier --write ../../packages/jsoncrack/src"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "dependencies": {
+    "jsonc-parser": "^3.3.1",
+    "react-zoomable-ui": "^0.11.0",
+    "reaflow": "5.4.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.11",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.9.3"
+  }
+}

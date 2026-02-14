@@ -1,0 +1,90 @@
+.canvasWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-color);
+}
+
+.showGrid {
+  background-image:
+    linear-gradient(var(--line-color-1) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, var(--line-color-1) 1.5px, transparent 1.5px),
+    linear-gradient(var(--line-color-2) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-color-2) 1px, transparent 1px);
+  background-position:
+    -1.5px -1.5px,
+    -1.5px -1.5px,
+    -1px -1px,
+    -1px -1px;
+  background-size:
+    100px 100px,
+    100px 100px,
+    20px 20px,
+    20px 20px;
+}
+
+.canvasWrapper :global(.jsoncrack-space) {
+  cursor: grab;
+}
+
+.canvasWrapper :global(.jsoncrack-space:active) {
+  cursor: grabbing;
+}
+
+.canvasWrapper :global(.dragging),
+.canvasWrapper :global(.dragging button) {
+  pointer-events: none;
+}
+
+.canvasWrapper :global(text) {
+  fill: var(--interactive-normal) !important;
+}
+
+.canvasWrapper :global(rect) {
+  fill: var(--node-fill);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at center,
+    var(--overlay-bg) 0 44px,
+    transparent 96px
+  );
+}
+
+.spinner {
+  width: 30px;
+  height: 30px;
+  border-radius: 9999px;
+  border: 3px solid var(--spinner-track);
+  border-top-color: var(--spinner-head);
+  border-right-color: var(--spinner-head);
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.tooLarge {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.62);
+  color: #ffffff;
+  font-size: 14px;
+}

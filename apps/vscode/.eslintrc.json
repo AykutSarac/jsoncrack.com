@@ -1,0 +1,42 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint",
+  "unused-imports",
+  "prettier"
+],
+  "extends": [
+    "eslint:recommended",
+    "prettier",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  
+  "rules": {
+    "@typescript-eslint/consistent-type-imports": "error",
+    "unused-imports/no-unused-imports": "error",
+    "@typescript-eslint/no-explicit-any": "off",
+    "prettier/prettier": "error",
+    "space-in-parens": "error",
+    "no-empty": "error",
+    "no-multiple-empty-lines": "error",
+    "no-irregular-whitespace": "error",
+    "strict": ["error", "never"],
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["error", "double", { "avoidEscape": true }],
+    "semi": ["error", "always"],
+    "prefer-const": "error",
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "always",
+        "named": "never",
+        "asyncArrow": "always"
+      }
+    ]
+  },
+  "ignorePatterns": ["build", "public", "scripts", "node_modules", "webpack.config.js"]
+}

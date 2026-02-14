@@ -1,0 +1,31 @@
+# App dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Turborepo task cache
+.turbo/
+
+# Test/build artifacts
+coverage/
+build/
+*.tsbuildinfo
+
+# Local environment files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Deployment
+.vercel
+
+# Workspace migration artifact (root lockfile is authoritative)
+pnpm-lock.yaml
+
+# PWA workers
+public/workbox-*.js
+public/sw.js
+public/fallback-*.js
