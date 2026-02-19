@@ -16,11 +16,7 @@ import useGraph from "./stores/useGraph";
 
 const StyledEditorWrapper = styled.div<{ $widget: boolean }>`
   width: 100%;
-  height: 100vh;
-
-  @media only screen and (max-width: 320px) {
-    height: 100vh;
-  }
+  height: 100%;
 `;
 
 interface GraphProps {
