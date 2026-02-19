@@ -1,11 +1,11 @@
 import React from "react";
-import { ActionIcon, Button, Flex, Menu, Text } from "@mantine/core";
+import { ActionIcon, Flex, Menu, Text } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
 import styled from "styled-components";
 import type { LayoutDirection } from "jsoncrack-react";
 import { event as gaEvent } from "nextjs-google-analytics";
 import { BsCheck2 } from "react-icons/bs";
-import { LuChevronRight, LuImageDown, LuMenu } from "react-icons/lu";
+import { LuImageDown, LuMenu } from "react-icons/lu";
 import { TiFlowMerge } from "react-icons/ti";
 import useConfig from "../../../../store/useConfig";
 import { useModal } from "../../../../store/useModal";
@@ -83,25 +83,28 @@ export const OptionsMenu = () => {
         </Menu.Target>
         <Menu.Dropdown>
           <Menu.Item
+            fz="sm"
             leftSection={<LuImageDown color="gray" />}
             onClick={() => setVisible("DownloadModal", true)}
           >
-            <Flex fz="xs" justify="space-between" gap="md">
-              <Text fz="xs">Export as image</Text>
-              <Text ml="md" fz={10} c="dimmed">
+            <Flex justify="space-between" gap="md">
+              <Text inherit>Export</Text>
+              <Text fz="xs" ml="md" c="dimmed">
                 {coreKey} + S
               </Text>
             </Flex>
           </Menu.Item>
           <Menu.Item
-            fz={12}
+            fz="sm"
             onClick={() => {
               toggleDirection();
               gaEvent("rotate_layout", { label: direction });
             }}
-            leftSection={<StyledFlowIcon rotate={rotateLayout(direction || "RIGHT")} />}
+            leftSection={
+              <StyledFlowIcon color="gray" rotate={rotateLayout(direction || "RIGHT")} />
+            }
             rightSection={
-              <Text ml="md" fz={10} c="dimmed">
+              <Text fz="xs" ml="md" c="dimmed">
                 {coreKey} Shift D
               </Text>
             }
@@ -110,41 +113,34 @@ export const OptionsMenu = () => {
             Rotate Layout
           </Menu.Item>
           <Menu.Divider />
-          <Menu position="right" trigger="hover" offset={0}>
-            <Menu.Target>
-              <Button
-                variant="subtle"
-                size="xs"
-                color="text"
-                fullWidth
-                fw="400"
-                rightSection={<LuChevronRight />}
-                styles={{ root: { paddingInline: 11 }, inner: { justifyContent: "space-between" } }}
-              >
-                View Options
-              </Button>
-            </Menu.Target>
-            <Menu.Dropdown>
+          <Menu.Sub position="right" offset={0}>
+            <Menu.Sub.Target>
+              <Menu.Sub.Item fz="sm">View Options</Menu.Sub.Item>
+            </Menu.Sub.Target>
+            <Menu.Sub.Dropdown>
               <Menu.Item
+                fz="sm"
                 leftSection={<BsCheck2 opacity={rulersEnabled ? 100 : 0} />}
                 onClick={() => {
                   toggleRulers(!rulersEnabled);
                   gaEvent("toggle_rulers", { label: rulersEnabled ? "on" : "off" });
                 }}
+                closeMenuOnClick={false}
               >
-                <Text size="xs">Rulers</Text>
+                Rulers
               </Menu.Item>
               <Menu.Item
+                fz="sm"
                 leftSection={<BsCheck2 opacity={gesturesEnabled ? 100 : 0} />}
                 onClick={() => {
                   toggleGestures(!gesturesEnabled);
                   gaEvent("toggle_gestures", { label: gesturesEnabled ? "on" : "off" });
                 }}
               >
-                <Text size="xs">Zoom on Scroll</Text>
+                Zoom on Scroll
               </Menu.Item>
-            </Menu.Dropdown>
-          </Menu>
+            </Menu.Sub.Dropdown>
+          </Menu.Sub>
         </Menu.Dropdown>
       </Menu>
     </Flex>
