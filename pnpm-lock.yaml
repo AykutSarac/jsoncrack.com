@@ -22,7 +22,7 @@ importers:
     dependencies:
       jsoncrack-react:
         specifier: workspace:*
-        version: link:../../packages/jsoncrack
+        version: link:../../packages/jsoncrack-react
       react:
         specifier: ^18.2.0
         version: 18.3.1
@@ -155,7 +155,7 @@ importers:
         version: 3.3.1
       jsoncrack-react:
         specifier: workspace:*
-        version: link:../../packages/jsoncrack
+        version: link:../../packages/jsoncrack-react
       jsonpath-plus:
         specifier: 10.3.0
         version: 10.3.0
@@ -266,23 +266,23 @@ importers:
         specifier: 5.9.3
         version: 5.9.3
 
-  packages/jsoncrack:
+  packages/jsoncrack-react:
     dependencies:
       jsonc-parser:
         specifier: ^3.3.1
         version: 3.3.1
       react:
         specifier: '>=18'
-        version: 19.2.4
+        version: 18.3.1
       react-dom:
         specifier: '>=18'
-        version: 19.2.4(react@19.2.4)
+        version: 18.3.1(react@18.3.1)
       react-zoomable-ui:
         specifier: ^0.11.0
-        version: 0.11.0(react@19.2.4)
+        version: 0.11.0(react@18.3.1)
       reaflow:
         specifier: 5.4.1
-        version: 5.4.1(@emotion/is-prop-valid@1.4.0)(@types/react@19.2.11)(prop-types@15.8.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        version: 5.4.1(@emotion/is-prop-valid@1.4.0)(@types/react@19.2.11)(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
       '@eslint/eslintrc':
         specifier: ^3.2.0
@@ -9898,6 +9898,11 @@ snapshots:
 
   '@polka/url@1.0.0-next.29': {}
 
+  '@reaviz/react-use-fuzzy@1.0.3(fuse.js@6.6.2)(react@18.3.1)':
+    dependencies:
+      fuse.js: 6.6.2
+      react: 18.3.1
+
   '@reaviz/react-use-fuzzy@1.0.3(fuse.js@6.6.2)(react@19.2.4)':
     dependencies:
       fuse.js: 6.6.2
@@ -12734,6 +12739,14 @@ snapshots:
 
   flatted@3.3.3: {}
 
+  focus-trap-react@10.3.1(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      focus-trap: 7.8.0
+      prop-types: 15.8.1
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      tabbable: 6.4.0
+
   focus-trap-react@10.3.1(prop-types@15.8.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
     dependencies:
       focus-trap: 7.8.0
@@ -12785,6 +12798,16 @@ snapshots:
   forwarded@0.2.0: {}
 
   fraction.js@5.3.4: {}
+
+  framer-motion@12.34.0(@emotion/is-prop-valid@1.4.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      motion-dom: 12.34.0
+      motion-utils: 12.29.2
+      tslib: 2.8.1
+    optionalDependencies:
+      '@emotion/is-prop-valid': 1.4.0
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   framer-motion@12.34.0(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
     dependencies:
@@ -14203,6 +14226,15 @@ snapshots:
 
   motion-utils@12.29.2: {}
 
+  motion@12.34.0(@emotion/is-prop-valid@1.4.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      framer-motion: 12.34.0(@emotion/is-prop-valid@1.4.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      tslib: 2.8.1
+    optionalDependencies:
+      '@emotion/is-prop-valid': 1.4.0
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+
   motion@12.34.0(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
     dependencies:
       framer-motion: 12.34.0(@emotion/is-prop-valid@1.4.0)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -15127,6 +15159,36 @@ snapshots:
       minimist: 1.2.8
       strip-json-comments: 2.0.1
 
+  reablocks@8.7.15(@emotion/is-prop-valid@1.4.0)(@types/react@19.2.11)(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      '@floating-ui/react': 0.26.28(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@marko19907/string-to-color': 1.0.2
+      '@reaviz/react-use-fuzzy': 1.0.3(fuse.js@6.6.2)(react@18.3.1)
+      body-scroll-lock-upgrade: 1.1.0
+      chroma-js: 2.6.0
+      classnames: 2.5.1
+      coverup: 0.1.1
+      create-global-state-hook: 0.0.2
+      ctrl-keys: 1.0.6
+      date-fns: 3.6.0
+      ellipsize: 0.5.1
+      focus-trap-react: 10.3.1(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      fuse.js: 6.6.2
+      human-format: 1.2.1
+      motion: 12.34.0(@emotion/is-prop-valid@1.4.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      name-initials: 0.1.3
+      pluralize: 8.0.0
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
+      react-fast-compare: 3.2.2
+      react-highlight-words: 0.20.0(react@18.3.1)
+      react-textarea-autosize: 8.5.9(@types/react@19.2.11)(react@18.3.1)
+      tailwind-merge: 2.6.1
+    transitivePeerDependencies:
+      - '@emotion/is-prop-valid'
+      - '@types/react'
+      - prop-types
+
   reablocks@8.7.15(@emotion/is-prop-valid@1.4.0)(@types/react@19.2.11)(prop-types@15.8.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
     dependencies:
       '@floating-ui/react': 0.26.28(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -15172,6 +15234,10 @@ snapshots:
       color: 4.2.3
       csstype: 3.2.3
       lodash-es: 4.17.23
+
+  react-cool-dimensions@2.0.7(react@18.3.1):
+    dependencies:
+      react: 18.3.1
 
   react-cool-dimensions@2.0.7(react@19.2.4):
     dependencies:
@@ -15232,6 +15298,13 @@ snapshots:
   react-error-overlay@6.1.0: {}
 
   react-fast-compare@3.2.2: {}
+
+  react-highlight-words@0.20.0(react@18.3.1):
+    dependencies:
+      highlight-words-core: 1.2.3
+      memoize-one: 4.0.3
+      prop-types: 15.8.1
+      react: 18.3.1
 
   react-highlight-words@0.20.0(react@19.2.4):
     dependencies:
@@ -15443,9 +15516,19 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
+  react-use-gesture@8.0.1(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+
   react-use-gesture@8.0.1(react@19.2.4):
     dependencies:
       react: 19.2.4
+
+  react-zoomable-ui@0.11.0(react@18.3.1):
+    dependencies:
+      hammerjs: 2.0.8
+      react: 18.3.1
+      ts-invariant: 0.10.3
 
   react-zoomable-ui@0.11.0(react@19.2.4):
     dependencies:
@@ -15487,6 +15570,32 @@ snapshots:
     dependencies:
       picomatch: 2.3.1
 
+  reaflow@5.4.1(@emotion/is-prop-valid@1.4.0)(@types/react@19.2.11)(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      '@juggle/resize-observer': 3.4.0
+      calculate-size: 1.1.1
+      classnames: 2.5.1
+      d3-shape: 3.2.0
+      elkjs: 0.10.2
+      ellipsize: 0.2.0
+      kld-affine: 2.1.1
+      kld-intersections: 0.7.0
+      motion: 12.34.0(@emotion/is-prop-valid@1.4.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      p-cancelable: 3.0.0
+      reablocks: 8.7.15(@emotion/is-prop-valid@1.4.0)(@types/react@19.2.11)(prop-types@15.8.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react: 18.3.1
+      react-cool-dimensions: 2.0.7(react@18.3.1)
+      react-dom: 18.3.1(react@18.3.1)
+      react-fast-compare: 3.2.2
+      react-use-gesture: 8.0.1(react@18.3.1)
+      reakeys: 2.0.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      undoo: 0.5.0
+      web-worker: 1.5.0
+    transitivePeerDependencies:
+      - '@emotion/is-prop-valid'
+      - '@types/react'
+      - prop-types
+
   reaflow@5.4.1(@emotion/is-prop-valid@1.4.0)(@types/react@19.2.11)(prop-types@15.8.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
     dependencies:
       '@juggle/resize-observer': 3.4.0
@@ -15512,6 +15621,12 @@ snapshots:
       - '@emotion/is-prop-valid'
       - '@types/react'
       - prop-types
+
+  reakeys@2.0.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+    dependencies:
+      ctrl-keys: 1.0.6
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   reakeys@2.0.6(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
     dependencies:

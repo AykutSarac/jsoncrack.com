@@ -4,7 +4,7 @@
   "displayName": "JSON Crack",
   "description": "Seamlessly visualize your JSON data instantly into graphs.",
   "publisher": "AykutSarac",
-  "license": "SEE LICENSE IN LICENSE.md",
+  "license": "MIT",
   "author": {
     "email": "aykutsarac0@gmail.com",
     "name": "Aykut Saraç"

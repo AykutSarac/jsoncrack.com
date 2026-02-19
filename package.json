@@ -31,6 +31,12 @@
   "packageManager": "pnpm@10.20.0",
   "pnpm": {
     "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "unrs-resolver"
+    ],
+    "approvedBuilds": [
+      "esbuild",
       "sharp",
       "unrs-resolver"
     ],
