@@ -68,8 +68,5 @@
     "ts-node": "^10.9.2",
     "typescript": "5.9.3"
   },
-  "engines": {
-    "node": ">=24.x"
-  },
   "packageManager": "pnpm@10.20.0"
 }

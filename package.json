@@ -28,6 +28,10 @@
   "devDependencies": {
     "turbo": "^2.8.8"
   },
+  "engines": {
+    "node": ">=24",
+    "pnpm": ">=10"
+  },
   "packageManager": "pnpm@10.20.0",
   "pnpm": {
     "onlyBuiltDependencies": [

@@ -142,7 +142,6 @@
     "url": "https://github.com/AykutSarac/jsoncrack-vscode/issues"
   },
   "engines": {
-    "node": ">=18.x",
     "vscode": "^1.86.0"
   },
   "packageManager": "pnpm@10.20.0"
