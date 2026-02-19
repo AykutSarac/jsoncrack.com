@@ -58,7 +58,7 @@ JSON Crack is a tool for visualizing JSON data in a structured, interactive grap
 ## Integrations
 
 - [VS Code Extension](https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode)
-- [npm Package (`jsoncrack`)](https://www.npmjs.com/package/jsoncrack)
+- [npm Package (`jsoncrack-react`)](https://www.npmjs.com/package/jsoncrack-react)
 
 ## Contributing
 
