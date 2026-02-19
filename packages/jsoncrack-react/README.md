@@ -1,9 +1,8 @@
 # jsoncrack-react
 
-Reusable JSON graph canvas component from [JSON Crack](https://jsoncrack.com) — visualize JSON, YAML, CSV and XML as interactive node graphs.
+Reusable JSON graph canvas component from [JSON Crack](https://jsoncrack.com) — visualize JSON as interactive node graphs.
 
 - React component API
-- Built-in parsing from `string | object | unknown[]`
 - Interactive canvas (pan/zoom + optional controls)
 - TypeScript types included
 
@@ -53,7 +52,7 @@ The wrapper must have an explicit height.
 
 | Prop | Type | Default | Description |
 | --- | --- | --- | --- |
-| `json` | `string \| object \| unknown[]` | - | Input data to visualize |
+| `json` | `string \| object \| unknown[]` | - | JSON input data to visualize |
 | `theme` | `"dark" \| "light"` | `"dark"` | Canvas theme |
 | `layoutDirection` | `"LEFT" \| "RIGHT" \| "DOWN" \| "UP"` | `"RIGHT"` | Layout direction |
 | `showControls` | `boolean` | `true` | Show built-in camera controls |
