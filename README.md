@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <p align="center">
   <a href="https://github.com/AykutSarac/jsoncrack.com">
-   <img src="./public/assets/192.png" height="50" alt="Logo">
+   <img src="./apps/www/public/assets/192.png" height="50" alt="Logo">
   </a>
 
   <h1 align="center">JSON Crack</h1>
@@ -28,13 +28,13 @@
 
 ## About the Project
 
-<img width="100%" alt="booking-screen" src="./public/assets/editor.webp">
+<img width="100%" alt="booking-screen" src="./apps/www/public/assets/editor.webp">
 
 ## Visualize JSON into interactive graphs
 
 JSON Crack is a tool for visualizing JSON data in a structured, interactive graphs, making it easier to explore, format, and validate JSON. It offers features like converting JSON to other formats (CSV, YAML), generating JSON Schema, executing queries, and exporting visualizations as images. Designed for both readability and usability.
 
-* **Visualizer**: Instantly convert JSON, YAML, CSV, XML, and TOML into interactive graphs or trees in dark or light mode.
+* **Visualizer**: Instantly convert JSON, YAML, CSV, and XML into interactive graphs or trees in dark or light mode.
 * **Convert**: Seamlessly transform data formats, like JSON to CSV or XML to JSON, for easy sharing.
 * **Format & Validate**: Beautify and validate JSON, YAML, and CSV for clear and accurate data.
 * **Code Generation**: Generate TypeScript interfaces, Golang structs, and JSON Schema.
@@ -55,12 +55,19 @@ JSON Crack is a tool for visualizing JSON data in a structured, interactive grap
 
 <a href="https://producthunt.com/posts/JSON-Crack?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-jsoncrack" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=332281&theme=light" alt="JSON Crack | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
 
-### Built With
+## Integrations
 
-- [Next.js](https://nextjs.org/?ref=jsoncrack.com)
-- [React.js](https://reactjs.org/?ref=jsoncrack.com)
-- [Reaflow](https://reaflow.dev/?ref=jsoncrack.com)
-- [Monaco Editor](https://github.com/suren-atoyan/monaco-react)
+- [VS Code Extension](https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode)
+- [npm Package (`jsoncrack-react`)](https://www.npmjs.com/package/jsoncrack-react)
+
+## Contributing
+
+- Found a bug or missing feature? Open an issue on [GitHub Issues](https://github.com/AykutSarac/jsoncrack.com/issues).
+- Want to contribute code or docs? Start with our [contribution guide](./CONTRIBUTING.md).
+
+## Sponsors & Support
+
+If you find JSON Crack useful, you can support the project by using [ToDiagram](https://todiagram.com).
 
 ## Stay Up-to-Date
 
@@ -78,8 +85,8 @@ To get a local copy up and running, please follow these simple steps.
 
 Here is what you need to be able to run JSON Crack.
 
-- Node.js (Version: >=18.x)
-- Pnpm _(recommended)_
+- Node.js (Version: >=24.x)
+- pnpm (Version: >=10)
 
 
 ## Development
@@ -104,20 +111,53 @@ Here is what you need to be able to run JSON Crack.
    pnpm install
    ```
 
-4. Run the project
+4. Run the web app
 
    ```sh
-   pnpm dev
+   pnpm dev:www
 
    # Running on http://localhost:3000/
    ```
 
+### Useful Commands
+
+From repository root:
+
+```sh
+# Web app
+pnpm dev:www
+pnpm build:www
+
+# VS Code extension
+pnpm dev:vscode
+pnpm build:vscode
+pnpm lint:vscode
+pnpm lint:fix:vscode
+
+# All workspaces
+pnpm dev
+pnpm build
+pnpm lint
+```
+
+`pnpm build:www` is the production build command used in GitHub Actions deployment.
+
+### Debug VS Code Extension
+
+1. Open repository root in VS Code.
+2. Press `F5`.
+3. Select `Run VSCode Extension (apps/vscode)` when prompted.
+4. In the Extension Development Host window, open a `.json` file and run:
+   `JSON Crack: Enable JSON Crack visualization`.
+
 ### Docker
 
-🐳 A [`Dockerfile`](Dockerfile) is provided in the root of the repository.
+🐳 Docker assets are in `apps/www`.
 If you want to run JSON Crack locally:
 
 ```console
+cd apps/www
+
 # Build a Docker image with:
 docker compose build
 
@@ -129,7 +169,7 @@ docker compose up
 
 ## Configuration
 
-The supported node limit can be changed by editing the `NEXT_PUBLIC_NODE_LIMIT` value in the `.env` file at the project root.
+The supported node limit can be changed by editing `NEXT_PUBLIC_NODE_LIMIT` in `apps/www/.env`.
 
 <!-- LICENSE -->
 

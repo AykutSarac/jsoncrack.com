@@ -1,0 +1,30 @@
+.controls {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(20, 20, 20, 0.38);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  padding: 6px;
+  backdrop-filter: blur(8px);
+}
+
+.button {
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  min-width: 30px;
+  height: 30px;
+  padding: 0 8px;
+  font-size: 12px;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.button:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
