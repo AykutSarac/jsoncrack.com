@@ -10,15 +10,6 @@ const CACHE_TTL_MS = 120_000;
 const sizeCache = new Map<string, Size>();
 let lastCacheClearAt = Date.now();
 
-export const isContentImage = (value: Text) => {
-  if (typeof value !== "string") return false;
-
-  const isImageURL = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg|webp))/i.test(value);
-  const isBase64 = value.startsWith("data:image/") && value.includes("base64");
-
-  return isImageURL || isBase64;
-};
-
 const calculateLines = (text: Text): string => {
   if (Array.isArray(text)) {
     return text.map(([k, v]) => `${k}: ${JSON.stringify(v).slice(0, 80)}`).join("\n");
@@ -76,7 +67,6 @@ const maybeClearCache = () => {
 export const calculateNodeSize = (text: Text, isParent = false) => {
   maybeClearCache();
 
-  const isImage = isContentImage(text);
   const cacheKey = `${JSON.stringify(text)}-${isParent}`;
 
   const cached = sizeCache.get(cacheKey);
@@ -84,11 +74,6 @@ export const calculateNodeSize = (text: Text, isParent = false) => {
 
   const lines = calculateLines(text);
   const sizes = calculateWidthAndHeight(lines, typeof text === "string");
-
-  if (isImage) {
-    sizes.width = 80;
-    sizes.height = 80;
-  }
 
   if (isParent) sizes.width += 80;
   if (sizes.width > 700) sizes.width = 700;

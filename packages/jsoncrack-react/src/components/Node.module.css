@@ -47,15 +47,6 @@
   padding: 0 10px;
 }
 
-.imageWrapper {
-  padding: 5px;
-}
-
-.image {
-  border-radius: 2px;
-  object-fit: contain;
-}
-
 .foreignObject:global(.searched) {
   background: rgba(27, 255, 0, 0.1);
   border: 1px solid var(--text-positive);
