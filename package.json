@@ -41,6 +41,8 @@
       "unrs-resolver"
     ],
     "overrides": {
+      "react": "19.2.4",
+      "react-dom": "19.2.4",
       "@types/react": "19.2.11",
       "@types/react-dom": "19.2.3",
       "html-to-image": "1.11.11",
