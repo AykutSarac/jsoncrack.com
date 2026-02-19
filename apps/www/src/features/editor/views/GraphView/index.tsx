@@ -17,6 +17,11 @@ import useGraph from "./stores/useGraph";
 const StyledEditorWrapper = styled.div<{ $widget: boolean }>`
   width: 100%;
   height: 100%;
+
+  .jsoncrack-space,
+  .jsoncrack-space:active {
+    cursor: url("/assets/cursor.svg"), auto;
+  }
 `;
 
 interface GraphProps {
