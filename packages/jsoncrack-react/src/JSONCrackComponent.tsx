@@ -5,7 +5,7 @@ import type { ViewPort } from "react-zoomable-ui";
 import { Space } from "react-zoomable-ui";
 import { Canvas } from "reaflow";
 import type { ElkRoot } from "reaflow";
-import styles from "./JsonCrack.module.css";
+import styles from "./JSONCrackStyles.module.css";
 import { Controls } from "./components/Controls";
 import { CustomEdge } from "./components/CustomEdge";
 import { CustomNode } from "./components/CustomNode";
@@ -21,7 +21,7 @@ const layoutOptions = {
 
 const objectJsonCache = new WeakMap<object, string>();
 
-export interface JsonCrackRef {
+export interface JSONCrackRef {
   zoomIn: () => void;
   zoomOut: () => void;
   setZoom: (zoomFactor: number) => void;
@@ -29,26 +29,25 @@ export interface JsonCrackRef {
   focusFirstNode: () => void;
 }
 
-export interface JsonCrackProps {
+export interface JSONCrackProps {
   json: string | object | unknown[];
   theme?: CanvasThemeMode;
-  direction?: LayoutDirection;
+  layoutDirection?: LayoutDirection;
   showControls?: boolean;
   showGrid?: boolean;
-  zoomOnScroll?: boolean;
-  imagePreview?: boolean;
-  fitViewOnLayout?: boolean;
-  maxVisibleNodes?: number;
+  trackpadZoom?: boolean;
+  centerOnLayout?: boolean;
+  maxRenderableNodes?: number;
   className?: string;
   style?: React.CSSProperties;
   onNodeClick?: (node: NodeData) => void;
-  onGraphChange?: (graph: GraphData) => void;
+  onParse?: (graph: GraphData) => void;
   onParseError?: (error: Error) => void;
-  onViewPortCreate?: (viewPort: ViewPort) => void;
-  renderTooLarge?: (nodeCount: number, maxVisibleNodes: number) => React.ReactNode;
+  onViewportCreate?: (viewPort: ViewPort) => void;
+  renderNodeLimitExceeded?: (nodeCount: number, maxRenderableNodes: number) => React.ReactNode;
 }
 
-const toJsonText = (json: JsonCrackProps["json"]): string => {
+const toJsonText = (json: JSONCrackProps["json"]): string => {
   if (typeof json === "string") return json;
 
   if (json && typeof json === "object") {
@@ -63,25 +62,24 @@ const toJsonText = (json: JsonCrackProps["json"]): string => {
   return JSON.stringify(json, null, 2);
 };
 
-export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
+export const JSONCrack = React.forwardRef<JSONCrackRef, JSONCrackProps>(
   (
     {
       json,
       theme = "dark",
-      direction = "RIGHT",
+      layoutDirection = "RIGHT",
       showControls = true,
       showGrid = true,
-      zoomOnScroll = false,
-      imagePreview = true,
-      fitViewOnLayout = true,
-      maxVisibleNodes = 1500,
+      trackpadZoom = false,
+      centerOnLayout = true,
+      maxRenderableNodes = 1500,
       className,
       style,
       onNodeClick,
-      onGraphChange,
+      onParse,
       onParseError,
-      onViewPortCreate,
-      renderTooLarge,
+      onViewportCreate,
+      renderNodeLimitExceeded,
     },
     ref
   ) => {
@@ -97,26 +95,25 @@ export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
     const [paneHeight, setPaneHeight] = React.useState(2000);
     const hasAutoFittedRef = React.useRef(false);
     const previousLayoutAreaRef = React.useRef<number | null>(null);
-    const callbacksRef = React.useRef({ onGraphChange, onParseError });
-    const onViewPortCreateRef = React.useRef(onViewPortCreate);
+    const callbacksRef = React.useRef({ onParse, onParseError });
+    const onViewportCreateRef = React.useRef(onViewportCreate);
     const lastParsedInputRef = React.useRef<{
       jsonText: string;
-      imagePreview: boolean;
-      maxVisibleNodes: number;
+      maxRenderableNodes: number;
     } | null>(null);
 
     React.useEffect(() => {
-      callbacksRef.current = { onGraphChange, onParseError };
-    }, [onGraphChange, onParseError]);
+      callbacksRef.current = { onParse, onParseError };
+    }, [onParse, onParseError]);
 
     React.useEffect(() => {
-      onViewPortCreateRef.current = onViewPortCreate;
-    }, [onViewPortCreate]);
+      onViewportCreateRef.current = onViewportCreate;
+    }, [onViewportCreate]);
 
     React.useEffect(() => {
       hasAutoFittedRef.current = false;
       previousLayoutAreaRef.current = null;
-    }, [direction]);
+    }, [layoutDirection]);
 
     const centerView = React.useCallback(() => {
       const nextViewPort = viewPort;
@@ -175,17 +172,14 @@ export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
         if (
           lastParsedInput &&
           lastParsedInput.jsonText === jsonText &&
-          lastParsedInput.imagePreview === imagePreview &&
-          lastParsedInput.maxVisibleNodes === maxVisibleNodes
+          lastParsedInput.maxRenderableNodes === maxRenderableNodes
         ) {
           return;
         }
 
         setLoading(true);
 
-        const graph = parseGraph(jsonText, {
-          imagePreviewEnabled: imagePreview,
-        });
+        const graph = parseGraph(jsonText);
 
         if (graph.errors.length > 0) {
           callbacksRef.current.onParseError?.(
@@ -195,15 +189,14 @@ export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
 
         setTotalNodes(graph.nodes.length);
 
-        if (graph.nodes.length > maxVisibleNodes) {
+        if (graph.nodes.length > maxRenderableNodes) {
           setAboveSupportedLimit(true);
           setNodes([]);
           setEdges([]);
           setLoading(false);
           lastParsedInputRef.current = {
             jsonText,
-            imagePreview,
-            maxVisibleNodes,
+            maxRenderableNodes,
           };
           return;
         }
@@ -211,14 +204,13 @@ export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
         setAboveSupportedLimit(false);
         setNodes(graph.nodes);
         setEdges(graph.edges);
-        callbacksRef.current.onGraphChange?.({
+        callbacksRef.current.onParse?.({
           nodes: graph.nodes,
           edges: graph.edges,
         });
         lastParsedInputRef.current = {
           jsonText,
-          imagePreview,
-          maxVisibleNodes,
+          maxRenderableNodes,
         };
 
         if (graph.nodes.length === 0) {
@@ -232,7 +224,7 @@ export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
           error instanceof Error ? error : new Error("Unable to parse data.")
         );
       }
-    }, [imagePreview, json, maxVisibleNodes]);
+    }, [json, maxRenderableNodes]);
 
     const edgeTargetById = React.useMemo(() => {
       const targetById = new Map<string, string>();
@@ -266,7 +258,7 @@ export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
               previousLayoutArea !== null &&
               previousLayoutArea > 0 &&
               Math.abs((currentLayoutArea * 100) / previousLayoutArea - 100) > 70;
-            const shouldAutoFit = fitViewOnLayout && (isFirstAutoFit || hasLargeLayoutChange);
+            const shouldAutoFit = centerOnLayout && (isFirstAutoFit || hasLargeLayoutChange);
 
             if (shouldAutoFit) {
               centerView();
@@ -277,10 +269,10 @@ export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
           });
         }, 0);
       },
-      [centerView, fitViewOnLayout]
+      [centerView, centerOnLayout]
     );
 
-    const tooLargeContent = renderTooLarge?.(totalNodes, maxVisibleNodes);
+    const tooLargeContent = renderNodeLimitExceeded?.(totalNodes, maxRenderableNodes);
     const canvasClassName = [styles.canvasWrapper, showGrid ? styles.showGrid : "", className]
       .filter(Boolean)
       .join(" ");
@@ -331,7 +323,7 @@ export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
             tooLargeContent
           ) : (
             <div className={styles.tooLarge}>
-              {`This graph has ${totalNodes} nodes and exceeds the maxVisibleNodes limit (${maxVisibleNodes}).`}
+              {`This graph has ${totalNodes} nodes and exceeds the maxRenderableNodes limit (${maxRenderableNodes}).`}
             </div>
           ))}
 
@@ -344,23 +336,17 @@ export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
         <Space
           onCreate={nextViewPort => {
             setViewPort(nextViewPort);
-            onViewPortCreateRef.current?.(nextViewPort);
+            onViewportCreateRef.current?.(nextViewPort);
           }}
           onContextMenu={event => event.preventDefault()}
-          treatTwoFingerTrackPadGesturesLikeTouch={zoomOnScroll}
+          treatTwoFingerTrackPadGesturesLikeTouch={trackpadZoom}
           pollForElementResizing
           className="jsoncrack-space"
         >
           <Canvas
             className="jsoncrack-canvas"
             onLayoutChange={onLayoutChange}
-            node={nodeProps => (
-              <CustomNode
-                {...nodeProps}
-                imagePreviewEnabled={imagePreview}
-                onNodeClick={onNodeClick}
-              />
-            )}
+            node={nodeProps => <CustomNode {...nodeProps} onNodeClick={onNodeClick} />}
             edge={edgeProps => (
               <CustomEdge
                 {...edgeProps}
@@ -376,9 +362,9 @@ export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
             maxWidth={paneWidth}
             height={paneHeight}
             width={paneWidth}
-            direction={direction}
+            direction={layoutDirection}
             layoutOptions={layoutOptions}
-            key={direction}
+            key={layoutDirection}
             pannable={false}
             zoomable={false}
             animated={false}
@@ -393,4 +379,4 @@ export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
   }
 );
 
-JsonCrack.displayName = "JsonCrack";
+JSONCrack.displayName = "JSONCrack";

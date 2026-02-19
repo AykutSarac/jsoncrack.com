@@ -28,12 +28,12 @@ import "jsoncrack-react/style.css";
 ## Quick Start
 
 ```tsx
-import { JsonCrack } from "jsoncrack-react";
+import { JSONCrack } from "jsoncrack-react";
 
 export function Example() {
   return (
     <div style={{ height: 700 }}>
-      <JsonCrack
+      <JSONCrack
         json={{
           user: {
             id: 1,
@@ -55,35 +55,34 @@ The wrapper must have an explicit height.
 | --- | --- | --- | --- |
 | `json` | `string \| object \| unknown[]` | - | Input data to visualize |
 | `theme` | `"dark" \| "light"` | `"dark"` | Canvas theme |
-| `direction` | `"LEFT" \| "RIGHT" \| "DOWN" \| "UP"` | `"RIGHT"` | Layout direction |
+| `layoutDirection` | `"LEFT" \| "RIGHT" \| "DOWN" \| "UP"` | `"RIGHT"` | Layout direction |
 | `showControls` | `boolean` | `true` | Show built-in camera controls |
 | `showGrid` | `boolean` | `true` | Show grid background |
-| `zoomOnScroll` | `boolean` | `false` | Enables touch/trackpad gesture behavior |
-| `imagePreview` | `boolean` | `true` | Render image URLs as image nodes |
-| `fitViewOnLayout` | `boolean` | `true` | Auto-fit on first/major layout changes |
-| `maxVisibleNodes` | `number` | `1500` | Node rendering safety limit |
+| `trackpadZoom` | `boolean` | `false` | Enables two-finger trackpad gesture zoom behavior |
+| `centerOnLayout` | `boolean` | `true` | Auto-center on first/major layout changes |
+| `maxRenderableNodes` | `number` | `1500` | Node rendering safety limit |
 | `className` | `string` | - | Wrapper class |
 | `style` | `React.CSSProperties` | - | Wrapper inline style |
 | `onNodeClick` | `(node: NodeData) => void` | - | Node click callback |
-| `onGraphChange` | `(graph: GraphData) => void` | - | Parsed graph callback |
+| `onParse` | `(graph: GraphData) => void` | - | Parsed graph callback |
 | `onParseError` | `(error: Error) => void` | - | Parse error callback |
-| `onViewPortCreate` | `(viewPort: ViewPort) => void` | - | Viewport ready callback |
-| `renderTooLarge` | `(nodeCount: number, maxVisibleNodes: number) => React.ReactNode` | - | Custom fallback when node limit is exceeded |
+| `onViewportCreate` | `(viewPort: ViewPort) => void` | - | Viewport ready callback |
+| `renderNodeLimitExceeded` | `(nodeCount: number, maxRenderableNodes: number) => React.ReactNode` | - | Custom fallback when node limit is exceeded |
 
 ## Performance
 
 The component renders all nodes as SVG elements. For large inputs, rendering cost grows with the number of nodes.
 
-- **Default limit:** `maxVisibleNodes` is set to `1500`. Graphs exceeding this render a fallback instead of the canvas.
+- **Default limit:** `maxRenderableNodes` is set to `1500`. Graphs exceeding this render a fallback instead of the canvas.
 - **Recommended range:** Up to ~300–500 nodes for smooth interaction. Beyond that, panning and zooming may feel sluggish depending on the device.
 - **Reduce node count:** Flatten or trim your data before passing it in. Arrays of primitives become individual nodes, so large arrays expand the graph quickly.
-- **Custom fallback:** Use `renderTooLarge` to show a message or alternative UI when the limit is hit.
+- **Custom fallback:** Use `renderNodeLimitExceeded` to show a message or alternative UI when the limit is hit.
 
 ```tsx
-<JsonCrack
+<JSONCrack
   json={data}
-  maxVisibleNodes={300}
-  renderTooLarge={(count, max) => (
+  maxRenderableNodes={300}
+  renderNodeLimitExceeded={(count, max) => (
     <p>Too large to render ({count} nodes, limit is {max})</p>
   )}
 />
@@ -93,10 +92,10 @@ The component renders all nodes as SVG elements. For large inputs, rendering cos
 
 ```tsx
 import { useRef } from "react";
-import { JsonCrack, type JsonCrackRef } from "jsoncrack-react";
+import { JSONCrack, type JSONCrackRef } from "jsoncrack-react";
 
 export function WithRef({ json }: { json: string }) {
-  const ref = useRef<JsonCrackRef>(null);
+  const ref = useRef<JSONCrackRef>(null);
 
   return (
     <>
@@ -104,14 +103,14 @@ export function WithRef({ json }: { json: string }) {
       <button onClick={() => ref.current?.zoomIn()}>+</button>
       <button onClick={() => ref.current?.zoomOut()}>-</button>
       <div style={{ height: 600 }}>
-        <JsonCrack ref={ref} json={json} />
+        <JSONCrack ref={ref} json={json} />
       </div>
     </>
   );
 }
 ```
 
-`JsonCrackRef` methods:
+`JSONCrackRef` methods:
 
 - `zoomIn()`
 - `zoomOut()`
@@ -126,15 +125,14 @@ If you only need parser output:
 ```ts
 import { parseGraph } from "jsoncrack-react";
 
-const result = parseGraph('{"a":[1,2,3]}', { imagePreviewEnabled: true });
+const result = parseGraph('{"a":[1,2,3]}');
 // result: { nodes, edges, errors }
 ```
 
 ## Exported Types
 
-- `JsonCrackProps`
-- `JsonCrackRef`
-- `ParseGraphOptions`
+- `JSONCrackProps`
+- `JSONCrackRef`
 - `ParseGraphResult`
 - `CanvasThemeMode`
 - `LayoutDirection`

@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import type { CustomNodeProps } from ".";
-import useConfig from "../../../../../store/useConfig";
 import { isContentImage } from "../lib/utils/calculateNodeSize";
 import { TextRenderer } from "./TextRenderer";
 import * as Styled from "./styles";
@@ -28,8 +27,7 @@ const StyledImage = styled.img`
 
 const Node = ({ node, x, y }: CustomNodeProps) => {
   const { text, width, height } = node;
-  const imagePreviewEnabled = useConfig(state => state.imagePreviewEnabled);
-  const isImage = imagePreviewEnabled && isContentImage(JSON.stringify(text[0].value));
+  const isImage = isContentImage(JSON.stringify(text[0].value));
   const value = text[0].value;
 
   return (

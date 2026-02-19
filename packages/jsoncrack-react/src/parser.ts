@@ -2,15 +2,11 @@ import { getNodePath, parseTree, type Node, type ParseError } from "jsonc-parser
 import type { EdgeData, GraphData, NodeData, NodeRow } from "./types";
 import { calculateNodeSize } from "./utils/calculateNodeSize";
 
-export interface ParseGraphOptions {
-  imagePreviewEnabled?: boolean;
-}
-
 export interface ParseGraphResult extends GraphData {
   errors: ParseError[];
 }
 
-export const parseGraph = (json: string, options: ParseGraphOptions = {}): ParseGraphResult => {
+export const parseGraph = (json: string): ParseGraphResult => {
   const parseErrors: ParseError[] = [];
   const jsonTree = parseTree(json, parseErrors);
 
@@ -44,11 +40,7 @@ export const parseGraph = (json: string, options: ParseGraphOptions = {}): Parse
     const isRootArray = !node.parent || node.parent.type === "array";
 
     if (isArray && isRootArray) {
-      const { width, height } = calculateNodeSize(
-        `[${node.children?.length ?? "0"} items]`,
-        false,
-        options.imagePreviewEnabled ?? true
-      );
+      const { width, height } = calculateNodeSize(`[${node.children?.length ?? "0"} items]`);
 
       nodes.push({
         id,
@@ -170,11 +162,7 @@ export const parseGraph = (json: string, options: ParseGraphOptions = {}): Parse
     if (text.length === 0) {
       if (typeof node.value === "undefined") return undefined;
 
-      const { width, height } = calculateNodeSize(
-        node.value as string | number,
-        false,
-        options.imagePreviewEnabled ?? true
-      );
+      const { width, height } = calculateNodeSize(node.value as string | number);
 
       nodes.push({
         id,
@@ -207,11 +195,7 @@ export const parseGraph = (json: string, options: ParseGraphOptions = {}): Parse
         displayText = `${text[0].value}`;
       }
 
-      const { width, height } = calculateNodeSize(
-        displayText,
-        false,
-        options.imagePreviewEnabled ?? true
-      );
+      const { width, height } = calculateNodeSize(displayText);
 
       nodes.push({
         id,

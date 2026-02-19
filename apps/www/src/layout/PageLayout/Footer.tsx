@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Anchor, Container, Divider, Flex, Stack, Text, ThemeIcon } from "@mantine/core";
 import { FaDiscord, FaGithub, FaLinkedin } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { JSONCrackLogo } from "../JsonCrackLogo";
+import { JSONCrackLogo } from "../JSONCrackBrandLogo";
 
 export const Footer = () => {
   return (

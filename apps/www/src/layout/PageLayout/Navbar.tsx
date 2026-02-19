@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Button, Menu, type MenuItemProps, Text, Stack } from "@mantine/core";
 import styled from "styled-components";
 import { LuChevronDown } from "react-icons/lu";
-import { JSONCrackLogo } from "../JsonCrackLogo";
+import { JSONCrackLogo } from "../JSONCrackBrandLogo";
 
 const StyledNavbarWrapper = styled.div`
   z-index: 3;

@@ -32,10 +32,8 @@ const rotateLayout = (direction: LayoutDirection) => {
 export const OptionsMenu = () => {
   const toggleGestures = useConfig(state => state.toggleGestures);
   const toggleRulers = useConfig(state => state.toggleRulers);
-  const toggleImagePreview = useConfig(state => state.toggleImagePreview);
   const gesturesEnabled = useConfig(state => state.gesturesEnabled);
   const rulersEnabled = useConfig(state => state.rulersEnabled);
-  const imagePreviewEnabled = useConfig(state => state.imagePreviewEnabled);
   const setDirection = useGraph(state => state.setDirection);
   const direction = useGraph(state => state.direction);
   const setVisible = useModal(state => state.setVisible);
@@ -144,15 +142,6 @@ export const OptionsMenu = () => {
                 }}
               >
                 <Text size="xs">Zoom on Scroll</Text>
-              </Menu.Item>
-              <Menu.Item
-                leftSection={<BsCheck2 opacity={imagePreviewEnabled ? 100 : 0} />}
-                onClick={() => {
-                  toggleImagePreview(!imagePreviewEnabled);
-                  gaEvent("toggle_image_preview", { label: imagePreviewEnabled ? "on" : "off" });
-                }}
-              >
-                <Text size="xs">Image Link Preview</Text>
               </Menu.Item>
             </Menu.Dropdown>
           </Menu>

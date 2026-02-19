@@ -1,6 +1,6 @@
 import type { CanvasThemeMode } from "./types";
 
-export interface JsonCrackTheme {
+export interface JSONCrackTheme {
   NODE_COLORS: {
     TEXT: string;
     NODE_KEY: string;
@@ -23,7 +23,7 @@ export interface JsonCrackTheme {
   GRID_COLOR_SECONDARY: string;
 }
 
-export const themes: Record<CanvasThemeMode, JsonCrackTheme> = {
+export const themes: Record<CanvasThemeMode, JSONCrackTheme> = {
   dark: {
     NODE_COLORS: {
       TEXT: "#DCE5E7",

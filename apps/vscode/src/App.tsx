@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Anchor, Box, MantineProvider, Text } from "@mantine/core";
 import type { NodeData } from "jsoncrack-react";
-import { JsonCrack } from "jsoncrack-react";
+import { JSONCrack } from "jsoncrack-react";
 import { NodeModal } from "./components/NodeModal";
 
 function getTheme() {
@@ -44,7 +44,7 @@ const App: React.FC = () => {
   return (
     <MantineProvider forceColorScheme={theme}>
       <Box h="100vh" w="100vw">
-        <JsonCrack json={json} theme={theme} showControls={false} onNodeClick={handleNodeClick} />
+        <JSONCrack json={json} theme={theme} showControls={false} onNodeClick={handleNodeClick} />
         {selectedNode && (
           <NodeModal opened={!!selectedNode} onClose={closeNodeModal} nodeData={selectedNode} />
         )}

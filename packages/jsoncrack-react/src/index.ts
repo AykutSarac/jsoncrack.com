@@ -1,7 +1,7 @@
-export { JsonCrack } from "./JsonCrack";
+export { JSONCrack } from "./JSONCrackComponent";
 export { parseGraph } from "./parser";
-export type { JsonCrackProps, JsonCrackRef } from "./JsonCrack";
-export type { ParseGraphOptions, ParseGraphResult } from "./parser";
+export type { JSONCrackProps, JSONCrackRef } from "./JSONCrackComponent";
+export type { ParseGraphResult } from "./parser";
 export type {
   CanvasThemeMode,
   EdgeData,

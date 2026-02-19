@@ -73,11 +73,11 @@ const maybeClearCache = () => {
   lastCacheClearAt = Date.now();
 };
 
-export const calculateNodeSize = (text: Text, isParent = false, imagePreviewEnabled = true) => {
+export const calculateNodeSize = (text: Text, isParent = false) => {
   maybeClearCache();
 
-  const isImage = isContentImage(text) && imagePreviewEnabled;
-  const cacheKey = `${JSON.stringify(text)}-${isParent}-${imagePreviewEnabled}`;
+  const isImage = isContentImage(text);
+  const cacheKey = `${JSON.stringify(text)}-${isParent}`;
 
   const cached = sizeCache.get(cacheKey);
   if (cached) return cached;

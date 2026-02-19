@@ -1,5 +1,4 @@
 import { NODE_DIMENSIONS } from "../../../../../../constants/graph";
-import useConfig from "../../../../../../store/useConfig";
 
 type Text = number | string | [string, string][];
 type Size = { width: number; height: number };
@@ -51,8 +50,7 @@ const sizeCache = new Map<Text, Size>();
 setInterval(() => sizeCache.clear(), 120_000);
 
 export const calculateNodeSize = (text: Text, isParent = false) => {
-  const { imagePreviewEnabled } = useConfig.getState();
-  const isImage = isContentImage(text) && imagePreviewEnabled;
+  const isImage = isContentImage(text);
 
   const cacheKey = [text, isParent].toString();
 

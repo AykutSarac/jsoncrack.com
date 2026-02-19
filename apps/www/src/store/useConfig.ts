@@ -3,7 +3,6 @@ import { persist } from "zustand/middleware";
 
 const initialStates = {
   darkmodeEnabled: true,
-  imagePreviewEnabled: true,
   liveTransformEnabled: true,
   gesturesEnabled: false,
   rulersEnabled: true,
@@ -11,7 +10,6 @@ const initialStates = {
 
 export interface ConfigActions {
   toggleDarkMode: (value: boolean) => void;
-  toggleImagePreview: (value: boolean) => void;
   toggleLiveTransform: (value: boolean) => void;
   toggleGestures: (value: boolean) => void;
   toggleRulers: (value: boolean) => void;
@@ -25,7 +23,6 @@ const useConfig = create(
       toggleGestures: gesturesEnabled => set({ gesturesEnabled }),
       toggleLiveTransform: liveTransformEnabled => set({ liveTransformEnabled }),
       toggleDarkMode: darkmodeEnabled => set({ darkmodeEnabled }),
-      toggleImagePreview: imagePreviewEnabled => set({ imagePreviewEnabled }),
     }),
     {
       name: "config",

@@ -9,10 +9,9 @@ type TextNodeProps = {
   node: NodeData;
   x: number;
   y: number;
-  imagePreviewEnabled: boolean;
 };
 
-const TextNodeBase = ({ node, x, y, imagePreviewEnabled }: TextNodeProps) => {
+const TextNodeBase = ({ node, x, y }: TextNodeProps) => {
   const { text, width, height } = node;
   const firstRow = text[0];
 
@@ -20,7 +19,7 @@ const TextNodeBase = ({ node, x, y, imagePreviewEnabled }: TextNodeProps) => {
 
   const value = firstRow.value;
   const normalizedValue = typeof value === "string" ? value : `${value}`;
-  const isImage = imagePreviewEnabled && isContentImage(normalizedValue);
+  const isImage = isContentImage(normalizedValue);
 
   return (
     <foreignObject
@@ -63,11 +62,7 @@ const TextNodeBase = ({ node, x, y, imagePreviewEnabled }: TextNodeProps) => {
 };
 
 const propsAreEqual = (prev: TextNodeProps, next: TextNodeProps) => {
-  return (
-    prev.imagePreviewEnabled === next.imagePreviewEnabled &&
-    prev.node.text === next.node.text &&
-    prev.node.width === next.node.width
-  );
+  return prev.node.text === next.node.text && prev.node.width === next.node.width;
 };
 
 export const TextNode = React.memo(TextNodeBase, propsAreEqual);

@@ -1,7 +1,7 @@
 import React from "react";
 import { Box } from "@mantine/core";
 import styled from "styled-components";
-import { JsonCrack } from "jsoncrack-react";
+import { JSONCrack } from "jsoncrack-react";
 import type { NodeData } from "jsoncrack-react";
 import { useLongPress } from "use-long-press";
 import { SUPPORTED_LIMIT } from "../../../../constants/graph";
@@ -34,7 +34,6 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
   const setSelectedNode = useGraph(state => state.setSelectedNode);
   const gesturesEnabled = useConfig(state => state.gesturesEnabled);
   const rulersEnabled = useConfig(state => state.rulersEnabled);
-  const imagePreviewEnabled = useConfig(state => state.imagePreviewEnabled);
   const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
   const json = useJson(state => state.json);
   const setVisible = useModal(state => state.setVisible);
@@ -79,20 +78,19 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
         onClick={blurOnClick}
         {...bindLongPress()}
       >
-        <JsonCrack
-          key={[direction, gesturesEnabled, rulersEnabled, imagePreviewEnabled].join("-")}
+        <JSONCrack
+          key={[direction, gesturesEnabled, rulersEnabled].join("-")}
           json={json}
           theme={darkmodeEnabled ? "dark" : "light"}
-          direction={direction}
+          layoutDirection={direction}
           showControls={false}
           showGrid={rulersEnabled}
-          zoomOnScroll={gesturesEnabled}
-          imagePreview={imagePreviewEnabled}
-          maxVisibleNodes={maxVisibleNodes}
-          fitViewOnLayout
-          onViewPortCreate={setViewPort}
+          trackpadZoom={gesturesEnabled}
+          maxRenderableNodes={maxVisibleNodes}
+          centerOnLayout
+          onViewportCreate={setViewPort}
           onNodeClick={handleNodeClick}
-          renderTooLarge={() => <NotSupported />}
+          renderNodeLimitExceeded={() => <NotSupported />}
         />
       </StyledEditorWrapper>
     </Box>

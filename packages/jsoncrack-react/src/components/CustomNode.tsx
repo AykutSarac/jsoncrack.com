@@ -6,11 +6,10 @@ import { ObjectNode } from "./ObjectNode";
 import { TextNode } from "./TextNode";
 
 type CustomNodeProps = NodeProps<NodeData> & {
-  imagePreviewEnabled: boolean;
   onNodeClick?: (node: NodeData) => void;
 };
 
-const CustomNodeBase = ({ imagePreviewEnabled, onNodeClick, ...nodeProps }: CustomNodeProps) => {
+const CustomNodeBase = ({ onNodeClick, ...nodeProps }: CustomNodeProps) => {
   const handleNodeClick = React.useCallback(
     (_: React.MouseEvent<SVGGElement, MouseEvent>, data: NodeData) => {
       onNodeClick?.(data);
@@ -39,14 +38,7 @@ const CustomNodeBase = ({ imagePreviewEnabled, onNodeClick, ...nodeProps }: Cust
       {({ node, x, y }) => {
         const hasKey = nodeProps.properties.text[0]?.key;
         if (!hasKey) {
-          return (
-            <TextNode
-              node={nodeProps.properties as NodeData}
-              x={x}
-              y={y}
-              imagePreviewEnabled={imagePreviewEnabled}
-            />
-          );
+          return <TextNode node={nodeProps.properties as NodeData} x={x} y={y} />;
         }
 
         return <ObjectNode node={node as NodeData} x={x} y={y} />;
