@@ -136,10 +136,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/AykutSarac/jsoncrack-vscode"
+    "url": "https://github.com/AykutSarac/jsoncrack.com"
   },
   "bugs": {
-    "url": "https://github.com/AykutSarac/jsoncrack-vscode/issues"
+    "url": "https://github.com/AykutSarac/jsoncrack.com/issues"
   },
   "engines": {
     "vscode": "^1.86.0"
