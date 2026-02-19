@@ -2,7 +2,7 @@
   "name": "www",
   "private": true,
   "version": "0.0.0",
-  "license": "SEE LICENSE IN LICENSE.md",
+  "license": "Apache-2.0",
   "scripts": {
     "dev": "next dev --webpack",
     "build": "next build --webpack",
