@@ -11,12 +11,7 @@ import { CustomEdge } from "./components/CustomEdge";
 import { CustomNode } from "./components/CustomNode";
 import { parseGraph } from "./parser";
 import { themes } from "./theme";
-import type {
-  CanvasThemeMode,
-  GraphData,
-  LayoutDirection,
-  NodeData,
-} from "./types";
+import type { CanvasThemeMode, GraphData, LayoutDirection, NodeData } from "./types";
 
 const layoutOptions = {
   "elk.layered.compaction.postCompaction.strategy": "EDGE_LENGTH",
@@ -50,10 +45,7 @@ export interface JsonCrackProps {
   onGraphChange?: (graph: GraphData) => void;
   onParseError?: (error: Error) => void;
   onViewPortCreate?: (viewPort: ViewPort) => void;
-  renderTooLarge?: (
-    nodeCount: number,
-    maxVisibleNodes: number,
-  ) => React.ReactNode;
+  renderTooLarge?: (nodeCount: number, maxVisibleNodes: number) => React.ReactNode;
 }
 
 const toJsonText = (json: JsonCrackProps["json"]): string => {
@@ -91,7 +83,7 @@ export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
       onViewPortCreate,
       renderTooLarge,
     },
-    ref,
+    ref
   ) => {
     const themeTokens = themes[theme];
     const containerRef = React.useRef<HTMLDivElement | null>(null);
@@ -130,18 +122,14 @@ export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
       const nextViewPort = viewPort;
       nextViewPort?.updateContainerSize();
 
-      const canvas = containerRef.current?.querySelector(
-        ".jsoncrack-canvas",
-      ) as HTMLElement | null;
+      const canvas = containerRef.current?.querySelector(".jsoncrack-canvas") as HTMLElement | null;
       if (canvas) {
         nextViewPort?.camera?.centerFitElementIntoView(canvas);
       }
     }, [viewPort]);
 
     const focusFirstNode = React.useCallback(() => {
-      const rootNode = containerRef.current?.querySelector(
-        "g[id$='node-1']",
-      ) as HTMLElement | null;
+      const rootNode = containerRef.current?.querySelector("g[id$='node-1']") as HTMLElement | null;
       if (!rootNode) return;
 
       viewPort?.camera?.centerFitElementIntoView(rootNode, {
@@ -152,31 +140,19 @@ export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
     const setZoom = React.useCallback(
       (zoomFactor: number) => {
         if (!viewPort) return;
-        viewPort.camera?.recenter(
-          viewPort.centerX,
-          viewPort.centerY,
-          zoomFactor,
-        );
+        viewPort.camera?.recenter(viewPort.centerX, viewPort.centerY, zoomFactor);
       },
-      [viewPort],
+      [viewPort]
     );
 
     const zoomIn = React.useCallback(() => {
       if (!viewPort) return;
-      viewPort.camera?.recenter(
-        viewPort.centerX,
-        viewPort.centerY,
-        viewPort.zoomFactor + 0.1,
-      );
+      viewPort.camera?.recenter(viewPort.centerX, viewPort.centerY, viewPort.zoomFactor + 0.1);
     }, [viewPort]);
 
     const zoomOut = React.useCallback(() => {
       if (!viewPort) return;
-      viewPort.camera?.recenter(
-        viewPort.centerX,
-        viewPort.centerY,
-        viewPort.zoomFactor - 0.1,
-      );
+      viewPort.camera?.recenter(viewPort.centerX, viewPort.centerY, viewPort.zoomFactor - 0.1);
     }, [viewPort]);
 
     React.useImperativeHandle(
@@ -188,7 +164,7 @@ export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
         centerView,
         focusFirstNode,
       }),
-      [centerView, focusFirstNode, setZoom, zoomIn, zoomOut],
+      [centerView, focusFirstNode, setZoom, zoomIn, zoomOut]
     );
 
     React.useEffect(() => {
@@ -213,9 +189,7 @@ export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
 
         if (graph.errors.length > 0) {
           callbacksRef.current.onParseError?.(
-            new Error(
-              `Failed to parse data (${graph.errors.length} syntax error(s)).`,
-            ),
+            new Error(`Failed to parse data (${graph.errors.length} syntax error(s)).`)
           );
         }
 
@@ -255,7 +229,7 @@ export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
         setEdges([]);
         setLoading(false);
         callbacksRef.current.onParseError?.(
-          error instanceof Error ? error : new Error("Unable to parse data."),
+          error instanceof Error ? error : new Error("Unable to parse data.")
         );
       }
     }, [imagePreview, json, maxVisibleNodes]);
@@ -291,10 +265,8 @@ export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
             const hasLargeLayoutChange =
               previousLayoutArea !== null &&
               previousLayoutArea > 0 &&
-              Math.abs((currentLayoutArea * 100) / previousLayoutArea - 100) >
-                70;
-            const shouldAutoFit =
-              fitViewOnLayout && (isFirstAutoFit || hasLargeLayoutChange);
+              Math.abs((currentLayoutArea * 100) / previousLayoutArea - 100) > 70;
+            const shouldAutoFit = fitViewOnLayout && (isFirstAutoFit || hasLargeLayoutChange);
 
             if (shouldAutoFit) {
               centerView();
@@ -305,15 +277,11 @@ export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
           });
         }, 0);
       },
-      [centerView, fitViewOnLayout],
+      [centerView, fitViewOnLayout]
     );
 
     const tooLargeContent = renderTooLarge?.(totalNodes, maxVisibleNodes);
-    const canvasClassName = [
-      styles.canvasWrapper,
-      showGrid ? styles.showGrid : "",
-      className,
-    ]
+    const canvasClassName = [styles.canvasWrapper, showGrid ? styles.showGrid : "", className]
       .filter(Boolean)
       .join(" ");
     const canvasStyle = {
@@ -336,11 +304,9 @@ export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
       "--node-divider": themeTokens.NODE_COLORS.DIVIDER,
       "--text-positive": themeTokens.TEXT_POSITIVE,
       "--background-modifier-accent": themeTokens.BACKGROUND_MODIFIER_ACCENT,
-      "--spinner-track":
-        theme === "dark" ? "rgba(255, 255, 255, 0.3)" : "rgba(17, 24, 39, 0.2)",
+      "--spinner-track": theme === "dark" ? "rgba(255, 255, 255, 0.3)" : "rgba(17, 24, 39, 0.2)",
       "--spinner-head": theme === "dark" ? "#FFFFFF" : "#111827",
-      "--overlay-bg":
-        theme === "dark" ? "rgba(0, 0, 0, 0.2)" : "rgba(255, 255, 255, 0.38)",
+      "--overlay-bg": theme === "dark" ? "rgba(0, 0, 0, 0.2)" : "rgba(255, 255, 255, 0.38)",
       ...style,
     } as React.CSSProperties;
 
@@ -349,7 +315,7 @@ export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
         ref={containerRef}
         className={canvasClassName}
         style={canvasStyle}
-        onContextMenu={(event) => event.preventDefault()}
+        onContextMenu={event => event.preventDefault()}
       >
         {showControls && (
           <Controls
@@ -376,11 +342,11 @@ export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
         )}
 
         <Space
-          onCreate={(nextViewPort) => {
+          onCreate={nextViewPort => {
             setViewPort(nextViewPort);
             onViewPortCreateRef.current?.(nextViewPort);
           }}
-          onContextMenu={(event) => event.preventDefault()}
+          onContextMenu={event => event.preventDefault()}
           treatTwoFingerTrackPadGesturesLikeTouch={zoomOnScroll}
           pollForElementResizing
           className="jsoncrack-space"
@@ -388,14 +354,14 @@ export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
           <Canvas
             className="jsoncrack-canvas"
             onLayoutChange={onLayoutChange}
-            node={(nodeProps) => (
+            node={nodeProps => (
               <CustomNode
                 {...nodeProps}
                 imagePreviewEnabled={imagePreview}
                 onNodeClick={onNodeClick}
               />
             )}
-            edge={(edgeProps) => (
+            edge={edgeProps => (
               <CustomEdge
                 {...edgeProps}
                 viewPort={viewPort}
@@ -424,7 +390,7 @@ export const JsonCrack = React.forwardRef<JsonCrackRef, JsonCrackProps>(
         </Space>
       </div>
     );
-  },
+  }
 );
 
 JsonCrack.displayName = "JsonCrack";

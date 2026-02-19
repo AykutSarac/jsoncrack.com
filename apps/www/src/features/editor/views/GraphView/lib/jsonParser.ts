@@ -4,7 +4,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 import { parseTree, getNodePath, type Node } from "jsonc-parser";
-import type { EdgeData, NodeData, NodeRow } from "jsoncrack";
+import type { EdgeData, NodeData, NodeRow } from "jsoncrack-react";
 import { calculateNodeSize } from "./utils/calculateNodeSize";
 
 export type Graph = {

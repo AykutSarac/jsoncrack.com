@@ -10,16 +10,12 @@ type CustomNodeProps = NodeProps<NodeData> & {
   onNodeClick?: (node: NodeData) => void;
 };
 
-const CustomNodeBase = ({
-  imagePreviewEnabled,
-  onNodeClick,
-  ...nodeProps
-}: CustomNodeProps) => {
+const CustomNodeBase = ({ imagePreviewEnabled, onNodeClick, ...nodeProps }: CustomNodeProps) => {
   const handleNodeClick = React.useCallback(
     (_: React.MouseEvent<SVGGElement, MouseEvent>, data: NodeData) => {
       onNodeClick?.(data);
     },
-    [onNodeClick],
+    [onNodeClick]
   );
 
   return (
@@ -28,10 +24,10 @@ const CustomNodeBase = ({
       onClick={handleNodeClick as any}
       animated={false}
       label={null as any}
-      onEnter={(event) => {
+      onEnter={event => {
         event.currentTarget.style.stroke = "#3B82F6";
       }}
-      onLeave={(event) => {
+      onLeave={event => {
         event.currentTarget.style.stroke = "var(--node-stroke)";
       }}
       style={{

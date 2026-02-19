@@ -13,9 +13,7 @@ let lastCacheClearAt = Date.now();
 export const isContentImage = (value: Text) => {
   if (typeof value !== "string") return false;
 
-  const isImageURL = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg|webp))/i.test(
-    value,
-  );
+  const isImageURL = /(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg|webp))/i.test(value);
   const isBase64 = value.startsWith("data:image/") && value.includes("base64");
 
   return isImageURL || isBase64;
@@ -23,9 +21,7 @@ export const isContentImage = (value: Text) => {
 
 const calculateLines = (text: Text): string => {
   if (Array.isArray(text)) {
-    return text
-      .map(([k, v]) => `${k}: ${JSON.stringify(v).slice(0, 80)}`)
-      .join("\n");
+    return text.map(([k, v]) => `${k}: ${JSON.stringify(v).slice(0, 80)}`).join("\n");
   }
 
   return `${text}`;
@@ -33,16 +29,11 @@ const calculateLines = (text: Text): string => {
 
 const fallbackSize = (str: string, single: boolean): Size => {
   const lines = str.split("\n");
-  const longestLine = lines.reduce(
-    (max, line) => Math.max(max, line.length),
-    0,
-  );
+  const longestLine = lines.reduce((max, line) => Math.max(max, line.length), 0);
 
   return {
     width: Math.min(700, Math.max(45, longestLine * 8 + 24)),
-    height: single
-      ? NODE_DIMENSIONS.PARENT_HEIGHT
-      : lines.length * NODE_DIMENSIONS.ROW_HEIGHT,
+    height: single ? NODE_DIMENSIONS.PARENT_HEIGHT : lines.length * NODE_DIMENSIONS.ROW_HEIGHT,
   };
 };
 
@@ -70,9 +61,7 @@ const calculateWidthAndHeight = (str: string, single = false): Size => {
   const lines = str.split("\n").length;
 
   const width = clientRect.width + 4;
-  const height = single
-    ? NODE_DIMENSIONS.PARENT_HEIGHT
-    : lines * NODE_DIMENSIONS.ROW_HEIGHT;
+  const height = single ? NODE_DIMENSIONS.PARENT_HEIGHT : lines * NODE_DIMENSIONS.ROW_HEIGHT;
 
   document.body.removeChild(dummyElement);
   return { width, height };
@@ -84,11 +73,7 @@ const maybeClearCache = () => {
   lastCacheClearAt = Date.now();
 };
 
-export const calculateNodeSize = (
-  text: Text,
-  isParent = false,
-  imagePreviewEnabled = true,
-) => {
+export const calculateNodeSize = (text: Text, isParent = false, imagePreviewEnabled = true) => {
   maybeClearCache();
 
   const isImage = isContentImage(text) && imagePreviewEnabled;

@@ -20,7 +20,7 @@ importers:
 
   apps/vscode:
     dependencies:
-      jsoncrack:
+      jsoncrack-react:
         specifier: workspace:*
         version: link:../../packages/jsoncrack
       react:
@@ -153,7 +153,7 @@ importers:
       jsonc-parser:
         specifier: 3.3.1
         version: 3.3.1
-      jsoncrack:
+      jsoncrack-react:
         specifier: workspace:*
         version: link:../../packages/jsoncrack
       jsonpath-plus:
@@ -284,12 +284,42 @@ importers:
         specifier: 5.4.1
         version: 5.4.1(@emotion/is-prop-valid@1.4.0)(@types/react@19.2.11)(prop-types@15.8.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
     devDependencies:
+      '@eslint/eslintrc':
+        specifier: ^3.2.0
+        version: 3.3.3
+      '@eslint/js':
+        specifier: ^9.39.2
+        version: 9.39.2
+      '@trivago/prettier-plugin-sort-imports':
+        specifier: ^4.3.0
+        version: 4.3.0(prettier@3.8.1)
       '@types/react':
         specifier: 19.2.11
         version: 19.2.11
       '@types/react-dom':
         specifier: 19.2.3
         version: 19.2.3(@types/react@19.2.11)
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^8.54.0
+        version: 8.55.0(@typescript-eslint/parser@8.55.0(eslint@9.39.2(jiti@1.21.7))(typescript@5.9.3))(eslint@9.39.2(jiti@1.21.7))(typescript@5.9.3)
+      '@typescript-eslint/parser':
+        specifier: ^8.54.0
+        version: 8.55.0(eslint@9.39.2(jiti@1.21.7))(typescript@5.9.3)
+      eslint:
+        specifier: ^9.39.2
+        version: 9.39.2(jiti@1.21.7)
+      eslint-config-prettier:
+        specifier: ^10.1.8
+        version: 10.1.8(eslint@9.39.2(jiti@1.21.7))
+      eslint-plugin-prettier:
+        specifier: ^5.5.5
+        version: 5.5.5(@types/eslint@9.6.1)(eslint-config-prettier@10.1.8(eslint@9.39.2(jiti@1.21.7)))(eslint@9.39.2(jiti@1.21.7))(prettier@3.8.1)
+      eslint-plugin-unused-imports:
+        specifier: ^4.3.0
+        version: 4.4.1(@typescript-eslint/eslint-plugin@8.55.0(@typescript-eslint/parser@8.55.0(eslint@9.39.2(jiti@1.21.7))(typescript@5.9.3))(eslint@9.39.2(jiti@1.21.7))(typescript@5.9.3))(eslint@9.39.2(jiti@1.21.7))
+      prettier:
+        specifier: ^3.8.1
+        version: 3.8.1
       typescript:
         specifier: ^5.9.3
         version: 5.9.3

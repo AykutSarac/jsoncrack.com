@@ -2,7 +2,7 @@ import React from "react";
 import type { ModalProps } from "@mantine/core";
 import { Modal, Stack, Text, ScrollArea } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
-import type { NodeData } from "jsoncrack";
+import type { NodeData } from "jsoncrack-react";
 
 interface NodeModalProps extends ModalProps {
   nodeData: NodeData | null;

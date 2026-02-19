@@ -23,12 +23,7 @@ const isQueryRoot = (value: unknown): value is QueryRoot => {
   );
 };
 
-const CustomEdgeBase = ({
-  viewPort,
-  edgeTargetById,
-  hostElement,
-  ...props
-}: CustomEdgeProps) => {
+const CustomEdgeBase = ({ viewPort, edgeTargetById, hostElement, ...props }: CustomEdgeProps) => {
   const [hovered, setHovered] = React.useState(false);
   const edgeId = (props.properties as EdgeData | undefined)?.id;
 
@@ -44,7 +39,7 @@ const CustomEdgeBase = ({
     if (!queryRoot) return;
 
     const targetNodeDom = queryRoot.querySelector(
-      `[data-id$="node-${targetNodeId}"]`,
+      `[data-id$="node-${targetNodeId}"]`
     ) as HTMLElement | null;
 
     if (targetNodeDom?.parentElement) {

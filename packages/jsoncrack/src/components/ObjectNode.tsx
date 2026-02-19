@@ -76,10 +76,7 @@ const areRowTargetsEqual = (prevTargets?: string[], nextTargets?: string[]) => {
   return true;
 };
 
-const areRowsEqual = (
-  prevRows: NodeData["text"],
-  nextRows: NodeData["text"],
-) => {
+const areRowsEqual = (prevRows: NodeData["text"], nextRows: NodeData["text"]) => {
   if (prevRows === nextRows) return true;
   if (prevRows.length !== nextRows.length) return false;
 

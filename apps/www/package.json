@@ -2,6 +2,7 @@
   "name": "www",
   "private": true,
   "version": "0.0.0",
+  "license": "SEE LICENSE IN LICENSE.md",
   "scripts": {
     "dev": "next dev --webpack",
     "build": "next build --webpack",
@@ -12,7 +13,7 @@
     "analyze": "ANALYZE=true npm run build"
   },
   "dependencies": {
-    "jsoncrack": "workspace:*",
+    "jsoncrack-react": "workspace:*",
     "@mantine/code-highlight": "^8.3.14",
     "@mantine/core": "^8.3.14",
     "@mantine/dropzone": "^8.3.14",

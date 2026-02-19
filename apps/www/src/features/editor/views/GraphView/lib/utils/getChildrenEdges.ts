@@ -1,4 +1,4 @@
-import type { EdgeData, NodeData } from "jsoncrack";
+import type { EdgeData, NodeData } from "jsoncrack-react";
 
 export const getChildrenEdges = (nodes: NodeData[], edges: EdgeData[]): EdgeData[] => {
   const nodeIds = nodes.map(node => node.id);

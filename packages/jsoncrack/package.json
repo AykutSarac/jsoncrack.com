@@ -1,8 +1,8 @@
 {
-  "name": "jsoncrack",
+  "name": "jsoncrack-react",
   "version": "1.0.0",
   "description": "Reusable JSON Crack canvas as a React component",
-  "license": "Apache-2.0",
+  "license": "SEE LICENSE IN LICENSE.md",
   "author": "Aykut Saraç",
   "type": "module",
   "main": "./dist/index.js",
@@ -19,8 +19,8 @@
   "scripts": {
     "build": "pnpm exec tsc -p tsconfig.build.json && node ./scripts/copy-css.mjs",
     "clean": "rm -rf dist",
-    "lint": "pnpm --dir ../.. exec tsc -p packages/jsoncrack/tsconfig.build.json --noEmit && pnpm --dir ../../apps/www exec prettier --check ../../packages/jsoncrack/src",
-    "lint:fix": "pnpm --dir ../../apps/www exec prettier --write ../../packages/jsoncrack/src"
+    "lint": "tsc -p tsconfig.build.json --noEmit && eslint src && prettier --check src",
+    "lint:fix": "eslint --fix src && prettier --write src"
   },
   "peerDependencies": {
     "react": ">=18",
@@ -32,8 +32,18 @@
     "reaflow": "5.4.1"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.39.2",
+    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
     "@types/react": "^19.2.11",
     "@types/react-dom": "^19.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.54.0",
+    "@typescript-eslint/parser": "^8.54.0",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "eslint-plugin-unused-imports": "^4.3.0",
+    "prettier": "^3.8.1",
     "typescript": "^5.9.3"
   }
 }

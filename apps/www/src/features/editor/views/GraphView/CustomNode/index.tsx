@@ -1,6 +1,6 @@
 import React from "react";
 import { useComputedColorScheme } from "@mantine/core";
-import type { NodeData } from "jsoncrack";
+import type { NodeData } from "jsoncrack-react";
 import type { NodeProps } from "reaflow";
 import { Node } from "reaflow";
 import { useModal } from "../../../../../store/useModal";

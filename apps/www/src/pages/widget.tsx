@@ -4,7 +4,7 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import { useMantineColorScheme } from "@mantine/core";
 import { ThemeProvider } from "styled-components";
-import type { LayoutDirection } from "jsoncrack";
+import type { LayoutDirection } from "jsoncrack-react";
 import { generateNextSeo } from "next-seo/pages";
 import toast from "react-hot-toast";
 import { darkTheme, lightTheme } from "../constants/theme";

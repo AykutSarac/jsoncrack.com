@@ -4,6 +4,7 @@
   "displayName": "JSON Crack",
   "description": "Seamlessly visualize your JSON data instantly into graphs.",
   "publisher": "AykutSarac",
+  "license": "SEE LICENSE IN LICENSE.md",
   "author": {
     "email": "aykutsarac0@gmail.com",
     "name": "Aykut Saraç"
@@ -117,7 +118,7 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
-    "jsoncrack": "workspace:*",
+    "jsoncrack-react": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

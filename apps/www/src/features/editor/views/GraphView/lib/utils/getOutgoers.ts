@@ -1,4 +1,4 @@
-import type { EdgeData, NodeData } from "jsoncrack";
+import type { EdgeData, NodeData } from "jsoncrack-react";
 
 type Outgoers = [NodeData[], string[]];
 

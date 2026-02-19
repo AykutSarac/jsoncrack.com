@@ -2,7 +2,7 @@ import React from "react";
 import type { ModalProps } from "@mantine/core";
 import { Modal, Stack, Text, ScrollArea, Flex, CloseButton } from "@mantine/core";
 import { CodeHighlight } from "@mantine/code-highlight";
-import type { NodeData } from "jsoncrack";
+import type { NodeData } from "jsoncrack-react";
 import useGraph from "../../editor/views/GraphView/stores/useGraph";
 
 // return object from json removing array and object fields

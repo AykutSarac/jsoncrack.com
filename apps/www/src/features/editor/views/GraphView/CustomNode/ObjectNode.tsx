@@ -1,5 +1,5 @@
 import React from "react";
-import type { NodeData } from "jsoncrack";
+import type { NodeData } from "jsoncrack-react";
 import type { CustomNodeProps } from ".";
 import { NODE_DIMENSIONS } from "../../../../../constants/graph";
 import { TextRenderer } from "./TextRenderer";

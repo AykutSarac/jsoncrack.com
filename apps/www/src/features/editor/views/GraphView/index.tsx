@@ -1,8 +1,8 @@
 import React from "react";
 import { Box } from "@mantine/core";
 import styled from "styled-components";
-import { JsonCrack } from "jsoncrack";
-import type { NodeData } from "jsoncrack";
+import { JsonCrack } from "jsoncrack-react";
+import type { NodeData } from "jsoncrack-react";
 import { useLongPress } from "use-long-press";
 import { SUPPORTED_LIMIT } from "../../../../constants/graph";
 import useConfig from "../../../../store/useConfig";

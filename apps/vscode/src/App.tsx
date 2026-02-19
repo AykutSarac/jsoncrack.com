@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Anchor, Box, MantineProvider, Text } from "@mantine/core";
-import type { NodeData } from "jsoncrack";
-import { JsonCrack } from "jsoncrack";
+import type { NodeData } from "jsoncrack-react";
+import { JsonCrack } from "jsoncrack-react";
 import { NodeModal } from "./components/NodeModal";
 
 function getTheme() {
