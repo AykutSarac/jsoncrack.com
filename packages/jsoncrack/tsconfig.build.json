@@ -7,7 +7,7 @@
     "strict": true,
     "declaration": true,
     "declarationMap": true,
-    "emitDeclarationOnly": false,
+    "emitDeclarationOnly": true,
     "outDir": "dist",
     "rootDir": "src",
     "jsx": "react-jsx",

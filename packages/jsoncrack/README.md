@@ -1,4 +1,4 @@
-# jsoncrack
+# jsoncrack-react
 
 Reusable JSON graph canvas component from JSON Crack.
 
@@ -10,7 +10,7 @@ Reusable JSON graph canvas component from JSON Crack.
 ## Install
 
 ```bash
-npm install jsoncrack
+npm install jsoncrack-react
 ```
 
 Peer dependencies:
@@ -18,10 +18,18 @@ Peer dependencies:
 - `react >= 18`
 - `react-dom >= 18`
 
+## Setup
+
+Import the stylesheet once in your app entry point:
+
+```ts
+import "jsoncrack-react/style.css";
+```
+
 ## Quick Start
 
 ```tsx
-import { JsonCrack } from "jsoncrack";
+import { JsonCrack } from "jsoncrack-react";
 
 export function Example() {
   return (
@@ -40,25 +48,7 @@ export function Example() {
 }
 ```
 
-Important: the wrapper must have an explicit height.
-
-## Next.js (App Router)
-
-`JsonCrack` is a client component. Use it in a `"use client"` file.
-
-```tsx
-"use client";
-
-import { JsonCrack } from "jsoncrack";
-
-export default function Graph() {
-  return (
-    <div style={{ height: "70vh" }}>
-      <JsonCrack json='{"hello":"world"}' />
-    </div>
-  );
-}
-```
+The wrapper must have an explicit height.
 
 ## Props
 
@@ -85,7 +75,7 @@ export default function Graph() {
 
 ```tsx
 import { useRef } from "react";
-import { JsonCrack, type JsonCrackRef } from "jsoncrack";
+import { JsonCrack, type JsonCrackRef } from "jsoncrack-react";
 
 export function WithRef({ json }: { json: string }) {
   const ref = useRef<JsonCrackRef>(null);
@@ -116,7 +106,7 @@ export function WithRef({ json }: { json: string }) {
 If you only need parser output:
 
 ```ts
-import { parseGraph } from "jsoncrack";
+import { parseGraph } from "jsoncrack-react";
 
 const result = parseGraph('{"a":[1,2,3]}', { imagePreviewEnabled: true });
 // result: { nodes, edges, errors }

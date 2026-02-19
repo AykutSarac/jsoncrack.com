@@ -1,5 +1,6 @@
 import "@mantine/core/styles.css";
 import "@mantine/code-highlight/styles.css";
+import "jsoncrack-react/style.css";
 import { createRoot } from "react-dom/client";
 import App from "./App";
 import "./global.css";

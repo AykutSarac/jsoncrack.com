@@ -4,6 +4,20 @@
   "description": "Reusable JSON Crack canvas as a React component",
   "license": "SEE LICENSE IN LICENSE.md",
   "author": "Aykut Saraç",
+  "homepage": "https://jsoncrack.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AykutSarac/jsoncrack.com"
+  },
+  "keywords": [
+    "json",
+    "visualizer",
+    "graph",
+    "canvas",
+    "react",
+    "json-crack",
+    "typescript"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -11,13 +25,17 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
-    }
+    },
+    "./style.css": "./dist/index.css"
   },
   "files": [
     "dist"
   ],
+  "sideEffects": [
+    "./dist/index.css"
+  ],
   "scripts": {
-    "build": "pnpm exec tsc -p tsconfig.build.json && node ./scripts/copy-css.mjs",
+    "build": "vite build && tsc -p tsconfig.build.json",
     "clean": "rm -rf dist",
     "lint": "tsc -p tsconfig.build.json --noEmit && eslint src && prettier --check src",
     "lint:fix": "eslint --fix src && prettier --write src"
@@ -39,11 +57,13 @@
     "@types/react-dom": "^19.2.3",
     "@typescript-eslint/eslint-plugin": "^8.54.0",
     "@typescript-eslint/parser": "^8.54.0",
+    "@vitejs/plugin-react": "^4.3.0",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-unused-imports": "^4.3.0",
     "prettier": "^3.8.1",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vite": "^6.0.0"
   }
 }
