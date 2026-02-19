@@ -12,13 +12,7 @@ export const FullscreenDropzone = () => {
   return (
     <Dropzone.FullScreen
       maxFiles={1}
-      accept={[
-        "application/json",
-        "application/x-yaml",
-        "text/csv",
-        "application/xml",
-        "application/toml",
-      ]}
+      accept={["application/json", "application/x-yaml", "text/csv", "application/xml"]}
       onReject={files => toast.error(`Unable to load file ${files[0].file.name}`)}
       onDrop={async e => {
         try {
@@ -55,7 +49,7 @@ export const FullscreenDropzone = () => {
             Invalid file
           </Text>
           <Text fz="lg" c="dimmed" mt="sm">
-            Allowed formats are JSON, YAML, CSV, XML, TOML
+            Allowed formats are JSON, YAML, CSV, XML
           </Text>
         </Dropzone.Reject>
       </Group>

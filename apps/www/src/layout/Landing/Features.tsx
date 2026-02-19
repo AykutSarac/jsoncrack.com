@@ -27,7 +27,7 @@ const features: FeatureItem[] = [
   {
     title: "JSON Visualizer",
     description:
-      "Transform your data into interactive graphs or trees as you type. Supports JSON, YAML, CSV, XML, and TOML.",
+      "Transform your data into interactive graphs or trees as you type. Supports JSON, YAML, CSV, and XML.",
     icon: <FaBolt size={20} />,
     color: "yellow",
   },
@@ -122,7 +122,7 @@ export const Features = () => {
           fz={{ base: 16, sm: 18 }}
           w={{ base: "100%", xs: "80%", sm: "60%", md: "40%" }}
         >
-          All in one tool for JSON, YAML, CSV, XML, and TOML.
+          All in one tool for JSON, YAML, CSV, and XML.
         </Title>
 
         <SimpleGrid

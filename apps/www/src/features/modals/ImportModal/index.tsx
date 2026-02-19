@@ -71,13 +71,7 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
             onReject={files => toast.error(`Unable to load file ${files[0].file.name}`)}
             maxFiles={1}
             p="md"
-            accept={[
-              "application/json",
-              "application/x-yaml",
-              "text/csv",
-              "application/xml",
-              "application/toml",
-            ]}
+            accept={["application/json", "application/x-yaml", "text/csv", "application/xml"]}
           >
             <Stack justify="center" align="center" gap="sm" mih={220}>
               <AiOutlineUpload size={48} />

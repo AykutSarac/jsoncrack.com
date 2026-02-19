@@ -21,7 +21,7 @@
   },
   {
     "title": "What kind of data formats are supported?",
-    "content": "A wide range of data formats are supported including JSON, YAML, XML, CSV, and TOML."
+    "content": "A wide range of data formats are supported including JSON, YAML, XML, and CSV."
   },
   {
     "title": "What size of data can I visualize?",
