@@ -2,7 +2,7 @@
   "name": "jsoncrack-react",
   "version": "1.0.0",
   "description": "Reusable JSON Crack canvas as a React component",
-  "license": "SEE LICENSE IN LICENSE.md",
+  "license": "Apache-2.0",
   "author": "Aykut Saraç",
   "homepage": "https://jsoncrack.com",
   "repository": {
