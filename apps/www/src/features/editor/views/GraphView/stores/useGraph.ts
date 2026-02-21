@@ -1,6 +1,9 @@
 import type { LayoutDirection, NodeData } from "jsoncrack-react";
 import type { ViewPort } from "react-zoomable-ui";
 import { create } from "zustand";
+import { SUPPORTED_LIMIT } from "../../../../../constants/graph";
+import useJson from "../../../../../store/useJson";
+import { getLineNumberFromPath, parser } from "../lib/jsonParser";
 
 export interface Graph {
   viewPort: ViewPort | null;
@@ -29,7 +32,38 @@ interface GraphActions {
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
   ...initialStates,
-  setSelectedNode: nodeData => set({ selectedNode: nodeData }),
+  setSelectedNode: nodeData => {
+    set({ selectedNode: nodeData });
+
+    if (!nodeData) return null;
+    if (nodeData.path && nodeData.path.length > 0) {
+      const line = getLineNumberFromPath(useJson.getState().json, nodeData.path);
+      set({
+        selectedNode: {
+          ...nodeData,
+          lineNumber: line ?? 1,
+        },
+      });
+    }
+  },
+  setGraph: (data, options) => {
+    const { nodes, edges } = parser(data ?? useJson.getState().json);
+
+    if (nodes.length > SUPPORTED_LIMIT) {
+      return set({
+        aboveSupportedLimit: true,
+        ...options,
+        loading: false,
+      });
+    }
+
+    set({
+      nodes,
+      edges,
+      aboveSupportedLimit: false,
+      ...options,
+    });
+  },
   setDirection: (direction = "RIGHT") => {
     set({ direction });
     setTimeout(() => get().centerView(), 200);

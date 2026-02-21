@@ -12,6 +12,37 @@ export type Graph = {
   edges: EdgeData[];
 };
 
+export function getLineNumberFromPath(jsonText: string, path: (string | number)[]): number | null {
+  const rootNode = parseTree(jsonText);
+  if (!rootNode) return null;
+
+  function getNodeAtPath(node: any, path: (string | number)[]): any | null {
+    let current = node;
+    for (const key of path) {
+      if (!current || !current.children) return null;
+
+      if (current.type === "object" && typeof key === "string") {
+        const child = current.children.find((c: any) => c.children[0].value === key);
+        if (!child) return null;
+        current = child.children[1];
+      } else if (current.type === "array" && typeof key === "number") {
+        current = current.children[key];
+      } else {
+        return null;
+      }
+    }
+    return current;
+  }
+
+  const targetNode = getNodeAtPath(rootNode, path);
+  if (!targetNode || typeof targetNode.offset !== "number") return null;
+
+  const textUpToOffset = jsonText.slice(0, targetNode.offset);
+  const lineNumber = textUpToOffset.split(/\r?\n/).length;
+
+  return lineNumber;
+}
+
 export const parser = (json: string): Graph => {
   const jsonTree = parseTree(json);
   if (!jsonTree) return { nodes: [], edges: [] };
