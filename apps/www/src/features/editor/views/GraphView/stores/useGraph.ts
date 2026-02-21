@@ -35,6 +35,7 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
   setSelectedNode: nodeData => {
     set({ selectedNode: nodeData });
 
+    if (!nodeData) return null;
     if (nodeData.path && nodeData.path.length > 0) {
       const line = getLineNumberFromPath(useJson.getState().json, nodeData.path);
       set({
