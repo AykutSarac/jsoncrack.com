@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Editor, { type EditorProps, loader, type OnMount, useMonaco } from "@monaco-editor/react";
 import useConfig from "../../store/useConfig";
 import useFile from "../../store/useFile";
+import useWatchMode from "../../store/useWatchMode";
 
 loader.config({
   paths: {
@@ -18,6 +19,9 @@ const editorOptions: EditorProps["options"] = {
   stickyScroll: { enabled: false },
   scrollBeyondLastLine: false,
   placeholder: "Start typing...",
+  readOnlyMessage: {
+    value: "You can't edit the file while watching mode is enabled ",
+  },
 };
 
 const TextEditor = () => {
@@ -29,6 +33,7 @@ const TextEditor = () => {
   const getHasChanges = useFile(state => state.getHasChanges);
   const theme = useConfig(state => (state.darkmodeEnabled ? "vs-dark" : "light"));
   const fileType = useFile(state => state.format);
+  const isWatching = useWatchMode(state => state.isWatching);
   const jsonDefaults = (monaco?.languages as any)?.json?.jsonDefaults as
     | { setDiagnosticsOptions: (options: unknown) => void }
     | undefined;
@@ -84,7 +89,10 @@ const TextEditor = () => {
           language={fileType}
           theme={theme}
           value={contents}
-          options={editorOptions}
+          options={{
+            ...editorOptions,
+            readOnly: isWatching,
+          }}
           onMount={handleMount}
           onValidate={errors => setError(errors[0]?.message || "")}
           onChange={contents => setContents({ contents, skipUpdate: true })}
