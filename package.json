@@ -1,90 +1,51 @@
 {
-  "name": "json-crack",
+  "name": "jsoncrack-monorepo",
   "private": true,
-  "version": "0.0.0",
+  "license": "Apache-2.0",
+  "homepage": "https://jsoncrack.com",
   "author": {
     "name": "Aykut Saraç",
     "email": "aykutsarac0@gmail.com"
   },
-  "license": "Apache-2.0",
-  "homepage": "https://jsoncrack.com",
   "bugs": {
     "url": "https://github.com/AykutSarac/jsoncrack.com/issues"
   },
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "postbuild": "next-sitemap --config next-sitemap.config.js",
-    "start": "next start",
-    "lint": "tsc --project tsconfig.json && eslint src && prettier --check src",
-    "lint:fix": "eslint --fix src & prettier --write src",
-    "analyze": "ANALYZE=true npm run build"
-  },
-  "dependencies": {
-    "@mantine/code-highlight": "^7.17.7",
-    "@mantine/core": "^7.17.7",
-    "@mantine/dropzone": "^7.17.7",
-    "@mantine/hooks": "^7.17.7",
-    "@monaco-editor/react": "^4.7.0",
-    "@sentry/nextjs": "^7.120.3",
-    "@tanstack/react-query": "^5.76.2",
-    "allotment": "^1.20.3",
-    "axios": "^1.9.0",
-    "dayjs": "^1.11.13",
-    "fast-xml-parser": "^5.2.3",
-    "gofmt.js": "^0.0.2",
-    "html-to-image": "1.11.11",
-    "jq-web": "^0.5.1",
-    "js-cookie": "^3.0.5",
-    "js-yaml": "^4.1.0",
-    "json-2-csv": "^5.5.9",
-    "json-schema-faker": "^0.5.9",
-    "json_typegen_wasm": "^0.7.0",
-    "jsonc-parser": "^3.3.1",
-    "jsonpath-plus": "^10.3.0",
-    "jsonwebtoken": "^9.0.2",
-    "lodash.debounce": "^4.0.8",
-    "next": "14.2.28",
-    "next-seo": "^6.8.0",
-    "next-sitemap": "^4.2.3",
-    "nextjs-google-analytics": "^2.3.7",
-    "react": "^18.3.1",
-    "react-compare-slider": "^3.1.0",
-    "react-countup": "^6.5.3",
-    "react-dom": "^18.3.1",
-    "react-hot-toast": "^2.5.2",
-    "react-icons": "^5.5.0",
-    "react-json-tree": "^0.18.0",
-    "react-linkify-it": "^1.0.8",
-    "react-text-transition": "^3.1.0",
-    "react-zoomable-ui": "^0.11.0",
-    "reaflow": "5.4.1",
-    "styled-components": "^6.1.18",
-    "toml": "^3.0.0",
-    "use-long-press": "^3.3.0",
-    "zustand": "^4.5.7"
+    "dev": "turbo run dev",
+    "dev:www": "turbo run dev --filter=www",
+    "dev:vscode": "turbo run watch-build --filter=vscode",
+    "build": "turbo run build",
+    "build:www": "turbo run build --filter=www",
+    "build:vscode": "turbo run build --filter=vscode",
+    "start": "turbo run start",
+    "lint": "turbo run lint",
+    "lint:vscode": "turbo run lint --filter=vscode",
+    "lint:fix": "turbo run lint:fix",
+    "lint:fix:vscode": "turbo run lint:fix --filter=vscode",
+    "analyze": "turbo run analyze",
+    "clean": "turbo run clean"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^14.2.29",
-    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
-    "@types/js-cookie": "^3.0.6",
-    "@types/js-yaml": "^4.0.9",
-    "@types/jsonwebtoken": "^9.0.9",
-    "@types/node": "^20.17.50",
-    "@types/react": "18.2.51",
-    "@types/react-dom": "^18.3.7",
-    "@typescript-eslint/eslint-plugin": "^7.18.0",
-    "eslint": "8.56.0",
-    "eslint-config-next": "14.2.28",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.4.0",
-    "eslint-plugin-unused-imports": "^3.2.0",
-    "prettier": "^3.5.3",
-    "ts-node": "^10.9.2",
-    "typescript": "5.8.2"
+    "turbo": "^2.8.8"
   },
   "engines": {
-    "node": ">=18.x"
+    "node": ">=24",
+    "pnpm": ">=10"
   },
-  "packageManager": "pnpm@9.1.4"
+  "packageManager": "pnpm@10.20.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp",
+      "unrs-resolver"
+    ],
+    "overrides": {
+      "react": "19.2.4",
+      "react-dom": "19.2.4",
+      "@types/react": "19.2.11",
+      "@types/react-dom": "19.2.3",
+      "html-to-image": "1.11.11",
+      "jq-web": "0.5.1"
+    }
+  }
 }

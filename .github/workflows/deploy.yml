@@ -20,19 +20,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: "20"
+          node-version: "24.10.0"
 
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
-          version: 9.1.4
+          version: 10.20.0
           run_install: false
 
       - name: Get pnpm store directory
@@ -40,7 +40,7 @@ jobs:
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         name: Setup pnpm cache
         with:
           path: ${{ env.STORE_PATH }}
@@ -48,73 +48,34 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-        with:
-          static_site_generator: next
-
-      - name: Restore cache
-        uses: actions/cache@v4
+      - name: Restore Turbo and Next.js cache
+        uses: actions/cache@v5
         with:
           path: |
-            .next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/pnpm-lock.yaml') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+            .turbo
+            apps/www/.next/cache
+          key: ${{ runner.os }}-turbo-next-${{ hashFiles('pnpm-lock.yaml', 'turbo.json') }}-${{ hashFiles('apps/www/**.[jt]s', 'apps/www/**.[jt]sx', 'packages/**.[jt]s', 'packages/**.[jt]sx') }}
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/pnpm-lock.yaml') }}-
+            ${{ runner.os }}-turbo-next-${{ hashFiles('pnpm-lock.yaml', 'turbo.json') }}-
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
-      - name: Build with Next.js
-        run: pnpm next build
+      - name: Build with Turborepo
+        run: pnpm run build:www
         env:
           NEXT_PUBLIC_GA_MEASUREMENT_ID: ${{ vars.NEXT_PUBLIC_GA_MEASUREMENT_ID }}
 
       - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: build-files
-          path: ./out/_next/static/chunks
+          path: ./apps/www/out/_next/static/chunks
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
-          path: './out'
-
-
-  # Sentry job
-  sentry: 
-    needs: build
-    runs-on: ubuntu-latest
-    env:
-      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-      SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
-      SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
-      SENTRY_RELEASE: ${{ github.sha }}
-      SENTRY_SOURCEMAP_PATH: "./"
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - uses: actions/download-artifact@v4.1.7
-        with:
-          name: build-files
-      - name: Download sentry-cli
-        run: curl -sL https://sentry.io/get-cli/ | SENTRY_CLI_VERSION="2.20.0" sh
-      - name: Create Release
-        run: sentry-cli releases new $SENTRY_RELEASE
-      - name: Inject Debug IDs to source files
-        run: sentry-cli sourcemaps inject $SENTRY_SOURCEMAP_PATH
-      - name: Upload Source Files
-        run: sentry-cli sourcemaps upload --validate -r=$SENTRY_RELEASE $SENTRY_SOURCEMAP_PATH
-      - name: Set Release Commits
-        run: sentry-cli releases set-commits $SENTRY_RELEASE --auto
-      - name: Deploy to Sentry
-        run: sentry-cli releases deploys $SENTRY_RELEASE new -e production
-      - name: Finalize Sentry Release
-        run: sentry-cli releases finalize $SENTRY_RELEASE
-          
+          path: './apps/www/out'
 
   # Deployment job
   deploy:
@@ -127,4 +88,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-

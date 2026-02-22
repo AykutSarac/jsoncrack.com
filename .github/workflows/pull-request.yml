@@ -10,17 +10,17 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: Install Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: "24.10.0"
 
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
-          version: 8
+          version: 10.20.0
           run_install: false
 
       - name: Get pnpm store directory
@@ -28,7 +28,7 @@ jobs:
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
 
-      - uses: actions/cache@v3
+      - uses: actions/cache@v5
         name: Setup pnpm cache
         with:
           path: ${{ env.STORE_PATH }}
@@ -36,13 +36,23 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
 
+      - name: Restore Turbo and Next.js cache
+        uses: actions/cache@v5
+        with:
+          path: |
+            .turbo
+            apps/www/.next/cache
+          key: ${{ runner.os }}-turbo-next-${{ hashFiles('pnpm-lock.yaml', 'turbo.json') }}-${{ hashFiles('apps/www/**.[jt]s', 'apps/www/**.[jt]sx', 'packages/**.[jt]s', 'packages/**.[jt]sx') }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-next-${{ hashFiles('pnpm-lock.yaml', 'turbo.json') }}-
+
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: Lint
-        run: pnpm run lint
+        run: pnpm turbo run lint
 
       - name: Build
-        run: pnpm run build
+        run: pnpm turbo run build
 
         
