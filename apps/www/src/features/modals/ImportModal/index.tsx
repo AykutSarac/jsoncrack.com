@@ -9,6 +9,33 @@ import type { FileFormat } from "../../../enums/file.enum";
 import useFile from "../../../store/useFile";
 import useWatchMode from "../../../store/useWatchMode";
 
+interface WatcherButtonProps {
+  availableFilePicker: boolean;
+  disabled?: boolean;
+  enableWatcher: () => void;
+}
+const WatcherButton = ({ availableFilePicker, enableWatcher, disabled }: WatcherButtonProps) => {
+  if (!availableFilePicker)
+    return (
+      <Tooltip
+        label="Not suported in this browser"
+        fz="xs"
+        ta="center"
+        maw="200"
+        withArrow
+        openDelay={500}
+      >
+        <Button disabled={true}>Watcher</Button>
+      </Tooltip>
+    );
+
+  return (
+    <Button onClick={enableWatcher} disabled={disabled}>
+      Watcher
+    </Button>
+  );
+};
+
 export const ImportModal = ({ opened, onClose }: ModalProps) => {
   const [url, setURL] = React.useState("");
   const [file, setFile] = React.useState<File | null>(null);
@@ -101,28 +128,6 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
     onClose();
   }, [availableFilePicker, onClose, setContents, setWatcherInterval, toggleWatchMode]);
 
-  const WatcherButton = () => {
-    if (!availableFilePicker)
-      return (
-        <Tooltip
-          label="Not suported in this browser"
-          fz="xs"
-          ta="center"
-          maw="200"
-          withArrow
-          openDelay={500}
-        >
-          <Button disabled={true}>Watcher</Button>
-        </Tooltip>
-      );
-
-    return (
-      <Button onClick={enableWatcher} disabled={!!(file || url)}>
-        Watcher
-      </Button>
-    );
-  };
-
   return (
     <Modal
       title="Import File"
@@ -162,7 +167,11 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
         </Paper>
       </Stack>
       <Group justify="right">
-        <WatcherButton />
+        <WatcherButton
+          availableFilePicker={availableFilePicker}
+          enableWatcher={enableWatcher}
+          disabled={!!(file || url)}
+        />
         <Button onClick={handleImportFile} disabled={!(file || url)}>
           Import
         </Button>
