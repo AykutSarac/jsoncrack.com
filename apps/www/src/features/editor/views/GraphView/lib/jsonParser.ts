@@ -173,7 +173,7 @@ export const parser = (json: string): Graph => {
         ...appendParentKey(),
       });
     } else {
-      let t: string | [string, string][] = "";
+      let t: string | [string, string][];
 
       if (text.some(t => t.key !== null)) {
         t = text.map(t => {

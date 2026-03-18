@@ -179,7 +179,7 @@ export const parseGraph = (json: string): ParseGraphResult => {
         ...appendParentKey(),
       });
     } else {
-      let displayText: string | [string, string][] = "";
+      let displayText: string | [string, string][];
 
       if (text.some(row => row.key !== null)) {
         displayText = text.map(row => {
