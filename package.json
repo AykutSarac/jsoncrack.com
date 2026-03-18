@@ -26,7 +26,7 @@
     "clean": "turbo run clean"
   },
   "devDependencies": {
-    "turbo": "^2.8.8"
+    "turbo": "^2.8.17"
   },
   "engines": {
     "node": ">=24",
@@ -38,14 +38,6 @@
       "esbuild",
       "sharp",
       "unrs-resolver"
-    ],
-    "overrides": {
-      "react": "19.2.4",
-      "react-dom": "19.2.4",
-      "@types/react": "19.2.11",
-      "@types/react-dom": "19.2.3",
-      "html-to-image": "1.11.11",
-      "jq-web": "0.5.1"
-    }
+    ]
   }
 }
