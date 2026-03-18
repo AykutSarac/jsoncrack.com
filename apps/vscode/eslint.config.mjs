@@ -50,5 +50,5 @@ export default defineConfig([
       ],
     },
   },
-  globalIgnores(["build/**", "public/**", "scripts/**", "webpack.config.js"]),
+  globalIgnores(["build/**"]),
 ]);

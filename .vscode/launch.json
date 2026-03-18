@@ -2,15 +2,11 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Run VSCode Extension (apps/vscode)",
+      "name": "Run VSCode Extension",
       "type": "extensionHost",
       "request": "launch",
-      "args": [
-        "--extensionDevelopmentPath=${workspaceFolder}/apps/vscode"
-      ],
-      "outFiles": [
-        "${workspaceFolder}/apps/vscode/build/**/*.js"
-      ],
+      "args": ["--extensionDevelopmentPath=${workspaceFolder}/apps/vscode"],
+      "outFiles": ["${workspaceFolder}/apps/vscode/build/**/*.js"],
       "preLaunchTask": "build vscode extension"
     }
   ]
