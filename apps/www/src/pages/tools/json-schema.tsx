@@ -2,7 +2,7 @@ import React from "react";
 import Head from "next/head";
 import { Box, Button, Container, Flex, Paper, Title, Text } from "@mantine/core";
 import { Editor, type OnMount } from "@monaco-editor/react";
-import { JSONSchemaFaker } from "json-schema-faker";
+import { generate } from "json-schema-faker";
 import { generateNextSeo } from "next-seo/pages";
 import { LuCheck, LuCircleX } from "react-icons/lu";
 import { SEO } from "../../constants/seo";
@@ -42,7 +42,7 @@ const JSONSchemaTool = () => {
   };
 
   const generateJson = async () => {
-    const randomJson = await JSONSchemaFaker.resolve(JSON.parse(jsonSchema));
+    const randomJson = await generate(JSON.parse(jsonSchema));
     const contents = await jsonToContent(JSON.stringify(randomJson, null, 2), FileFormat.JSON);
     setJson(contents);
   };
