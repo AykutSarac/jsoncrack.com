@@ -49,7 +49,7 @@
     "zustand": "^5.0.12"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.0",
+    "@eslint/js": "^10.0.1",
     "@next/bundle-analyzer": "16.1.7",
     "@next/eslint-plugin-next": "16.1.7",
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
@@ -57,14 +57,14 @@
     "@types/node": "^25.5.0",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
-    "eslint": "^10.0.0",
+    "eslint": "^10.0.3",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
     "eslint-plugin-unused-imports": "^4.4.1",
     "prettier": "^3.8.1",
     "ts-node": "^10.9.2",
     "typescript": "5.9.3",
-    "typescript-eslint": "^8.57.0"
+    "typescript-eslint": "^8.57.1"
   },
   "packageManager": "pnpm@10.20.0"
 }
