@@ -29,13 +29,13 @@ const StyledTitle = styled.span<{ fontSize: string }>`
   mix-blend-mode: difference;
 `;
 
-interface LogoProps extends React.ComponentPropsWithoutRef<"div"> {
+interface LogoProps {
   fontSize?: string;
   hideLogo?: boolean;
   hideText?: boolean;
 }
 
-export const JSONCrackLogo = ({ fontSize = "1.2rem", hideText, hideLogo, ...props }: LogoProps) => {
+export const JSONCrackLogo = ({ fontSize = "1.2rem", hideText, hideLogo }: LogoProps) => {
   const handleLogoClick = React.useCallback((event: React.MouseEvent<HTMLAnchorElement>) => {
     if (typeof window === "undefined") return;
     if (!window.location.href.includes("widget")) return;
@@ -58,11 +58,7 @@ export const JSONCrackLogo = ({ fontSize = "1.2rem", hideText, hideLogo, ...prop
             mb="2"
           />
         )}
-        {!hideText && (
-          <StyledTitle fontSize={fontSize} {...props}>
-            JSON CRACK
-          </StyledTitle>
-        )}
+        {!hideText && <StyledTitle fontSize={fontSize}>JSON CRACK</StyledTitle>}
       </StyledLogoWrapper>
     </Link>
   );
