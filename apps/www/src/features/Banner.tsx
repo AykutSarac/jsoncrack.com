@@ -13,12 +13,13 @@ const BANNER_LIST = [
   "Try ToDiagram for free, no sign-up required",
   "Edit data directly inside diagrams",
   "Explore larger datasets (up to 50 MB) easily",
+  "Generate Mermaid flowcharts, modern and customizable",
 ];
 
-export const Banner = () => {
-  const ROTATION_INTERVAL = 6000; // ms between label changes
-  const FADE_DURATION = 500; // ms for fade transition
+const ROTATION_INTERVAL = 6000; // ms between label changes
+const FADE_DURATION = 500; // ms for fade transition
 
+export const Banner = () => {
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(true);
   const [dismissed, setDismissed] = useSessionStorage({
