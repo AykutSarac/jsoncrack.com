@@ -3,7 +3,6 @@ import { Box } from "@mantine/core";
 import styled from "styled-components";
 import { JSONCrack } from "jsoncrack-react";
 import type { NodeData } from "jsoncrack-react";
-import { useLongPress } from "use-long-press";
 import { SUPPORTED_LIMIT } from "../../../../constants/graph";
 import useConfig from "../../../../store/useConfig";
 import useJson from "../../../../store/useJson";
@@ -18,9 +17,12 @@ const StyledEditorWrapper = styled.div<{ $widget: boolean }>`
   width: 100%;
   height: 100%;
 
-  .jsoncrack-space,
-  .jsoncrack-space:active {
+  .jsoncrack-space {
     cursor: url("/assets/cursor.svg"), auto;
+  }
+
+  .jsoncrack-space:active {
+    cursor: grabbing;
   }
 `;
 
@@ -37,19 +39,6 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
   const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
   const json = useJson(state => state.json);
   const setVisible = useModal(state => state.setVisible);
-
-  const callback = React.useCallback(() => {
-    const canvas = document.querySelector(".jsoncrack-canvas") as HTMLDivElement | null;
-    canvas?.classList.add("dragging");
-  }, []);
-
-  const bindLongPress = useLongPress(callback, {
-    threshold: 150,
-    onFinish: () => {
-      const canvas = document.querySelector(".jsoncrack-canvas") as HTMLDivElement | null;
-      canvas?.classList.remove("dragging");
-    },
-  });
 
   const blurOnClick = React.useCallback(() => {
     if ("activeElement" in document) {
@@ -76,7 +65,6 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
         $widget={isWidget}
         onContextMenu={event => event.preventDefault()}
         onClick={blurOnClick}
-        {...bindLongPress()}
       >
         <JSONCrack
           key={[direction, gesturesEnabled, rulersEnabled].join("-")}

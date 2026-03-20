@@ -192,9 +192,6 @@ importers:
       styled-components:
         specifier: ^6.3.11
         version: 6.3.11(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
-      use-long-press:
-        specifier: ^3.3.0
-        version: 3.3.0(react@19.2.4)
       zustand:
         specifier: ^5.0.12
         version: 5.0.12(@types/react@19.2.14)(immer@9.0.21)(react@19.2.4)(use-sync-external-store@1.6.0(react@19.2.4))
@@ -265,6 +262,9 @@ importers:
       reaflow:
         specifier: 5.4.1
         version: 5.4.1(@emotion/is-prop-valid@1.4.0)(@types/react@19.2.14)(prop-types@15.8.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      use-long-press:
+        specifier: ^3.3.0
+        version: 3.3.0(react@19.2.4)
     devDependencies:
       '@eslint/js':
         specifier: ^10.0.1

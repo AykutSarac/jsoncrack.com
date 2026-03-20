@@ -5,6 +5,7 @@ import type { ViewPort } from "react-zoomable-ui";
 import { Space } from "react-zoomable-ui";
 import { Canvas } from "reaflow";
 import type { ElkRoot } from "reaflow";
+import { useLongPress } from "use-long-press";
 import styles from "./JSONCrackStyles.module.css";
 import { Controls } from "./components/Controls";
 import { CustomEdge } from "./components/CustomEdge";
@@ -272,6 +273,21 @@ export const JSONCrack = React.forwardRef<JSONCrackRef, JSONCrackProps>(
       [centerView, centerOnLayout]
     );
 
+    const onLongPress = React.useCallback(() => {
+      const canvas = containerRef.current?.querySelector(".jsoncrack-canvas") as HTMLElement | null;
+      canvas?.classList.add("dragging");
+    }, []);
+
+    const bindLongPress = useLongPress(onLongPress, {
+      threshold: 150,
+      onFinish: () => {
+        const canvas = containerRef.current?.querySelector(
+          ".jsoncrack-canvas"
+        ) as HTMLElement | null;
+        canvas?.classList.remove("dragging");
+      },
+    });
+
     const tooLargeContent = renderNodeLimitExceeded?.(totalNodes, maxRenderableNodes);
     const canvasClassName = [styles.canvasWrapper, showGrid ? styles.showGrid : "", className]
       .filter(Boolean)
@@ -308,6 +324,7 @@ export const JSONCrack = React.forwardRef<JSONCrackRef, JSONCrackProps>(
         className={canvasClassName}
         style={canvasStyle}
         onContextMenu={event => event.preventDefault()}
+        {...bindLongPress()}
       >
         {showControls && (
           <Controls

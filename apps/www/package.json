@@ -45,7 +45,6 @@
     "reaflow": "5.4.1",
     "shiki": "^4.0.2",
     "styled-components": "^6.3.11",
-    "use-long-press": "^3.3.0",
     "zustand": "^5.0.12"
   },
   "devDependencies": {
