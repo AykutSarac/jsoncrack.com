@@ -79,7 +79,9 @@ const WidgetPage = () => {
     <ThemeProvider theme={theme === "dark" ? darkTheme : lightTheme}>
       <Head>{generateNextSeo({ noindex: true, nofollow: true })}</Head>
       <ModalController />
-      <GraphView isWidget />
+      <div style={{ width: "100vw", height: "100vh" }}>
+        <GraphView isWidget />
+      </div>
     </ThemeProvider>
   );
 };
