@@ -9,6 +9,7 @@ import { generateNextSeo } from "next-seo/pages";
 import toast from "react-hot-toast";
 import { darkTheme, lightTheme } from "../constants/theme";
 import useGraph from "../features/editor/views/GraphView/stores/useGraph";
+import useConfig from "../store/useConfig";
 import useFile from "../store/useFile";
 import useJson from "../store/useJson";
 
@@ -40,6 +41,7 @@ const WidgetPage = () => {
   const checkEditorSession = useFile(state => state.checkEditorSession);
   const setContents = useFile(state => state.setContents);
   const setDirection = useGraph(state => state.setDirection);
+  const toggleDarkMode = useConfig(state => state.toggleDarkMode);
   const clearJson = useJson(state => state.clear);
 
   React.useEffect(() => {
@@ -57,6 +59,7 @@ const WidgetPage = () => {
         if (!event.data?.json) return;
         if (event.data?.options?.theme === "light" || event.data?.options?.theme === "dark") {
           setTheme(event.data.options.theme);
+          toggleDarkMode(event.data.options.theme === "dark");
         }
 
         setContents({ contents: event.data.json, hasChanges: false });
@@ -69,7 +72,7 @@ const WidgetPage = () => {
 
     window.addEventListener("message", handler);
     return () => window.removeEventListener("message", handler);
-  }, [setColorScheme, setContents, setDirection, theme]);
+  }, [setColorScheme, setContents, setDirection, toggleDarkMode, theme]);
 
   React.useEffect(() => {
     setColorScheme(theme);
