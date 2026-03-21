@@ -7,7 +7,6 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
  */
 const config = {
   output: "export",
-  transpilePackages: ["jsoncrack"],
   reactStrictMode: false,
   productionBrowserSourceMaps: true,
   compiler: {
