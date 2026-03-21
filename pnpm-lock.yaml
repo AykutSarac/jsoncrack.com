@@ -132,9 +132,6 @@ importers:
       json-2-csv:
         specifier: 5.5.10
         version: 5.5.10
-      json-schema-faker:
-        specifier: 0.6.0
-        version: 0.6.0
       json_typegen_wasm:
         specifier: 0.7.0
         version: 0.7.0
@@ -2273,10 +2270,6 @@ packages:
 
   json-buffer@3.0.1:
     resolution: {integrity: sha512-4bV5BfR2mqfQTJm+V5tPPdf+ZpuhiIvTuAB5g8kcrXOZpTT/QwwVRWBywX1ozr6lEuPdbHxwaJlm9G6mI2sfSQ==}
-
-  json-schema-faker@0.6.0:
-    resolution: {integrity: sha512-KfTcb8UEjD4n1VBI1BOoHWOqSADP6KMah5BBKT/GeYxM4LbzOoyDs3T71jbrR3TflUtNiT8zSTpLiFU62iHZFQ==}
-    hasBin: true
 
   json-schema-traverse@0.4.1:
     resolution: {integrity: sha512-xbbCH5dCYU5T8LcEhhuh7HJ88HXuW3qsI3Y0zOZFKfZEHcpWiHU/Jxzk629Brsab/mMiHQti9wMP+845RPe3Vg==}
@@ -5272,8 +5265,6 @@ snapshots:
       doc-path: 4.1.1
 
   json-buffer@3.0.1: {}
-
-  json-schema-faker@0.6.0: {}
 
   json-schema-traverse@0.4.1: {}
 

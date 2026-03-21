@@ -1,21 +1,12 @@
 import React from "react";
 import Link from "next/link";
-import { Button, Menu, type MenuItemProps, Text, Stack } from "@mantine/core";
+import { Button } from "@mantine/core";
 import styled from "styled-components";
-import { LuChevronDown } from "react-icons/lu";
 import { JSONCrackLogo } from "../JSONCrackBrandLogo";
 
 const StyledNavbarWrapper = styled.div`
   z-index: 3;
   transition: background 0.2s ease-in-out;
-`;
-
-const StyledMenuItem = styled(Menu.Item)<MenuItemProps & any>`
-  color: black;
-
-  &[data-hovered] {
-    background-color: #f7f7f7;
-  }
 `;
 
 const StyledNavbar = styled.nav`
@@ -102,55 +93,6 @@ export const Navbar = () => {
           >
             Open Source
           </Button>
-          <Menu withArrow shadow="sm">
-            <Menu.Target>
-              <Button
-                variant="subtle"
-                color="black"
-                visibleFrom="sm"
-                size="md"
-                radius="md"
-                rightSection={<LuChevronDown />}
-              >
-                Tools
-              </Button>
-            </Menu.Target>
-            <Menu.Dropdown maw={300} bg="white">
-              <StyledMenuItem component={Link} prefetch={false} href="/converter/json-to-yaml">
-                <Stack gap="2">
-                  <Text c="black" size="sm" fw={600}>
-                    Converter
-                  </Text>
-                  <Text size="xs" c="gray.6" lineClamp={2}>
-                    Convert JSON to YAML, CSV to JSON, YAML to XML, and more.
-                  </Text>
-                </Stack>
-              </StyledMenuItem>
-              <StyledMenuItem component={Link} prefetch={false} href="/type/json-to-rust">
-                <Stack gap="2">
-                  <Text c="black" size="sm" fw={600}>
-                    Generate Types
-                  </Text>
-                  <Text size="xs" c="gray.6" lineClamp={2}>
-                    Generate TypeScript types, Golang structs, Rust, and more.
-                  </Text>
-                </Stack>
-              </StyledMenuItem>
-              <StyledMenuItem component={Link} prefetch={false} href="/tools/json-schema">
-                <Stack gap="2">
-                  <Text c="black" size="sm" fw={600}>
-                    JSON Schema
-                  </Text>
-                  <Text size="xs" c="gray.6" lineClamp={2}>
-                    Generate JSON schema from JSON data.
-                  </Text>
-                  <Text size="xs" c="gray.6" lineClamp={2}>
-                    Generate JSON data from JSON schema.
-                  </Text>
-                </Stack>
-              </StyledMenuItem>
-            </Menu.Dropdown>
-          </Menu>
         </Center>
         <Right>
           <Button
