@@ -74,7 +74,7 @@ function JSONCrackApp({ Component, pageProps }: AppProps) {
   const colorSchemeManager = smartColorSchemeManager({
     key: "editor-color-scheme",
     getPathname: () => pathname,
-    dynamicPaths: ["/editor"], // Only editor paths use dynamic theme
+    dynamicPaths: ["/editor", "/widget"], // Editor and widget paths use dynamic theme
   });
 
   return (
