@@ -57,41 +57,7 @@ window.addEventListener("message", (event) => {
   }
 });`;
 
-const reactInstall = `npm install jsoncrack-react`;
-
-const reactUsage = `import { JSONCrack } from "jsoncrack-react";
-import "jsoncrack-react/style.css";
-
-export default function App() {
-  return (
-    <div style={{ height: 600 }}>
-      <JSONCrack
-        json={{ name: "Ada", languages: ["Python", "Rust"] }}
-        theme="light"
-        layoutDirection="DOWN"
-      />
-    </div>
-  );
-}`;
-
-const reactRefExample = `import { useRef } from "react";
-import { JSONCrack, JSONCrackRef } from "jsoncrack-react";
-import "jsoncrack-react/style.css";
-
-export default function App() {
-  const ref = useRef<JSONCrackRef>(null);
-
-  return (
-    <>
-      <button onClick={() => ref.current?.centerView()}>
-        Center
-      </button>
-      <div style={{ height: 600 }}>
-        <JSONCrack ref={ref} json='{"a":1}' />
-      </div>
-    </>
-  );
-}`;
+const reactInstall = "npm install jsoncrack-react";
 
 const Docs = () => {
   return (
@@ -117,6 +83,33 @@ const Docs = () => {
         </Stack>
 
         <Stack gap={40}>
+          {/* React Component */}
+          <Paper bg="white" p={{ base: "md", sm: "xl" }} radius="lg" withBorder>
+            <Stack gap="md">
+              <Badge variant="light" color="violet" size="lg" radius="sm" w="fit-content">
+                React Component
+              </Badge>
+              <Text c="gray.7" fz={15} lh={1.7}>
+                For React applications, use the{" "}
+                <Anchor
+                  href="https://www.npmjs.com/package/jsoncrack-react"
+                  target="_blank"
+                  fz={15}
+                >
+                  jsoncrack-react
+                </Anchor>{" "}
+                package for a native integration with full control over props and callbacks. See the
+                npm page for the full API reference and latest documentation.
+              </Text>
+              <CodeHighlight
+                language="bash"
+                code={reactInstall}
+                withCopyButton
+                styles={{ codeHighlight: { borderRadius: 8 } }}
+              />
+            </Stack>
+          </Paper>
+
           {/* Method 1: Basic iframe */}
           <Paper bg="white" p={{ base: "md", sm: "xl" }} radius="lg" withBorder>
             <Stack gap="md">
@@ -124,14 +117,14 @@ const Docs = () => {
                 1. Iframe Widget
               </Badge>
               <Text c="gray.7" fz={15} lh={1.7}>
-                The simplest way to embed JSON Crack. Add an iframe pointing to{" "}
-                <Code>/widget</Code> and it will render an interactive graph viewer.
+                The simplest way to embed JSON Crack. Add an iframe pointing to <Code>/widget</Code>{" "}
+                and it will render an interactive graph viewer.
               </Text>
               <CodeHighlight
                 language="html"
                 code={iframeExample}
                 withCopyButton
-                styles={{ root: { borderRadius: 8 } }}
+                styles={{ codeHighlight: { borderRadius: 8 } }}
               />
             </Stack>
           </Paper>
@@ -154,7 +147,7 @@ const Docs = () => {
                 language="html"
                 code={fetchExample}
                 withCopyButton
-                styles={{ root: { borderRadius: 8 } }}
+                styles={{ codeHighlight: { borderRadius: 8 } }}
               />
               <StyledFrame
                 title="Fetch from URL example"
@@ -203,7 +196,7 @@ const Docs = () => {
                 language="javascript"
                 code={postMessageExample}
                 withCopyButton
-                styles={{ root: { borderRadius: 8 } }}
+                styles={{ codeHighlight: { borderRadius: 8 } }}
               />
 
               <Title order={4} c="gray.8" mt="xs">
@@ -247,7 +240,9 @@ const Docs = () => {
                       <Code>options.direction</Code>
                     </Table.Td>
                     <Table.Td>
-                      <Code>&quot;RIGHT&quot; | &quot;DOWN&quot; | &quot;LEFT&quot; | &quot;UP&quot;</Code>
+                      <Code>
+                        &quot;RIGHT&quot; | &quot;DOWN&quot; | &quot;LEFT&quot; | &quot;UP&quot;
+                      </Code>
                     </Table.Td>
                     <Table.Td>
                       Layout direction of the graph (default: <Code>RIGHT</Code>)
@@ -272,225 +267,6 @@ const Docs = () => {
                 src="https://codepen.io/AykutSarac/embed/QWBbpqx?default-tab=html%2Cresult"
                 loading="lazy"
               />
-            </Stack>
-          </Paper>
-
-          {/* Method 4: React Component */}
-          <Paper bg="white" p={{ base: "md", sm: "xl" }} radius="lg" withBorder>
-            <Stack gap="md">
-              <Badge variant="light" color="violet" size="lg" radius="sm" w="fit-content">
-                React Component
-              </Badge>
-              <Text c="gray.7" fz={15} lh={1.7}>
-                For React applications, use the{" "}
-                <Anchor
-                  href="https://www.npmjs.com/package/jsoncrack-react"
-                  target="_blank"
-                  fz={15}
-                >
-                  jsoncrack-react
-                </Anchor>{" "}
-                package for a native integration with full control over props and callbacks.
-              </Text>
-
-              <CodeHighlight
-                language="bash"
-                code={reactInstall}
-                withCopyButton
-                styles={{ root: { borderRadius: 8 } }}
-              />
-              <CodeHighlight
-                language="typescript"
-                code={reactUsage}
-                withCopyButton
-                styles={{ root: { borderRadius: 8 } }}
-              />
-
-              <Paper
-                bg="blue.0"
-                p="sm"
-                radius="md"
-                withBorder
-                bd="1px solid var(--mantine-color-blue-2)"
-              >
-                <Text c="gray.8" fz={14} lh={1.7}>
-                  The container element <b>must</b> have an explicit height. The component will fill
-                  its parent.
-                </Text>
-              </Paper>
-
-              <Title order={4} c="gray.8" mt="xs">
-                Props
-              </Title>
-              <Table
-                withTableBorder
-                withColumnBorders
-                styles={{
-                  table: { borderRadius: 8, overflow: "hidden" },
-                }}
-              >
-                <Table.Thead bg="gray.0">
-                  <Table.Tr>
-                    <Table.Th c="gray.7">Prop</Table.Th>
-                    <Table.Th c="gray.7">Type</Table.Th>
-                    <Table.Th c="gray.7">Default</Table.Th>
-                  </Table.Tr>
-                </Table.Thead>
-                <Table.Tbody>
-                  <Table.Tr>
-                    <Table.Td>
-                      <Code>json</Code>
-                    </Table.Td>
-                    <Table.Td>
-                      <Code>string | object | unknown[]</Code>
-                    </Table.Td>
-                    <Table.Td>required</Table.Td>
-                  </Table.Tr>
-                  <Table.Tr>
-                    <Table.Td>
-                      <Code>theme</Code>
-                    </Table.Td>
-                    <Table.Td>
-                      <Code>&quot;light&quot; | &quot;dark&quot;</Code>
-                    </Table.Td>
-                    <Table.Td>
-                      <Code>&quot;dark&quot;</Code>
-                    </Table.Td>
-                  </Table.Tr>
-                  <Table.Tr>
-                    <Table.Td>
-                      <Code>layoutDirection</Code>
-                    </Table.Td>
-                    <Table.Td>
-                      <Code>&quot;RIGHT&quot; | &quot;DOWN&quot; | &quot;LEFT&quot; | &quot;UP&quot;</Code>
-                    </Table.Td>
-                    <Table.Td>
-                      <Code>&quot;RIGHT&quot;</Code>
-                    </Table.Td>
-                  </Table.Tr>
-                  <Table.Tr>
-                    <Table.Td>
-                      <Code>showControls</Code>
-                    </Table.Td>
-                    <Table.Td>
-                      <Code>boolean</Code>
-                    </Table.Td>
-                    <Table.Td>
-                      <Code>true</Code>
-                    </Table.Td>
-                  </Table.Tr>
-                  <Table.Tr>
-                    <Table.Td>
-                      <Code>showGrid</Code>
-                    </Table.Td>
-                    <Table.Td>
-                      <Code>boolean</Code>
-                    </Table.Td>
-                    <Table.Td>
-                      <Code>true</Code>
-                    </Table.Td>
-                  </Table.Tr>
-                  <Table.Tr>
-                    <Table.Td>
-                      <Code>maxRenderableNodes</Code>
-                    </Table.Td>
-                    <Table.Td>
-                      <Code>number</Code>
-                    </Table.Td>
-                    <Table.Td>
-                      <Code>1500</Code>
-                    </Table.Td>
-                  </Table.Tr>
-                  <Table.Tr>
-                    <Table.Td>
-                      <Code>onNodeClick</Code>
-                    </Table.Td>
-                    <Table.Td>
-                      <Code>(node: NodeData) =&gt; void</Code>
-                    </Table.Td>
-                    <Table.Td>—</Table.Td>
-                  </Table.Tr>
-                  <Table.Tr>
-                    <Table.Td>
-                      <Code>onParse</Code>
-                    </Table.Td>
-                    <Table.Td>
-                      <Code>(graph: GraphData) =&gt; void</Code>
-                    </Table.Td>
-                    <Table.Td>—</Table.Td>
-                  </Table.Tr>
-                  <Table.Tr>
-                    <Table.Td>
-                      <Code>onParseError</Code>
-                    </Table.Td>
-                    <Table.Td>
-                      <Code>(error: Error) =&gt; void</Code>
-                    </Table.Td>
-                    <Table.Td>—</Table.Td>
-                  </Table.Tr>
-                </Table.Tbody>
-              </Table>
-
-              <Divider my="xs" />
-
-              <Title order={4} c="gray.8">
-                Ref Methods
-              </Title>
-              <Text c="gray.7" fz={15} lh={1.7}>
-                Use a ref to programmatically control the viewport:
-              </Text>
-              <CodeHighlight
-                language="typescript"
-                code={reactRefExample}
-                withCopyButton
-                styles={{ root: { borderRadius: 8 } }}
-              />
-              <Table
-                withTableBorder
-                withColumnBorders
-                styles={{
-                  table: { borderRadius: 8, overflow: "hidden" },
-                }}
-              >
-                <Table.Thead bg="gray.0">
-                  <Table.Tr>
-                    <Table.Th c="gray.7">Method</Table.Th>
-                    <Table.Th c="gray.7">Description</Table.Th>
-                  </Table.Tr>
-                </Table.Thead>
-                <Table.Tbody>
-                  <Table.Tr>
-                    <Table.Td>
-                      <Code>zoomIn()</Code>
-                    </Table.Td>
-                    <Table.Td>Zoom in by 0.1</Table.Td>
-                  </Table.Tr>
-                  <Table.Tr>
-                    <Table.Td>
-                      <Code>zoomOut()</Code>
-                    </Table.Td>
-                    <Table.Td>Zoom out by 0.1</Table.Td>
-                  </Table.Tr>
-                  <Table.Tr>
-                    <Table.Td>
-                      <Code>setZoom(factor)</Code>
-                    </Table.Td>
-                    <Table.Td>Set zoom to a specific level</Table.Td>
-                  </Table.Tr>
-                  <Table.Tr>
-                    <Table.Td>
-                      <Code>centerView()</Code>
-                    </Table.Td>
-                    <Table.Td>Fit the entire graph into view</Table.Td>
-                  </Table.Tr>
-                  <Table.Tr>
-                    <Table.Td>
-                      <Code>focusFirstNode()</Code>
-                    </Table.Td>
-                    <Table.Td>Center on the root node</Table.Td>
-                  </Table.Tr>
-                </Table.Tbody>
-              </Table>
             </Stack>
           </Paper>
         </Stack>
