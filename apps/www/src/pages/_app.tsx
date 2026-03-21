@@ -19,7 +19,7 @@ import { smartColorSchemeManager } from "../lib/utils/mantineColorScheme";
 async function loadShiki() {
   const { createHighlighter } = await import("shiki");
   const shiki = await createHighlighter({
-    langs: ["typescript", "json", "go", "kotlin", "rust"],
+    langs: ["typescript", "json", "go", "kotlin", "rust", "html", "bash", "javascript"],
     themes: [],
   });
 
