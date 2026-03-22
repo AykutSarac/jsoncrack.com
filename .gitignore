@@ -2,6 +2,7 @@
 .agents
 .claude
 .codex
+skills-lock.json
 
 # Package manager
 node_modules/

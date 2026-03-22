@@ -1,19 +1,25 @@
 import eslint from "@eslint/js";
+import { defineConfig, globalIgnores } from "eslint/config";
 import eslintConfigPrettier from "eslint-config-prettier/flat";
 import eslintPluginPrettier from "eslint-plugin-prettier/recommended";
 import unusedImports from "eslint-plugin-unused-imports";
-import { defineConfig, globalIgnores } from "eslint/config";
+import globals from "globals";
 import tseslint from "typescript-eslint";
 
 export default defineConfig([
-  globalIgnores(["dist", "scripts", "node_modules"]),
   eslint.configs.recommended,
   tseslint.configs.recommended,
   eslintConfigPrettier,
   eslintPluginPrettier,
   {
     languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
       parserOptions: {
+        ecmaVersion: "latest",
+        sourceType: "module",
         tsconfigRootDir: import.meta.dirname,
       },
     },
@@ -44,4 +50,5 @@ export default defineConfig([
       ],
     },
   },
+  globalIgnores(["build/**"]),
 ]);

@@ -1,9 +1,9 @@
-import * as fs from "fs";
 import * as path from "path";
 import * as vscode from "vscode";
 
 export function createWebviewPanel(context: vscode.ExtensionContext, title = "JSON Crack") {
   const extPath = context.extensionPath;
+  const webviewDir = vscode.Uri.file(path.join(extPath, "build", "webview"));
 
   const panel = vscode.window.createWebviewPanel(
     "liveHTMLPreviewer",
@@ -12,29 +12,17 @@ export function createWebviewPanel(context: vscode.ExtensionContext, title = "JS
     {
       enableScripts: true,
       retainContextWhenHidden: true,
-      localResourceRoots: [
-        vscode.Uri.file(path.join(extPath, "build")),
-        vscode.Uri.file(path.join(extPath, "build", "static")),
-        vscode.Uri.file(path.join(extPath, "build", "static", "js")),
-        vscode.Uri.file(path.join(extPath, "build", "static", "css")),
-        vscode.Uri.file(path.join(extPath, "assets")),
-      ],
+      localResourceRoots: [webviewDir, vscode.Uri.file(path.join(extPath, "assets"))],
     }
   );
-  panel.iconPath = vscode.Uri.file(path.join(extPath, "build", "assets", "favicon.ico"));
+  panel.iconPath = vscode.Uri.file(path.join(extPath, "assets", "jsoncrack.png"));
 
-  const manifest = JSON.parse(
-    fs.readFileSync(path.join(extPath, "build", "asset-manifest.json"), "utf-8")
+  const scriptUri = panel.webview.asWebviewUri(
+    vscode.Uri.file(path.join(extPath, "build", "webview", "index.js"))
   );
-
-  const mainScript = manifest.files["main.js"];
-  const mainStyle = manifest.files["main.css"];
-
-  const scriptPathOnDisk = vscode.Uri.file(path.join(extPath, "build", mainScript));
-  const stylePathOnDisk = vscode.Uri.file(path.join(extPath, "build", mainStyle));
-
-  const stylesMainUri = panel.webview.asWebviewUri(stylePathOnDisk);
-  const scriptUri = panel.webview.asWebviewUri(scriptPathOnDisk);
+  const styleUri = panel.webview.asWebviewUri(
+    vscode.Uri.file(path.join(extPath, "build", "webview", "index.css"))
+  );
 
   const nonce = getNonce();
   const csp = [
@@ -49,9 +37,8 @@ export function createWebviewPanel(context: vscode.ExtensionContext, title = "JS
       <html lang="en">
       <head>
         <meta charset="utf-8">
-        <base href="${panel.webview.asWebviewUri(vscode.Uri.file(path.join(extPath, "build")))}/">
         <meta http-equiv="Content-Security-Policy" content="${csp}">
-        <link href="${stylesMainUri}" rel="stylesheet">
+        <link href="${styleUri}" rel="stylesheet">
       </head>
       <body>
         <noscript>You need to enable JavaScript to run this app.</noscript>

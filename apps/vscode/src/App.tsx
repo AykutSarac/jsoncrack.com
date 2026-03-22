@@ -1,8 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
 import { Anchor, Box, MantineProvider, Text } from "@mantine/core";
+import { CodeHighlightAdapterProvider, createShikiAdapter } from "@mantine/code-highlight";
 import type { NodeData } from "jsoncrack-react";
 import { JSONCrack } from "jsoncrack-react";
 import { NodeModal } from "./components/NodeModal";
+
+async function loadShiki() {
+  const { createHighlighter } = await import("shiki");
+  return createHighlighter({ langs: ["json"], themes: [] });
+}
+
+const shikiAdapter = createShikiAdapter(loadShiki);
 
 function getTheme() {
   const theme = document.body.getAttribute("data-vscode-theme-kind");
@@ -43,25 +51,27 @@ const App: React.FC = () => {
 
   return (
     <MantineProvider forceColorScheme={theme}>
-      <Box h="100vh" w="100vw">
-        <JSONCrack json={json} theme={theme} showControls={false} onNodeClick={handleNodeClick} />
-        {selectedNode && (
-          <NodeModal opened={!!selectedNode} onClose={closeNodeModal} nodeData={selectedNode} />
-        )}
-        <Anchor
-          pos="fixed"
-          bottom={0}
-          left={0}
-          href="https://jsoncrack.com/editor?utm_source=vscode&utm_campaign=attribute"
-          target="_blank"
-        >
-          <Box px="12" py="4" bg="dark">
-            <Text fz="sm" c="white">
-              Powered by JSON Crack
-            </Text>
-          </Box>
-        </Anchor>
-      </Box>
+      <CodeHighlightAdapterProvider adapter={shikiAdapter}>
+        <Box h="100vh" w="100vw">
+          <JSONCrack json={json} theme={theme} showControls={false} onNodeClick={handleNodeClick} />
+          {selectedNode && (
+            <NodeModal opened={!!selectedNode} onClose={closeNodeModal} nodeData={selectedNode} />
+          )}
+          <Anchor
+            pos="fixed"
+            bottom={0}
+            left={0}
+            href="https://jsoncrack.com/editor?utm_source=vscode&utm_campaign=attribute"
+            target="_blank"
+          >
+            <Box px="12" py="4" bg="dark">
+              <Text fz="sm" c="white">
+                Powered by JSON Crack
+              </Text>
+            </Box>
+          </Anchor>
+        </Box>
+      </CodeHighlightAdapterProvider>
     </MantineProvider>
   );
 };

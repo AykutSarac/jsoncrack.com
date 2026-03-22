@@ -102,14 +102,14 @@ export const Section3 = () => {
           </List>
           <Button
             component="a"
-            href="/converter/json-to-yaml"
+            href="/editor"
             color="#202842"
             size="lg"
             radius="md"
             w="fit-content"
             mt="sm"
           >
-            Open Converter
+            Open Editor
           </Button>
         </Stack>
       </Flex>

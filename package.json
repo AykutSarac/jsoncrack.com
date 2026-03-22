@@ -13,7 +13,7 @@
   "scripts": {
     "dev": "turbo run dev",
     "dev:www": "turbo run dev --filter=www",
-    "dev:vscode": "turbo run watch-build --filter=vscode",
+    "dev:vscode": "turbo run watch --filter=vscode",
     "build": "turbo run build",
     "build:www": "turbo run build --filter=www",
     "build:vscode": "turbo run build --filter=vscode",
@@ -26,7 +26,7 @@
     "clean": "turbo run clean"
   },
   "devDependencies": {
-    "turbo": "^2.8.8"
+    "turbo": "^2.8.20"
   },
   "engines": {
     "node": ">=24",
@@ -38,14 +38,6 @@
       "esbuild",
       "sharp",
       "unrs-resolver"
-    ],
-    "overrides": {
-      "react": "19.2.4",
-      "react-dom": "19.2.4",
-      "@types/react": "19.2.11",
-      "@types/react-dom": "19.2.3",
-      "html-to-image": "1.11.11",
-      "jq-web": "0.5.1"
-    }
+    ]
   }
 }

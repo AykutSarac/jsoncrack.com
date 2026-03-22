@@ -16,18 +16,37 @@
 
 The extension works **fully offline**. No data is sent to any server. All JSON parsing and visualization happens locally in your editor.
 
-## Debugging
+## Development
 
 This extension lives in `apps/vscode` inside the [jsoncrack.com](https://github.com/AykutSarac/jsoncrack.com) monorepo.
 
-**Prerequisites:** Node.js `>=24`, pnpm `>=10`
+**Prerequisites:** Node.js `>=20`, pnpm `>=10`
+
+**Stack:** Vite (webview) + esbuild (extension host) + React 19
 
 ```sh
 # Install dependencies from repo root
 pnpm install
 
-# Watch mode — rebuilds on every change
-pnpm dev:vscode
+# Build the extension
+cd apps/vscode
+pnpm run build
 ```
 
-Then press **F5** in VS Code to launch the Extension Development Host. Keep the watch process running for live iteration.
+### Debugging
+
+1. Open the **monorepo root** in VS Code.
+2. Press **F5** to launch the "Run VSCode Extension" config — it builds and opens the Extension Development Host.
+3. After making changes, press `Cmd+R` (macOS) / `Ctrl+R` (Windows/Linux) in the host window to reload.
+
+### Scripts
+
+| Script | Description |
+|---|---|
+| `build` | Production build (minified, no sourcemaps) |
+| `build:dev` | Dev build (sourcemaps, no minification) |
+| `watch` | Watch extension host (`ext-src/`) for changes |
+| `watch:webview` | Watch webview (`src/`) for changes |
+| `dev` | Start Vite dev server (standalone webview in browser) |
+| `lint` | Run ESLint + Prettier check |
+| `clean` | Remove `build/` directory |

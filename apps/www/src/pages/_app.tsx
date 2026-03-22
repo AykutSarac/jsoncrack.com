@@ -1,4 +1,3 @@
-import React from "react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { useRouter } from "next/router";
@@ -20,7 +19,7 @@ import { smartColorSchemeManager } from "../lib/utils/mantineColorScheme";
 async function loadShiki() {
   const { createHighlighter } = await import("shiki");
   const shiki = await createHighlighter({
-    langs: ["typescript", "json", "go", "kotlin", "rust"],
+    langs: ["typescript", "json", "go", "kotlin", "rust", "html", "bash", "javascript"],
     themes: [],
   });
 
@@ -75,7 +74,7 @@ function JSONCrackApp({ Component, pageProps }: AppProps) {
   const colorSchemeManager = smartColorSchemeManager({
     key: "editor-color-scheme",
     getPathname: () => pathname,
-    dynamicPaths: ["/editor"], // Only editor paths use dynamic theme
+    dynamicPaths: ["/editor", "/widget"], // Editor and widget paths use dynamic theme
   });
 
   return (

@@ -32,8 +32,8 @@
 }
 
 .canvasWrapper :global(.dragging),
-.canvasWrapper :global(.dragging button) {
-  pointer-events: none;
+.canvasWrapper :global(.dragging *) {
+  pointer-events: none !important;
 }
 
 .canvasWrapper :global(text) {

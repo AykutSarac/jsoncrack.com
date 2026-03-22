@@ -1,6 +1,6 @@
 {
   "name": "jsoncrack-react",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Reusable JSON Crack canvas as a React component",
   "license": "Apache-2.0",
   "author": "Aykut Saraç",
@@ -47,23 +47,24 @@
   "dependencies": {
     "jsonc-parser": "^3.3.1",
     "react-zoomable-ui": "^0.11.0",
-    "reaflow": "5.4.1"
+    "reaflow": "5.4.1",
+    "use-long-press": "^3.3.0"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.2.0",
-    "@eslint/js": "^9.39.2",
-    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
-    "@types/react": "^19.2.11",
-    "@types/react-dom": "^19.2.3",
-    "@typescript-eslint/eslint-plugin": "^8.54.0",
-    "@typescript-eslint/parser": "^8.54.0",
-    "@vitejs/plugin-react": "^4.3.0",
-    "eslint": "^9.39.2",
+    "@eslint/js": "^10.0.1",
+    "@trivago/prettier-plugin-sort-imports": "^6.0.2",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@typescript-eslint/eslint-plugin": "^8.57.1",
+    "@typescript-eslint/parser": "^8.57.1",
+    "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^10.0.3",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",
-    "eslint-plugin-unused-imports": "^4.3.0",
+    "eslint-plugin-unused-imports": "^4.4.1",
     "prettier": "^3.8.1",
     "typescript": "^5.9.3",
-    "vite": "^6.0.0"
+    "typescript-eslint": "^8.57.1",
+    "vite": "^8.0.0"
   }
 }
