@@ -71,7 +71,6 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
       const format = file.name.substring(lastIndex + 1);
       setFormat(format as FileFormat);
 
-      console.log(file);
       file.text().then(text => {
         setContents({ contents: text });
         toggleWatchMode(false);
