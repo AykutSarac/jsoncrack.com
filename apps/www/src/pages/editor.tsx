@@ -18,6 +18,13 @@ import useConfig from "../store/useConfig";
 import useFile from "../store/useFile";
 
 const ModalController = dynamic(() => import("../features/modals/ModalController"));
+const EditorChoiceModal = dynamic(
+  () =>
+    import("../features/modals/EditorChoiceModal").then(mod => ({
+      default: mod.EditorChoiceModal,
+    })),
+  { ssr: false }
+);
 const ExternalMode = dynamic(() => import("../features/editor/ExternalMode"));
 
 export const StyledPageWrapper = styled.div`
@@ -91,6 +98,7 @@ const EditorPage = () => {
       <ThemeProvider theme={darkmodeEnabled ? darkTheme : lightTheme}>
         <ExternalMode />
         <ModalController />
+        <EditorChoiceModal />
         <StyledEditorWrapper>
           <StyledPageWrapper>
             <Toolbar />
