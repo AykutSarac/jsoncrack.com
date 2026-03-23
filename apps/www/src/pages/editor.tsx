@@ -10,7 +10,6 @@ import "allotment/dist/style.css";
 import { generateNextSeo } from "next-seo/pages";
 import { SEO } from "../constants/seo";
 import { darkTheme, lightTheme } from "../constants/theme";
-import { Banner } from "../features/Banner";
 import { BottomBar } from "../features/editor/BottomBar";
 import { FullscreenDropzone } from "../features/editor/FullscreenDropzone";
 import { Toolbar } from "../features/editor/Toolbar";
@@ -94,7 +93,6 @@ const EditorPage = () => {
         <ModalController />
         <StyledEditorWrapper>
           <StyledPageWrapper>
-            {process.env.NEXT_PUBLIC_DISABLE_EXTERNAL_MODE === "true" ? null : <Banner />}
             <Toolbar />
             <StyledEditorWrapper>
               <StyledEditor proportionalLayout={false}>
