@@ -110,7 +110,7 @@ export const OptionsMenu = () => {
             }
             closeMenuOnClick={false}
           >
-            Rotate Layout
+            Rotate
           </Menu.Item>
           <Menu.Divider />
           <Menu.Sub position="right" offset={0}>
