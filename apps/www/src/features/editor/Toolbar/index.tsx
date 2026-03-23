@@ -74,13 +74,15 @@ export const Toolbar = () => {
         <ToolsMenu />
       </Group>
       <Group gap="xs" justify="right" w="100%" style={{ flexWrap: "nowrap" }}>
-        <StyledToDiagramLink
-          href="https://todiagram.com/editor?utm_source=jsoncrack&utm_medium=toolbar"
-          target="_blank"
-          rel="noopener"
-        >
-          Upgrade to Pro Editor <TbExternalLink size={14} />
-        </StyledToDiagramLink>
+        {process.env.NEXT_PUBLIC_DISABLE_EXTERNAL_MODE !== "true" && (
+          <StyledToDiagramLink
+            href="https://todiagram.com/editor?utm_source=jsoncrack&utm_medium=toolbar"
+            target="_blank"
+            rel="noopener"
+          >
+            Upgrade to Pro Editor <TbExternalLink size={14} />
+          </StyledToDiagramLink>
+        )}
         <ThemeToggle />
         <Link href="https://github.com/AykutSarac/jsoncrack.com" rel="noopener" target="_blank">
           <StyledToolElement title="GitHub">
