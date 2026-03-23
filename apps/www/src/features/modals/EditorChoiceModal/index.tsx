@@ -73,13 +73,13 @@ export const EditorChoiceModal = () => {
                 ToDiagram
               </Text>
               <Text size="sm" c="dimmed">
-                Next-gen editor with AI, storage and more
+                Next-gen editor with high-performance, AI Copilot and more
               </Text>
             </Stack>
 
             <Button
               component="a"
-              href="https://todiagram.com?utm_source=jsoncrack&utm_medium=promotion_modal&utm_campaign=editor_redirect"
+              href="https://todiagram.com/editor?utm_source=jsoncrack&utm_medium=promotion_modal&utm_campaign=editor_redirect"
               target="_blank"
               rel="noopener noreferrer"
               color="pink"
@@ -162,11 +162,11 @@ export const EditorChoiceModal = () => {
               Open Source
             </Text>
             <Text size="sm" c="dimmed">
-              Code only, no login, always free
+              Code only, no login, always free. Best for small files and quick edits
             </Text>
           </Stack>
 
-          <Button variant="default" size="md" radius="md" fullWidth onClick={handleDismiss} mt="20">
+          <Button variant="default" size="md" radius="md" fullWidth onClick={handleDismiss}>
             Stay on JSON Crack
           </Button>
 
