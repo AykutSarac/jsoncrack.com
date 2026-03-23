@@ -132,7 +132,6 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
       title="Import File"
       opened={opened}
       onClose={() => {
-        toggleWatchMode(false);
         setFile(null);
         setURL("");
         onClose();
