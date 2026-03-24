@@ -18,7 +18,7 @@ const WatcherButton = ({ availableFilePicker, enableWatcher, disabled }: Watcher
   if (!availableFilePicker)
     return (
       <Tooltip
-        label="Not suported in this browser"
+        label="Not supported in this browser"
         fz="xs"
         ta="center"
         maw="200"
