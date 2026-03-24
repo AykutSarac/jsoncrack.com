@@ -1,23 +1,29 @@
-FROM node:24.10.0-alpine AS base
-RUN npm install -g pnpm@10.10.0
+# syntax=docker/dockerfile:1.6
 
-# Stage 1: Install dependencies
-FROM base AS deps
+FROM node:24-alpine AS base
+RUN apk add --no-cache libc6-compat && npm install -g pnpm@10.20.0
 WORKDIR /app
-COPY package.json pnpm-lock.yaml ./
-RUN corepack enable pnpm && pnpm install --frozen-lockfile
 
-# Stage 2: Build the application
-FROM base AS builder
-WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+FROM base AS pruner
 COPY . .
-RUN corepack enable pnpm && pnpm run build
+RUN pnpm dlx turbo@2.8.20 prune www --docker
 
-# Stage 3: Production image
+FROM base AS installer
+COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+COPY --from=pruner /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
+COPY --from=pruner /app/out/json/ .
+
+ENV PNPM_SKIP_LIFECYCLE_SCRIPTS=1
+RUN --mount=type=cache,target=/root/.pnpm-store \
+    pnpm config set store-dir /root/.pnpm-store && \
+    pnpm install --frozen-lockfile --ignore-scripts
+
+COPY --from=pruner /app/out/full/ .
+RUN pnpm turbo run build
+
 FROM nginxinc/nginx-unprivileged:stable AS production
 WORKDIR /app
-COPY --from=builder /app/out /app
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=installer /app/apps/www/out /app
+COPY apps/www/nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 8080

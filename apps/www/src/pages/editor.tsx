@@ -10,7 +10,6 @@ import "allotment/dist/style.css";
 import { generateNextSeo } from "next-seo/pages";
 import { SEO } from "../constants/seo";
 import { darkTheme, lightTheme } from "../constants/theme";
-import { Banner } from "../features/Banner";
 import { BottomBar } from "../features/editor/BottomBar";
 import { FullscreenDropzone } from "../features/editor/FullscreenDropzone";
 import { Toolbar } from "../features/editor/Toolbar";
@@ -19,6 +18,13 @@ import useConfig from "../store/useConfig";
 import useFile from "../store/useFile";
 
 const ModalController = dynamic(() => import("../features/modals/ModalController"));
+const EditorChoiceModal = dynamic(
+  () =>
+    import("../features/modals/EditorChoiceModal").then(mod => ({
+      default: mod.EditorChoiceModal,
+    })),
+  { ssr: false }
+);
 const ExternalMode = dynamic(() => import("../features/editor/ExternalMode"));
 
 export const StyledPageWrapper = styled.div`
@@ -92,9 +98,9 @@ const EditorPage = () => {
       <ThemeProvider theme={darkmodeEnabled ? darkTheme : lightTheme}>
         <ExternalMode />
         <ModalController />
+        <EditorChoiceModal />
         <StyledEditorWrapper>
           <StyledPageWrapper>
-            {process.env.NEXT_PUBLIC_DISABLE_EXTERNAL_MODE === "true" ? null : <Banner />}
             <Toolbar />
             <StyledEditorWrapper>
               <StyledEditor proportionalLayout={false}>
