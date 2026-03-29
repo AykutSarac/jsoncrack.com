@@ -152,20 +152,24 @@ pnpm lint
 
 ### Docker
 
-🐳 Docker assets are in `apps/www`.
-If you want to run JSON Crack locally:
+🐳 Docker assets are in `apps/www`. The image uses a multi-stage build with [Turborepo](https://turbo.build/) and is served via nginx on port 8080 (mapped to 8888).
+
+To self-host JSON Crack with Docker, run from `apps/www`:
 
 ```console
 cd apps/www
 
-# Build a Docker image with:
-docker compose build
+# Build and start the container:
+docker compose up --build
 
-# Run locally with `docker-compose`
+# Or build and run separately:
+docker compose build
 docker compose up
 
-# Go to http://localhost:8888
+# Access at http://localhost:8888
 ```
+
+> **Note:** The build requires the full monorepo as context (for `turbo prune`). Always run `docker compose` from the `apps/www` directory as shown above.
 
 ## Configuration
 
