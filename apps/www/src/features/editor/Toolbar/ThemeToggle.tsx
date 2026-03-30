@@ -7,7 +7,10 @@ export const ThemeToggle = () => {
   const toggleDarkMode = useConfig(state => state.toggleDarkMode);
 
   return (
-    <StyledToolElement title="Fullscreen" onClick={() => toggleDarkMode(!darkmodeEnabled)}>
+    <StyledToolElement
+      title={!darkmodeEnabled ? "Dark Mode" : "Light Mode"}
+      onClick={() => toggleDarkMode(!darkmodeEnabled)}
+    >
       {!darkmodeEnabled ? <FaMoon size="18" /> : <FaSun size="18" />}
     </StyledToolElement>
   );
