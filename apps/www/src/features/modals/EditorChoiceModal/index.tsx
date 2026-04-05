@@ -218,7 +218,7 @@ export const EditorChoiceModal = () => {
       </SimpleGrid>
       <Text size="xs" c="dimmed" ta="center" mt="md">
         <a
-          href="https://todiagram.com/legal/privacy"
+          href="https://todiagram.com/legal/privacy?utm_source=jsoncrack&utm_medium=promotion_modal"
           target="_blank"
           rel="noopener noreferrer"
           style={{ color: "inherit", textDecoration: "underline" }}

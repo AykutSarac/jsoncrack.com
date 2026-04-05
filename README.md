@@ -12,7 +12,7 @@
     <a href="https://jsoncrack.com"><strong>Learn more »</strong></a>
     <br />
     <br />
-    <a href="https://todiagram.com">ToDiagram</a>
+    <a href="https://todiagram.com?utm_source=jsoncrack&utm_medium=readme_header">ToDiagram</a>
     ·
     <a href="https://discord.gg/yVyTtCRueq">Discord</a>
     ·
@@ -67,7 +67,7 @@ JSON Crack is a tool for visualizing JSON data in a structured, interactive grap
 
 ## Sponsors & Support
 
-If you find JSON Crack useful, you can support the project by using [ToDiagram](https://todiagram.com).
+If you find JSON Crack useful, you can support the project by using [ToDiagram](https://todiagram.com?utm_source=jsoncrack&utm_medium=readme_sponsors). For sponsorship inquiries, reach out at contact@todiagram.com.
 
 ## Stay Up-to-Date
 
