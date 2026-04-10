@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@mantine/core";
 import styled from "styled-components";
 import { JSONCrack } from "jsoncrack-react";
-import type { NodeData } from "jsoncrack-react";
+import type { JSONCrackRef, NodeData } from "jsoncrack-react";
 import { SUPPORTED_LIMIT } from "../../../../constants/graph";
 import useConfig from "../../../../store/useConfig";
 import useJson from "../../../../store/useJson";
@@ -32,6 +32,7 @@ interface GraphProps {
 
 export const GraphView = ({ isWidget = false }: GraphProps) => {
   const setViewPort = useGraph(state => state.setViewPort);
+  const setJsonCrackRef = useGraph(state => state.setJsonCrackRef);
   const direction = useGraph(state => state.direction);
   const setSelectedNode = useGraph(state => state.setSelectedNode);
   const gesturesEnabled = useConfig(state => state.gesturesEnabled);
@@ -39,6 +40,11 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
   const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
   const json = useJson(state => state.json);
   const setVisible = useModal(state => state.setVisible);
+  const jsonCrackRef = React.useRef<JSONCrackRef>(null);
+
+  React.useEffect(() => {
+    setJsonCrackRef(jsonCrackRef);
+  }, [setJsonCrackRef]);
 
   const blurOnClick = React.useCallback(() => {
     if ("activeElement" in document) {
@@ -67,6 +73,7 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
         onClick={blurOnClick}
       >
         <JSONCrack
+          ref={jsonCrackRef}
           key={[direction, gesturesEnabled, rulersEnabled].join("-")}
           json={json}
           theme={darkmodeEnabled ? "dark" : "light"}
