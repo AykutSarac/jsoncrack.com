@@ -1,6 +1,6 @@
 {
   "name": "jsoncrack-react",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Reusable JSON Crack canvas as a React component",
   "license": "Apache-2.0",
   "author": "Aykut Saraç",
@@ -29,7 +29,8 @@
     "./style.css": "./dist/index.css"
   },
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md"
   ],
   "sideEffects": [
     "./dist/index.css"
@@ -38,7 +39,9 @@
     "build": "vite build && tsc -p tsconfig.build.json",
     "clean": "rm -rf dist",
     "lint": "tsc -p tsconfig.build.json --noEmit && eslint src && prettier --check src",
-    "lint:fix": "eslint --fix src && prettier --write src"
+    "lint:fix": "eslint --fix src && prettier --write src",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "peerDependencies": {
     "react": ">=18",
@@ -65,6 +68,7 @@
     "prettier": "^3.8.1",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.57.1",
-    "vite": "^8.0.0"
+    "vite": "^8.0.0",
+    "vitest": "^2.1.9"
   }
 }
