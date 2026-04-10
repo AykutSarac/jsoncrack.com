@@ -92,7 +92,7 @@
     "@mantine/core": "^8.3.18",
     "@mantine/hooks": "^8.3.18",
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
-    "@types/node": "^22.19.15",
+    "@types/node": "^25.6.0",
     "@types/react": "19.2.11",
     "@types/react-dom": "19.2.3",
     "@types/vscode": "^1.110.0",
