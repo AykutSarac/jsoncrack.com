@@ -8,7 +8,8 @@
     "dev": "vite build --watch",
     "build": "vite build",
     "lint": "tsc --project tsconfig.json --noEmit",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "zip": "pnpm run build && bash zip.sh"
   },
   "dependencies": {
     "jsoncrack-react": "workspace:*",
