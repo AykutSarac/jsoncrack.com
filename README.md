@@ -21,6 +21,8 @@
     <a href="https://github.com/AykutSarac/jsoncrack.com/issues">Issues</a>
     ·
     <a href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode">VS Code</a>
+    ·
+    <a href="https://chromewebstore.google.com/detail/hbaeglefdflnhodchjiaphmheaojikhh">Chrome</a>
   </p>
 </p>
 
@@ -58,7 +60,7 @@ JSON Crack is a tool for visualizing JSON data in a structured, interactive grap
 ## Integrations
 
 - [VS Code Extension](https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode)
-- [Chrome Extension](./apps/chrome-extension/README.md)
+- [Chrome Extension](https://chromewebstore.google.com/detail/hbaeglefdflnhodchjiaphmheaojikhh)
 - [npm Package (`jsoncrack-react`)](https://www.npmjs.com/package/jsoncrack-react)
 
 ## Contributing
