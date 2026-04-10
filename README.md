@@ -58,6 +58,7 @@ JSON Crack is a tool for visualizing JSON data in a structured, interactive grap
 ## Integrations
 
 - [VS Code Extension](https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode)
+- [Chrome Extension](./apps/chrome-extension/README.md)
 - [npm Package (`jsoncrack-react`)](https://www.npmjs.com/package/jsoncrack-react)
 
 ## Contributing
@@ -133,6 +134,11 @@ pnpm dev:vscode
 pnpm build:vscode
 pnpm lint:vscode
 pnpm lint:fix:vscode
+
+# Chrome extension
+pnpm dev:chrome
+pnpm build:chrome
+pnpm lint:chrome
 
 # All workspaces
 pnpm dev
