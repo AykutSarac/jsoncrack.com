@@ -11,6 +11,18 @@ const NODE_MODAL_BACKDROP_ID = "jsoncrack-node-modal-backdrop";
 const GRAPH_OVERLAY_ID = "jsoncrack-graph-overlay";
 const TOGGLE_ID = "jsoncrack-toggle";
 
+const getExtensionAssetUrl = (path: string) => {
+  const runtime = (
+    globalThis as {
+      chrome?: { runtime?: { getURL?: (assetPath: string) => string } };
+    }
+  ).chrome?.runtime;
+
+  return runtime?.getURL?.(path) ?? "";
+};
+
+const TO_DIAGRAM_LOGO_URL = getExtensionAssetUrl("icons/logo.svg");
+
 let jsonCrackComponentPromise: Promise<JSONCrackComponentType> | null = null;
 
 const loadJsonCrackComponent = async (): Promise<JSONCrackComponentType> => {
@@ -373,13 +385,15 @@ function NodeLimitUpgrade() {
   return (
     <div id="jsoncrack-upgrade-overlay">
       <div id="jsoncrack-upgrade-card">
-        <img
-          src="https://todiagram.com/logo.svg"
-          alt="ToDiagram"
-          width={48}
-          height={48}
-          className="jsoncrack-upgrade-logo"
-        />
+        {TO_DIAGRAM_LOGO_URL ? (
+          <img
+            src={TO_DIAGRAM_LOGO_URL}
+            alt="ToDiagram"
+            width={48}
+            height={48}
+            className="jsoncrack-upgrade-logo"
+          />
+        ) : null}
         <span className="jsoncrack-upgrade-badge">Upgrade Required</span>
         <h2 className="jsoncrack-upgrade-title">Your diagram is too large</h2>
         <p className="jsoncrack-upgrade-desc">
