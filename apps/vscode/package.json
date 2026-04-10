@@ -1,6 +1,6 @@
 {
-  "name": "vscode",
-  "version": "3.0.1",
+  "name": "jsoncrack-vscode",
+  "version": "5.0.1",
   "displayName": "JSON Crack",
   "description": "Seamlessly visualize your JSON data instantly into graphs.",
   "publisher": "AykutSarac",
