@@ -1,6 +1,6 @@
 {
   "name": "jsoncrack-vscode",
-  "version": "5.0.1",
+  "version": "5.1.0",
   "displayName": "JSON Crack",
   "description": "Seamlessly visualize your JSON data instantly into graphs.",
   "publisher": "AykutSarac",
@@ -78,7 +78,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && node esbuild.config.mjs --production",
-    "package": "pnpm run build && vsce package --no-dependencies",
+    "vsc:package": "pnpm run build && vsce package --no-dependencies",
     "build:dev": "vite build && node esbuild.config.mjs",
     "watch": "node esbuild.config.mjs --watch",
     "watch:webview": "vite build --watch",
