@@ -95,7 +95,7 @@
     "@types/node": "^25.6.0",
     "@types/react": "19.2.11",
     "@types/react-dom": "19.2.3",
-    "@types/vscode": "^1.110.0",
+    "@types/vscode": "^1.100.0",
     "@typescript-eslint/eslint-plugin": "^8.57.1",
     "@typescript-eslint/parser": "^8.57.1",
     "@vitejs/plugin-react": "^4.7.0",
@@ -124,7 +124,7 @@
     "url": "https://github.com/AykutSarac/jsoncrack.com/issues"
   },
   "engines": {
-    "vscode": "^1.86.0"
+    "vscode": "^1.100.0"
   },
   "packageManager": "pnpm@10.20.0"
 }

@@ -77,7 +77,7 @@ importers:
         specifier: 19.2.3
         version: 19.2.3(@types/react@19.2.11)
       '@types/vscode':
-        specifier: ^1.110.0
+        specifier: ^1.100.0
         version: 1.110.0
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.57.1
