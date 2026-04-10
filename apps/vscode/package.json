@@ -1,6 +1,6 @@
 {
   "name": "vscode",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "displayName": "JSON Crack",
   "description": "Seamlessly visualize your JSON data instantly into graphs.",
   "publisher": "AykutSarac",
@@ -76,9 +76,9 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "pnpm run build",
     "dev": "vite",
     "build": "vite build && node esbuild.config.mjs --production",
+    "package": "pnpm run build && vsce package --no-dependencies",
     "build:dev": "vite build && node esbuild.config.mjs",
     "watch": "node esbuild.config.mjs --watch",
     "watch:webview": "vite build --watch",
@@ -99,6 +99,7 @@
     "@typescript-eslint/eslint-plugin": "^8.57.1",
     "@typescript-eslint/parser": "^8.57.1",
     "@vitejs/plugin-react": "^4.7.0",
+    "@vscode/vsce": "^3.7.1",
     "esbuild": "^0.25.12",
     "eslint": "^10.0.3",
     "eslint-config-prettier": "^10.1.8",

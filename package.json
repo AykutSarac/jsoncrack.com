@@ -39,7 +39,9 @@
   "packageManager": "pnpm@10.20.0",
   "pnpm": {
     "onlyBuiltDependencies": [
+      "@vscode/vsce-sign",
       "esbuild",
+      "keytar",
       "sharp",
       "unrs-resolver"
     ]
