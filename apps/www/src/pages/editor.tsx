@@ -2,12 +2,14 @@ import { useEffect } from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useMantineColorScheme } from "@mantine/core";
+import { Tooltip, useMantineColorScheme } from "@mantine/core";
 import "@mantine/dropzone/styles.css";
 import styled, { ThemeProvider } from "styled-components";
 import { Allotment } from "allotment";
 import "allotment/dist/style.css";
 import { generateNextSeo } from "next-seo/pages";
+import { event as gaEvent } from "nextjs-google-analytics";
+import { LuChevronsRight } from "react-icons/lu";
 import { SEO } from "../constants/seo";
 import { darkTheme, lightTheme } from "../constants/theme";
 import { BottomBar } from "../features/editor/BottomBar";
@@ -39,6 +41,7 @@ export const StyledPageWrapper = styled.div`
 `;
 
 export const StyledEditorWrapper = styled.div`
+  position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -61,6 +64,33 @@ const StyledTextEditor = styled.div`
   height: 100%;
 `;
 
+const StyledOpenEditorButton = styled.button<{ $dark?: boolean }>`
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 120px;
+  padding: 0;
+  border: none;
+  border-radius: 0 8px 8px 0;
+  background: ${({ $dark }) => ($dark ? "#e8e8e8" : "#1c1c1e")};
+  color: ${({ $dark }) => ($dark ? "#1c1c1e" : "#ffffff")};
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    width 150ms ease;
+
+  &:hover {
+    width: 32px;
+    background: ${({ $dark }) => ($dark ? "#ffffff" : "#333")};
+  }
+`;
+
 const TextEditor = dynamic(() => import("../features/editor/TextEditor"), {
   ssr: false,
 });
@@ -75,6 +105,12 @@ const EditorPage = () => {
   const checkEditorSession = useFile(state => state.checkEditorSession);
   const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
   const fullscreen = useGraph(state => state.fullscreen);
+  const toggleFullscreen = useGraph(state => state.toggleFullscreen);
+
+  const openEditor = () => {
+    toggleFullscreen(false);
+    gaEvent("toggle_fullscreen");
+  };
 
   useEffect(() => {
     if (isReady) checkEditorSession(query?.json);
@@ -111,14 +147,26 @@ const EditorPage = () => {
                   visible={!fullscreen}
                 >
                   <StyledTextEditor>
-                    <TextEditor />
                     <BottomBar />
+                    <TextEditor />
                   </StyledTextEditor>
                 </Allotment.Pane>
                 <Allotment.Pane minSize={0}>
                   <LiveEditor />
                 </Allotment.Pane>
               </StyledEditor>
+              {fullscreen && (
+                <Tooltip label="Open editor" position="right" withArrow openDelay={750}>
+                  <StyledOpenEditorButton
+                    $dark={darkmodeEnabled}
+                    onClick={openEditor}
+                    aria-label="open editor"
+                    type="button"
+                  >
+                    <LuChevronsRight size={16} />
+                  </StyledOpenEditorButton>
+                </Tooltip>
+              )}
               <FullscreenDropzone />
             </StyledEditorWrapper>
           </StyledPageWrapper>
