@@ -18,6 +18,7 @@ const editorOptions: EditorProps["options"] = {
   stickyScroll: { enabled: false },
   scrollBeyondLastLine: false,
   placeholder: "Start typing...",
+  smoothScrolling: true,
 };
 
 const TextEditor = () => {
