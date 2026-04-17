@@ -33,14 +33,17 @@ export const StyledForeignObject = styled.foreignObject<{ $isObject?: boolean }>
   pointer-events: none;
 
   &.searched {
-    background: rgba(27, 255, 0, 0.1);
+    background: rgba(27, 255, 0, 0.08);
     border: 1px solid ${({ theme }) => theme.TEXT_POSITIVE};
-    border-radius: 2px;
+    border-radius: 4px;
     box-sizing: border-box;
+    box-shadow: 0 0 0 3px rgba(0, 220, 125, 0.12);
   }
 
   .highlight {
-    background: rgba(255, 214, 0, 0.15);
+    background: rgba(255, 214, 0, 0.2);
+    border-radius: 2px;
+    padding: 0 1px;
   }
 
   .renderVisible {

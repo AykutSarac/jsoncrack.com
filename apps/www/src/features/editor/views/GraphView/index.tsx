@@ -23,6 +23,24 @@ const StyledEditorWrapper = styled.div<{ $widget: boolean }>`
   .jsoncrack-space:active {
     cursor: grabbing;
   }
+
+  .jsoncrack-space rect {
+    rx: 5;
+    ry: 5;
+    stroke-width: 1;
+    filter: drop-shadow(
+      2px 2px 0
+        ${({ theme }) =>
+          theme.BACKGROUND_SECONDARY === "#f2f3f5"
+            ? "rgba(15, 23, 42, 0.25)"
+            : "rgba(0, 0, 0, 0.6)"}
+    );
+  }
+
+  .jsoncrack-space path {
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
 `;
 
 interface GraphProps {
