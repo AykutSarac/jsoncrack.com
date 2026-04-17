@@ -33,6 +33,41 @@
   box-sizing: border-box;
 }
 
+.row.collapsed {
+  font-style: italic;
+  opacity: 0.7;
+}
+
+.collapseButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  margin-right: 6px;
+  margin-top: -2px;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--interactive-normal);
+  background: transparent;
+  border: 1px solid var(--node-divider);
+  border-radius: 3px;
+  opacity: 0.6;
+  pointer-events: all;
+  cursor: pointer;
+  user-select: none;
+  vertical-align: middle;
+  transition:
+    opacity 120ms ease,
+    background 120ms ease;
+}
+
+.collapseButton:hover {
+  opacity: 1;
+  background: var(--node-divider);
+}
+
 .row:last-of-type {
   border-bottom: none;
 }

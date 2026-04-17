@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { JSONCrack } from "jsoncrack-react";
 import type { JSONCrackRef, NodeData } from "jsoncrack-react";
 import { SUPPORTED_LIMIT } from "../../../../constants/graph";
+import { pruneInvalidPaths } from "../../../../lib/utils/collapse";
 import useConfig from "../../../../store/useConfig";
 import useJson from "../../../../store/useJson";
 import { useModal } from "../../../../store/useModal";
@@ -52,6 +53,9 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
   const setJsonCrackRef = useGraph(state => state.setJsonCrackRef);
   const direction = useGraph(state => state.direction);
   const setSelectedNode = useGraph(state => state.setSelectedNode);
+  const collapsedPaths = useGraph(state => state.collapsedPaths);
+  const toggleCollapse = useGraph(state => state.toggleCollapse);
+  const setCollapsedPaths = useGraph(state => state.setCollapsedPaths);
   const gesturesEnabled = useConfig(state => state.gesturesEnabled);
   const rulersEnabled = useConfig(state => state.rulersEnabled);
   const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
@@ -62,6 +66,12 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
   React.useEffect(() => {
     setJsonCrackRef(jsonCrackRef);
   }, [setJsonCrackRef]);
+
+  React.useEffect(() => {
+    if (!collapsedPaths.length) return;
+    const pruned = pruneInvalidPaths(json, collapsedPaths);
+    if (pruned.length !== collapsedPaths.length) setCollapsedPaths(pruned);
+  }, [json, collapsedPaths, setCollapsedPaths]);
 
   const blurOnClick = React.useCallback(() => {
     if ("activeElement" in document) {
@@ -101,6 +111,8 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
           centerOnLayout
           onViewportCreate={setViewPort}
           onNodeClick={handleNodeClick}
+          collapsedPaths={collapsedPaths}
+          onToggleCollapse={toggleCollapse}
           renderNodeLimitExceeded={() => <NotSupported />}
         />
       </StyledEditorWrapper>

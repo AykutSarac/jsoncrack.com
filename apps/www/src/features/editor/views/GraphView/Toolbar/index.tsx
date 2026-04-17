@@ -6,10 +6,19 @@ import type { LayoutDirection } from "jsoncrack-react";
 import { event as gaEvent } from "nextjs-google-analytics";
 import { BsCheck2 } from "react-icons/bs";
 import { FaMoon, FaSun } from "react-icons/fa6";
-import { LuImageDown, LuMinus, LuPlus, LuSearch, LuSettings2 } from "react-icons/lu";
+import {
+  LuCopyMinus,
+  LuCopyPlus,
+  LuImageDown,
+  LuMinus,
+  LuPlus,
+  LuSearch,
+  LuSettings2,
+} from "react-icons/lu";
 import { MdFullscreen, MdOutlineCenterFocusStrong } from "react-icons/md";
 import { TbArrowsLeftRight } from "react-icons/tb";
 import useConfig from "../../../../../store/useConfig";
+import useJson from "../../../../../store/useJson";
 import { useModal } from "../../../../../store/useModal";
 import { SearchInput } from "../../../Toolbar/SearchInput";
 import useGraph from "../stores/useGraph";
@@ -73,6 +82,10 @@ export const Toolbar = () => {
   const focusFirstNode = useGraph(state => state.focusFirstNode);
   const direction = useGraph(state => state.direction);
   const setDirection = useGraph(state => state.setDirection);
+  const collapsedPaths = useGraph(state => state.collapsedPaths);
+  const expandAll = useGraph(state => state.expandAll);
+  const collapseAllDepth1 = useGraph(state => state.collapseAllDepth1);
+  const json = useJson(state => state.json);
   const setVisible = useModal(state => state.setVisible);
   const darkmodeEnabled = useConfig(state => state.darkmodeEnabled);
   const toggleDarkMode = useConfig(state => state.toggleDarkMode);
@@ -238,6 +251,36 @@ export const Toolbar = () => {
             onClick={toggleDirection}
           >
             <TbArrowsLeftRight size={18} />
+          </ActionIcon>
+        </Tooltip>
+
+        <Tooltip
+          label={
+            collapsedPaths.length > 0
+              ? `Expand all (${collapsedPaths.length} collapsed)`
+              : "Collapse all"
+          }
+          position="top"
+          withArrow
+          openDelay={750}
+        >
+          <ActionIcon
+            aria-label={collapsedPaths.length > 0 ? "expand all" : "collapse all"}
+            size="lg"
+            radius="md"
+            variant="subtle"
+            color="gray"
+            onClick={() => {
+              if (collapsedPaths.length > 0) {
+                expandAll();
+                gaEvent("expand_all");
+              } else {
+                collapseAllDepth1(json);
+                gaEvent("collapse_all");
+              }
+            }}
+          >
+            {collapsedPaths.length > 0 ? <LuCopyPlus size={18} /> : <LuCopyMinus size={18} />}
           </ActionIcon>
         </Tooltip>
 

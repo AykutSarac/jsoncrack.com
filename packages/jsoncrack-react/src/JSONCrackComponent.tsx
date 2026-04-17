@@ -11,6 +11,7 @@ import {
   type CSSProperties,
   type ReactNode,
 } from "react";
+import type { JSONPath } from "jsonc-parser";
 import type { ViewPort } from "react-zoomable-ui";
 import { Space } from "react-zoomable-ui";
 import { Canvas } from "reaflow";
@@ -30,6 +31,7 @@ import {
   toJsonText,
   type JsonInput,
 } from "./canvasHelpers";
+import { CollapseContext, isNodeHidden } from "./components/CollapseContext";
 import { Controls } from "./components/Controls";
 import { CustomEdge } from "./components/CustomEdge";
 import { CustomNode } from "./components/CustomNode";
@@ -87,6 +89,10 @@ export interface JSONCrackProps {
   onViewportCreate?: (viewPort: ViewPort) => void;
   /** Custom renderer shown when the graph exceeds `maxRenderableNodes`. */
   renderNodeLimitExceeded?: (nodeCount: number, maxRenderableNodes: number) => ReactNode;
+  /** Serialized JSON paths (via `JSON.stringify`) whose subtrees should be folded away. */
+  collapsedPaths?: string[];
+  /** Called with the `JSONPath` of a row's value when the user clicks a chevron. */
+  onToggleCollapse?: (path: JSONPath) => void;
 }
 
 /** Interactive JSON-to-graph visualization. Forwards a `JSONCrackRef` for imperative viewport control. */
@@ -108,6 +114,8 @@ export const JSONCrack = forwardRef<JSONCrackRef, JSONCrackProps>(
       onParseError,
       onViewportCreate,
       renderNodeLimitExceeded,
+      collapsedPaths,
+      onToggleCollapse,
     },
     ref
   ) => {
@@ -208,7 +216,102 @@ export const JSONCrack = forwardRef<JSONCrackRef, JSONCrackProps>(
     );
     useImperativeHandle(ref, () => viewPortApi, [viewPortApi]);
 
-    const edgeTargetById = useMemo(() => buildEdgeTargetMap(edges), [edges]);
+    const collapsedSet = useMemo(() => new Set(collapsedPaths ?? []), [collapsedPaths]);
+
+    // Pre-parse the serialized paths once per collapsedSet change so the
+    // per-node prefix check doesn't re-parse on every iteration.
+    const collapsedPrefixes = useMemo<JSONPath[]>(() => {
+      if (collapsedSet.size === 0) return [];
+      const out: JSONPath[] = [];
+      for (const key of collapsedSet) {
+        try {
+          out.push(JSON.parse(key) as JSONPath);
+        } catch {
+          // skip malformed entries
+        }
+      }
+      return out;
+    }, [collapsedSet]);
+
+    const { visibleNodes, visibleEdges } = useMemo(() => {
+      if (collapsedPrefixes.length === 0) return { visibleNodes: nodes, visibleEdges: edges };
+      const hiddenIds = new Set<string>();
+      const keptNodes: typeof nodes = [];
+      for (const node of nodes) {
+        if (isNodeHidden(collapsedPrefixes, node.path)) {
+          hiddenIds.add(node.id);
+        } else {
+          keptNodes.push(node);
+        }
+      }
+      const keptEdges = edges.filter(edge => !hiddenIds.has(edge.from) && !hiddenIds.has(edge.to));
+      return { visibleNodes: keptNodes, visibleEdges: keptEdges };
+    }, [nodes, edges, collapsedPrefixes]);
+
+    // Remember where a collapse button sat on screen at click time so the
+    // post-layout camera pan can pin it back under the cursor.
+    const pendingRecenterRef = useRef<{
+      key: string;
+      clientX: number;
+      clientY: number;
+    } | null>(null);
+    // While a collapse-toggle is mid-flight (ELK running, pan pending) we
+    // fade the canvas to hide the intermediate shifted layout — otherwise the
+    // user sees a flash of the un-pinned graph before the camera recenters.
+    const [isRelayouting, setIsRelayouting] = useState(false);
+
+    const findCollapseButton = useCallback((key: string): HTMLElement | null => {
+      const container = containerRef.current;
+      if (!container) return null;
+      const buttons = container.querySelectorAll<HTMLElement>("[data-collapse-path]");
+      for (let i = 0; i < buttons.length; i += 1) {
+        if (buttons[i].getAttribute("data-collapse-path") === key) return buttons[i];
+      }
+      return null;
+    }, []);
+
+    const wrappedToggleCollapse = useCallback(
+      (path: JSONPath) => {
+        if (!onToggleCollapse) return;
+        const key = JSON.stringify(path);
+        const btn = findCollapseButton(key);
+        if (btn) {
+          const rect = btn.getBoundingClientRect();
+          pendingRecenterRef.current = {
+            key,
+            clientX: rect.left + rect.width / 2,
+            clientY: rect.top + rect.height / 2,
+          };
+          setIsRelayouting(true);
+        } else {
+          pendingRecenterRef.current = null;
+        }
+        onToggleCollapse(path);
+      },
+      [onToggleCollapse, findCollapseButton]
+    );
+
+    const collapseContextValue = useMemo(
+      () => ({ collapsedSet, onToggleCollapse: wrappedToggleCollapse }),
+      [collapsedSet, wrappedToggleCollapse]
+    );
+
+    const edgeTargetById = useMemo(() => buildEdgeTargetMap(visibleEdges), [visibleEdges]);
+
+    // Signal "relayouting" whenever the collapsed-set changes so the spinner
+    // appears immediately on collapse/expand. JSON edits already route
+    // through the parse effect which handles `setLoading(true)` on its own,
+    // so we scope this trigger to collapse toggles only.
+    const visibleNodesRef = useRef(visibleNodes);
+    visibleNodesRef.current = visibleNodes;
+    const isFirstCollapsedPassRef = useRef(true);
+    useEffect(() => {
+      if (isFirstCollapsedPassRef.current) {
+        isFirstCollapsedPassRef.current = false;
+        return;
+      }
+      if (visibleNodesRef.current.length > 0) setLoading(true);
+    }, [collapsedSet]);
 
     const onLayoutChange = useCallback((layout: ElkRoot) => {
       if (!layout.width || !layout.height) {
@@ -222,6 +325,78 @@ export const JSONCrack = forwardRef<JSONCrackRef, JSONCrackProps>(
       setLoading(false);
     }, []);
 
+    // After a collapse toggle triggers relayout, pin the clicked button back
+    // under the cursor. We poll each rAF until the button's rect is stable
+    // for two consecutive frames (reaflow runs ELK + framer-motion commits
+    // the new transforms over several frames on large graphs), then shift
+    // the camera by the measured screen-pixel delta.
+    useEffect(() => {
+      const pending = pendingRecenterRef.current;
+      if (!pending) return;
+      pendingRecenterRef.current = null;
+
+      let cancelled = false;
+      let attempts = 0;
+      let lastX: number | null = null;
+      let lastY: number | null = null;
+      let movementSeen = false;
+      const MAX_ATTEMPTS = 180;
+
+      const finish = (x?: number, y?: number) => {
+        if (x !== undefined && y !== undefined) {
+          const dx = x - pending.clientX;
+          const dy = y - pending.clientY;
+          if (Math.abs(dx) >= 1 || Math.abs(dy) >= 1) {
+            viewPort?.camera?.moveByInClientSpace(dx, dy);
+          }
+        }
+        setIsRelayouting(false);
+      };
+
+      const tick = () => {
+        if (cancelled) return;
+        attempts += 1;
+        const btn = findCollapseButton(pending.key);
+        if (!btn) {
+          if (attempts < MAX_ATTEMPTS) requestAnimationFrame(tick);
+          else finish();
+          return;
+        }
+        const rect = btn.getBoundingClientRect();
+        const x = rect.left + rect.width / 2;
+        const y = rect.top + rect.height / 2;
+
+        if (lastX !== null) {
+          const moved = Math.abs(x - lastX) >= 0.5 || Math.abs(y - (lastY ?? 0)) >= 0.5;
+          if (moved) {
+            movementSeen = true;
+          } else if (movementSeen) {
+            // Stabilised after detected movement — safe to apply.
+            finish(x, y);
+            return;
+          }
+        }
+
+        lastX = x;
+        lastY = y;
+
+        if (attempts < MAX_ATTEMPTS) {
+          requestAnimationFrame(tick);
+        } else if (movementSeen) {
+          finish(x, y);
+        } else {
+          finish();
+        }
+      };
+
+      const rafId = requestAnimationFrame(tick);
+      return () => {
+        cancelled = true;
+        cancelAnimationFrame(rafId);
+        setIsRelayouting(false);
+      };
+    }, [visibleNodes, visibleEdges, viewPort, findCollapseButton]);
+
     // Auto-fit on initial load / new data. Gated on `paneWidth`/`paneHeight`
     // as deps: `onLayoutChange` batches the pane-size state updates with
     // `setLoading(false)` in the same commit, so by the time this effect
@@ -234,7 +409,7 @@ export const JSONCrack = forwardRef<JSONCrackRef, JSONCrackProps>(
         setInitialFitDone(true);
         return;
       }
-      if (!viewPort || nodes.length === 0 || loading) return;
+      if (!viewPort || visibleNodes.length === 0 || loading) return;
       if (!layoutSizeRef.current) return;
 
       let cancelled = false;
@@ -247,7 +422,7 @@ export const JSONCrack = forwardRef<JSONCrackRef, JSONCrackProps>(
         cancelled = true;
         window.cancelAnimationFrame(rafId);
       };
-    }, [viewPort, nodes, loading, centerOnLayout, initialFitDone, paneWidth, paneHeight]);
+    }, [viewPort, visibleNodes, loading, centerOnLayout, initialFitDone, paneWidth, paneHeight]);
 
     // Stable render factories so reaflow doesn't re-key nodes/edges on every parent render.
     const renderNode = useCallback(
@@ -315,41 +490,41 @@ export const JSONCrack = forwardRef<JSONCrackRef, JSONCrackProps>(
           onContextMenu={event => event.preventDefault()}
           treatTwoFingerTrackPadGesturesLikeTouch={trackpadZoom}
           className="jsoncrack-space"
-          style={{ opacity: initialFitDone ? 1 : 0, transition: "opacity 120ms" }}
+          style={{
+            opacity: initialFitDone && !isRelayouting ? 1 : 0,
+            visibility: isRelayouting ? "hidden" : "visible",
+            transition: "opacity 120ms",
+          }}
         >
-          <Canvas
-            className="jsoncrack-canvas"
-            onLayoutChange={onLayoutChange}
-            node={renderNode}
-            edge={renderEdge}
-            nodes={nodes}
-            edges={edges}
-            arrow={null}
-            maxHeight={paneHeight}
-            maxWidth={paneWidth}
-            height={paneHeight}
-            width={paneWidth}
-            direction={layoutDirection}
-            layoutOptions={layoutOptions}
-            key={layoutDirection}
-            pannable={false}
-            zoomable={false}
-            animated={false}
-            readonly
-            dragEdge={null}
-            dragNode={null}
-            // Disable reaflow's built-in auto-centering of content inside the
-            // pane. The default is `CanvasPosition.CENTER`, which translates
-            // the content group by `(pane - layout) / 2` on every layout
-            // pass. That plays poorly with our own fit-to-viewport logic:
-            // at fit time the content is offset by the centering transform
-            // inside a 2000×2000 default pane, so our measured client rect
-            // lands hundreds of pixels below the container top, and the fit
-            // computes a zoom/center based on that offset. Passing a nullish
-            // `defaultPosition` makes reaflow leave the group at the svg
-            // origin so our rect math matches reality.
-            defaultPosition={null as unknown as undefined}
-          />
+          <CollapseContext.Provider value={collapseContextValue}>
+            <Canvas
+              className="jsoncrack-canvas"
+              onLayoutChange={onLayoutChange}
+              node={renderNode}
+              edge={renderEdge}
+              nodes={visibleNodes}
+              edges={visibleEdges}
+              arrow={null}
+              maxHeight={paneHeight}
+              maxWidth={paneWidth}
+              height={paneHeight}
+              width={paneWidth}
+              direction={layoutDirection}
+              layoutOptions={layoutOptions}
+              key={layoutDirection}
+              pannable={false}
+              zoomable={false}
+              animated={false}
+              readonly
+              dragEdge={null}
+              dragNode={null}
+              // Disable reaflow's built-in auto-centering of content inside the
+              // pane. Passing a nullish `defaultPosition` makes reaflow leave
+              // the group at the svg origin so our fit-to-viewport rect math
+              // matches reality.
+              defaultPosition={null as unknown as undefined}
+            />
+          </CollapseContext.Provider>
         </Space>
       </div>
     );
