@@ -1,9 +1,10 @@
 import type { RefObject } from "react";
 import type { JSONPath } from "jsonc-parser";
-import { pathKey } from "jsoncrack-react";
 import type { LayoutDirection, NodeData, JSONCrackRef } from "jsoncrack-react";
 import type { ViewPort } from "react-zoomable-ui";
 import { create } from "zustand";
+
+const pathKey = (path: JSONPath): string => JSON.stringify(path);
 
 export interface Graph {
   viewPort: ViewPort | null;
