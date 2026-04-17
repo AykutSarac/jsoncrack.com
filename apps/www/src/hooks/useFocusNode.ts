@@ -9,9 +9,22 @@ export const useFocusNode = () => {
   const [selectedNode, setSelectedNode] = React.useState(0);
   const [nodeCount, setNodeCount] = React.useState(0);
   const [value, setValue] = React.useState("");
-  const [debouncedValue] = useDebouncedValue(value, 600);
+  const [debouncedValue] = useDebouncedValue(value, 300);
 
-  const skip = () => setSelectedNode(current => (current + 1) % nodeCount);
+  const next = React.useCallback(() => {
+    setSelectedNode(current => (nodeCount > 0 ? (current + 1) % nodeCount : 0));
+  }, [nodeCount]);
+
+  const prev = React.useCallback(() => {
+    setSelectedNode(current => (nodeCount > 0 ? (current - 1 + nodeCount) % nodeCount : 0));
+  }, [nodeCount]);
+
+  const clear = React.useCallback(() => {
+    setValue("");
+    setSelectedNode(0);
+    setNodeCount(0);
+    cleanupHighlight();
+  }, []);
 
   React.useEffect(() => {
     if (!value) {
@@ -42,5 +55,5 @@ export const useFocusNode = () => {
     gaEvent("search_graph");
   }, [selectedNode, debouncedValue, value, viewPort]);
 
-  return [value, setValue, skip, nodeCount, selectedNode] as const;
+  return { value, setValue, next, prev, clear, nodeCount, selectedNode };
 };

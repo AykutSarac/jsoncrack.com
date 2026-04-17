@@ -8,9 +8,8 @@ import useConfig from "../../../../store/useConfig";
 import useJson from "../../../../store/useJson";
 import { useModal } from "../../../../store/useModal";
 import { NotSupported } from "./NotSupported";
-import { OptionsMenu } from "./OptionsMenu";
 import { SecureInfo } from "./SecureInfo";
-import { ZoomControl } from "./ZoomControl";
+import { Toolbar } from "./Toolbar";
 import useGraph from "./stores/useGraph";
 
 const StyledEditorWrapper = styled.div<{ $widget: boolean }>`
@@ -64,9 +63,8 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
 
   return (
     <Box pos="relative" h="100%" w="100%">
-      {!isWidget && <OptionsMenu />}
       {!isWidget && <SecureInfo />}
-      <ZoomControl />
+      {!isWidget && <Toolbar />}
       <StyledEditorWrapper
         $widget={isWidget}
         onContextMenu={event => event.preventDefault()}
