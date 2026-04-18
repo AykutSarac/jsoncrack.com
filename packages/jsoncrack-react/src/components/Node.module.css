@@ -82,17 +82,14 @@
   padding: 0 10px;
 }
 
-.foreignObject:global(.searched) {
-  background: rgba(27, 255, 0, 0.1);
-  border: 1px solid var(--text-positive);
-  border-radius: 2px;
-  box-sizing: border-box;
+.row:global(.searched),
+.textNodeWrapper:global(.searched) {
+  background: rgba(34, 197, 94, 0.18);
+  box-shadow: inset 3px 0 0 rgba(34, 197, 94, 0.6);
 }
 
-.foreignObject :global(.highlight) {
-  background: rgba(255, 214, 0, 0.15);
-}
-
-.foreignObject:global(.searched) .row {
-  border-bottom: 1px solid var(--text-positive);
+.row:global(.highlight),
+.textNodeWrapper:global(.highlight) {
+  background: rgba(22, 163, 74, 0.55);
+  box-shadow: inset 3px 0 0 #15803d;
 }
