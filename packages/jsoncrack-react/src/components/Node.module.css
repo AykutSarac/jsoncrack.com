@@ -8,6 +8,7 @@
   font-weight: 500;
   overflow: hidden;
   pointer-events: none;
+  border-radius: 5px;
 }
 
 .objectForeignObject {
