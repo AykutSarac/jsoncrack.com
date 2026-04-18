@@ -40,12 +40,12 @@ export const useFocusNode = () => {
 
     cleanupHighlight();
 
-    if (matchedNode && matchedNode.parentElement) {
+    if (matchedNode instanceof HTMLElement) {
       highlightMatchedNodes(matchedNodes, selectedNode);
       setNodeCount(matchedNodes.length);
 
-      viewPort?.camera.centerFitElementIntoView(matchedNode.parentElement, {
-        elementExtraMarginForZoom: 400,
+      viewPort?.camera.centerFitElementIntoView(matchedNode, {
+        elementExtraMarginForZoom: 200,
       });
     } else {
       setSelectedNode(0);
