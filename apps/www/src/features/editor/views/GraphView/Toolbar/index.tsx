@@ -1,7 +1,7 @@
 import React from "react";
-import { ActionIcon, Divider, Flex, Menu, Popover, Tooltip } from "@mantine/core";
+import { ActionIcon, Divider, Flex, Menu, Tooltip } from "@mantine/core";
 import { useHotkeys } from "@mantine/hooks";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import type { LayoutDirection } from "jsoncrack-react";
 import { event as gaEvent } from "nextjs-google-analytics";
 import { BsCheck2 } from "react-icons/bs";
@@ -23,15 +23,7 @@ import { useModal } from "../../../../../store/useModal";
 import { SearchInput } from "../../../Toolbar/SearchInput";
 import useGraph from "../stores/useGraph";
 
-const StyledToolbar = styled.div`
-  position: absolute;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  padding: 5px;
+const glassSurface = css`
   border-radius: 14px;
   background: ${({ theme }) =>
     theme.BACKGROUND_SECONDARY === "#f2f3f5"
@@ -57,6 +49,31 @@ const StyledToolbar = styled.div`
         theme.BACKGROUND_SECONDARY === "#f2f3f5"
           ? "rgba(15, 23, 42, 0.12)"
           : "rgba(0, 0, 0, 0.45)"};
+`;
+
+const StyledToolbarDock = styled.div`
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+`;
+
+const StyledSearchBar = styled.div`
+  ${glassSurface}
+  padding: 6px 8px;
+  min-width: 360px;
+`;
+
+const StyledToolbar = styled.div`
+  ${glassSurface}
+  display: flex;
+  align-items: center;
+  padding: 5px;
 
   [data-mantine-divider] {
     border-color: ${({ theme }) =>
@@ -103,12 +120,8 @@ export const Toolbar = () => {
     }
   }, []);
 
-  const handleSearchClick = () => {
-    setSearchOpen(true);
-    requestAnimationFrame(() => {
-      const input = document.querySelector("#search-node") as HTMLInputElement | null;
-      input?.focus();
-    });
+  const handleSearchToggle = () => {
+    setSearchOpen(current => !current);
   };
 
   const toggleDirection = () => {
@@ -122,7 +135,7 @@ export const Toolbar = () => {
       ["mod+[minus]", zoomOut, { usePhysicalKeys: true }],
       ["shift+Digit1", focusFirstNode, { usePhysicalKeys: true }],
       ["shift+Digit2", centerView, { usePhysicalKeys: true }],
-      ["mod+f", handleSearchClick],
+      ["mod+f", handleSearchToggle],
       ["mod+s", () => setVisible("DownloadModal", true)],
       ["mod+shift+d", toggleDirection],
     ],
@@ -130,210 +143,196 @@ export const Toolbar = () => {
   );
 
   return (
-    <StyledToolbar>
-      <Flex gap={4} align="center">
-        <Tooltip label="Center first item (⇧1)" position="top" withArrow openDelay={750}>
+    <StyledToolbarDock>
+      {searchOpen && (
+        <StyledSearchBar>
+          <SearchInput onClose={() => setSearchOpen(false)} />
+        </StyledSearchBar>
+      )}
+      <StyledToolbar>
+        <Flex gap={4} align="center">
+          <Tooltip label="Center first item (⇧1)" position="top" withArrow openDelay={750}>
+            <ActionIcon
+              aria-label="center first item"
+              size="lg"
+              radius="md"
+              variant="subtle"
+              color="gray"
+              onClick={() => {
+                focusFirstNode();
+                gaEvent("focus_first_node");
+              }}
+            >
+              <MdOutlineCenterFocusStrong size={18} />
+            </ActionIcon>
+          </Tooltip>
+
+          <Tooltip label="Fit to center (⇧2)" position="top" withArrow openDelay={750}>
+            <ActionIcon
+              aria-label="fit to center"
+              size="lg"
+              radius="md"
+              variant="subtle"
+              color="gray"
+              onClick={() => {
+                centerView();
+                gaEvent("center_view");
+              }}
+            >
+              <MdFullscreen size={20} />
+            </ActionIcon>
+          </Tooltip>
+
           <ActionIcon
-            aria-label="center first item"
+            aria-label="zoom out"
             size="lg"
             radius="md"
             variant="subtle"
             color="gray"
             onClick={() => {
-              focusFirstNode();
-              gaEvent("focus_first_node");
+              zoomOut();
+              gaEvent("zoom_out");
             }}
           >
-            <MdOutlineCenterFocusStrong size={18} />
+            <LuMinus size={16} />
           </ActionIcon>
-        </Tooltip>
 
-        <Tooltip label="Fit to center (⇧2)" position="top" withArrow openDelay={750}>
           <ActionIcon
-            aria-label="fit to center"
+            aria-label="zoom in"
             size="lg"
             radius="md"
             variant="subtle"
             color="gray"
             onClick={() => {
-              centerView();
-              gaEvent("center_view");
+              zoomIn();
+              gaEvent("zoom_in");
             }}
           >
-            <MdFullscreen size={20} />
+            <LuPlus size={16} />
           </ActionIcon>
-        </Tooltip>
 
-        <ActionIcon
-          aria-label="zoom out"
-          size="lg"
-          radius="md"
-          variant="subtle"
-          color="gray"
-          onClick={() => {
-            zoomOut();
-            gaEvent("zoom_out");
-          }}
-        >
-          <LuMinus size={16} />
-        </ActionIcon>
+          <Divider orientation="vertical" mx={2} />
 
-        <ActionIcon
-          aria-label="zoom in"
-          size="lg"
-          radius="md"
-          variant="subtle"
-          color="gray"
-          onClick={() => {
-            zoomIn();
-            gaEvent("zoom_in");
-          }}
-        >
-          <LuPlus size={16} />
-        </ActionIcon>
+          <Tooltip label={`Export (${coreKey}+S)`} position="top" withArrow openDelay={750}>
+            <ActionIcon
+              aria-label="export"
+              size="lg"
+              radius="md"
+              variant="subtle"
+              color="gray"
+              onClick={() => setVisible("DownloadModal", true)}
+            >
+              <LuImageDown size={18} />
+            </ActionIcon>
+          </Tooltip>
 
-        <Divider orientation="vertical" mx={2} />
+          <Tooltip label={`Search (${coreKey}+F)`} position="top" withArrow openDelay={750}>
+            <ActionIcon
+              aria-label="search"
+              size="lg"
+              radius="md"
+              variant={searchOpen ? "light" : "subtle"}
+              color="gray"
+              onClick={handleSearchToggle}
+            >
+              <LuSearch size={18} />
+            </ActionIcon>
+          </Tooltip>
 
-        <Tooltip label={`Export (${coreKey}+S)`} position="top" withArrow openDelay={750}>
-          <ActionIcon
-            aria-label="export"
-            size="lg"
-            radius="md"
-            variant="subtle"
-            color="gray"
-            onClick={() => setVisible("DownloadModal", true)}
+          <Tooltip label="Rotate layout" position="top" withArrow openDelay={750}>
+            <ActionIcon
+              aria-label="rotate layout"
+              size="lg"
+              radius="md"
+              variant="subtle"
+              color="gray"
+              onClick={toggleDirection}
+            >
+              <TbArrowsLeftRight size={18} />
+            </ActionIcon>
+          </Tooltip>
+
+          <Tooltip
+            label={
+              collapsedPaths.length > 0
+                ? `Expand all (${collapsedPaths.length} collapsed)`
+                : "Collapse all"
+            }
+            position="top"
+            withArrow
+            openDelay={750}
           >
-            <LuImageDown size={18} />
-          </ActionIcon>
-        </Tooltip>
+            <ActionIcon
+              aria-label={collapsedPaths.length > 0 ? "expand all" : "collapse all"}
+              size="lg"
+              radius="md"
+              variant="subtle"
+              color="gray"
+              onClick={() => {
+                if (collapsedPaths.length > 0) {
+                  expandAll();
+                  gaEvent("expand_all");
+                } else {
+                  collapseAllDepth1(json);
+                  gaEvent("collapse_all");
+                }
+              }}
+            >
+              {collapsedPaths.length > 0 ? <LuCopyPlus size={18} /> : <LuCopyMinus size={18} />}
+            </ActionIcon>
+          </Tooltip>
 
-        <Popover
-          opened={searchOpen}
-          onChange={setSearchOpen}
-          position="top"
-          withArrow
-          shadow="md"
-          trapFocus={false}
-          closeOnClickOutside
-        >
-          <Popover.Target>
-            <Tooltip label={`Search (${coreKey}+F)`} position="top" withArrow openDelay={750}>
-              <ActionIcon
-                aria-label="search"
-                size="lg"
-                radius="md"
-                variant="subtle"
-                color="gray"
+          <Divider orientation="vertical" mx={2} />
+
+          <Menu trigger="click" position="top-end">
+            <Menu.Target>
+              <Tooltip label="Preferences" position="top" withArrow openDelay={750}>
+                <ActionIcon
+                  aria-label="preferences"
+                  size="lg"
+                  radius="md"
+                  variant="subtle"
+                  color="gray"
+                >
+                  <LuSettings2 size={18} />
+                </ActionIcon>
+              </Tooltip>
+            </Menu.Target>
+            <Menu.Dropdown>
+              <Menu.Item
+                fz="sm"
+                leftSection={darkmodeEnabled ? <FaSun /> : <FaMoon />}
+                onClick={() => toggleDarkMode(!darkmodeEnabled)}
+                closeMenuOnClick={false}
+              >
+                {darkmodeEnabled ? "Light Mode" : "Dark Mode"}
+              </Menu.Item>
+              <Menu.Item
+                fz="sm"
+                rightSection={<BsCheck2 display={gesturesEnabled ? "initial" : "none"} />}
                 onClick={() => {
-                  if (searchOpen) {
-                    setSearchOpen(false);
-                  } else {
-                    handleSearchClick();
-                  }
+                  toggleGestures(!gesturesEnabled);
+                  gaEvent("toggle_gestures", { label: gesturesEnabled ? "on" : "off" });
                 }}
+                closeMenuOnClick={false}
               >
-                <LuSearch size={18} />
-              </ActionIcon>
-            </Tooltip>
-          </Popover.Target>
-          <Popover.Dropdown p={8}>
-            <SearchInput onClose={() => setSearchOpen(false)} />
-          </Popover.Dropdown>
-        </Popover>
-
-        <Tooltip label="Rotate layout" position="top" withArrow openDelay={750}>
-          <ActionIcon
-            aria-label="rotate layout"
-            size="lg"
-            radius="md"
-            variant="subtle"
-            color="gray"
-            onClick={toggleDirection}
-          >
-            <TbArrowsLeftRight size={18} />
-          </ActionIcon>
-        </Tooltip>
-
-        <Tooltip
-          label={
-            collapsedPaths.length > 0
-              ? `Expand all (${collapsedPaths.length} collapsed)`
-              : "Collapse all"
-          }
-          position="top"
-          withArrow
-          openDelay={750}
-        >
-          <ActionIcon
-            aria-label={collapsedPaths.length > 0 ? "expand all" : "collapse all"}
-            size="lg"
-            radius="md"
-            variant="subtle"
-            color="gray"
-            onClick={() => {
-              if (collapsedPaths.length > 0) {
-                expandAll();
-                gaEvent("expand_all");
-              } else {
-                collapseAllDepth1(json);
-                gaEvent("collapse_all");
-              }
-            }}
-          >
-            {collapsedPaths.length > 0 ? <LuCopyPlus size={18} /> : <LuCopyMinus size={18} />}
-          </ActionIcon>
-        </Tooltip>
-
-        <Divider orientation="vertical" mx={2} />
-
-        <Menu trigger="click" position="top-end">
-          <Menu.Target>
-            <Tooltip label="Preferences" position="top" withArrow openDelay={750}>
-              <ActionIcon
-                aria-label="preferences"
-                size="lg"
-                radius="md"
-                variant="subtle"
-                color="gray"
+                Zoom on Scroll
+              </Menu.Item>
+              <Menu.Item
+                fz="sm"
+                rightSection={<BsCheck2 display={rulersEnabled ? "initial" : "none"} />}
+                onClick={() => {
+                  toggleRulers(!rulersEnabled);
+                  gaEvent("toggle_rulers", { label: rulersEnabled ? "on" : "off" });
+                }}
+                closeMenuOnClick={false}
               >
-                <LuSettings2 size={18} />
-              </ActionIcon>
-            </Tooltip>
-          </Menu.Target>
-          <Menu.Dropdown>
-            <Menu.Item
-              fz="sm"
-              leftSection={darkmodeEnabled ? <FaSun /> : <FaMoon />}
-              onClick={() => toggleDarkMode(!darkmodeEnabled)}
-              closeMenuOnClick={false}
-            >
-              {darkmodeEnabled ? "Light Mode" : "Dark Mode"}
-            </Menu.Item>
-            <Menu.Item
-              fz="sm"
-              rightSection={<BsCheck2 display={gesturesEnabled ? "initial" : "none"} />}
-              onClick={() => {
-                toggleGestures(!gesturesEnabled);
-                gaEvent("toggle_gestures", { label: gesturesEnabled ? "on" : "off" });
-              }}
-              closeMenuOnClick={false}
-            >
-              Zoom on Scroll
-            </Menu.Item>
-            <Menu.Item
-              fz="sm"
-              rightSection={<BsCheck2 display={rulersEnabled ? "initial" : "none"} />}
-              onClick={() => {
-                toggleRulers(!rulersEnabled);
-                gaEvent("toggle_rulers", { label: rulersEnabled ? "on" : "off" });
-              }}
-              closeMenuOnClick={false}
-            >
-              Rulers
-            </Menu.Item>
-          </Menu.Dropdown>
-        </Menu>
-      </Flex>
-    </StyledToolbar>
+                Rulers
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
+        </Flex>
+      </StyledToolbar>
+    </StyledToolbarDock>
   );
 };
