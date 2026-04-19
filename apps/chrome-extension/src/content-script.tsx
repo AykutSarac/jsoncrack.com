@@ -69,26 +69,11 @@ function injectStyles() {
 }
 
 function getJsonSource() {
-  const body = document.body;
   const contentType = (document.contentType || "").toLowerCase();
+  if (!contentType.includes("json")) return null;
 
-  const pickText = (): string => {
-    if (contentType.includes("json")) {
-      return body.innerText || body.textContent || "";
-    }
-    // Browsers render standalone JSON responses as a single <pre> inside
-    // <body>. Some built-in viewers wrap that <pre> in extra containers,
-    // so look for exactly one <pre> anywhere in the body.
-    const pres = body.querySelectorAll("pre");
-    if (pres.length === 1) {
-      return pres[0].textContent || "";
-    }
-    return "";
-  };
-
-  const raw = pickText().trim();
+  const raw = (document.body.innerText || document.body.textContent || "").trim();
   if (!raw) return null;
-  if (!startsLikeJson(raw)) return null;
 
   try {
     JSON.parse(raw);
@@ -96,10 +81,6 @@ function getJsonSource() {
   } catch {
     return null;
   }
-}
-
-function startsLikeJson(value: string) {
-  return value.startsWith("{") || value.startsWith("[");
 }
 
 function detectTheme(): ThemeMode {
