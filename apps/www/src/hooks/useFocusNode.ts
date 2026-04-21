@@ -3,12 +3,6 @@ import { useDebouncedValue } from "@mantine/hooks";
 import { event as gaEvent } from "nextjs-google-analytics";
 import type { NodeData } from "jsoncrack-react";
 import useGraph from "../features/editor/views/GraphView/stores/useGraph";
-import {
-  cleanupHighlight,
-  highlightMatchedNodes,
-  applyNodeSearchEffects,
-  clearNodeSearchEffects,
-} from "../lib/utils/search";
 
 interface MatchedNode {
   nodeId: string;
@@ -61,34 +55,13 @@ const findMatchingNodes = (
   return matches;
 };
 
-const findElementByNodeId = (nodeId: string, rowIndex?: number): HTMLElement | null => {
+const findElementByNodeId = (nodeId: string): HTMLElement | null => {
   const foreignObject = document.querySelector(
     `foreignObject[data-id="node-${nodeId}"]`
   ) as HTMLElement | null;
 
   if (!foreignObject) return null;
-
-  if (rowIndex != null) {
-    const rows = foreignObject.querySelectorAll(".row, .textNodeWrapper");
-    if (rows[rowIndex]) {
-      return rows[rowIndex] as HTMLElement;
-    }
-  }
-
   return foreignObject;
-};
-
-const findAllMatchingElements = (matchedNodes: MatchedNode[]): HTMLElement[] => {
-  const elements: HTMLElement[] = [];
-
-  for (const matched of matchedNodes) {
-    const element = findElementByNodeId(matched.nodeId, matched.matchedRowIndex);
-    if (element) {
-      elements.push(element);
-    }
-  }
-
-  return elements;
 };
 
 export const useFocusNode = () => {
@@ -120,8 +93,6 @@ export const useFocusNode = () => {
         setTotalMatches(0);
         setMatchedNodeIds(new Set());
         setMatchedNodesCache([]);
-        cleanupHighlight();
-        clearNodeSearchEffects();
       }
     },
     [setSearchQuery, setSelectedMatchIndex, setTotalMatches, setMatchedNodeIds]
@@ -130,14 +101,10 @@ export const useFocusNode = () => {
   const clear = React.useCallback(() => {
     clearSearchFromStore();
     setMatchedNodesCache([]);
-    cleanupHighlight();
-    clearNodeSearchEffects();
   }, [clearSearchFromStore]);
 
   React.useEffect(() => {
     if (!searchQueryState || searchQueryState.trim() === "") {
-      cleanupHighlight();
-      clearNodeSearchEffects();
       setSelectedMatchIndex(0);
       setTotalMatches(0);
       setMatchedNodeIds(new Set());
@@ -167,35 +134,14 @@ export const useFocusNode = () => {
   }, [debouncedValue, searchQueryState, allNodes]);
 
   React.useEffect(() => {
-    if (matchedNodeIds.size === 0) {
-      cleanupHighlight();
-      clearNodeSearchEffects();
-      return;
-    }
-
-    applyNodeSearchEffects(matchedNodeIds);
-
+    if (matchedNodeIds.size === 0) return;
     if (matchedNodesCache.length === 0) return;
-
-    const matchedElements = findAllMatchingElements(matchedNodesCache);
-
-    if (matchedElements.length > 0) {
-      cleanupHighlight();
-      highlightMatchedNodes(
-        matchedElements as unknown as NodeListOf<Element>,
-        Math.min(selectedMatchIndex, matchedElements.length - 1)
-      );
-    }
-
     if (!viewPort || selectedMatchIndex >= matchedNodesCache.length) return;
 
     const currentMatch = matchedNodesCache[selectedMatchIndex];
     if (!currentMatch) return;
 
-    const elementToFocus = findElementByNodeId(
-      currentMatch.nodeId,
-      currentMatch.matchedRowIndex
-    );
+    const elementToFocus = findElementByNodeId(currentMatch.nodeId);
 
     if (elementToFocus instanceof HTMLElement) {
       viewPort?.camera.centerFitElementIntoView(elementToFocus, {

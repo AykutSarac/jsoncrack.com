@@ -64,6 +64,10 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
   const setVisible = useModal(state => state.setVisible);
   const jsonCrackRef = React.useRef<JSONCrackRef>(null);
 
+  const searchQuery = useGraph(state => state.searchQuery);
+  const matchedNodeIds = useGraph(state => state.matchedNodeIds);
+  const isSearchActive = searchQuery.trim().length > 0;
+
   const handleParse = React.useCallback(
     (graph: GraphData) => {
       setParsedGraph(graph);
@@ -122,6 +126,8 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
           onParse={handleParse}
           collapsedPaths={collapsedPaths}
           onToggleCollapse={toggleCollapse}
+          matchedNodeIds={matchedNodeIds}
+          isSearchActive={isSearchActive}
           renderNodeLimitExceeded={() => <NotSupported />}
         />
       </StyledEditorWrapper>

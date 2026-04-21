@@ -108,21 +108,21 @@
   }
 }
 
-:global(.node-matched) rect {
-  animation: searchPulse 1.5s ease-in-out infinite;
-}
-
-:global(.node-unmatched) {
-  opacity: 0.3;
-  transition: opacity 0.3s ease;
-}
-
-:global(.node-matched) {
+.nodeMatched {
   opacity: 1;
   transition: opacity 0.3s ease;
 }
 
-:global(.node-matched) .foreignObject,
-:global(.node-unmatched) .foreignObject {
+.nodeMatched rect {
+  animation: searchPulse 1.5s ease-in-out infinite;
+}
+
+.nodeUnmatched {
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+}
+
+.nodeMatched .foreignObject,
+.nodeUnmatched .foreignObject {
   pointer-events: auto;
 }

@@ -4,12 +4,18 @@ import { Node } from "reaflow";
 import type { NodeData } from "../types";
 import { ObjectNode } from "./ObjectNode";
 import { TextNode } from "./TextNode";
+import { useSearchContext } from "./SearchContext";
+import styles from "./Node.module.css";
 
 type CustomNodeProps = NodeProps<NodeData> & {
   onNodeClick?: (node: NodeData) => void;
 };
 
 const CustomNodeBase = ({ onNodeClick, ...nodeProps }: CustomNodeProps) => {
+  const { isSearchActive, isNodeMatched, matchedNodeIds } = useSearchContext();
+  const nodeId = nodeProps.id;
+  const isMatched = isNodeMatched(nodeId);
+
   const handleNodeClick = React.useCallback(
     (_: React.MouseEvent<SVGGElement, MouseEvent>, data: NodeData) => {
       onNodeClick?.(data);
@@ -17,12 +23,18 @@ const CustomNodeBase = ({ onNodeClick, ...nodeProps }: CustomNodeProps) => {
     [onNodeClick]
   );
 
+  let nodeClassName = "";
+  if (isSearchActive) {
+    nodeClassName = isMatched ? styles.nodeMatched : styles.nodeUnmatched;
+  }
+
   return (
     <Node
       {...nodeProps}
       onClick={handleNodeClick as any}
       animated={false}
       label={null as any}
+      className={nodeClassName || undefined}
       onEnter={event => {
         event.currentTarget.style.stroke = "#3B82F6";
       }}

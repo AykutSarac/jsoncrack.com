@@ -32,6 +32,7 @@ import {
   type JsonInput,
 } from "./canvasHelpers";
 import { CollapseContext, isNodeHidden } from "./components/CollapseContext";
+import { SearchContext } from "./components/SearchContext";
 import { Controls } from "./components/Controls";
 import { CustomEdge } from "./components/CustomEdge";
 import { CustomNode } from "./components/CustomNode";
@@ -93,6 +94,10 @@ export interface JSONCrackProps {
   collapsedPaths?: string[];
   /** Called with the `JSONPath` of a row's value when the user clicks a chevron. */
   onToggleCollapse?: (path: JSONPath) => void;
+  /** Set of node IDs that match the current search query. */
+  matchedNodeIds?: Set<string>;
+  /** Whether search is currently active. */
+  isSearchActive?: boolean;
 }
 
 /** Interactive JSON-to-graph visualization. Forwards a `JSONCrackRef` for imperative viewport control. */
@@ -116,6 +121,8 @@ export const JSONCrack = forwardRef<JSONCrackRef, JSONCrackProps>(
       renderNodeLimitExceeded,
       collapsedPaths,
       onToggleCollapse,
+      matchedNodeIds = new Set(),
+      isSearchActive = false,
     },
     ref
   ) => {
@@ -294,6 +301,15 @@ export const JSONCrack = forwardRef<JSONCrackRef, JSONCrackProps>(
     const collapseContextValue = useMemo(
       () => ({ collapsedSet, onToggleCollapse: wrappedToggleCollapse }),
       [collapsedSet, wrappedToggleCollapse]
+    );
+
+    const searchContextValue = useMemo(
+      () => ({
+        isSearchActive,
+        isNodeMatched: (nodeId: string) => matchedNodeIds.has(nodeId),
+        matchedNodeIds,
+      }),
+      [isSearchActive, matchedNodeIds]
     );
 
     const edgeTargetById = useMemo(() => buildEdgeTargetMap(visibleEdges), [visibleEdges]);
@@ -497,33 +513,31 @@ export const JSONCrack = forwardRef<JSONCrackRef, JSONCrackProps>(
           }}
         >
           <CollapseContext.Provider value={collapseContextValue}>
-            <Canvas
-              className="jsoncrack-canvas"
-              onLayoutChange={onLayoutChange}
-              node={renderNode}
-              edge={renderEdge}
-              nodes={visibleNodes}
-              edges={visibleEdges}
-              arrow={null}
-              maxHeight={paneHeight}
-              maxWidth={paneWidth}
-              height={paneHeight}
-              width={paneWidth}
-              direction={layoutDirection}
-              layoutOptions={layoutOptions}
-              key={layoutDirection}
-              pannable={false}
-              zoomable={false}
-              animated={false}
-              readonly
-              dragEdge={null}
-              dragNode={null}
-              // Disable reaflow's built-in auto-centering of content inside the
-              // pane. Passing a nullish `defaultPosition` makes reaflow leave
-              // the group at the svg origin so our fit-to-viewport rect math
-              // matches reality.
-              defaultPosition={null as unknown as undefined}
-            />
+            <SearchContext.Provider value={searchContextValue}>
+              <Canvas
+                className="jsoncrack-canvas"
+                onLayoutChange={onLayoutChange}
+                node={renderNode}
+                edge={renderEdge}
+                nodes={visibleNodes}
+                edges={visibleEdges}
+                arrow={null}
+                maxHeight={paneHeight}
+                maxWidth={paneWidth}
+                height={paneHeight}
+                width={paneWidth}
+                direction={layoutDirection}
+                layoutOptions={layoutOptions}
+                key={layoutDirection}
+                pannable={false}
+                zoomable={false}
+                animated={false}
+                readonly
+                dragEdge={null}
+                dragNode={null}
+                defaultPosition={null as unknown as undefined}
+              />
+            </SearchContext.Provider>
           </CollapseContext.Provider>
         </Space>
       </div>
