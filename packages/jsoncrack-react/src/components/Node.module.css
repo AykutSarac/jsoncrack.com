@@ -94,3 +94,35 @@
   background: rgba(22, 163, 74, 0.55);
   box-shadow: inset 3px 0 0 #15803d;
 }
+
+@keyframes searchPulse {
+  0%, 100% {
+    stroke: #3b82f6;
+    stroke-width: 2px;
+    filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.5));
+  }
+  50% {
+    stroke: #60a5fa;
+    stroke-width: 3px;
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.8));
+  }
+}
+
+:global(.node-matched) rect {
+  animation: searchPulse 1.5s ease-in-out infinite;
+}
+
+:global(.node-unmatched) {
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+}
+
+:global(.node-matched) {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+:global(.node-matched) .foreignObject,
+:global(.node-unmatched) .foreignObject {
+  pointer-events: auto;
+}

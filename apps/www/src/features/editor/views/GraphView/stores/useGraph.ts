@@ -13,6 +13,10 @@ export interface Graph {
   fullscreen: boolean;
   selectedNode: NodeData | null;
   collapsedPaths: string[];
+  searchQuery: string;
+  matchedNodeIds: Set<string>;
+  selectedMatchIndex: number;
+  totalMatches: number;
 }
 
 const initialStates: Graph = {
@@ -22,6 +26,10 @@ const initialStates: Graph = {
   fullscreen: false,
   selectedNode: null,
   collapsedPaths: [],
+  searchQuery: "",
+  matchedNodeIds: new Set(),
+  selectedMatchIndex: 0,
+  totalMatches: 0,
 };
 
 interface GraphActions {
@@ -38,6 +46,13 @@ interface GraphActions {
   setCollapsedPaths: (paths: string[]) => void;
   expandAll: () => void;
   collapseAllDepth1: (json: string) => void;
+  setSearchQuery: (query: string) => void;
+  setMatchedNodeIds: (nodeIds: Set<string>) => void;
+  setSelectedMatchIndex: (index: number) => void;
+  setTotalMatches: (count: number) => void;
+  clearSearch: () => void;
+  nextMatch: () => void;
+  prevMatch: () => void;
 }
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
@@ -93,6 +108,29 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
       set({ collapsedPaths: paths });
     } catch {
       // ignore invalid JSON
+    }
+  },
+  setSearchQuery: searchQuery => set({ searchQuery }),
+  setMatchedNodeIds: matchedNodeIds => set({ matchedNodeIds }),
+  setSelectedMatchIndex: selectedMatchIndex => set({ selectedMatchIndex }),
+  setTotalMatches: totalMatches => set({ totalMatches }),
+  clearSearch: () =>
+    set({
+      searchQuery: "",
+      matchedNodeIds: new Set(),
+      selectedMatchIndex: 0,
+      totalMatches: 0,
+    }),
+  nextMatch: () => {
+    const { totalMatches, selectedMatchIndex } = get();
+    if (totalMatches > 0) {
+      set({ selectedMatchIndex: (selectedMatchIndex + 1) % totalMatches });
+    }
+  },
+  prevMatch: () => {
+    const { totalMatches, selectedMatchIndex } = get();
+    if (totalMatches > 0) {
+      set({ selectedMatchIndex: (selectedMatchIndex - 1 + totalMatches) % totalMatches });
     }
   },
 }));

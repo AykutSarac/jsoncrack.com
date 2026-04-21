@@ -2,58 +2,117 @@ import React from "react";
 import { useDebouncedValue } from "@mantine/hooks";
 import { event as gaEvent } from "nextjs-google-analytics";
 import useGraph from "../features/editor/views/GraphView/stores/useGraph";
-import { cleanupHighlight, searchQuery, highlightMatchedNodes } from "../lib/utils/search";
+import {
+  cleanupHighlight,
+  searchQuery,
+  highlightMatchedNodes,
+  applyNodeSearchEffects,
+  clearNodeSearchEffects,
+} from "../lib/utils/search";
 
 export const useFocusNode = () => {
   const viewPort = useGraph(state => state.viewPort);
-  const [selectedNode, setSelectedNode] = React.useState(0);
-  const [nodeCount, setNodeCount] = React.useState(0);
-  const [value, setValue] = React.useState("");
-  const [debouncedValue] = useDebouncedValue(value, 300);
+  const searchQueryState = useGraph(state => state.searchQuery);
+  const matchedNodeIds = useGraph(state => state.matchedNodeIds);
+  const selectedMatchIndex = useGraph(state => state.selectedMatchIndex);
+  const totalMatches = useGraph(state => state.totalMatches);
+  
+  const {
+    setSearchQuery,
+    setMatchedNodeIds,
+    setSelectedMatchIndex,
+    setTotalMatches,
+    clearSearch: clearSearchFromStore,
+    nextMatch,
+    prevMatch,
+  } = useGraph(state => state);
 
-  const next = React.useCallback(() => {
-    setSelectedNode(current => (nodeCount > 0 ? (current + 1) % nodeCount : 0));
-  }, [nodeCount]);
+  const [debouncedValue] = useDebouncedValue(searchQueryState, 300);
 
-  const prev = React.useCallback(() => {
-    setSelectedNode(current => (nodeCount > 0 ? (current - 1 + nodeCount) % nodeCount : 0));
-  }, [nodeCount]);
+  const getNodeIdFromElement = (element: Element): string | null => {
+    const foreignObject = element.closest("foreignObject");
+    if (!foreignObject) return null;
+    const dataId = foreignObject.getAttribute("data-id");
+    if (!dataId) return null;
+    return dataId.replace("node-", "");
+  };
+
+  const setValue = React.useCallback(
+    (value: string) => {
+      setSearchQuery(value);
+      if (value === "") {
+        setSelectedMatchIndex(0);
+        setTotalMatches(0);
+        setMatchedNodeIds(new Set());
+        cleanupHighlight();
+        clearNodeSearchEffects();
+      }
+    },
+    [setSearchQuery, setSelectedMatchIndex, setTotalMatches, setMatchedNodeIds]
+  );
 
   const clear = React.useCallback(() => {
-    setValue("");
-    setSelectedNode(0);
-    setNodeCount(0);
+    clearSearchFromStore();
     cleanupHighlight();
-  }, []);
+    clearNodeSearchEffects();
+  }, [clearSearchFromStore]);
 
   React.useEffect(() => {
-    if (!value) {
+    if (!searchQueryState) {
       cleanupHighlight();
-      setSelectedNode(0);
-      setNodeCount(0);
+      clearNodeSearchEffects();
+      setSelectedMatchIndex(0);
+      setTotalMatches(0);
+      setMatchedNodeIds(new Set());
       return;
     }
 
     if (!viewPort || !debouncedValue) return;
-    const matchedNodes: NodeListOf<Element> = searchQuery(`span[data-key*='${debouncedValue}' i]`);
-    const matchedNode: Element | null = matchedNodes[selectedNode] || null;
+    const matchedElements: NodeListOf<Element> = searchQuery(`span[data-key*='${debouncedValue}' i]`);
+    const matchedElement: Element | null = matchedElements[selectedMatchIndex] || null;
 
     cleanupHighlight();
 
-    if (matchedNode instanceof HTMLElement) {
-      highlightMatchedNodes(matchedNodes, selectedNode);
-      setNodeCount(matchedNodes.length);
+    if (matchedElement instanceof HTMLElement) {
+      highlightMatchedNodes(matchedElements, selectedMatchIndex);
+      setTotalMatches(matchedElements.length);
 
-      viewPort?.camera.centerFitElementIntoView(matchedNode, {
+      const nodeIds = new Set<string>();
+      for (let i = 0; i < matchedElements.length; i++) {
+        const nodeId = getNodeIdFromElement(matchedElements[i]);
+        if (nodeId) nodeIds.add(nodeId);
+      }
+      setMatchedNodeIds(nodeIds);
+      
+      applyNodeSearchEffects(nodeIds);
+
+      viewPort?.camera.centerFitElementIntoView(matchedElement, {
         elementExtraMarginForZoom: 200,
       });
     } else {
-      setSelectedNode(0);
-      setNodeCount(0);
+      setSelectedMatchIndex(0);
+      setTotalMatches(0);
+      setMatchedNodeIds(new Set());
+      clearNodeSearchEffects();
     }
 
     gaEvent("search_graph");
-  }, [selectedNode, debouncedValue, value, viewPort]);
+  }, [selectedMatchIndex, debouncedValue, searchQueryState, viewPort, setTotalMatches, setMatchedNodeIds, setSelectedMatchIndex]);
 
-  return { value, setValue, next, prev, clear, nodeCount, selectedNode };
+  React.useEffect(() => {
+    if (matchedNodeIds.size > 0) {
+      applyNodeSearchEffects(matchedNodeIds);
+    }
+  }, [matchedNodeIds]);
+
+  return {
+    value: searchQueryState,
+    setValue,
+    next: nextMatch,
+    prev: prevMatch,
+    clear,
+    nodeCount: totalMatches,
+    selectedNode: selectedMatchIndex,
+    matchedNodeIds,
+  };
 };
