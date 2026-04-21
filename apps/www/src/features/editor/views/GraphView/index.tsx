@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@mantine/core";
 import styled from "styled-components";
 import { JSONCrack } from "jsoncrack-react";
-import type { JSONCrackRef, NodeData } from "jsoncrack-react";
+import type { JSONCrackRef, NodeData, GraphData } from "jsoncrack-react";
 import { SUPPORTED_LIMIT } from "../../../../constants/graph";
 import { pruneInvalidPaths } from "../../../../lib/utils/collapse";
 import useConfig from "../../../../store/useConfig";
@@ -51,6 +51,7 @@ interface GraphProps {
 export const GraphView = ({ isWidget = false }: GraphProps) => {
   const setViewPort = useGraph(state => state.setViewPort);
   const setJsonCrackRef = useGraph(state => state.setJsonCrackRef);
+  const setParsedGraph = useGraph(state => state.setParsedGraph);
   const direction = useGraph(state => state.direction);
   const setSelectedNode = useGraph(state => state.setSelectedNode);
   const collapsedPaths = useGraph(state => state.collapsedPaths);
@@ -62,6 +63,13 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
   const json = useJson(state => state.json);
   const setVisible = useModal(state => state.setVisible);
   const jsonCrackRef = React.useRef<JSONCrackRef>(null);
+
+  const handleParse = React.useCallback(
+    (graph: GraphData) => {
+      setParsedGraph(graph);
+    },
+    [setParsedGraph]
+  );
 
   React.useEffect(() => {
     setJsonCrackRef(jsonCrackRef);
@@ -111,6 +119,7 @@ export const GraphView = ({ isWidget = false }: GraphProps) => {
           centerOnLayout
           onViewportCreate={setViewPort}
           onNodeClick={handleNodeClick}
+          onParse={handleParse}
           collapsedPaths={collapsedPaths}
           onToggleCollapse={toggleCollapse}
           renderNodeLimitExceeded={() => <NotSupported />}

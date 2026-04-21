@@ -1,6 +1,6 @@
 import type { RefObject } from "react";
 import type { JSONPath } from "jsonc-parser";
-import type { LayoutDirection, NodeData, JSONCrackRef } from "jsoncrack-react";
+import type { LayoutDirection, NodeData, JSONCrackRef, GraphData } from "jsoncrack-react";
 import type { ViewPort } from "react-zoomable-ui";
 import { create } from "zustand";
 
@@ -17,6 +17,8 @@ export interface Graph {
   matchedNodeIds: Set<string>;
   selectedMatchIndex: number;
   totalMatches: number;
+  allNodes: NodeData[];
+  allEdges: GraphData["edges"];
 }
 
 const initialStates: Graph = {
@@ -30,6 +32,8 @@ const initialStates: Graph = {
   matchedNodeIds: new Set(),
   selectedMatchIndex: 0,
   totalMatches: 0,
+  allNodes: [],
+  allEdges: [],
 };
 
 interface GraphActions {
@@ -53,6 +57,7 @@ interface GraphActions {
   clearSearch: () => void;
   nextMatch: () => void;
   prevMatch: () => void;
+  setParsedGraph: (graph: GraphData) => void;
 }
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
@@ -132,6 +137,9 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
     if (totalMatches > 0) {
       set({ selectedMatchIndex: (selectedMatchIndex - 1 + totalMatches) % totalMatches });
     }
+  },
+  setParsedGraph: graph => {
+    set({ allNodes: graph.nodes, allEdges: graph.edges });
   },
 }));
 
