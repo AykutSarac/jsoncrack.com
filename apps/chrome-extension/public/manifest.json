@@ -3,7 +3,7 @@
   "name": "JSON Crack",
   "short_name": "JSON Crack",
   "description": "Visualize JSON pages as an interactive graph. Toggle between raw text and an auto-generated diagram.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Aykut Saraç",
   "homepage_url": "https://jsoncrack.com",
   "icons": {
