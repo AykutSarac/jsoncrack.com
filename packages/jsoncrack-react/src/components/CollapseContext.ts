@@ -35,3 +35,38 @@ export const isNodeHidden = (
   }
   return false;
 };
+
+/**
+ * Drop serialized collapsed-paths that no longer resolve to an object/array
+ * in the given JSON. Invalid JSON returns the input verbatim so a transient
+ * edit error doesn't nuke state.
+ */
+export const prunePaths = (jsonText: string, paths: readonly string[]): string[] => {
+  if (paths.length === 0) return paths as string[];
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(jsonText);
+  } catch {
+    return paths as string[];
+  }
+  const kept: string[] = [];
+  for (const key of paths) {
+    let path: JSONPath;
+    try {
+      path = JSON.parse(key) as JSONPath;
+    } catch {
+      continue;
+    }
+    let cur: unknown = parsed;
+    let ok = true;
+    for (const seg of path) {
+      if (cur == null || typeof cur !== "object") {
+        ok = false;
+        break;
+      }
+      cur = (cur as Record<string | number, unknown>)[seg as string & number];
+    }
+    if (ok && cur != null && typeof cur === "object") kept.push(key);
+  }
+  return kept;
+};

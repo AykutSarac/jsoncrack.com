@@ -31,7 +31,7 @@ import {
   toJsonText,
   type JsonInput,
 } from "./canvasHelpers";
-import { CollapseContext, isNodeHidden } from "./components/CollapseContext";
+import { CollapseContext, isNodeHidden, prunePaths } from "./components/CollapseContext";
 import { Controls } from "./components/Controls";
 import { CustomEdge } from "./components/CustomEdge";
 import { CustomNode } from "./components/CustomNode";
@@ -55,6 +55,14 @@ export interface JSONCrackRef {
   centerView: () => void;
   /** Center and zoom on the root node of the graph. */
   focusFirstNode: () => void;
+  /** Toggle collapse for a specific JSON path (uncontrolled mode only). */
+  toggleCollapse: (path: JSONPath) => void;
+  /** Collapse every first-level container of the root (uncontrolled mode only). */
+  collapseAll: () => void;
+  /** Clear all collapsed paths (uncontrolled mode only). */
+  expandAll: () => void;
+  /** Current collapsed-paths snapshot (serialized keys). */
+  getCollapsedPaths: () => string[];
 }
 
 /** Props accepted by the `JSONCrack` component. */
@@ -89,10 +97,17 @@ export interface JSONCrackProps {
   onViewportCreate?: (viewPort: ViewPort) => void;
   /** Custom renderer shown when the graph exceeds `maxRenderableNodes`. */
   renderNodeLimitExceeded?: (nodeCount: number, maxRenderableNodes: number) => ReactNode;
-  /** Serialized JSON paths (via `JSON.stringify`) whose subtrees should be folded away. */
+  /**
+   * Controlled collapsed-paths set (serialized via `pathKey` / `JSON.stringify`).
+   * When provided, the component becomes controlled for collapse state and
+   * `onToggleCollapse` is required to mutate it. When omitted, the component
+   * manages collapse state internally.
+   */
   collapsedPaths?: string[];
-  /** Called with the `JSONPath` of a row's value when the user clicks a chevron. */
+  /** Called with the `JSONPath` of a row's value when the user clicks a chevron (controlled mode). */
   onToggleCollapse?: (path: JSONPath) => void;
+  /** Observe the internal collapsed-paths set (uncontrolled mode). */
+  onCollapseChange?: (collapsedPaths: string[]) => void;
 }
 
 /** Interactive JSON-to-graph visualization. Forwards a `JSONCrackRef` for imperative viewport control. */
@@ -114,8 +129,9 @@ export const JSONCrack = forwardRef<JSONCrackRef, JSONCrackProps>(
       onParseError,
       onViewportCreate,
       renderNodeLimitExceeded,
-      collapsedPaths,
-      onToggleCollapse,
+      collapsedPaths: controlledCollapsedPaths,
+      onToggleCollapse: controlledOnToggle,
+      onCollapseChange,
     },
     ref
   ) => {
@@ -203,18 +219,35 @@ export const JSONCrack = forwardRef<JSONCrackRef, JSONCrackProps>(
       return () => observer.disconnect();
     }, [viewPort]);
 
-    // Unified viewport API: all five methods only need `viewPort`, so build them together and expose the same object to both the imperative handle and the built-in Controls.
-    const viewPortApi = useMemo<JSONCrackRef>(
+    const viewPortApi = useMemo(
       () => ({
         zoomIn: () => adjustViewPortZoom(viewPort, 0.1),
         zoomOut: () => adjustViewPortZoom(viewPort, -0.1),
-        setZoom: zoomFactor => setViewPortZoom(viewPort, zoomFactor),
+        setZoom: (zoomFactor: number) => setViewPortZoom(viewPort, zoomFactor),
         centerView: () => fitGraphToViewPort(viewPort, containerRef.current, layoutSizeRef.current),
         focusFirstNode: () => focusRootNode(viewPort, containerRef.current),
       }),
       [viewPort]
     );
-    useImperativeHandle(ref, () => viewPortApi, [viewPortApi]);
+
+    // Uncontrolled collapse state. `controlledCollapsedPaths` takes precedence when provided.
+    const [internalCollapsedPaths, setInternalCollapsedPaths] = useState<string[]>([]);
+    const isControlled = controlledCollapsedPaths !== undefined;
+    const collapsedPaths = isControlled ? controlledCollapsedPaths : internalCollapsedPaths;
+
+    const onCollapseChangeRef = useRef(onCollapseChange);
+    useEffect(() => {
+      onCollapseChangeRef.current = onCollapseChange;
+    }, [onCollapseChange]);
+
+    // Prune internally-held collapsed paths that no longer resolve to an
+    // object/array in the current data (e.g., after a JSON edit).
+    useEffect(() => {
+      if (isControlled) return;
+      if (internalCollapsedPaths.length === 0) return;
+      const kept = prunePaths(jsonText, internalCollapsedPaths);
+      if (kept.length !== internalCollapsedPaths.length) setInternalCollapsedPaths(kept);
+    }, [jsonText, internalCollapsedPaths, isControlled]);
 
     const collapsedSet = useMemo(() => new Set(collapsedPaths ?? []), [collapsedPaths]);
 
@@ -272,7 +305,6 @@ export const JSONCrack = forwardRef<JSONCrackRef, JSONCrackProps>(
 
     const wrappedToggleCollapse = useCallback(
       (path: JSONPath) => {
-        if (!onToggleCollapse) return;
         const key = JSON.stringify(path);
         const btn = findCollapseButton(key);
         if (btn) {
@@ -286,15 +318,68 @@ export const JSONCrack = forwardRef<JSONCrackRef, JSONCrackProps>(
         } else {
           pendingRecenterRef.current = null;
         }
-        onToggleCollapse(path);
+        if (isControlled) {
+          controlledOnToggle?.(path);
+          return;
+        }
+        setInternalCollapsedPaths(prev => {
+          const next = prev.includes(key) ? prev.filter(p => p !== key) : [...prev, key];
+          onCollapseChangeRef.current?.(next);
+          return next;
+        });
       },
-      [onToggleCollapse, findCollapseButton]
+      [isControlled, controlledOnToggle, findCollapseButton]
     );
 
     const collapseContextValue = useMemo(
       () => ({ collapsedSet, onToggleCollapse: wrappedToggleCollapse }),
       [collapsedSet, wrappedToggleCollapse]
     );
+
+    const collapsedPathsRef = useRef(collapsedPaths);
+    collapsedPathsRef.current = collapsedPaths;
+
+    const collapseApi = useMemo(
+      () => ({
+        toggleCollapse: (path: JSONPath) => wrappedToggleCollapse(path),
+        collapseAll: () => {
+          if (isControlled) return;
+          let parsed: unknown;
+          try {
+            parsed = JSON.parse(jsonText);
+          } catch {
+            return;
+          }
+          if (!parsed || typeof parsed !== "object") return;
+          const keys = Array.isArray(parsed)
+            ? parsed.map((_, i) => i)
+            : Object.keys(parsed as Record<string, unknown>);
+          const next: string[] = [];
+          for (const k of keys) {
+            const v = (parsed as Record<string | number, unknown>)[k as string & number];
+            if (v && typeof v === "object") {
+              if (Array.isArray(v) && v.length === 0) continue;
+              if (!Array.isArray(v) && Object.keys(v).length === 0) continue;
+              next.push(JSON.stringify([k]));
+            }
+          }
+          setInternalCollapsedPaths(next);
+          onCollapseChangeRef.current?.(next);
+        },
+        expandAll: () => {
+          if (isControlled) return;
+          setInternalCollapsedPaths([]);
+          onCollapseChangeRef.current?.([]);
+        },
+        getCollapsedPaths: () => collapsedPathsRef.current ?? [],
+      }),
+      [isControlled, jsonText, wrappedToggleCollapse]
+    );
+
+    useImperativeHandle(ref, () => ({ ...viewPortApi, ...collapseApi }), [
+      viewPortApi,
+      collapseApi,
+    ]);
 
     const edgeTargetById = useMemo(() => buildEdgeTargetMap(visibleEdges), [visibleEdges]);
 
