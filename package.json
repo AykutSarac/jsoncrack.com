@@ -13,15 +13,19 @@
   "scripts": {
     "dev": "turbo run dev",
     "dev:www": "turbo run dev --filter=www",
-    "dev:vscode": "turbo run watch --filter=vscode",
+    "dev:vscode": "turbo run watch --filter=jsoncrack-vscode",
+    "dev:chrome": "turbo run dev --filter=chrome-extension",
     "build": "turbo run build",
     "build:www": "turbo run build --filter=www",
-    "build:vscode": "turbo run build --filter=vscode",
+    "build:vscode": "turbo run build --filter=jsoncrack-vscode",
+    "build:chrome": "turbo run build --filter=chrome-extension",
     "start": "turbo run start",
     "lint": "turbo run lint",
-    "lint:vscode": "turbo run lint --filter=vscode",
+    "lint:vscode": "turbo run lint --filter=jsoncrack-vscode",
+    "lint:chrome": "turbo run lint --filter=chrome-extension",
     "lint:fix": "turbo run lint:fix",
-    "lint:fix:vscode": "turbo run lint:fix --filter=vscode",
+    "lint:fix:vscode": "turbo run lint:fix --filter=jsoncrack-vscode",
+    "test": "turbo run test",
     "analyze": "turbo run analyze",
     "clean": "turbo run clean"
   },
@@ -35,9 +39,14 @@
   "packageManager": "pnpm@10.20.0",
   "pnpm": {
     "onlyBuiltDependencies": [
+      "@vscode/vsce-sign",
       "esbuild",
+      "keytar",
       "sharp",
       "unrs-resolver"
-    ]
+    ],
+    "overrides": {
+      "html-to-image": "1.11.11"
+    }
   }
 }

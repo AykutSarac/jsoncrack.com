@@ -36,8 +36,7 @@ const CustomNodeBase = ({ onNodeClick, ...nodeProps }: CustomNodeProps) => {
       }}
     >
       {({ node, x, y }) => {
-        const hasKey = nodeProps.properties.text[0]?.key;
-        if (!hasKey) {
+        if (nodeProps.properties.text[0]?.key == null) {
           return <TextNode node={nodeProps.properties as NodeData} x={x} y={y} />;
         }
 

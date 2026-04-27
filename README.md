@@ -21,6 +21,8 @@
     <a href="https://github.com/AykutSarac/jsoncrack.com/issues">Issues</a>
     ·
     <a href="https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode">VS Code</a>
+    ·
+    <a href="https://chromewebstore.google.com/detail/hbaeglefdflnhodchjiaphmheaojikhh">Chrome</a>
   </p>
 </p>
 
@@ -28,7 +30,7 @@
 
 ## About the Project
 
-<img width="100%" alt="booking-screen" src="./apps/www/public/assets/editor.webp">
+<img width="100%" alt="JSON Crack editor" src="./apps/www/public/assets/editor.webp">
 
 ## Visualize JSON into interactive graphs
 
@@ -37,9 +39,9 @@ JSON Crack is a tool for visualizing JSON data in a structured, interactive grap
 * **Visualizer**: Instantly convert JSON, YAML, CSV, and XML into interactive graphs or trees in dark or light mode.
 * **Convert**: Seamlessly transform data formats, like JSON to CSV or XML to JSON, for easy sharing.
 * **Format & Validate**: Beautify and validate JSON, YAML, and CSV for clear and accurate data.
-* **Code Generation**: Generate TypeScript interfaces, Golang structs, and JSON Schema.
-* **JSON Schema**: Create JSON Schema, mock data, and validate various data formats.
-* **Advanced Tools**: Decode JWT, randomize data, and run jq or JSON path queries.
+* **Code Generation**: Generate TypeScript interfaces, Golang structs, Kotlin data classes, Rust serde types, and JSON Schema.
+* **JSON Schema**: Create and validate JSON Schema.
+* **Advanced Tools**: Run jq and JSON path queries.
 * **Export Image**: Download your visualization as PNG, JPEG, or SVG.
 * **Privacy**: All data processing is local; nothing is stored on our servers.
 
@@ -58,6 +60,7 @@ JSON Crack is a tool for visualizing JSON data in a structured, interactive grap
 ## Integrations
 
 - [VS Code Extension](https://marketplace.visualstudio.com/items?itemName=AykutSarac.jsoncrack-vscode)
+- [Chrome Extension](https://chromewebstore.google.com/detail/hbaeglefdflnhodchjiaphmheaojikhh)
 - [npm Package (`jsoncrack-react`)](https://www.npmjs.com/package/jsoncrack-react)
 
 ## Contributing
@@ -134,13 +137,16 @@ pnpm build:vscode
 pnpm lint:vscode
 pnpm lint:fix:vscode
 
+# Chrome extension
+pnpm dev:chrome
+pnpm build:chrome
+pnpm lint:chrome
+
 # All workspaces
 pnpm dev
 pnpm build
 pnpm lint
 ```
-
-`pnpm build:www` is the production build command used in GitHub Actions deployment.
 
 ### Debug VS Code Extension
 
@@ -161,7 +167,7 @@ cd apps/www
 # Build a Docker image with:
 docker compose build
 
-# Run locally with `docker-compose`
+# Run locally with docker compose
 docker compose up
 
 # Go to http://localhost:8888

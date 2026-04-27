@@ -1,0 +1,307 @@
+#jsoncrack-toggle,
+#jsoncrack-graph-overlay,
+#jsoncrack-node-modal-backdrop {
+  --jsoncrack-font:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --jsoncrack-font-mono:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
+    monospace;
+}
+
+#jsoncrack-toggle {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 2147483647;
+  font-family: var(--jsoncrack-font);
+}
+
+#jsoncrack-toggle .jsoncrack-segmented {
+  display: inline-flex;
+  border: 1px solid #a8a8a8;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+#jsoncrack-toggle .jsoncrack-toggle-btn {
+  border: 0;
+  border-right: 1px solid #b4b4b4;
+  background: linear-gradient(180deg, #f2f2f2 0%, #dadada 100%);
+  color: #383838;
+  height: 30px;
+  padding: 0 12px;
+  font-size: 13px;
+  line-height: 1;
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+#jsoncrack-toggle .jsoncrack-toggle-btn:last-child {
+  border-right: 0;
+}
+
+#jsoncrack-toggle .jsoncrack-toggle-btn.is-active {
+  background: linear-gradient(180deg, #dcdcdc 0%, #c6c6c6 100%);
+  color: #232323;
+}
+
+#jsoncrack-graph-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  background: #ffffff;
+  font-family: var(--jsoncrack-font);
+}
+
+@media (prefers-color-scheme: dark) {
+  #jsoncrack-graph-overlay {
+    background: #0b0f17;
+  }
+}
+
+#jsoncrack-graph-overlay[hidden] {
+  display: none !important;
+}
+
+#jsoncrack-attribution {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  z-index: 2147483647;
+  padding: 8px 16px;
+  background: #0b0f17;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  font-family: var(--jsoncrack-font);
+}
+
+#jsoncrack-attribution:hover {
+  text-decoration: underline;
+}
+
+#jsoncrack-upgrade-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(17, 17, 17, 0.6);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  font-family: var(--jsoncrack-font);
+}
+
+#jsoncrack-upgrade-card {
+  position: relative;
+  width: 90%;
+  max-width: 460px;
+  padding: 40px 48px;
+  border-radius: 16px;
+  background: rgba(37, 38, 43, 0.97);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 1px 3px rgba(0, 0, 0, 0.2);
+  color: #f1f3f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  animation: jsoncrack-upgrade-fade-in 0.4s ease-out;
+}
+
+@keyframes jsoncrack-upgrade-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.jsoncrack-upgrade-logo {
+  width: 48px;
+  height: 48px;
+}
+
+.jsoncrack-upgrade-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 4px;
+  background: rgba(18, 184, 134, 0.15);
+  color: #0ca678;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.jsoncrack-upgrade-title {
+  margin: 0;
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.jsoncrack-upgrade-desc {
+  margin: 0;
+  max-width: 360px;
+  color: #adb5bd;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.jsoncrack-upgrade-link {
+  color: #20c997;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.jsoncrack-upgrade-link:hover {
+  text-decoration: underline;
+}
+
+.jsoncrack-upgrade-cta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: #0ca678;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 120ms ease;
+}
+
+.jsoncrack-upgrade-cta:hover {
+  background: #099268;
+}
+
+#jsoncrack-react-root {
+  width: 100%;
+  height: 100%;
+}
+
+#jsoncrack-graph-error {
+  margin: 20px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #7f1d1d;
+  background: rgba(220, 38, 38, 0.15);
+  color: #fee2e2;
+  font: 500 14px/1.4 var(--jsoncrack-font);
+}
+
+#jsoncrack-graph-status {
+  margin: 20px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid #1e3a8a;
+  background: rgba(59, 130, 246, 0.16);
+  color: #dbeafe;
+  font: 500 14px/1.4 var(--jsoncrack-font);
+}
+
+#jsoncrack-node-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483646;
+  background: rgba(1, 6, 15, 0.66);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+#jsoncrack-node-modal {
+  width: min(680px, calc(100vw - 32px));
+  max-height: min(80vh, 760px);
+  overflow: auto;
+  border-radius: 12px;
+  border: 1px solid #334155;
+  background: #0f172a;
+  color: #e2e8f0;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+  font-family: var(--jsoncrack-font);
+}
+
+#jsoncrack-node-modal .jsoncrack-node-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border-bottom: 1px solid #1f2937;
+  font-size: 14px;
+}
+
+#jsoncrack-node-modal .jsoncrack-node-modal-close {
+  border: 1px solid #334155;
+  border-radius: 6px;
+  background: #111827;
+  color: #cbd5e1;
+  width: 30px;
+  height: 30px;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+#jsoncrack-node-modal .jsoncrack-node-modal-close:hover {
+  background: #1f2937;
+}
+
+#jsoncrack-node-modal .jsoncrack-node-modal-section {
+  padding: 12px 14px 14px;
+}
+
+#jsoncrack-node-modal .jsoncrack-node-modal-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  color: #bfdbfe;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+#jsoncrack-node-modal .jsoncrack-node-modal-copy {
+  border: 1px solid #334155;
+  border-radius: 6px;
+  background: #111827;
+  color: #dbeafe;
+  height: 26px;
+  padding: 0 10px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#jsoncrack-node-modal .jsoncrack-node-modal-copy:hover {
+  background: #1f2937;
+}
+
+#jsoncrack-node-modal pre {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #334155;
+  background: #020617;
+  color: #dbeafe;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: 500 12px/1.45 var(--jsoncrack-font-mono);
+}

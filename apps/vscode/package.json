@@ -1,6 +1,6 @@
 {
-  "name": "vscode",
-  "version": "3.0.0",
+  "name": "jsoncrack-vscode",
+  "version": "5.1.0",
   "displayName": "JSON Crack",
   "description": "Seamlessly visualize your JSON data instantly into graphs.",
   "publisher": "AykutSarac",
@@ -76,9 +76,9 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "pnpm run build",
     "dev": "vite",
     "build": "vite build && node esbuild.config.mjs --production",
+    "vsc:package": "pnpm run build && vsce package --no-dependencies",
     "build:dev": "vite build && node esbuild.config.mjs",
     "watch": "node esbuild.config.mjs --watch",
     "watch:webview": "vite build --watch",
@@ -92,13 +92,14 @@
     "@mantine/core": "^8.3.18",
     "@mantine/hooks": "^8.3.18",
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
-    "@types/node": "^22.19.15",
+    "@types/node": "^25.6.0",
     "@types/react": "19.2.11",
     "@types/react-dom": "19.2.3",
-    "@types/vscode": "^1.110.0",
+    "@types/vscode": "^1.100.0",
     "@typescript-eslint/eslint-plugin": "^8.57.1",
     "@typescript-eslint/parser": "^8.57.1",
     "@vitejs/plugin-react": "^4.7.0",
+    "@vscode/vsce": "^3.7.1",
     "esbuild": "^0.25.12",
     "eslint": "^10.0.3",
     "eslint-config-prettier": "^10.1.8",
@@ -124,7 +125,7 @@
     "url": "https://github.com/AykutSarac/jsoncrack.com/issues"
   },
   "engines": {
-    "vscode": "^1.86.0"
+    "vscode": "^1.100.0"
   },
   "packageManager": "pnpm@10.20.0"
 }

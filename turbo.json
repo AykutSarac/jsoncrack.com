@@ -3,7 +3,13 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".next/**", "!.next/cache/**", "dist/**", "out/**", "build/**"]
+      "outputs": [
+        ".next/**",
+        "!.next/cache/**",
+        "dist/**",
+        "out/**",
+        "build/**"
+      ]
     },
     "dev": {
       "dependsOn": ["^build"],
@@ -20,6 +26,10 @@
     },
     "lint:fix": {
       "cache": false
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": []
     },
     "analyze": {
       "dependsOn": ["^build"],

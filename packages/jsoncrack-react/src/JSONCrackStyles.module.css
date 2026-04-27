@@ -38,6 +38,8 @@
 
 .canvasWrapper :global(text) {
   fill: var(--interactive-normal) !important;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
 }
 
 .canvasWrapper :global(rect) {
@@ -51,8 +53,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
-  background: radial-gradient(circle at center, var(--overlay-bg) 0 44px, transparent 96px);
+  pointer-events: all;
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(6px) saturate(110%);
+  -webkit-backdrop-filter: blur(6px) saturate(110%);
 }
 
 .spinner {

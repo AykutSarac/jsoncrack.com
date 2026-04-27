@@ -15,16 +15,18 @@ export const SecureInfo = () => {
       <ThemeIcon
         variant="light"
         color="teal"
-        size="36"
+        size="32"
         style={{
           position: "absolute",
-          bottom: "10px",
-          right: "10px",
-          zIndex: 100,
+          bottom: "14px",
+          right: "14px",
+          zIndex: 3,
+          backdropFilter: "blur(12px)",
+          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(20, 184, 166, 0.15)",
         }}
         radius="xl"
       >
-        <LuShieldCheck size="22" />
+        <LuShieldCheck size="18" />
       </ThemeIcon>
     </Tooltip>
   );

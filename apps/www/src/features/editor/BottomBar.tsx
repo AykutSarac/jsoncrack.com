@@ -1,10 +1,10 @@
 import React from "react";
-import { Flex, Menu, Popover, Text } from "@mantine/core";
+import { Flex, Menu, Popover, Text, Tooltip } from "@mantine/core";
 import styled from "styled-components";
 import { event as gaEvent } from "nextjs-google-analytics";
-import { BiSolidDockLeft } from "react-icons/bi";
 import { IoMdCheckmark } from "react-icons/io";
-import { MdArrowUpward } from "react-icons/md";
+import { LuPanelLeftClose } from "react-icons/lu";
+import { LuChevronDown } from "react-icons/lu";
 import { VscCheck, VscError, VscRunAll, VscSync, VscSyncIgnored } from "react-icons/vsc";
 import { formats } from "../../enums/file.enum";
 import useConfig from "../../store/useConfig";
@@ -17,12 +17,11 @@ const StyledBottomBar = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-top: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
+  padding: 4px 6px;
+  border-bottom: 1px solid ${({ theme }) => theme.BACKGROUND_MODIFIER_ACCENT};
   background: ${({ theme }) => theme.TOOLBAR_BG};
-  max-height: 27px;
-  height: 27px;
-  z-index: 35;
-  padding-right: 6px;
+  z-index: 2;
+  flex-shrink: 0;
 
   @media screen and (max-width: 320px) {
     display: none;
@@ -32,9 +31,7 @@ const StyledBottomBar = styled.div`
 const StyledLeft = styled.div`
   display: flex;
   align-items: center;
-  justify-content: left;
-  gap: 4px;
-  padding-left: 8px;
+  gap: 0;
 
   @media screen and (max-width: 480px) {
     display: none;
@@ -44,33 +41,42 @@ const StyledLeft = styled.div`
 const StyledRight = styled.div`
   display: flex;
   align-items: center;
-  justify-content: right;
-  gap: 4px;
+  gap: 0;
 `;
 
 const StyledBottomBarItem = styled.button<{ $bg?: string }>`
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 4px;
   width: fit-content;
   margin: 0;
-  height: 28px;
-  padding: 4px;
+  height: 26px;
+  padding: 2px 8px;
   font-size: 12px;
-  font-weight: 400;
+  font-weight: 500;
   color: ${({ theme }) => theme.INTERACTIVE_NORMAL};
-  background: ${({ $bg }) => $bg};
+  background: ${({ $bg }) => $bg || "transparent"};
+  border: none;
+  border-radius: 6px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  cursor: pointer;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease;
 
   &:hover:not(&:disabled) {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0 0);
+    background-color: ${({ theme }) =>
+      theme.BACKGROUND_SECONDARY === "#f2f3f5"
+        ? "rgba(0, 0, 0, 0.05)"
+        : "rgba(255, 255, 255, 0.05)"};
     color: ${({ theme }) => theme.INTERACTIVE_HOVER};
   }
 
   &:disabled {
-    opacity: 0.6;
+    opacity: 0.4;
     cursor: default;
   }
 `;
@@ -100,9 +106,11 @@ export const BottomBar = () => {
   return (
     <StyledBottomBar>
       <StyledLeft>
-        <StyledBottomBarItem onClick={toggleEditor}>
-          <BiSolidDockLeft />
-        </StyledBottomBarItem>
+        <Tooltip label="Close editor" position="bottom" withArrow openDelay={750}>
+          <StyledBottomBarItem onClick={toggleEditor} aria-label="close editor">
+            <LuPanelLeftClose size={14} />
+          </StyledBottomBarItem>
+        </Tooltip>
         <StyledBottomBarItem>
           {error ? (
             <Popover width="auto" shadow="md" position="top" withArrow>
@@ -154,8 +162,8 @@ export const BottomBar = () => {
           <Menu.Target>
             <StyledBottomBarItem disabled={isWatching}>
               <Flex align="center" gap={2}>
-                <MdArrowUpward />
                 <Text size="xs">{currentFormat?.toUpperCase()}</Text>
+                <LuChevronDown size={12} />
               </Flex>
             </StyledBottomBarItem>
           </Menu.Target>
@@ -163,7 +171,6 @@ export const BottomBar = () => {
             {formats.map(format => (
               <Menu.Item
                 key={format.value}
-                fz={12}
                 onClick={() => setFormat(format.value)}
                 rightSection={currentFormat === format.value && <IoMdCheckmark />}
               >

@@ -28,9 +28,10 @@ const CustomEdgeWrapper = (props: EdgeProps) => {
       onEnter={() => setHovered(true)}
       onLeave={() => setHovered(false)}
       style={{
-        stroke: colorScheme === "dark" ? "#444444" : "#BCBEC0",
-        ...(hovered && { stroke: "#3B82F6" }),
-        strokeWidth: 1.5,
+        stroke: colorScheme === "dark" ? "#3a3a3d" : "#c9cdd3",
+        ...(hovered && { stroke: colorScheme === "dark" ? "#60a5fa" : "#3b82f6" }),
+        strokeWidth: hovered ? 2 : 1.25,
+        transition: "stroke 120ms ease, stroke-width 120ms ease",
       }}
       {...props}
     />

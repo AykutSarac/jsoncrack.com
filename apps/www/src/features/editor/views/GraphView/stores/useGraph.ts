@@ -1,30 +1,39 @@
-import type { LayoutDirection, NodeData } from "jsoncrack-react";
+import type { RefObject } from "react";
+import type { LayoutDirection, NodeData, JSONCrackRef } from "jsoncrack-react";
 import type { ViewPort } from "react-zoomable-ui";
 import { create } from "zustand";
 
 export interface Graph {
   viewPort: ViewPort | null;
+  jsonCrackRef: RefObject<JSONCrackRef | null> | null;
   direction: LayoutDirection;
   fullscreen: boolean;
   selectedNode: NodeData | null;
+  collapsedCount: number;
 }
 
 const initialStates: Graph = {
   viewPort: null,
+  jsonCrackRef: null,
   direction: "RIGHT",
   fullscreen: false,
   selectedNode: null,
+  collapsedCount: 0,
 };
 
 interface GraphActions {
   setDirection: (direction: LayoutDirection) => void;
   setViewPort: (ref: ViewPort) => void;
+  setJsonCrackRef: (ref: RefObject<JSONCrackRef | null>) => void;
   setSelectedNode: (nodeData: NodeData | null) => void;
   focusFirstNode: () => void;
   toggleFullscreen: (value: boolean) => void;
   zoomIn: () => void;
   zoomOut: () => void;
   centerView: () => void;
+  expandAll: () => void;
+  collapseAll: () => void;
+  setCollapsedCount: (count: number) => void;
 }
 
 const useGraph = create<Graph & GraphActions>((set, get) => ({
@@ -35,30 +44,30 @@ const useGraph = create<Graph & GraphActions>((set, get) => ({
     setTimeout(() => get().centerView(), 200);
   },
   focusFirstNode: () => {
-    const rootNode = document.querySelector("g[id$='node-1']");
-    get().viewPort?.camera?.centerFitElementIntoView(rootNode as HTMLElement, {
-      elementExtraMarginForZoom: 100,
-    });
+    get().jsonCrackRef?.current?.focusFirstNode();
   },
   zoomIn: () => {
-    const viewPort = get().viewPort;
-    viewPort?.camera?.recenter(viewPort.centerX, viewPort.centerY, viewPort.zoomFactor + 0.1);
+    get().jsonCrackRef?.current?.zoomIn();
   },
   zoomOut: () => {
-    const viewPort = get().viewPort;
-    viewPort?.camera?.recenter(viewPort.centerX, viewPort.centerY, viewPort.zoomFactor - 0.1);
+    get().jsonCrackRef?.current?.zoomOut();
   },
   centerView: () => {
-    const viewPort = get().viewPort;
-    viewPort?.updateContainerSize();
-
-    const canvas = document.querySelector(".jsoncrack-canvas") as HTMLElement | null;
-    if (canvas) {
-      viewPort?.camera?.centerFitElementIntoView(canvas);
-    }
+    get().jsonCrackRef?.current?.centerView();
+  },
+  expandAll: () => {
+    get().jsonCrackRef?.current?.expandAll();
+  },
+  collapseAll: () => {
+    get().jsonCrackRef?.current?.collapseAll();
+  },
+  setCollapsedCount: count => {
+    if (get().collapsedCount === count) return;
+    set({ collapsedCount: count });
   },
   toggleFullscreen: fullscreen => set({ fullscreen }),
   setViewPort: viewPort => set({ viewPort }),
+  setJsonCrackRef: jsonCrackRef => set({ jsonCrackRef }),
 }));
 
 export default useGraph;

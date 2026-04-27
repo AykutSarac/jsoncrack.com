@@ -3,6 +3,7 @@ import { Flex, Group } from "@mantine/core";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 import { AiOutlineFullscreen } from "react-icons/ai";
+import { FaChrome } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa6";
 import { TbExternalLink } from "react-icons/tb";
 import { JSONCrackLogo } from "../../../layout/JSONCrackBrandLogo";
@@ -84,6 +85,15 @@ export const Toolbar = () => {
           </StyledToDiagramLink>
         )}
         <ThemeToggle />
+        <Link
+          href="https://chromewebstore.google.com/detail/json-crack/hbaeglefdflnhodchjiaphmheaojikhh"
+          rel="noopener"
+          target="_blank"
+        >
+          <StyledToolElement title="Get Chrome Extension">
+            <FaChrome size="20" />
+          </StyledToolElement>
+        </Link>
         <Link href="https://github.com/AykutSarac/jsoncrack.com" rel="noopener" target="_blank">
           <StyledToolElement title="GitHub">
             <FaGithub size="20" />
