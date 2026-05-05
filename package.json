@@ -46,7 +46,8 @@
       "unrs-resolver"
     ],
     "overrides": {
-      "html-to-image": "1.11.11"
+      "html-to-image": "1.11.11",
+      "lodash-es": "4.18.0"
     }
   }
 }
