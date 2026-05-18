@@ -20,7 +20,7 @@
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "typescript": "5.9.3",
-    "vite": "^8.0.0"
+    "vite": "^8.0.13"
   },
   "packageManager": "pnpm@10.20.0"
 }
