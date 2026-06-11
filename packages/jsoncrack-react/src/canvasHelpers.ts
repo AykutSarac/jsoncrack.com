@@ -106,6 +106,27 @@ export const setCanvasDragging = (container: HTMLElement | null, dragging: boole
   canvas.classList.toggle("dragging", dragging);
 };
 
+const DOM_DELTA_LINE = 1;
+const DOM_DELTA_PAGE = 2;
+const LINE_WHEEL_DELTA_SCALE = 7.15625;
+
+/** Convert Shift+wheel movement into a horizontal client-space pan delta. */
+export const getShiftWheelHorizontalPanDelta = (
+  event: Pick<WheelEvent, "shiftKey" | "deltaX" | "deltaY" | "deltaMode">,
+  pageDeltaScale: number
+): number | null => {
+  if (!event.shiftKey) return null;
+
+  const rawDelta = event.deltaY !== 0 ? event.deltaY : event.deltaX;
+  if (rawDelta === 0) return null;
+
+  let scale = 1;
+  if (event.deltaMode === DOM_DELTA_LINE) scale = LINE_WHEEL_DELTA_SCALE;
+  if (event.deltaMode === DOM_DELTA_PAGE) scale = pageDeltaScale;
+
+  return (rawDelta * scale) / 2;
+};
+
 /** Breathing room around the measured graph rect, expressed as a fraction of the rect's own dimensions. Using a fraction (instead of a fixed pixel value) is scale-invariant: whether we measure the graph at zoom 1 or at zoom 0.27, the padded rect expands by the same *proportion*, so translating through `translateClientRectToVirtualSpace` produces the same virtual rect regardless of current zoom. A fixed client-pixel padding would blow up in virtual space as zoom decreases and make manual Fit clicks land at a different zoom than the initial auto-fit. */
 const GRAPH_FIT_PADDING_RATIO = 0.02;
 

@@ -25,6 +25,7 @@ import {
   buildEdgeTargetMap,
   fitGraphToViewPort,
   focusRootNode,
+  getShiftWheelHorizontalPanDelta,
   parseJsonGraph,
   setCanvasDragging,
   setViewPortZoom,
@@ -217,6 +218,24 @@ export const JSONCrack = forwardRef<JSONCrackRef, JSONCrackProps>(
 
       observer.observe(container);
       return () => observer.disconnect();
+    }, [viewPort]);
+
+    useEffect(() => {
+      if (!viewPort) return;
+      const space = containerRef.current?.querySelector<HTMLElement>(".jsoncrack-space");
+      if (!space) return;
+
+      const handleShiftWheel = (event: WheelEvent) => {
+        const delta = getShiftWheelHorizontalPanDelta(event, window.innerHeight);
+        if (delta === null) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+        viewPort.camera?.moveByInClientSpace(delta, 0, 0);
+      };
+
+      space.addEventListener("wheel", handleShiftWheel, { capture: true, passive: false });
+      return () => space.removeEventListener("wheel", handleShiftWheel, { capture: true });
     }, [viewPort]);
 
     const viewPortApi = useMemo(

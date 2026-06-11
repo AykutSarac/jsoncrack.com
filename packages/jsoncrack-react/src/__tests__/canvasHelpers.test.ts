@@ -3,6 +3,7 @@ import {
   buildCanvasClassName,
   buildCanvasStyle,
   buildEdgeTargetMap,
+  getShiftWheelHorizontalPanDelta,
   parseJsonGraph,
   toJsonText,
 } from "../canvasHelpers";
@@ -141,5 +142,40 @@ describe("buildEdgeTargetMap", () => {
 
   it("returns an empty map for empty input", () => {
     expect(buildEdgeTargetMap([]).size).toBe(0);
+  });
+});
+
+describe("getShiftWheelHorizontalPanDelta", () => {
+  it("ignores wheel events without the shift key", () => {
+    expect(
+      getShiftWheelHorizontalPanDelta({ shiftKey: false, deltaX: 0, deltaY: 80, deltaMode: 0 }, 900)
+    ).toBeNull();
+  });
+
+  it("ignores shift wheel events without movement", () => {
+    expect(
+      getShiftWheelHorizontalPanDelta({ shiftKey: true, deltaX: 0, deltaY: 0, deltaMode: 0 }, 900)
+    ).toBeNull();
+  });
+
+  it("maps vertical shift wheel movement to horizontal pan", () => {
+    expect(
+      getShiftWheelHorizontalPanDelta({ shiftKey: true, deltaX: 0, deltaY: 80, deltaMode: 0 }, 900)
+    ).toBe(40);
+  });
+
+  it("falls back to horizontal wheel movement when no vertical delta is present", () => {
+    expect(
+      getShiftWheelHorizontalPanDelta({ shiftKey: true, deltaX: -60, deltaY: 0, deltaMode: 0 }, 900)
+    ).toBe(-30);
+  });
+
+  it("scales line and page deltas before panning", () => {
+    expect(
+      getShiftWheelHorizontalPanDelta({ shiftKey: true, deltaX: 0, deltaY: 2, deltaMode: 1 }, 900)
+    ).toBeCloseTo(7.15625);
+    expect(
+      getShiftWheelHorizontalPanDelta({ shiftKey: true, deltaX: 0, deltaY: 1, deltaMode: 2 }, 900)
+    ).toBe(450);
   });
 });
