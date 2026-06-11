@@ -226,7 +226,10 @@ export const JSONCrack = forwardRef<JSONCrackRef, JSONCrackProps>(
       if (!space) return;
 
       const handleShiftWheel = (event: WheelEvent) => {
-        const delta = getShiftWheelHorizontalPanDelta(event, window.innerHeight);
+        const delta = getShiftWheelHorizontalPanDelta(
+          event,
+          space.clientWidth || window.innerWidth
+        );
         if (delta === null) return;
 
         event.preventDefault();
