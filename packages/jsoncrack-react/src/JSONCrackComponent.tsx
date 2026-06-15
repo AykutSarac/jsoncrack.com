@@ -233,7 +233,7 @@ export const JSONCrack = forwardRef<JSONCrackRef, JSONCrackProps>(
         if (delta === null) return;
 
         event.preventDefault();
-        event.stopPropagation();
+        event.stopImmediatePropagation();
         viewPort.camera?.moveByInClientSpace(delta, 0, 0);
       };
 
