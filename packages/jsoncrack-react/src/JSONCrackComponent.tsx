@@ -232,9 +232,12 @@ export const JSONCrack = forwardRef<JSONCrackRef, JSONCrackProps>(
         );
         if (delta === null) return;
 
+        const camera = viewPort.camera;
+        if (!camera) return;
+
         event.preventDefault();
         event.stopImmediatePropagation();
-        viewPort.camera?.moveByInClientSpace(delta, 0, 0);
+        camera.moveByInClientSpace(delta, 0, 0);
       };
 
       space.addEventListener("wheel", handleShiftWheel, { capture: true, passive: false });
