@@ -10,10 +10,12 @@ const baseURL = `http://localhost:${PORT}`;
 export default defineConfig({
   testDir: "./src/__tests__/e2e",
   testMatch: "**/*.e2e.{ts,tsx}",
-  fullyParallel: true,
+  // Run serially: all tests share one dev server, and parallel workers contend
+  // for it (slow cold compiles, late-mounting modals) which makes runs flaky.
+  fullyParallel: false,
+  workers: 1,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
   reporter: "html",
   use: {
     baseURL,
