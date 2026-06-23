@@ -11,7 +11,11 @@
     "lint": "tsc --project tsconfig.json && eslint src && prettier --check src",
     "lint:fix": "eslint --fix src && prettier --write src",
     "analyze": "ANALYZE=true npm run build",
-    "test": "jest"
+    "test": "jest",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:report": "playwright show-report",
+    "test:e2e:codegen": "playwright codegen"
   },
   "dependencies": {
     "@mantine/code-highlight": "^8.3.18",
@@ -51,6 +55,7 @@
     "@eslint/js": "^10.0.1",
     "@next/bundle-analyzer": "16.2.6",
     "@next/eslint-plugin-next": "16.2.6",
+    "@playwright/test": "^1.60.0",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
