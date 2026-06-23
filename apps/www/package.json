@@ -55,7 +55,11 @@
     "@eslint/js": "^10.0.1",
     "@next/bundle-analyzer": "16.2.6",
     "@next/eslint-plugin-next": "16.2.6",
+<<<<<<< Updated upstream
     "@playwright/test": "^1.60.0",
+=======
+    "@playwright/test": "^1.61.0",
+>>>>>>> Stashed changes
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
