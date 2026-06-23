@@ -3,6 +3,8 @@ import http from "k6/http";
 
 const BASE = "http://localhost:3000";
 
+
+// Stefan Czepl
 export const options = {
   scenarios: {
     spike_100: {

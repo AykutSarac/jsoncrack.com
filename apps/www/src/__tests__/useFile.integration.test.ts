@@ -13,6 +13,8 @@ beforeEach(() => {
   sessionStorage.clear();
 });
 
+
+// Stefan Czepl
 describe("useFile integration", () => {
   test("setContents pushes parsed JSON into the useJson store", async () => {
     // Arrange

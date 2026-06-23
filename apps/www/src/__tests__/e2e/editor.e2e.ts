@@ -2,6 +2,8 @@
 
 import { SAMPLE_JSON } from "./fixtures/sampleJson";
 
+
+// Stefan Czepl
 test.describe("Editor Page center first Item", () => {
   test.beforeEach(async ({ page }) => {
     await page.goto('http://localhost:3000/');
@@ -10,6 +12,8 @@ test.describe("Editor Page center first Item", () => {
     await page.getByRole('button', { name: 'Stay on JSON Crack' }).click();
     await page.locator('.mantine-focus-auto.mantine-active.m_220c80f2').click();
   });
+
+
 
 
   test("goes to the editor page and centers the first item", async ({ page }) => {

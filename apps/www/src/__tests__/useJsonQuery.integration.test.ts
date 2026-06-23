@@ -7,23 +7,6 @@ import useFile from "../store/useFile";
 import useJson from "../store/useJson";
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const mockJqJson = jest.fn<(obj: unknown, query: string) => Promise<unknown>>();
 const mockTypegenRun = jest.fn<(name: string, value: string, opts: string) => string>();
 
