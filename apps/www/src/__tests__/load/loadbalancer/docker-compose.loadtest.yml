@@ -1,0 +1,45 @@
+name: jsoncrack-loadtest
+
+services:
+  web:
+    build:
+      # use existing docker file and set the context to the project root
+      context: ../../../../../..
+      dockerfile: apps/www/Dockerfile
+    image: jsoncrack-www:loadtest
+    expose:
+      - "8080"
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"  # limit to 1/2 gpu core
+          memory: 256M # limit to 256 mb ram
+    restart: unless-stopped
+
+  lb:
+    image: nginx:alpine
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"  # limit to 1 cpu core
+          memory: 128M # limit to 128 mb ram
+    # wait that the web container run
+    depends_on:
+      - web
+    volumes:
+      # add nginx config
+      - ./lb.nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "8088:80"
+    restart: unless-stopped
+
+  k6:
+    image: grafana/k6:latest
+    # wait that the load balancer is set up
+    depends_on:
+      - lb
+    volumes:
+      # mount the load test script
+      - ./:/scripts:ro
+    # run our load test
+    command: ["run", "/scripts/editor.lb.load.js"]

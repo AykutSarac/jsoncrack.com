@@ -22,7 +22,7 @@ beforeEach(() => {
 // the json2go function should generate golang (go) code from the json it gets
 describe("jsonToGo tests", () => {
   describe("invalid json tests", () => {
-    test("returns an error and empty output for not valid json", () => {
+    test("returns an error and empty output for not valid json test", () => {
       // Arrange
       const invalid = "{ not valid json";
 
@@ -36,7 +36,7 @@ describe("jsonToGo tests", () => {
   });
 
   describe("check working result types tests", () => {
-    test("returns struct with default struct name and right fields", () => {
+    test("returns struct with default struct name and right fields test", () => {
       // Arrange
       const valid = '{"name":"Matt","age":30}';
 
@@ -50,7 +50,7 @@ describe("jsonToGo tests", () => {
       expect(go).toContain("}");
     });
 
-    test("returns struct with the given type name", () => {
+    test("returns struct with the given type name test", () => {
       // Arrange / Act
       const { go } = jsonToGo('{"a":1}', "my type");
 
@@ -62,7 +62,7 @@ describe("jsonToGo tests", () => {
   });
 
   describe("number types conversion tests", () => {
-    test("returns a field with int", () => {
+    test("returns a field with int test", () => {
       // Arrange / Act
       const { go } = jsonToGo('{"number":321}');
 
@@ -77,7 +77,7 @@ describe("jsonToGo tests", () => {
       expect(go).toContain('Big int64 `json:"big"`');
     });
 
-    test("returns a float64 for a float number", () => {
+    test("returns a float64 for a float number test", () => {
       // Arrange / Act
       const { go } = jsonToGo('{"pi":3.14}');
 
@@ -85,7 +85,7 @@ describe("jsonToGo tests", () => {
       expect(go).toContain('Pi float64 `json:"pi"`');
     });
 
-    test("returns a float64 for a float number that could also be a int", () => {
+    test("returns a float64 for a float number that could also be a int test", () => {
       // Arrange / Act
       const { go } = jsonToGo('{"x":1.0}');
 
@@ -95,7 +95,7 @@ describe("jsonToGo tests", () => {
   });
 
   describe("null type conversion tests", () => {
-    test("maps null to any", () => {
+    test("maps null to any test", () => {
       // Arrange / Act
       const { go } = jsonToGo('{"x":null}');
 
@@ -103,7 +103,7 @@ describe("jsonToGo tests", () => {
       expect(go).toContain('X any `json:"x"`');
     });
 
-    test("maps timestamp string to time.Time", () => {
+    test("maps timestamp string to time.Time test", () => {
       // Arrange / Act
       const { go } = jsonToGo('{"created":"2020-01-01T00:00:00Z"}');
 
@@ -113,7 +113,7 @@ describe("jsonToGo tests", () => {
   });
 
   describe("arrays mapping tests", () => {
-    test("maps an array of strings to a Go slice", () => {
+    test("maps an array of strings to a GO slice", () => {
       // Arrange / Act
       const { go } = jsonToGo('{"tags":["a","b"]}');
 
@@ -123,7 +123,7 @@ describe("jsonToGo tests", () => {
   });
 
   describe("map nested objects tests", () => {
-    test("hoists nested structs into their own type definitions when flattened", () => {
+    test("hoists nested structs into their own type definitions when flattened test", () => {
       // Arrange / Act — flatten defaults to true
       const { go } = jsonToGo('{"user":{"name":"Matt"}}');
 
@@ -132,7 +132,7 @@ describe("jsonToGo tests", () => {
       expect(go).toContain("type User struct {");
     });
 
-    test("inlines nested structs when flatten is disabled", () => {
+    test("inlines nested structs when flatten is disabled test", () => {
       // Arrange / Act
       const { go } = jsonToGo('{"user":{"name":"Matt"}}', "Root", false);
 
@@ -143,7 +143,7 @@ describe("jsonToGo tests", () => {
   });
 
   describe("json key mapping tests", () => {
-    test("upper-cases common initialisms such as id -> ID", () => {
+    test("json key id should map to ID test", () => {
       // Arrange / Act
       const { go } = jsonToGo('{"id":5}');
 
