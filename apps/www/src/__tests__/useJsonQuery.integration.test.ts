@@ -6,26 +6,26 @@ import useJsonQuery from "../hooks/useJsonQuery";
 import useFile from "../store/useFile";
 import useJson from "../store/useJson";
 
+// mock functions we use
 const mockJqJson = jest.fn<(obj: unknown, query: string) => Promise<unknown>>();
 const mockTypegenRun = jest.fn<(name: string, value: string, opts: string) => string>();
 
+// replace wasm with a mock
 jest.mock("jq-web", () => ({
   __esModule: true,
   default: { promised: { json: mockJqJson } },
   promised: { json: mockJqJson },
 }));
-
+// replace wasm with a mock
 jest.mock(
   "json_typegen_wasm",
   () => ({ __esModule: true, run: mockTypegenRun, default: { run: mockTypegenRun } }),
   { virtual: true }
 );
 
-// `toast` is the real react-hot-toast singleton (same instance the hook imports);
-// we spy on `.error` so failures are observable without rendering a <Toaster/>.
 let toastError: ReturnType<typeof jest.spyOn>;
 
-// Reset the singleton stores and the boundary mocks before each test.
+// reset the mocks, add spy for toastError, reset useJson and useFile and clear the sessionStorage
 beforeEach(() => {
   jest.clearAllMocks();
   toastError = jest.spyOn(toast, "error").mockImplementation(() => "toast-id");
@@ -34,17 +34,19 @@ beforeEach(() => {
   sessionStorage.clear();
 });
 
-// reset the mock for each test
+// reset the toast errors we we start clean for each test
 afterEach(() => {
   toastError.mockRestore();
 });
 
 // Fabian Eberhardt
-describe("useJsonQuery integration", () => {
-  describe("updateJson", () => {
-    test("runs a jq query against the useJson store and writes the result into useFile", async () => {
+describe("useJsonQuery integration tests", () => {
+  describe("updateJson tests", () => {
+    test("runs a jq query against the useJson store and writes the result into useFile test", async () => {
       // Arrange
+      // set valid json
       useJson.setState({ json: '{"a":[1,2,3]}', loading: false });
+      // add mock response
       mockJqJson.mockResolvedValue(3);
       const onDone = jest.fn();
       const { result } = renderHook(() => useJsonQuery());
@@ -60,9 +62,11 @@ describe("useJsonQuery integration", () => {
       expect(onDone).toHaveBeenCalledTimes(1);
     });
 
-    test("shows a toast and skips the callback when the jq query rejects", async () => {
+    test("shows a toast and skips the callback when the jq query fails test", async () => {
       // Arrange
+      // add valid json
       useJson.setState({ json: '{"a":1}', loading: false });
+      // mock that it returns error
       mockJqJson.mockRejectedValue(new Error("invalid query"));
       const onDone = jest.fn();
       const { result } = renderHook(() => useJsonQuery());
@@ -73,13 +77,15 @@ describe("useJsonQuery integration", () => {
       });
 
       // Assert
+      // error toast shown, callback skipped, useFile not changed
       expect(toastError).toHaveBeenCalledWith("Unable to process the request.");
       expect(onDone).toHaveBeenCalledTimes(0);
       expect(useFile.getState().getContents()).toBe("");
     });
 
-    test("never reaches jq and reports an error when the store holds malformed JSON", async () => {
+    test("never reaches jq and reports an error when the store holds malformed json test", async () => {
       // Arrange
+      // add invalid json
       useJson.setState({ json: "{ not valid json", loading: false });
       const { result } = renderHook(() => useJsonQuery());
 
@@ -88,17 +94,21 @@ describe("useJsonQuery integration", () => {
         await result.current.updateJson(".a");
       });
 
-      // Assert — JSON.parse throws before the jq call is made
+      // Assert
+      // check if we got an error
       expect(mockJqJson).toHaveBeenCalledTimes(0);
       expect(toastError).toHaveBeenCalledWith("Unable to process the request.");
     });
   });
 
-  describe("getJsonType", () => {
-    test("generates types from the current useJson contents via json_typegen_wasm", async () => {
+  describe("getJsonType tests", () => {
+    test("generates types from the current useJson contents via json_typegen_wasm test", async () => {
       // Arrange
+      // add json
       useJson.setState({ json: '{"id":1,"name":"x"}', loading: false });
+      // set mock return value
       mockTypegenRun.mockReturnValue("export type Root = { id: number; name: string };");
+      // call useJsonQuery hook
       const { result } = renderHook(() => useJsonQuery());
 
       // Act
@@ -107,13 +117,14 @@ describe("useJsonQuery integration", () => {
         types = await result.current.getJsonType();
       });
 
-      // Assert — the hook forwards the live JSON string and the typealias option,
-      // and passes the module's output straight through.
+      // Assert
+      // should have been called with the following things:
       expect(mockTypegenRun).toHaveBeenCalledWith(
         "Root",
         '{"id":1,"name":"x"}',
         JSON.stringify({ output_mode: "typescript/typealias" })
       );
+      // check result
       expect(types).toContain("Root");
     });
   });
