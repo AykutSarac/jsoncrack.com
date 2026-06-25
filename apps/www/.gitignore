@@ -13,6 +13,12 @@ coverage/
 build/
 *.tsbuildinfo
 
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
 # Local environment files
 .env.local
 .env.development.local
