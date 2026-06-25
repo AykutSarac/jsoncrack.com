@@ -10,13 +10,14 @@ test.describe("Editor Page center first Item", () => {
 
     await page.getByRole('link', { name: 'Go to Editor' }).click();
     await page.getByRole('button', { name: 'Stay on JSON Crack' }).click();
-    await page.locator('.mantine-focus-auto.mantine-active.m_220c80f2').click();
+    await page.keyboard.press("Escape");
   });
 
 
 
 
   test("goes to the editor page and centers the first item", async ({ page }) => {
+    await page.waitForTimeout(500);
     await page.getByRole('button', { name: 'center first item' }).click();
     // only the first node should be within the viewport
     await expect(page.locator('#ref-1-node-1 > ._rect_1b6xi_1')).toBeInViewport();
