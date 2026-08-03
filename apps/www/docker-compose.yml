@@ -2,9 +2,9 @@ services:
   jsoncrack:
     image: jsoncrack
     container_name: jsoncrack
-    build: 
-      context: .
-      dockerfile: Dockerfile
+    build:
+      context: ../..
+      dockerfile: apps/www/Dockerfile
     ports:
       - "8888:8080"
     environment:
