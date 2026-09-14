@@ -73,7 +73,20 @@
           "group": "navigation"
         }
       ]
-    }
+    },
+    "configuration": [
+      {
+        "title": "JSON Crack",
+        "properties": {
+          "jsoncrack.maxRenderableNodes": {
+            "type": "integer",
+            "default": 1500,
+            "minimum": 0,
+            "scope": "resource"
+          }
+        }
+      }
+    ]
   },
   "scripts": {
     "dev": "vite",
