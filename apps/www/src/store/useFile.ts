@@ -100,7 +100,7 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
   setContents: async ({ contents, hasChanges = true, skipUpdate = false, format }) => {
     try {
       set({
-        ...(contents && { contents }),
+        ...(contents !== undefined && { contents }),
         error: null,
         hasChanges,
         format: format ?? get().format,
