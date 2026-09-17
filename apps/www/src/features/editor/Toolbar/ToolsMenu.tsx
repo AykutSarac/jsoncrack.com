@@ -3,7 +3,7 @@ import { Menu, Flex } from "@mantine/core";
 import { event as gaEvent } from "nextjs-google-analytics";
 import { CgChevronDown } from "react-icons/cg";
 import { MdFilterListAlt } from "react-icons/md";
-import { VscSearchFuzzy, VscJson, VscGroupByRefType } from "react-icons/vsc";
+import { VscSearchFuzzy, VscJson, VscGroupByRefType, VscCopy } from "react-icons/vsc";
 import { useModal } from "../../../store/useModal";
 import { StyledToolElement } from "./styles";
 
@@ -20,6 +20,16 @@ export const ToolsMenu = () => {
         </StyledToolElement>
       </Menu.Target>
       <Menu.Dropdown>
+        <Menu.Item
+          leftSection={<VscCopy />}
+          onClick={() => {
+            setVisible("CopyJsonModal", true);
+            gaEvent("open_copy_json_modal");
+          }}
+        >
+          Copy JSON
+        </Menu.Item>
+        <Menu.Divider />
         <Menu.Item
           leftSection={<VscSearchFuzzy />}
           onClick={() => {
