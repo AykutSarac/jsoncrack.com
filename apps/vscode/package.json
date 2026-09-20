@@ -27,7 +27,8 @@
     "livepreview"
   ],
   "activationEvents": [
-    "workspaceContains:**/*.{json}"
+    "workspaceContains:**/*.{json}",
+    "workspaceContains:**/*.{yaml,yml}"
   ],
   "main": "./build/extension.js",
   "contributes": {
@@ -69,7 +70,7 @@
       "editor/title": [
         {
           "command": "jsoncrack-vscode.start",
-          "when": "resourceExtname == .json || editorLangId == json",
+          "when": "resourceExtname == .json || editorLangId == json || resourceExtname == .yaml || resourceExtname == .yml || editorLangId == yaml",
           "group": "navigation"
         }
       ]
@@ -92,6 +93,7 @@
     "@mantine/core": "^8.3.18",
     "@mantine/hooks": "^8.3.18",
     "@trivago/prettier-plugin-sort-imports": "^6.0.2",
+    "@types/js-yaml": "^4.0.9",
     "@types/node": "^25.9.5",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
@@ -112,6 +114,7 @@
     "vite": "^6.4.3"
   },
   "dependencies": {
+    "js-yaml": "4.3.1",
     "jsoncrack-react": "workspace:*",
     "react": "catalog:",
     "react-dom": "catalog:",

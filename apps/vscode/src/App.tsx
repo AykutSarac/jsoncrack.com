@@ -27,11 +27,24 @@ const App: React.FC = () => {
     const vscode = window?.acquireVsCodeApi?.();
     vscode?.postMessage("ready");
 
-    const onMessage = (event: MessageEvent<{ json?: string }>) => {
+    const onMessage = async (event: MessageEvent<{ json?: string; format?: string }>) => {
       const jsonData = event.data?.json;
-      if (typeof jsonData === "string") {
-        setJson(jsonData);
+      if (typeof jsonData !== "string") return;
+
+      // YAML needs to be converted to a JS object before the JSON-only
+      // graph renderer can visualize it. js-yaml is loaded on demand.
+      if (event.data?.format === "yaml") {
+        try {
+          const { load } = await import("js-yaml");
+          setJson(JSON.stringify(load(jsonData) as object));
+        } catch (error) {
+          console.error("Failed to parse YAML", error);
+          setJson("{}");
+        }
+        return;
       }
+
+      setJson(jsonData);
     };
 
     window.addEventListener("message", onMessage);
