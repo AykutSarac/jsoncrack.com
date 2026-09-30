@@ -4,6 +4,7 @@ import { toast } from "react-hot-toast";
 import { create } from "zustand";
 import exampleJson from "../data/example.json";
 import { FileFormat } from "../enums/file.enum";
+import { fetchJsonDocument } from "../lib/utils/fetchJsonDocument";
 import { isIframe } from "../lib/utils/helpers";
 import { contentToJson, jsonToContent } from "../lib/utils/jsonAdapter";
 import useConfig from "./useConfig";
@@ -128,15 +129,16 @@ const useFile = create<FileStates & JsonActions>()((set, get) => ({
   setHasChanges: hasChanges => set({ hasChanges }),
   fetchUrl: async url => {
     try {
-      const res = await fetch(url);
-      const json = await res.json();
+      const json = await fetchJsonDocument(url);
       const jsonStr = JSON.stringify(json, null, 2);
 
       get().setContents({ contents: jsonStr });
       return useJson.setState({ json: jsonStr, loading: false });
-    } catch {
+    } catch (error) {
       get().clear();
-      toast.error("Failed to fetch document from URL!");
+      toast.error(
+        error instanceof Error ? error.message : "Document request could not be completed."
+      );
     }
   },
   checkEditorSession: (url, widget) => {

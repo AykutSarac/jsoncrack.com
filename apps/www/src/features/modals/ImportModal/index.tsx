@@ -6,6 +6,7 @@ import { event as gaEvent } from "nextjs-google-analytics";
 import toast from "react-hot-toast";
 import { AiOutlineUpload } from "react-icons/ai";
 import type { FileFormat } from "../../../enums/file.enum";
+import { fetchJsonDocument } from "../../../lib/utils/fetchJsonDocument";
 import useFile from "../../../store/useFile";
 
 export const ImportModal = ({ opened, onClose }: ModalProps) => {
@@ -22,13 +23,16 @@ export const ImportModal = ({ opened, onClose }: ModalProps) => {
       toast.loading("Loading...", { id: "toastFetch" });
       gaEvent("fetch_url");
 
-      return fetch(url)
-        .then(res => res.json())
+      return fetchJsonDocument(url)
         .then(json => {
           setContents({ contents: JSON.stringify(json, null, 2) });
           onClose();
         })
-        .catch(() => toast.error("Failed to fetch JSON!"))
+        .catch(error =>
+          toast.error(
+            error instanceof Error ? error.message : "Document request could not be completed."
+          )
+        )
         .finally(() => toast.dismiss("toastFetch"));
     } else if (file) {
       const lastIndex = file.name.lastIndexOf(".");
