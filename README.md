@@ -158,7 +158,8 @@ pnpm lint
 
 ### Docker
 
-🐳 Docker assets are in `apps/www`.
+🐳 Docker assets are in `apps/www`. The compose file uses the repository root as
+the Docker build context so the multi-stage build can prune the `www` workspace.
 If you want to run JSON Crack locally:
 
 ```console
