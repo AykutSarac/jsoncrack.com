@@ -12,6 +12,7 @@ out/
 coverage/
 build/
 *.tsbuildinfo
+next-env.d.ts
 
 # Local environment files
 .env.local
