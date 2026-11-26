@@ -9,6 +9,12 @@ function getPanelTitle(document?: vscode.TextDocument) {
   return fileName || "JSON Crack";
 }
 
+function getMaxRenderableNodes(document?: vscode.TextDocument) {
+  return vscode.workspace
+    .getConfiguration("jsoncrack", document?.uri)
+    .get<number>("maxRenderableNodes", 1500);
+}
+
 export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand("jsoncrack-vscode.start", () =>
@@ -44,6 +50,7 @@ async function createWebviewForSelectedText(context: vscode.ExtensionContext) {
     if (e === "ready") {
       panel.webview.postMessage({
         json: selectedText,
+        maxRenderableNodes: getMaxRenderableNodes(editor?.document),
       });
     }
   });
@@ -72,6 +79,7 @@ async function createWebviewForActiveEditor(context: vscode.ExtensionContext) {
     if (e === "ready") {
       panel.webview.postMessage({
         json: editor?.document.getText(),
+        maxRenderableNodes: getMaxRenderableNodes(editor?.document),
       });
     }
   });
@@ -105,6 +113,7 @@ function createWebviewForContent(context?: vscode.ExtensionContext, content?: st
     );
     panel.webview.postMessage({
       json: content,
+      maxRenderableNodes: getMaxRenderableNodes(vscode.window.activeTextEditor?.document),
     });
   }
 }

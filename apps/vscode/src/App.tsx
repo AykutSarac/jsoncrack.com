@@ -22,15 +22,21 @@ const App: React.FC = () => {
   const [json, setJson] = useState("{}");
   const [selectedNode, setSelectedNode] = useState<NodeData | null>(null);
   const theme = getTheme();
+  const [maxRenderableNodes, setMaxRenderableNodes] = useState<number>(1500);
 
   useEffect(() => {
     const vscode = window?.acquireVsCodeApi?.();
     vscode?.postMessage("ready");
 
-    const onMessage = (event: MessageEvent<{ json?: string }>) => {
+    const onMessage = (event: MessageEvent<{ json?: string; maxRenderableNodes?: number }>) => {
       const jsonData = event.data?.json;
       if (typeof jsonData === "string") {
         setJson(jsonData);
+      }
+
+      const maxRenderableNodesConfig = event.data?.maxRenderableNodes;
+      if (typeof maxRenderableNodesConfig === "number") {
+        setMaxRenderableNodes(maxRenderableNodesConfig);
       }
     };
 
@@ -53,7 +59,13 @@ const App: React.FC = () => {
     <MantineProvider forceColorScheme={theme}>
       <CodeHighlightAdapterProvider adapter={shikiAdapter}>
         <Box h="100vh" w="100vw">
-          <JSONCrack json={json} theme={theme} showControls={false} onNodeClick={handleNodeClick} />
+          <JSONCrack
+            json={json}
+            theme={theme}
+            showControls={false}
+            onNodeClick={handleNodeClick}
+            maxRenderableNodes={maxRenderableNodes}
+          />
           {selectedNode && (
             <NodeModal opened={!!selectedNode} onClose={closeNodeModal} nodeData={selectedNode} />
           )}
